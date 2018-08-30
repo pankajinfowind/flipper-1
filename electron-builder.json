@@ -1,7 +1,15 @@
 {
-  "productName": "angular-electron",
+  "productName": "flipper",
   "directories": {
     "output": "release/"
+  },
+  "publish": {
+    "provider": "github",
+    "vPrefixedTagName":true,
+    "host":"github.com",
+    "protocol": "https",
+    "owner":"richard457",
+    "token":"7f5d984f8ef17c9f5b2a281250dea28fc050f232"
   },
     "files": [
         "**/*",

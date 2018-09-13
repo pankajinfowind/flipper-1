@@ -5,44 +5,35 @@
   },
   "publish": {
     "provider": "github",
-    "vPrefixedTagName":true,
-    "host":"github.com",
-    "protocol": "https",
-    "owner":"richard457",
-    "token":"7f5d984f8ef17c9f5b2a281250dea28fc050f232"
+    "vPrefixedTagName": true,
+    "token": "7f5d984f8ef17c9f5b2a281250dea28fc050f232"
   },
-    "files": [
-        "**/*",
-        "!*.ts",
-        "!*.code-workspace",
-        "!LICENSE.md",
-        "!package.json",
-        "!package-lock.json",
-        "!src/",
-        "!e2e/",
-        "!hooks/",
-        "!.angular-cli.json",
-        "!_config.yml",
-        "!karma.conf.js",
-        "!tsconfig.json",
-        "!tslint.json"
-    ],
+  "files": [
+    "**/*",
+    "!*.ts",
+    "!*.code-workspace",
+    "!LICENSE.md",
+    "!package.json",
+    "!package-lock.json",
+    "!src/",
+    "!e2e/",
+    "!hooks/",
+    "!.angular-cli.json",
+    "!_config.yml",
+    "!karma.conf.js",
+    "!tsconfig.json",
+    "!tslint.json"
+  ],
   "win": {
     "icon": "dist",
-    "target": [
-      "portable"
-    ]
+    "target": ["portable"]
   },
   "mac": {
     "icon": "dist",
-    "target": [
-      "dmg"
-    ]
+    "target": ["dmg"]
   },
   "linux": {
     "icon": "dist",
-    "target": [
-      "AppImage"
-    ]
+    "target": ["AppImage"]
   }
 }

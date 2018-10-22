@@ -60,8 +60,6 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 import { MatDatepickerModule } from "@angular/material/datepicker";
 
-import { MatExpansionPanel } from "@angular/material";
-
 import { MatTableModule } from "@angular/material/table";
 
 import { MatSortModule } from "@angular/material/sort";
@@ -147,7 +145,7 @@ const MATERIAL_MODULES = [
 @NgModule({
   imports: MATERIAL_MODULES,
 
-  declarations: [MatExpansionPanel, MatRadioButton],
+  declarations: [],
 
   exports: MATERIAL_MODULES
 })

@@ -16,7 +16,8 @@ import { GlobalVariables } from "../classes/global-variables";
 export class RegisterComponent implements OnInit {
   // Gender list for the select control element
   appname = "Yegobox";
-  phoneCode: String[] = ["+250", "+41", "+256"];
+  password_hide = true;
+  cfm_password_hide = true;
   signupForm: FormGroup;
   // Property for the user
 

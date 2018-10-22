@@ -21,12 +21,14 @@ import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LoginComponent } from "./login/login.component";
-import { RegisterComponent } from "./register/register.component";
+
 import { ChangePasswordComponent } from "./reset-password/change-password/change-password.component";
 import { EmailVerifyComponent } from "./login/email-verify/email-verify.component";
 import { MaterialModule } from "./material/material.module";
 import { PasswordVerifyComponent } from "./login/password-verify/password-verify.component";
 import { SendResetPassLinkComponent } from "./reset-password/send-reset-pass-link.component";
+
+import { RegisterComponent } from "./register/register.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

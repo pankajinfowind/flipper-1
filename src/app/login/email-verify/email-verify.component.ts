@@ -21,7 +21,7 @@ export class EmailVerifyComponent implements OnInit {
   redirecturl;
   @Output()
   valueChange = new EventEmitter<any>();
-
+  public socialAuth: any;
   constructor(
     public dialog: MatDialog,
     private api: ApiService,

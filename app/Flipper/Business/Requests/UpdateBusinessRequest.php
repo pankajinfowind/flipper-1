@@ -13,10 +13,10 @@ class UpdateBusinessRequest extends BaseFormRequest
      */
     public function rules()
     {
-        return ['name' => ['required|string|min:1'],
-                'type' => ['required|string|min:1'],
-                'address' => ['required|string|min:1'],
-                'description' => ['required|string|min:1']
-                ];
+        return ['name' => ['required','string','unique:business'],
+        'type' => ['required','string'],
+        'address' => ['required','string'],
+         'description' => ['required','string']
+        ];
     }
 }

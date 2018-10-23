@@ -24,20 +24,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::namespace('Admin')->group(function () {
         //   Route::group(['middleware' => ['role:admin|superadmin|cashier, guard:employee']], function () {
                Route::namespace('Business')->group(function(){
-                  // Route::resource('bussiness', 'BussinessController');
-                  Route::post('business', 'BussinessController@store');
-
+                   Route::resource('business', 'BussinessController');
                });
           // });
        });
 });
-
-
-    // //create-bussiness
-    // Route::middleware('auth:api')->post('bussiness', 'BussinessController@store');
-    // //update-business
-    // Route::middleware('auth:api')->put('bussiness', 'BussinessController@update');
-    // //update-business
-    // Route::middleware('auth:api')->delete('bussiness/{id}', 'BussinessController@destroy');
-    // //list of user business
-    // Route::middleware('auth:api')->get('bussiness', 'BussinessController@index');

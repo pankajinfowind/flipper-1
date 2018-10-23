@@ -13,7 +13,7 @@ class CreateBusinessRequest extends BaseFormRequest
      */
     public function rules()
     {
-        return ['name' => ['required','string'],
+        return ['name' => ['required','string','unique:business'],
                 'type' => ['required','string'],
                 'address' => ['required','string'],
                  'description' => ['required','string']

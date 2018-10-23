@@ -10,13 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+
+Route::group(['prefix' => 'admin', 'middleware' => ['employee'], 'as' => 'admin.' ], function () {
+    Route::namespace('Admin')->group(function () {
+     //   Route::group(['middleware' => ['role:admin|superadmin|cashier, guard:employee']], function () {
+            Route::namespace('Business')->group(function(){
+                Route::resource('bussiness', 'BussinessController');
+
+            });
+       // });
+    });
+});
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/messages','ChatController@getMessages');
-Route::post('/sendMessage','ChatController@sendMessage');

@@ -4,18 +4,21 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBussinessesTable extends Migration
+class UserStocks extends Migration
 {
-    /**
+     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('bussinesses', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('user_stocks', function (Blueprint $table) {
+            $table->integer('user_id');
+            $table->integer('stock_id');
+            $table->boolean('switched')->default(true)->unique();
             $table->timestamps();
+            $table->primary(['user_id','stock_id']);
         });
     }
 
@@ -26,6 +29,6 @@ class CreateBussinessesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bussinesses');
+        Schema::dropIfExists('user_stocks');
     }
 }

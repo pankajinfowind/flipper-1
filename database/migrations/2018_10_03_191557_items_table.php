@@ -16,12 +16,13 @@ class ItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
             $table->string('barcode');
+            $table->string('sku');
             $table->string('item');
             $table->string('units');
-            $table->string('price');
-            $table->dateTime('expired_date')->default(NULL);
+            $table->decimal('price');
+            $table->decimal('sale_price')->nullable();
+            $table->string('cover')->nullable();
             $table->unsignedInteger('category_id');
-            $table->boolean('available')->default(true);
             $table->foreign('category_id')->references('id')->on('categories')
                 ->onUpdate('cascade')->onDelete('cascade');
                 $table->unsignedInteger('business_id');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CategoriesTable extends Migration
+class StockPosSessionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('pos_session', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('type');
+            $table->string('session')->unique();
             $table->boolean('active')->default(true);
-            $table->integer('parent_id')->default(0);
-            $table->unsignedInteger('business_id');
-            $table->foreign('business_id')->references('id')->on('business')
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('user_branch_id');
+            $table->foreign('user_branch_id')->references('id')->on('user_branches')
+            ->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -31,8 +30,9 @@ class CategoriesTable extends Migration
      *
      * @return void
      */
+
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('pos_session');
     }
 }

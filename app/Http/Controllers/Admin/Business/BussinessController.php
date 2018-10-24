@@ -28,8 +28,8 @@ class BussinessController extends Controller
 
     public function index() // index bussiness
      {
-    //     $bussines_list=$this->loggedUser($this->request)->bussinesses;
-        return $this->success(['bussiness'=>'list'],200);
+    //     $bussines_list=$this->loggedUser($this->request)->business;
+        return $this->success(['bussiness'=>$this->loggedUser()->business],200);
     }
 
 

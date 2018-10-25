@@ -17,8 +17,8 @@ class StockPosSessionTable extends Migration
             $table->increments('id');
             $table->string('session')->unique();
             $table->boolean('active')->default(true);
-            $table->unsignedInteger('user_branch_id');
-            $table->foreign('user_branch_id')->references('id')->on('user_branches')
+            $table->unsignedInteger('branch_branch_id');
+            $table->foreign('branch_branch_id')->references('id')->on('branch_user')
             ->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();

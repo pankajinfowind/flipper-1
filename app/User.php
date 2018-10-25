@@ -5,9 +5,13 @@ namespace App;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
+use App\Flipper\Branch\Branch;
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use HasApiTokens, Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -36,5 +40,9 @@ class User extends Authenticatable
     public function business()
     {
         return $this->hasOne('App\Flipper\Business\Business');
+    }
+    public function branchies()
+    {
+        return $this->belongsToMany(Branch::class);
     }
 }

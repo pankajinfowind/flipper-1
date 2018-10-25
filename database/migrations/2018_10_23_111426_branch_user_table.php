@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserBranchesTable extends Migration
+class BranchUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class UserBranchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_branches', function (Blueprint $table) {
+        Schema::create('branch_user', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
 
@@ -24,7 +24,7 @@ class UserBranchesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
             ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->boolean('active')->default(true)->unique();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -36,6 +36,6 @@ class UserBranchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_branches');
+        Schema::dropIfExists('branch_user');
     }
 }

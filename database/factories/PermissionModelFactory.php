@@ -11,9 +11,8 @@
 |
 */
 
-use App\Flipper\Permissions\Permission;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(Permission::class, function (Faker\Generator $faker) {
+$factory->define(App\Flipper\Permissions\Permission::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->unique()->word,

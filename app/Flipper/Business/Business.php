@@ -3,6 +3,9 @@
 namespace App\Flipper\Business;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Flipper\Items\Item;
+use App\Flipper\Categories\Category;
+use App\Flipper\Branch\Branch;
 
 class Business extends Model
 {
@@ -18,14 +21,23 @@ class Business extends Model
      */
     protected $hidden = [];
 
-    public function products()
+  /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
     {
-        // return $this->belongsToMany(Stock::class);
+        return $this->hasMany(Item::class);
     }
 
-    /**
-         * Get the user that owns the business.
-     */
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function branchies()
+    {
+        return $this->hasMany(Branch::class);
+    }
 
     public function user()
     {

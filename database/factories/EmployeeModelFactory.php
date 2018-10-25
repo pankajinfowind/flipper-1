@@ -3,9 +3,9 @@
 use Faker\Generator as Faker;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\Flipper\Employees\Employee;
 
-$factory->define(Employee::class, function (Faker\Generator $faker) {
+
+$factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
     return [
         'name' => $faker->firstName,

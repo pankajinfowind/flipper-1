@@ -12,10 +12,14 @@
         "laravel/tinker": "^1.0",
         "santigarcor/laratrust": "5.0.*",
         "predis/predis": "^1.1",
+        "gloudemans/shoppingcart": "^2.5",
         "guzzlehttp/guzzle": "^6.3",
         "jsdecena/baserepo": "^1.0",
         "jsdecena/mailchimp": "~7.0",
-        "jsdecena/mcpro": "1.1.*"
+        "jsdecena/mcpro": "1.1.*",
+        "nicolaslopezj/searchable": "^1.10",
+        "paypal/rest-api-sdk-php": "*",
+        "shippo/shippo-php": "^1.4"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

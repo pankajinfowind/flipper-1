@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Business\Roles\Requests;
+namespace App\Flipper\Business\Roles\Requests;
 
 use App\Flipper\Base\BaseFormRequest;
 

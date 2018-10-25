@@ -32,7 +32,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
      *
      * @return Collection
      */
-    public function listEmployees(string $order = 'id', string $sort = 'desc'): Collection
+    public function listEmployees(string $order = 'id', string $sort = 'desc') : Collection
     {
         return $this->all(['*'], $order, $sort);
     }
@@ -44,7 +44,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
      *
      * @return Employee
      */
-    public function createEmployee(array $data): Employee
+    public function createEmployee(array $data) : Employee
     {
         $data['password'] = Hash::make($data['password']);
         return $this->create($data);
@@ -57,8 +57,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
      *
      * @return Employee
      */
-    public function findEmployeeById(int $id): Employee
+    public function findEmployeeById(int $id) : Employee
     {
+
         try {
             return $this->findOneOrFail($id);
         } catch (ModelNotFoundException $e) {
@@ -73,7 +74,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
      *
      * @return bool
      */
-    public function updateEmployee(array $params): bool
+    public function updateEmployee(array $params) : bool
     {
         if (isset($params['password'])) {
             $params['password'] = Hash::make($params['password']);
@@ -93,7 +94,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
     /**
      * @return Collection
      */
-    public function listRoles(): Collection
+    public function listRoles() : Collection
     {
         return $this->model->roles()->get();
     }
@@ -103,7 +104,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
      *
      * @return bool
      */
-    public function hasRole(string $roleName): bool
+    public function hasRole(string $roleName) : bool
     {
         return $this->model->hasRole($roleName);
     }
@@ -113,7 +114,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
      *
      * @return bool
      */
-    public function isAuthUser(Employee $employee): bool
+    public function isAuthUser(Employee $employee) : bool
     {
         $isAuthUser = false;
         if (Auth::guard('employee')->user()->id == $employee->id) {

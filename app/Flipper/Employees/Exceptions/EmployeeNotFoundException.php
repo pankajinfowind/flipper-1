@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EmployeeNotFoundException extends NotFoundHttpException
 {
 
+
     /**
      * EmployeeNotFoundException constructor.
      */

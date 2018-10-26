@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Flipper\Stocks;
+namespace App\Flipper\PosSessions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Flipper\Branch\Branch;
 
-class Stock extends Model
+class PosSession extends Model
 {
     use SearchableTrait;
 
@@ -17,8 +17,7 @@ class Stock extends Model
      */
     protected $searchable = [
         'columns' => [
-            'stocks.openning_stock_qty' => 10,
-            'stocks.minimum_stock_qty' => 10
+            'pos_session.session' => 10
         ]
     ];
 
@@ -28,11 +27,10 @@ class Stock extends Model
      * @var array
      */
     protected $fillable = [
-        'available',
-        'openning_stock_qty',
-        'minimum_stock_qty',
-        'item_id',
-        'branch_id'
+        'session',
+        'open',
+        'user_id',
+        'branch_id',
     ];
 
 
@@ -40,7 +38,7 @@ class Stock extends Model
      * @param string $term
      * @return Collection
      */
-    public function searchStock(string $term) : Collection
+    public function searchPosSession(string $term) : Collection
     {
         return self::search($term)->get();
     }

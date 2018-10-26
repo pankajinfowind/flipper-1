@@ -11,34 +11,29 @@ class AttributeTableSeeder extends Seeder
         $sizeAttr = factory(Attribute::class)->create(['name' => 'Size']);
         factory(AttributeValue::class)->create([
             'value' => 'small',
-            'attribute_id' => $sizeAttr->id
+            'attribute_id' => $sizeAttr->id,
+            'item_id' => 1,
+            'branch_id' => 1
         ]);
 
+
+        $expAttr = factory(Attribute::class)->create(['name' => 'Expired_date']);
         factory(AttributeValue::class)->create([
-            'value' => 'medium',
-            'attribute_id' => $sizeAttr->id
+            'value' => '2018-04-12',
+            'attribute_id' => $expAttr->id,
+            'item_id' => 1,
+            'branch_id' => 1
         ]);
 
-        factory(AttributeValue::class)->create([
-            'value' => 'large',
-            'attribute_id' => $sizeAttr->id
-        ]);
 
         $colorAttr = factory(Attribute::class)->create(['name' => 'Color']);
 
         factory(AttributeValue::class)->create([
-            'value' => 'red',
-            'attribute_id' => $colorAttr->id
+            'value' => 'Green',
+            'attribute_id' => $colorAttr->id,
+            'item_id' => 1,
+            'branch_id' => 1
         ]);
 
-        factory(AttributeValue::class)->create([
-            'value' => 'yellow',
-            'attribute_id' => $colorAttr->id
-        ]);
-
-        factory(AttributeValue::class)->create([
-            'value' => 'blue',
-            'attribute_id' => $colorAttr->id
-        ]);
     }
 }

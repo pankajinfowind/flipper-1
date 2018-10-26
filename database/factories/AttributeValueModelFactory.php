@@ -16,6 +16,9 @@ use App\Flipper\AttributeValues\AttributeValue;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(AttributeValue::class, function (Faker\Generator $faker) {
     return [
-        'value' => $faker->unique()->word
+        'value' => $faker->unique()->word,
+        'attribute_id' => 1,
+        'item_id'=>1,
+        'branch_id'=>1
     ];
 });

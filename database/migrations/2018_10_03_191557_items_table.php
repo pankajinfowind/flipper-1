@@ -22,6 +22,7 @@ class ItemsTable extends Migration
             $table->decimal('price');
             $table->decimal('sale_price')->nullable();
             $table->string('cover')->nullable();
+
             $table->unsignedInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')
                 ->onUpdate('cascade')->onDelete('cascade');

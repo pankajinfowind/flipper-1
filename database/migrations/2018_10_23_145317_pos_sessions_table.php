@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class StockPosSessionTable extends Migration
+class PosSessionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,18 @@ class StockPosSessionTable extends Migration
      */
     public function up()
     {
-        Schema::create('pos_session', function (Blueprint $table) {
+        Schema::create('pos_sessions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('session')->unique();
-            $table->boolean('active')->default(true);
-            $table->unsignedInteger('branch_branch_id');
-            $table->foreign('branch_branch_id')->references('id')->on('branch_user')
+            $table->boolean('open')->default(true);
+
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('branch')
             ->onUpdate('cascade')->onDelete('cascade');
 
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +37,6 @@ class StockPosSessionTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('pos_session');
+        Schema::dropIfExists('pos_sessions');
     }
 }

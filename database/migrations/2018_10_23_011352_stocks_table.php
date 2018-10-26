@@ -15,9 +15,17 @@ class StocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->boolean('is_new')->default(true);
+
+            $table->boolean('available')->default(true);
+            $table->integer('openning_stock_qty');
+            $table->integer('minimum_stock_qty');
+
+            $table->unsignedInteger('item_id');
+            $table->foreign('item_id')->references('id')->on('items')
+                ->onUpdate('cascade')->onDelete('cascade');
+
             $table->unsignedInteger('branch_id');
+
             $table->foreign('branch_id')->references('id')->on('branch')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

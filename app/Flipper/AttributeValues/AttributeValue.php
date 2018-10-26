@@ -3,13 +3,14 @@
 namespace App\Flipper\AttributeValues;
 
 use App\Flipper\Attributes\Attribute;
-use App\Flipper\ItemAttributes\ItemAttribute;
 use Illuminate\Database\Eloquent\Model;
+use App\Flipper\Items\Item;
+use App\Flipper\Branch\Branch;
 
 class AttributeValue extends Model
 {
     protected $fillable = [
-        'value'
+        'value','attribute_id','item_id','branch_id'
     ];
 
     /**
@@ -17,14 +18,20 @@ class AttributeValue extends Model
      */
     public function attribute()
     {
-        return $this->belongsTo(Attribute::class);
+       return $this->belongsTo(Attribute::class);
+    }
+
+    public function branch()
+    {
+       return $this->belongsTo(Branch::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function itemAttributes()
+
+    public function items()
     {
-        return $this->belongsToMany(ItemAttribute::class);
+        return $this->belongsTo(Item::class);
     }
 }

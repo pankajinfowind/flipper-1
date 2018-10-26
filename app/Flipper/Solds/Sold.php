@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Flipper\Stocks;
+namespace App\Flipper\Solds;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Nicolaslopezj\Searchable\SearchableTrait;
-use App\Flipper\Branch\Branch;
+use App\Flipper\Items\Item;
 
-class Stock extends Model
+class Sold extends Model
 {
     use SearchableTrait;
 
@@ -17,8 +17,8 @@ class Stock extends Model
      */
     protected $searchable = [
         'columns' => [
-            'stocks.openning_stock_qty' => 10,
-            'stocks.minimum_stock_qty' => 10
+            'solds.openning_stock_qty' => 10,
+            'solds.minimum_stock_qty' => 10
         ]
     ];
 
@@ -32,7 +32,7 @@ class Stock extends Model
         'openning_stock_qty',
         'minimum_stock_qty',
         'item_id',
-        'branch_id'
+        'branch_id',
     ];
 
 
@@ -40,7 +40,7 @@ class Stock extends Model
      * @param string $term
      * @return Collection
      */
-    public function searchStock(string $term) : Collection
+    public function searchSold(string $term) : Collection
     {
         return self::search($term)->get();
     }
@@ -49,9 +49,9 @@ class Stock extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function branch()
+    public function items()
     {
-        return $this->belongsTo(Branch::class);
+        return $this->belongsToMany(Item::class);
     }
 
      /**

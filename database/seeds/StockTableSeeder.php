@@ -13,10 +13,11 @@ class StockTableSeeder extends Seeder
         public function run()
         {
             factory(Stock::class)->create([
-                'name' => '2018-01-1/kimorongo',
-                'is_new'=>1,
-                'branch_id'=>1
-
+                'available' => 1,
+                'openning_stock_qty'=>20,
+                'minimum_stock_qty'=>0,
+                'item_id' =>1,
+                'branch_id' =>1
             ]);
     }
 

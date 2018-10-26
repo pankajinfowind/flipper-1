@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
          $this->call(BusinessTableSeeder::class);
          $this->call(BranchTableSeeder::class);
          $this->call(CategoriesTableSeeder::class);
-         $this->call(AttributeTableSeeder::class);
          $this->call(ItemTableSeeder::class);
+         $this->call(AttributeTableSeeder::class);
          $this->call(UserBranchiesTableSeeder::class);
          $this->call(StockTableSeeder::class);
-
-
+         $this->call(PosSessionTableSeeder::class);
+         $this->call(SoldTableSeeder::class);
+         $this->call(SoldItemTableSeeder::class);
     }
 }

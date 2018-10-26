@@ -13,11 +13,20 @@ class CreateAttributeValuesTable extends Migration
      */
     public function up()
     {
+
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->increments('id');
             $table->string('value');
             $table->unsignedInteger('attribute_id');
             $table->foreign('attribute_id')->references('id')->on('attributes');
+
+            $table->unsignedInteger('item_id');
+            $table->foreign('item_id')->references('id')->on('items');
+
+            $table->unsignedInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('branch')
+            ->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

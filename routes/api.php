@@ -19,13 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::group(['middleware' => 'auth:api'], function() {
-    Route::namespace('Admin')->group(function () {
-        //   Route::group(['middleware' => ['role:admin|superadmin|cashier, guard:employee']], function () {
-               Route::namespace('Business')->group(function(){
-                   Route::resource('business', 'BussinessController');
-               });
-          // });
-       });
+Route::group(['middleware' => 'cors'], function() {
+        Route::group(['middleware' => 'auth:api'], function() {
+            Route::namespace('Admin')->group(function () {
+                 Route::namespace('Business')->group(function(){
+                        Route::resource('business', 'BussinessController');
+                    });
+                        Route::namespace('Branch')->group(function(){
+                               Route::resource('branch', 'BranchController');
+                  });
+            });
+        });
 });

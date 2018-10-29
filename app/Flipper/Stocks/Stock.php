@@ -17,7 +17,8 @@ class Stock extends Model
      */
     protected $searchable = [
         'columns' => [
-            'stock.name' => 10
+            'stocks.openning_stock_qty' => 10,
+            'stocks.minimum_stock_qty' => 10
         ]
     ];
 
@@ -27,9 +28,11 @@ class Stock extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'is_new',
-        'branch_id',
+        'available',
+        'openning_stock_qty',
+        'minimum_stock_qty',
+        'item_id',
+        'branch_id'
     ];
 
 
@@ -50,4 +53,12 @@ class Stock extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+     /**
+     * The users that belong to the role.
+     */
+    // public function items()
+    // {
+    //     return $this->belongsToMany('App\User');
+    // }
 }

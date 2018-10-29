@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Flipper\Business\Business;
 use App\User;
 use App\Flipper\Stock\Stock;
+use App\Flipper\AttributeValues\AttributeValue;
 
 class Branch extends Model
 {
@@ -29,5 +30,10 @@ class Branch extends Model
     public function stocks()
     {
         return $this->belongsToMany(Stock::class);
+    }
+
+    public function attributeValues()
+    {
+        return $this->belongsToMany(AttributeValue::class);
     }
 }

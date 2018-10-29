@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Flipper\Business\Business;
+use App\Flipper\Solds\Sold;
 
 class Item extends Model implements Buyable
 {
@@ -101,9 +102,12 @@ class Item extends Model implements Buyable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function attributes()
+     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attributeValues()
     {
-        return $this->hasMany(ItemAttribute::class);
+        return $this->hasMany(AttributeValue::class);
     }
 
     /**
@@ -112,5 +116,10 @@ class Item extends Model implements Buyable
     public function business()
     {
         return $this->belongsTo(Business::class);
+    }
+
+    public function solds()
+    {
+        return $this->belongsToMany(Sold::class);
     }
 }

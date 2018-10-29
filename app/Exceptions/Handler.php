@@ -9,6 +9,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -84,4 +85,8 @@ class Handler extends ExceptionHandler
 
         return response()->json(['error' => 'Unauthenticated.','status'=>401]);
     }
+    protected function invalidJson($request, ValidationException $exception)
+{
+    return response()->json($exception->errors(), $exception->status);
+}
 }

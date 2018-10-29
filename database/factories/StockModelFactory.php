@@ -4,8 +4,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Flipper\Stocks\Stock::class, function (Faker $faker) {
     return [
-            'name' => $faker->name,
-            'is_new'=>1,
-            'branch_id'=>1
+            'available' => 1,
+            'openning_stock_qty'=>20,
+            'minimum_stock_qty'=>0,
+            'item_id' =>1,
+            'branch_id' =>1
           ];
 });

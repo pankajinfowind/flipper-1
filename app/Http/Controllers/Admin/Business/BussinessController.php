@@ -6,29 +6,28 @@ use Log;
 use App\Http\Controllers\Controller;
 use App\Flipper\Business\Repositories\Interfaces\BusinessRepositoryInterface;
 use App\Flipper\Business\Requests\CreateBusinessRequest;
-use App\Business\Roles\Requests\UpdateBusinessRequest;
+use App\Flipper\Business\Requests\UpdateBusinessRequest;
 use App\Flipper\Business\Repositories\BusinessRepository;
 class BussinessController extends Controller
 {
        /**
      * @var BusinessRepositoryInterface
      */
-    private $businessRepo;
+    private $business_repo;
 
     /**
      * BussinessController constructor.
      *
-     * @param BusinessRepositoryInterface $businessRepo
+     * @param BusinessRepositoryInterface $business_repo
      */
-    public function __construct(BusinessRepositoryInterface $businessRepo)
+    public function __construct(BusinessRepositoryInterface $business_repo)
     {
          $this->middleware('auth');
-        $this->businessRepo = $businessRepo;
+        $this->businessRepo = $business_repo;
     }
 
     public function index() // index bussiness
      {
-    //     $bussines_list=$this->loggedUser($this->request)->business;
         return $this->success(['bussiness'=>$this->loggedUser()->business],200);
     }
 

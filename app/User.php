@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Traits\LaratrustUserTrait;
 use App\Flipper\Branch\Branch;
+use App\Flipper\Business\Business;
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
@@ -31,18 +32,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function bussinesses(){
-        return $this->hasMany(Bussiness::class);
-    }
+
 /**
      * Get the business record associated with the user.
      */
     public function business()
     {
-        return $this->hasOne('App\Flipper\Business\Business');
+        return $this->hasOne(Business::class);
     }
     public function branchies()
     {
         return $this->belongsToMany(Branch::class);
+    }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

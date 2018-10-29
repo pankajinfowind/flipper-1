@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Flipper\Items\Item;
 use App\Flipper\Categories\Category;
 use App\Flipper\Branch\Branch;
+use App\User;
 
 class Business extends Model
 {
@@ -41,6 +42,6 @@ class Business extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        $this->belongsTo(User::class);
     }
 }

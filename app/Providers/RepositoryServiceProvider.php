@@ -11,6 +11,8 @@ use App\Flipper\Roles\Repositories\RoleRepositoryInterface;
 use App\Flipper\Business\Repositories\Interfaces\BusinessRepositoryInterface;
 use App\Flipper\Business\Repositories\BusinessRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Flipper\Branch\Repositories\Interfaces\BranchRepositoryInterface;
+use App\Flipper\Branch\Repositories\BranchRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             BusinessRepositoryInterface::class,
             BusinessRepository::class
+        );
+        $this->app->bind(
+            BranchRepositoryInterface::class,
+            BranchRepository::class
         );
     }
 }

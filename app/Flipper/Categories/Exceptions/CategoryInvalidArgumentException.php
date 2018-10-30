@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\Categories\Exceptions;
+namespace App\Flipper\Categories\Exceptions;
 
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 

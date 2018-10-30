@@ -12,7 +12,7 @@ use App\Flipper\Items\Transformations\ItemTransformable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
-
+use Log;
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
     use  ItemTransformable;
@@ -88,7 +88,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
      */
     public function findCategoryById(int $id) : Category
     {
-        try {
+     try {
             return $this->findOneOrFail($id);
         } catch (ModelNotFoundException $e) {
             throw new CategoryNotFoundException($e->getMessage());

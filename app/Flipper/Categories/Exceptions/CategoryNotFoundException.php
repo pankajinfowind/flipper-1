@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\Categories\Exceptions;
+namespace App\Flipper\Categories\Exceptions;
 
 class CategoryNotFoundException extends \Exception
 {

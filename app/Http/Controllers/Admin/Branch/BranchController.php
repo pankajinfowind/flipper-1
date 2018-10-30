@@ -9,6 +9,8 @@ use App\Flipper\Branch\Requests\CreateBranchRequest;
 use App\Flipper\Branch\Requests\UpdateBranchRequest;
 use App\Flipper\Branch\Repositories\BranchRepository;
 use App\Flipper\Branch\Transformations\BranchTransformable;
+use App\Flipper\Branch\Requests\AssignUserBranchRequest;
+use App\User;
 class BranchController extends Controller
 {
     use BranchTransformable;
@@ -29,9 +31,9 @@ class BranchController extends Controller
     }
 
     public function index() // index Branch
-     {
+    {
         return $this->success(['branch'=>$this->transformArray($this->loggedUser()->branchies)],200);
-    }
+     }
 
 
     /**
@@ -53,14 +55,28 @@ class BranchController extends Controller
         return $this->success(['branch_created'=>$this->transformObject($branch) ],200);
     }
 
+    public function attachUserBranch(AssignUserBranchRequest $request){
+        $branch = $this->branch_repo->findBranchById($request['branch_id']);
+        User::find($request['user_id'])->branchies()->attach($branch);
+        return $this->success(['attach_user_branch'=>$this->transformObject($branch) ],200);
+    }
+
     public function update(UpdateBranchRequest $request,$id) // store Branch
     {
-        $Branch = $this->branch_repo->findBranchById($id);
-        $update = new BranchRepository($Branch);
+        $branch = $this->branch_repo->findBranchById($id);
+        $update = new BranchRepository($branch);
         return $this->success(['branch_updated'=>$update->updateBranch($request->all())],200);
 
 
     }
+    public function show($id) // show one Branch
+    {
+        $branch = $this->branch_repo->findBranchById($id);
+        return $this->success(['branch'=>$this->transformObject($branch)],200);
+
+
+    }
+
     public function destroy($id) // delete Branch
     {
         $branch = $this->branch_repo->findBranchById($id);

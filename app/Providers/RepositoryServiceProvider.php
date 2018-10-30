@@ -13,7 +13,8 @@ use App\Flipper\Business\Repositories\BusinessRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Flipper\Branch\Repositories\Interfaces\BranchRepositoryInterface;
 use App\Flipper\Branch\Repositories\BranchRepository;
-
+use App\Flipper\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
+use App\Flipper\Categories\Repositories\CategoryRepository;
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
@@ -43,5 +44,10 @@ class RepositoryServiceProvider extends ServiceProvider
             BranchRepositoryInterface::class,
             BranchRepository::class
         );
+        $this->app->bind(
+            CategoryRepositoryInterface::class,
+            CategoryRepository::class
+        );
+
     }
 }

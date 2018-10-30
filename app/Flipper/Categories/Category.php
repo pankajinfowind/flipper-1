@@ -15,7 +15,8 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
-        'type'
+        'type',
+        'business_id'
     ];
 
     /**
@@ -27,7 +28,7 @@ class Category extends Model
 
     public function items()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->hasMany(Item::class);
     }
 
     public function parent()

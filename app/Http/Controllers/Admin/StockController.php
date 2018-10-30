@@ -39,17 +39,18 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        $validator= Validator::make($this->request->all(),['name' => 'required|string|min:1','address' => 'required|string|min:1','business_id' => 'required|integer|min:1']);
-        if($validator->fails()){
+        //FIXME: why can't you use Request to validate form input?
+        $validator = Validator::make($this->request->all(), ['name' => 'required|string|min:1', 'address' => 'required|string|min:1', 'business_id' => 'required|integer|min:1']);
+        if ($validator->fails()) {
             return $this->error(['error' => $validator->errors()], 422);
         } else {
 
-        $this->entry= $this->entry->create($this->request->all());
+            $this->entry = $this->entry->create($this->request->all());
 
         // $redis = Redis::connection();
         // $redis->publish('message',json_encode($this->entry));
 
-        return $this->success(['stock'=>$this->entry],200);
+            return $this->success(['stock' => $this->entry], 200);
         }
     }
 

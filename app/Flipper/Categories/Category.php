@@ -41,11 +41,11 @@ class Category extends Model
         return $this->hasMany(static::class, 'parent_id');
     }
 
-     /**
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-        public function business()
-        {
-            return $this->belongsTo(Business::class);
-        }
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
+    }
 }

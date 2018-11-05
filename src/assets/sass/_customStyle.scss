@@ -1,0 +1,442 @@
+
+*{
+    padding:0px;
+    margin:0px;
+}
+//Specific ID
+//=============================
+
+
+#hm-wrp, #hm-stripes{
+    @extend .clearboth;
+}
+#wrp-dwn{
+    left: 0;
+    bottom: -324px;
+}
+
+// Specific Class
+// ============================
+
+.clearfix{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2% 0px;
+}
+.clearboth{
+    position: relative;
+    overflow: hidden;
+}
+
+// End Class
+// ============================
+
+.ybx-header{
+    position: relative;
+}
+.ybx-hm-wrp{
+    background-color: $hm_PrimaryBg;
+    padding: 110px 0 150px 0;
+    text-align: left;
+}
+.ybx-hm-wrp-dwn{
+    background-color:darken($hm_PrimaryBg, 3%);
+    height: 700px;
+    width: 150%;
+    position: absolute;
+    transform: rotate(155deg);
+}
+.ybx-ftrs{
+    background-color: $hm_DefautlBg;
+    padding-bottom: 50px;
+    .inner-box{
+        position: relative;
+        margin-top: -150px;
+        background: rgb(255, 255, 255); //#fff;
+        padding: 50px 50px 40px;
+        border-radius: 8px;
+        @include box-shadow;
+    }
+}
+
+.ft-box-content{
+    padding-left: 15px;
+    text-align: left;
+
+    h3{
+        color: darken($primaryColor, 30%);
+        font-size: $defaultSize * 1.5;
+        line-height: 26px;
+        margin-bottom: 30px;
+    }
+
+    ul{
+        > li{
+            color: $defaultColor;
+            margin-bottom: 10px;
+            line-height: 20px;
+            font-size: $defaultSize;
+            list-style: none;
+            position: relative;
+            
+            &:before{
+                content: "\f00c";
+                color: $greenSea;
+                font: normal normal normal 14px/1 FontAwesome;
+                position: absolute;
+                left: -20px;
+                top: 3px;
+            }
+        }
+    }
+}
+.ybx-choose{
+    background-color: $hm_DefautlBg;
+    position: relative;
+    .ybx-title{
+        padding-bottom: 100px;
+        h1{
+           color: darken($primaryColor, 35%);
+           font-weight: bold;
+        }
+        p{
+            color: lighten($defaultColor, 5%);
+            font-size: $defaultSize *1.2;
+            margin: 15px 0;
+        }
+    }
+    .hm-choose-sprt{
+        background: darken($hm_DefautlBg, 35%);
+        position: absolute;
+        left: 50%;
+        bottom: -75px;
+        width: 1px;
+        height: 150px;
+        z-index: 9;
+    }
+}
+.ybx-pltfm{
+    background-color: darken($hm_DefautlBg, 2.2%);
+    position: relative;
+
+    .ybx-title{
+        padding-top: 100px;
+        h1{
+           color: darken($primaryColor, 35%);
+           font-weight: bold;
+        }
+        p{
+            color: lighten($defaultColor, 5%);
+            font-size: $defaultSize *1.2;
+            margin: 15px 0;
+        }
+    }
+    
+    .pltfm-grp{
+        list-style: none;
+        margin:40px 0 0 0;
+        padding:0;
+        max-width: 420px;
+        li{
+            line-height: 20px;
+            margin-bottom: 45px; 
+
+           > .pltfm-icon{
+                float:left;
+                margin-right: 15px;
+                text-align: center;
+                & img{
+                    height: 70px;
+                    width: auto;
+                    margin:0 auto 15px;
+                }
+            }
+           > .pltfm-content{
+                margin-left: 85px;
+                font-size: $defaultSize;
+                h3{
+                    color: darken($primaryColor, 35%);
+                    font-size: $defaultSize *1.45;
+                    font-weight: 600;
+                }
+                p{
+                    color: lighten($defaultColor, 5%);
+                    line-height: 1.8;
+                }
+               
+            }
+        }
+    }
+}
+.ybx-stripes{
+    background-color: $hm_PrimaryBg;
+    padding: 120px 15px 300px 15px;
+    text-align: center;
+}
+.ftrs-box{
+    background-color: transparent;
+    margin-top: -200px;
+    
+    .inner-ftr-box{
+        background-color: lighten($defaultColor, 100%);
+        border-radius: 8px;
+        padding: 40px 30px 60px;
+        margin-bottom: 20px;
+        @include box-shadow;
+        .ft-box-content{
+            text-align: center;
+            padding: 0;
+            h3{
+                color: darken($primaryColor, 35%);
+                font-size: $defaultSize *1.28;
+                font-weight: bold;
+                margin: 30px 0 25px;
+            }
+            p{
+                color: $defaultColor;
+                line-height: 1.8;
+            }
+        }
+    }
+}
+
+.ybx-cms{
+    background-color: $hm_DefautlBg;
+    position: relative;
+    padding: 70px 0;
+
+}
+.ybx-prtns{
+    position: relative;
+    .ybx-title{
+        text-align: center;
+        h1{
+            color: darken($primaryColor, 38%);
+            font-weight: bold;
+        }
+    }
+}
+.ybx-edge{
+    background-color: lighten($hm_PrimaryBg, 5%);
+    padding: 90px 15px 70px 15px;
+}
+#ybx-footer{
+    .inner-footer{
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .footer-bar{
+        background-color: lighten($hm_PrimaryBg, 0%);
+        color: lighten($defaultColor, 100%);
+    }
+}
+
+// Typography
+// ============================
+
+h1, h2, h3,
+h4, h5, h6{
+    font-weight: 300;
+}
+.ybx-box{
+    h1{
+        color: rgb(255, 255, 255);
+        font-size: $defaultSize * 4;
+        font-weight: bold;
+        margin-bottom: 30px;  
+    }
+    p{
+        color: rgb(255, 255, 255); // #fff
+        font-size: $defaultSize *1.5;
+        font-weight: normal;
+        line-height: 32px;
+        margin-bottom: 20px;
+    }
+    
+}
+
+.ybx-stripes{
+    .ybx-title{
+        color: lighten($defaultColor, 100%); 
+        text-align: center;
+        h1{
+            line-height: 2;
+        }
+        p{
+            font-size: $defaultSize * 1.5;
+            margin:15px 0 30px 0;
+        }
+    }
+}
+.cms-box{
+    h3{
+        color: darken($primaryColor, 35%);
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }   
+    p{
+        color: $defaultColor;
+        font-size: $defaultSize * 1.15;
+        line-height: 1.8;
+    }    
+}
+
+@media  (max-width: 767px){
+    .ybx-box{
+        h1{
+            font-size: $defaultSize *2;
+            line-height: 31px;
+        }
+        p{
+            font-size: $defaultSize *1.1;
+            line-height: 25px;
+        }
+    }
+    .cms-box{
+        text-align: center;
+        h3{
+            font-size: 26px;
+        }
+        p{
+            font-size: $defaultSize;
+        }
+    }
+}
+
+// Link
+// ============================
+
+a{
+    color: $primaryColor;
+    outline: 0; 
+}
+a:hover, a:visited, a:active{
+    text-decoration: none;
+    outline: none;
+}
+
+// Images
+// =============================
+
+.navbar-brand{
+    a{
+        color: $navColor;
+    }
+    img{
+        width: auto;
+        height: 35px;
+        margin-top:-5px;
+        display: inline-block;
+    }
+    name{
+        font-size: $defaultSize;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+}
+.ft-box-icon{
+    img{
+        height: 74px;
+        width: auto;
+        margin-bottom: 15px;
+    }
+}
+.pltfm-img{
+    min-height: 480px;
+    img.img-responsive{
+        position: absolute;
+        bottom: -5px; 
+    }
+}
+
+
+
+// Responsive
+// ==============================
+
+@media (min-width: 1200px) {
+    .ybx-hm-wrp{ min-height: 798px;}
+    .container{
+        width: 1130px;
+    }
+   
+}
+
+@media (min-width: 	992px) {
+    
+    .ft-box{
+        .col-md-8{
+            border-left:1px solid #e6e6e6;
+        }
+    }
+}
+
+@media (max-width: 991px){
+    .ybx-hm-wrp{
+        .ybx-box{
+            h1{
+                font-size: 30px;
+                line-height: 38px;
+                margin-bottom: 30px;
+            }
+            p{
+                font-size: 15px;
+                line-height: 25px;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+@media (min-width: 	768px) {
+    
+}
+
+@media (max-width: 767px){
+    .ybx-hm-wrp{
+        min-height: 200px;
+        padding-top: 60px;
+        padding-bottom: 20px;
+        
+        & img.img-responsive{
+            max-height: 200px;
+            margin: 0 auto;
+        }
+        & .ybx-box{
+            text-align: center;
+        }
+    }
+    .ybx-ftrs{
+        .inner-box{
+            background-color: transparent;
+            box-shadow: none;
+            margin-top:0;
+            padding: 50px 0 10px;
+            .ft-box{
+                background: #fff;
+                padding: 20px;
+                text-align: center;
+                margin-bottom: 20px;
+                border-radius: 6px;
+               @include box-shadow;
+            }
+        }
+    }
+
+    .ft-box{
+        .ft-box-icon, .ft-box-content{
+            text-align: center;
+        }
+    }
+    .pltfm-grp{
+        max-width: 100% !important;
+    }
+}
+@media (max-width: 480px){
+    .col-xs-6{
+        width: 100%;
+    }
+}
+

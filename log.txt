@@ -1,0 +1,20 @@
+[Fri, 14 Sep 2018 14:06:20 GMT] [info] [<0.000.0>] pouchdb-server has started on http://127.0.0.1:3000/
+[Fri, 14 Sep 2018 14:06:20 GMT] [info] [<0.000.0>] navigate to http://127.0.0.1:3000/_utils for the Fauxton UI.
+[Fri, 14 Sep 2018 14:06:33 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils 301
+[Fri, 14 Sep 2018 14:06:33 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/ 200
+[Fri, 14 Sep 2018 14:06:33 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/css/styles-a9623008fc27e79da2388441deeacfab.css 200
+[Fri, 14 Sep 2018 14:06:33 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/js/bundle-34997e32896293a1fa5d71f79eb1b4f7.js 200
+[Fri, 14 Sep 2018 14:06:34 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_session 200
+[Fri, 14 Sep 2018 14:06:34 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_session 304
+[Fri, 14 Sep 2018 14:06:34 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET / 200
+[Fri, 14 Sep 2018 14:06:34 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/img/pouchdb-site.png 200
+[Fri, 14 Sep 2018 14:06:34 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/fonts/fauxtonicon5.woff 200
+[Fri, 14 Sep 2018 14:06:35 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_all_dbs?_=1536933994520 200
+[Fri, 14 Sep 2018 14:06:35 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_all_dbs?startkey=%22%22&endkey=%22%E9%A6%99%22&limit=30&_=1536933994521 200
+[Fri, 14 Sep 2018 14:06:35 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_replicator?_=1536933994522 200
+[Fri, 14 Sep 2018 14:06:35 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/fonts/fontawesome-webfont.woff 200
+[Fri, 14 Sep 2018 14:06:35 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_users?_=1536933994523 200
+[Fri, 14 Sep 2018 14:06:36 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/img/pouchdb-favicon.png 200
+[Fri, 14 Sep 2018 14:27:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_users/_all_docs?startkey=%22_design%2F%22&endkey=%22_design0%22&include_docs=true&limit=501 200
+[Fri, 14 Sep 2018 14:27:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_users/_all_docs?limit=21&include_docs=true 200
+[Fri, 14 Sep 2018 14:27:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_users/_all_docs?startkey=%22%22&endkey=%22%E9%A6%99%22&limit=30&_=1536933994524 200

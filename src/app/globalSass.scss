@@ -1,0 +1,161 @@
+
+
+// variables
+// =========================
+$colorDefault: grey;
+$colorPrimary: #1a73e8;
+
+$defaultSize: 14px;
+
+// mixins
+// =========================
+
+@mixin defaultFormBoxShadow{
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  -ms-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  -o-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+@mixin defaultFormBorderRadius{
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
+}
+
+
+.clearfix{
+  width: 100%;
+  padding: 5% 0px;
+  margin: 0;
+}
+.ybx-mat{
+  position: relative;
+}
+
+.or{
+  position: relative;
+  margin-bottom: 15px;
+  &::before{
+    content: "or";
+    background-color: lighten($colorDefault, 100%);
+    color: rgb(151, 160, 175);
+    display: block;
+    font-size: 11px;
+    line-height: 1;
+    margin-top: 24px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+
+.ybx-signIn{
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 100px;
+  height: auto;
+  min-height: 500px;
+  @include defaultFormBorderRadius;
+  @include defaultFormBoxShadow;
+  .inner-box{
+    padding: 40px;
+    overflow: hidden;
+  }
+  .form-load{
+    .primary-progress-bar{
+      background-color: $colorPrimary !important;
+    }
+  }
+}
+@include media-breakpoint-up(md) {
+  .ybx-signIn{
+    max-width: 450px !important;
+    margin-top: 150px;
+  }
+  .ybx-signUp{
+    max-width: 550px !important;
+  }
+}
+@include media-breakpoint-down(sm) {
+  .ybx-signIn{
+    max-width: 100% !important;
+    margin-top: 0px;
+    box-shadow: none;
+  }
+}
+// Forms
+// ==========================
+
+.ybx-form {
+  min-width: 150px;
+  max-width: 350px;
+  width: 100%;
+}
+
+.mat-full-wdth {
+  width: 100%;
+}
+
+//Buttons
+// ===============
+
+button{
+  &:hover,
+  &:focus{
+    outline: none;
+    -webkit-outline: none;
+  }
+}
+.mat-primary-btn{
+  background-color: $colorPrimary !important;
+  color: lighten($colorDefault, 100%) !important;
+}
+.mat-default-btn{
+  background-color:lighten($colorDefault, 100%) !important;
+  color: $colorPrimary !important;
+}
+
+.button-row{
+  a.mat-button{
+    color: $colorPrimary;
+    font-weight: 500;
+
+    &:hover{
+      background: none !important;
+      text-decoration: none !important;
+    }
+  }
+}
+
+.btn-sign-ggle{
+  color: darken($colorDefault, 5%) !important;
+  border: 0px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  -ms-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  -o-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  font-weight: bold;
+  font-size: $defaultSize;
+  padding: 10px 35px;
+  .google-icon{
+    height: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 18px;
+  }
+}
+
+// Images
+// ===============================
+
+.resetbox-img{
+  position: relative;
+  margin-bottom: 15px;
+  img{
+    height: 100px;
+    margin: 15px auto;
+  }
+}

@@ -1,11 +1,9 @@
-
-import * as CryptoJS from 'crypto-js';
-import { Injectable } from '@angular/core';
-@Injectable({ providedIn: 'root' })
-
+// import * as CryptoJS from 'crypto-js';
+import { Injectable } from "@angular/core";
+@Injectable({ providedIn: "root" })
 export class Crypt {
-  private encrpty_key = CryptoJS.enc.Utf8.parse('7061737323313231');
-  private encrpty_iv = CryptoJS.enc.Utf8.parse('7061737323313231');
+  // private encrpty_key = CryptoJS.enc.Utf8.parse('7061737323313231');
+  // private encrpty_iv = CryptoJS.enc.Utf8.parse('7061737323313231');
   private _encrypted;
   private _decrypted;
   constructor() {}
@@ -14,12 +12,12 @@ export class Crypt {
       this._encrypted = null;
       return;
     }
-    this._encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(value), this.encrpty_key, {
-      keySize: 128 / 8,
-      iv: this.encrpty_iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
-    });
+    // this._encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(value), this.encrpty_key, {
+    //   keySize: 128 / 8,
+    //   iv: this.encrpty_iv,
+    //   mode: CryptoJS.mode.CBC,
+    //   padding: CryptoJS.pad.Pkcs7
+    // });
   }
   get encrypt(): any {
     return this._encrypted;
@@ -30,12 +28,12 @@ export class Crypt {
       this._decrypted = null;
       return;
     }
-    this._decrypted = CryptoJS.AES.decrypt(encrypted, this.encrpty_key, {
-      keySize: 128 / 8,
-      iv: this.encrpty_iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
-    }).toString(CryptoJS.enc.Utf8);
+    // this._decrypted = CryptoJS.AES.decrypt(encrypted, this.encrpty_key, {
+    //   keySize: 128 / 8,
+    //   iv: this.encrpty_iv,
+    //   mode: CryptoJS.mode.CBC,
+    //   padding: CryptoJS.pad.Pkcs7
+    // }).toString(CryptoJS.enc.Utf8);
   }
   get decrypt(): any {
     return this._decrypted;

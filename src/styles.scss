@@ -13,6 +13,7 @@ $yego-app-theme: mat-light-theme(
   $yego-app-accent,
   $yego-app-warn
 );
+
 @include angular-material-theme($yego-app-theme);
 @import "~bootstrap/scss/bootstrap";
 

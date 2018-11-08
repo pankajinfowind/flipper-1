@@ -3,7 +3,6 @@
   "directories": {
     "output": "release/"
   },
-<<<<<<< HEAD
   "publish": {
     "provider": "github",
     "vPrefixedTagName": true,
@@ -25,24 +24,6 @@
     "!tsconfig.json",
     "!tslint.json"
   ],
-=======
-    "files": [
-        "**/*",
-        "!**/*.ts",
-        "!*.code-workspace",
-        "!LICENSE.md",
-        "!package.json",
-        "!package-lock.json",
-        "!src/",
-        "!e2e/",
-        "!hooks/",
-        "!angular.json",
-        "!_config.yml",
-        "!karma.conf.js",
-        "!tsconfig.json",
-        "!tslint.json"
-    ],
->>>>>>> 198da428c3f07cc4ae7d8bf4b15eb55afcd18e01
   "win": {
     "icon": "dist",
     "target": ["portable"]

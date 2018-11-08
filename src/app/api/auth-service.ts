@@ -2,16 +2,16 @@ import { Injectable } from "@angular/core";
 
 import { Router } from "@angular/router";
 import { ApiService } from "../api/api.service";
-import { GlobalVariables } from "../classes/global-variables";
-import { YLocalStorage } from "../classes/local-storage";
+import { Settings } from "../common/core/config/flipper-settings.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
+  //TODO: make localstorage somethhing and test it too now is mocked
+  localstorage: any;
   constructor(
-    private v: GlobalVariables,
+    private v: Settings,
     private myRoute: Router,
-    private api: ApiService,
-    private localstorage: YLocalStorage
+    private api: ApiService
   ) {}
 
   sendToken(token: string) {
@@ -42,21 +42,10 @@ export class AuthService {
     }
   }
   getLoggedUser() {
-    return this.api.getLoggedUser(this.getToken());
+    // return this.api.getLoggedUser(this.getToken());
   }
 
-  logout() {
-    // this.api.logout(this.getToken()).subscribe(
-    //   res => {
-    //     if (res) {
-    //       this.clearAll();
-    //     }
-    //   },
-    //   _error => {
-    //     console.log(_error);
-    //   }
-    // );
-  }
+  logout() {}
   clearAll() {
     this.localstorage.remove("auth_token");
     this.localstorage.remove("redirect_url");

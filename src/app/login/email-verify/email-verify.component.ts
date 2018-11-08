@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { ApiService } from "../../api/api.service";
-import { GlobalVariables } from "../../classes/global-variables";
+import { Settings } from "../../common/core/config/flipper-settings.service";
 
 @Component({
   selector: "app-email-verify",
@@ -25,7 +25,7 @@ export class EmailVerifyComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private api: ApiService,
-    public v: GlobalVariables
+    public v: Settings
   ) {
     this.v.loading = false;
     this.v.webTitle("Sign in - eNexus Accounts");
@@ -39,7 +39,6 @@ export class EmailVerifyComponent implements OnInit {
   get email() {
     return this.emailForm.get("email");
   }
-
   emailVerify() {
     this.v.errorMsg = "";
     if (this.emailForm.valid) {
@@ -47,38 +46,6 @@ export class EmailVerifyComponent implements OnInit {
       this.v.response = [];
       document.querySelector("form").disabled = true;
       const data = { email: this.emailForm.value.email };
-      // this.api.emailVerifying(data).subscribe(
-      //   res => {
-      //     this.v.loading = false;
-      //     document.querySelector("form").disabled = false;
-      //     if (res["response"]) {
-      //       if (res["data"] && res["status"] === 200) {
-      //         this.v.response = {
-      //           status: res["status"],
-      //           message: res["message"],
-      //           user: res["data"]["user"],
-      //           next_step: true
-      //         };
-      //         this.valueChange.emit(this.v.response);
-      //       }
-      //     } else {
-      //       this.v.response = {
-      //         status: res["status"],
-      //         message: res["message"],
-      //         erros: res["errors"],
-      //         next_step: false
-      //       };
-      //       this.v.errorMsg = res["errors"]["message"];
-      //       this.valueChange.emit(this.v.response);
-      //     }
-      //   },
-      //   _error => {
-      //     this.v.loading = false;
-      //     if (_error["status"] === 500) {
-      //       this.v.errorMsg = _error["statusText"];
-      //     }
-      //   }
-      // );
     }
   }
 }

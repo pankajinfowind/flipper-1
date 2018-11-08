@@ -5,8 +5,8 @@ import { FormBuilder, Validators } from "@angular/forms";
 
 import { ApiService } from "../../api/api.service";
 
-import { GlobalVariables } from "../../classes/global-variables";
 import { AuthService } from "../../api/auth-service";
+import { Settings } from "../../common/core/config/flipper-settings.service";
 @Component({
   selector: "app-password-verify",
   templateUrl: "./password-verify.component.html",
@@ -29,7 +29,7 @@ export class PasswordVerifyComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(
-    public v: GlobalVariables,
+    public v: Settings,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -64,38 +64,5 @@ export class PasswordVerifyComponent implements OnInit {
       password: this.form.value.password,
       remember: true
     };
-    // this.api.passwordVerifying(data, this.user.auth_token).subscribe(
-    //   res => {
-    //     this.v.loading = false;
-    //     if (res) {
-    //       //  this.localstorage.save('u_list', {'e_unique': res['email'], 'u_avatar': res['avatar_url']});
-    //       //  this.localstorage.save('redirect_url', this.v.redirectUrl);
-    //       if (this.auth.sendToken(this.user.auth_token)) {
-    //         this.v.redirectUrl =
-    //           this.route.snapshot.queryParams["redirect"] || "box/my-box/root";
-    //         return this.router.navigate([this.v.redirectUrl]);
-    //       }
-    //     }
-    //   },
-    //   _error => {
-    //     this.v.loading = false;
-    //     if (_error.ok === false) {
-    //       this.v.errorMsg = _error["error"]["*"]
-    //         ? _error["error"]["*"]
-    //         : _error["error"].message;
-    //       this.v.errorErrors.push({
-    //         email:
-    //           _error["error"]["errors"] !== undefined
-    //             ? _error["error"]["errors"]["email"][0]
-    //             : "",
-    //         password:
-    //           _error["error"]["errors"] !== undefined
-    //             ? _error["error"]["errors"]["password"][0]
-    //             : ""
-    //       });
-    //       return;
-    //     }
-    //   }
-    // );
   }
 }

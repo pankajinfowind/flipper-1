@@ -45,6 +45,7 @@
     "@angular/cdk": "~7.0.3",
     "@angular/material": "^7.0.3",
     "bootstrap": "^4.1.3",
+    "dot-object": "^1.7.1",
     "hammerjs": "^2.0.8"
   },
   "devDependencies": {

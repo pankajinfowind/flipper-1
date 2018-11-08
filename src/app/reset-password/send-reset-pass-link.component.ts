@@ -3,7 +3,8 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { ApiService } from "../api/api.service";
 
 import { Router } from "@angular/router";
-import { GlobalVariables } from "../classes/global-variables";
+import { Settings } from "../common/core/config/flipper-settings.service";
+
 @Component({
   selector: "app-send-reset-pass-link",
   templateUrl: "./send-reset-pass-link.component.html",
@@ -17,7 +18,7 @@ export class SendResetPassLinkComponent implements OnInit {
   form;
   constructor(
     public router: Router,
-    public v: GlobalVariables,
+    public v: Settings,
     private fb: FormBuilder,
     private api: ApiService
   ) {
@@ -45,24 +46,10 @@ export class SendResetPassLinkComponent implements OnInit {
     this.sent = false;
     this.v.response = [];
     if (!this.form.valid) {
-      alert("Invalid email!");
       return;
     }
     if (this.form.valid) {
       const data = { email: this.form.value.email };
-      // this.api.sendLinkToResetPassword(data, this.user.auth_token).subscribe(
-      //   res => {
-      //     this.v.loading = false;
-      //     if (res) {
-      //       this.sent = true;
-      //     }
-      //   },
-      //   _error => {
-      //     this.v.loading = false;
-      //     this.error = _error;
-      //     console.log(_error);
-      //   }
-      // );
     }
   }
 }

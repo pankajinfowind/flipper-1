@@ -7,7 +7,8 @@ import {
 } from "@angular/forms";
 import { ApiService } from "../api/api.service";
 import { MatDialog } from "@angular/material";
-import { GlobalVariables } from "../classes/global-variables";
+import { Settings } from "../common/core/config/flipper-settings.service";
+
 @Component({
   selector: "app-register",
   templateUrl: "./register.component.html",
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private api: ApiService,
     public dialog: MatDialog,
-    public v: GlobalVariables
+    public v: Settings
   ) {
     this.v.loading = false;
     this.v.doesMatchPassword = false;

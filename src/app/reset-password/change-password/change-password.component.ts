@@ -7,7 +7,6 @@ import {
   FormControl
 } from "@angular/forms";
 import { ApiService } from "../../api/api.service";
-
 @Component({
   selector: "app-change-password",
   templateUrl: "./change-password.component.html",
@@ -29,10 +28,6 @@ export class ChangePasswordComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.checkToken();
-    // this.form = this.fb.group({
-    //   password: ['', Validators.required],
-    //   repeatPassword: ['', Validators.required]
-    // });
     this.form = new FormGroup({
       password: new FormControl("", [Validators.required]),
       repeatPassword: new FormControl("", [Validators.required])
@@ -57,33 +52,10 @@ export class ChangePasswordComponent implements OnInit {
         reset_pass_token: this.route.snapshot.params.token,
         password: this.form.value.password
       };
-      // this.api.resetforgettenPassword(data).subscribe(res => {
-      //   this.loading = false;
-      //   if (res['status'] === 200) {
-      //      return this.router.navigate(['sign-in']);
-      //   }
-      //   if (res['errors'] && res['errors'].token === 'invalid') {
-      //     this.is_token_expired = true;
-      //     return false;
-      //  }
-      //   this.error_msg = res['errors'] ? res['errors']['password'][0] : '';
-      // }, _error => {
-      //   this.loading = false;
-      // }
-      // );
     }
   }
 
   checkToken() {
     this.loading = true;
-    // this.api.checkToken(this.route.snapshot.params.token).subscribe(res => {
-    //   this.loading = false;
-    //         if (res['errors'] && res['errors'].token === 'invalid') {
-    //           this.is_token_expired = true;
-    //           return false;
-    //         }
-    //    }, _error => {
-    //     this.loading = false;
-    //   });
   }
 }

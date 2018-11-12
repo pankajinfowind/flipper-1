@@ -10,65 +10,60 @@ import { ObserversModule } from "@angular/cdk/observers";
 
 import { PortalModule } from "@angular/cdk/portal";
 
-import { MatCommonModule, MatRippleModule } from "@angular/material/core";
+import { MatCommonModule, MatRippleModule } from "@angular/material";
 
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatCheckboxModule } from "@angular/material";
 
-import { MatButtonModule } from "@angular/material/button";
+import { MatSlideToggleModule } from "@angular/material";
 
-import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatSliderModule } from "@angular/material";
 
-import { MatRadioButton } from "@angular/material/radio";
+import { MatSidenavModule } from "@angular/material";
 
-import { MatSelectModule } from "@angular/material/select";
+import { MatListModule } from "@angular/material";
 
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatGridListModule } from "@angular/material";
 
-import { MatSliderModule } from "@angular/material/slider";
+import { MatCardModule } from "@angular/material";
 
-import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatChipsModule } from "@angular/material";
 
-import { MatListModule } from "@angular/material/list";
+import { MatIconModule } from "@angular/material";
 
-import { MatGridListModule } from "@angular/material/grid-list";
+import { MatProgressSpinnerModule } from "@angular/material";
 
-import { MatCardModule } from "@angular/material/card";
-
-import { MatChipsModule } from "@angular/material/chips";
-
-import { MatIconModule } from "@angular/material/icon";
-
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-
-import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatProgressBarModule } from "@angular/material";
 
 import { MatInputModule } from "@angular/material/input";
 
-import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSnackBarModule } from "@angular/material";
 
-import { MatTabsModule } from "@angular/material";
+import {
+  MatTabsModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatSelectModule
+} from "@angular/material";
 
-import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatToolbarModule } from "@angular/material";
 
-import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatMenuModule } from "@angular/material";
 
-import { MatMenuModule } from "@angular/material/menu";
+import { MatDialogModule } from "@angular/material";
 
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatAutocompleteModule } from "@angular/material";
 
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatDatepickerModule } from "@angular/material";
 
-import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatTableModule } from "@angular/material";
 
-import { MatTableModule } from "@angular/material/table";
+import { MatSortModule } from "@angular/material";
 
-import { MatSortModule } from "@angular/material/sort";
+import { MatPaginatorModule } from "@angular/material";
 
-import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatFormFieldModule } from "@angular/material";
 
-import { MatFormFieldModule } from "@angular/material/form-field";
-
-import { MatStepperModule } from "@angular/material/stepper";
+import { MatStepperModule } from "@angular/material";
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
@@ -126,8 +121,6 @@ const MATERIAL_MODULES = [
   MatTabsModule,
 
   MatToolbarModule,
-
-  MatTooltipModule,
 
   OverlayModule,
 

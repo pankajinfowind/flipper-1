@@ -60,7 +60,7 @@ export class EmailVerifyComponent implements OnInit {
             this.v.errorMsg = "email not found";
           }
           this.v.loading = false;
-          if (res["data"]) {
+          if (res.data) {
             this.v.response = {
               status: 200,
               message: "enable login",

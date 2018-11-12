@@ -68,7 +68,6 @@ export class Bootstrapper {
             };
             const url = 'http://localhost:8000/bootstrap-data';
             this.http.get(url,header).subscribe(response => {
-              console.log(response['data']);
                 this.handleData(response['data']);
                 resolve();
             }, error => {

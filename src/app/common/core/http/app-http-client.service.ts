@@ -3,6 +3,7 @@ import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/
 import {Observable} from 'rxjs';
 import {HttpErrorHandler} from './errors/http-error-handler.service';
 import { catchError, filter, map } from 'rxjs/operators';
+import { Settings } from '../config/settings.service';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class AppHttpClient {
     /**
      * AppHttpClient Constructor.
      */
-    constructor(protected httpClient: HttpClient, protected errorHandler: HttpErrorHandler) {}
+    constructor(protected httpClient: HttpClient, protected errorHandler: HttpErrorHandler,private setting:Settings) {}
 
     public get<T>(uri: string, params = {}, options: object = {}): Observable<T>|any {
         const httpParams = this.generateHttpParams(params);
@@ -24,7 +25,8 @@ export class AppHttpClient {
     }
 
     public post<T>(uri: string, params: object = null): Observable<T>|any {
-        return this.httpClient.post<T>(this.prefixUri(uri), params)
+
+      return this.httpClient.post<T>(this.prefixUri(uri), params)
             .pipe(catchError(err => this.errorHandler.handle(err, uri)));
     }
 

@@ -12,7 +12,7 @@ export class ApiService {
     constructor(private http: AppHttpClient) {}
 
 
-    public create(params: Business): BackendResponse<{ folder: any }> {
+    public create(params: Business): BackendResponse<{ business: Business }> {
         return this.http.post(API_ROUTES.BUSINESS, params);
     }
 

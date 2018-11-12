@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {Settings} from './config/settings.service';
 import {Translations} from './translations/translations.service';
 import {APP_CONFIG, FlipperConfig} from './config/flipper-config';
@@ -7,7 +6,8 @@ import {Role} from './types/models/Role';
 import {User} from './types/models/User';
 import { LocalizationWithLines } from './types/localization-with-lines';
 import { CurrentUser } from '../auth/current-user';
-
+import { BackendResponse } from './types/backend-response';
+import { HttpClient } from '@angular/common/http';
 export function init_app(bootstrapper: Bootstrapper) {
     return () => bootstrapper.bootstrap();
 }
@@ -22,14 +22,15 @@ export interface BootstrapData {
 
 @Injectable()
 export class Bootstrapper {
-    protected http: HttpClient;
+
     protected settings: Settings;
     protected currentUser: CurrentUser;
     protected i18n: Translations;
     public data: BootstrapData;
+    private http: HttpClient;
 
     constructor(protected injector: Injector) {
-        this.http = this.injector.get(HttpClient);
+      this.http = this.injector.get(HttpClient);
         this.settings = this.injector.get(Settings);
         this.currentUser = this.injector.get(CurrentUser);
         this.i18n = this.injector.get(Translations);
@@ -39,6 +40,7 @@ export class Bootstrapper {
             return this.settings.merge({vebto: providedConfig});
         });
     }
+
 
     /**
      * Bootstrap application with data returned from server.
@@ -56,8 +58,18 @@ export class Bootstrapper {
         // fetch bootstrap data from backend and return promise that
         // resolves once request is complete and data is passed to the app
         return new Promise((resolve, reject) => {
-            const url = this.settings.getBaseUrl() + 'api/bootstrap-data';
+          var header={
+                    headers: {
+                    'Content-Type' : 'application/json',
+                    'Accept' : 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET'
+                  }
+            };
+            console.log(this.settings.getBaseUrl());
+            const url = 'http://localhost:8000/bootstrap-data';
             this.http.get(url).subscribe(response => {
+              console.log(response['data']);
                 this.handleData(response['data']);
                 resolve();
             }, error => {

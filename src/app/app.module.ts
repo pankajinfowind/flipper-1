@@ -24,6 +24,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material/material.module";
 import { BusinessModule } from "./business/business.module";
 import { AuthModule } from "./common/auth/auth.module";
+import { CoreModule } from "./common/core/core.module";
+import { RouterModule } from "@angular/router";
+import { APP_CONFIG } from "./common/core/config/flipper-config";
+import { FLIPPER_CONFIG } from "./flipper-config";
 
 // AoT requires an exported function for factories
 
@@ -38,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebviewDirective
   ],
   imports: [
+
     BrowserModule,
     FormsModule,
     AuthModule,
@@ -46,6 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     MaterialModule,
     BusinessModule,
+    RouterModule,
+    CoreModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -55,7 +62,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     BrowserAnimationsModule
   ],
-  providers: [ElectronService],
+  providers: [ {
+    provide: APP_CONFIG,
+    useValue: FLIPPER_CONFIG,
+    multi: true
+},ElectronService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

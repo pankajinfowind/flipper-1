@@ -1,8 +1,8 @@
 export interface BackendErrorMessages {
-  [key: string]: string;
+    [key: string]: string;
 }
 
 export interface BackendErrorResponse<T = BackendErrorMessages> {
-  status: "error";
-  messages: T;
+    status: 'error';
+    messages: T;
 }

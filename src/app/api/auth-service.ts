@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { Router } from "@angular/router";
 import { ApiService } from "../api/api.service";
-import { Settings } from "../common/core/config/flipper-settings.service";
+import { Settings } from "../common/core/config/settings.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {

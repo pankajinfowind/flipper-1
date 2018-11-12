@@ -1,0 +1,189 @@
+<!-- <form class="auth-page" id="auth-page" (ngSubmit)="register()" ngNativeValidate>
+    <div class="many-inputs auth-panel">
+
+        <loading-indicator class="overlay" [isVisible]="isLoading"></loading-indicator>
+
+        <a class="logo" [routerLink]="['/']"><img [src]="settings.get('branding.logo_dark')" alt="logo"></a>
+
+        <div class="general-error" *ngIf="errors.general">{{errors.general}}</div>
+
+        <div class="input-container">
+            <label for="email" class="hidden" trans>Email</label>
+            <input type="email" [(ngModel)]="model.email" name="email" id="email" required placeholder="Email" trans-placeholder>
+            <p class="error email-error" *ngIf="errors.email">{{errors.email}}</p>
+        </div>
+
+        <div class="input-container">
+            <label for="password" class="hidden" trans>Password</label>
+            <input type="password" [(ngModel)]="model.password" name="password" id="password" required placeholder="Password" trans-placeholder>
+            <p class="error password-error" *ngIf="errors.password">{{errors.password}}</p>
+        </div>
+
+        <div class="input-container">
+            <label for="password_confirmation" class="hidden" trans>Confirm Password</label>
+            <input type="password" [(ngModel)]="model.password_confirmation" name="password_confirmation" id="password_confirmation" required placeholder="Confirm Password" trans-placeholder>
+        </div>
+
+        <div class="social-icons-and-register-row">
+            <div class="social-icons center">
+                <button type="button" mat-icon-button (click)="socialAuth.loginWith('facebook')" *ngIf="settings.get('social.facebook.enable')" class="social-icon no-style facebook" [matTooltip]="'Login with facebook' | trans">
+                    <mat-icon svgIcon="facebook-custom"></mat-icon>
+                </button>
+                <button type="button" mat-icon-button (click)="socialAuth.loginWith('google')" *ngIf="settings.get('social.google.enable')" class="social-icon no-style google" [matTooltip]="'Login with google' | trans">
+                    <mat-icon svgIcon="google-custom"></mat-icon>
+                </button>
+                <button type="button" mat-icon-button (click)="socialAuth.loginWith('twitter')" *ngIf="settings.get('social.twitter.enable')" class="social-icon no-style twitter" [matTooltip]="'Login with twitter' | trans">
+                    <mat-icon svgIcon="twitter-custom"></mat-icon>
+                </button>
+            </div>
+
+            <div class="register-button-container">
+                <button class="button primary register-button" mat-raised-button [color]="settings.get('vebto.auth.color')" type="submit" trans>Register</button>
+            </div>
+        </div>
+
+        <p class="info-row">
+            <span trans>Already have an account?</span>
+            <a class="login-link" [routerLink]="['/login']" trans>Login in here.</a>
+        </p>
+    </div>
+</form> -->
+<div class="ybx-sgnForm">
+    <div class="ybx-signIn ybx-signUp">
+      <span class="form-load" *ngIf="v.loading"><mat-progress-bar class="primary-progress-bar" mode="indeterminate"></mat-progress-bar></span>
+      <div class="inner-box">
+          <div class="mr-auto text-center">
+            <div class="h3 d-block p-2 w-100">Create your Account</div>
+            <div class="d-block p-2 w-100"> to continue to {{appname}} </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <form class="ybx-defaultForm" [formGroup]="signupForm" (ngSubmit)="onAccountInfoSubmit()"> <div class="row">
+            <div class="col-12 col-sm-6">
+                <mat-form-field class="ybx-mat mat-full-wdth">
+                  <input matInput type="text" placeholder="First name" formControlName="first_name" required>
+                  <button mat-button *ngIf="first_name.value" matSuffix mat-icon-button aria-label="Clear" (click)="first_name.value=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-error  *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)">
+                    <strong *ngIf="first_name.errors.required">First name is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <mat-form-field class="ybx-mat mat-full-wdth">
+                  <input matInput type="text" placeholder="Last name" formControlName="last_name" required>
+                  <button mat-button *ngIf="last_name.value" matSuffix mat-icon-button aria-label="Clear" (click)="last_name.value=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-error  *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)">
+                    <strong *ngIf="last_name.errors.required">Last name is required.</strong>
+                 </mat-error>
+              </mat-form-field>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+              <mat-form-field class="ybx-mat mat-full-wdth">
+                <input matInput type="text" placeholder="Phone (optional)" formControlName="phone">
+              </mat-form-field>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+              <mat-form-field class="ybx-mat mat-full-wdth">
+                <mat-select placeholder="Gender" formControlName="gender" required>
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let g of v.gender_list" [value]="g">{{g}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+                  <strong *ngIf="gender.errors.required">Gender is required.</strong>
+                </mat-error>
+              </mat-form-field>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="col-12">
+              <mat-form-field class="ybx-mat mat-full-wdth">
+                <mat-select placeholder="Country"  formControlName="country" required>
+                  <mat-option *ngFor="let country of v.countries" [value]="country">{{country}}</mat-option>
+                  <mat-option>None</mat-option>
+                </mat-select>
+                <mat-error  *ngIf="country.invalid && (country.dirty || country.touched)">
+                    <strong *ngIf="country.errors.required">Country is required.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12">
+              <mat-form-field class="ybx-mat mat-full-wdth">
+                <input matInput placeholder="Email" formControlName="email" required>
+                <mat-error  *ngIf="email.invalid && (email.dirty || email.touched)">
+                  <mat-error *ngIf="email.errors.email && !email.errors.required">
+                    Please enter a valid email address
+                  </mat-error>
+                  <mat-error *ngIf="email.errors.required">Email is <strong>required</strong></mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <mat-form-field class="ybx-mat mat-full-wdth">
+                  <input matInput placeholder="Password" [type]="password_hide ? 'password' : 'text'" formControlName="password" required>
+                  <mat-icon matSuffix (click)="password_hide = !password_hide">{{password_hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                  <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                      <strong>Password is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+              <div class="clearfix"></div>
+            </div>
+
+            <!-- TODO get back to make password hide and visibility work again -->
+            <div class="col-12 col-sm-6">
+                <mat-form-field class="ybx-mat mat-full-wdth">
+                  <input matInput placeholder="Confirm password" [type]="cfm_password_hide ? 'password' : 'text'" formControlName="password_confirmation" required>
+                  <mat-icon matSuffix (click)="cfm_password_hide = !cfm_password_hide">{{cfm_password_hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                  <mat-error   *ngIf="password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched)">
+                      <strong>Confirm password is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+              <div class="clearfix"></div>
+            </div>
+            <div class="col-12">
+                    <div class="general-error" *ngIf="v.errors.general">{{v.errors.general}}</div>
+
+              <mat-error  *ngIf="v.does_match_password" class="pull-left">
+                <strong>Password does not match.</strong>
+              </mat-error>
+            </div>
+          </div>
+          <div class="ybx-mat">
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-12">
+                <mat-checkbox formControlName="agree_term_condition">By registering, you agree to the <a href="#">terms & conditions</a></mat-checkbox>
+              </div>
+            </div>
+        </div>
+          <div class="ybx-mat">
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-6 button-row">
+                <a mat-button class="mat-button pl-0" [routerLink]="['/login']">Sign in instead</a>
+              </div>
+              <div class="col-6 order-6">
+                <button mat-raised-button class="mat-primary-btn float-right" *ngIf='!v.loading'>Next </button>
+                <button mat-raised-button class="mat-primary-btn float-right" *ngIf='v.loading' disable='true'>sending ... </button>
+              </div>
+            </div>
+        </div>
+        </form>
+    </div>
+  </div>
+  </div>
+
+
+
+
+

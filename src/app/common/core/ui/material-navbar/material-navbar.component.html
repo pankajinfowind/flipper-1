@@ -1,0 +1,50 @@
+<!-- <div class="navbar-container" [class.container]="container">
+    <a routerLink="/" class="logo-container">
+        <img class="logo" *ngIf="config.get('branding.logo_light')" [src]="config.getBaseUrl(true) + config.get('branding.logo_light')">
+        <div class="text-logo" *ngIf="!config.get('branding.logo_light')">{{config.get('branding.site_name')}}</div>
+    </a>
+
+    <button class="no-style toggle-sidebar-button" mat-icon-button *ngIf="showToggleButton" (click)="toggleButtonClick.emit()">
+        <mat-icon svgIcon="menu"></mat-icon>
+    </button>
+
+    <ng-content></ng-content>
+
+    <custom-menu [position]="menuPosition"></custom-menu>
+
+    <logged-in-user-widget>
+        <ng-container *ngFor="let item of config.get('vebto.navbar.dropdownItems')">
+            <a mat-menu-item [routerLink]="item.route" *ngIf="(!item.permission || currentUser.hasPermission(item.permission)) && (!item.role || currentUser.hasRole(item.role))">
+                <mat-icon [svgIcon]="item.icon"></mat-icon>
+                <span trans>{{item.name}}</span>
+            </a>
+        </ng-container>
+    </logged-in-user-widget>
+
+    <div class="auth-buttons" *ngIf="showAuthButtons && !currentUser.isLoggedIn()">
+        <a routerLink="/register" mat-button trans>Register</a>
+        <a routerLink="/login" class="login-button" mat-raised-button color="accent" trans>Login</a>
+    </div>
+</div> -->
+
+<div class="navbar-container">
+    <button class="no-style toggle-sidebar-button" color="primary" mat-icon-button *ngIf="showToggleButton" (click)="toggleButtonClick.emit()">
+        <mat-icon svgIcon="menu"></mat-icon>
+    </button>
+    <a routerLink="/" class="logo-container">
+        <!-- <img class="logo" *ngIf="config.get('branding.logo_light')" [src]="config.getBaseUrl(true) + config.get('branding.logo_light')"> -->
+        <div class="text-logo">{{config.get('branding.site_name')}}</div>
+        <!-- <div class="text-logo" *ngIf="!config.get('branding.logo_light')">{{config.get('branding.site_name')}}</div> -->
+    </a>
+
+    <ng-content></ng-content>
+
+    <custom-menu [position]="menuPosition"></custom-menu>
+
+    <logged-in-user-widget>
+        <a mat-menu-item [routerLink]="item.route" *ngFor="let item of config.get('vebto.navbar.dropdownItems')">
+            <mat-icon [svgIcon]="item.icon"></mat-icon>
+            <span>{{item.name}}</span>
+        </a>
+    </logged-in-user-widget>
+</div>

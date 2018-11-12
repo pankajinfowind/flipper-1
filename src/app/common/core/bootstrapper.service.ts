@@ -1,5 +1,4 @@
 import { Injectable, Injector } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { Settings } from "./config/settings.service";
 import { Translations } from "./translations/translations.service";
 import { APP_CONFIG, FlipperConfig } from "./config/flipper-config";
@@ -7,7 +6,7 @@ import { Role } from "./types/models/Role";
 import { User } from "./types/models/User";
 import { LocalizationWithLines } from "./types/localization-with-lines";
 import { CurrentUser } from "../auth/current-user";
-
+import { HttpClient } from "@angular/common/http";
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
 }
@@ -52,13 +51,13 @@ export class Bootstrapper {
       this.handleData(data);
       return new Promise(resolve => resolve());
     }
-
     // fetch bootstrap data from backend and return promise that
     // resolves once request is complete and data is passed to the app
     return new Promise((resolve, reject) => {
-      const url = this.settings.getBaseUrl() + "bootstrap-data";
+      const url = this.settings.getBaseUrl() + "secure/bootstrap-data";
       this.http.get(url).subscribe(
         response => {
+          console.log("first", response);
           this.handleData(response["data"]);
           resolve();
         },
@@ -74,6 +73,7 @@ export class Bootstrapper {
    * Handle specified bootstrap data.
    */
   protected handleData(encodedData: string): BootstrapData {
+    console.log("str", encodedData);
     // decode bootstrap data from server
     const data = JSON.parse(atob(encodedData)) as BootstrapData;
 

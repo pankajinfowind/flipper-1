@@ -66,9 +66,8 @@ export class Bootstrapper {
                     'Access-Control-Allow-Methods': 'GET'
                   }
             };
-            console.log(this.settings.getBaseUrl());
             const url = 'http://localhost:8000/bootstrap-data';
-            this.http.get(url).subscribe(response => {
+            this.http.get(url,header).subscribe(response => {
               console.log(response['data']);
                 this.handleData(response['data']);
                 resolve();

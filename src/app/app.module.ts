@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material/material.module";
 import { BusinessModule } from "./business/business.module";
 import { AuthModule } from "./common/auth/auth.module";
+import { AdminModule } from "./admin/admin.module";
 
 // AoT requires an exported function for factories
 
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     FormsModule,
     AuthModule,
+    AdminModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,

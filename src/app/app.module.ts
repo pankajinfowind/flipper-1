@@ -17,8 +17,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material/material.module";
 import { BusinessModule } from "./business/business.module";
 import { AuthModule } from "./common/auth/auth.module";
-import { CoreModule } from "./common/core/core.module";
+import { AdminModule } from "./admin/admin.module";
 import { RouterModule } from "@angular/router";
+import { CoreModule } from "./common/core/core.module";
 import { APP_CONFIG } from "./common/core/config/flipper-config";
 import { FLIPPER_CONFIG } from "./flipper-config";
 
@@ -33,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     FormsModule,
     AuthModule,
+    AdminModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,

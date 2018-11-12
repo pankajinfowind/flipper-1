@@ -1,0 +1,204 @@
+// variables
+// =========================
+$colorDefault: grey;
+$colorPrimary: #1a73e8;
+
+$defaultSize: 14px;
+
+// mixins
+// =========================
+
+@mixin defaultFormBoxShadow{
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  -ms-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  -o-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+@mixin defaultFormBorderRadius{
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
+}
+
+
+.clearfix{
+  width: 100%;
+  padding: 2% 0px;
+  margin: 0;
+}
+.ybx-mat{
+  position: relative;
+}
+
+.or{
+  position: relative;
+  margin-bottom: 15px;
+  &::before{
+    content: "or";
+    background-color: lighten($colorDefault, 100%);
+    color: rgb(151, 160, 175);
+    display: block;
+    font-size: 11px;
+    line-height: 1;
+    margin-top: 24px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+
+.ybx-sgnForm{
+  width: 100%;
+  overflow: hidden;
+  &:before,
+  &:after{
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    content: '';
+    display: block;
+    height: 100px;
+  }
+}
+
+
+#ybx-wrapper{
+  display: flex;
+  align-items: stretch;
+  #ybx-header{
+    position: absolute;
+    width: 100%;
+    height: 50px;
+  }
+  #ybx-section{
+    position: relative;
+    margin-top: 80px;
+    padding: 20px;
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+  }
+}
+
+.footer-fixed-bottom{
+  position: fixed;
+  bottom: 0;
+  p{
+    padding-top: 15px;
+  }
+}
+
+// Navbar
+// ==========================
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  margin-top: 80px;
+  transition: all 0.3s;
+  .active{
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+  }
+}
+
+.ybx-nav{
+  .navbar-toggler{
+    border: 0px;
+    display: inline;
+  }
+
+  .navbar-content{
+    position: relative;
+    height: calc(100vh - 90px);
+    .sidebar-nav{
+      min-width: 250px;
+      max-width: 250px;
+    }
+  }
+}
+
+
+
+
+
+
+
+// Forms
+// ==========================
+
+.ybx-form {
+  min-width: 150px;
+  max-width: 350px;
+  width: 100%;
+}
+
+.mat-full-wdth {
+  width: 100%;
+}
+
+//Buttons
+// ===============
+
+button{
+  &:hover,
+  &:focus{
+    outline: none;
+    -webkit-outline: none;
+  }
+}
+.mat-primary-btn{
+  background-color: $colorPrimary !important;
+  color: lighten($colorDefault, 100%) !important;
+}
+.mat-default-btn{
+  background-color:lighten($colorDefault, 100%) !important;
+  color: $colorPrimary !important;
+}
+
+.button-row{
+  a.mat-button{
+    color: $colorPrimary;
+    font-weight: 500;
+
+    &:hover{
+      background: none !important;
+      text-decoration: none !important;
+    }
+  }
+}
+
+.btn-sign-ggle{
+  color: darken($colorDefault, 5%) !important;
+  border: 0px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  -ms-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  -o-box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+  font-weight: bold;
+  font-size: $defaultSize;
+  padding: 10px 35px;
+  .google-icon{
+    height: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 18px;
+  }
+}
+
+// Images
+// ===============================
+
+.resetbox-img{
+  position: relative;
+  margin-bottom: 15px;
+  img{
+    height: 100px;
+    margin: 15px auto;
+  }
+}

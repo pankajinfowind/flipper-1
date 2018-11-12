@@ -20,17 +20,13 @@ import { WebviewDirective } from "./directives/webview.directive";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { LoginComponent } from "./login/login.component";
 
-import { ChangePasswordComponent } from "./reset-password/change-password/change-password.component";
-import { EmailVerifyComponent } from "./login/email-verify/email-verify.component";
 import { MaterialModule } from "./material/material.module";
-import { PasswordVerifyComponent } from "./login/password-verify/password-verify.component";
-import { SendResetPassLinkComponent } from "./reset-password/send-reset-pass-link.component";
-
-import { RegisterComponent } from "./register/register.component";
+import { BusinessModule } from "./business/business.module";
+import { AuthModule } from "./common/auth/auth.module";
 
 // AoT requires an exported function for factories
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
@@ -39,21 +35,17 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    WebviewDirective,
-    LoginComponent,
-    RegisterComponent,
-    EmailVerifyComponent,
-    PasswordVerifyComponent,
-    SendResetPassLinkComponent,
-    ChangePasswordComponent
+    WebviewDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    AuthModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
+    BusinessModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

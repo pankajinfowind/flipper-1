@@ -1,0 +1,53 @@
+<div class="ybx-sgnForm">
+    <div class="ybx-signIn">
+      <span class="form-load" *ngIf="v.loading"><mat-progress-bar class="primary-progress-bar" mode="indeterminate"></mat-progress-bar></span>
+       <div class="inner-box">
+      <div class="justify-content-center mr-auto text-center">
+          <div class="h3 d-block p-2 w-100">Reset your password</div>
+          <div class="d-block p-2 w-100" *ngIf="!sent">Your recovery email </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-12" *ngIf="sent">
+          <div class="resetbox-img text-center">
+            <img src="assets/images/icons/reset-password.svg" alt="" class="img-fluid"/>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+
+      <div class="text-center" *ngIf="sent">
+        Check your email for a verification link sent to<br />
+        {{user.email}} <br />
+        <div class="clearfix"></div>
+        <a href="#" color="primary">Not in inbox or spam folder?</a> <button mat-button color="primary" (click)="resend()" >Resend</button>
+        <div class="col-12"><div class="or"></div></div>
+        <a mat-button  class="mat-button mat-primary-btn btn-block" (click)="goToLogin()">Return to sign in </a>
+
+      </div>
+      <div class="clearfix"></div>
+
+      <form class="ybx-defaultForm" *ngIf="!sent" [formGroup]="form" (ngSubmit)="sendResetEmail()">
+          <div class="p text-center">we will send you a link to reset your password.</div>
+          <div class="clearfix"></div>
+          <div class="clearfix"></div>
+          <mat-form-field class="ybx-mat mat-full-wdth">
+              <input matInput type="email" placeholder="Your email address" formControlName="email" />
+          </mat-form-field>
+
+          <div class="clearfix"></div>
+
+          <div class="ybx-mat">
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-12">
+                    <button mat-raised-button class="mat-primary-btn btn-block" *ngIf='!v.loading'><span *ngIf="error">Resend  password reset email </span><span *ngIf="!error">Send  password reset email </span> </button>
+                    <button mat-raised-button class="mat-primary-btn btn-block" *ngIf='v.loading' disable='true'>sending ... </button>
+                </div>
+            </div>
+        </div>
+      </form>
+      <div class="clearfix"></div>
+  </div>
+</div>
+</div>
+
+

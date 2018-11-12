@@ -32,7 +32,6 @@ export class Bootstrapper {
     this.settings = this.injector.get(Settings);
     this.currentUser = this.injector.get(CurrentUser);
     this.i18n = this.injector.get(Translations);
-
     // merge all config provided by modules into single object
     this.injector.get(APP_CONFIG).forEach(providedConfig => {
       return this.settings.merge({ vebto: providedConfig });

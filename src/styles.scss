@@ -15,12 +15,7 @@ $yego-app-theme: mat-light-theme(
 );
 
 @include angular-material-theme($yego-app-theme);
-// @import "~bootstrap/scss/_functions";
-// @import "~bootstrap/scss/_variables";
 
-// @import "~bootstrap/scss/mixins/_breakpoints";
-
-// @import "app/globalSass.scss"; //
 @import "~bootstrap/scss/bootstrap";
 
 @import "app/globalSass.scss"; //
@@ -29,6 +24,7 @@ body {
   height: 100%;
 }
 body {
+  overflow: hidden;
   margin: 0;
   font-family: "Roboto", sans-serif;
 }

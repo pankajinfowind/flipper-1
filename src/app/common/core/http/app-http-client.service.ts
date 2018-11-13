@@ -16,7 +16,7 @@ export class AppHttpClient {
     /**
      * AppHttpClient Constructor.
      */
-    constructor(protected httpClient: HttpClient, protected errorHandler: HttpErrorHandler,private setting:Settings) {}
+    constructor(protected httpClient: HttpClient, protected errorHandler: HttpErrorHandler) {}
 
     public get<T>(uri: string, params = {}, options: object = {}): Observable<T>|any {
         const httpParams = this.generateHttpParams(params);

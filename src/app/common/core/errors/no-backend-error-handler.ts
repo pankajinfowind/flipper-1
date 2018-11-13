@@ -14,7 +14,6 @@ export class NoBackendErrorHandler extends ErrorHandler {
      * Whether sentry error logger is already installed.
      */
     protected installed = false;
-
     /**
      * RavenErrorHandler Constructor.
      */

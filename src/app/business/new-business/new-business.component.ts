@@ -5,6 +5,7 @@ import { GlobalVariables } from '../../common/core/global-variables';
 import { ApiService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { CurrentUser } from '../../common/auth/current-user';
 
 export interface SelectorBox {
   value: string;
@@ -20,13 +21,14 @@ export class NewBusinessComponent implements OnInit {
   businessForm: FormGroup;
 
   view_more=false;
+  error='';
   public loading = new BehaviorSubject(false);
   types: SelectorBox[] = [
     {value: 'pharamcy', viewValue: 'Pharamcy'},
     {value: 'resto', viewValue: 'Restaurant'},
     {value: 'shop', viewValue: 'Shop'}
   ];
-  constructor(
+  constructor(private current:CurrentUser,
     public dialog: MatDialog,
     private api: ApiService,
      public v: GlobalVariables
@@ -35,10 +37,11 @@ export class NewBusinessComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.current.isLoggedIn());
     this.businessForm = new FormGroup({
       name: new FormControl("", [Validators.required]),
       type: new FormControl("", [Validators.required]),
-      address: new FormControl(""),
+      address: new FormControl("",[Validators.required]),
       description: new FormControl(""),
       tin: new FormControl(""),
       tax_charge: new FormControl(""),
@@ -74,7 +77,13 @@ export class NewBusinessComponent implements OnInit {
       this.v.response = [];
      this.api.create(this.businessForm.value) .pipe(finalize(() =>  this.loading.next(false)))
      .subscribe(res=>{
-       console.log(res);
+      if(res.status == '422'){
+        this.error='The business name already was taken!';
+       }
+     },error=>{
+       if(error.status == '422'){
+        this.error='The business name already was taken!';
+       }
      });
     }
   }

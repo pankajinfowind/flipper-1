@@ -3,6 +3,7 @@ import { User } from './User';
 export class Role {
     id: number;
     name: string;
+    display_name: string;
     permissions?: string;
     default: boolean;
     guests: boolean;

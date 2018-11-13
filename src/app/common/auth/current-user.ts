@@ -186,9 +186,9 @@ export class CurrentUser {
 
         // merge role permissions
         const roles = this.get('roles') || [];
-        roles.forEach((role: Role) => {
-            if (role) Object.assign(permissions, role.permissions);
-        });
+        // roles.forEach((role: Role) => {
+        //     if (role) Object.assign(permissions, role.permissions);
+        // });
 
         // merge billing plan permissions
         // const subscription = this.getSubscription();

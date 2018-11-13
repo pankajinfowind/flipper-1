@@ -13,7 +13,7 @@ import { catchError, filter, map } from "rxjs/operators";
   providedIn: "root"
 })
 export class AppHttpClient {
-  public prefix = "api";
+  public prefix = "secure";
 
   /**
    * AppHttpClient Constructor.

@@ -37,12 +37,19 @@
           </mat-error>
 
         </mat-form-field>
-        <div *ngIf="view_more">
+
         <mat-form-field class="ybx-mat mat-full-wdth">
-          <input class="text-secondary" matInput placeholder="Address (Optional)" formControlName="address">
+          <input class="text-secondary" matInput placeholder="Address" formControlName="address" required>
           <mat-hint class="text-secondary"><i>ex: KN 1 Roundabout, Kigali, Rwanda</i></mat-hint>
 
+          <mat-error *ngIf="address.invalid && (address.dirty || address.touched)">
+            <mat-error *ngIf="address.errors.required">
+              Business address is <strong>required</strong>
+            </mat-error>
+          </mat-error>
         </mat-form-field>
+        <div *ngIf="view_more">
+
 
         <mat-form-field class="ybx-mat mat-full-wdth">
             <input class="text-secondary" matInput placeholder="Tin (Optional)" formControlName="tin">
@@ -77,7 +84,7 @@
 
         <div class="clearfix"></div>
         <div class="ybx-mat">
-          <mat-error *ngIf="v.errorMsg!=''">{{v.errorMsg}} </mat-error>
+          <mat-error *ngIf="error!=''">{{v.error}} </mat-error>
 
           <div class="clearfix"></div>
           <div class="row">

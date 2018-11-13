@@ -1,10 +1,11 @@
 import { Social } from './Social';
 import { SocialProfile } from './SocialProfile';
 import { Role } from './Role';
+import { Business } from '../../../../business/api/business';
 
 export class User {
     id: number;
-    display_name: string;
+    display_name?: string;
     username?: string;
     first_name?: string;
     last_name?: string;
@@ -19,11 +20,13 @@ export class User {
     updated_at: string;
     is_subscribed?: boolean;
     confirmed: true;
-    roles: Role[] = [];
-    social_profiles: SocialProfile[];
-    has_password: boolean;
+    roles?: Role[]=[];
+    business?: Business[]=[];
+    has_business_belongs?: boolean;
+    social_profiles?: SocialProfile[];
+    has_password?: boolean;
     oauth?: Social[];
-    available_space: number|null;
+    available_space?: number|null;
 
     constructor(params: Object = {}) {
         for (let name in params) {

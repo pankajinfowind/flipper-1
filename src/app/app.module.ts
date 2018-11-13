@@ -22,6 +22,8 @@ import { RouterModule } from "@angular/router";
 import { CoreModule } from "./common/core/core.module";
 import { APP_CONFIG } from "./common/core/config/flipper-config";
 import { FLIPPER_CONFIG } from "./flipper-config";
+import { AuthGuard } from "./common/guards/auth-guard.service";
+import { RedirectComponent } from './redirect/redirect.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -29,12 +31,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, WebviewDirective],
+  declarations: [AppComponent, HomeComponent, WebviewDirective, RedirectComponent],
   imports: [
     BrowserModule,
     FormsModule,
-    AuthModule,
-    AdminModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -42,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BusinessModule,
     RouterModule,
     CoreModule.forRoot(),
+    AuthModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -49,14 +50,15 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    AdminModule,
     BrowserAnimationsModule
   ],
   providers: [
-    {
-      provide: APP_CONFIG,
-      useValue: FLIPPER_CONFIG,
-      multi: true
-    },
+    // {
+    //   provide: APP_CONFIG,
+    //   useValue: FLIPPER_CONFIG,
+    //   multi: true
+    // },
     ElectronService
   ],
   bootstrap: [AppComponent]

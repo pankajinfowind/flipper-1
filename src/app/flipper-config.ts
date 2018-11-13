@@ -8,8 +8,8 @@ export const FLIPPER_CONFIG = {
         ]
     },
     auth: {
-        redirectUri: '/drive',
-        adminRedirectUri: '/drive',
+        redirectUri: '/redirect',
+        adminRedirectUri: '/admin',
         color: 'primary',
     },
     accountSettings: {

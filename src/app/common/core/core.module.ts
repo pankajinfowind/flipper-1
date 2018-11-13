@@ -13,6 +13,7 @@ import {HttpModule} from './http/http.module';
 import {TranslationsModule} from './translations/translations.module';
 import {APP_CONFIG, DEFAULT_FLIPPER_CONFIG} from './config/flipper-config';
 import { CurrentUser } from '../auth/current-user';
+import { AdminModule } from '../../admin/admin.module';
 
 @NgModule({
     imports: [
@@ -31,7 +32,7 @@ import { CurrentUser } from '../auth/current-user';
         ReactiveFormsModule,
         RouterModule,
         HttpClientModule,
-        UiModule,
+        UiModule
     ],
 })
 export class CoreModule {

@@ -70,7 +70,6 @@ export class Bootstrapper {
    * Handle specified bootstrap data.
    */
   protected handleData(encodedData: string): BootstrapData {
-    console.log("str", encodedData);
     // decode bootstrap data from server
     const data = JSON.parse(atob(encodedData)) as BootstrapData;
 

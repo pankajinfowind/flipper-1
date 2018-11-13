@@ -6,6 +6,9 @@ import { ApiService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { CurrentUser } from '../../common/auth/current-user';
+import { Bootstrapper } from '../../common/core/bootstrapper.service';
+import { Router } from '@angular/router';
+import { Toast } from '../../common/core/ui/toast.service';
 
 export interface SelectorBox {
   value: string;
@@ -29,15 +32,17 @@ export class NewBusinessComponent implements OnInit {
     {value: 'shop', viewValue: 'Shop'}
   ];
   constructor(private current:CurrentUser,
+    private bootstrapper: Bootstrapper,
     public dialog: MatDialog,
     private api: ApiService,
-     public v: GlobalVariables
+     public v: GlobalVariables,
+     private router: Router,
+     private toast: Toast
   ) {
     this.v.webTitle("Create - Business");
   }
 
   ngOnInit() {
-    console.log(this.current.isLoggedIn());
     this.businessForm = new FormGroup({
       name: new FormControl("", [Validators.required]),
       type: new FormControl("", [Validators.required]),
@@ -77,11 +82,19 @@ export class NewBusinessComponent implements OnInit {
       this.v.response = [];
      this.api.create(this.businessForm.value) .pipe(finalize(() =>  this.loading.next(false)))
      .subscribe(res=>{
-      if(res.status == '422'){
-        this.error='The business name already was taken!';
-       }
+       console.log(res);
+      this.bootstrapper.bootstrap(res.data);
+         // TODO: Move this into auth service, so other components can re-use
+         this.router.navigate(['admin']).then(navigated => {
+
+          if (!navigated) {
+              this.router.navigate(['admin']);
+              this.v.webTitle('Admin -Flipper');
+          }
+          this.toast.open('Thank you for creating bussiness account on flipper!');
+      });
      },error=>{
-       if(error.status == '422'){
+       if(error.status == 422){
         this.error='The business name already was taken!';
        }
      });

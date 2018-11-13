@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentUser } from '../common/auth/current-user';
 import { Router } from '@angular/router';
+import { GlobalVariables } from '../common/core/global-variables';
 
 @Component({
   selector: 'app-redirect',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class RedirectComponent implements OnInit {
 
-  constructor(private auth:CurrentUser, private router: Router) {
+  constructor(private auth:CurrentUser, private router: Router, public v: GlobalVariables) {
      this.goTo();
   }
 
@@ -18,9 +19,14 @@ export class RedirectComponent implements OnInit {
   }
 
   goTo(){
-    console.log(this.auth.get('roles'));
-    if(this.auth.get('roles')['name']=='admin'){
-      this.router.navigate(["/admin"]);
+    if(! this.auth.get('has_business_belongs') ){
+      return this.router.navigate(["/customer"]);
+    }else{
+      if(this.auth.get('roles')['name']=='admin'){
+        this.v.webTitle('Admin -Flipper');
+        this.router.navigate(["/admin"]);
+      }
     }
+
   }
 }

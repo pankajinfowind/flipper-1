@@ -49,7 +49,7 @@ export class AuthService {
    */
   public login(credentials: Object): Observable<{ data: string }> {
     this.httpClient.prefix = "secure";
-    return this.httpClient.post("verify/password", credentials);
+    return this.httpClient.post("auth/login", credentials);
   }
   /**
    * Verify user email before login.

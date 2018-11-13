@@ -6,7 +6,7 @@ import { NewBusinessComponent } from "./business/new-business/new-business.compo
 const routes: Routes = [
   {
     path: "",
-    component: NewBusinessComponent
+    component: LoginComponent
   }
 ];
 

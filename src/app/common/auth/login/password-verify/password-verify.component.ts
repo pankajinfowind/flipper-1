@@ -64,7 +64,9 @@ export class PasswordVerifyComponent implements OnInit {
         this.v.response = { user: this.user, next_step: false, rest_password: true };
         this.valueChange.emit(this.v.response);
     }
-
+reload(){
+ return ()=>window.location.reload();
+}
     public login() {
         this.v.loading = true;
         this.v.model = {
@@ -72,6 +74,7 @@ export class PasswordVerifyComponent implements OnInit {
             password: this.form.value.password,
             remember: true
         };
+
         this.auth.login(this.v.model).subscribe(
             response => {
                 this.bootstrapper.bootstrap(response.data);

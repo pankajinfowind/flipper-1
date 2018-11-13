@@ -87,17 +87,16 @@ export class PasswordVerifyComponent implements OnInit {
     this.auth.login(this.v.model).subscribe(
       response => {
         this.bootstrapper.bootstrap(response.data);
-
+        console.log("we are here");
         // TODO: Move this into auth service, so other components can re-use
-        this.router.navigate([this.auth.getRedirectUri()]).then(navigated => {
-          this.v.loading = false;
-
-          if (!navigated) {
-            this.router.navigate([this.auth.getRedirectUri()]);
-            this.v.webTitle("My box -Yegobox");
-          }
-          this.toast.open("You are logged in!. Thank you.");
-        });
+        // this.router.navigate([this.auth.getRedirectUri()]).then(navigated => {
+        //   this.v.loading = false;
+        //   if (!navigated) {
+        //     this.router.navigate([this.auth.getRedirectUri()]);
+        //     this.v.webTitle("My box -Yegobox");
+        //   }
+        //   this.toast.open("You are logged in!. Thank you.");
+        // });
       },
       error => {
         this.v.errors = error["messages"];

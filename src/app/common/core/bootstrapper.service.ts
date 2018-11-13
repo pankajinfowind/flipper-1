@@ -42,6 +42,7 @@ export class Bootstrapper {
    * Bootstrap application with data returned from server.
    */
   public bootstrap(data?: string): Promise<any> {
+    let url;
     if (!data) data = window["bootstrapData"];
     // if we have bootstrap data in global scope, pass
     // it to the app and return self resolving promise
@@ -49,10 +50,14 @@ export class Bootstrapper {
       this.handleData(data);
       return new Promise(resolve => resolve());
     }
+    if (this.settings.getBaseUrl() != "http://localhost:4200") {
+      url = "http://localhost:8000/secure/bootstrap-data";
+    } else {
+      url = this.settings.getBaseUrl() + "secure/bootstrap-data";
+    }
     // fetch bootstrap data from backend and return promise that
     // resolves once request is complete and data is passed to the app
     return new Promise((resolve, reject) => {
-      const url = this.settings.getBaseUrl() + "secure/bootstrap-data";
       this.http.get(url).subscribe(
         response => {
           this.handleData(response["data"]);

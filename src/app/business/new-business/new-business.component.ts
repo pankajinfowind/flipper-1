@@ -82,7 +82,6 @@ export class NewBusinessComponent implements OnInit {
       this.v.response = [];
      this.api.create(this.businessForm.value) .pipe(finalize(() =>  this.loading.next(false)))
      .subscribe(res=>{
-       console.log(res);
       this.bootstrapper.bootstrap(res.data);
          // TODO: Move this into auth service, so other components can re-use
          this.router.navigate(['admin']).then(navigated => {

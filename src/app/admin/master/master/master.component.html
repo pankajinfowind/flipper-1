@@ -1,0 +1,35 @@
+  <mat-drawer-container class="wrapper">
+      <mat-drawer class="sidebar" #sideNav mode="side" opened="true" [position]="nav_position">
+        <mat-list role="list" class="list">
+            <mat-list-item role="listitem" *ngFor="let _link of links">
+                <a matLine (click)='goTo(_link)'>{{ _link }}</a>
+                <button mat-icon-button (click)='goTo(_link)'>
+                   <mat-icon>info</mat-icon>
+                </button>
+             </mat-list-item>
+        </mat-list>
+      </mat-drawer>
+      <mat-drawer-content class="content">
+
+        <mat-toolbar color="primary" class="tabbar">
+            <mat-toolbar-row>
+                <button (click)="sideNav.toggle()" mat-button><mat-icon class="icon">menu</mat-icon>{{link}}</button>
+                <span class="spacer"></span>
+
+                <span class="spacer"></span>
+                <mat-icon class="icon" (click)="add()">add</mat-icon>
+                <mat-icon class="icon">delete</mat-icon>
+            </mat-toolbar-row>
+
+        </mat-toolbar>
+
+        <div [style.width.%]="add_toggled?'30':'0'" *ngIf="add_toggled">
+          <app-modal [link]='link' [action]="action"  (valueChange)='checkChanges($event)'></app-modal>
+        </div>
+        <div [style.width.%]="add_toggled?'70':'100'">
+          <app-categories *ngIf="link=='Categories'" [shared_output]="shared_output"></app-categories>
+          <app-items *ngIf="link=='Items'"></app-items>
+        </div>
+        <div *ngIf="link=='Insurances'"> insurance</div>
+      </mat-drawer-content>
+    </mat-drawer-container>

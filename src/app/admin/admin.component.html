@@ -8,23 +8,28 @@
           <li class="nav-item"><a class="nav-link" href="#">Item</a></li>
         </div>
     </div>
-  </nav>  
+  </nav>
 </header>
 
 <section id="section" class="section-content">
-  <mat-tab-group>
+  <mat-tab-group class="col-12">
       <mat-tab label="Dashboard">
         Dashboard
       </mat-tab>
-  
-      <mat-tab label="Master"> 
+
+      <mat-tab label="Master">
+          <div class="col-12">
+              <div class="row">
+                <app-master></app-master>
+              </div>
+            </div>
         <app-categories></app-categories>
       </mat-tab>
-  
+
       <mat-tab label="Branch">
-        Branchies 
+        Branchies
       </mat-tab>
-  
+
       <mat-tab label="pos">
         POS
       </mat-tab>

@@ -1,0 +1,31 @@
+<div *ngIf="action=='add'">
+    <mat-card class="card">
+        <mat-card-header>
+            <span mat-button><mat-icon class="icon">add</mat-icon>{{link}}</span>
+            <button mat-button (click)="close()">Close</button>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <form [formGroup]="cateogryForm" (ngSubmit)="saveCategory()">
+        <mat-card-content>
+          <p>
+              <mat-form-field class="ybx-mat mat-full-wdth">
+                  <input class="text-secondary" matInput placeholder="Your Category" formControlName="name" required>
+
+                  <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+                        <mat-error *ngIf="name.errors.name && !name.errors.required">
+                          Please enter a valid category
+                        </mat-error>
+                        <mat-error *ngIf="name.errors.required">
+                            Category is <strong>required</strong>
+                        </mat-error>
+                  </mat-error>
+
+              </mat-form-field>
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button type="submit" mat-button [disabled]="(loading | async)">Save</button>
+        </mat-card-actions>
+        </form>
+      </mat-card>
+</div>

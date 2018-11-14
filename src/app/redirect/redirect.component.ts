@@ -11,6 +11,7 @@ import { GlobalVariables } from '../common/core/global-variables';
 export class RedirectComponent implements OnInit {
 
   constructor(private auth:CurrentUser, private router: Router, public v: GlobalVariables) {
+
      this.goTo();
   }
 

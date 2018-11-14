@@ -50,7 +50,7 @@ export class Bootstrapper {
       this.handleData(data);
       return new Promise(resolve => resolve());
     }
-    if (this.settings.getBaseUrl() != "http://localhost:4200") {
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
       url = "http://localhost:8000/secure/bootstrap-data";
     } else {
       url = this.settings.getBaseUrl() + "secure/bootstrap-data";

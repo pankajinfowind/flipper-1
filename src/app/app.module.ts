@@ -2,7 +2,12 @@ import "zone.js/dist/zone-mix";
 import "reflect-metadata";
 import "../polyfills";
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule, APP_INITIALIZER } from "@angular/core";
+import {
+  NgModule,
+  APP_INITIALIZER,
+  Injectable,
+  ErrorHandler
+} from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
@@ -22,7 +27,19 @@ import { RouterModule } from "@angular/router";
 import { CoreModule } from "./common/core/core.module";
 import { APP_CONFIG } from "./common/core/config/flipper-config";
 import { FLIPPER_CONFIG } from "./flipper-config";
-
+import * as Sentry from "@sentry/browser";
+Sentry.init({
+  dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
+});
+// TODO: improve sentry with this article: https://alligator.io/angular/error-tracking-sentry/
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  constructor() {}
+  handleError(error) {
+    Sentry.captureException(error.originalError || error);
+    throw error;
+  }
+}
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -57,7 +74,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       useValue: FLIPPER_CONFIG,
       multi: true
     },
-    ElectronService
+    ElectronService,
+    { provide: ErrorHandler, useClass: SentryErrorHandler }
   ],
   bootstrap: [AppComponent]
 })

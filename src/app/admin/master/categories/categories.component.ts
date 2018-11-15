@@ -42,14 +42,14 @@ export class CategoriesComponent implements OnInit {
       );
     }
     checkIncomingData(){
-      this.ref.detach();
-      setInterval(() => {
-        if(this.shared_output){
-          this.data.push(this.shared_output);
-          this.shared_output=null;
-        }
-        this.ref.detectChanges();
-      }, 1000);
+      // this.ref.detach();
+      // setInterval(() => {
+      //   if(this.shared_output){
+      //     this.data.push(this.shared_output);
+      //     this.shared_output=null;
+      //   }
+      //   this.ref.detectChanges();
+      // }, 1000);
 
     }
 }

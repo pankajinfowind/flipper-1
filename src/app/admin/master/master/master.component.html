@@ -29,7 +29,7 @@
         <div [style.width.%]="add_toggled?'70':'100'">
           <app-categories *ngIf="link=='Categories'" [shared_output]="shared_output"></app-categories>
           <app-items *ngIf="link=='Items'"></app-items>
+          <app-insurance *ngIf="link=='Insurances'"></app-insurance>
         </div>
-        <div *ngIf="link=='Insurances'"> insurance</div>
       </mat-drawer-content>
     </mat-drawer-container>

@@ -1,41 +1,41 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ApiItemService } from './api/api.service';
-import { Item } from 'electron';
-import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { ApiInsuranceService } from './api/ap.service';
+import { Insurance } from './api/insurance';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-items',
-  templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss']
+  selector: 'app-insurance',
+  templateUrl: './insurance.component.html',
+  styleUrls: ['./insurance.component.scss']
 })
-export class ItemsComponent implements OnInit {
+export class InsuranceComponent implements OnInit {
+
 
   public loading = new BehaviorSubject(false);
-  constructor(private api:ApiItemService,private ref: ChangeDetectorRef) { }
-  data: Item[] = [];
-  displayedColumns: string[] = ['sku', 'item','price','sale_price','category'];
-  dataSource = new MatTableDataSource<Item>([]);
+  constructor(private api:ApiInsuranceService,private ref: ChangeDetectorRef) { }
+  data: Insurance[] = [];
+  displayedColumns: string[] = ['logo_url','name', 'discount','country','address'];
+  dataSource = new MatTableDataSource<Insurance>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @Input() shared_output :Item;
+  @Input() shared_output :Insurance;
   ngOnInit() {
-    this.items();
+    this.insurances();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-   // this.checkIncomingData();
+  //  this.checkIncomingData();
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  items(){
+  insurances(){
       this.loading.next(true);
-      this.api.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
+      this.api.getBusinessInsurance().pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
-          console.log(res);
-          this.data = res['items']['data'];
-          this.dataSource = new MatTableDataSource<Item>(this.data);
+          this.data = res['business_insurance'];
+          this.dataSource = new MatTableDataSource<Insurance>(this.data);
         },
         _error => {
         console.error(_error);
@@ -53,5 +53,4 @@ export class ItemsComponent implements OnInit {
       // }, 1000);
 
     }
-
 }

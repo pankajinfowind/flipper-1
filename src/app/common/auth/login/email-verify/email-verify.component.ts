@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { MatDialog } from "@angular/material";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 
 import { AuthService } from "../../auth.service";
@@ -30,7 +29,6 @@ export class EmailVerifyComponent implements OnInit {
     public socialAuth: SocialAuthService,
     public settings: Settings,
     private auth: AuthService,
-    public dialog: MatDialog,
     private api: ApiService,
     public v: GlobalVariables
   ) {

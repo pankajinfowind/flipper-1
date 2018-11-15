@@ -5,12 +5,6 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
-import { SocialAuthService } from "../social-auth.service";
-import { AuthService } from "../auth.service";
-import { Router } from "@angular/router";
-import { CurrentUser } from "../current-user";
-import { Bootstrapper } from "../../core/bootstrapper.service";
-import { Settings } from "../../core/config/settings.service";
 
 @Component({
   selector: "login",
@@ -22,7 +16,7 @@ export class LoginComponent {
   constructor() {}
   @Input() label = "login";
   @Input() token = "";
-  @Input() appname = "Yegobox";
+  @Input() appname = "YeGoBox";
   @Input() redirecturl = "/home";
   @Output() action = new EventEmitter<any>();
   user = {};

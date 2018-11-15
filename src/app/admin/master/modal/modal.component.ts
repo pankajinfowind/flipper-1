@@ -6,6 +6,10 @@ import { finalize } from 'rxjs/operators';
 import { ApiItemService } from '../items/api/api.service';
 import { Category } from '../categories/api/category';
 import { Toast } from '../../../common/core/ui/toast.service';
+import { MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Insurance } from '../insurance/api/insurance';
+import { ApiInsuranceService } from '../insurance/api/ap.service';
 
 @Component({
   selector: 'app-modal',
@@ -22,13 +26,17 @@ export class ModalComponent implements OnInit {
   itemForm: FormGroup;
   public loading = new BehaviorSubject(false);
   currencies: string[] = ['Rwf'];
-  categories: Category[] = [
-    {category_id:  1, name: 'Amata'}
-  ];
-  constructor(private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService) { }
+  categories: Category[] = [];
+  constructor(private apiIns:ApiInsuranceService,private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService) { }
 
 
   ngOnInit() {
+    if(this.link=='Items'){
+    this.getActiveCategories();
+    }
+    if(this.link=='Insurances'){
+      this.insurances();
+    }
     this.cateogryForm = new FormGroup({
       name: new FormControl("", [Validators.required])
     });
@@ -50,6 +58,17 @@ export class ModalComponent implements OnInit {
   close(){
     this.valueChange.emit({close_modal:true});
   }
+  getActiveCategories(){
+    this.loading.next(true);
+    this.apiCat.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
+      res => {
+        this.categories=res['categories']['data'].filter(res=>res.is_active==1);
+      },
+      _error => {
+      console.error(_error);
+      }
+    );
+  }
 
   saveCategory(){
     if (this.cateogryForm.valid) {
@@ -57,7 +76,7 @@ export class ModalComponent implements OnInit {
       const data = { name: this.cateogryForm.value.name };
       this.apiCat.create(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
-          if(res.status=='status'){
+        if(res.status=='success'){
             this.toast.open('Category recorded successfull!');
             //this.valueChange.emit(res);
           }
@@ -108,8 +127,7 @@ export class ModalComponent implements OnInit {
              };
       this.apiItem.create(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
-
-            if(res.status=='status'){
+            if(res.status=='success'){
               this.toast.open('Item recorded successfull!');
               this.valueChange.emit(res);
             }
@@ -121,4 +139,53 @@ export class ModalComponent implements OnInit {
     }
   }
 
+
+  selection = new SelectionModel<Insurance>(true, []);
+  insurance_data: Insurance[] = [];
+  displayedColumns: string[] = ['select','logo_url','name', 'discount','country','address'];
+  dataSource = new MatTableDataSource<Insurance>([]);
+
+
+  insurances(){
+    this.loading.next(true);
+    this.apiIns.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
+      res => {
+        this.insurance_data = res['insurances']['data'];
+        this.dataSource = new MatTableDataSource<Insurance>(this.insurance_data);
+      },
+      _error => {
+      console.error(_error);
+      }
+    );
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+  attachInsuranceToBusiness(){
+    if (this.selection.selected.length > 0) {
+      this.loading.next(true);
+      const data = {insurance:this.selection.selected};
+      this.apiIns.attachInsurance(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+        res => {
+            if(res.status=='success'){
+              this.toast.open('Insurance attached to business!');
+              this.valueChange.emit(res);
+            }
+        },
+        _error => {
+        console.error(_error);
+        }
+      );
+    }
+  }
 }

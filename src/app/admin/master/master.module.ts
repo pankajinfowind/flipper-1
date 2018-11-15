@@ -6,6 +6,7 @@ import { MasterComponent } from './master/master.component';
 import { MaterialModule } from '../../material/material.module';
 import { ModalComponent } from './modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InsuranceComponent } from './insurance/insurance.component';
 
 @NgModule({
   imports: [
@@ -18,9 +19,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ItemsComponent,
     CategoriesComponent,
     MasterComponent,
-    ModalComponent
+    ModalComponent,
+    InsuranceComponent
   ],
-  declarations: [ItemsComponent, CategoriesComponent, MasterComponent, ModalComponent],
+  declarations: [ItemsComponent, CategoriesComponent, MasterComponent, ModalComponent,InsuranceComponent],
 
 })
 export class MasterModule { }

@@ -1,5 +1,5 @@
 
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" *ngIf="data.length > 0;else notDataFound">
     <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
       </mat-form-field>
@@ -26,3 +26,7 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+
+<ng-template #notDataFound>
+    can't find data
+</ng-template>

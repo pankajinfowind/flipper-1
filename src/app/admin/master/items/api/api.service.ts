@@ -14,6 +14,8 @@ export class ApiItemService {
     public create(params: Item): BackendResponse<{ data: any }> {
         return this.http.post(API_ROUTES.ITEM, params);
     }
+
+
     public get(): BackendResponse<{ data: any }> {
       return this.http.get(API_ROUTES.ITEM);
   }

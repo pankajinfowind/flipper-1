@@ -4,13 +4,15 @@ import { MasterModule } from './master/master.module';
 import { AdminComponent } from './admin.component';
 import { MaterialModule } from '../material/material.module';
 import { AdminRoutingModule } from './admin-routing.module';
+import { StockModule } from '../stock/stock.module';
 
 @NgModule({
   imports: [
     CommonModule,
     MasterModule,
     MaterialModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    StockModule
   ],
   exports:[
     AdminComponent

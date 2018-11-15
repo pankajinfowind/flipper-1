@@ -1,0 +1,32 @@
+.sidebar {
+  float: left;
+  min-width: 30%;
+  max-width: 30%;
+  transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+}
+.mat-drawer-container{
+  min-width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+}
+.content{
+  float: right;
+  min-width: 70%;
+  max-width: 70%;
+  transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+}
+.list{
+  width:100%
+}
+.tabbar{
+  width:100%
+}
+
+.icon {
+  padding: 0 14px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

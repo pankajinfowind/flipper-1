@@ -3,8 +3,13 @@ import {
   ViewEncapsulation,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnInit
 } from "@angular/core";
+import * as Raven from "raven-js";
+Raven.config(
+  "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
+).install();
 
 @Component({
   selector: "login",
@@ -12,7 +17,12 @@ import {
   styleUrls: ["./login.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  ngOnInit(): void {
+    // throw new Error("I Know nothing");
+    Raven.captureException("we can not load item from stock sir sorry");
+    Raven.showReportDialog();
+  }
   constructor() {}
   @Input() label = "login";
   @Input() token = "";

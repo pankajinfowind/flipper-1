@@ -106,8 +106,9 @@ export class CurrentUser {
      * Check if user subscription is active
      */
     public subscriptionIsActive(): boolean {
-        return this.isSubscribed() && !this.onTrial();
+        return false;//this.isSubscribed() && !this.onTrial();
     }
+
 
     public onTrial() {
         // const sub = this.getSubscription();

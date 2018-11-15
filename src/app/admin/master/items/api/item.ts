@@ -1,5 +1,11 @@
 export class Item {
-  name:string;
+  item:string;
+  sku:string;
+  price:number;
+  category_id?:number;
+  barcode?:string;
+  sale_price?:number;
+  currency?:string;
 
     constructor(params: Object = {}) {
       for (let name in params) {

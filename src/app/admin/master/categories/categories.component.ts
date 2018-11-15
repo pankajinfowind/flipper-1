@@ -24,7 +24,7 @@ export class CategoriesComponent implements OnInit {
     this.category();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.checkIncomingData();
+  //  this.checkIncomingData();
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

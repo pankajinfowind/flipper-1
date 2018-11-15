@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppHttpClient } from '../../../../common/core/http/app-http-client.service';
 import { BackendResponse } from '../../../../common/core/types/backend-response';
 import { API_ROUTES } from './api-routes.enum';
-import { Item } from 'electron';
+import { Item } from './item';
 
 @Injectable({
     providedIn: 'root'

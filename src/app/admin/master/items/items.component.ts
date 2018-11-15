@@ -12,7 +12,6 @@ import { finalize } from 'rxjs/operators';
 })
 export class ItemsComponent implements OnInit {
 
-
   public loading = new BehaviorSubject(false);
   constructor(private api:ApiItemService,private ref: ChangeDetectorRef) { }
   data: Item[] = [];
@@ -22,7 +21,7 @@ export class ItemsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @Input() shared_output :Item;
   ngOnInit() {
-    this.category();
+    this.items();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.checkIncomingData();
@@ -30,7 +29,7 @@ export class ItemsComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  category(){
+  items(){
       this.loading.next(true);
       this.api.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {

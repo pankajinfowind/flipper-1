@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockComponent implements OnInit {
   add_toggled=false;
-  link: string = 'Items';
+  link: string = 'Stock';
   action:string ='';
   nav_position:string='start';
   links: string[] = ['Stock', 'Available stock', 'Sold out'];

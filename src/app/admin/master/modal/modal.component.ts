@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Insurance } from '../insurance/api/insurance';
 import { ApiInsuranceService } from '../insurance/api/ap.service';
-
+// import {LocalStorageService} from 'ngx-webstorage';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -28,10 +28,13 @@ export class ModalComponent implements OnInit {
   currencies: string[] = ['Rwf'];
   categories: Category[] = [];
   numberPatern = '^[0-9.]+$';
+  //  geoIpInfo = this.storage.retrieve('geoIpInfo');
+  //  private storage: LocalStorageService,
   constructor(private apiIns:ApiInsuranceService,private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService) { }
 
 
   ngOnInit() {
+    // console.log(this.geoIpInfo.country_name);
     if(this.link=='Items'){
     this.getActiveCategories();
     }

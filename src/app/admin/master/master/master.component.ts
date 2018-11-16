@@ -16,7 +16,9 @@ shared_output;
   constructor() { }
 
   ngOnInit() {
+
   }
+
 
   goTo(position: string) {
     this.link = position;

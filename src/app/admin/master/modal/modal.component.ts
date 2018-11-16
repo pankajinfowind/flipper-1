@@ -27,6 +27,7 @@ export class ModalComponent implements OnInit {
   public loading = new BehaviorSubject(false);
   currencies: string[] = ['Rwf'];
   categories: Category[] = [];
+  numberPatern = '^[0-9.]+$';
   constructor(private apiIns:ApiInsuranceService,private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService) { }
 
 
@@ -45,8 +46,8 @@ export class ModalComponent implements OnInit {
       item: new FormControl("", [Validators.required]),
       sku: new FormControl("", [Validators.required]),
       currency: new FormControl("", [Validators.required]),
-      price: new FormControl("", [Validators.required]),
-      sale_price: new FormControl("", [Validators.required]),
+      price: new FormControl("", [Validators.required, Validators.pattern(this.numberPatern)]),
+      sale_price: new FormControl("", [Validators.required, Validators.pattern(this.numberPatern)]),
       category_id: new FormControl("", [Validators.required]),
       barcode: new FormControl("barcode")
     });

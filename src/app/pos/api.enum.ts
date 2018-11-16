@@ -1,3 +1,4 @@
 export enum API_ROUTES {
-  SESSIONS = "session"
+  SESSIONS = "session",
+  SOLD = "sold"
 }

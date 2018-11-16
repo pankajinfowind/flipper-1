@@ -22,4 +22,8 @@ export class ApiService {
     Raven.captureException(problem);
     Raven.showReportDialog();
   }
+  sold(params: any) {
+    // this.http.prefix = "api";
+    return this.http.post(API_ROUTES.SOLD, params);
+  }
 }

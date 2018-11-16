@@ -40,14 +40,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
       <td mat-cell *matCellDef="let element">{{ element.category.name }}</td>
     </ng-container>
-    <ng-container matColumnDef="operation">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Operation</th>
-      <td mat-cell *matCellDef="let element">
-        <button type="button" mat-button [disabled]="loading | async">
-          Add To Card
-        </button>
-      </td>
-    </ng-container>
+    
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>

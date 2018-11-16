@@ -2,10 +2,10 @@
   <mat-drawer class="sidebar" #sideNav mode="side" opened="true" [position]="nav_position">
     <mat-list role="list" class="list">
         <mat-list-item role="listitem" *ngFor="let _link of links">
-            <a matLine (click)='goTo(_link)'>{{ _link }}</a>
-            <button mat-icon-button (click)='goTo(_link)'>
-               <mat-icon>info</mat-icon>
-            </button>
+            <button mat-icon-button (click)='goTo(_link.value)'>
+                <mat-icon>info</mat-icon>
+             </button>   <a matLine (click)='goTo(_link.value,_link.viewValue)'>{{ _link.viewValue }}</a>
+
          </mat-list-item>
     </mat-list>
   </mat-drawer>
@@ -13,18 +13,19 @@
 
     <mat-toolbar color="primary" class="tabbar">
         <mat-toolbar-row>
-            <button (click)="sideNav.toggle()" mat-button><mat-icon class="">menu</mat-icon>{{link}}</button>
+            <button (click)="sideNav.toggle()" mat-button><mat-icon class="">menu</mat-icon>{{title}}</button>
             <span class="spacer"></span>
 
             <span class="spacer"></span>
-            <mat-icon class="icon" (click)="add()">add</mat-icon>
-            <mat-icon class="icon">delete</mat-icon>
         </mat-toolbar-row>
 
     </mat-toolbar>
 
     <div [style.width.%]="add_toggled?'70':'100'">
-     stock
+         <app-new-stock *ngIf="link=='new'"></app-new-stock>
+         <app-availabe-stock *ngIf="link=='avalaible'"></app-availabe-stock>
+         <app-stock-sold-out *ngIf="link=='sold'"></app-stock-sold-out>
+         <app-stock-damaged *ngIf="link=='damaged'"></app-stock-damaged>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

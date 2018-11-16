@@ -7,15 +7,21 @@ import { Component, OnInit } from "@angular/core";
 })
 export class StockComponent implements OnInit {
   add_toggled = false;
-  link: string = "Stock";
+  link: string = "avalaible";
+  title: string = "Available stock";
   action: string = "";
   nav_position: string = "start";
-  links: string[] = ["Stock", "Available stock", "Sold out"];
+  links: any[] = [
+    { value: "new", viewValue: "Add item in stock" },
+    { value: "avalaible", viewValue: "Available stock" },
+    { value: "sold", viewValue: "Sold out" },
+    { value: "damaged", viewValue: "Stock Damaged" }
+  ];
   constructor() {}
 
   ngOnInit() {}
-  add() {}
-  goTo(position: string) {
-    this.link = position;
+  goTo(v: string, vv: string) {
+    this.link = v;
+    this.title = vv;
   }
 }

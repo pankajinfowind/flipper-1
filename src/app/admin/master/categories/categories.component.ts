@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiCategoryService } from './api/api.service';
 import { finalize } from 'rxjs/operators';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Category } from './api/category';
+import { Select } from '@ngxs/store';
+import { MasterState } from '../../../state/master-state';
 
 @Component({
   selector: 'app-categories',
@@ -20,6 +22,7 @@ export class CategoriesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() shared_output :Category;
+  @Select(MasterState.categories) entries$: Observable<Category[]>;
   ngOnInit() {
     this.category();
     this.dataSource.paginator = this.paginator;
@@ -30,11 +33,9 @@ export class CategoriesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   category(){
-      this.loading.next(true);
-      this.api.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
+    this.entries$.pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
-          this.data = res['categories']['data'];
-          this.dataSource = new MatTableDataSource<Category>(this.data);
+          console.log(res);
         },
         _error => {
         console.error(_error);

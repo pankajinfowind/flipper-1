@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8" *ngIf="data.length > 0; else: notDataFound">
+<div class="mat-elevation-z8" *ngIf="soldoutData.length > 0; else: notSoldDataFound">
     <mat-form-field>
       <input
         matInput
@@ -7,7 +7,7 @@
       />
     </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="soldoutDataSource" matSort>
       <!-- Position Column -->
       <ng-container matColumnDef="sku">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Sku</th>
@@ -83,4 +83,4 @@
     ></mat-paginator>
   </div>
 
-  <ng-template #notDataFound> can't find data </ng-template>
+  <ng-template #notSoldDataFound> can't find data </ng-template>

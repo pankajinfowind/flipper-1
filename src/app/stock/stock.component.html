@@ -23,8 +23,8 @@
 
     <div [style.width.%]="add_toggled?'70':'100'">
          <app-new-stock *ngIf="link=='new'"></app-new-stock>
-         <app-availabe-stock *ngIf="link=='avalaible'"></app-availabe-stock>
-         <app-stock-sold-out *ngIf="link=='sold'"></app-stock-sold-out>
+         <app-availabe-stock *ngIf="link=='available'"></app-availabe-stock>
+         <app-stock-sold-out *ngIf="link=='stockout'"></app-stock-sold-out>
          <app-stock-damaged *ngIf="link=='damaged'"></app-stock-damaged>
     </div>
   </mat-drawer-content>

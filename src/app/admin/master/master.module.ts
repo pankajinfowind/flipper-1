@@ -7,9 +7,11 @@ import { MaterialModule } from "../../material/material.module";
 import { ModalComponent } from "./modal/modal.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { InsuranceComponent } from "./insurance/insurance.component";
+import { MasterState } from "../../state/master-state";
+import { NgxsModule } from '@ngxs/store';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule,NgxsModule.forFeature([MasterState])],
   exports: [
     ItemsComponent,
     CategoriesComponent,

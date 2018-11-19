@@ -14,7 +14,7 @@ export class ApiCategoryService {
     public create(params: Category): BackendResponse<{ data: any }> {
         return this.http.post(API_ROUTES.CATEGORY, params);
     }
-    public get(): BackendResponse<{ data: any }> {
+    public get(): BackendResponse<{ categories: Category[] }> {
       return this.http.get(API_ROUTES.CATEGORY);
   }
 }

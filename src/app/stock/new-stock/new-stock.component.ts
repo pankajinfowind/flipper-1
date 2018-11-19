@@ -23,7 +23,7 @@ export class NewStockComponent implements OnInit {
   units: string[] = ['unit','ltre','gms','kg'];
   data: Item[] = [];
   selection = new SelectionModel<Item>(true, []);
-  displayedColumns: string[] = ['select','sku', 'item','category','current_stock_qty','weight','unit_of_measure','operation'];
+  displayedColumns: string[] = ['select','sku', 'item','category','available_stock_qty','weight','unit_of_measure','operation'];
   dataSource = new MatTableDataSource<Item>([]);
 
   rows: FormArray = this._fb.array([]);

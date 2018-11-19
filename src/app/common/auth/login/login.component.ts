@@ -20,8 +20,8 @@ Raven.config(
 export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // throw new Error("I Know nothing");
-    Raven.captureException("we can not load item from stock sir sorry");
-    Raven.showReportDialog();
+    // Raven.captureException("we can not load item from stock sir sorry");
+    // Raven.showReportDialog();
   }
   constructor() {}
   @Input() label = "login";

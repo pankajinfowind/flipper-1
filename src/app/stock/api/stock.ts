@@ -8,9 +8,9 @@ export class Stock {
   qty?:string;
   sale_price?:number;
   currency?:string;
-  available?:boolean;
-  current_stock_qty?:number;
-  openning_stock_qty?:number;
+  status?:any;
+  available_stock_qty?:number;
+  entry_stock_qty?:number;
   weight?:number;
   unit_of_measure?:string;
   item_id?:number;

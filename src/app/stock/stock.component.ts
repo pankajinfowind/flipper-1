@@ -63,7 +63,6 @@ export class StockComponent implements OnInit,OnDestroy {
         }
       );
   }
-
   set data(data:Stock[]){
     this._data=data;
   }

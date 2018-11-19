@@ -25,7 +25,8 @@ export class ItemsComponent implements OnInit {
     "item",
     "price",
     "sale_price",
-    "category"
+    "category",
+    "action"
   ];
   dataSource = new MatTableDataSource<Item>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;

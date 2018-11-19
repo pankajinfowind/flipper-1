@@ -16,7 +16,7 @@ export class InsuranceComponent implements OnInit {
   public loading = new BehaviorSubject(false);
   constructor(private api:ApiInsuranceService,private ref: ChangeDetectorRef) { }
   data: Insurance[] = [];
-  displayedColumns: string[] = ['logo_url','name', 'discount','country','address'];
+  displayedColumns: string[] = ['logo_url','name', 'discount','country','address', 'action'];
   dataSource = new MatTableDataSource<Insurance>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

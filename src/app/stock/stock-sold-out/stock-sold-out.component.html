@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8" *ngIf="soldoutData.length > 0; else: notSoldDataFound">
-    <mat-form-field>
+<div class="col-12 mat-elevation-z8" *ngIf="soldoutData.length > 0; else: notSoldDataFound">
+    <mat-form-field class="w-100 px-2">
       <input
         matInput
         (keyup)="applyFilter($event.target.value)"
@@ -7,7 +7,7 @@
       />
     </mat-form-field>
 
-    <table mat-table [dataSource]="soldoutDataSource" matSort>
+    <table mat-table [dataSource]="soldoutDataSource" matSort class="w-100">
       <!-- Position Column -->
       <ng-container matColumnDef="sku">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Sku</th>
@@ -77,10 +77,11 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
+    <div class="clearfix"></div>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
     ></mat-paginator>
   </div>
 
-  <ng-template #notSoldDataFound> can't find data </ng-template>
+  <ng-template #notSoldDataFound> <p class="py-1">can't find data</p> </ng-template>

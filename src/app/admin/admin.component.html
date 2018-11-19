@@ -2,17 +2,15 @@
   <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar-brand">
-          Flipper
+          Flipper App
         </div>
-        <div class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#">Item</a></li>
-        </div>
+        
     </div>
   </nav>
 </header>
 
 <section id="section" class="section-content">
-  <mat-tab-group class="col-12">
+  <mat-tab-group class="w-100">
       <mat-tab label="Dashboard">
         Dashboard
       </mat-tab>
@@ -22,24 +20,17 @@
       </mat-tab>
 
       <mat-tab label="Master">
-          <div class="col-12">
-              <div class="row">
-                <app-master></app-master>
-              </div>
-            </div>
+        <app-master></app-master>
       </mat-tab>
 
       <mat-tab label="Stock">
-
-        <div class="col-12">
-            <div class="row">
-                 <app-stock></app-stock>
-            </div>
-          </div>
+          <app-stock></app-stock>
       </mat-tab>
+
       <mat-tab label="Sales">
         Sales
       </mat-tab>
+
       <mat-tab label="Reports">
           Reports
       </mat-tab>

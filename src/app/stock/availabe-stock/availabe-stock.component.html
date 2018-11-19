@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8" *ngIf="data.length > 0; else: notDataFound">
-    <mat-form-field>
+<div class="col-12 mat-elevation-z8">
+    <mat-form-field class="w-100 px-2">
       <input
         matInput
         (keyup)="applyFilter($event.target.value)"
@@ -7,7 +7,7 @@
       />
     </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort class="w-100">
       <!-- Position Column -->
       <ng-container matColumnDef="sku">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Sku</th>
@@ -77,10 +77,11 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
+    <div class="clearfix"></div>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
     ></mat-paginator>
   </div>
 
-  <ng-template #notDataFound> can't find data </ng-template>
+

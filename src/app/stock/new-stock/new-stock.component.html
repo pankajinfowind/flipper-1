@@ -1,13 +1,13 @@
 
-<div class="mat-elevation-z8" *ngIf="data.length > 0;else notDataFound">
-    <mat-form-field>
+<div class="col-12 mat-elevation-z8" *ngIf="data.length > 0;else notDataFound">
+    <mat-form-field class="w-100 px-2">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
       </mat-form-field>
 
 
     <form [formGroup]="itemForm"  novalidate (ngSubmit)="addItem()">
         <button type="button" (click)="addItem()" *ngIf="selection.selected.length > 1" mat-button [disabled]="(loading | async)">Save all</button>
-        <table formArrayName="newStock" mat-table [dataSource]="dataSource" matSort>
+        <table formArrayName="newStock" mat-table [dataSource]="dataSource" matSort class="w-100">
 
        <!-- Checkbox Column -->
         <ng-container matColumnDef="select">

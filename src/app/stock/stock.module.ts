@@ -7,10 +7,11 @@ import { NewStockComponent } from './new-stock/new-stock.component';
 import { AvailabeStockComponent } from './availabe-stock/availabe-stock.component';
 import { StockSoldOutComponent } from './stock-sold-out/stock-sold-out.component';
 import { StockDamagedComponent } from './stock-damaged/stock-damaged.component';
+import { StocksComponent } from './stocks/stocks.component';
 
 @NgModule({
   declarations:
-   [StockComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockDamagedComponent],
+   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockDamagedComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -18,6 +19,6 @@ import { StockDamagedComponent } from './stock-damaged/stock-damaged.component';
     ReactiveFormsModule
   ],
   exports:
-  [StockComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent]
+  [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent]
 })
 export class StockModule { }

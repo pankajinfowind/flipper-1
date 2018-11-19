@@ -16,7 +16,7 @@ export class StockSoldOutComponent implements OnInit {
   @Output("cart")
   cart: EventEmitter<Stock> = new EventEmitter();
   constructor(private api: ApiStockService, private ref: ChangeDetectorRef) {}
-  data: Stock[] = [];
+  soldoutData: Stock[] = [];
   displayedColumns: string[] = [
     "sku",
     "stock",
@@ -29,7 +29,7 @@ export class StockSoldOutComponent implements OnInit {
     "progress",
     "operation"
   ];
-  dataSource = new MatTableDataSource<Stock>([]);
+  soldoutDataSource = new MatTableDataSource<Stock>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() shared_output: Stock;
@@ -41,12 +41,12 @@ export class StockSoldOutComponent implements OnInit {
 
   ngOnInit() {
     this.stocks();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // this.checkIncomingData();
+    this.soldoutDataSource.paginator = this.paginator;
+    this.soldoutDataSource.sort = this.sort;
+    // this.checkIncomingsoldoutData();
   }
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.soldoutDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   stocks() {
@@ -56,8 +56,9 @@ export class StockSoldOutComponent implements OnInit {
       .pipe(finalize(() => this.loading.next(false)))
       .subscribe(
         res => {
-          this.data = res["stocks"]["data"];
-          this.dataSource = new MatTableDataSource<Stock>(this.data);
+          this.soldoutData = res["stocks"]["data"];
+          console.log(res);
+          this.soldoutDataSource = new MatTableDataSource<Stock>(this.soldoutData);
         },
         _error => {
           console.error(_error);

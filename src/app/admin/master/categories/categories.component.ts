@@ -15,7 +15,7 @@ export class CategoriesComponent implements OnInit {
   public loading = new BehaviorSubject(false);
   constructor(private api:ApiCategoryService,private ref: ChangeDetectorRef) { }
   data: Category[] = [];
-  displayedColumns: string[] = ['category_id', 'name'];
+  displayedColumns: string[] = ['category_id', 'name', 'action'];
   dataSource = new MatTableDataSource<Category>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

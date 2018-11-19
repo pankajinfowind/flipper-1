@@ -1,4 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { ApiStockService } from "./api/api.service";
+import { finalize } from "rxjs/operators";
+import { Stock } from "./api/stock";
 
 @Component({
   selector: "app-stock",
@@ -7,21 +11,54 @@ import { Component, OnInit } from "@angular/core";
 })
 export class StockComponent implements OnInit {
   add_toggled = false;
-  link: string = "avalaible";
+  link: string = "available";
   title: string = "Available stock";
   action: string = "";
   nav_position: string = "start";
   links: any[] = [
     { value: "new", viewValue: "Add item in stock" },
-    { value: "avalaible", viewValue: "Available stock" },
-    { value: "sold", viewValue: "Sold out" },
+    { value: "available", viewValue: "Available stock" },
+    { value: "stockout", viewValue: "Sold out" },
     { value: "damaged", viewValue: "Stock Damaged" }
   ];
-  constructor() {}
+  public loading = new BehaviorSubject(false);
+  _data: Stock[] = [];
+  constructor(private api: ApiStockService, private ref: ChangeDetectorRef) {
+    this.stocks();
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
   goTo(v: string, vv: string) {
     this.link = v;
     this.title = vv;
+    if(this.link){
+      console.log('link',this.link);
+      this.stocks();
+    }
+  }
+
+  stocks() {
+    this.loading.next(true);
+    this.api
+      .getStockByBranch(1, this.link)
+      .pipe(finalize(() => this.loading.next(false)))
+      .subscribe(
+        res => {
+          console.log('ddddd',this.data);
+          this.data = res["stocks"]["data"];
+          this.ref.detectChanges();
+        },
+        _error => {
+          console.error(_error);
+        }
+      );
+  }
+  set data(data:Stock[]){
+    this._data=data;
+  }
+  get data():Stock[]{
+    return this._data;
   }
 }

@@ -1,39 +1,15 @@
-<header id="header" class="header-content">
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <div class="navbar-brand">
-          Flipper App
-        </div>
+ <material-navbar menuPosition="admin-navbar" [showToggleButton]="true" (toggleButtonClick)="toggleLeftSidebar()"></material-navbar>
 
-    </div>
-  </nav>
-</header>
+    <nav mat-tab-nav-bar [color]="appearance.navLayout.color" [backgroundColor]="appearance.navLayout.backgroundColor">
+        <a mat-tab-link
+           *ngFor="let link of appearance.navLinks"
+           [routerLink]="link.path"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive">
+          {{link.label}}
+        </a>
+      </nav>
 
-<section id="section" class="section-content">
-  <mat-tab-group class="w-100">
-      <mat-tab label="Dashboard">
-        Dashboard
-      </mat-tab>
+      <router-outlet></router-outlet>
 
-      <mat-tab label="Pos">
-         <app-sessions></app-sessions>
-      </mat-tab>
-
-      <mat-tab label="Master">
-        <app-master></app-master>
-      </mat-tab>
-
-      <mat-tab label="Stock">
-          <app-stock></app-stock>
-      </mat-tab>
-
-      <mat-tab label="Sales">
-        Sales
-      </mat-tab>
-
-      <mat-tab label="Reports">
-          Reports
-      </mat-tab>
-  </mat-tab-group>
-</section>
 

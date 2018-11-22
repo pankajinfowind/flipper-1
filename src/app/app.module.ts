@@ -30,8 +30,6 @@ import { FLIPPER_CONFIG } from "./flipper-config";
 import * as Sentry from "@sentry/browser";
 import { RedirectComponent } from "./redirect/redirect.component";
 import { NgxsModule } from "@ngxs/store";
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 Sentry.init({
   dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 });

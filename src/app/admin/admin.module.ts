@@ -1,22 +1,20 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { MasterModule } from "./master/master.module";
 import { AdminComponent } from "./admin.component";
 import { MaterialModule } from "../material/material.module";
 import { AdminRoutingModule } from "./admin-routing.module";
-import { StockModule } from "../stock/stock.module";
 import { PosModule } from "../pos/pos.module";
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UiModule } from "../common/core/ui/ui.module";
 
 @NgModule({
   imports: [
     CommonModule,
-    PosModule,
-    MasterModule,
     MaterialModule,
     AdminRoutingModule,
-    StockModule
+    UiModule
   ],
-  exports: [AdminComponent],
-  declarations: [AdminComponent]
+  exports: [AdminComponent,DashboardComponent],
+  declarations: [AdminComponent, DashboardComponent]
 })
 export class AdminModule {}

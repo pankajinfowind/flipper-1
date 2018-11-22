@@ -31,6 +31,9 @@ export class CurrentUser {
 
     public userChanged: EventEmitter<User> = new EventEmitter();
 
+    public userSetting() {
+      return this.current.settings;
+    }
     /**
      * Get property of currently logged in user model.
      */
@@ -85,6 +88,7 @@ export class CurrentUser {
     public hasRole(role: string): boolean {
         return this.current.roles && !!this.current.roles.find(r => r.name === role);
     }
+
 
     /**
      * Check if current user is logged in.

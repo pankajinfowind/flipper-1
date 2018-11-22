@@ -1,51 +1,22 @@
-<div class="mw-100">
-    <div class="row">
-        <div class="col-sm-2 col-side">
-            <mat-drawer class="w-100" #sideNav mode="side" opened="true" [position]="nav_position">
-                <mat-list role="list" class="list">
-                    <mat-list-item role="listitem" *ngFor="let _link of links">
-                        <button mat-icon-button (click)='goTo(_link.value)'>
-                            <mat-icon>info</mat-icon>
-                        </button>   <a matLine (click)='goTo(_link.value,_link.viewValue)'>{{ _link.viewValue }}</a>
+<div class="stock">
+<mat-sidenav-container class="content">
+  <mat-sidenav [opened]="!leftColumnIsHidden" mode="side" class="left-column">
+    <div class="menu-items" *ngFor="let link of links">
+      <a class="menu-item"  [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <mat-icon >menu</mat-icon>
+          <span class="text" trans>{{link.label}}</span>
+      </a>
+   </div>
 
-                    </mat-list-item>
-                </mat-list>
-            </mat-drawer>
-        </div>
-
-        <div class="col-sm-10">
-            <div class="row">
-                <div class="col-12">
-                    <mat-toolbar color="primary" class="tabbar">
-                        <mat-toolbar-row>
-                            <button (click)="sideNav.toggle()" mat-button><mat-icon class="">menu</mat-icon>{{title}}</button>
-                            <span class="spacer"></span>
-                            <span class="spacer"></span>
-                        </mat-toolbar-row>
-                    </mat-toolbar>
-                </div>
-
-                <div class="clearfix"></div>
-                <div class="col-12">
-                    <app-new-stock *ngIf="link=='new'"></app-new-stock>
-                    <!-- <app-stocks *ngIf="data.length > 0; else notDataFound" [data]='data' [status]='link'></app-stocks> -->
-                    <ng-template #notDataFound> can't find data </ng-template>
-                </div>
-            </div>
-        </div>
-
+    <div class="version">
+        <!-- Version: {{settings.get('version')}} -->
     </div>
+</mat-sidenav>
+
+<mat-sidenav-content class="content-inner">
+    <loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
+    <router-outlet></router-outlet>
+</mat-sidenav-content>
+</mat-sidenav-container>
 </div>
-  <!-- <mat-drawer-content class="content">
-
-
-
-    <div [style.width.%]="add_toggled?'70':'100'">
-         <app-new-stock *ngIf="link=='new'"></app-new-stock>
-         <app-availabe-stock *ngIf="link=='available'"></app-availabe-stock>
-         <app-stock-sold-out *ngIf="link=='stockout'"></app-stock-sold-out>
-         <app-stock-damaged *ngIf="link=='damaged'"></app-stock-damaged>
-    </div>
-  </mat-drawer-content>
-</mat-drawer-container> -->
 

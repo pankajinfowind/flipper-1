@@ -1,9 +1,8 @@
-@import "./src/app/app_sass/theme";
-app-master{
-  width:100vh;
-  height:100vh;
+@import "../app_sass/variables";
+app-admin{
+  material-navbar {
+    box-shadow: none;
+    border-bottom: 1px solid $site-border-color-200;
+  }
 }
-app-stock{
-  width:100vh;
-  height:100vh;
-}
+

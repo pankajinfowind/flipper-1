@@ -8,6 +8,8 @@ import { AvailabeStockComponent } from './availabe-stock/availabe-stock.componen
 import { StockSoldOutComponent } from './stock-sold-out/stock-sold-out.component';
 import { StockDamagedComponent } from './stock-damaged/stock-damaged.component';
 import { StocksComponent } from './stocks/stocks.component';
+import { StockRoutingModule } from './stock-routing.module';
+import { UiModule } from '../common/core/ui/ui.module';
 
 @NgModule({
   declarations:
@@ -16,7 +18,9 @@ import { StocksComponent } from './stocks/stocks.component';
     CommonModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StockRoutingModule,
+    UiModule
   ],
   exports:
   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent]

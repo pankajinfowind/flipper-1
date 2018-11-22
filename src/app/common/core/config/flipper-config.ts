@@ -1,5 +1,6 @@
 import {AppConfig} from '../../../../environments/environment';
 import {InjectionToken} from '@angular/core';
+import { Appearance } from '../types/models/User';
 
 export const APP_CONFIG = new InjectionToken<FlipperConfig[]>('APP_CONFIG');
 
@@ -65,6 +66,7 @@ export interface FlipperConfig {
     // backend stuff
     base_url?: string;
     version?: string;
+    appearance?:Appearance
     'homepage.type'?: string;
     'homepage.value'?: string;
     'logging.sentry_public'?: string;
@@ -74,7 +76,6 @@ export interface FlipperConfig {
     'i18n.enable'?: boolean;
     'branding.site_name'?: string;
     'toast.default_timeout'?: number;
-
     // vebto config
     environment?: 'production'|'dev';
     assetsPrefix?: string|null;
@@ -90,15 +91,6 @@ export interface FlipperConfig {
         defaultPosition: string,
         dropdownItems: {route: string, name: string, icon: string, permission?: string, role?: string}[],
     };
-    demo?: {
-        email?: string,
-        password?: string,
-    };
-    admin?: {
-        appearance: FlipperConfigAppearance,
-        analytics?: {stats: {name: string, icon: string}[]},
-        ads?: {slot: string, description: string}[],
-        pages: {name: string, icon: string, route: string, permission: string}[],
-        settingsPages?: {name: string, route: string}[],
-    };
+
+
 }

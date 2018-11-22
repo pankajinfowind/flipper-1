@@ -1,46 +1,24 @@
-<div class="mw-100">
-  <div class="row">
-    <div class="col-sm-3 col-side">
-      <mat-drawer class="w-100" #sideNav mode="side" opened="true" [position]="nav_position">
-        <mat-list role="list" class="list">
-          <mat-list-item role="listitem" *ngFor="let _link of links">
-            <a matLine (click)='goTo(_link)'>{{ _link }}</a>
-            <button mat-icon-button (click)='goTo(_link)'>
-                <mat-icon>info</mat-icon>
-            </button>
-          </mat-list-item>
-        </mat-list>
-      </mat-drawer>
-    </div>
-  
-    <div class="col-sm-9">
-      <div class="row">
-        <div class="col-sm-12">
-          <mat-toolbar color="primary" class="tabbar">
-            <mat-toolbar-row>
-                <mat-icon class="icon" (click)="add()">add</mat-icon>
-                <mat-icon class="icon">delete</mat-icon>
-            </mat-toolbar-row>
-          </mat-toolbar>
-        </div>
 
-        <div class="col-sm-12">
-          <div class="container-fluid">
-              <div class="clearfix"></div>
-              <div class="row">
-                <div class="col-sm-4" *ngIf="add_toggled">
-                  <app-modal [link]='link' [action]="action"  (valueChange)='checkChanges($event)'></app-modal>
-                </div>
-                
-                <div class="col-sm-8">
-                  <app-categories *ngIf="link=='Categories'" [shared_output]="shared_output"></app-categories>
-                  <app-items *ngIf="link=='Items'"></app-items>
-                  <app-insurance *ngIf="link=='Insurances'"></app-insurance>
-                </div>
-              </div>
-            </div>
-        </div>
+<mat-sidenav-container class="content">
+    <mat-sidenav [opened]="!leftColumnIsHidden" mode="side" class="left-column">
+        <div class="menu-items" *ngFor="let link of links">
+            <a class="menu-item"  [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon >menu</mat-icon>
+                <span class="text" trans>{{link.label}}</span>
+            </a>
+         </div>
+
+      <div class="version">
+          <!-- Version: {{settings.get('version')}} -->
       </div>
-  </div>
-</div> 
-      
+  </mat-sidenav>
+
+  <mat-sidenav [opened]="!rightColumnIsHidden" [mode]="(isMobile) ? 'over' : 'side'" position="end" class="right-sidebar">
+right
+</mat-sidenav>
+
+  <mat-sidenav-content class="content-inner">
+      <loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

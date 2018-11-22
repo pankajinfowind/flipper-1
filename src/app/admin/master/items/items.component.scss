@@ -1,2 +1,12 @@
-@import "./src/app/app_sass/theme";
+@import "../../../app_sass/variables";
+$bsm-primary:#000;
+app-items{
 
+  .mat-elevation-z8 {
+
+        box-shadow: none;
+        background: $site-bg-color-100;
+        border-bottom: 1px solid $site-border-color-200;
+  }
+
+}

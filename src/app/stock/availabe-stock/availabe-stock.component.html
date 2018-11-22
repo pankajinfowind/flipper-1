@@ -1,4 +1,16 @@
-<div class="col-12 mat-elevation-z8">
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div class="col-8">
+        <button mat-button><mat-icon class="">menu</mat-icon>Stock Available Items  </button>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      </div>
+      <div class="col-4 float-right">
+         <button mat-button><mat-icon class="">add</mat-icon>New Stock Item</button> <button mat-button><mat-icon class="">delete</mat-icon>Remove all</button></div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
+<div class="col-12" *ngIf="data.length > 0;else notDataFound">
     <mat-form-field class="w-100 px-2">
       <input
         matInput
@@ -83,5 +95,7 @@
       showFirstLastButtons
     ></mat-paginator>
   </div>
+
+  <ng-template #notDataFound> can't find data </ng-template>
 
 

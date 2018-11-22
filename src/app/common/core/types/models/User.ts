@@ -48,6 +48,16 @@ export class Subscription {
         }
     }
 }
+export class Settings{
+  apperance?:Appearance;
+  base_url:string;
+  version:string;
+}
+export class Appearance{
+  navLinks:any[] = [{path:'',label:'Dashboard'},{path:'master',label:'Master'} ,{path:'stock',label:'Stock'},{path:'sold',label:'Sold'},{path:'pos',label:'Pos'}];
+  tabLayout ={color:'primary',backgroundColor:'primary',size:12};
+  navLayout={color:'accent',backgroundColor:'primary',size:12};
+}
 export class User {
     id: number;
     display_name?: string;
@@ -72,6 +82,7 @@ export class User {
     has_password?: boolean;
     oauth?: Social[];
     available_space?: number|null;
+    settings?:Settings
 
     constructor(params: Object = {}) {
         for (let name in params) {

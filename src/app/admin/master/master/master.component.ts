@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { MasterState } from '../../../state/master-state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-master',
@@ -7,36 +10,30 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class MasterComponent implements OnInit {
-add_toggled=false;
-link: string = 'Items';
-action:string ='';
-nav_position:string='start';
-links: string[] = ['Categories', 'Items', 'Insurances'];
-shared_output;
-  constructor() { }
+
+links: any[] = [{path:'category',label:'Categories'},{path:'item',label:'Items'},{path:'insurance',label:'Insurances'} ];
+
+@Select(MasterState.loading) loading$: Observable<boolean>;
+isMobile=false;
+
+leftColumnIsHidden=false;
+rightColumnIsHidden=true;
+constructor() {
+ }
 
   ngOnInit() {
-
+  //  this.getWinSize();
   }
 
-
-  goTo(position: string) {
-    this.link = position;
-  }
-  add(){
-    this.action='add';
-    this.addToggled();
-  }
-  checkChanges(event){
-    if(event.close_modal){
-        this.addToggled();
-    }
-    if(event.category_created){
-      this.shared_output=event.category_created;
-    }
-
-  }
-  addToggled(){
-    this.add_toggled=!this.add_toggled;
-  }
+getWinSize(){
+  setInterval(()=>{
+if(window.innerWidth < 1200 ){
+  this.isMobile=true;
+  this.rightColumnIsHidden=true;
+}else{
+  this.isMobile=false;
+  this.rightColumnIsHidden=false;
+}
+  },1000);
+}
 }

@@ -2,22 +2,21 @@ import { LocalStorage } from "../common/core/services/local-storage.service";
 import { Router } from "@angular/router";
 import { MasterStateModel } from "./models/master-state-model";
 import { MASTER_STATE_MODEL_DEFAULTS } from "./models/master-state-model-defaults";
-import { Store, State, Selector, Action, StateContext } from "@ngxs/store";
-import { LoadCategories, AddCategories } from "./actions/commands";
+import { Store, State, Selector, Action, StateContext, NgxsOnInit } from "@ngxs/store";
+import { LoadCategories, AddCategoryAction, LoadProgress, LoadingAction } from "./actions/commands";
 import { tap } from "rxjs/operators";
 import { ApiCategoryService } from "../admin/master/categories/api/api.service";
+import { Injector } from "@angular/core";
 
 @State<MasterStateModel>({
   name: 'master',
   defaults: MASTER_STATE_MODEL_DEFAULTS
 })
 export class MasterState {
-  constructor(
-    private apiCat:ApiCategoryService,
-      private router: Router,
-      private store: Store,
-      private localStore: LocalStorage
-  ) {}
+  private  api: ApiCategoryService;
+  constructor(injector: Injector) {
+    this.api = injector.get<ApiCategoryService>(ApiCategoryService);
+}
 
   @Selector()
   static categories(state: MasterStateModel) {
@@ -29,14 +28,39 @@ export class MasterState {
       return state.items;
   }
 
-  @Action(LoadCategories)
-  loadCategories(ctx: StateContext<MasterStateModel>) {
-      return this.apiCat.get().pipe(
-          tap(response => {
+  @Selector()
+  static loading(state: MasterStateModel) {
+      return state.loading;
+  }
 
-            console.log('am her', response);
-              return ctx.dispatch(new AddCategories(response.categories));
-          })
+  @Action(LoadCategories)
+   loadCategories(ctx: StateContext<MasterStateModel>, action:AddCategoryAction) {
+    const oldState = ctx.getState(),
+    newState = { loading: true } as Partial<
+    MasterStateModel
+    >;
+    ctx.patchState(newState);
+
+      return  this.api.getCategories().pipe(
+          tap(response => {
+            const categories = action.categories ? oldState.categories : [];
+
+            const state = {
+                categories: categories.concat(response.data),
+                loading: false
+            } as Partial<MasterStateModel>;
+
+
+          return ctx.patchState(state);
+        },
+        () => {
+          return ctx.patchState({ loading: false });
+        })
       );
+  }
+
+  @Action(LoadProgress)
+  onLoadProgress({getState, patchState}: StateContext<MasterStateModel>, action:LoadingAction) {
+    patchState({loading: action.loading});
   }
 }

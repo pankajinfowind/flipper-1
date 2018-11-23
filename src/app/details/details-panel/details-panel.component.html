@@ -1,0 +1,16 @@
+<mat-divider></mat-divider>
+<div class="app-details-panel">
+<ng-container  *ngIf="details$ | async as details; else nothingSelected">
+    <div class="details-list">
+      <app-master-model  *ngIf="details.module=='app-master'"></app-master-model>
+      </div>
+</ng-container>
+
+
+<ng-template #nothingSelected>
+    <div class="nothing-selected">
+        <mat-icon svgIcon="selection-tool-custom" class="icon"></mat-icon>
+        <div class="text" trans>No Action Made.</div>
+    </div>
+</ng-template>
+</div>

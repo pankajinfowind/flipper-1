@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { MasterStateModel } from "./models/master-state-model";
 import { MASTER_STATE_MODEL_DEFAULTS } from "./models/master-state-model-defaults";
 import { Store, State, Selector, Action, StateContext, NgxsOnInit } from "@ngxs/store";
-import { LoadCategories, AddCategoryAction, LoadProgress, LoadingAction } from "./actions/commands";
+import { LoadCategories, AddCategoryAction, LoadProgress, LoadingAction, ToggleDetailsSidebar, SetViewDetails } from "./actions/commands";
 import { tap } from "rxjs/operators";
 import { ApiCategoryService } from "../admin/master/categories/api/api.service";
 import { Injector } from "@angular/core";
@@ -32,6 +32,14 @@ export class MasterState {
   static loading(state: MasterStateModel) {
       return state.loading;
   }
+  @Selector()
+    static details(state: MasterStateModel) {
+        return state.details;
+    }
+    @Action(ToggleDetailsSidebar)
+    toggleDetailsSidebar(ctx: StateContext<MasterStateModel>,action: SetViewDetails) {
+      ctx.patchState({ details: action.details });
+    }
 
   @Action(LoadCategories)
    loadCategories(ctx: StateContext<MasterStateModel>, action:AddCategoryAction) {

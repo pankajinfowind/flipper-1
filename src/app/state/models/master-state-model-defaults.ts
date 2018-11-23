@@ -6,4 +6,5 @@ export const MASTER_STATE_MODEL_DEFAULTS: MasterStateModel = {
     items: [],
     loading: false,
     currentUser: null,
+    details:null
 };

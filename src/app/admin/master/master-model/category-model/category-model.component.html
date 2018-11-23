@@ -1,0 +1,29 @@
+<div class="details-list">
+   <!-- Items ---------------------------------- -->
+
+    <form [formGroup]="cateogryForm" (ngSubmit)="saveCategory()">
+      <mat-card-content>
+        <p>
+          <mat-form-field class="ybx-mat mat-full-wdth">
+              <input class="text-secondary" matInput placeholder="Category name" formControlName="name" required>
+
+              <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+                    <mat-error *ngIf="name.errors.name && !name.errors.required">
+                      Please enter a valid category
+                    </mat-error>
+                    <mat-error *ngIf="name.errors.required">
+                        Category is <strong>required</strong>
+                    </mat-error>
+              </mat-error>
+
+          </mat-form-field>
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button type="submit" class="float-right" mat-button [disabled]="(loading | async)"> <span *ngIf="need_to_add_new">Save</span>
+          <span *ngIf="!need_to_add_new">Edit</span></button>
+        <button type="button" class="float-right" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button>
+      </mat-card-actions>
+    </form>
+</div>

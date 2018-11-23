@@ -15,13 +15,19 @@ export class ApiCategoryService {
     constructor(private http: AppHttpClient) {}
 
 
-    public create(params: Category): BackendResponse<{ data: any }> {
+  public create(params: Category): BackendResponse<{ data: any }> {
         return this.http.post(API_ROUTES.CATEGORY, params);
     }
-    public get(): BackendResponse<{ categories: Category[] }> {
+  public get(): BackendResponse<{ categoryies: Category[] }> {
       return this.http.get(API_ROUTES.CATEGORY);
   }
   public getCategories(): Observable<CategoryEntriesPaginationResponse> {
     return this.http.get(API_ROUTES.CATEGORY);
+  }
+  public update(params: Category,id:number): BackendResponse<{ data: Category }> {
+    return this.http.put(API_ROUTES.CATEGORY+'/'+id, params);
+ }
+ public delete(id:number): BackendResponse<{ data: Category }> {
+  return this.http.delete(API_ROUTES.CATEGORY+'/'+id);
 }
 }

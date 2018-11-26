@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { Item } from '../../admin/master/items/api/item';
 import { Toast } from '../../common/core/ui/toast.service';
 import { ApiStockService } from '../api/api.service';
+import { Stock } from '../api/stock';
 
 @Component({
   selector: 'app-new-stock',
@@ -19,11 +20,11 @@ export class NewStockComponent implements OnInit {
 
   public loading = new BehaviorSubject(false);
   itemForm: FormGroup;
-  constructor(private apiStock:ApiStockService,private toast: Toast,private _fb: FormBuilder,private api:ApiItemService,private ref: ChangeDetectorRef) { }
+  constructor(private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
   units: string[] = ['unit','ltre','gms','kg'];
   data: Item[] = [];
   selection = new SelectionModel<Item>(true, []);
-  displayedColumns: string[] = ['select','sku', 'item','category','available_stock_qty','weight','unit_of_measure','operation'];
+  displayedColumns: string[] = ['select','item','available_stock_qty','weight','unit_of_measure','operation'];
   dataSource = new MatTableDataSource<Item>([]);
 
   rows: FormArray = this._fb.array([]);
@@ -53,7 +54,6 @@ export class NewStockComponent implements OnInit {
       branch_id:  new FormControl(1,[Validators.required]),
       sku:  new FormControl(d && d.sku ? d.sku : null,[Validators.required]),
       item: new FormControl(d && d.item ? d.item : null,[Validators.required]),
-      category: new FormControl(d && d.category.name  ? d.category.name  : null,[Validators.required]),
       qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern)]),
       weight: new FormControl(1, [Validators.required, Validators.pattern(numberPatern)]),
       unit_of_measure: new FormControl('gms', [Validators.required])
@@ -66,9 +66,10 @@ export class NewStockComponent implements OnInit {
 
   items(){
       this.loading.next(true);
-      this.api.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
+      this.api.getNewStockItem(1).pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
-          this.data = res['items']['data'];
+          this.data = res['items'];
+          console.log(this.data);
           this.data.forEach((d: Item) => this.addRow(d, false));
           this.dataSource = new MatTableDataSource<Item>(this.data);
 
@@ -106,20 +107,30 @@ export class NewStockComponent implements OnInit {
   }
     addItem(){
       if (this.selection.selected.length > 0) {
+        const form_data:Stock[]=[];
+
         if (this.itemForm.valid) {
           this.loading.next(true);
-          console.log(this.itemForm.value.newStock);
-          this.apiStock.create(this.itemForm.value.newStock).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+
+          this.selection.selected.forEach(selected_item => {
+            this.itemForm.value.newStock.forEach(form_item=>{
+              if(form_item.id===selected_item.id){
+                form_data.push(form_item);
+              }
+            });
+          });
+
+          this.api.create(form_data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
             res => {
             if(res.status=='success'){
-                this.toast.open('Category recorded successfull!');
+                this.toast.open('Stock created successfully!');
                 this.removeSelectedRows();
               }
             },
             _error => {
             console.error(_error);
             }
-          );
+         );
 
         }else{
           this.toast.open('Invalid some field(s) data');
@@ -128,13 +139,12 @@ export class NewStockComponent implements OnInit {
     }
     removeSelectedRows() {
       this.selection.selected.forEach(item => {
+        this.dataSource.data.splice(item.id-1,1);
 
-        this.data=this.data.filter(function(ele){
-          return ele != item;
-      });
-        this.dataSource = new MatTableDataSource<Item>(this.data);
+        this.dataSource = new MatTableDataSource<Item>(this.dataSource.data);
       });
       this.selection = new SelectionModel<Item>(true, []);
+        console.log(this.dataSource.data);
     }
 }
 

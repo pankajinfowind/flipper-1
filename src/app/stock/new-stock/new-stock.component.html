@@ -1,120 +1,116 @@
 
-<div class="col-12 mat-elevation-z8" *ngIf="data.length > 0;else notDataFound">
+
+<div *ngIf="dataSource.data.length > 0;else notDataFound">
+
+ <form [formGroup]="itemForm"  novalidate (ngSubmit)="addItem()">
+<mat-toolbar>
+    <mat-toolbar-row>
+      <div class="col-8">
+          <button mat-button [disabled]='true'><mat-icon class="">menu</mat-icon>New Stock </button>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        </div>
+        <div class="col-4">
+            <button type="button" class="float-right" (click)="addItem()" mat-raised-button color='accent' *ngIf="selection.selected.length > 1" [disabled]="(loading | async)">Save all</button>
+        </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
+
     <mat-form-field class="w-100 px-2">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
       </mat-form-field>
 
 
-    <form [formGroup]="itemForm"  novalidate (ngSubmit)="addItem()">
-        <button type="button" (click)="addItem()" *ngIf="selection.selected.length > 1" mat-button [disabled]="(loading | async)">Save all</button>
-        <table formArrayName="newStock" mat-table [dataSource]="dataSource" matSort class="w-100">
+            <table formArrayName="newStock" mat-table [dataSource]="dataSource" matSort class="col-12">
 
-       <!-- Checkbox Column -->
-        <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()">
-              </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
-                            [checked]="selection.isSelected(row)">
-              </mat-checkbox>
-            </td>
-          </ng-container>
+            <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                  </td>
+                </ng-container>
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="sku">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Sku </th>
-      <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-          <mat-form-field class="ybx-mat mat-full-wdth">
-              <input matInput  formControlName="id" required>
-              <input matInput  formControlName="branch_id" required>
-             <input matInput  formControlName="sku" required>
-      </mat-form-field>
-     </td>
 
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="item">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-          <mat-form-field class="ybx-mat mat-full-wdth">
-          <input matInput  formControlName="item" required>
-          </mat-form-field>
-         </td>
-    </ng-container>
-
-            <!--  Category Column -->
-         <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
-            <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-                <mat-form-field class="ybx-mat mat-full-wdth">
-              <input matInput  formControlName="category" required>
-              </mat-form-field>
-               </td>
-          </ng-container>
-
-                     <!--  Category Column -->
-         <ng-container matColumnDef="available_stock_qty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity</th>
-            <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-                   <!-- unit quantity input field -->
-              <mat-form-field>
-
-                <input matInput placeholder="New Qty" type="number" formControlName="qty" required>
-              </mat-form-field>
-            </td>
-            </ng-container>
-                  <!--  Category Column -->
-         <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-            <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-                <mat-form-field class="ybx-mat mat-full-wdth">
-                    <input class="text-secondary" matInput placeholder="New weight" type="number" formControlName="weight" required>
+          <!-- Name Column -->
+          <ng-container matColumnDef="item">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index" >
+                <mat-form-field >
+                <input matInput  formControlName="item" required>
+                <input matInput  formControlName="id" required hidden>
+                <input matInput  formControlName="branch_id" required hidden>
+                <input matInput  formControlName="sku" required hidden>
 
                 </mat-form-field>
-
-            </td>
+              </td>
           </ng-container>
 
-          <ng-container matColumnDef="unit_of_measure">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> U.of Measure </th>
-              <td mat-cell *matCellDef="let element;let index = index"  [formGroupName]="index">
-                  <mat-form-field class="ybx-mat mat-full-wdth">
-                      <mat-select placeholder="Choose Unit of measure" formControlName="unit_of_measure" required>
-                        <mat-option>None</mat-option>
-                        <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
-                      </mat-select>
+              <ng-container matColumnDef="available_stock_qty">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity</th>
+                  <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
+                        <!-- unit quantity input field -->
+                    <mat-form-field>
 
+                      <input matInput placeholder="New Qty" (input)="$event ? selection.toggle(element) : true" type="number" formControlName="qty" required>
                     </mat-form-field>
+                  </td>
+                  </ng-container>
+                        <!--  Category Column -->
+              <ng-container matColumnDef="weight">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+                  <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
+                      <mat-form-field >
+                          <input class="text-secondary" (input)="$event ? selection.toggle(element) : true" matInput placeholder="New weight" type="number" formControlName="weight" required>
+
+                      </mat-form-field>
+
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="unit_of_measure">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> U.of Measure </th>
+                    <td mat-cell *matCellDef="let element;let index = index"  [formGroupName]="index" >
+                        <mat-form-field >
+                            <mat-select (input)="$event ? selection.toggle(element) : true" placeholder="Choose Unit of measure" formControlName="unit_of_measure" required>
+                              <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
+                            </mat-select>
+
+                          </mat-form-field>
 
 
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="operation">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Operation </th>
-                <td mat-cell *matCellDef="let element">
-                    <button type="button" (click)="addItem()" mat-button [disabled]="selection.selected.length > 1 || (loading | async)">Save</button>
-                </td>
-              </ng-container>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="operation">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Operation </th>
+                      <td mat-cell *matCellDef="let element">
+                          <button type="button" class="float-right" (click)="addItem()" mat-raised-button  color="accent" [disabled]="!selection.isSelected(element) || (loading | async)">Save</button>
+                      </td>
+                    </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-              <tr  mat-row *matRowDef="let row; columns: displayedColumns; let index = index"
-                  (click)="selection.toggle(row)">
-              </tr>
+                    <tr  mat-row *matRowDef="let row; columns: displayedColumns; let index = index"
+                        (click)="selection.toggle(row)">
+                    </tr>
 
 
-  </table>
+        </table>
 </form>
 </div>
 
 
 <ng-template #notDataFound>
-    can't find data
+    can't find data a
 </ng-template>
 

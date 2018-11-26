@@ -23,4 +23,5 @@ export class ApiItemService {
     public get(): BackendResponse<{ data: Item []}> {
       return this.http.get(API_ROUTES.ITEM);
   }
+
 }

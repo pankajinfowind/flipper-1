@@ -6,7 +6,7 @@ import { MasterComponent } from "./master.component";
 import { MaterialModule } from "../../../material/material.module";
 import { ModalComponent } from "../modal/modal.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { InsuranceComponent } from "../insurance/insurance.component";
+import { InsuranceComponent, RemoveInsuranceDialog } from "../insurance/insurance.component";
 import { MasterState } from "../../../state/master-state";
 import { NgxsModule } from '@ngxs/store';
 import { UiModule } from "../../../common/core/ui/ui.module";
@@ -22,7 +22,8 @@ import { DetailsModule } from "../../../details/details.module";
     ModalComponent,
     InsuranceComponent,
     RemoveItemDialog,
-    RemoveCategoryDialog
+    RemoveCategoryDialog,
+    RemoveInsuranceDialog
   ],
   declarations: [
     ItemsComponent,
@@ -31,8 +32,9 @@ import { DetailsModule } from "../../../details/details.module";
     ModalComponent,
     InsuranceComponent,
     RemoveItemDialog,
-    RemoveCategoryDialog
+    RemoveCategoryDialog,
+    RemoveInsuranceDialog
   ],
-  entryComponents: [RemoveItemDialog,RemoveCategoryDialog]
+  entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemoveInsuranceDialog]
 })
 export class MasterModule {}

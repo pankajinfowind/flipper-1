@@ -1,6 +1,7 @@
 export class Item {
   id?:number;
   item:string;
+  item_id?:number;
   sku:string;
   price:number;
   category_id?:number;

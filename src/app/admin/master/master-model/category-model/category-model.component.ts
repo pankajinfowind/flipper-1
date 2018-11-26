@@ -67,7 +67,6 @@ export class CategoryModelComponent implements OnInit {
       res => {
           if(res.status=='success'){
             this.toast.open('Category added Successfully!');
-            console.log(res);
             this.cateogryForm.reset();
             this.detailsService.update({receriver_data:res.data});
           }

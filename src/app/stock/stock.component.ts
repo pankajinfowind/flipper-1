@@ -14,8 +14,8 @@ import { MasterState } from "../state/master-state";
 export class StockComponent implements OnInit {
 
   links: any[] = [
-    { path: "new", label: "Add Stock's Items " },
-    { path: "available", label: "Available Items" },
+    { path: "new", label: "New Stock" },
+    { path: "available", label: "Available Stock" },
     { path: "stockout", label: "Sold Out Items" },
     { path: "damaged", label: "Damaged Items" }
   ];

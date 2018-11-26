@@ -1,6 +1,6 @@
 export class Details {
 sender_data?:any={};
-receriver_data?:any={};
+receriver_data?:any;
 detailsVisible:boolean=false;
 action?:any=null;
 title?:string=null;

@@ -72,7 +72,7 @@ export class CategoriesComponent implements   OnInit {
   dataSource = new MatTableDataSource<Category>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @Input() shared_output :Category;
+
   @Select(MasterState.categories) categories$: Observable<Category[]>;
 
   subscription: Observable<Details>;
@@ -92,6 +92,7 @@ export class CategoriesComponent implements   OnInit {
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
   ngOnInit() {
     this.categories();
     this.dataSource.paginator = this.paginator;

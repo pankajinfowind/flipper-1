@@ -2,7 +2,7 @@
 
 <!-- <div *ngIf="dataSource.data.length > 0;else notDataFound"> -->
 
- <form [formGroup]="itemForm"  novalidate (ngSubmit)="addItem()">
+ <form *ngIf="data && data.length > 0" [formGroup]="itemForm"  novalidate (ngSubmit)="addItem()">
 <mat-toolbar>
     <mat-toolbar-row>
       <div class="col-8">
@@ -107,10 +107,6 @@
 
         </table>
 </form>
-<!-- </div> -->
+<stock-no-entry-found *ngIf="data && data.length == 0" [message]="message()" [subMessage]='subMessage()'></stock-no-entry-found>
 
-<!--
-<ng-template #notDataFound>
-    can't find data a
-</ng-template> -->
 

@@ -135,5 +135,11 @@ export class NewStockComponent implements OnInit {
       this.dataSource.data= _data;
      this.selection = new SelectionModel<Item>(true, []);
     }
+    message(){
+      return 'No new items';
+    }
+    subMessage(){
+      return 'There are no new items to add in your stock currently.';
+    }
 }
 

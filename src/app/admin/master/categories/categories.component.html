@@ -2,7 +2,7 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <div class="col-8">
-        <button mat-button><mat-icon class="">menu</mat-icon>Items </button>
+        <button mat-button><mat-icon class="">menu</mat-icon>Categories </button>
       <span class="spacer"></span>
       <span class="spacer"></span>
       </div>
@@ -16,7 +16,7 @@
       </mat-toolbar-row>
 </mat-toolbar>
 <loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
-<div class="col-12" *ngIf="data.length > 0;else notDataFound">
+<div class="col-12" *ngIf="data.length">
 
 <mat-form-field class="w-100 px-2">
   <input
@@ -72,6 +72,4 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
-<ng-template #notDataFound>
-  <p class="p-1">can't find data</p>
-</ng-template>
+<master-no-entry-found *ngIf="data && data.length == 0" [message]="message('Category')" [subMessage]='subMessage("Category")'></master-no-entry-found>

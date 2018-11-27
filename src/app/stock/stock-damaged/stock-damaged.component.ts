@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-stock-damaged',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockDamagedComponent implements OnInit {
 
-  constructor() { }
+  public loading = new BehaviorSubject(false);
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }

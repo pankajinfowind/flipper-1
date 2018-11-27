@@ -156,4 +156,10 @@ export class InsuranceComponent implements OnInit {
       }
 
     }
+    message(t){
+      return ''+t.trim().toLowerCase()+' is empty';
+    }
+    subMessage(t){
+      return 'There are no '+t.trim().toLowerCase()+' currently.';
+    }
 }

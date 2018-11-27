@@ -9,6 +9,7 @@ import { Item } from '../../admin/master/items/api/item';
 import { Toast } from '../../common/core/ui/toast.service';
 import { ApiStockService } from '../api/api.service';
 import { Stock } from '../api/stock';
+import { StockModelService } from '../stock-model.service';
 
 @Component({
   selector: 'app-new-stock',
@@ -20,7 +21,7 @@ export class NewStockComponent implements OnInit {
 
   public loading = new BehaviorSubject(false);
   itemForm: FormGroup;
-  constructor(private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
+  constructor(private modelStockService: StockModelService,private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
   units: string[] = ['unit','ltre','gms','kg'];
   data: Item[] = [];
   selection = new SelectionModel<Item>(true, []);
@@ -36,7 +37,6 @@ export class NewStockComponent implements OnInit {
     this.items();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-   // this.checkIncomingData();
 
    this.itemForm = new FormGroup({
     newStock: this.rows
@@ -69,7 +69,6 @@ export class NewStockComponent implements OnInit {
       this.api.getNewStockItem(1).pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
           this.data = res['items'];
-          console.log(this.data);
           this.data.forEach((d: Item) => this.addRow(d, false));
           this.dataSource = new MatTableDataSource<Item>(this.data);
 
@@ -79,17 +78,7 @@ export class NewStockComponent implements OnInit {
         }
       );
     }
-    checkIncomingData(){
-      // this.ref.detach();
-      // setInterval(() => {
-      //   if(this.shared_output){
-      //     this.data.push(this.shared_output);
-      //     this.shared_output=null;
-      //   }
-      //   this.ref.detectChanges();
-      // }, 1000);
 
-    }
 
      /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -119,12 +108,12 @@ export class NewStockComponent implements OnInit {
               }
             });
           });
-
           this.api.create(form_data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
             res => {
             if(res.status=='success'){
+              this.modelStockService.update({loading:false, available:res["stocks"]["data"]});
+              this.removeSelectedRows(form_data);
                 this.toast.open('Stock created successfully!');
-                this.removeSelectedRows();
               }
             },
             _error => {
@@ -137,14 +126,14 @@ export class NewStockComponent implements OnInit {
         }
       }
     }
-    removeSelectedRows() {
-      this.selection.selected.forEach(item => {
-        this.dataSource.data.splice(item.id-1,1);
-
-        this.dataSource = new MatTableDataSource<Item>(this.dataSource.data);
+    removeSelectedRows(form_data) {
+      const _data=this.dataSource.data;
+      form_data.forEach((item) => {
+        let index= _data.findIndex(i => i.id===item.id);
+        _data.splice(index,1);
       });
-      this.selection = new SelectionModel<Item>(true, []);
-        console.log(this.dataSource.data);
+      this.dataSource.data= _data;
+     this.selection = new SelectionModel<Item>(true, []);
     }
 }
 

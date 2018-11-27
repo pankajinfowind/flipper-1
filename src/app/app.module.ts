@@ -6,7 +6,8 @@ import {
   NgModule,
   APP_INITIALIZER,
   Injectable,
-  ErrorHandler
+  ErrorHandler,
+  CUSTOM_ELEMENTS_SCHEMA
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";

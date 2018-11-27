@@ -87,8 +87,6 @@ export class PasswordVerifyComponent implements OnInit {
     this.auth.login(this.v.model).subscribe(
       response => {
         this.bootstrapper.bootstrap(response.data);
-        // TODO: Move this into auth service, so other components can re-use
-        console.log(response.data);
         this.router.navigate(['']).then(navigated => {
           this.v.loading = false;
           if (!navigated) {

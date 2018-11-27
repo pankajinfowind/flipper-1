@@ -12,6 +12,7 @@ import { NgxsModule } from '@ngxs/store';
 import { UiModule } from "../../../common/core/ui/ui.module";
 import { MasterRoutingModule } from "./master-routing.module";
 import { DetailsModule } from "../../../details/details.module";
+import { NoEntryFoundMasterComponent } from "../messages/no-entry-found/no-entry-found.component";
 
 @NgModule({
   imports: [CommonModule,MasterRoutingModule,DetailsModule, MaterialModule, FormsModule, UiModule, ReactiveFormsModule,NgxsModule.forFeature([MasterState])],
@@ -23,7 +24,8 @@ import { DetailsModule } from "../../../details/details.module";
     InsuranceComponent,
     RemoveItemDialog,
     RemoveCategoryDialog,
-    RemoveInsuranceDialog
+    RemoveInsuranceDialog,
+    NoEntryFoundMasterComponent
   ],
   declarations: [
     ItemsComponent,
@@ -33,8 +35,10 @@ import { DetailsModule } from "../../../details/details.module";
     InsuranceComponent,
     RemoveItemDialog,
     RemoveCategoryDialog,
-    RemoveInsuranceDialog
+    RemoveInsuranceDialog,
+    NoEntryFoundMasterComponent
+
   ],
-  entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemoveInsuranceDialog]
+entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemoveInsuranceDialog]
 })
 export class MasterModule {}

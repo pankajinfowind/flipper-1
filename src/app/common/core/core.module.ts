@@ -13,7 +13,7 @@ import {HttpModule} from './http/http.module';
 import {TranslationsModule} from './translations/translations.module';
 import {APP_CONFIG, DEFAULT_FLIPPER_CONFIG} from './config/flipper-config';
 import { CurrentUser } from '../auth/current-user';
-import { AdminModule } from '../../admin/admin.module';
+import { StockModule } from '../../stock/stock.module';
 
 @NgModule({
     imports: [
@@ -25,6 +25,7 @@ import { AdminModule } from '../../admin/admin.module';
         UiModule,
         HttpModule,
         TranslationsModule,
+        StockModule.forRoot()
     ],
     exports: [
         CommonModule,

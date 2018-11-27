@@ -18,7 +18,7 @@ export class Stock {
   branch?:{name?:string};
   item_entries:{};
   item_soldout:{};
-
+  available:Stock[];
     constructor(params: Object = {}) {
       for (let name in params) {
           this[name] = params[name];

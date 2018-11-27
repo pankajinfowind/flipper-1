@@ -163,5 +163,14 @@ export class CategoriesComponent implements   OnInit {
           this.detailsService.update({receriver_data:null,sender_data:null});
       }
     });
+
+
+  }
+
+  message(t){
+    return ''+t.trim().toLowerCase()+' is empty';
+  }
+  subMessage(t){
+    return 'There are no '+t.trim().toLowerCase()+' currently.';
   }
 }

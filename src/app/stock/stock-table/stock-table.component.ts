@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { StockModelService } from '../stock-model.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import { DetailsService } from '../../details/details.service';
+import { Details } from '../../details/details';
 
 @Component({
   selector: 'app-stock-table',
@@ -14,7 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class StockTableComponent implements OnInit {
 
   cart: EventEmitter<Stock> = new EventEmitter();
-  constructor(private modelService:StockModelService,private router: Router) {}
+  constructor(private detailsService:DetailsService,private modelService:StockModelService,private router: Router) {}
   displayedColumns: string[] = [
     'select',
     "sku",
@@ -34,7 +36,6 @@ export class StockTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() title: string='Manage Stock';
-  @Input() loading=new BehaviorSubject(false);
   @Input() status:string;
   warn = 'warn';
   accent='accent';
@@ -42,13 +43,16 @@ export class StockTableComponent implements OnInit {
   mode = 'determinate';
   stocks$: Observable<Stock[]>;
   data:Stock[]=[];
-
+  subscription: Observable<Details>;
+  details$: Observable<Details>;
   ngOnInit() {
+    this.subscription = this.details$ = this.detailsService.details$;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.stocks$ = this.modelService.stocks$;
 
     this.stocks$.subscribe(res=>{
+
       if(this.status === 'available'){
         this.data=res['available'];
         this.dataSource.data=this.data;
@@ -94,4 +98,10 @@ export class StockTableComponent implements OnInit {
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
+  openDetails(title='Stock Details',action='info',obj,component='app-info-stock-model'){
+    this.detailsService.update({title:title,sender_data:obj,module:'app-stock',component:component,action:action,detailsVisible:true});
+ }
 }
+
+

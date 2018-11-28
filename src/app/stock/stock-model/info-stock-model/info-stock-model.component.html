@@ -1,0 +1,75 @@
+<ng-container *ngIf="info as entry; else nothingSelected">
+    <mat-tab-group>
+   <mat-tab label="Details">
+           <div  class="details-panel">
+             <div>
+              <mat-progress-bar *ngIf="percentage(entry.available_stock_qty,entry.entry_stock_qty) >= 70" [mode]="determinate" [color]="accent" [value]="percentage(entry.available_stock_qty,entry.entry_stock_qty)"></mat-progress-bar>
+              <mat-progress-bar *ngIf="percentage(entry.available_stock_qty,entry.entry_stock_qty) < 70 && percentage(entry.available_stock_qty,entry.entry_stock_qty) >= 40" [mode]="determinate"  [value]="percentage(entry.available_stock_qty,entry.entry_stock_qty)"></mat-progress-bar>
+              <mat-progress-bar *ngIf="percentage(entry.available_stock_qty,entry.entry_stock_qty) < 40 && percentage(entry.available_stock_qty,entry.entry_stock_qty) >= 0" [mode]="warn" [value]="percentage(entry.available_stock_qty,entry.entry_stock_qty)"></mat-progress-bar>
+              </div>
+              <div class="details-list">
+               <div class="item">
+                   <div class="name" trans>Stock</div>
+                   <div class="value type-value" trans>{{entry.name}}</div>
+               </div>
+               <div class="item">
+                  <div class="name" trans>Category</div>
+                  <div class="value">{{entry.item.category.name}} </div>
+              </div>
+              <div class="item">
+                  <div class="name" trans>Branch</div>
+                  <div class="value">{{entry.branch.name}} </div>
+              </div>
+               <div class="item">
+                   <div class="name" trans>Status</div>
+                   <div class="value">{{entry.status}} </div>
+               </div>
+               <div class="item">
+                   <div class="name" trans>Available Quantity</div>
+                   <div class="value">{{entry.available_stock_qty}}</div>
+               </div>
+               <div class="item">
+                  <div class="name" trans>Updated Quantity</div>
+                  <div class="value">{{entry.entry_stock_qty}}</div>
+              </div>
+              <div class="item">
+                  <div class="name" trans>Units</div>
+                  <div class="value">{{entry.weight}} {{entry.unit_of_measure}}</div>
+              </div>
+              <div class="item">
+                  <div class="name" trans>Purchased price</div>
+                  <div class="value">{{ entry.item.price }} {{ entry.item.currency }}</div>
+              </div>
+              <div class="item">
+                  <div class="name" trans>Sales price</div>
+                  <div class="value">{{ entry.item.sale_price }} {{ entry.item.currency }}</div>
+              </div>
+
+               <div class="item">
+                       <div class="name" trans>Modified</div>
+                       <div class="value">{{entry.updated_at | date:'fullDate'}}</div>
+                </div>
+               <div class="item">
+                   <div class="name" trans>Created</div>
+                   <div class="value">{{entry.created_at | date:'fullDate'}}</div>
+               </div>
+           </div>
+           </div>
+   </mat-tab>
+   <mat-tab label="Entries">
+      <app-stock-datails-table title="Entries" [data]='entry.stock_entries'></app-stock-datails-table>
+   </mat-tab>
+
+   <mat-tab label="Solds out">
+      <app-stock-datails-table title="Solds out" [data]='entry.stock_stockout'></app-stock-datails-table>
+   </mat-tab>
+  </mat-tab-group>
+</ng-container>
+
+   <ng-template #nothingSelected>
+       <div class="nothing-selected">
+           <mat-icon svgIcon="selection-tool-custom" class="icon"></mat-icon>
+           <div class="text" trans>Select item to view its details.</div>
+       </div>
+   </ng-template>
+

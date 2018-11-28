@@ -1,0 +1,36 @@
+<div class="details-list">
+    <!-- Items ---------------------------------- -->
+
+    <form [formGroup]="stockForm" (ngSubmit)="updateStock()">
+       <mat-card-content>
+         <p>
+            <mat-form-field class="ybx-mat mat-full-wdth">
+                <input class="text-secondary" matInput placeholder="Quantity" formControlName="qty" required>
+                  <mat-error  *ngIf="qty.invalid && (qty.dirty || qty.touched)">
+                    <mat-error *ngIf="qty.errors.qty && !qty.errors.required">
+                      Please enter a valid quantity
+                    </mat-error>
+                    <mat-error *ngIf="qty.errors.required">
+                      Quantity is <strong>required</strong>
+                    </mat-error>
+                  </mat-error>
+
+              </mat-form-field>
+
+              <mat-form-field class="ybx-mat mat-full-wdth">
+                  <input class="text-secondary" matInput placeholder="Weight" formControlName="weight" required>
+                    <mat-error  *ngIf="weight.invalid && (weight.dirty || weight.touched)">
+                      <mat-error *ngIf="weight.errors.weight && !weight.errors.required">
+                        Please enter a valid weight
+                      </mat-error>
+                      <mat-error *ngIf="weight.errors.required">
+                          Weight is <strong>required</strong>
+                      </mat-error>
+                    </mat-error>
+
+                </mat-form-field>
+         </p>
+        </mat-card-content>
+     </form>
+ </div>
+

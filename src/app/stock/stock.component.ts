@@ -4,6 +4,8 @@ import 'rxjs/add/operator/takeUntil';
 import { Select } from "@ngxs/store";
 import { MasterState } from "../state/master-state";
 import { StockModelService } from "./stock-model.service";
+import { DetailsService } from "../details/details.service";
+import { Details } from "../details/details";
 
 @Component({
   selector: "app-stock",
@@ -21,14 +23,20 @@ export class StockComponent implements OnInit {
   ];
 
   @Select(MasterState.loading) loading$: Observable<boolean>;
-
+  isMobile=false;
   leftColumnIsHidden=false;
   stocks$: Observable<any>;
-  constructor(private modelService:StockModelService) {
+
+  subscription: Observable<Details>;
+  details$: Observable<Details>;
+
+
+  constructor(private detailsService:DetailsService,private modelService:StockModelService) {
   }
 
   ngOnInit() {
     this.stocks$ = this.modelService.stocks$;
+    this.subscription = this.details$ = this.detailsService.details$;
   }
 
 }

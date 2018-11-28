@@ -33,7 +33,7 @@
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
+          <mat-checkbox (click)="$event.stopPropagation();openDetails('Edit Item','edit',row)"
                         (change)="$event ? selection.toggle(row) : null"
                         [checked]="selection.isSelected(row)">
           </mat-checkbox>
@@ -42,34 +42,35 @@
     <!-- Position Column -->
     <ng-container matColumnDef="sku">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Sku</th>
-      <td mat-cell *matCellDef="let element">{{ element.sku }}</td>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+          <span class="text">{{ element.sku }}</span></td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="item">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.item }}</td>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.item }}</span></td>
     </ng-container>
 
     <!-- Purchase Price Column -->
     <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Purchase Price</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.price }} {{ element.currency }}
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Purchased Price</th>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+          <span class="text">{{ element.price }} {{ element.currency }}</span>
       </td>
     </ng-container>
 
     <!-- Sales Price Column -->
     <ng-container matColumnDef="sale_price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Sales Price</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.sale_price }} {{ element.currency }}
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+          <span class="text">{{ element.sale_price }} {{ element.currency }}</span>
       </td>
     </ng-container>
     <!-- Category Column -->
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-      <td mat-cell *matCellDef="let element">{{ element.category.name }}</td>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.category.name }}</span></td>
     </ng-container>
 
     <!-- Action Column -->
@@ -82,7 +83,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      <tr [class.highlighted]="((details$ | async).sender_data?(details$ | async).sender_data.id==row.id:false)" mat-row *matRowDef="let row; columns: displayedColumns;"
           (click)="selection.toggle(row)">
       </tr>
   </table>

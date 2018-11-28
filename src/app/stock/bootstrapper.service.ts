@@ -58,7 +58,7 @@ export class Bootstrapper {
           resolve();
         },
         error => {
-          this.modelStockService.update({loading:false,data:[]});
+          this.modelStockService.update({loading:false});
           console.log("bootstrap error", error);
           reject();
         }

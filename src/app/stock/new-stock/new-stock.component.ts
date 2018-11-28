@@ -66,7 +66,7 @@ export class NewStockComponent implements OnInit {
 
   items(){
       this.loading.next(true);
-      this.api.getNewStockItem(1).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+      this.api.getNewStockItem(1).pipe(finalize(() =>this.loading.next(false))).subscribe(
         res => {
           this.data = res['items'];
           this.data.forEach((d: Item) => this.addRow(d, false));

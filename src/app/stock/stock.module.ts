@@ -18,6 +18,8 @@ import { BackendHttpErrorHandler } from '../common/core/http/errors/backend-http
 import { ravenErrorHandlerFactory } from '../common/core/errors/raven-error-handler';
 import { ApiStockService } from './api/api.service';
 import { StockModelService } from './stock-model.service';
+import { StockModelModule } from './stock-model/stock-model.module';
+import { DetailsModule } from '../details/details.module';
 
 @NgModule({
   declarations:
@@ -28,7 +30,9 @@ import { StockModelService } from './stock-model.service';
     FormsModule,
     ReactiveFormsModule,
     StockRoutingModule,
-    UiModule
+    UiModule,
+    StockModelModule,
+    DetailsModule
   ],
   exports:
   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,NoEntryFoundStockComponent]

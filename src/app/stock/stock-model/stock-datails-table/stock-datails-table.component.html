@@ -1,0 +1,71 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+      <div class="col-12">
+          <button mat-button><mat-icon class="">menu</mat-icon>{{title}}  </button>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="col-12" *ngIf="data && data.length > 0">
+    <mat-form-field class="w-100 px-2">
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Search"
+      />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+
+      <!--  Qty Column -->
+      <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight </th>
+          <td mat-cell *matCellDef="let element" > {{element.weight}} {{element.unit_of_measure}} </td>
+        </ng-container>
+
+      <!--  Qty Column -->
+        <ng-container matColumnDef="qty">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity </th>
+            <td mat-cell *matCellDef="let element" > {{element.quantity}} </td>
+          </ng-container>
+   <!--  Qty Column -->
+   <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Transction date </th>
+      <td mat-cell *matCellDef="let element" > {{element.updated_at | date:'fullDate'}} </td>
+    </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="selection.toggle(row)">
+      </tr>
+    </table>
+
+    <div class="clearfix"></div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+
+  <div class="no-results-message" *ngIf="data && data.length == 0">
+      <div class="main" trans>{{message(title)}}</div>
+      <div class="secondary" trans>{{subMessage(title)}}</div>
+      <img class="icon" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDQ0Ni44NTMgNDQ2Ljg1MyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ2Ljg1MyA0NDYuODUzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQ0NC4yNzQsOTMuMzZjLTIuNTU4LTMuNjY2LTYuNjc0LTUuOTMyLTExLjE0NS02LjEyM0wxNTUuOTQyLDc1LjI4OWMtNy45NTMtMC4zNDgtMTQuNTk5LDUuNzkyLTE0LjkzOSwxMy43MDggICBjLTAuMzM4LDcuOTEzLDUuNzkyLDE0LjU5OSwxMy43MDcsMTQuOTM5bDI1OC40MjEsMTEuMTRMMzYyLjMyLDI3My42MUgxMzYuMjA1TDk1LjM1NCw1MS4xNzkgICBjLTAuODk4LTQuODc1LTQuMjQ1LTguOTQyLTguODYxLTEwLjc1M0wxOS41ODYsMTQuMTQxYy03LjM3NC0yLjg4Ny0xNS42OTUsMC43MzUtMTguNTkxLDguMWMtMi44OTEsNy4zNjksMC43MywxNS42OTUsOC4xLDE4LjU5MSAgIGw1OS40OTEsMjMuMzcxbDQxLjU3MiwyMjYuMzM1YzEuMjUzLDYuODA0LDcuMTgzLDExLjc0NiwxNC4xMDQsMTEuNzQ2aDYuODk2bC0xNS43NDcsNDMuNzRjLTEuMzE4LDMuNjY0LTAuNzc1LDcuNzMzLDEuNDY4LDEwLjkxNiAgIGMyLjI0LDMuMTg0LDUuODgzLDUuMDc4LDkuNzcyLDUuMDc4aDExLjA0NWMtNi44NDQsNy42MTctMTEuMDQ1LDE3LjY0Ni0xMS4wNDUsMjguNjc1YzAsMjMuNzE4LDE5LjI5OSw0My4wMTIsNDMuMDEyLDQzLjAxMiAgIHM0My4wMTItMTkuMjk0LDQzLjAxMi00My4wMTJjMC0xMS4wMjgtNC4yMDEtMjEuMDU4LTExLjA0NC0yOC42NzVoOTMuNzc3Yy02Ljg0Nyw3LjYxNy0xMS4wNDcsMTcuNjQ2LTExLjA0NywyOC42NzUgICBjMCwyMy43MTgsMTkuMjk0LDQzLjAxMiw0My4wMTIsNDMuMDEyYzIzLjcxOSwwLDQzLjAxMi0xOS4yOTQsNDMuMDEyLTQzLjAxMmMwLTExLjAyOC00LjItMjEuMDU4LTExLjA0Mi0yOC42NzVoMTMuNDMyICAgYzYuNiwwLDExLjk0OC01LjM0OSwxMS45NDgtMTEuOTQ3YzAtNi42LTUuMzQ5LTExLjk0OC0xMS45NDgtMTEuOTQ4SDE0My42NTFsMTIuOTAyLTM1Ljg0M2gyMTYuMjIxICAgYzYuMjM1LDAsMTEuNzUyLTQuMDI4LDEzLjY1MS05Ljk2bDU5LjczOS0xODYuMzg3QzQ0Ny41MzYsMTAxLjY3OSw0NDYuODMyLDk3LjAyOCw0NDQuMjc0LDkzLjM2eiBNMTY5LjY2NCw0MDkuODE0ICAgYy0xMC41NDMsMC0xOS4xMTctOC41NzMtMTkuMTE3LTE5LjExNnM4LjU3NC0xOS4xMTcsMTkuMTE3LTE5LjExN3MxOS4xMTYsOC41NzQsMTkuMTE2LDE5LjExN1MxODAuMjA3LDQwOS44MTQsMTY5LjY2NCw0MDkuODE0eiAgICBNMzI3LjM3Myw0MDkuODE0Yy0xMC41NDMsMC0xOS4xMTYtOC41NzMtMTkuMTE2LTE5LjExNnM4LjU3My0xOS4xMTcsMTkuMTE2LTE5LjExN3MxOS4xMTYsOC41NzQsMTkuMTE2LDE5LjExNyAgIFMzMzcuOTE2LDQwOS44MTQsMzI3LjM3Myw0MDkuODE0eiIgZmlsbD0iIzAwMDAwMCIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+    </div>

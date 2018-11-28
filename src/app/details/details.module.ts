@@ -6,6 +6,7 @@ import { DetailsService } from './details.service';
 import { MaterialModule } from '../material/material.module';
 import { DetailsPanelComponent } from './details-panel/details-panel.component';
 import { MasterModelModule } from '../admin/master/master-model/master-model.module';
+import { StockModelModule } from '../stock/stock-model/stock-model.module';
 
 @NgModule({
   declarations: [DetailsComponent, DetailsPanelComponent],
@@ -13,7 +14,8 @@ import { MasterModelModule } from '../admin/master/master-model/master-model.mod
     CommonModule,
     NgxModelModule,
     MaterialModule,
-    MasterModelModule
+    MasterModelModule,
+    StockModelModule
   ],
   exports:[DetailsComponent],
   providers: [DetailsService],

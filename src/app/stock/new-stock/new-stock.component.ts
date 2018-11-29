@@ -8,6 +8,8 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { Item } from '../../admin/master/items/api/item';
 import { Toast } from '../../common/core/ui/toast.service';
 import { ApiStockService } from '../api/api.service';
+import { Stock } from '../api/stock';
+import { StockModelService } from '../stock-model.service';
 
 @Component({
   selector: 'app-new-stock',
@@ -19,14 +21,14 @@ export class NewStockComponent implements OnInit {
 
   public loading = new BehaviorSubject(false);
   itemForm: FormGroup;
-  constructor(private apiStock:ApiStockService,private toast: Toast,private _fb: FormBuilder,private api:ApiItemService,private ref: ChangeDetectorRef) { }
-  units: string[] = ['unit','ltre','gms','kg'];
+  constructor(private modelStockService: StockModelService,private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
   data: Item[] = [];
   selection = new SelectionModel<Item>(true, []);
-  displayedColumns: string[] = ['select','sku', 'item','category','available_stock_qty','weight','unit_of_measure','operation'];
+  displayedColumns: string[] = ['select','item','available_stock_qty','unit_cost','expired_date','transction_date','comments','operation'];
   dataSource = new MatTableDataSource<Item>([]);
 
   rows: FormArray = this._fb.array([]);
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -35,7 +37,6 @@ export class NewStockComponent implements OnInit {
     this.items();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-   // this.checkIncomingData();
 
    this.itemForm = new FormGroup({
     newStock: this.rows
@@ -53,22 +54,26 @@ export class NewStockComponent implements OnInit {
       branch_id:  new FormControl(1,[Validators.required]),
       sku:  new FormControl(d && d.sku ? d.sku : null,[Validators.required]),
       item: new FormControl(d && d.item ? d.item : null,[Validators.required]),
-      category: new FormControl(d && d.category.name  ? d.category.name  : null,[Validators.required]),
-      qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern)]),
-      weight: new FormControl(1, [Validators.required, Validators.pattern(numberPatern)]),
-      unit_of_measure: new FormControl('gms', [Validators.required])
+      qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern), Validators.min(1)]),
+      unit_cost: new FormControl(d && d.item ? '('+d.currency+') '+d.unit_cost:null, [Validators.required]),
+      transction_date: new FormControl(new Date(), [Validators.required]),
+      expired_date: new FormControl(null),
+      comments:new FormControl('no comments'),
     });
     this.rows.push(row);
   }
   get sku() {
     return this.itemForm.get("sku");
   }
+  qty(){
+    return this.itemForm.get("qty");
+  }
 
   items(){
       this.loading.next(true);
-      this.api.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
+      this.api.getNewStockItem(1).pipe(finalize(() =>this.loading.next(false))).subscribe(
         res => {
-          this.data = res['items']['data'];
+          this.data = res['items'];
           this.data.forEach((d: Item) => this.addRow(d, false));
           this.dataSource = new MatTableDataSource<Item>(this.data);
 
@@ -78,17 +83,7 @@ export class NewStockComponent implements OnInit {
         }
       );
     }
-    checkIncomingData(){
-      // this.ref.detach();
-      // setInterval(() => {
-      //   if(this.shared_output){
-      //     this.data.push(this.shared_output);
-      //     this.shared_output=null;
-      //   }
-      //   this.ref.detectChanges();
-      // }, 1000);
 
-    }
 
      /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -106,35 +101,50 @@ export class NewStockComponent implements OnInit {
   }
     addItem(){
       if (this.selection.selected.length > 0) {
+        const form_data:Stock[]=[];
+
         if (this.itemForm.valid) {
           this.loading.next(true);
-          console.log(this.itemForm.value.newStock);
-          this.apiStock.create(this.itemForm.value.newStock).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+
+          this.selection.selected.forEach(selected_item => {
+            this.itemForm.value.newStock.forEach(form_item=>{
+              if(form_item.id===selected_item.id){
+                form_data.push(form_item);
+              }
+            });
+          });
+          this.api.create(form_data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
             res => {
             if(res.status=='success'){
-                this.toast.open('Category recorded successfull!');
-                this.removeSelectedRows();
+              this.modelStockService.update({loading:false, available:res["stocks"]["data"]});
+              this.removeSelectedRows(form_data);
+                this.toast.open('Stock created successfully!');
               }
             },
             _error => {
             console.error(_error);
             }
-          );
+         );
 
         }else{
           this.toast.open('Invalid some field(s) data');
         }
       }
     }
-    removeSelectedRows() {
-      this.selection.selected.forEach(item => {
-
-        this.data=this.data.filter(function(ele){
-          return ele != item;
+    removeSelectedRows(form_data) {
+      const _data=this.dataSource.data;
+      form_data.forEach((item) => {
+        let index= _data.findIndex(i => i.id===item.id);
+        _data.splice(index,1);
       });
-        this.dataSource = new MatTableDataSource<Item>(this.data);
-      });
-      this.selection = new SelectionModel<Item>(true, []);
+      this.dataSource.data= _data;
+     this.selection = new SelectionModel<Item>(true, []);
+    }
+    message(){
+      return 'No new items';
+    }
+    subMessage(){
+      return 'There are no new items to add in your stock currently.';
     }
 }
 

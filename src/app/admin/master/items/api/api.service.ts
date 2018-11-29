@@ -11,12 +11,17 @@ export class ApiItemService {
     constructor(private http: AppHttpClient) {}
 
 
-    public create(params: Item): BackendResponse<{ data: any }> {
+    public create(params: Item): BackendResponse<{ data: Item }> {
         return this.http.post(API_ROUTES.ITEM, params);
     }
-
-
-    public get(): BackendResponse<{ data: any }> {
+    public update(params: Item,id:number): BackendResponse<{ data: Item }> {
+      return this.http.put(API_ROUTES.ITEM+'/'+id, params);
+   }
+   public delete(id:number): BackendResponse<{ data: Item }> {
+    return this.http.delete(API_ROUTES.ITEM+'/'+id);
+ }
+    public get(): BackendResponse<{ data: Item []}> {
       return this.http.get(API_ROUTES.ITEM);
   }
+
 }

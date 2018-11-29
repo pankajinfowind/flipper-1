@@ -11,7 +11,7 @@ export class ApiStockService {
     constructor(private http: AppHttpClient) {}
 
 
-    public create(params: Stock): BackendResponse<{ data: any }> {
+    public create(params: Stock[]): BackendResponse<{ data: any }> {
         return this.http.post(API_ROUTES.STOCK, params);
     }
 
@@ -23,5 +23,8 @@ export class ApiStockService {
       // here we can get stock available when status = 1 , damage(like expired by date(by stytem task) or branch mananger (can update the stock item damaged)) status= 3 and soldout  status=2
       return this.http.get(API_ROUTES.BRANCH_STOCK+'/'+branch_id+'/'+status);
     }
-
+    public getNewStockItem(branch_id): BackendResponse<{ data: any []}> {
+      return this.http.get(API_ROUTES.NEW_STOCK_ITEM+'/'+branch_id);
+  }
+    //new-item
 }

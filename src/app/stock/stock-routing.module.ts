@@ -19,7 +19,7 @@ const stockRoutes: Routes = [
             pathMatch: 'full',
             },
             { path: 'available', component: AvailabeStockComponent},
-            { path: 'new-stock', component: NewStockComponent},
+            { path: 'new', component: NewStockComponent},
             { path: 'stockout', component: StockSoldOutComponent},
             { path: 'damaged', component: StockDamagedComponent}
 

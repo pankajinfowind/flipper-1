@@ -1,0 +1,13 @@
+
+<ng-container  *ngIf="details$ | async as details" [ngSwitch]="details.component">
+    <app-item-model *ngSwitchCase="'app-items'"></app-item-model>
+    <app-category-model *ngSwitchCase="'app-categories'"></app-category-model>
+    <app-insurance-model *ngSwitchCase="'app-insurances'"></app-insurance-model>
+
+    <ng-template *ngSwitchDefault>
+        <div class="nothing-selected">
+            <div class="text" trans>No Action Made.</div>
+        </div>
+    </ng-template>
+</ng-container>
+

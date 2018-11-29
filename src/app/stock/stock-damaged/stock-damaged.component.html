@@ -1,14 +1,1 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <div class="col-8">
-        <button mat-button><mat-icon class="">menu</mat-icon>Stock Damaged Items </button>
-      <span class="spacer"></span>
-      <span class="spacer"></span>
-      </div>
-      <div class="col-4 float-right">
-         <button mat-button><mat-icon class="">add</mat-icon>New Stock Item</button> <button mat-button><mat-icon class="">delete</mat-icon>Remove all</button></div>
-  </mat-toolbar-row>
-</mat-toolbar>
-<p>
-  stock-damaged works!
-</p>
+<app-stock-table  [title]="'Stock Damaged Items'" [status]="'damaged'"></app-stock-table>

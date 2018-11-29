@@ -118,29 +118,29 @@ export class ModalComponent implements OnInit {
     return this.itemForm.get("currency");
   }
   saveItem(){
-    if (this.itemForm.valid) {
-      this.loading.next(true)
-      const data = {
-                  item: this.itemForm.value.item,
-                  sku:this.itemForm.value.sku,
-                  price:this.itemForm.value.price,
-                  category_id:this.itemForm.value.category_id,
-                  barcode:this.itemForm.value.barcode,
-                  currency:this.itemForm.value.currency,
-                  sale_price:this.itemForm.value.sale_price
-             };
-      this.apiItem.create(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
-        res => {
-            if(res.status=='success'){
-              this.toast.open('Item recorded successfull!');
-              this.valueChange.emit(res);
-            }
-        },
-        _error => {
-        console.error(_error);
-        }
-      );
-    }
+    // if (this.itemForm.valid) {
+    //   this.loading.next(true)
+    //   const data = {
+    //               item: this.itemForm.value.item,
+    //               sku:this.itemForm.value.sku,
+    //               price:this.itemForm.value.price,
+    //               category_id:this.itemForm.value.category_id,
+    //               barcode:this.itemForm.value.barcode,
+    //               currency:this.itemForm.value.currency,
+    //               sale_price:this.itemForm.value.sale_price
+    //          };
+    //   this.apiItem.create(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+    //     res => {
+    //         if(res.status=='success'){
+    //           this.toast.open('Item recorded successfull!');
+    //           this.valueChange.emit(res);
+    //         }
+    //     },
+    //     _error => {
+    //     console.error(_error);
+    //     }
+    //   );
+    // }
   }
 
 

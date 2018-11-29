@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { MasterState } from '../../../state/master-state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { DetailsService } from '../../../details/details.service';
+import { Details } from '../../../details/details';
 
 @Component({
   selector: 'app-master',
@@ -9,31 +11,24 @@ import { Observable } from 'rxjs';
   styleUrls: ['./master.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MasterComponent implements OnInit {
+export class MasterComponent implements OnInit,OnDestroy {
 
 links: any[] = [{path:'category',label:'Categories'},{path:'item',label:'Items'},{path:'insurance',label:'Insurances'} ];
 
 @Select(MasterState.loading) loading$: Observable<boolean>;
 isMobile=false;
-
 leftColumnIsHidden=false;
-rightColumnIsHidden=true;
-constructor() {
+subscription: Observable<Details>;
+details$: Observable<Details>;
+constructor(private detailsService:DetailsService) {
  }
 
   ngOnInit() {
-  //  this.getWinSize();
+    this.subscription = this.details$ = this.detailsService.details$;
   }
 
-getWinSize(){
-  setInterval(()=>{
-if(window.innerWidth < 1200 ){
-  this.isMobile=true;
-  this.rightColumnIsHidden=true;
-}else{
-  this.isMobile=false;
-  this.rightColumnIsHidden=false;
-}
-  },1000);
-}
+  ngOnDestroy() {
+    //this.subscription.next();
+  }
+
 }

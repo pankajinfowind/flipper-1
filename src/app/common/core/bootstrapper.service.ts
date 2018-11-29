@@ -53,7 +53,7 @@ export class Bootstrapper {
     // if (this.settings.getBaseUrl() != "http://localhost:4200") {
     //   url = "http://localhost:8000/secure/bootstrap-data";
     // } else {
-      url = this.settings.getBaseUrl() + "secure/bootstrap-data";
+      url = this.settings.getBaseUrl() +"secure/bootstrap-data";
     // }
     // fetch bootstrap data from backend and return promise that
     // resolves once request is complete and data is passed to the app

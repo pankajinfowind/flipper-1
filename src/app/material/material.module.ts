@@ -5,7 +5,6 @@ import {
   MatCardModule,
   MatChipsModule,
   MatCheckboxModule,
-  MatDatepickerModule,
   MatTableModule,
   MatDialogModule,
   MatFormFieldModule,
@@ -27,8 +26,12 @@ import {
   MatStepperModule,
   MatTabsModule,
   MatToolbarModule,
-  MatCommonModule
+  MatCommonModule,
+  MatRadioModule,
+  MatTooltipModule,
+  MatNativeDateModule
 } from "@angular/material";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { OverlayModule } from "@angular/cdk/overlay";
 
@@ -72,7 +75,7 @@ const MATERIAL_MODULES = [
   MatListModule,
 
   MatMenuModule,
-
+  MatTooltipModule,
   MatPaginatorModule,
 
   MatProgressBarModule,
@@ -92,9 +95,9 @@ const MATERIAL_MODULES = [
   MatSnackBarModule,
 
   MatSortModule,
-
+  MatNativeDateModule,
   MatStepperModule,
-
+  MatRadioModule,
   MatTabsModule,
   MatToolbarModule,
   OverlayModule,

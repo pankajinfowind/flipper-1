@@ -41,11 +41,16 @@
       </ng-container>
     <!-- Position Column -->
     <ng-container matColumnDef="sku">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sku</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
           <span class="text">{{ element.sku }}</span></td>
     </ng-container>
-
+    <!-- Position Column -->
+    <ng-container matColumnDef="upc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>UPC</th>
+        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+            <span class="text">{{ element.upc }}</span></td>
+      </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="item">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -53,18 +58,18 @@
     </ng-container>
 
     <!-- Purchase Price Column -->
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Purchased Price</th>
+    <ng-container matColumnDef="unit_cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Cost</th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
-          <span class="text">{{ element.price }} {{ element.currency }}</span>
+          <span class="text">{{ element.unit_cost }} {{ element.currency }}</span>
       </td>
     </ng-container>
 
     <!-- Sales Price Column -->
-    <ng-container matColumnDef="sale_price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sales Price</th>
+    <ng-container matColumnDef="unit_sale">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Sale</th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
-          <span class="text">{{ element.sale_price }} {{ element.currency }}</span>
+          <span class="text">{{ element.unit_sale }} {{ element.currency }}</span>
       </td>
     </ng-container>
     <!-- Category Column -->
@@ -72,6 +77,16 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.category.name }}</span></td>
     </ng-container>
+      <!-- Category Column -->
+      <ng-container matColumnDef="manufacturer">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Manufacturer</th>
+          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.manufacturer }}</span></td>
+        </ng-container>
+              <!-- Category Column -->
+      <ng-container matColumnDef="summary">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Summary</th>
+          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text" trans>{{ element.summary }}</span></td>
+        </ng-container>
 
     <!-- Action Column -->
     <ng-container matColumnDef="action">

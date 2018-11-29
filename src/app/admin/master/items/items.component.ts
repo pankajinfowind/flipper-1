@@ -75,10 +75,13 @@ export class ItemsComponent implements OnInit {
   displayedColumns: string[] = [
     'select',
     "sku",
+    "upc",
     "item",
-    "price",
-    "sale_price",
+    "unit_cost",
+    "unit_sale",
     "category",
+    'manufacturer',
+    'summary',
     "action"
   ];
   dataSource = new MatTableDataSource<Item>([]);

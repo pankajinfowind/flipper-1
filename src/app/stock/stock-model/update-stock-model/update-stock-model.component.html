@@ -3,7 +3,33 @@
 
     <form [formGroup]="stockForm" (ngSubmit)="updateStock()">
        <mat-card-content>
-         <p>
+
+            <div class="details-list">
+                <div class="item">
+                    <div class="name" trans>Stock</div>
+                    <div class="value type-value" trans></div>
+                </div>
+                <div class="item">
+                    <div class="name" trans>Current In-Stock</div>
+                    <div class="value type-value" trans>{{stock.available_stock_qty}}</div>
+                </div>
+                <div class="item">
+                    <div class="name" trans>Weight</div>
+                    <div class="value">{{stock.weight}} {{stock.unit_of_measure}}</div>
+                </div>
+                <mat-divider></mat-divider>
+                <br />
+                <div class="item">
+                    <div class="name" trans><b>Transction:</b></div>
+                    <div class="value">
+                        <mat-radio-group>
+                            <mat-radio-button value="1">New Stock</mat-radio-button>
+                            <mat-radio-button value="2">Usable Return </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <br />
+            </div>
             <mat-form-field class="ybx-mat mat-full-wdth">
                 <input class="text-secondary" matInput placeholder="Quantity" formControlName="qty" required>
                   <mat-error  *ngIf="qty.invalid && (qty.dirty || qty.touched)">
@@ -16,20 +42,6 @@
                   </mat-error>
 
               </mat-form-field>
-
-              <mat-form-field class="ybx-mat mat-full-wdth">
-                  <input class="text-secondary" matInput placeholder="Weight" formControlName="weight" required>
-                    <mat-error  *ngIf="weight.invalid && (weight.dirty || weight.touched)">
-                      <mat-error *ngIf="weight.errors.weight && !weight.errors.required">
-                        Please enter a valid weight
-                      </mat-error>
-                      <mat-error *ngIf="weight.errors.required">
-                          Weight is <strong>required</strong>
-                      </mat-error>
-                    </mat-error>
-
-                </mat-form-field>
-         </p>
         </mat-card-content>
      </form>
  </div>

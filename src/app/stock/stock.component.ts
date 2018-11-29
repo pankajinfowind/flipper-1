@@ -16,9 +16,9 @@ import { Details } from "../details/details";
 export class StockComponent implements OnInit {
 
   links: any[] = [
-    { path: "new", label: "New Stock" },
-    { path: "available", label: "Available Stock" },
-    { path: "stockout", label: "Sold Out Items" },
+    { path: "new", label: "Create New Stock" },
+    { path: "available", label: "Current Stock" },
+    { path: "stockout", label: "Out of Stock Items" },
     { path: "damaged", label: "Damaged Items" }
   ];
 

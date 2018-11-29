@@ -157,6 +157,8 @@ $drive-text-color: #656565;
   border-bottom-right-radius: 25px;
   .text {
     font-weight: 500!important;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &:not(.active):not(.drag-over):hover {

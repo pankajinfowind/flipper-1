@@ -20,10 +20,12 @@ export class ItemModelComponent implements OnInit {
   numberPatern = '^[0-9.]+$';
   public loading = new BehaviorSubject(false);
   details$: Observable<Details>;
-  currencies: string[] = ['Rwf'];
+  currencies: string[] = ['Rwf','$'];
   need_to_add_new:boolean=true;
   category_placeholder='Choose Item Category';
   item_id:number=0;
+  upc_tool_tips="The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
+  sku_tool_tips="The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   constructor(private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService,private detailsService:DetailsService) { }
 
   ngOnInit() {
@@ -41,10 +43,13 @@ export class ItemModelComponent implements OnInit {
         this.itemForm = new FormGroup({
           item: new FormControl(res.sender_data?res.sender_data.item:"", [Validators.required]),
           sku: new FormControl(res.sender_data?res.sender_data.sku:"", [Validators.required]),
-          currency: new FormControl(res.sender_data?res.sender_data.currency:"", [Validators.required]),
-          price: new FormControl(res.sender_data?res.sender_data.price:"", [Validators.required, Validators.pattern(this.numberPatern)]),
-          sale_price: new FormControl(res.sender_data?res.sender_data.sale_price:"", [Validators.required, Validators.pattern(this.numberPatern)]),
-          category_id: new FormControl(res.sender_data?res.sender_data.category.category_id:"", [Validators.required]),
+          upc:new FormControl(res.sender_data?res.sender_data.upc:0, [Validators.required]),
+          summary:new FormControl(res.sender_data?res.sender_data.summary:''),
+          manufacturer:new FormControl(res.sender_data?res.sender_data.manufacturer:''),
+          currency: new FormControl(res.sender_data?res.sender_data.currency:"Rwf", [Validators.required]),
+          unit_cost: new FormControl(res.sender_data?res.sender_data.unit_cost:0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
+          unit_sale: new FormControl(res.sender_data?res.sender_data.unit_sale:0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
+          category_id: new FormControl(res.sender_data?res.sender_data.category.category_id:0, [Validators.required]),
           barcode: new FormControl(res.sender_data?res.sender_data.barcode:"barcode")
         });
   });
@@ -73,8 +78,8 @@ export class ItemModelComponent implements OnInit {
     return this.itemForm.get("sku");
   }
 
-  get price() {
-    return this.itemForm.get("price");
+  get unit_sale() {
+    return this.itemForm.get("unit_sale");
   }
   get category_id() {
     return this.itemForm.get("category_id");
@@ -82,11 +87,20 @@ export class ItemModelComponent implements OnInit {
   get barcode() {
     return this.itemForm.get("barcode");
   }
-  get sale_price() {
-    return this.itemForm.get("sale_price");
+  get unit_cost() {
+    return this.itemForm.get("unit_cost");
+  }
+  get upc() {
+    return this.itemForm.get("upc");
+  }
+  get summary() {
+    return this.itemForm.get("summary");
   }
   get currency() {
     return this.itemForm.get("currency");
+  }
+  get manufacturer() {
+    return this.itemForm.get("manufacturer");
   }
   saveItem(){
     if (this.itemForm.valid) {
@@ -94,11 +108,14 @@ export class ItemModelComponent implements OnInit {
       const data = {
                   item: this.itemForm.value.item,
                   sku:this.itemForm.value.sku,
-                  price:this.itemForm.value.price,
-                  category_id:this.itemForm.value.category_id,
-                  barcode:this.itemForm.value.barcode,
+                  upc:this.itemForm.value.upc,
+                  summary:this.itemForm.value.summary,
+                  manufacturer:this.itemForm.value.manufacturer,
                   currency:this.itemForm.value.currency,
-                  sale_price:this.itemForm.value.sale_price
+                  unit_cost:this.itemForm.value.unit_cost,
+                  unit_sale:this.itemForm.value.unit_sale,
+                  category_id:this.itemForm.value.category_id,
+                  barcode:this.itemForm.value.barcode
              };
            return  this.need_to_add_new?this.create(data):this.update(data,this.item_id);
     }

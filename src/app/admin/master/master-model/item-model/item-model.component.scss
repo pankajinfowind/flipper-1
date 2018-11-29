@@ -1,10 +1,11 @@
 @import "../../../../app_sass/variables";
 
 .details-list {
+  margin-top: -18px;
   .item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
 
     .name {
       width: 120px;
@@ -19,5 +20,8 @@
     .type-value {
       text-transform: capitalize;
     }
+  }
+  .card-actions{
+    margin-top: -17px                                                                                                                                                                                                                                                                                                                                                                                                                                                                                x;
   }
 }

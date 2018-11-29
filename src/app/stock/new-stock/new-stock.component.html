@@ -11,7 +11,7 @@
         <span class="spacer"></span>
         </div>
         <div class="col-4">
-            <button type="button" class="float-right" (click)="addItem()" mat-raised-button color='accent' *ngIf="selection.selected.length > 1" [disabled]="(loading | async)">Save all</button>
+            <button type="button" class="float-right" (click)="addItem()" mat-raised-button color='accent' *ngIf="selection.selected.length > 1" [disabled]="(loading | async) || itemForm.invalid">Save all</button>
         </div>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -64,38 +64,65 @@
                         <span class="text">
                       <input matInput placeholder="New Qty" (input)="$event ? selection.toggle(element) : true" type="number" formControlName="qty" required>
                       </span>
+                      <!-- <mat-error *ngIf="qty.invalid && (qty.dirty || qty.touched)">
+                          <strong *ngIf="qty.errors.required">Quantity is required.</strong>
+                          <strong *ngIf="qty.errors.min">Quantity must be greater than 0.</strong>
+                        </mat-error> -->
                     </mat-form-field>
                   </td>
                   </ng-container>
                         <!--  Category Column -->
-              <ng-container matColumnDef="weight">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+              <ng-container matColumnDef="unit_cost">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit Cost </th>
                   <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
                       <mat-form-field class="text">
-                          <input class="text-secondary" (input)="$event ? selection.toggle(element) : true" matInput placeholder="New weight" type="number" formControlName="weight" required>
+                          <input class="text-secondary" (input)="$event ? selection.toggle(element) : true" matInput placeholder="New unit cost" type="text" formControlName="unit_cost" required>
 
                       </mat-form-field>
 
                   </td>
                 </ng-container>
 
-                <ng-container matColumnDef="unit_of_measure">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> U.of Measure </th>
+                <ng-container matColumnDef="expired_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Expired date </th>
                     <td mat-cell *matCellDef="let element;let index = index"  [formGroupName]="index" >
                         <mat-form-field class="text">
-                            <mat-select (input)="$event ? selection.toggle(element) : true" placeholder="Choose Unit of measure" formControlName="unit_of_measure" required>
-                              <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
-                            </mat-select>
+
+                            <input matInput [matDatepicker]="expireddate" placeholder="Expired date (if needed)" formControlName="expired_date">
+                            <mat-datepicker-toggle matSuffix [for]="expireddate"></mat-datepicker-toggle>
+                            <mat-datepicker #expireddate></mat-datepicker>
 
                           </mat-form-field>
-
-
                     </td>
                   </ng-container>
+
+                <ng-container matColumnDef="transction_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transction date </th>
+                    <td mat-cell *matCellDef="let element;let index = index"  [formGroupName]="index" >
+                        <mat-form-field class="text">
+
+                            <input matInput [matDatepicker]="transctiondate" placeholder="Transction date" formControlName="transction_date" required>
+                            <mat-datepicker-toggle matSuffix [for]="transctiondate"></mat-datepicker-toggle>
+                            <mat-datepicker #transctiondate></mat-datepicker>
+
+                          </mat-form-field>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="comments">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments </th>
+                      <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
+                          <mat-form-field class="text">
+                              <textarea class="text-secondary" matInput placeholder="Leave a summary"  (input)="$event ? selection.toggle(element) : true" formControlName="comments"></textarea>
+                          </mat-form-field>
+
+                      </td>
+                    </ng-container>
+
                   <ng-container matColumnDef="operation">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Operation </th>
                       <td mat-cell *matCellDef="let element">
-                          <button type="button" class="float-right" (click)="addItem()" mat-raised-button  color="accent" [disabled]="!selection.isSelected(element) || (loading | async)">Save</button>
+                          <button type="button" class="float-right" (click)="addItem()" mat-raised-button  color="accent" [disabled]="!selection.isSelected(element) || (loading | async) || itemForm.invalid">Save</button>
                       </td>
                     </ng-container>
 

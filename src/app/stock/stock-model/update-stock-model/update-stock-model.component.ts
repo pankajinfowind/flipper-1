@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Details } from '../../../details/details';
 import { DetailsService } from '../../../details/details.service';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Stock } from '../../api/stock';
 
 @Component({
   selector: 'app-update-stock-model',
@@ -15,6 +16,7 @@ export class UpdateStockModelComponent implements OnInit {
   details$: Observable<Details>;
   stockForm: FormGroup;
   units: string[] = ['unit','ltre','gms','kg'];
+  stock:Stock;
   constructor(private detailsService:DetailsService) {
    }
 
@@ -23,6 +25,7 @@ export class UpdateStockModelComponent implements OnInit {
       this.details$ = this.detailsService.details$;
       this.details$.subscribe(res=>{
         const numberPatern = '^[0-9.,]+$';
+        this.stock=res.sender_data;
           this.stockForm = new FormGroup({
             qty: new FormControl(res.sender_data?res.sender_data.available_stock_qty:1, [Validators.required, Validators.pattern(numberPatern)]),
             weight: new FormControl(res.sender_data?res.sender_data.weight:1, [Validators.required, Validators.pattern(numberPatern)]),

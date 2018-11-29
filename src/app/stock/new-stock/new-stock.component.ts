@@ -22,13 +22,13 @@ export class NewStockComponent implements OnInit {
   public loading = new BehaviorSubject(false);
   itemForm: FormGroup;
   constructor(private modelStockService: StockModelService,private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
-  units: string[] = ['unit','ltre','gms','kg'];
   data: Item[] = [];
   selection = new SelectionModel<Item>(true, []);
-  displayedColumns: string[] = ['select','item','available_stock_qty','weight','unit_of_measure','operation'];
+  displayedColumns: string[] = ['select','item','available_stock_qty','unit_cost','expired_date','transction_date','comments','operation'];
   dataSource = new MatTableDataSource<Item>([]);
 
   rows: FormArray = this._fb.array([]);
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -54,14 +54,19 @@ export class NewStockComponent implements OnInit {
       branch_id:  new FormControl(1,[Validators.required]),
       sku:  new FormControl(d && d.sku ? d.sku : null,[Validators.required]),
       item: new FormControl(d && d.item ? d.item : null,[Validators.required]),
-      qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern)]),
-      weight: new FormControl(1, [Validators.required, Validators.pattern(numberPatern)]),
-      unit_of_measure: new FormControl('gms', [Validators.required])
+      qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern), Validators.min(1)]),
+      unit_cost: new FormControl(d && d.item ? '('+d.currency+') '+d.unit_cost:null, [Validators.required]),
+      transction_date: new FormControl(new Date(), [Validators.required]),
+      expired_date: new FormControl(null),
+      comments:new FormControl('no comments'),
     });
     this.rows.push(row);
   }
   get sku() {
     return this.itemForm.get("sku");
+  }
+  qty(){
+    return this.itemForm.get("qty");
   }
 
   items(){

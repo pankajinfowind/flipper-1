@@ -3,8 +3,7 @@
 
    <form [formGroup]="itemForm" (ngSubmit)="saveItem()">
       <mat-card-content>
-        <p>
-          <mat-form-field class="ybx-mat mat-full-wdth">
+        <mat-form-field class="ybx-mat mat-full-wdth">
             <input class="text-secondary" matInput placeholder="Item name" formControlName="item" required>
               <mat-error  *ngIf="item.invalid && (item.dirty || item.touched)">
                 <mat-error *ngIf="item.errors.item && !item.errors.required">
@@ -17,7 +16,9 @@
           </mat-form-field>
 
           <mat-form-field class="ybx-mat mat-full-wdth">
-            <input class="text-secondary" matInput placeholder="Item sku" formControlName="sku" required>
+            <input class="text-secondary" [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit" matInput placeholder="Sku (auto generated if blank)" formControlName="sku" required>
+            <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
+
             <mat-error  *ngIf="sku.invalid && (sku.dirty || sku.touched)">
               <mat-error *ngIf="sku.errors.sku && !sku.errors.required">
                 Please enter a valid sku
@@ -29,28 +30,43 @@
           </mat-form-field>
 
           <mat-form-field class="ybx-mat mat-full-wdth">
-            <input class="text-secondary" matInput placeholder="Purchase price" formControlName="price" required>
-            <mat-error  *ngIf="price.invalid && (price.dirty || price.touched)">
-              <mat-error *ngIf="price.invalid && !price.errors.required">
-                Please enter a valid purchase price, only number allowed
+            <input class="text-secondary"[matTooltip]="upc_tool_tips" aria-label="Universal Product Code" matInput placeholder="Upc (if available)" formControlName="upc" required>
+            <mat-icon matSuffix [matTooltip]="upc_tool_tips" aria-label="Universal Product Code">info</mat-icon>
+
+            <mat-error  *ngIf="upc.invalid && (upc.dirty || upc.touched)">
+              <mat-error *ngIf="upc.errors.upc && !upc.errors.required">
+                Please enter a valid upc, only number allowed
               </mat-error>
-              <mat-error *ngIf="price.errors.required">
-                Purchase price is <strong>required</strong>
+              <mat-error *ngIf="upc.errors.required">
+                  Item upc is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+          </mat-form-field><br />
+
+          <mat-form-field class="ybx-mat mat-full-wdth">
+            <input class="text-secondary" matInput placeholder="Unit Cost" formControlName="unit_cost" required>
+            <mat-error  *ngIf="unit_cost.invalid && (unit_cost.dirty || unit_cost.touched)">
+              <mat-error *ngIf="unit_cost.invalid && !unit_cost.errors.required">
+                Please enter a valid unit cost, only number allowed
+              </mat-error>
+              <mat-error *ngIf="unit_cost.errors.required">
+                Unit cost is <strong>required</strong>
               </mat-error>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="ybx-mat mat-full-wdth">
-            <input class="text-secondary" matInput placeholder="Sales price" formControlName="sale_price" required>
-            <mat-error *ngIf="sale_price.invalid && (sale_price.dirty || sale_price.touched)">
-              <mat-error *ngIf="sale_price.invalid && !sale_price.errors.required">
-                Please enter a valid sales price, only number allowed
+            <input class="text-secondary" matInput placeholder="Unit sale" formControlName="unit_sale" required>
+            <mat-error *ngIf="unit_sale.invalid && (unit_sale.dirty || unit_sale.touched)">
+              <mat-error *ngIf="unit_sale.invalid && !unit_sale.errors.required">
+                Please enter a valid unit sale, only number allowed
               </mat-error>
-              <mat-error *ngIf="sale_price.errors.required">
-                Sales price is <strong>required</strong>
+              <mat-error *ngIf="unit_sale.errors.required">
+                Unit sale is <strong>required</strong>
               </mat-error>
             </mat-error>
           </mat-form-field>
+
 
           <mat-form-field class="ybx-mat mat-full-wdth">
             <mat-select placeholder="Choose Currency" formControlName="currency" required>
@@ -73,12 +89,21 @@
               <strong *ngIf="category_id.errors.required">Category is required.</strong>
             </mat-error>
           </mat-form-field>
-        </p>
+
+          <mat-form-field class="ybx-mat mat-full-wdth">
+              <input class="text-secondary" matInput placeholder="Manufacturer (Optinal)" formControlName="manufacturer">
+            </mat-form-field>
+            <mat-form-field class="ybx-mat mat-full-wdth">
+                <textarea class="text-secondary" matInput placeholder="Leave a summary" formControlName="summary"></textarea>
+            </mat-form-field>
+
       </mat-card-content>
-      <mat-card-actions>
+      <mat-card-actions class="card-actions">
         <button type="submit" class="float-right" mat-button [disabled]="(loading | async)"> <span *ngIf="need_to_add_new">Save</span>
           <span *ngIf="!need_to_add_new">Edit</span></button>
         <button type="button" class="float-right" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button>
       </mat-card-actions>
     </form>
 </div>
+
+

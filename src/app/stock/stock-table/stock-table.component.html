@@ -8,8 +8,7 @@
 
          <div class="col-4">
             <button color='accent' class="float-right" mat-raised-button (click)="newStck()">
-            <mat-icon class="">add</mat-icon>New Stock</button>
-            <button mat-button color='warn' class="float-right" [disabled]="true" *ngIf="selection.selected.length > 0"><mat-icon class="">delete</mat-icon>Delete ({{selection.selected.length}}) selected</button>
+            <mat-icon class="">add</mat-icon>Create New Stock</button>
          </div>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -41,48 +40,52 @@
         </ng-container>
     <!-- Position Column -->
     <ng-container matColumnDef="sku">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sku</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon></th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.item.sku }}</span></td>
     </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="upc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>UPC <mat-icon matSuffix [matTooltip]="upc_tool_tips" aria-label="Universal Product Code">info</mat-icon></th>
+          <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.item.upc }}</span></td>
+        </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="stock">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stocks </th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> {{element.name}} </td>
     </ng-container>
 
   <!--  Category Column -->
   <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Categories </th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.category.name}}</span> </td>
     </ng-container>
-
+       <!--  Qty Column -->
+       <ng-container matColumnDef="expire_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Expired at </th>
+        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.expire_date}}</span></td>
+      </ng-container>
          <!--  Sales Price Column -->
-         <ng-container matColumnDef="sale_price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sales Price </th>
-            <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> <span class="text">{{element.item.sale_price}} {{element.item.currency}}</span> </td>
+         <ng-container matColumnDef="unit_sale">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Sales </th>
+            <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> <span class="text">{{element.item.unit_sale}} {{element.item.currency}}</span> </td>
           </ng-container>
 
-            <!--  Qty Column -->
-            <ng-container matColumnDef="units">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Units </th>
-                <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.weight}} {{element.unit_of_measure}}</span> </td>
-              </ng-container>
   <!--  Qty Column -->
-      <ng-container matColumnDef="entry_stock_qty">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated Qty </th>
-          <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> <span class="text">{{element.entry_stock_qty}}</span></td>
+      <ng-container matColumnDef="in_stock_qty">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Added In-Stock Qtys </th>
+          <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> <span class="text">{{element.in_stock_qty}}</span></td>
         </ng-container>
          <!--  Qty Column -->
          <ng-container matColumnDef="available_stock_qty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Available Qty </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Stock Qtys </th>
             <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.available_stock_qty}}</span></td>
           </ng-container>
 
              <!--  Qty Column -->
          <ng-container matColumnDef="sold">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sold Qty </th>
-            <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.entry_stock_qty-element.available_stock_qty}}</span></td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Out-Stock Qtys </th>
+            <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.in_stock_qty-element.available_stock_qty}}</span></td>
           </ng-container>
 
               <!--  Qty Column -->
@@ -90,9 +93,9 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress </th>
                 <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')">
 
-                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.entry_stock_qty) >= 70" [mode]="determinate" [color]="accent" [value]="percentage(element.available_stock_qty,element.entry_stock_qty)"></mat-progress-bar>
-                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.entry_stock_qty) < 70 && percentage(element.available_stock_qty,element.entry_stock_qty) >= 40" [mode]="determinate"  [value]="percentage(element.available_stock_qty,element.entry_stock_qty)"></mat-progress-bar>
-                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.entry_stock_qty) < 40 && percentage(element.available_stock_qty,element.entry_stock_qty) >= 0" [mode]="warn" [value]="percentage(element.available_stock_qty,element.entry_stock_qty)"></mat-progress-bar>
+                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) >= 70" [mode]="determinate" [color]="accent" [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
+                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) < 70 && percentage(element.available_stock_qty,element.in_stock_qty) >= 40" [mode]="determinate"  [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
+                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) < 40 && percentage(element.available_stock_qty,element.in_stock_qty) >= 0" [mode]="warn" [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
                 </td>
               </ng-container>
 
@@ -100,9 +103,9 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Operation</th>
       <td mat-cell *matCellDef="let element">
 
-          <button mat-button class="d-inline-block" color="primary" (click)="openDetails('Update Stock Item','edit',element,'app-update-stock-model')" [disabled]="!selection.isSelected(element) || isAllSelected()"><mat-icon>create</mat-icon>Update </button>
-          <button mat-button class="d-inline-block" color="accent"  [disabled]="!selection.isSelected(element) || isAllSelected()"><mat-icon>remove</mat-icon> Is Damaged</button>
-          <button mat-button class="d-inline-block" color="warn"  [disabled]="true"> <mat-icon>delete</mat-icon> Delete</button>
+          <button mat-button class="d-inline-block" color="primary" (click)="openDetails('Update Stock Item','edit',element,'app-update-stock-model')" [disabled]="!selection.isSelected(element) || isAllSelected()"><mat-icon>create</mat-icon>Edit </button>
+          <button mat-button class="d-inline-block" color="accent"  [disabled]="!selection.isSelected(element) || isAllSelected()"><mat-icon>add</mat-icon>Add</button>
+          <button mat-button class="d-inline-block" color="warn"   [disabled]="!selection.isSelected(element) || isAllSelected()"><mat-icon>remove</mat-icon> Remove</button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

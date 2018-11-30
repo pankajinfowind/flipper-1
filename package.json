@@ -1,8 +1,8 @@
 {
-  "name": "flipper",
-  "version": "0.1.34",
-  "description": "POS APP",
-  "homepage": "https://github.com/richard457/flipper.git",
+  "name": "Flipper",
+  "version": "0.1.38",
+  "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventor, sales and used in point of sale.",
+  "homepage": "https://flipper.yegobox.rw",
   "repository": {
     "type": "git",
     "url": "https://github.com/richard457/flipper.git"

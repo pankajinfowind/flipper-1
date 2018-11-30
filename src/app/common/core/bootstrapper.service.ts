@@ -7,6 +7,8 @@ import { User } from "./types/models/User";
 import { LocalizationWithLines } from "./types/localization-with-lines";
 import { CurrentUser } from "../auth/current-user";
 import { HttpClient } from "@angular/common/http";
+import { AppConfig } from "../../../environments/environment";
+import { URL } from "./utils/URL";
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
 }
@@ -27,7 +29,7 @@ export class Bootstrapper {
   protected i18n: Translations;
   public data: BootstrapData;
 
-  constructor(protected injector: Injector) {
+  constructor(protected injector: Injector, protected URL: URL) {
     this.http = this.injector.get(HttpClient);
     this.settings = this.injector.get(Settings);
     this.currentUser = this.injector.get(CurrentUser);
@@ -50,12 +52,13 @@ export class Bootstrapper {
       this.handleData(data);
       return new Promise(resolve => resolve());
     }
-    // if (this.settings.getBaseUrl() != "http://localhost:4200") {
-    //   url = "http://localhost:8000/secure/bootstrap-data";
-    // } else {
-      url = this.settings.getBaseUrl() +"secure/bootstrap-data";
-    // }
-    // fetch bootstrap data from backend and return promise that
+    // this.URL.defineAppUrl();
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+      url = AppConfig.url + "secure/bootstrap-data";
+    } else {
+      url = this.settings.getBaseUrl() + "secure/bootstrap-data";
+    }
+
     // resolves once request is complete and data is passed to the app
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe(

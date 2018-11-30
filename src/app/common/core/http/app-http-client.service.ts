@@ -8,6 +8,8 @@ import {
 import { Observable } from "rxjs";
 import { HttpErrorHandler } from "./errors/http-error-handler.service";
 import { catchError, filter, map } from "rxjs/operators";
+import { Settings } from "../config/settings.service";
+import { AppConfig } from "../../../../environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -20,7 +22,8 @@ export class AppHttpClient {
    */
   constructor(
     protected httpClient: HttpClient,
-    protected errorHandler: HttpErrorHandler
+    protected errorHandler: HttpErrorHandler,
+    protected settings: Settings
   ) {}
 
   public get<T>(
@@ -59,7 +62,11 @@ export class AppHttpClient {
    */
   private prefixUri(uri: string) {
     if (uri.indexOf("://") > -1) return uri;
-    return this.prefix + "/" + uri;
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+      return AppConfig.url + this.prefix + "/" + uri;
+    } else {
+      return this.prefix + "/" + uri;
+    }
   }
 
   /**

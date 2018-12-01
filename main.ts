@@ -19,6 +19,7 @@ function sendStatusToWindow(text) {
 
 autoUpdater.on("checking-for-update", () => {
   sendStatusToWindow("Checking for update...");
+  // tag
 });
 autoUpdater.on("update-available", info => {
   sendStatusToWindow("Update available.");

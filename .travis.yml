@@ -55,13 +55,13 @@ env:
   global:
     - TRAVIS_SECURE_ENV_VARS=true
     - DEBUG=electron-builder
-deploy:
-  provider: releases
-  api_key: "65f8a7659318578b95a89a6c7c79355d5d7e8461"
-  file: release/**/*
-  skip_cleanup: true
-  on:
-    tags: true
+# deploy:
+#   provider: releases
+#   api_key: "kPKEVO5XZHA+k7gRqg8FAKkHcAev+RXFBh57A1EMNwwUxNAzOsZvyrom4cZ7JbP5"
+#   file: release/**/*
+#   skip_cleanup: true
+#   on:
+#     tags: true
 matrix:
   include:
     - os: osx

@@ -4,11 +4,10 @@
 
 Flipper application Developed by Team @StreamUpBox for stock management,Pharmacy management and Hospital management
 
-Currently runs with:
+Currently runs with features:
 
-- Angular v6.1.2
-- Electron v2.0.7
-- Electron Builder v20.28.1
+- Login
+- Stock
 
 ## Getting Started
 

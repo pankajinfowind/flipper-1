@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventor, sales and used in point of sale.",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -53,6 +53,8 @@
     "bootstrap": "^4.1.3",
     "deepmerge": "^2.2.1",
     "dot-object": "^1.7.1",
+    "electron-log": "^2.2.17",
+    "electron-updater": "^4.0.5",
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
     "ngx-color-picker": "^7.0.1",

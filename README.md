@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/StreamUpBox/flipper.svg?branch=master)](https://travis-ci.org/StreamUpBox/flipper)
+
 # Introduction
 
-Flipper application Developed by Team @StreamUpBox for stock management,Pharmacie management and Hostpital management
+Flipper application Developed by Team @StreamUpBox for stock management,Pharmacy management and Hospital management
 
 Currently runs with:
 
@@ -13,7 +15,7 @@ Currently runs with:
 Clone this repository locally :
 
 ```bash
-git clone https://github.com/maximegris/angular-electron.git
+git clone https://github.com/StreamUpBox/flipper.git
 ```
 
 Install dependencies with npm :

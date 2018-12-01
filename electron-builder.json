@@ -6,7 +6,7 @@
   "publish": {
     "provider": "github",
     "vPrefixedTagName": true,
-    "token": "8cad14ed15e4dbe7cc7bbb175486ca3b470e512c"
+    "token": ""
   },
   "files": [
     "**/*",

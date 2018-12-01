@@ -2,8 +2,6 @@ import { app, BrowserWindow, Tray, Menu, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
 
-//const WindowStateManager = require('electron-window-state-manager');
-
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === "--serve");
@@ -11,44 +9,50 @@ if (process.mas) app.setName("Flipper");
 const debug = /--debug/.test(process.argv[2]);
 makeSingleInstance();
 
-// Create a new instance of the WindowStateManager
-// and pass it the name and the default properties
-// const mainWindowState = new WindowStateManager('win', {
-//   defaultWidth: 1080,
-//   defaultHeight: 840
-// });
-
-
 function createWindow() {
-  //const electronScreen = screen;
-  //const size = electronScreen.getPrimaryDisplay().workAreaSize;
-
   const windowOptions = {
-    width:1080,
+    width: 1080,
     height: 840,
     title: app.getName(),
     icon: null,
     show: false
   };
 
-if(serve){
-  if (process.platform === "linux") {
-    windowOptions.icon = path.join(__dirname, "src/assets/app-icon/png/512.png");
-  } else if (process.platform === "win32") {
-    windowOptions.icon = path.join(__dirname, "src/assets/app-icon/win/app.ico");
+  if (serve) {
+    if (process.platform === "linux") {
+      windowOptions.icon = path.join(
+        __dirname,
+        "src/assets/app-icon/png/512.png"
+      );
+    } else if (process.platform === "win32") {
+      windowOptions.icon = path.join(
+        __dirname,
+        "src/assets/app-icon/win/app.ico"
+      );
+    } else {
+      windowOptions.icon = path.join(
+        __dirname,
+        "src/assets/app-icon/mac/app.icns"
+      );
+    }
   } else {
-    windowOptions.icon = path.join(__dirname, "src/assets/app-icon/mac/app.icns");
+    if (process.platform === "linux") {
+      windowOptions.icon = path.join(
+        __dirname,
+        "dist/assets/app-icon/png/512.png"
+      );
+    } else if (process.platform === "win32") {
+      windowOptions.icon = path.join(
+        __dirname,
+        "dist/assets/app-icon/win/app.ico"
+      );
+    } else {
+      windowOptions.icon = path.join(
+        __dirname,
+        "dist/assets/app-icon/mac/app.icns"
+      );
+    }
   }
-}else{
-  if (process.platform === "linux") {
-    windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/png/512.png");
-  } else if (process.platform === "win32") {
-    windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/win/app.ico");
-  } else {
-    windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/mac/app.icns");
-  }
-}
-  // Create the browser window.
   win = new BrowserWindow(windowOptions);
 
   if (serve) {
@@ -66,7 +70,6 @@ if(serve){
     );
   }
 
-  // Launch fullscreen with DevTools open, usage: npm run debug
   if (debug) {
     win.webContents.openDevTools();
     win.maximize();
@@ -77,14 +80,6 @@ if(serve){
     win = null;
   });
 }
-
-// Make this app a single instance app.
-//
-// The main window will be restored and focused instead of a second window
-// opened when a person attempts to launch a second instance.
-//
-// Returns true if the current version of the app should quit instead of
-// launching.
 function makeSingleInstance() {
   if (process.mas) return;
 
@@ -101,17 +96,17 @@ function makeSingleInstance() {
 let appIcon = null;
 
 ipcMain.on("put-in-tray", event => {
-  let iconName=null;
+  let iconName = null;
   if (serve) {
- iconName =
-    process.platform === "win32"
-      ? "src/assets/tray-icon/windows-icon.png"
-      : "src/assets/tray-icon/iconTemplate.png";
-  }else{
-   iconName =
-    process.platform === "win32"
-      ? "dist/assets/tray-icon/windows-icon.png"
-      : "dist/assets/tray-icon/iconTemplate.png";
+    iconName =
+      process.platform === "win32"
+        ? "src/assets/tray-icon/windows-icon.png"
+        : "src/assets/tray-icon/iconTemplate.png";
+  } else {
+    iconName =
+      process.platform === "win32"
+        ? "dist/assets/tray-icon/windows-icon.png"
+        : "dist/assets/tray-icon/iconTemplate.png";
   }
   const iconPath = path.join(__dirname, iconName);
   appIcon = new Tray(iconPath);
@@ -138,30 +133,11 @@ app.on("window-all-closed", () => {
 });
 
 try {
-  // This method will be called when Electron has finished
-  // initialization and is ready to create browser windows.
-  // Some APIs can only be used after this event occurs.
-  app.on('ready', () => {
-
+  app.on("ready", () => {
     createWindow();
-
-     // You can check if the window was closed in a maximized saveState
-    // If so you can maximize the BrowserWindow again
-    // if (mainWindowState.maximized) {
-    //   win.maximize();
-    // }
-
-  // Don't forget to save the current state
-  // of the Browser window when it's about to be closed
-      // win.on('close', () => {
-      //     mainWindowState.saveState(win);
-      // });
-
   });
-
   // Quit when all windows are closed.
   app.on("window-all-closed", () => {
-    //mainWindowState.saveState(win);
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== "darwin") {
@@ -170,18 +146,11 @@ try {
   });
 
   app.on("activate", () => {
-    //mainWindowState.saveState(win);
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (win === null) {
       createWindow();
     }
   });
-} catch (e) {
-  console.log(e);
-  // Catch Error
-  // throw e;
-}
+} catch (e) {}
 
 /////////////////////////////////////////  MENU
 
@@ -189,10 +158,14 @@ const menu = Menu.buildFromTemplate([
   {
     label: app.getName(),
     submenu: [
-      { role: "about",  click() {
-        require("electron").shell.openExternal("https://flipper.yegobox.rw/abouts");
+      {
+        role: "about",
+        click() {
+          require("electron").shell.openExternal(
+            "https://flipper.yegobox.rw/abouts"
+          );
         }
-     },
+      },
       { type: "separator" },
       { role: "quit" }
     ]
@@ -223,11 +196,10 @@ const menu = Menu.buildFromTemplate([
       { type: "separator" },
       { role: "togglefullscreen" }
     ]
-  },{
+  },
+  {
     label: "Developer",
-    submenu: [
-      { role: "toggledevtools" }
-    ]
+    submenu: [{ role: "toggledevtools" }]
   },
   {
     label: "History",
@@ -243,7 +215,9 @@ const menu = Menu.buildFromTemplate([
       {
         label: "Learn More",
         click() {
-          require("electron").shell.openExternal("https://flipper.yegobox.rw/help");
+          require("electron").shell.openExternal(
+            "https://flipper.yegobox.rw/help"
+          );
         }
       }
     ]

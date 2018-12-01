@@ -6,12 +6,12 @@ import { BehaviorSubject } from "rxjs";
 import { API_ROUTES } from "./api/api-routes.enum";
 import { HttpClient } from "@angular/common/http";
 import { Settings } from "../common/core/config/settings.service";
-import { URL } from "../common/core/utils/URL";
 import { AppConfig } from "../../environments/environment";
-
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
 }
+
+
 
 @Injectable()
 export class Bootstrapper {
@@ -20,7 +20,7 @@ export class Bootstrapper {
   protected http: HttpClient;
   protected settings: Settings;
   public loading = new BehaviorSubject(false);
-  constructor(protected injector: Injector, protected URL: URL) {
+  constructor(protected injector: Injector) {
     this.http = this.injector.get(HttpClient);
     this.apiStock = this.injector.get(ApiStockService);
     this.modelStockService = this.injector.get(StockModelService);
@@ -30,62 +30,46 @@ export class Bootstrapper {
   /**
    * Bootstrap application with data returned from server.
    */
-  public bootstrap() {
-    this.modelStockService.update({ loading: true });
-    this.stockHandleData(1, "available");
-    this.stockHandleData(1, "stockout");
-    this.stockHandleData(1, "damaged");
-  }
+  public bootstrap(){
+      this.modelStockService.update({loading:true});
+      this.stockHandleData(1,'available');
+      this.stockHandleData(1,'stockout');
+      this.stockHandleData(1,'damaged');
+    }
+
+
 
   /**
    * Handle specified bootstrap data.
    */
-  protected stockHandleData(branch_id, status): Promise<any> {
-    let url;
+  protected stockHandleData(branch_id,status): Promise<any>  {
+let url;
     if (this.settings.getBaseUrl() != "http://localhost:4200/") {
-      url = AppConfig.url;
+      url = AppConfig.url + "secure/"+API_ROUTES.BRANCH_STOCK+'/'+branch_id+'/'+status;
     } else {
-      url = this.settings.getBaseUrl() + "secure/bootstrap-data";
+      url = this.settings.getBaseUrl() + "secure/"+API_ROUTES.BRANCH_STOCK+'/'+branch_id+'/'+status;
     }
     return new Promise((resolve, reject) => {
-      this.http
-        .get(
-          url +
-            "secure/" +
-            API_ROUTES.BRANCH_STOCK +
-            "/" +
-            branch_id +
-            "/" +
-            status
-        )
-        .pipe(finalize(() => this.modelStockService.update({ loading: false })))
-        .subscribe(
-          res => {
-            //TODO: see if I did not break anything
-            if (status == "available") {
-              this.modelStockService.update({
-                loading: false,
-                available: res["stocks"] ? ["data"] : ""
-              });
-            } else if (status == "stockout") {
-              this.modelStockService.update({
-                loading: false,
-                stockout: res["stocks"] ? ["data"] : ""["data"]
-              });
-            } else if (status == "damaged") {
-              this.modelStockService.update({
-                loading: false,
-                damaged: res["stocks"] ? ["data"] : ""["data"]
-              });
-            }
-            resolve();
-          },
-          error => {
-            this.modelStockService.update({ loading: false });
-            console.log("bootstrap error", error);
-            reject();
+      this.http.get(url)
+      .pipe(finalize(() => this.modelStockService.update({loading:false})))
+      .subscribe(
+        res => {
+          if(status == 'available'){
+          this.modelStockService.update({loading:false, available:res["stocks"]["data"]});
+          }else if(status == 'stockout'){
+            this.modelStockService.update({loading:false, stockout:res["stocks"]["data"]});
+          }else if(status == 'damaged'){
+            this.modelStockService.update({loading:false, damaged:res["stocks"]["data"]});
           }
-        );
+          resolve();
+        },
+        error => {
+          this.modelStockService.update({loading:false});
+          console.log("bootstrap error", error);
+          reject();
+        }
+      );
     });
   }
 }
+

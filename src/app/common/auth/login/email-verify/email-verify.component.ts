@@ -50,6 +50,7 @@ export class EmailVerifyComponent implements OnInit {
     if (this.emailForm.valid) {
       this.v.loading = true;
       this.v.response = [];
+      console.log(this.settings.csrfToken);
       const data = { email: this.emailForm.value.email };
       this.auth.verifyUserEmail(data).subscribe(
         res => {

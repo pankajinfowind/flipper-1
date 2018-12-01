@@ -11,7 +11,7 @@ export class ApiStockService {
     constructor(private http: AppHttpClient) {}
 
 
-    public create(params: Stock[]): BackendResponse<{ data: any }> {
+    public create(params: any): BackendResponse<{ data: any }> {
         return this.http.post(API_ROUTES.STOCK, params);
     }
 

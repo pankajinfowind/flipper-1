@@ -10,6 +10,7 @@ import { Toast } from '../../common/core/ui/toast.service';
 import { ApiStockService } from '../api/api.service';
 import { Stock } from '../api/stock';
 import { StockModelService } from '../stock-model.service';
+import { Settings } from '../../common/core/config/settings.service';
 
 @Component({
   selector: 'app-new-stock',
@@ -21,7 +22,7 @@ export class NewStockComponent implements OnInit {
 
   public loading = new BehaviorSubject(false);
   itemForm: FormGroup;
-  constructor(private modelStockService: StockModelService,private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
+  constructor(protected settings: Settings,private modelStockService: StockModelService,private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
   data: Item[] = [];
   selection = new SelectionModel<Item>(true, []);
   displayedColumns: string[] = ['select','item','available_stock_qty','unit_cost','expired_date','transction_date','comments','operation'];
@@ -109,11 +110,12 @@ export class NewStockComponent implements OnInit {
           this.selection.selected.forEach(selected_item => {
             this.itemForm.value.newStock.forEach(form_item=>{
               if(form_item.id===selected_item.id){
+                form_data['_token']=this.settings.csrfToken;
                 form_data.push(form_item);
               }
             });
           });
-          this.api.create(form_data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+          this.api.create({data:form_data}).pipe(finalize(() =>  this.loading.next(false))).subscribe(
             res => {
             if(res.status=='success'){
               this.modelStockService.update({loading:false, available:res["stocks"]["data"]});

@@ -38,12 +38,15 @@ export class AppHttpClient {
   }
 
   public post<T>(uri: string, params: object = null): Observable<T> | any {
+    params['_token']=this.settings.csrfToken;
+    console.log('here token',params);
     return this.httpClient
       .post<T>(this.prefixUri(uri), params)
       .pipe(catchError(err => this.errorHandler.handle(err, uri)));
   }
 
   public put<T>(uri: string, params: object = {}): Observable<T> | any {
+    params['_token']=this.settings.csrfToken;
     params = this.spoofHttpMethod(params, "PUT");
     return this.httpClient
       .post<T>(this.prefixUri(uri), params)
@@ -51,6 +54,7 @@ export class AppHttpClient {
   }
 
   public delete<T>(uri: string, params: object = {}): Observable<T> | any {
+    params['_token']=this.settings.csrfToken;
     params = this.spoofHttpMethod(params, "DELETE");
     return this.httpClient
       .post<T>(this.prefixUri(uri), params)

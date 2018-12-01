@@ -47,44 +47,68 @@
 #   - npm run electron:linux
 #   - npm run electron:windows
 
-sudo: required
-dist: trusty
+# Travis CI configuration file to build BrainVerse application for
+# macOS, Linux, and Windows
+# Based on https://github.com/develar/onshape-desktop-shell/blob/51c8894e2857412dcf2ff4d68f8578bd4653b7a3/.travis.yml
 
-# language: c
+env:
+  global:
+    - TRAVIS_SECURE_ENV_VARS=true
+    - DEBUG=electron-builder
 matrix:
   include:
     - os: osx
-      osx_image: xcode9.4
+      osx_image: xcode9.0
       language: node_js
-      node_js: "10"
+      node_js: "8"
       env:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
     - os: linux
+      sudo: required
       services: docker
       language: generic
 
 cache:
+  yarn: true
   directories:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 
+before_script:
+  # Replace clientId and clientSecret values in app-config.js with environment
+  # variable values.
+  # - cd eapp/config/
+  # - sed -i -e "s/exports.clientId = ''/exports.clientId = \"$clientId\"/g" app-config.js
+  # - sed -i -e "s/exports.clientSecret = ''/exports.clientSecret = \"$clientSecret\"/g" app-config.js
+  # - cd ../../
+
 script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       docker run --rm \
-        --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_') \
-        -v ${PWD}:/project \
+        -e TRAVIS=$TRAVIS \
+        -e TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS \
+        -e clientId=${clientId} \
+        -e clientSecret=${clientSecret} \
+        -e GH_TOKEN=${GH_TOKEN} \
+        -v $(pwd):/project \
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        electronuserland/builder:wine \
-        /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn release --linux --win"
+        electronuserland/builder:latest \
+        bash -c "
+          yarn --link-duplicates --pure-lockfile \
+          && yarn dist --linux --win"
     else
-      npm run electron:linux
-      npm run electron:windows
+      # Code signing for macOS is not available in Docker, so we build on macOS.
+      # yarn dist --mac
+      # npm run electron:mac
     fi
+
+    #ls dist/
+
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
 

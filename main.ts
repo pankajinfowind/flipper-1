@@ -9,8 +9,6 @@ if (process.mas) app.setName("Flipper");
 const debug = /--debug/.test(process.argv[2]);
 makeSingleInstance();
 function createWindow() {
-  //const electronScreen = screen;
-  //const size = electronScreen.getPrimaryDisplay().workAreaSize;
   const windowOptions = {
     width: 1080,
     minWidth: 680,
@@ -44,8 +42,6 @@ function createWindow() {
     );
   }
 
-  // Launch fullscreen with DevTools open, usage: npm run debug
-  // win.webContents.openDevTools();
   if (debug) {
     win.webContents.openDevTools();
 
@@ -108,27 +104,18 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on("ready", createWindow);
 
-  // Quit when all windows are closed.
   app.on("window-all-closed", () => {
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== "darwin") {
       app.quit();
     }
   });
 
   app.on("activate", () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (win === null) {
       createWindow();
     }
   });
-} catch (e) {
-  console.log(e);
-  // Catch Error
-  // throw e;
-}
+} catch (e) {}
 
 /////////////////////////////////////////  MENU
 

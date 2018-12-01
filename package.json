@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.1.41",
+  "version": "0.1.42",
   "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventor, sales and used in point of sale.",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -38,7 +38,8 @@
     "electron:windows": "npm run build:prod && npx electron-builder build --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
     "test": "npm run postinstall:web && ng test",
-    "e2e": "npm run postinstall:web && ng e2e"
+    "e2e": "npm run postinstall:web && ng e2e",
+    "release": "standard-version"
   },
   "dependencies": {
     "@angular/animations": "7.0.4",

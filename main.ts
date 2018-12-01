@@ -97,7 +97,6 @@ ipcMain.on("remove-tray", () => {
 app.on("window-all-closed", () => {
   if (appIcon) appIcon.destroy();
 });
-
 try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.

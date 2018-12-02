@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.8"></a>
+## [0.2.8](https://github.com/StreamUpBox/flipper/compare/v0.2.7...v0.2.8) (2018-12-02)
+
+
+### Bug Fixes
+
+* **should publish:** artifact ([131907d](https://github.com/StreamUpBox/flipper/commit/131907d))
+
+
+
 <a name="0.2.7"></a>
 ## [0.2.7](https://github.com/StreamUpBox/flipper/compare/v0.2.6...v0.2.7) (2018-12-02)
 

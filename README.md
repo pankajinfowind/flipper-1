@@ -8,6 +8,7 @@ Currently runs with features:
 
 - Login
 - Stock
+- Branches
 
 ## Getting Started
 

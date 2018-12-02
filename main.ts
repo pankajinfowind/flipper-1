@@ -7,9 +7,9 @@ const args = process.argv.slice(1);
 serve = args.some(val => val === "--serve");
 if (process.mas) app.setName("Flipper");
 const debug = /--debug/.test(process.argv[2]);
-// const log = require("electron-log");
+const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
-// autoUpdater.logger = log;
+autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 
 function sendStatusToWindow(text) {

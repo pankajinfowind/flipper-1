@@ -1,10 +1,14 @@
+import { Item } from '../../admin/master/items/api/item';
+import { Category } from '../../admin/master/categories/api/category';
+
 export class Stock {
   id?:number;
-  item:string;
-  sku:string;
+  item:Item;
+  name?:string;
+  sku?:string;
   price:number;
   category_id?:number;
-  category?:{name:string};
+  category?:Category;
   qty?:string;
   sale_price?:number;
   currency?:string;
@@ -15,7 +19,7 @@ export class Stock {
   unit_of_measure?:string;
   item_id?:number;
   branch_id?:number;
-  branch?:{name?:string};
+  branch?:any;
   item_entries:{};
   item_soldout:{};
   available:Stock[];

@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# 0.4.0 (2018-12-03)
+
+
+### Bug Fixes
+
+* fixes maximegris/angular-electron[#118](https://github.com/StreamUpBox/flipper/issues/118) ([6d21e69](https://github.com/StreamUpBox/flipper/commit/6d21e69))
+* fixes maximegris/angular-electron[#98](https://github.com/StreamUpBox/flipper/issues/98) ([136344b](https://github.com/StreamUpBox/flipper/commit/136344b))
+* **add login design:** should have common login/register on all of our product ([a057f23](https://github.com/StreamUpBox/flipper/commit/a057f23))
+* **binding:** for node sass in build process ([37aa551](https://github.com/StreamUpBox/flipper/commit/37aa551))
+* **remove:** jquery, popper.js I think we do not need this dependency and it is causing travis to crash ([ebf42cb](https://github.com/StreamUpBox/flipper/commit/ebf42cb))
+* **remove:** jquery, popper.js I think we do not need this dependency and it is causing travis to crash ([e2c5177](https://github.com/StreamUpBox/flipper/commit/e2c5177))
+* **should publish:** artifact ([131907d](https://github.com/StreamUpBox/flipper/commit/131907d))
+* **test:** create polyfills-test.ts for karma test & setup Travis CI ([7fbc68c](https://github.com/StreamUpBox/flipper/commit/7fbc68c))
+* **travis:** set progress to false (speed up npm) ([be48531](https://github.com/StreamUpBox/flipper/commit/be48531))
+
+
+### Features
+
+* **basic feature:** only basic functionality ([4c70c76](https://github.com/StreamUpBox/flipper/commit/4c70c76))
+* **support:mac:** mac version ([7250d8c](https://github.com/StreamUpBox/flipper/commit/7250d8c))
+* **zone:** add zone-patch-electron to patch Electron native APIs in polyfills ([01842e2](https://github.com/StreamUpBox/flipper/commit/01842e2))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/StreamUpBox/flipper/compare/v0.2.9...v0.3.0) (2018-12-02)
 

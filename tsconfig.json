@@ -22,7 +22,7 @@
   },
   "include": [
     "main.ts",
-    "src/**/*"
+    "src/**/*", "win-state-keeper.ts"
   ],
   "exclude": [
     "node_modules"

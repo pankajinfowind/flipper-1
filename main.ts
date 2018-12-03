@@ -11,44 +11,44 @@ const args = process.argv.slice(1);
 serve = args.some(val => val === "--serve");
 if (process.mas) app.setName("Flipper");
 const debug = /--debug/.test(process.argv[2]);
-//const log = require("electron-log");
-// const { autoUpdater } = require("electron-updater");
-// autoUpdater.logger = log;
-// autoUpdater.logger.transports.file.level = "info";
+const log = require("electron-log");
+const { autoUpdater } = require("electron-updater");
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info";
 
 function sendStatusToWindow(text) {
-  // log.info(text);
+   log.info(text);
   win.webContents.send("message", text);
 }
 
-// autoUpdater.on("checking-for-update", () => {
-//   sendStatusToWindow("Checking for update...");
-//   // tag
-// });
-// autoUpdater.on("update-available", info => {
-//   sendStatusToWindow("Update available.");
-// });
-// autoUpdater.on("update-not-available", info => {
-//   sendStatusToWindow("Update not available.");
-// });
-// autoUpdater.on("error", err => {
-//   sendStatusToWindow("Error in auto-updater. " + err);
-// });
-// autoUpdater.on("download-progress", progressObj => {
-//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
-//   log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-//   log_message =
-//     log_message +
-//     " (" +
-//     progressObj.transferred +
-//     "/" +
-//     progressObj.total +
-//     ")";
-//   sendStatusToWindow(log_message);
-// });
-// autoUpdater.on("update-downloaded", info => {
-//   sendStatusToWindow("Update downloaded");
-// });
+autoUpdater.on("checking-for-update", () => {
+  sendStatusToWindow("Checking for update...");
+  // tag
+});
+autoUpdater.on("update-available", info => {
+  sendStatusToWindow("Update available.");
+});
+autoUpdater.on("update-not-available", info => {
+  sendStatusToWindow("Update not available.");
+});
+autoUpdater.on("error", err => {
+  sendStatusToWindow("Error in auto-updater. " + err);
+});
+autoUpdater.on("download-progress", progressObj => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message =
+    log_message +
+    " (" +
+    progressObj.transferred +
+    "/" +
+    progressObj.total +
+    ")";
+  sendStatusToWindow(log_message);
+});
+autoUpdater.on("update-downloaded", info => {
+  sendStatusToWindow("Update downloaded");
+});
 
 
 
@@ -104,7 +104,7 @@ function createWindow() {
     win.maximize();
     require("devtron").install();
   }
- // win.setMenu(null);
+  win.setMenu(null);
   win.on("closed", () => {
     win = null;
   });
@@ -167,7 +167,7 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on("ready", createWindow);
   app.on("ready", function() {
-    //autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdatesAndNotify();
   });
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {

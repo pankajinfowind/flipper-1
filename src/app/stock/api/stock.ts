@@ -10,7 +10,7 @@ export class Stock {
   currency?:string;
   status?:any;
   available_stock_qty?:number;
-  entry_stock_qty?:number;
+  in_stock_qty?:number;
   weight?:number;
   unit_of_measure?:string;
   item_id?:number;

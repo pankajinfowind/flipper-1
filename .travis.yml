@@ -93,7 +93,7 @@ before_script:
   # - cd ../../
   # removed this: -e clientId=${clientId} \
   # -e clientSecret=${clientSecret} \ bellow
-  # ae6ab9a342626cb222a95d79b20b753f544bc619
+
 script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -104,14 +104,14 @@ script:
         -v $(pwd):/project \
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        electronuserland/builder:latest \
+        electronuserland/builder:wine \
         bash -c "
           npm install \
-          && npm run electron:linux "
-    # else
+          && npm run electron:linux && npm run electron:windows "
+    else
       # Code signing for macOS is not available in Docker, so we build on macOS.
       # yarn dist --mac
-      # npm run electron:mac
+      npm run electron:mac
     fi
 
     #ls dist/
@@ -122,8 +122,6 @@ before_cache:
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
-  # tobe used GH_TOKEN=65f8a7659318578b95a89a6c7c79355d5d7e8461
-  # tobe used old token GH_TOKEN=7f5d984f8ef17c9f5b2a281250dea28fc050f232
   # run locally
   #     docker run --rm -ti \
   # --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS_TAG|TRAVIS|TRAVIS_REPO_|TRAVIS_BUILD_|TRAVIS_BRANCH|TRAVIS_PULL_REQUEST_|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_') \

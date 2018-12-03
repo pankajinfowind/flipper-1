@@ -14,6 +14,9 @@ export class ApiStockService {
     public create(params: any): BackendResponse<{ data: any }> {
         return this.http.post(API_ROUTES.STOCK, params);
     }
+    public addOrRemoveExistingItem(params: any): BackendResponse<{ data: any }> {
+      return this.http.post(API_ROUTES.ADD_OR_REMOVE_EXISTING_ITEM, params);
+  }
 
 
     public get(): BackendResponse<{ data: any }> {

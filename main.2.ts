@@ -2,84 +2,87 @@ import { app, BrowserWindow, Tray, Menu, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
 
-import {windowStateKeeper} from "./win-state-keeper";
-
-const mainWindowStateKeeper = windowStateKeeper('main');
+const appConfig = require('electron-settings');
 
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === "--serve");
 if (process.mas) app.setName("Flipper");
 const debug = /--debug/.test(process.argv[2]);
-//const log = require("electron-log");
-// const { autoUpdater } = require("electron-updater");
-// autoUpdater.logger = log;
-// autoUpdater.logger.transports.file.level = "info";
+const log = require("electron-log");
+const { autoUpdater } = require("electron-updater");
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info";
 
 function sendStatusToWindow(text) {
   // log.info(text);
   win.webContents.send("message", text);
 }
 
-// autoUpdater.on("checking-for-update", () => {
-//   sendStatusToWindow("Checking for update...");
-//   // tag
-// });
-// autoUpdater.on("update-available", info => {
-//   sendStatusToWindow("Update available.");
-// });
-// autoUpdater.on("update-not-available", info => {
-//   sendStatusToWindow("Update not available.");
-// });
-// autoUpdater.on("error", err => {
-//   sendStatusToWindow("Error in auto-updater. " + err);
-// });
-// autoUpdater.on("download-progress", progressObj => {
-//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
-//   log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-//   log_message =
-//     log_message +
-//     " (" +
-//     progressObj.transferred +
-//     "/" +
-//     progressObj.total +
-//     ")";
-//   sendStatusToWindow(log_message);
-// });
-// autoUpdater.on("update-downloaded", info => {
-//   sendStatusToWindow("Update downloaded");
-// });
-
-
-
+autoUpdater.on("checking-for-update", () => {
+  sendStatusToWindow("Checking for update...");
+  // tag
+});
+autoUpdater.on("update-available", info => {
+  sendStatusToWindow("Update available.");
+});
+autoUpdater.on("update-not-available", info => {
+  sendStatusToWindow("Update not available.");
+});
+autoUpdater.on("error", err => {
+  sendStatusToWindow("Error in auto-updater. " + err);
+});
+autoUpdater.on("download-progress", progressObj => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message =
+    log_message +
+    " (" +
+    progressObj.transferred +
+    "/" +
+    progressObj.total +
+    ")";
+  sendStatusToWindow(log_message);
+});
+autoUpdater.on("update-downloaded", info => {
+  sendStatusToWindow("Update downloaded");
+});
 makeSingleInstance();
+
+// Create a new instance of the mainWindowStateKeeper
+// and pass it the name and the default properties
+const mainWindowStateKeeper = windowStateKeeper('main');
+// Creating the window
+
+
 function createWindow() {
   const windowOptions = {
     x: mainWindowStateKeeper.x,
     y: mainWindowStateKeeper.y,
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
-    minWidth: 680,
     title: app.getName(),
-    icon: null
+    icon: null,
+    show: false
   };
-  if(serve){
-    if (process.platform === "linux") {
-      windowOptions.icon = path.join(__dirname, "src/assets/app-icon/png/512.png");
-    } else if (process.platform === "win32") {
-      windowOptions.icon = path.join(__dirname, "src/assets/app-icon/win/app.ico");
-    } else {
-      windowOptions.icon = path.join(__dirname, "src/assets/app-icon/mac/app.icns");
-    }
-  }else{
-    if (process.platform === "linux") {
-      windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/png/512.png");
-    } else if (process.platform === "win32") {
-      windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/win/app.ico");
-    } else {
-      windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/mac/app.icns");
-    }
+
+if(serve){
+  if (process.platform === "linux") {
+    windowOptions.icon = path.join(__dirname, "src/assets/app-icon/png/512.png");
+  } else if (process.platform === "win32") {
+    windowOptions.icon = path.join(__dirname, "src/assets/app-icon/win/app.ico");
+  } else {
+    windowOptions.icon = path.join(__dirname, "src/assets/app-icon/mac/app.icns");
   }
+}else{
+  if (process.platform === "linux") {
+    windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/png/512.png");
+  } else if (process.platform === "win32") {
+    windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/win/app.ico");
+  } else {
+    windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/mac/app.icns");
+  }
+}
   // Create the browser window.
   win = new BrowserWindow(windowOptions);
 
@@ -104,7 +107,7 @@ function createWindow() {
     win.maximize();
     require("devtron").install();
   }
- // win.setMenu(null);
+  win.setMenu(null);
   win.on("closed", () => {
     win = null;
   });
@@ -126,18 +129,18 @@ function makeSingleInstance() {
 let appIcon = null;
 
 ipcMain.on("put-in-tray", event => {
-  let iconName;
+  let iconName=null;
   if (serve) {
-    iconName =
-       process.platform === "win32"
-         ? "src/assets/tray-icon/windows-icon.png"
-         : "src/assets/tray-icon/iconTemplate.png";
-     }else{
-      iconName =
-       process.platform === "win32"
-         ? "dist/assets/tray-icon/windows-icon.png"
-         : "dist/assets/tray-icon/iconTemplate.png";
-     }
+ iconName =
+    process.platform === "win32"
+      ? "src/assets/tray-icon/windows-icon.png"
+      : "src/assets/tray-icon/iconTemplate.png";
+  }else{
+   iconName =
+    process.platform === "win32"
+      ? "dist/assets/tray-icon/windows-icon.png"
+      : "dist/assets/tray-icon/iconTemplate.png";
+  }
   const iconPath = path.join(__dirname, iconName);
   appIcon = new Tray(iconPath);
 
@@ -167,7 +170,7 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on("ready", createWindow);
   app.on("ready", function() {
-    //autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdatesAndNotify();
   });
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
@@ -188,13 +191,10 @@ const menu = Menu.buildFromTemplate([
   {
     label: app.getName(),
     submenu: [
-      { role: "about" },
-      { type: "separator" },
-      { role: "services", submenu: [] },
-      { type: "separator" },
-      { role: "hide" },
-      { role: "hideothers" },
-      { role: "unhide" },
+      { role: "about",  click() {
+        require("electron").shell.openExternal("https://flipper.yegobox.rw/abouts");
+        }
+     },
       { type: "separator" },
       { role: "quit" }
     ]
@@ -218,13 +218,17 @@ const menu = Menu.buildFromTemplate([
     submenu: [
       { role: "reload" },
       { role: "forcereload" },
-      { role: "toggledevtools" },
       { type: "separator" },
       { role: "resetzoom" },
       { role: "zoomin" },
       { role: "zoomout" },
       { type: "separator" },
       { role: "togglefullscreen" }
+    ]
+  },{
+    label: "Developer",
+    submenu: [
+      { role: "toggledevtools" }
     ]
   },
   {
@@ -249,3 +253,44 @@ const menu = Menu.buildFromTemplate([
 ]);
 Menu.setApplicationMenu(menu);
 
+///building windowStateKeeper
+
+function windowStateKeeper(windowName) {
+  let window, windowState;
+  function setBounds() {
+    // Restore from appConfig
+    if (appConfig.has(`windowState.${windowName}`)) {
+      windowState = appConfig.get(`windowState.${windowName}`);
+      return;
+    }
+    // Default
+    windowState = {
+      x: undefined,
+      y: undefined,
+      width: 1000,
+      height: 800,
+    };
+  }
+  function saveState() {
+    if (!windowState.isMaximized) {
+      windowState = window.getBounds();
+    }
+    windowState.isMaximized = window.isMaximized();
+    appConfig.set(`windowState.${windowName}`, windowState);
+  }
+  function track(win) {
+    window = win;
+    ['resize', 'move', 'close'].forEach(event => {
+      win.on(event, saveState);
+    });
+  }
+  setBounds();
+  return({
+    x: windowState.x,
+    y: windowState.y,
+    width: windowState.width,
+    height: windowState.height,
+    isMaximized: windowState.isMaximized,
+    track,
+  });
+}

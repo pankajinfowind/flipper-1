@@ -1,0 +1,73 @@
+<div class="details-list">
+   <!-- Items ---------------------------------- -->
+
+  <!-- //Insurances -->
+      <div *ngIf="dataSource.data.length > 0;else notDataFounds">
+        <mat-card-content>
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="logo_url">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Logo </th>
+              <td mat-cell *matCellDef="let element"><img [src]="element.logo_url" style="width:48px" /> </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Discount Column -->
+            <ng-container matColumnDef="discount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount </th>
+              <td mat-cell *matCellDef="let element"> {{element.discount}} </td>
+            </ng-container>
+
+            <!-- Country Column -->
+            <ng-container matColumnDef="country">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+              <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+            </ng-container>
+
+            <!-- address Column -->
+            <ng-container matColumnDef="address">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Adress </th>
+              <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+              (click)="selection.toggle(row)">
+            </tr>
+          </table>
+
+        </mat-card-content>
+
+        <mat-card-actions class="float-right">
+            <button type="button"  (click)='close()' [disabled]="(loading | async)" mat-button>Close</button>
+          <button type="button" mat-button *ngIf="selection.selected.length > 0" (click)="attachInsuranceToBusiness()" [disabled]="(loading | async)">Save selected</button>
+        </mat-card-actions>
+      </div>
+      <ng-template #notDataFounds>
+          can't add insurance coz not found!
+      </ng-template>
+    </div>
+
+

@@ -1,0 +1,63 @@
+<div class="ybx-sgnForm">
+    <div class="ybx-signIn">
+      <span class="form-load" *ngIf="v.loading"><mat-progress-bar class="primary-progress-bar" mode="indeterminate"></mat-progress-bar></span>
+      <div class="inner-box">
+      <div class="justify-content-center mr-auto text-center">
+        <div class="h3 d-block p-2 w-100">Sign in</div>
+        <div class="d-block p-2 w-100">with your {{appname}} Account </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="clearfix"></div>
+      <form class="ybx-defaultForm" [formGroup]="emailForm" (ngSubmit)="emailVerify()">
+        <mat-form-field class="ybx-mat mat-full-wdth">
+            <input class="text-secondary" matInput placeholder="Your eMail" formControlName="email" required>
+            <mat-hint class="text-secondary"><i>youremail@example.com</i></mat-hint>
+
+            <mat-error  *ngIf="email.invalid && (email.dirty || email.touched)">
+              <mat-error *ngIf="email.errors.email && !email.errors.required">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="email.errors.required">
+                Email is <strong>required</strong>
+              </mat-error>
+              </mat-error>
+
+        </mat-form-field>
+
+        <div class="clearfix"></div>
+
+        <div class="ybx-mat">
+                <mat-error  *ngIf="v.errorMsg!=''">{{v.errorMsg}} </mat-error>
+
+          <div class="clearfix"></div>
+          <div class="row">
+            <div class="col-6">
+              <button mat-raised-button class="mat-primary-btn float-right" *ngIf='!v.loading' (click)="emailVerify()">Next </button>
+              <button mat-raised-button class="mat-primary-btn float-right" *ngIf='v.loading' (click)="emailVerify()" disable='true'>Next ... </button>
+            </div>
+            <div class="col-6">
+              <a mat-button class="mat-button pl-0" routerLink="/sign-up">Create account</a>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="clearfix"></div>
+      <div class="col-12">
+        <div class="or"></div>
+        <div class="ggl-button text-center">
+          <div class="clearfix"></div>
+          <div class="center">
+
+                <button type="button" mat-icon-button (click)="socialAuth.loginWith('google')"  class="social-icon no-style google" [matTooltip]="'Login with google' | trans">
+                        <img class="google-icon" src="assets/images/icons/g-google.svg" alt="" />
+                </button>
+
+            </div>
+
+        </div>
+      </div>
+  </div>
+</div>
+
+</div>

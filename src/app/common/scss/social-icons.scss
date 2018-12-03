@@ -1,0 +1,39 @@
+@import "../scss/variables";
+
+.social-icons {
+  &:empty {
+    display: none;
+  }
+
+  .social-icon {
+    width: 31px;
+    height: 31px;
+    margin-right: 8px;
+    border-radius: 3px;
+
+    &.facebook {
+      color: $facebook-color;
+      background-color: $facebook-color;
+
+      .mat-icon {
+        background-color: #fff;
+      }
+    }
+
+    &.twitter {
+      background-color: $twitter-color;
+      color: #fff;
+    }
+
+    &.google {
+      background-color: $google-color;
+      color: #fff;
+    }
+
+    .mat-icon {
+      width: 18px;
+      height: 18px;
+      margin: 0 auto;
+    }
+  }
+}

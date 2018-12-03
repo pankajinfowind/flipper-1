@@ -1,0 +1,109 @@
+<!-- <loading-indicator class="overlay" [isVisible]="(loading | async)"></loading-indicator> -->
+<div class="ybx-sgnForm" style="margin-top:-7%; overflow: hidden;">
+  <div class="ybx-signIn">
+    <span class="form-load" *ngIf="(loading | async)">
+      <mat-progress-bar class="primary-progress-bar" mode="indeterminate"></mat-progress-bar>
+    </span>
+    <div class="inner-box">
+      <div class="justify-content-center mr-auto text-center">
+        <div class="h3 d-block p-2 w-100">Create Business</div>
+      </div>
+      <div class="clearfix"></div>
+      <form class="ybx-defaultForm" [formGroup]="businessForm" (ngSubmit)="createBusiness()">
+
+        <mat-form-field class="ybx-mat mat-full-wdth">
+          <input class="text-secondary" matInput placeholder="Name" formControlName="name" required>
+
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+            <mat-error *ngIf="name.errors.required">
+              Business name is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field class="ybx-mat mat-full-wdth">
+              <mat-select class="text-secondary" placeholder="Pick your business type" formControlName="type" required>
+                <mat-option *ngFor="let t of types" [value]="t.value">
+                  {{t.viewValue}}
+                </mat-option>
+              </mat-select>
+
+          <mat-error *ngIf="type.invalid && (type.dirty || type.touched)">
+
+            <mat-error *ngIf="type.errors.required">
+              Business type is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field class="ybx-mat mat-full-wdth">
+          <input class="text-secondary" matInput placeholder="Address" formControlName="address" required>
+          <mat-hint class="text-secondary"><i>ex: KN 1 Roundabout, Kigali, Rwanda</i></mat-hint>
+
+          <mat-error *ngIf="address.invalid && (address.dirty || address.touched)">
+            <mat-error *ngIf="address.errors.required">
+              Business address is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+        <div *ngIf="view_more">
+
+
+        <mat-form-field class="ybx-mat mat-full-wdth">
+            <input class="text-secondary" matInput placeholder="Tin (Optional)" formControlName="tin">
+            <mat-hint class="text-secondary"><i>ex: 10120303303</i></mat-hint>
+
+          </mat-form-field>
+          <mat-form-field class="ybx-mat mat-full-wdth">
+              <input class="text-secondary" matInput placeholder="Country Tax charged( Optional)" formControlName="tax_charge">
+              <mat-hint class="text-secondary"><i>ex: 18.00 %</i></mat-hint>
+
+            </mat-form-field>
+
+            <mat-form-field class="ybx-mat mat-full-wdth">
+                <input class="text-secondary" matInput placeholder="Currency (Optional)" formControlName="currency_code">
+                <mat-hint class="text-secondary"><i>ex: Rwf</i></mat-hint>
+
+              </mat-form-field>
+
+        <mat-form-field class="ybx-mat mat-full-wdth">
+          <input class="text-secondary" matInput placeholder="Description" formControlName="description">
+          <mat-hint class="text-secondary"><i>describe your business</i></mat-hint>
+
+          <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">
+
+            <mat-error *ngIf="description.errors.required">
+              Business description is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+
+        </mat-form-field>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="ybx-mat">
+          <mat-error *ngIf="error!=''">{{v.error}} </mat-error>
+
+          <div class="clearfix"></div>
+          <div class="row">
+
+            <div class="col-6 button-row">
+              <a mat-button class="mat-button pl-0" (click)="view_more=!view_more" >&nbsp;  <span *ngIf="view_more">-</span>  <span *ngIf="!view_more">+</span> add more</a>
+            </div>
+            <div class="col-6 order-6">
+              <button type="submit" mat-raised-button class="mat-primary-btn float-right" *ngIf='!(loading | async)'>Next
+              </button>
+              <button mat-raised-button class="mat-primary-btn float-right" *ngIf='(loading | async)' (click)="emailVerify()"
+              [disabled]="(loading | async)">Creating ... </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="clearfix"></div>
+
+    </div>
+  </div>
+
+</div>

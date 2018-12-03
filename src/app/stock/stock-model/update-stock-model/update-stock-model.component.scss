@@ -1,0 +1,21 @@
+.details-list {
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .name {
+      width: 150px;
+      flex: 0 0 150px;
+      color: black;
+    }
+
+    .value {
+      flex: 1 1 auto;
+    }
+
+    .type-value {
+      text-transform: capitalize;
+    }
+  }
+}

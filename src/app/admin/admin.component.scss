@@ -1,0 +1,8 @@
+@import "../app_sass/variables";
+app-admin{
+  material-navbar {
+    box-shadow: none;
+    border-bottom: 1px solid $site-border-color-200;
+  }
+}
+

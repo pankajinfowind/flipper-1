@@ -1,0 +1,16 @@
+<button mat-button (click)="createSession()">Create Session</button>
+
+<div class="col-12">
+  <app-availabe-stock (cart)="onCartItemAdded($event)"></app-availabe-stock>
+</div>
+<div class="clearfix"></div>
+<div class="col-12">
+  <p>Shopping cart</p>
+  <ul class="w-100">
+    <div *ngFor="let item of cart_items">
+      <li class="d-inline-block w-100">{{ item.name }}</li>
+      <button mat-button (click)="removeItemFromCart(item)">Remove item</button>
+    </div>
+    <div><button mat-button (click)="saveInvoice()">Complete Sell</button></div>
+  </ul>
+</div>

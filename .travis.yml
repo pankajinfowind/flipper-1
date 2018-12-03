@@ -1,17 +1,135 @@
-language: node_js
-node_js:
-  - 8
-sudo: required
-addons:
-    chrome: stable
+# sudo: required
+# dist: trusty
+
+# language: c
+
+# matrix:
+#   include:
+#     - os: osx
+#     - os: linux
+#       env: CC=clang CXX=clang++ npm_config_clang=1
+#       compiler: clang
+
+# node_js:
+#   - 8
+
+# cache:
+#   directories:
+#     - node_modules
+
+# addons:
+#   apt:
+#     sources:
+#       - ubuntu-toolchain-r-test
+#     packages:
+#       - g++-4.8
+#       - icnsutils
+#       - graphicsmagick
+#       - libgnome-keyring-dev
+#       - xz-utils
+#       - xorriso
+#       - xvfb
+
+# install:
+#   - nvm install 8
+#   - npm install electron-builder@next
+#   - npm install
+#   - npm rebuild node-sass
+#   - export DISPLAY=':99.0'
+#   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+
+# before_script:
+#   - export DISPLAY=:99.0
+#   - sh -e /etc/init.d/xvfb start &
+#   - sleep 3
+
+# script:
+#   - npm run electron:linux
+#   - npm run electron:windows
+
+# Travis CI configuration file to build BrainVerse application for
+# macOS, Linux, and Windows
+# Based on https://github.com/develar/onshape-desktop-shell/blob/51c8894e2857412dcf2ff4d68f8578bd4653b7a3/.travis.yml
+
+env:
+  global:
+    - TRAVIS_SECURE_ENV_VARS=true
+    - DEBUG=electron-builder
+# deploy:
+#   provider: releases
+#   api_key: "65f8a7659318578b95a89a6c7c79355d5d7e8461"
+#   file: release/**/*
+#   skip_cleanup: true
+#   on:
+#     tags: true
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.0
+      language: node_js
+      node_js: "8"
+      env:
+        - ELECTRON_CACHE=$HOME/.cache/electron
+        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+    - os: linux
+      sudo: required
+      services: docker
+      language: generic
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-install:
-  - npm set progress=false
-  - npm install
+  # Replace clientId and clientSecret values in app-config.js with environment
+  # variable values.
+  # - cd eapp/config/
+  # - sed -i -e "s/exports.clientId = ''/exports.clientId = \"$clientId\"/g" app-config.js
+  # - sed -i -e "s/exports.clientSecret = ''/exports.clientSecret = \"$clientSecret\"/g" app-config.js
+  # - cd ../../
+  # removed this: -e clientId=${clientId} \
+  # -e clientSecret=${clientSecret} \ bellow
+
 script:
-  - ng lint
-  - npm run test
-  - npm run e2e
-  - npm run build
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      docker run --rm \
+        -e TRAVIS=$TRAVIS \
+        -e TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS \
+        -e GH_TOKEN=${GH_TOKEN} \
+        -v $(pwd):/project \
+        -v ~/.cache/electron:/root/.cache/electron \
+        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+        electronuserland/builder:wine \
+        bash -c "
+          npm install \
+          && npm run electron:linux && npm run electron:windows "
+    else
+      # Code signing for macOS is not available in Docker, so we build on macOS.
+      # yarn dist --mac
+      npm run electron:mac
+    fi
+
+    #ls dist/
+
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine
+
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
+  # run locally
+  #     docker run --rm -ti \
+  # --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS_TAG|TRAVIS|TRAVIS_REPO_|TRAVIS_BUILD_|TRAVIS_BRANCH|TRAVIS_PULL_REQUEST_|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_') \
+  # --env ELECTRON_CACHE="/root/.cache/electron" \
+  # --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
+  # -v ${PWD}:/project \
+  # -v ${PWD##*/}-node-modules:/project/node_modules \
+  # -v ~/.cache/electron:/root/.cache/electron \
+  # -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+  # electronuserland/builder:wine
+  # build

@@ -58,7 +58,8 @@ function createWindow() {
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
     minWidth: 680,
-    title: app.getName(),
+    title: app.getName()+ "v"+app.getVersion(),
+
     icon: null
   };
   if (serve) {

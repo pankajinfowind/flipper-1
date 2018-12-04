@@ -150,6 +150,7 @@ ipcMain.on("put-in-tray", event => {
     }
   ]);
 
+
   appIcon.setToolTip("Flipper in the tray.");
   appIcon.setContextMenu(contextMenu);
 });

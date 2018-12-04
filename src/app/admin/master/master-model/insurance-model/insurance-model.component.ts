@@ -146,7 +146,7 @@ export class InsuranceModelComponent implements OnInit {
   attachInsuranceToBusiness(){
     if (this.selection.selected.length > 0) {
       this.loading.next(true);
-      this.api.attachInsurance(this.selection.selected).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+      this.api.attachInsurance({data:this.selection.selected}).pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
             if(res.status=='success'){
               this.toast.open('Insurance attached to business!');

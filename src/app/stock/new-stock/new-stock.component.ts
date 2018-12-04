@@ -11,6 +11,7 @@ import { ApiStockService } from '../api/api.service';
 import { Stock } from '../api/stock';
 import { StockModelService } from '../stock-model.service';
 import { Settings } from '../../common/core/config/settings.service';
+import { CurrentUser } from '../../common/auth/current-user';
 
 @Component({
   selector: 'app-new-stock',
@@ -22,7 +23,7 @@ export class NewStockComponent implements OnInit {
 
   public loading = new BehaviorSubject(false);
   itemForm: FormGroup;
-  constructor(protected settings: Settings,private modelStockService: StockModelService,private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
+  constructor(private currentUser:CurrentUser, protected settings: Settings,private modelStockService: StockModelService,private api:ApiStockService,private toast: Toast,private _fb: FormBuilder,private ref: ChangeDetectorRef) { }
   data: Item[] = [];
   selection = new SelectionModel<Item>(true, []);
   displayedColumns: string[] = ['select','item','available_stock_qty','unit_cost','expired_date','transction_date','comments','operation'];
@@ -35,13 +36,14 @@ export class NewStockComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @Input() shared_output :Item;
   ngOnInit() {
-    this.items();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if(this.currentUser.get('business'))
+        this.items();
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
-   this.itemForm = new FormGroup({
-    newStock: this.rows
-  });
+      this.itemForm = new FormGroup({
+        newStock: this.rows
+      });
 
   }
   applyFilter(filterValue: string) {
@@ -72,7 +74,7 @@ export class NewStockComponent implements OnInit {
 
   items(){
       this.loading.next(true);
-      this.api.getNewStockItem(1).pipe(finalize(() =>this.loading.next(false))).subscribe(
+      this.api.getNewStockItem(this.currentUser.get('business')[0]['branches'][0]['id']).pipe(finalize(() =>this.loading.next(false))).subscribe(
         res => {
           this.data = res['items'];
           this.data.forEach((d: Item) => this.addRow(d, false));

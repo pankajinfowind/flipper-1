@@ -83,7 +83,7 @@ export class User {
     oauth?: Social[];
     available_space?: number|null;
     settings?:Settings
-
+    current:any;
     constructor(params: Object = {}) {
         for (let name in params) {
             this[name] = params[name];

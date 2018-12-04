@@ -20,6 +20,7 @@ import { ApiStockService } from './api/api.service';
 import { StockModelService } from './stock-model.service';
 import { StockModelModule } from './stock-model/stock-model.module';
 import { DetailsModule } from '../details/details.module';
+import { CurrentUser } from '../common/auth/current-user';
 
 @NgModule({
   declarations:
@@ -42,6 +43,7 @@ export class StockModule {
         return {
             ngModule: StockModule,
             providers: [
+                CurrentUser,
                 Bootstrapper,
                 {
                     provide: HttpErrorHandler,
@@ -50,7 +52,7 @@ export class StockModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: init_app,
-                    deps: [Bootstrapper],
+                    deps: [Bootstrapper,CurrentUser],
                     multi: true,
                 },
                 {

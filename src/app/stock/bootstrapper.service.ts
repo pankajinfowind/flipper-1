@@ -7,6 +7,7 @@ import {API_ROUTES} from "./api/api-routes.enum";
 import {HttpClient} from "@angular/common/http";
 import {Settings} from "../common/core/config/settings.service";
 import {AppConfig} from "../../environments/environment";
+import { CurrentUser } from '../common/auth/current-user';
 
 export function init_app(bootstrapper: Bootstrapper) {
     return () => bootstrapper.bootstrap();
@@ -19,23 +20,31 @@ export class Bootstrapper {
     protected modelStockService: StockModelService;
     protected http: HttpClient;
     protected settings: Settings;
+    protected user: CurrentUser;
     public loading = new BehaviorSubject(false);
-
     constructor(protected injector: Injector) {
         this.http = this.injector.get(HttpClient);
         this.apiStock = this.injector.get(ApiStockService);
         this.modelStockService = this.injector.get(StockModelService);
         this.settings = this.injector.get(Settings);
+        this.user = this.injector.get(CurrentUser);
     }
 
     /**
      * Bootstrap application with data returned from server.
      */
-    public bootstrap() {
-        this.modelStockService.update({loading: true});
-        this.stockHandleData(1, 'available');
-        this.stockHandleData(1, 'stockout');
-        this.stockHandleData(1, 'damaged');
+     public  bootstrap() {
+
+      this.user.userChanged.subscribe(res=>{
+        if(res['business'][0]){
+          this.modelStockService.update({loading: true});
+          this.stockHandleData(res['business'][0]['branches'][0]['id'], 'available');
+          this.stockHandleData(res['business'][0]['branches'][0]['id'], 'stockout');
+          this.stockHandleData(res['business'][0]['branches'][0]['id'], 'damaged');
+        }
+
+      });
+
     }
 
 

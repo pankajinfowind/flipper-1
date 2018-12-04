@@ -2,9 +2,9 @@ import { app, BrowserWindow, Tray, Menu, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
 
-import {windowStateKeeper} from "./win-state-keeper";
+import { windowStateKeeper } from "./win-state-keeper";
 
-const mainWindowStateKeeper = windowStateKeeper('main');
+const mainWindowStateKeeper = windowStateKeeper("main");
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -17,7 +17,7 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 
 function sendStatusToWindow(text) {
-   log.info(text);
+  log.info(text);
   win.webContents.send("message", text);
 }
 
@@ -50,8 +50,6 @@ autoUpdater.on("update-downloaded", info => {
   sendStatusToWindow("Update downloaded");
 });
 
-
-
 makeSingleInstance();
 function createWindow() {
   const windowOptions = {
@@ -60,27 +58,45 @@ function createWindow() {
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
     minWidth: 680,
-    title: app.getName(),
+    title: app.getName()+ "v"+app.getVersion(),
+
     icon: null
   };
-  if(serve){
+  if (serve) {
     if (process.platform === "linux") {
-      windowOptions.icon = path.join(__dirname, "src/assets/app-icon/png/512.png");
+      windowOptions.icon = path.join(
+        __dirname,
+        "src/assets/app-icon/png/512.png"
+      );
     } else if (process.platform === "win32") {
-      windowOptions.icon = path.join(__dirname, "src/assets/app-icon/win/app.ico");
+      windowOptions.icon = path.join(
+        __dirname,
+        "src/assets/app-icon/win/app.ico"
+      );
     } else {
-      windowOptions.icon = path.join(__dirname, "src/assets/app-icon/mac/app.icns");
+      windowOptions.icon = path.join(
+        __dirname,
+        "src/assets/app-icon/mac/app.icns"
+      );
     }
-  }else{
+  } else {
     if (process.platform === "linux") {
-      windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/png/512.png");
+      windowOptions.icon = path.join(
+        __dirname,
+        "dist/assets/app-icon/png/512.png"
+      );
     } else if (process.platform === "win32") {
-      windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/win/app.ico");
+      windowOptions.icon = path.join(
+        __dirname,
+        "dist/assets/app-icon/win/app.ico"
+      );
     } else {
-      windowOptions.icon = path.join(__dirname, "dist/assets/app-icon/mac/app.icns");
+      windowOptions.icon = path.join(
+        __dirname,
+        "dist/assets/app-icon/mac/app.icns"
+      );
     }
   }
-  // Create the browser window.
   win = new BrowserWindow(windowOptions);
 
   if (serve) {
@@ -98,6 +114,7 @@ function createWindow() {
     );
   }
 
+  // win.webContents.openDevTools();
   if (debug) {
     win.webContents.openDevTools();
 
@@ -129,15 +146,15 @@ ipcMain.on("put-in-tray", event => {
   let iconName;
   if (serve) {
     iconName =
-       process.platform === "win32"
-         ? "src/assets/tray-icon/windows-icon.png"
-         : "src/assets/tray-icon/iconTemplate.png";
-     }else{
-      iconName =
-       process.platform === "win32"
-         ? "dist/assets/tray-icon/windows-icon.png"
-         : "dist/assets/tray-icon/iconTemplate.png";
-     }
+      process.platform === "win32"
+        ? "src/assets/tray-icon/windows-icon.png"
+        : "src/assets/tray-icon/iconTemplate.png";
+  } else {
+    iconName =
+      process.platform === "win32"
+        ? "dist/assets/tray-icon/windows-icon.png"
+        : "dist/assets/tray-icon/iconTemplate.png";
+  }
   const iconPath = path.join(__dirname, iconName);
   appIcon = new Tray(iconPath);
 
@@ -163,9 +180,6 @@ app.on("window-all-closed", () => {
   if (appIcon) appIcon.destroy();
 });
 try {
-  // This method will be called when Electron has finished
-  // initialization and is ready to create browser windows.
-  // Some APIs can only be used after this event occurs.
   app.on("ready", createWindow);
   app.on("ready", function() {
     autoUpdater.checkForUpdatesAndNotify();
@@ -249,4 +263,3 @@ const menu = Menu.buildFromTemplate([
   }
 ]);
 Menu.setApplicationMenu(menu);
-

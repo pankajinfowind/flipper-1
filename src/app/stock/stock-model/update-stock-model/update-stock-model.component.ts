@@ -99,7 +99,7 @@ export class UpdateStockModelComponent implements OnInit {
       .subscribe(
             res => {
             if(res.status=='success'){
-             this.modelStockService.update({loading:false, available:res["available"]["data"],stockout:res["stockout"]["data"]});
+             this.modelStockService.update({loading:false, available:res["available"]["data"]?res["available"]["data"]:[],stockout:res["stockout"]["data"]?res["stockout"]["data"]:[]});
             this.close();
               }
             },

@@ -121,7 +121,7 @@ function createWindow() {
     win.maximize();
     require("devtron").install();
   }
-  win.setMenu(null);
+  //win.setMenu(null);
   win.on("closed", () => {
     win = null;
   });
@@ -182,7 +182,7 @@ app.on("window-all-closed", () => {
 try {
   app.on("ready", createWindow);
   app.on("ready", function() {
-    autoUpdater.checkForUpdatesAndNotify();
+   autoUpdater.checkForUpdatesAndNotify();
   });
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
@@ -196,6 +196,7 @@ try {
     }
   });
 } catch (e) {}
+
 
 /////////////////////////////////////////  MENU
 

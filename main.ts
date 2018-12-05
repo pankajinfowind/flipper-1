@@ -17,10 +17,10 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 
 function sendStatusToWindow(text) {
-  log.info(text);
+  console.log(text);
+  log.info(app.getVersion() + "::" + text);
   win.webContents.send("message", text);
 }
-
 autoUpdater.on("checking-for-update", () => {
   sendStatusToWindow("Checking for update...");
   // tag
@@ -58,7 +58,7 @@ function createWindow() {
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
     minWidth: 680,
-    title: app.getName()+ "v"+app.getVersion(),
+    title: app.getName() + "v" + app.getVersion(),
 
     icon: null
   };
@@ -144,6 +144,44 @@ function makeSingleInstance() {
   });
 }
 
+let appIcon = null;
+
+ipcMain.on("put-in-tray", event => {
+  let iconName;
+  if (serve) {
+    iconName =
+      process.platform === "win32"
+        ? "src/assets/tray-icon/windows-icon.png"
+        : "src/assets/tray-icon/iconTemplate.png";
+  } else {
+    iconName =
+      process.platform === "win32"
+        ? "dist/assets/tray-icon/windows-icon.png"
+        : "dist/assets/tray-icon/iconTemplate.png";
+  }
+  const iconPath = path.join(__dirname, iconName);
+  appIcon = new Tray(iconPath);
+
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: "Remove",
+      click: () => {
+        event.sender.send("tray-removed");
+      }
+    }
+  ]);
+
+  appIcon.setToolTip("Flipper in the tray.");
+  appIcon.setContextMenu(contextMenu);
+});
+
+ipcMain.on("remove-tray", () => {
+  appIcon.destroy();
+});
+
+app.on("window-all-closed", () => {
+  if (appIcon) appIcon.destroy();
+});
 try {
   app.on("ready", createWindow);
   app.on("ready", function() {

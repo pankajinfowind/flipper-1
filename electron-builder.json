@@ -5,6 +5,8 @@
   },
   "publish": {
     "provider": "github",
+    "owner": "streamupbox",
+    "repo": "flipper",
     "vPrefixedTagName": true,
     "token": ""
   },

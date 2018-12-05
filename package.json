@@ -12,11 +12,10 @@
     "email": "streamupbox@gmail.com"
   },
   "keywords": [
-    "angular",
-    "angular 6",
-    "electron",
-    "typescript",
-    "sass"
+    "POS",
+    "Pharmacy",
+    "Hospital",
+    "Management"
   ],
   "main": "main.js",
   "private": true,

@@ -51,7 +51,7 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="stock">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stocks </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Items </th>
       <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> {{element.name}} </td>
     </ng-container>
 
@@ -67,36 +67,26 @@
       </ng-container>
          <!--  Sales Price Column -->
          <ng-container matColumnDef="unit_sale">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Sales </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sales Prices </th>
             <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> <span class="text">{{element.item.unit_sale}} {{element.item.currency}}</span> </td>
           </ng-container>
 
-  <!--  Qty Column -->
-      <ng-container matColumnDef="in_stock_qty">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Added In-Stock Qtys </th>
-          <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"> <span class="text">{{element.in_stock_qty}}</span></td>
-        </ng-container>
-         <!--  Qty Column -->
          <ng-container matColumnDef="available_stock_qty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Stock Qtys </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Currently Quantities </th>
             <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.available_stock_qty}}</span></td>
           </ng-container>
 
-             <!--  Qty Column -->
-         <ng-container matColumnDef="sold">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Out-Stock Qtys </th>
-            <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')"><span class="text">{{element.in_stock_qty-element.available_stock_qty}}</span></td>
-          </ng-container>
 
               <!--  Qty Column -->
               <ng-container matColumnDef="progress">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress </th>
                 <td mat-cell *matCellDef="let element" (click)="openDetails('Stock Details','info',element,'app-info-stock-model')">
 
-                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) >= 70" [mode]="determinate" [color]="accent" [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
-                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) < 70 && percentage(element.available_stock_qty,element.in_stock_qty) >= 40" [mode]="determinate"  [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
-                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) < 40 && percentage(element.available_stock_qty,element.in_stock_qty) >= 0" [mode]="warn" [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
-                </td>
+                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) >= 71" [mode]="determinate" [color]="accent" [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
+                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) <= 70 && percentage(element.available_stock_qty,element.in_stock_qty) >= 41" [mode]="determinate"  [color]="primary" [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
+                    <mat-progress-bar *ngIf="percentage(element.available_stock_qty,element.in_stock_qty) <= 40 && percentage(element.available_stock_qty,element.in_stock_qty) >= 0"[mode]="determinate" [color]="warn" [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
+                    {{percentage(element.available_stock_qty,element.in_stock_qty)}} %
+                  </td>
               </ng-container>
 
     <ng-container matColumnDef="operation">

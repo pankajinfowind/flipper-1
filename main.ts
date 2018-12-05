@@ -121,7 +121,7 @@ function createWindow() {
     win.maximize();
     require("devtron").install();
   }
-  win.setMenu(null);
+  //win.setMenu(null);
   win.on("closed", () => {
     win = null;
   });
@@ -166,6 +166,7 @@ ipcMain.on("put-in-tray", event => {
       }
     }
   ]);
+
 
   appIcon.setToolTip("Flipper in the tray.");
   appIcon.setContextMenu(contextMenu);

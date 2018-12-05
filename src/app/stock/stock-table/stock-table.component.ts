@@ -25,9 +25,7 @@ export class StockTableComponent implements OnInit {
     "category",
     "expire_date",
     "unit_sale",
-    'in_stock_qty',
     "available_stock_qty",
-    'sold',
     "progress",
     "operation"
   ];
@@ -74,7 +72,8 @@ export class StockTableComponent implements OnInit {
 
 
   percentage(num,num1) {
-    return Math.round(num *100)/num1;
+      let sum=Math.round(parseInt(num) *100)/parseInt(num1);
+    return isNaN(sum)?0:sum.toFixed(1);
 }
   newStck(){
     this.router.navigate(['stock/new']);

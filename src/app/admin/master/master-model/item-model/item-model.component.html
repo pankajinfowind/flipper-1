@@ -15,7 +15,7 @@
               </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="ybx-mat mat-full-wdth">
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth">
             <input class="text-secondary" [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit" matInput placeholder="Sku (auto generated if blank)" formControlName="sku" required>
             <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
 
@@ -29,7 +29,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="ybx-mat mat-full-wdth">
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth">
             <input class="text-secondary"[matTooltip]="upc_tool_tips" aria-label="Universal Product Code" matInput placeholder="Upc (if available)" formControlName="upc" required>
             <mat-icon matSuffix [matTooltip]="upc_tool_tips" aria-label="Universal Product Code">info</mat-icon>
 
@@ -43,7 +43,7 @@
             </mat-error>
           </mat-form-field><br />
 
-          <mat-form-field class="ybx-mat mat-full-wdth">
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth">
             <input class="text-secondary" matInput placeholder="Unit Cost" formControlName="unit_cost" required>
             <mat-error  *ngIf="unit_cost.invalid && (unit_cost.dirty || unit_cost.touched)">
               <mat-error *ngIf="unit_cost.invalid && !unit_cost.errors.required">
@@ -55,7 +55,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="ybx-mat mat-full-wdth">
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth">
             <input class="text-secondary" matInput placeholder="Unit sale" formControlName="unit_sale" required>
             <mat-error *ngIf="unit_sale.invalid && (unit_sale.dirty || unit_sale.touched)">
               <mat-error *ngIf="unit_sale.invalid && !unit_sale.errors.required">
@@ -78,7 +78,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="ybx-mat mat-full-wdth">
             <mat-select placeholder="{{category_placeholder}}"  formControlName="category_id" required>
                 <mat-option>None</mat-option>
               <mat-option *ngFor="let category of categories" [value]="category.category_id">

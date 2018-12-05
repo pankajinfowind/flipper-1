@@ -4,7 +4,7 @@
     <form [formGroup]="stockForm" (ngSubmit)="updateStock()">
        <mat-card-content>
 
-            <div class="details-list">
+            <div class="details-list" style="overflow-x: auto">
 
                 <div class="item">
                     <div class="name" trans><b>{{stock.name}}</b></div>
@@ -80,8 +80,8 @@
                     </div>
 
                 </div>
-                <div class="item" *ngIf="(details$ | async).action=='add'"><h6>Total {{(details$ | async).action}} quantity:<b>{{calculateTQty('add')}}</b></h6></div>
-                <div class="item" *ngIf="(details$ | async).action=='remove'"><h6>Total {{(details$ | async).action}} quantity:<b>{{calculateTQty('remove')}}</b></h6></div>
+                <div class="item" *ngIf="(details$ | async).action=='add'"><h6>Current quantity:<b>{{calculateTQty('add')}}</b></h6></div>
+                <div class="item" *ngIf="(details$ | async).action=='remove'"><h6>Current quantity:<b>{{calculateTQty('remove')}}</b></h6></div>
                 <div class="item">
                     <div class="name" trans><b>Comments</b></div>
                     <div class="value">

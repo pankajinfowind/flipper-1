@@ -5,10 +5,11 @@ import { SessionsComponent } from "./sessions/sessions.component";
 import { MaterialModule } from "../material/material.module";
 import { StockModule } from "../stock/stock.module";
 import { PosComponent } from './pos/pos.component';
+import { PosRoutingModule } from './pos-routing.module';
 
 @NgModule({
   declarations: [SalePointComponent, SessionsComponent, PosComponent],
-  imports: [CommonModule, MaterialModule, StockModule],
+  imports: [CommonModule, MaterialModule, StockModule,PosRoutingModule],
   exports: [SessionsComponent, SalePointComponent,PosComponent]
 })
 export class PosModule {}

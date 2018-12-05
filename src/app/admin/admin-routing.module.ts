@@ -28,8 +28,13 @@ const routes: Routes = [
               path: 'stock',
               loadChildren: 'app/stock/stock.module#StockModule',
               canActivate: [AuthGuard]
+            },
+            {
+              path: 'pos',
+              loadChildren: 'app/pos/pos.module#PosModule',
+              canActivate: [AuthGuard]
             }
-            // { path: 'pos', component: PosComponent},
+
         ]
 
     }

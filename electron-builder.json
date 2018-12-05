@@ -27,11 +27,11 @@
   ],
   "win": {
     "icon": "dist",
-    "target": ["msi"]
+    "target": ["nsis"]
   },
   "mac": {
     "icon": "dist",
-    "target": ["dmg"]
+    "target": ["zip", "dmg"]
   },
   "linux": {
     "icon": "dist",

@@ -1,7 +1,12 @@
 {
   "name": "flipper",
+<<<<<<< HEAD
   "version": "0.4.7",
   "description": "Flipper is a medical and Pharmacy app that can be used in other business too such as (Stock management, POS, Bar and restaurant with little customization) it can help to manage inventory, manage  point of sales. and Customer relationship CRM",
+=======
+  "version": "0.4.9",
+  "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventory, sales and used in point of sale.",
+>>>>>>> c04d6071275138cad32978a2dcd3dc42e7270ece
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
     "type": "git",

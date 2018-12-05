@@ -53,8 +53,9 @@ export class NewStockComponent implements OnInit {
   addRow(d?: Item, noUpdate?: boolean) {
     const numberPatern = '^[0-9.,]+$';
     const row = new FormGroup({
+      //TODO:
       id:  new FormControl(d && d.id ? d.id : null,[Validators.required]),
-      branch_id:  new FormControl(1,[Validators.required]),
+      branch_id:  new FormControl(this.currentUser.get('business')[0]['branches'][0]['id'],[Validators.required]),
       sku:  new FormControl(d && d.sku ? d.sku : null,[Validators.required]),
       item: new FormControl(d && d.item ? d.item : null,[Validators.required]),
       qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern), Validators.min(1)]),

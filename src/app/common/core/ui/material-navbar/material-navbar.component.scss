@@ -2,9 +2,9 @@
 
 material-navbar {
     display: block;
-    background-color: $nav-bar-color;
+    background-color: $site-primary-color-100;
     // $site-primary-color-100;
-    color: black;
+    color: $nav-bar-color;
     box-shadow: $box-shadow-3;
     position: relative;
     z-index: 2;
@@ -28,13 +28,23 @@ material-navbar {
             height: 100%;
             width: auto;
         }
+        .text-logo {
+          font-size: 1.4rem;
+          //color: black!important;
+          color: $nav-bar-color;
+      }
+      .text-logo-sm {
+        margin-left: 20px;
+        font-size: 1rem;
+        //color: black!important;
+        color: $nav-bar-color;
+    }
+     .text-logo-sm:first-letter {
+      text-transform: uppercase;
+      }
     }
 
-    .text-logo {
-        font-size: 2.2rem;
-        //color: black!important;
-        color: $site-text-color-400 !important;
-    }
+
 
     .toggle-sidebar-button {
         display: block;

@@ -80,6 +80,7 @@ function createWindow() {
 
     icon: null
   };
+
   if (serve) {
     if (process.platform === "linux") {
       windowOptions.icon = path.join(
@@ -131,7 +132,7 @@ function createWindow() {
       })
     );
   }
-
+  //win.localStorage.setItem("version", app.getVersion());
   // win.webContents.openDevTools();
   if (debug) {
     win.webContents.openDevTools();
@@ -143,6 +144,9 @@ function createWindow() {
   win.on("closed", () => {
     win = null;
   });
+
+
+
 }
 
 function makeSingleInstance() {

@@ -15,9 +15,15 @@ export class MaterialNavbar {
     @Input() showAuthButtons = false;
 
     @Output() toggleButtonClick = new EventEmitter();
-    
+    version:string;
+    business:any;
+    branch: any;;
     constructor(
         public config: Settings,
         public currentUser: CurrentUser,
-    ) {}
+    ) {
+      this.business=this.currentUser.get('business')[0];
+      this.branch=this.currentUser.get('business')[0]['branches'][0];
+      this.version=localStorage.getItem("version");
+    }
 }

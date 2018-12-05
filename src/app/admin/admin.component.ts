@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { CurrentUser } from '../common/auth/current-user';
 import { Settings } from '../common/core/config/settings.service';
 
@@ -8,18 +8,23 @@ import { Settings } from '../common/core/config/settings.service';
   styleUrls: ['./admin.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit,AfterViewInit {
 public appearance;
   /**
      * Controls left column visibility.
      */
     public leftColumnIsHidden = false;
-  constructor(public setting:Settings) { }
+    private rlaSafe: boolean = false;
+  constructor(public setting:Settings,private changeDetectionRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.appearance=this.setting.getAll().appearance;
   }
   public toggleLeftSidebar() {
     this.leftColumnIsHidden = !this.leftColumnIsHidden;
+}
+ngAfterViewInit() {
+  this.rlaSafe = true;
+  this.changeDetectionRef.detectChanges();
 }
 }

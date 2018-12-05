@@ -62,6 +62,7 @@ function createWindow() {
 
     icon: null
   };
+
   if (serve) {
     if (process.platform === "linux") {
       windowOptions.icon = path.join(
@@ -113,7 +114,7 @@ function createWindow() {
       })
     );
   }
-
+  //win.localStorage.setItem("version", app.getVersion());
   // win.webContents.openDevTools();
   if (debug) {
     win.webContents.openDevTools();
@@ -125,6 +126,9 @@ function createWindow() {
   win.on("closed", () => {
     win = null;
   });
+
+
+
 }
 
 function makeSingleInstance() {
@@ -140,45 +144,6 @@ function makeSingleInstance() {
   });
 }
 
-let appIcon = null;
-
-ipcMain.on("put-in-tray", event => {
-  let iconName;
-  if (serve) {
-    iconName =
-      process.platform === "win32"
-        ? "src/assets/tray-icon/windows-icon.png"
-        : "src/assets/tray-icon/iconTemplate.png";
-  } else {
-    iconName =
-      process.platform === "win32"
-        ? "dist/assets/tray-icon/windows-icon.png"
-        : "dist/assets/tray-icon/iconTemplate.png";
-  }
-  const iconPath = path.join(__dirname, iconName);
-  appIcon = new Tray(iconPath);
-
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: "Remove",
-      click: () => {
-        event.sender.send("tray-removed");
-      }
-    }
-  ]);
-
-
-  appIcon.setToolTip("Flipper in the tray.");
-  appIcon.setContextMenu(contextMenu);
-});
-
-ipcMain.on("remove-tray", () => {
-  appIcon.destroy();
-});
-
-app.on("window-all-closed", () => {
-  if (appIcon) appIcon.destroy();
-});
 try {
   app.on("ready", createWindow);
   app.on("ready", function() {

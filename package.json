@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.4.8",
+  "version": "0.4.7",
   "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventory, sales and used in point of sale.",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -33,7 +33,7 @@
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
-    "electron:linux": "npm run build:prod && npx electron-builder build -p  always --linux",
+    "electron:linux": "npm run build:prod && npx electron-builder build   always --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build -p always --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
     "test": "npm run postinstall:web && ng test",
@@ -52,6 +52,7 @@
     "bootstrap": "^4.1.3",
     "deepmerge": "^2.2.1",
     "dot-object": "^1.7.1",
+    "electron-is-dev": "^1.0.1",
     "electron-log": "^2.2.17",
     "electron-settings": "^3.2.0",
     "electron-updater": "^4.0.5",

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Tray, Menu, ipcMain } from "electron";
+import { app, BrowserWindow, Tray, Menu, ipcMain, dialog } from "electron";
 import * as path from "path";
 import * as url from "url";
 
@@ -47,6 +47,18 @@ autoUpdater.on("download-progress", progressObj => {
   sendStatusToWindow(log_message);
 });
 autoUpdater.on("update-downloaded", info => {
+  const dialogOpts = {
+    type: "info",
+    buttons: ["Restart", "Later"],
+    title: "Application Update",
+    // message: process.platform === 'win32' ? info : info,
+    message: "updated the app",
+    detail:
+      "A new version has been downloaded. Restart the application to apply the updates."
+  };
+  dialog.showMessageBox(dialogOpts, response => {
+    if (response === 0) autoUpdater.quitAndInstall();
+  });
   sendStatusToWindow("Update downloaded");
 });
 

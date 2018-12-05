@@ -17,10 +17,10 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 
 function sendStatusToWindow(text) {
-  log.info(text);
+  console.log(text);
+  log.info(app.getVersion() + "::" + text);
   win.webContents.send("message", text);
 }
-
 autoUpdater.on("checking-for-update", () => {
   sendStatusToWindow("Checking for update...");
   // tag
@@ -58,7 +58,7 @@ function createWindow() {
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
     minWidth: 680,
-    title: app.getName()+ "v"+app.getVersion(),
+    title: app.getName() + "v" + app.getVersion(),
 
     icon: null
   };
@@ -166,7 +166,6 @@ ipcMain.on("put-in-tray", event => {
       }
     }
   ]);
-
 
   appIcon.setToolTip("Flipper in the tray.");
   appIcon.setContextMenu(contextMenu);

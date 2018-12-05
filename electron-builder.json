@@ -27,7 +27,7 @@
   ],
   "win": {
     "icon": "dist",
-    "target": ["portable", "msi"]
+    "target": ["msi"]
   },
   "mac": {
     "icon": "dist",

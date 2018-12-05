@@ -1,7 +1,7 @@
 {
   "name": "flipper",
   "version": "0.4.7",
-  "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventory, sales and used in point of sale.",
+  "description": "Flipper is a medical and Pharmacy app that can be used in other business too such as (Stock management, POS, Bar and restaurant with little customization) it can help to manage inventory, manage  point of sales. and Customer relationship CRM",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
-    "electron:linux": "npm run build:prod && npx electron-builder build   always --linux",
+    "electron:linux": "npm run build:prod && npx electron-builder build -p  always --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build -p always --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
     "test": "npm run postinstall:web && ng test",

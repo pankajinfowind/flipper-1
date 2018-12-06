@@ -35,7 +35,7 @@
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build -p  always --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build -p always --windows",
-    "electron:mac": "npm run build:prod && npx electron-builder build --mac",
+    "electron:mac": "npm run build:prod && npx electron-builder build -p always  --mac",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run postinstall:web && ng e2e",
     "release": "standard-version"

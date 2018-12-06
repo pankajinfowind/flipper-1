@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { MatDialog } from "@angular/material";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { GlobalVariables } from "../../../core/global-variables";
 import { AuthService } from "../../auth.service";
-import { SocialAuthService } from "../../social-auth.service";
 import { Settings } from "../../../core/config/settings.service";
 
 import { ElectronService } from "ngx-electron";
@@ -21,10 +19,8 @@ export class EmailVerifyComponent implements OnInit {
   @Output() valueChange = new EventEmitter<any>();
   ipcRenderer: any;
   constructor(
-    public socialAuth: SocialAuthService,
     public settings: Settings,
     private auth: AuthService,
-    public dialog: MatDialog,
     public v: GlobalVariables,
     private _electronService: ElectronService
   ) {

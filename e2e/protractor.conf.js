@@ -13,7 +13,6 @@ exports.config = {
       args: ["--no-sandbox", "--headless", "--disable-gpu"]
     }
   },
-  webpack: { node: { fs: "empty" } },
   chromeOnly: true,
   directConnect: true,
   baseUrl: "http://localhost:4200/",

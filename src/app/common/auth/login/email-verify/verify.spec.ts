@@ -1,45 +1,51 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async } from "@angular/core/testing";
 
+import { NgZone } from "@angular/core";
 import { EmailVerifyComponent } from "./email-verify.component";
+
 import { Settings } from "../../../core/config/settings.service";
-import { AuthService } from "../../auth.service";
+
 import { GlobalVariables } from "../../../core/global-variables";
 import { ElectronService } from "ngx-electron";
+import { Router, ActivatedRoute } from "@angular/router";
+import { ApiService } from "../../../../api/api.service";
+import { AuthService } from "../../auth.service";
+import { AppHttpClient } from "../../../core/http/app-http-client.service";
+import { CurrentUser } from "../../current-user";
+import { Toast } from "../../../core/ui/toast.service";
+import { YLocalStorage } from "../../../classes/local-storage";
 
-class MockedAuthService extends AuthService {}
-class MockedSettings extends Settings {}
-class MockedGlobalVariable extends GlobalVariables {}
-class MockedElectronService extends ElectronService {}
-class MockedApiService {}
-class MockedAppHttpClient {}
-class MockedCurrentUser {}
-class MockedRouter {}
-class MockedActivatedRoute {}
-class MockedToast {}
-class MockedZone {}
-class MockedLocalStorage {}
 describe("VerifyEmailComponent", () => {
   let component: EmailVerifyComponent;
-  // create new instance of FormBuilder
-
-  let setting: MockedSettings;
-  let auth: MockedAuthService;
-  let v: MockedGlobalVariable;
-  let api: MockedApiService;
-  let e: MockedElectronService;
-  let httpclient: MockedAppHttpClient;
-  let currentUser: MockedCurrentUser;
-  let router: MockedRouter;
-  let activatedRoute: MockedActivatedRoute;
-  let toast: MockedToast;
-  let zone: MockedZone;
-  let localStorage: MockedLocalStorage;
+  let setting: Settings;
+  let auth: AuthService;
+  let v: GlobalVariables;
+  let api: ApiService;
+  let e: ElectronService;
+  let httpclient: AppHttpClient;
+  let currentUser: CurrentUser;
+  let router: Router;
+  let activatedRoute: ActivatedRoute;
+  let toast: Toast;
+  let zone: NgZone;
+  let localStorage: YLocalStorage;
 
   beforeEach(async(() => {
-    setting = new MockedSettings();
-    auth = new MockedAuthService();
-    e = new MockedElectronService();
-    v = new MockedGlobalVariable();
+    setting = new Settings();
+    auth = new AuthService(
+      httpclient,
+      currentUser,
+      router,
+      activatedRoute,
+      toast,
+      zone,
+      v,
+      api,
+      localStorage,
+      setting
+    );
+    e = new ElectronService();
+    v = new GlobalVariables();
     component = new EmailVerifyComponent(setting, auth, v, e);
   }));
   afterEach(() => {

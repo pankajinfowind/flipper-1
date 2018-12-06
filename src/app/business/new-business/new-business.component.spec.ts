@@ -1,16 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { NewBusinessComponent } from './new-business.component';
+import { NewBusinessComponent } from "./new-business.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-describe('NewBusinessComponent', () => {
+describe("NewBusinessComponent", () => {
   let component: NewBusinessComponent;
   let fixture: ComponentFixture<NewBusinessComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewBusinessComponent ]
-    })
-    .compileComponents();
+      declarations: [NewBusinessComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('NewBusinessComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

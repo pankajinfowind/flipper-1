@@ -1,16 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MasterComponent } from './master.component';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { MasterComponent } from "./master.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-
-describe('MasterComponent', () => {
+describe("MasterComponent", () => {
   let component: MasterComponent;
   let fixture: ComponentFixture<MasterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MasterComponent ]
-    })
-    .compileComponents();
+      declarations: [MasterComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('MasterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

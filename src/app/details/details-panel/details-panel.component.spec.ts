@@ -1,16 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DetailsPanelComponent } from './details-panel.component';
+import { DetailsPanelComponent } from "./details-panel.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-describe('DetailsPanelComponent', () => {
+describe("DetailsPanelComponent", () => {
   let component: DetailsPanelComponent;
   let fixture: ComponentFixture<DetailsPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailsPanelComponent ]
-    })
-    .compileComponents();
+      declarations: [DetailsPanelComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('DetailsPanelComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

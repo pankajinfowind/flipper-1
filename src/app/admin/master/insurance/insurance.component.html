@@ -18,8 +18,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
-<div class="col-12" *ngIf="data.length > 0">
+<div class="col-12" *ngIf="data && data.length > 0">
 
 <mat-form-field class="w-100 px-2">
   <input

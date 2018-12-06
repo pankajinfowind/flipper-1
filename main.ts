@@ -75,7 +75,6 @@ function createWindow() {
     y: mainWindowStateKeeper.y,
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
-    minWidth: 680,
     title: app.getName() + "v" + app.getVersion(),
 
     icon: null

@@ -8,6 +8,8 @@ import { ApiCategoryService } from '../../categories/api/api.service';
 import { ApiItemService } from '../../items/api/api.service';
 import { DetailsService } from '../../../../details/details.service';
 import { Details } from '../../../../details/details';
+import { MasterModelService } from '../../master-model.service';
+import { Master } from '../../master';
 
 @Component({
   selector: 'app-item-model',
@@ -15,6 +17,7 @@ import { Details } from '../../../../details/details';
   styleUrls: ['./item-model.component.scss']
 })
 export class ItemModelComponent implements OnInit {
+  master$: Observable<Master>;
   itemForm: FormGroup;
   categories: Category[] = [];
   numberPatern = '^[0-9.]+$';
@@ -26,46 +29,47 @@ export class ItemModelComponent implements OnInit {
   item_id:number=0;
   upc_tool_tips="The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
   sku_tool_tips="The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
-  constructor(private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService,private detailsService:DetailsService) { }
+  constructor(private msterModelService:MasterModelService,private toast: Toast,private apiItem:ApiItemService,private detailsService:DetailsService) { }
 
   ngOnInit() {
-
+    this.master$ = this.msterModelService.master$;
     this. getActiveCategories();
     this.details$ = this.detailsService.details$;
+    this.loadingFormGroup();
+  }
+
+  loadingFormGroup(){
     this.details$.subscribe(res=>{
-        if(res.action=='new'){
-          this.need_to_add_new=true;
-        }else{
-          this.need_to_add_new=false;
-        }
-        this.category_placeholder=res.sender_data?res.sender_data.category.name:'Choose Item Category';
-        this.item_id=res.sender_data?res.sender_data.id:0;
-        this.itemForm = new FormGroup({
-          item: new FormControl(res.sender_data?res.sender_data.item:"", [Validators.required]),
-          sku: new FormControl(res.sender_data?res.sender_data.sku:"", [Validators.required]),
-          upc:new FormControl(res.sender_data?res.sender_data.upc:0, [Validators.required]),
-          summary:new FormControl(res.sender_data?res.sender_data.summary:'null'),
-          manufacturer:new FormControl(res.sender_data?res.sender_data.manufacturer:'null'),
-          currency: new FormControl(res.sender_data?res.sender_data.currency:"Rwf", [Validators.required]),
-          unit_cost: new FormControl(res.sender_data?res.sender_data.unit_cost:0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
-          unit_sale: new FormControl(res.sender_data?res.sender_data.unit_sale:0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
-          category_id: new FormControl(res.sender_data?res.sender_data.category.category_id:0, [Validators.required]),
-          barcode: new FormControl(res.sender_data?res.sender_data.barcode:"barcode")
-        });
-  });
+      if(res.action=='new'){
+        this.need_to_add_new=true;
+      }else{
+        this.need_to_add_new=false;
+      }
+      this.category_placeholder=res.sender_data?res.sender_data.category.name:'Choose Item Category';
+      this.item_id=res.sender_data?res.sender_data.id:0;
+      this.itemForm = new FormGroup({
+        item: new FormControl(res.sender_data?res.sender_data.item:"", [Validators.required]),
+        sku: new FormControl(res.sender_data?res.sender_data.sku:0, [Validators.required]),
+        upc:new FormControl(res.sender_data?res.sender_data.upc:0, [Validators.required]),
+        summary:new FormControl(res.sender_data?res.sender_data.summary:'null'),
+        manufacturer:new FormControl(res.sender_data?res.sender_data.manufacturer:'null'),
+        currency: new FormControl(res.sender_data?res.sender_data.currency:"Rwf", [Validators.required]),
+        unit_cost: new FormControl(res.sender_data?res.sender_data.unit_cost:0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
+        unit_sale: new FormControl(res.sender_data?res.sender_data.unit_sale:0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
+        category_id: new FormControl(res.sender_data?res.sender_data.category.category_id:0, [Validators.required]),
+        barcode: new FormControl(res.sender_data?res.sender_data.barcode:"barcode")
+      });
+});
   }
 
 
   getActiveCategories(){
-    this.loading.next(true);
-    this.apiCat.get().pipe(finalize(() =>  this.loading.next(false))).subscribe(
-      res => {
-        this.categories=res['categories']['data'].filter(res=>res.is_active==1);
-      },
-      _error => {
-      console.error(_error);
+    this.master$.subscribe(res=>{
+      if(res.categories.length  > 0){
+        this.categories=res.categories;
       }
-    );
+  });
+
   }
 
 
@@ -110,7 +114,7 @@ export class ItemModelComponent implements OnInit {
                   sku:this.itemForm.value.sku,
                   upc:this.itemForm.value.upc,
                   summary:this.itemForm.value.summary,
-                  manufacturer:this.itemForm.value.manufacturer,
+                  manufacturer:this.itemForm.value.manufacturer==''?'null':this.itemForm.value.manufacturer,
                   currency:this.itemForm.value.currency,
                   unit_cost:this.itemForm.value.unit_cost,
                   unit_sale:this.itemForm.value.unit_sale,
@@ -124,10 +128,12 @@ export class ItemModelComponent implements OnInit {
   create(data){
     this.apiItem.create(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
       res => {
+
           if(res.status=='success'){
             this.toast.open('Item added Successfully!');
-            this.itemForm.reset();
-            this.detailsService.update({receriver_data:res.data});
+            this.loadingFormGroup();
+
+            this.msterModelService.update({loading:false, items:res["items"]["data"]?res["items"]["data"]:[]});
           }
       },
       _error => {
@@ -140,8 +146,8 @@ export class ItemModelComponent implements OnInit {
       res => {
           if(res.status=='success'){
             this.toast.open('Item updated Successfully!');
-            this.itemForm.reset();
-            this.detailsService.update({receriver_data:res.data});
+            this.loadingFormGroup();
+            this.msterModelService.update({loading:false, items:res["items"]["data"]?res["items"]["data"]:[]});
             this.close();
           }
       },
@@ -150,6 +156,7 @@ export class ItemModelComponent implements OnInit {
       }
     );
   }
+
 
   close(){
     this.detailsService.update({title:null,receriver_data:null,sender_data:null,module:null,component:null,action:null,detailsVisible:false});

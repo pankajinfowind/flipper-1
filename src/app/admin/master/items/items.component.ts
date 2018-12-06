@@ -16,6 +16,8 @@ import { DetailsService } from "../../../details/details.service";
 import { SelectionModel } from "@angular/cdk/collections";
 import { Item } from "./api/item";
 import { Toast } from "../../../common/core/ui/toast.service";
+import { MasterModelService } from '../master-model.service';
+import { Master } from '../master';
 
 @Component({
   selector: "remove-dialog",
@@ -25,38 +27,33 @@ import { Toast } from "../../../common/core/ui/toast.service";
 export class RemoveItemDialog {
   item_deleted=[];
   public loading = new BehaviorSubject(false);
-  constructor(private toast: Toast,private api: ApiItemService,
+  constructor(private msterModelService:MasterModelService,private toast: Toast,private api: ApiItemService,
     public dialogRef: MatDialogRef<RemoveItemDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     deleteItem(){
       this.loading.next(true);
-        this.data.forEach(element => {
+
           this.api
-          .delete(element.id).subscribe(
+          .delete({data:this.data}).subscribe(
               res => {
                   if(res.status=='success'){
-                    this.item_deleted.push(res.data);
-                    this.checking();
+                    this.toast.open('Item(s) deleted!');
+                    this.dialogRef.close({status:'success'});
+                    this.msterModelService.update({loading:false, items:res["items"]["data"]?res["items"]["data"]:[]});
                   }
               },
               _error => {
+                this.dialogRef.close({status:'not'});
                 this.toast.open('Nothing deleted!');
                 console.error(_error);
               }
           );
-        });
+
 
     }
 
-    checking(){
-        if( this.item_deleted.length == this.data.length ){
-             this.loading.next(false);
-             this.dialogRef.close({status:'success',data:this.item_deleted});
-             this.toast.open(this.item_deleted.length +' Deleted successfully!');
-        }
-    }
 
   close(): void {
     this.dialogRef.close({status:'none'});
@@ -70,7 +67,7 @@ export class RemoveItemDialog {
 })
 export class ItemsComponent implements OnInit {
   public loading = new BehaviorSubject(false);
-  constructor(public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {}
+  constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {}
   data: Item[] = [];
   displayedColumns: string[] = [
     'select',
@@ -92,7 +89,7 @@ export class ItemsComponent implements OnInit {
   subscription: Observable<Details>;
   details$: Observable<Details>;
   selection = new SelectionModel<Item>(true, []);
-
+  master$: Observable<Master>;
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -107,11 +104,17 @@ export class ItemsComponent implements OnInit {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
   ngOnInit() {
-    this.items();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.subscription = this.details$ = this.detailsService.details$;
-    this.checkIncomingData();
+    this.master$ = this.msterModelService.master$;
+
+    this.master$.subscribe(res=>{
+      if(res.categories.length  > 0){
+        this.data=res.items;
+        this.dataSource.data=this.data;
+      }
+  });
   }
   openDetails(title='New Items',action='new',obj){
      this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-items',action:action,detailsVisible:true});
@@ -119,21 +122,7 @@ export class ItemsComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  items() {
-    this.loading.next(true);
-    this.api
-      .get()
-      .pipe(finalize(() => this.loading.next(false)))
-      .subscribe(
-        res => {
-          this.data = res["items"]["data"];
-          this.dataSource = new MatTableDataSource<Item>(this.data);
-        },
-        _error => {
-          console.error(_error);
-        }
-      );
-  }
+
 
   removeDialog(): void {
     if (this.selection.selected.length > 0) {
@@ -144,12 +133,6 @@ export class ItemsComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if(result.status=="success"){
-          const _data = this.dataSource.data;
-          _data.filter(entry => {
-            let i = result.data.findIndex(curr => curr.id === entry.id);
-            _data.splice(i);
-          });
-          this.dataSource.data = _data;
           this.selection = new SelectionModel<Item>(true, []);
          }
       });

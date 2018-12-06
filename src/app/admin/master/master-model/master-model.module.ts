@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MasterModelComponent } from './master-model.component';
 import { ItemModelComponent } from './item-model/item-model.component';
@@ -6,6 +6,7 @@ import { CategoryModelComponent } from './category-model/category-model.componen
 import { MaterialModule } from '../../../material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InsuranceModelComponent } from './insurance-model/insurance-model.component';
+
 
 @NgModule({
   declarations:
@@ -21,4 +22,6 @@ import { InsuranceModelComponent } from './insurance-model/insurance-model.compo
     MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent
   ]
 })
-export class MasterModelModule { }
+export class MasterModelModule {
+
+ }

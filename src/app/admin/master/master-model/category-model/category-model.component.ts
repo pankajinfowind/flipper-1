@@ -8,6 +8,7 @@ import { ApiCategoryService } from '../../categories/api/api.service';
 import { ApiItemService } from '../../items/api/api.service';
 import { DetailsService } from '../../../../details/details.service';
 import { Details } from '../../../../details/details';
+import { MasterModelService } from '../../master-model.service';
 
 @Component({
   selector: 'app-category-model',
@@ -23,7 +24,7 @@ export class CategoryModelComponent implements OnInit {
   category_id:number=0;
   cateogryForm: FormGroup;
 
-  constructor(private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService,private detailsService:DetailsService) { }
+  constructor(private msterModelService:MasterModelService,private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService,private detailsService:DetailsService) { }
 
   ngOnInit() {
 
@@ -68,7 +69,8 @@ export class CategoryModelComponent implements OnInit {
           if(res.status=='success'){
             this.toast.open('Category added Successfully!');
             this.cateogryForm.reset();
-            this.detailsService.update({receriver_data:res.data});
+            this.msterModelService.update({loading:false, categories:res["categories"]["data"]?res["categories"]["data"]:[]});
+
           }
       },
       _error => {
@@ -81,8 +83,7 @@ export class CategoryModelComponent implements OnInit {
       res => {
           if(res.status=='success'){
             this.toast.open('Category updated Successfully!');
-            this.cateogryForm.reset();
-            this.detailsService.update({receriver_data:res.data});
+            this.msterModelService.update({loading:false, categories:res["categories"]["data"]?res["categories"]["data"]:[]});
             this.close();
           }
       },

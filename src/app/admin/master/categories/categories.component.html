@@ -15,8 +15,7 @@
 
       </mat-toolbar-row>
 </mat-toolbar>
-<loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
-<div class="col-12" *ngIf="data.length">
+<div class="col-12" *ngIf="data && data.length > 0">
 
 <mat-form-field class="w-100 px-2">
   <input
@@ -41,13 +40,6 @@
                       [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
-    </ng-container>
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="category_id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Category','edit',element)">
-          <span class="text">{{element.category_id}}</span> </td>
     </ng-container>
 
     <!-- Name Column -->

@@ -34,7 +34,6 @@ export class Bootstrapper {
      * Bootstrap application with data returned from server.
      */
      public  bootstrap() {
-
       this.user.userChanged.subscribe(res=>{
         if(res['business'][0]){
           this.modelStockService.update({loading: true});

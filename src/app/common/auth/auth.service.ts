@@ -28,17 +28,16 @@ export class AuthService {
    * AuthService Constructor.
    */
   constructor(
-    protected httpClient: AppHttpClient,
-    protected currentUser: CurrentUser,
-    protected router: Router,
-    protected route: ActivatedRoute,
-    protected toast: Toast,
-    protected zone: NgZone,
-    private v: GlobalVariables,
-    private myRoute: Router,
-    private api: ApiService,
-    private localstorage: YLocalStorage,
-    protected config: Settings
+    protected httpClient: AppHttpClient = null,
+    protected currentUser: CurrentUser = null,
+    protected router: Router = null,
+    protected route: ActivatedRoute = null,
+    protected toast: Toast = null,
+    protected zone: NgZone = null,
+    private v: GlobalVariables = null,
+    private api: ApiService = null,
+    private localstorage: YLocalStorage = null,
+    protected config: Settings = null
   ) {
     this.redirectUri = this.config.get("vebto.auth.redirectUri");
     this.adminRedirectUri = this.config.get("vebto.auth.adminRedirectUri");
@@ -133,7 +132,7 @@ export class AuthService {
   }
   checkSession() {
     if (!this.isLoggednIn()) {
-      return this.myRoute.navigate(["login"], {
+      return this.router.navigate(["login"], {
         queryParams: { redirect: this.localstorage.get("redirect_url") }
       });
     }
@@ -150,6 +149,6 @@ export class AuthService {
     if (this.localstorage.get("redirect_url")) {
       this.localstorage.remove("redirect_url");
     }
-    this.myRoute.navigate(["login"]);
+    this.router.navigate(["login"]);
   }
 }

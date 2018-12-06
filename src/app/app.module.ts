@@ -32,6 +32,7 @@ import * as Sentry from "@sentry/browser";
 import { RedirectComponent } from "./redirect/redirect.component";
 import { NgxsModule } from "@ngxs/store";
 import { NgxModelModule } from "ngx-model";
+import { NgxElectronModule } from "ngx-electron";
 Sentry.init({
   dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 });
@@ -57,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RedirectComponent
   ],
   imports: [
+    NgxElectronModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { GlobalVariables } from "../../common/core/global-variables";
-import { ipcRenderer } from "electron";
+
+import { ElectronService } from "ngx-electron";
 
 @Component({
   selector: "app-dashboard",
@@ -8,12 +9,15 @@ import { ipcRenderer } from "electron";
   styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
-  ipcRenderer: typeof ipcRenderer;
-  constructor(public v: GlobalVariables) {
+  ipcRenderer: any;
+  constructor(
+    public v: GlobalVariables,
+    private _electronService: ElectronService
+  ) {
     if (this.isElectron()) {
-      this.ipcRenderer = window.require("electron").ipcRenderer;
-      ipcRenderer.send("version-ping", "ping");
-      ipcRenderer.on("version-pong", (event, version) => {
+      this.ipcRenderer = this._electronService.ipcRenderer;
+      this.ipcRenderer.send("version-ping", "ping");
+      this.ipcRenderer.on("version-pong", (event, version) => {
         this.v.webTitle("Flipper" + "v" + version);
       });
     } else {

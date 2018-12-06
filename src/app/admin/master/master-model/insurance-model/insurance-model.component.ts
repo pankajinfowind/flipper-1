@@ -10,6 +10,7 @@ import { DetailsService } from '../../../../details/details.service';
 import { Details } from '../../../../details/details';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MasterModelService } from '../../master-model.service';
 
 @Component({
   selector: 'app-insurance-model',
@@ -25,7 +26,7 @@ export class InsuranceModelComponent implements OnInit {
   insurance_id:number=0;
   insuranceForm: FormGroup;
 
-  constructor(private toast: Toast,private api:ApiInsuranceService,private apiItem:ApiItemService,private detailsService:DetailsService) { }
+  constructor(private msterModelService:MasterModelService,private toast: Toast,private api:ApiInsuranceService,private apiItem:ApiItemService,private detailsService:DetailsService) { }
 
    ngOnInit() {
 
@@ -149,24 +150,9 @@ export class InsuranceModelComponent implements OnInit {
       this.api.attachInsurance({data:this.selection.selected}).pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
             if(res.status=='success'){
-              this.toast.open('Insurance attached to business!');
-             const attached_insurance=res['attached_insurance'];
-
-           const array_of_all_insurances=this.insurance_data;
-           let filtered_insurancees=[];
-           array_of_all_insurances.forEach(each_insurance=>{
-            attached_insurance.forEach(element => {
-               if(each_insurance.insurance_id !== element.insurance_id ){
-                 filtered_insurancees.push(each_insurance);
-               }else{
-                filtered_insurancees=[];
-               }
-             });
-           });
-
-           this.dataSource.data = filtered_insurancees;
-              this.detailsService.update({receriver_data:attached_insurance});
-              this.selection = new SelectionModel<Insurance>(true, []);
+              this.toast.open('Insurance(s) attached to business!');
+              this.msterModelService.update({loading: false, insurances:  res['business_insurance']?res['business_insurance']:[]});
+              this.close();
             }
         },
         _error => {
@@ -178,5 +164,11 @@ export class InsuranceModelComponent implements OnInit {
 
   close(){
     this.detailsService.update({title:null,receriver_data:null,sender_data:null,module:null,component:null,action:null,detailsVisible:false});
+  }
+  message(t="New Insurance"){
+    return ''+t.trim().toLowerCase()+'';
+  }
+  subMessage(t="insurance"){
+    return 'There are no new '+t.trim().toLowerCase()+'  currently, all added.';
   }
 }

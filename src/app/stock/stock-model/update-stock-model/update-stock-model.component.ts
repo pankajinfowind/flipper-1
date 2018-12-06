@@ -7,6 +7,7 @@ import { Stock } from '../../api/stock';
 import { ApiStockService } from '../../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { StockModelService } from '../../stock-model.service';
+import { MasterModelService } from '../../../admin/master/master-model.service';
 
 @Component({
   selector: 'app-update-stock-model',
@@ -46,7 +47,7 @@ export class UpdateStockModelComponent implements OnInit {
         }];
   public loading = new BehaviorSubject(false);
   action:any;
-  constructor(private modelStockService: StockModelService,private detailsService:DetailsService,private api:ApiStockService) {
+  constructor(private msterModelService:MasterModelService,private modelStockService: StockModelService,private detailsService:DetailsService,private api:ApiStockService) {
    }
 
 

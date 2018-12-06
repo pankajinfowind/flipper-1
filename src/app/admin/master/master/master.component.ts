@@ -4,6 +4,8 @@ import { MasterState } from '../../../state/master-state';
 import { Observable, Subscription } from 'rxjs';
 import { DetailsService } from '../../../details/details.service';
 import { Details } from '../../../details/details';
+import { Master } from '../master';
+import { MasterModelService } from '../master-model.service';
 
 @Component({
   selector: 'app-master',
@@ -20,10 +22,12 @@ isMobile=false;
 leftColumnIsHidden=false;
 subscription: Observable<Details>;
 details$: Observable<Details>;
-constructor(private detailsService:DetailsService) {
+master$: Observable<Master>;
+constructor(private msterModelService:MasterModelService,private detailsService:DetailsService) {
  }
 
   ngOnInit() {
+    this.master$ = this.msterModelService.master$;
     this.subscription = this.details$ = this.detailsService.details$;
   }
 

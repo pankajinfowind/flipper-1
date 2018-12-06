@@ -2,19 +2,25 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import { PosComponent } from './pos/pos.component';
 import { AuthGuard } from '../common/guards/auth-guard.service';
+import { SalePointComponent } from './sale-point/sale-point.component';
 
 const posRoutes: Routes = [
     {
-        path: '',
-        component: PosComponent,canActivate: [AuthGuard],
+
+      path: '',
+      canActivate: [AuthGuard],
+      canActivateChild: [AuthGuard],
+      data: {},
+      component: PosComponent,
 
         children: [
           {
             path: '',
-            redirectTo: 'pos',
+            redirectTo: 'sales',
             pathMatch: 'full',
             },
-            { path: 'pos', component: PosComponent}
+            { path: 'sales', component: SalePointComponent
+            }
 
         ]
 

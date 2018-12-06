@@ -1,3 +1,29 @@
-<p>
-  sale-point works!
-</p>
+<mat-toolbar color='accent'>
+    <mat-toolbar-row>
+      <div class="col-8">
+          <button mat-button class="text-center text-uppercase">HOME</button>
+         <mat-icon class="mat-icon" *ngIf="is_categry_clicked">  chevron_right </mat-icon>
+          <button mat-button class="text-uppercase" *ngIf="is_categry_clicked">
+              {{category_selected.name}}
+        </button>
+
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+        </div>
+
+    </mat-toolbar-row>
+
+</mat-toolbar>
+<div class="row m-2" *ngIf="!is_categry_clicked && categories.length > 0;else notCat">
+        <mat-card  *ngFor="let category of categories"  class="col-2 p-4 m-2 text-center text-uppercase mat-card" (click)="categoriesClicked(category)">{{category.name}}</mat-card>
+</div>
+<div *ngIf="is_categry_clicked  && categories.length == 0">
+    no categories could found
+  </div>
+
+  <div class="row m-2" *ngIf="is_categry_clicked  && currently_stocks.length > 0">
+      <mat-card  *ngFor="let stock of currently_stocks"  class="col-2 p-4 m-2 text-center text-uppercase mat-card" (click)="categoriesClicked(category)">{{stock.name}}</mat-card>
+</div>
+<div *ngIf="is_categry_clicked  && currently_stocks.length == 0">
+  no stock could found
+</div>

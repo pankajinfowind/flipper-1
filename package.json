@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventory, sales and used in point of sale.",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -52,6 +52,7 @@
     "bootstrap": "^4.1.3",
     "deepmerge": "^2.2.1",
     "dot-object": "^1.7.1",
+    "electron-is-dev": "^1.0.1",
     "electron-log": "^2.2.17",
     "electron-settings": "^3.2.0",
     "electron-updater": "^4.0.5",

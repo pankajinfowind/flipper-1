@@ -12,7 +12,6 @@ import { MaterialModule } from "../../material/material.module";
 import { ChangePasswordComponent } from "./reset-password/change-password/change-password.component";
 import { EmailVerifyComponent } from "./login/email-verify/email-verify.component";
 import { PasswordVerifyComponent } from "./login/password-verify/password-verify.component";
-import { SendResetPassLinkComponent } from "./reset-password/send-reset-pass-link.component";
 
 @NgModule({
   imports: [
@@ -30,8 +29,7 @@ import { SendResetPassLinkComponent } from "./reset-password/send-reset-pass-lin
     EmailVerifyComponent,
     PasswordVerifyComponent,
     RegisterComponent,
-    ChangePasswordComponent,
-    SendResetPassLinkComponent
+    ChangePasswordComponent
   ],
   declarations: [
     LoginComponent,
@@ -39,7 +37,6 @@ import { SendResetPassLinkComponent } from "./reset-password/send-reset-pass-lin
     PasswordVerifyComponent,
     RegisterComponent,
     ChangePasswordComponent,
-    SendResetPassLinkComponent,
     RequestExtraCredentialsModalComponent
   ],
   entryComponents: [RequestExtraCredentialsModalComponent]

@@ -46,6 +46,8 @@ before_script:
   - sleep 3
 
 script:
+  - npm run test -- --single-run --no-progress --browser=ChromeHeadlessC
+  - npm run mocha
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       docker run --rm \
@@ -58,8 +60,6 @@ script:
         electronuserland/builder:wine \
         bash -c "
           npm install \
-          npm run test -- --single-run --no-progress --browser=ChromeHeadlessCI \
-          npm run mocha
           && npm run electron:linux && npm run electron:windows "
     else
       # Code signing for macOS is not available in Docker, so we build on macOS.

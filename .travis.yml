@@ -32,11 +32,11 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
-# install:
-#   - npm install
-# before_script:
-#   - npm run test
-#   - npm run mocha
+install:
+  - npm install
+before_script:
+  - npm run test
+  - npm run mocha
 script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -62,3 +62,4 @@ before_cache:
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
+fhdfjhjh@8r8r78bcbf!@&*

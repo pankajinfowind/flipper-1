@@ -1,5 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { Settings } from '../../common/core/config/settings.service';
+import { Observable } from 'rxjs';
+import { Pos } from '../pos';
+import { PosModelService } from '../pos-model.service';
 
 @Component({
   selector: 'app-pos',
@@ -14,10 +17,11 @@ export class PosComponent implements OnInit,AfterViewInit {
      */
     public leftColumnIsHidden = false;
     isMobile=false;
-  constructor(public setting:Settings,private changeDetectionRef: ChangeDetectorRef) { }
+    pos$: Observable<Pos>;
+  constructor(private posModelService:PosModelService,public setting:Settings,private changeDetectionRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-
+    this.pos$ = this.posModelService.pos$;
   }
 
 ngAfterViewInit() {

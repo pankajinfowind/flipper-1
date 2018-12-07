@@ -1,10 +1,10 @@
 <div class="pos">
-<mat-sidenav-container class="content">
+<mat-sidenav-container>
     <mat-sidenav [opened]="true" [mode]="(isMobile) ? 'over' : 'side'" position="end" class="right-sidebar">
-        <!-- <app-details></app-details> -->
+        <app-cart-item class="app-cart-item"></app-cart-item>
       </mat-sidenav>
 <mat-sidenav-content class="content-inner">
-    <!-- <loading-indicator [isVisible]="(stocks$ | async).loading" class="overlay"></loading-indicator> -->
+    <loading-indicator [isVisible]="(pos$ | async).loading" class="overlay"></loading-indicator>
       <router-outlet></router-outlet>
   </mat-sidenav-content>
   </mat-sidenav-container>

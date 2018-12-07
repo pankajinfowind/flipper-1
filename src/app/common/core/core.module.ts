@@ -15,6 +15,7 @@ import {APP_CONFIG, DEFAULT_FLIPPER_CONFIG} from './config/flipper-config';
 import { CurrentUser } from '../auth/current-user';
 import { StockModule } from '../../stock/stock.module';
 import { MasterModule } from '../../admin/master/master/master.module';
+import { PosModule } from '../../pos/pos.module';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { MasterModule } from '../../admin/master/master/master.module';
         HttpModule,
         TranslationsModule,
         StockModule.forRoot(),
-        MasterModule.forRoot()
+        MasterModule.forRoot(),
+        PosModule.forRoot()
     ],
     exports: [
         CommonModule,

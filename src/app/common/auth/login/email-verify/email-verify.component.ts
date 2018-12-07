@@ -41,6 +41,9 @@ export class EmailVerifyComponent implements OnInit {
   isElectron = () => {
     return window && window.process && window.process.type;
   };
+  gotoWebRegister(){
+    return require("electron").shell.openExternal("https://yegobox.rw/register");
+  }
 
   ngOnInit() {
     this.emailForm = new FormGroup({

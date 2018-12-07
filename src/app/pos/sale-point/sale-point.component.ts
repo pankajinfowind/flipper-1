@@ -5,6 +5,14 @@ import { MasterModelService } from '../../admin/master/master-model.service';
 import { Category } from '../../admin/master/categories/api/category';
 import { Stock } from '../../stock/api/stock';
 import { StockModelService } from '../../stock/stock-model.service';
+import { Pos } from '../pos';
+import { OrderModelService } from '../orders/order-model.service';
+import { ApiPosService } from '../api/api.service';
+import { finalize } from 'rxjs/operators';
+import { PosModelService } from '../pos-model.service';
+import { Orders } from '../orders/orders';
+import { OrderItemsModelService } from '../cart/order-item-model.service';
+import { OrderItems } from '../cart/order_items';
 
 @Component({
   selector: 'app-sale-point',
@@ -16,7 +24,13 @@ export class SalePointComponent implements OnInit {
   categories: Category[] = [];
   currently_stocks: Stock[] = [];
   stocks$: Observable<Stock[]>;
-  constructor(private modelService:StockModelService,private msterModelService:MasterModelService) { }
+  pos$: Observable<Pos>;
+  is_order_currently=false;
+  current_order=null;
+  ordered_items=[];
+  order$: Observable<Orders[]>;
+  order_items$: Observable<OrderItems[]>;
+  constructor(private orderItemModelService:OrderItemsModelService,private orderModelService:OrderModelService,private api:ApiPosService,private posModelService:PosModelService,private modelService:StockModelService,private msterModelService:MasterModelService) { }
   category_selected:Category;
   is_categry_clicked=false;
   ngOnInit() {
@@ -30,10 +44,75 @@ export class SalePointComponent implements OnInit {
 
   this.stocks$ = this.modelService.stocks$;
 
+  this.pos$ = this.posModelService.pos$;
+
+  this.order$ = this.orderModelService.order$;
+
+  this.order_items$=this.orderItemModelService.order_items$;
+
+      this.getCurrentOrder();
+
+  }
+
+  getCurrentOrder(){
+    this.order$.subscribe(res=>{
+      if(res['orders'] !=undefined || null){
+        this.current_order=res['orders'].filter(item=>item.status==='pending');
+      }
+
+ });
+  }
+
+  getCartItem(){
+    this.order_items$.subscribe(res=>{
+      if(res['order_items'] !=undefined || null){
+       console.log(res);
+      }
+
+ });
   }
 
 
-   getRandomColor() {
+  addItemToCart(stock){
+    this.getCurrentOrder();
+      if(this.is_categry_clicked){
+      if(stock.available_stock_qty === 0){
+      alert("Stock Quantity is unavailable");
+      }else{
+
+          if(this.current_order!==undefined || null){
+            this.updateCartItem(stock);
+            //console.log(this.current_order);
+          }else{
+
+          }
+      }
+
+    }
+  }
+
+  updateCartItem(stock){
+    const carts=[];
+    const cart_data={id:stock.stock_id,order_id:this.current_order.id,order_item:stock.stock_id,price:stock.item.unit_sale,currency:stock.item.currency,quantity:1};
+    carts.push(cart_data);
+    this.orderItemModelService.update({orders_items:cart_data});
+
+this.getCartItem();
+  }
+
+  createNewOrder(params){
+    this.posModelService.update({loading:true});
+    this.api.createOrder(params).pipe(finalize(() =>  this.posModelService.update({loading:false}) )).subscribe(
+      res => {
+        this.orderModelService.update(res['orders'])
+      },
+      _error => {
+      console.error(_error);
+      }
+    );
+  }
+
+  getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
     for (var i = 0; i < 6; i++) {
@@ -45,14 +124,13 @@ export class SalePointComponent implements OnInit {
   categoriesClicked(category){
     this.category_selected=category;
     this.is_categry_clicked=true;
-if(this.is_categry_clicked){
-  this.stocks$.subscribe(res=>{
-    if(res['available']){
-      this.currently_stocks=res['available'].filter(stock=>stock['category']['id']===this.category_selected.category_id);
-    }
+      if(this.is_categry_clicked){
+        this.stocks$.subscribe(res=>{
+          if(res['available']){
+            this.currently_stocks=res['available'].filter(stock=>stock['category']['id']===this.category_selected.category_id);
+          }
 
-  });
-}
-
+        });
+      }
   }
 }

@@ -13,7 +13,8 @@ addons:
 cache:
   directories:
      - ./node_modules
-
+install:
+  - npm install
 env:
   global:
     - TRAVIS_SECURE_ENV_VARS=true

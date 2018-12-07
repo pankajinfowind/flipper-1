@@ -32,13 +32,11 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
-install:
-  - npm install
-
-before_script:
-  - npm run test
-  - npm run mocha
-  # - npm run e2e -- --no-progress --config=protractor-ci.conf.js
+# install:
+#   - npm install
+# before_script:
+#   - npm run test
+#   - npm run mocha
 script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -55,7 +53,6 @@ script:
           && npm run electron:linux && npm run electron:windows "
     else
       # Code signing for macOS is not available in Docker, so we build on macOS.
-
       npm run electron:mac
     fi
 

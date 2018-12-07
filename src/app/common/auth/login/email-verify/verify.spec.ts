@@ -23,6 +23,20 @@ import { CommonModule } from "@angular/common";
 import { MatSnackBarModule } from "@angular/material";
 import { NgxModelModule } from "ngx-model";
 
+
+//level up testing
+// 1)
+// let fakeService= {
+//   getData: ()=> Observable.of('me');
+// }
+
+// 2)
+// let fakeService =  jasmine.createSpyObj('jService',['data']);
+//faktService.getData.and.returnValue(Observable.of('data'));
+// or 
+  // spyOn(fakeService,'getData').and.returnValue(Observable.of('data'))
+  //expect(fakeService.getData).toHaveBeenCalled()
+
 describe("VerifyEmailComponent", () => {
   let component: EmailVerifyComponent;
   let setting: Settings;
@@ -74,6 +88,7 @@ describe("VerifyEmailComponent", () => {
     );
     e = new ElectronService();
     v = new GlobalVariables();
+    //tip: I can do new EmailVerifyComponent(null);
     component = new EmailVerifyComponent(setting, auth, v, e);
   }));
   it("should create EmailVerifyComponent", () => {

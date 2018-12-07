@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { AuthRoutingModule } from "./auth.routing";
 import { LoginComponent } from "./login/login.component";
-import { RegisterComponent } from "./register/register.component";
 
 import { RequestExtraCredentialsModalComponent } from "./request-extra-credentials-modal/request-extra-credentials-modal.component";
 import { CommonModule } from "@angular/common";
@@ -28,14 +27,12 @@ import { PasswordVerifyComponent } from "./login/password-verify/password-verify
     LoginComponent,
     EmailVerifyComponent,
     PasswordVerifyComponent,
-    RegisterComponent,
     ChangePasswordComponent
   ],
   declarations: [
     LoginComponent,
     EmailVerifyComponent,
     PasswordVerifyComponent,
-    RegisterComponent,
     ChangePasswordComponent,
     RequestExtraCredentialsModalComponent
   ],

@@ -87,10 +87,10 @@ export class PasswordVerifyComponent implements OnInit {
     this.auth.login(this.v.model).subscribe(
       response => {
         this.bootstrapper.bootstrap(response.data);
-        this.router.navigate(['']).then(navigated => {
+        this.router.navigate([""]).then(navigated => {
           this.v.loading = false;
           if (!navigated) {
-            this.router.navigate(['']);
+            this.router.navigate([""]);
           }
         });
       },

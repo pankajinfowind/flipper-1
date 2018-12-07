@@ -1,5 +1,5 @@
 dist: trusty
-sudo: false
+sudo: true
 env:
   global:
     - TRAVIS_SECURE_ENV_VARS=true

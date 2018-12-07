@@ -37,6 +37,7 @@ install:
 
 before_script:
   - npm run test --single-run --no-progress --browser=ChromeHeadlessCI
+  - npm run mocha
   # - npm run e2e -- --no-progress --config=protractor-ci.conf.js
 script:
   - |

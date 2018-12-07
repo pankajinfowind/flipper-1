@@ -1,3 +1,5 @@
+dist: trusty
+sudo: false
 env:
   global:
     - TRAVIS_SECURE_ENV_VARS=true
@@ -24,17 +26,18 @@ cache:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+install:
+  - npm install
 
 before_script:
-  # Replace clientId and clientSecret values in app-config.js with environment
-  # variable values.
-  # - cd eapp/config/
-  # - sed -i -e "s/exports.clientId = ''/exports.clientId = \"$clientId\"/g" app-config.js
-  # - sed -i -e "s/exports.clientSecret = ''/exports.clientSecret = \"$clientSecret\"/g" app-config.js
-  # - cd ../../
-  # removed this: -e clientId=${clientId} \
-  # -e clientSecret=${clientSecret} \ bellow
-
+  - npm run test -- --single-run --no-progress --browser=ChromeHeadlessCI
+  # - npm run e2e -- --no-progress --config=protractor-ci.conf.js
 script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -48,7 +51,6 @@ script:
         electronuserland/builder:wine \
         bash -c "
           npm install \
-          npm run test -- --single-run --no-progress \
           && npm run electron:linux && npm run electron:windows "
     else
       # Code signing for macOS is not available in Docker, so we build on macOS.

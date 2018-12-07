@@ -4,11 +4,9 @@ import { NgZone } from "@angular/core";
 import { EmailVerifyComponent } from "./email-verify.component";
 
 import { Settings } from "../../../core/config/settings.service";
-
 import { GlobalVariables } from "../../../core/global-variables";
 import { ElectronService } from "ngx-electron";
 import { Router, ActivatedRoute } from "@angular/router";
-
 import { RouterTestingModule } from "@angular/router/testing";
 import { ApiService } from "../../../../api/api.service";
 import { AuthService } from "../../auth.service";
@@ -18,10 +16,7 @@ import { Toast } from "../../../core/ui/toast.service";
 import { YLocalStorage } from "../../../classes/local-storage";
 import {
   FormsModule,
-  ReactiveFormsModule,
-  FormGroup,
-  FormControl,
-  Validators
+  ReactiveFormsModule
 } from "@angular/forms";
 import { HttpModule } from "../../../core/http/http.module";
 import { CommonModule } from "@angular/common";
@@ -64,6 +59,7 @@ describe("VerifyEmailComponent", () => {
       imports: [ReactiveFormsModule, FormsModule]
     });
     setting = new Settings();
+
     auth = new AuthService(
       httpclient,
       currentUser,
@@ -80,14 +76,12 @@ describe("VerifyEmailComponent", () => {
     v = new GlobalVariables();
     component = new EmailVerifyComponent(setting, auth, v, e);
   }));
-
   it("should create EmailVerifyComponent", () => {
     expect(component).toBeTruthy();
   });
-  // it("should call verifyEmail Function", () => {
-  //   spyOn(component, "emailVerify").and.returnValue(true);
-
-  //   // spyOn(auth, "verifyUserEmail").and.returnValue(true);
-  //   // expect(component.emailVerify()).toBeTruthy();
-  //   // expect(auth.verifyUserEmail).toHaveBeenCalled();
+  it("should call verifyEmail Function", () => {
+    spyOn(component, "emailVerify").and.returnValues(true);
+    spyOn(auth, "verifyUserEmail").and.returnValue(true);
+    expect(component.emailVerify()).toBeTruthy();
+  });
 });

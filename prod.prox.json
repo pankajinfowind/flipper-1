@@ -1,0 +1,14 @@
+{
+  "/secure": {
+    "target": "https://flipper.yegobox.rw",
+    "secure": false
+  },
+  "/api": {
+    "target": "https://flipper.yegobox.rw",
+    "secure": false
+  },
+  "/__clockwork": {
+    "target": "https://flipper.yegobox.rw",
+    "secure": false
+  }
+}

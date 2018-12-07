@@ -10,7 +10,7 @@ import { ElectronService } from "ngx-electron";
   templateUrl: "./email-verify.component.html",
   styleUrls: ["./email-verify.component.scss"]
 })
-export class EmailVerifyComponent implements OnInit {
+export class EmailVerifyComponent {
   emailForm: FormGroup;
   @Input() label;
   @Input() token;
@@ -24,6 +24,9 @@ export class EmailVerifyComponent implements OnInit {
     public v: GlobalVariables,
     private _electronService: ElectronService
   ) {
+    this.emailForm = new FormGroup({
+      email: new FormControl("", [Validators.required, Validators.email])
+    });
     this.v.loading = false;
     if (this.isElectron()) {
       this.ipcRenderer = this._electronService.ipcRenderer;
@@ -39,11 +42,6 @@ export class EmailVerifyComponent implements OnInit {
     return window && window.process && window.process.type;
   };
 
-  ngOnInit() {
-    this.emailForm = new FormGroup({
-      email: new FormControl("", [Validators.required, Validators.email])
-    });
-  }
   get email() {
     return this.emailForm.get("email");
   }

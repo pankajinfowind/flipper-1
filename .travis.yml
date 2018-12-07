@@ -55,7 +55,6 @@ script:
       # Code signing for macOS is not available in Docker, so we build on macOS.
       npm run electron:mac
     fi
-
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
 

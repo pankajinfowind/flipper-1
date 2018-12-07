@@ -1,4 +1,4 @@
-import { async } from "@angular/core/testing";
+import { async, TestBed, inject } from "@angular/core/testing";
 
 import { NgZone } from "@angular/core";
 import { EmailVerifyComponent } from "./email-verify.component";
@@ -8,12 +8,25 @@ import { Settings } from "../../../core/config/settings.service";
 import { GlobalVariables } from "../../../core/global-variables";
 import { ElectronService } from "ngx-electron";
 import { Router, ActivatedRoute } from "@angular/router";
+
+import { RouterTestingModule } from "@angular/router/testing";
 import { ApiService } from "../../../../api/api.service";
 import { AuthService } from "../../auth.service";
 import { AppHttpClient } from "../../../core/http/app-http-client.service";
 import { CurrentUser } from "../../current-user";
 import { Toast } from "../../../core/ui/toast.service";
 import { YLocalStorage } from "../../../classes/local-storage";
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators
+} from "@angular/forms";
+import { HttpModule } from "../../../core/http/http.module";
+import { CommonModule } from "@angular/common";
+import { MatSnackBarModule } from "@angular/material";
+import { NgxModelModule } from "ngx-model";
 
 describe("VerifyEmailComponent", () => {
   let component: EmailVerifyComponent;
@@ -30,7 +43,26 @@ describe("VerifyEmailComponent", () => {
   let zone: NgZone;
   let localStorage: YLocalStorage;
 
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [EmailVerifyComponent, ElectronService],
+      imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        RouterTestingModule,
+        MatSnackBarModule,
+        NgxModelModule
+      ]
+    });
+  });
+
   beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      providers: [EmailVerifyComponent],
+      imports: [ReactiveFormsModule, FormsModule]
+    });
     setting = new Settings();
     auth = new AuthService(
       httpclient,
@@ -48,13 +80,14 @@ describe("VerifyEmailComponent", () => {
     v = new GlobalVariables();
     component = new EmailVerifyComponent(setting, auth, v, e);
   }));
-  afterEach(() => {
-    auth = null;
-    e = null;
-    component = null;
-  });
 
-  it("should create", () => {
+  it("should create EmailVerifyComponent", () => {
     expect(component).toBeTruthy();
   });
+  // it("should call verifyEmail Function", () => {
+  //   spyOn(component, "emailVerify").and.returnValue(true);
+
+  //   // spyOn(auth, "verifyUserEmail").and.returnValue(true);
+  //   // expect(component.emailVerify()).toBeTruthy();
+  //   // expect(auth.verifyUserEmail).toHaveBeenCalled();
 });

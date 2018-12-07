@@ -17,6 +17,9 @@
 <div class="row m-2" *ngIf="!is_categry_clicked && categories.length > 0;else notCat">
         <mat-card  *ngFor="let category of categories"  class="col-2 p-4 m-2 text-center text-uppercase mat-card" (click)="categoriesClicked(category)">{{category.name}}</mat-card>
 </div>
+<div #notCat>
+    <p>no cart found</p>
+</div>
 <div *ngIf="is_categry_clicked  && categories.length == 0">
     no categories could found
   </div>

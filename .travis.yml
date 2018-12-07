@@ -1,3 +1,19 @@
+dist: trusty
+sudo: false
+language: node_js
+node_js:
+  - "8"
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+cache:
+  directories:
+     - ./node_modules
+
 env:
   global:
     - TRAVIS_SECURE_ENV_VARS=true
@@ -27,17 +43,7 @@ cache:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
-
-# before_script:
-# Replace clientId and clientSecret values in app-config.js with environment
-# variable values.
-# - cd eapp/config/
-# - sed -i -e "s/exports.clientId = ''/exports.clientId = \"$clientId\"/g" app-config.js
-# - sed -i -e "s/exports.clientSecret = ''/exports.clientSecret = \"$clientSecret\"/g" app-config.js
-# - cd ../../
-# removed this: -e clientId=${clientId} \
-# -e clientSecret=${clientSecret} \ bellow
+  - sleep 3
 
 script:
   - |
@@ -52,14 +58,13 @@ script:
         electronuserland/builder:wine \
         bash -c "
           npm install \
+          npm run test -- --single-run --no-progress --browser=ChromeHeadlessCI \
+          npm run mocha
           && npm run electron:linux && npm run electron:windows "
     else
       # Code signing for macOS is not available in Docker, so we build on macOS.
-      # yarn dist --mac
       npm run electron:mac
     fi
-
-    #ls dist/
 
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine

@@ -33,7 +33,7 @@ addons:
     packages:
       - google-chrome-stable
 install:
-  - npm install
+  - sudo npm install --unsafe-perm=true --allow-root
 
 before_script:
   - npm run test -- --single-run --no-progress --browser=ChromeHeadlessCI

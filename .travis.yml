@@ -52,7 +52,7 @@ script:
           npm install \
           && npm run electron:linux && npm run electron:windows "
     else
-      # Code signing for macOS is not available in Docker, so we build on macOS.
+      # Code signing for macOS is not available in Docker, so we build on macOS. here is do more
       npm run electron:mac
     fi
 before_cache:

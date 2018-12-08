@@ -74,7 +74,7 @@ export class EmailVerifyComponent {
   }
   public openRegister() {
     if (this.isElectron()) {
-      require("electron").shell.openExternal("https://yegobox.rw/register");
+      this._electronService.shell.openExternal("https://yegobox.rw/register");
     }
   }
 }

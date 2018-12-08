@@ -91,7 +91,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       multi: true
     },
     { provide: ErrorHandler, useClass: SentryErrorHandler }
-
   ],
   bootstrap: [AppComponent]
 })

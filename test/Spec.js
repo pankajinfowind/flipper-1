@@ -13,7 +13,6 @@ describe("launch Flipper", function() {
       // But for the sake of the example we fetch it from our node_modules.
       path: electronPath,
       // Assuming you have the following directory structure
-
       //  |__ my project
       //     |__ ...
       //     |__ main.js

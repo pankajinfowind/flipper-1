@@ -11,7 +11,7 @@ import { Settings } from "../../common/core/config/settings.service";
   templateUrl: "./pos.component.html",
   styleUrls: ["./pos.component.scss"]
 })
-export class PosComponent implements OnInit, AfterViewInit {
+export class PosComponent implements OnInit {
   public appearance;
   public leftColumnIsHidden: boolean = false;
   isMobile: boolean;

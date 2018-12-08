@@ -93,6 +93,5 @@ describe("VerifyEmailComponent", () => {
     spyOn(component, "emailVerify").and.returnValues(true);
     spyOn(auth, "verifyUserEmail").and.returnValue(true);
     expect(component.emailVerify()).toBeTruthy();
-    // expect(auth.verifyUserEmail).toHaveBeenCalled();
   });
 });

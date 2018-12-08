@@ -1,9 +1,18 @@
 import { PosComponent } from "./pos.component";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { Settings } from "../../common/core/config/settings.service";
-
+// const cdRefMock = {
+//   detectChanges: () => null
+// };
+// const setting = {
+//   name: () => null
+// };
 describe("POS Service", () => {
   let component: PosComponent;
+  // let fixture = ComponentFixture<PosComponent>;
+  // fixture = TestBed.createComponent(PosComponent);
+  // component = fixture.componentInstance;
+  // component.ngAfterViewInit();
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PosComponent]

@@ -11,20 +11,18 @@ import { PosModelService } from '../pos-model.service';
 })
 export class PosComponent implements OnInit, AfterViewInit {
   public appearance;
-  public leftColumnIsHidden: boolean = false;
-  isMobile: boolean;
+  /**
+     * Controls left column visibility.
+     */
+    public leftColumnIsHidden = false;
+    isMobile=false;
+    pos$: Observable<Pos>;
+  constructor(private posModelService:PosModelService,public setting:Settings,private changeDetectionRef: ChangeDetectorRef) { }
 
-  constructor(
-    public setting: Settings,
-    private changeDetectionRef: ChangeDetectorRef
-  ) {}
   ngAfterViewInit(): void {
     this.changeDetectionRef.detectChanges();
   }
   ngOnInit() {
-    this.isMobile = false;
-  }
-  public toggleLeftColumn(is_toggled: boolean) {
-    this.leftColumnIsHidden = is_toggled;
+    this.pos$ = this.posModelService.pos$;
   }
 }

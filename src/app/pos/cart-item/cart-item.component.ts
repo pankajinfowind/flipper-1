@@ -42,5 +42,9 @@ export class CartItemComponent implements OnInit {
     });
   }
 
+  update(element,status){
+    return this.orderItemModelService.update(element,status);
+  }
+
 }
 

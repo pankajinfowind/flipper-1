@@ -24,13 +24,26 @@ export class OrderItemsModelService {
        return this.model.get();
    }
 
-   update(stateUpdates: any) {
+   update(stateUpdates: any,status='add-qty') {
 
     const modelSnapshot = this.model.get();
     let check_existing=false;
         modelSnapshot.forEach(el=>{
           if(el.id===stateUpdates.id){
-            el.Qty+=1;
+            if(status=='add-qty'){
+              el.Qty+=1;
+              if(el.Qty > stateUpdates.available_qty){
+                el.Qty-=1;
+                alert('Quantity will create a negative stock level');
+              }
+
+            }else if(status=='remove-qty'){
+              el.Qty-=1;
+              if(el.Qty < 0){
+                el.Qty+=1;
+                alert('Quantity must be greater than 0');
+              }
+            }
             el.Total=el.currency+ ' '+ (el.Qty*el.price);
             check_existing=true;
           }

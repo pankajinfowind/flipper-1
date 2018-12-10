@@ -73,12 +73,9 @@ export class CartItemComponent implements OnInit {
     this.customers = this.customer.getCustomers();
     return this.customers;
   }
-<<<<<<< HEAD
 
-  update(element,status){
-    return this.orderItemModelService.update(element,status);
+  update(element, status) {
+    return this.orderItemModelService.update(element, status);
   }
 
-=======
->>>>>>> 188640afeccd8c3732cf2cc9957a549b62097167
 }

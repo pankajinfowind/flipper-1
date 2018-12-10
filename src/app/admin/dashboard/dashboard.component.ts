@@ -8,7 +8,7 @@ import { ElectronService } from "ngx-electron";
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   ipcRenderer: any;
   constructor(
     public v: GlobalVariables,
@@ -25,7 +25,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
   isElectron = () => {
     return window && window.process && window.process.type;
   };

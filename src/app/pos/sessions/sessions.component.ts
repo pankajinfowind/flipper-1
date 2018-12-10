@@ -16,12 +16,12 @@ export interface Session {
   templateUrl: "./sessions.component.html",
   styleUrls: ["./sessions.component.scss"]
 })
-export class SessionsComponent implements OnInit {
+export class SessionsComponent {
   cart_items: Stock[] = [];
   constructor(private current_user: CurrentUser, private api: ApiService) {}
 
-  ngOnInit() {}
   createSession() {
+    //TODO: branch_id should not be hard coded
     this.api
       .create({ branch_id: 1, session: "flipper-01" })
       .subscribe(

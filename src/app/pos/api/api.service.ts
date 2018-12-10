@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Item } from './item';
-import { Orders } from '../orders';
+import { Orders } from '../orders/orders';
 import { BackendResponse } from '../../common/core/types/backend-response';
 import { AppHttpClient } from '../../common/core/http/app-http-client.service';
 import { API_ROUTES } from './api-routes.enum';

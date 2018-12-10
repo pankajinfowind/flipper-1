@@ -37,6 +37,7 @@ export class CartItemComponent implements OnInit {
   pos$: Observable<Pos>;
   order_items$: Observable<OrderItems[]>;
   data: OrderItems[] = [];
+  all_total={num_item:0,total_tax:0,total_amount:0,total_due:0,total_discount:0};
   dataSource = new MatTableDataSource<OrderItems>([]);
   constructor(
     private orderItemModelService: OrderItemsModelService,
@@ -55,6 +56,7 @@ export class CartItemComponent implements OnInit {
           ? this.data[this.data.length - 1]
           : null;
       });
+
     }
   }
   customers: Observable<Customer[]>;
@@ -77,5 +79,17 @@ export class CartItemComponent implements OnInit {
   update(element,status){
     return this.orderItemModelService.update(element,status);
   }
+
+  total(prop){
+      if(this.data.length > 0){
+        var total=0;
+          for ( var i = 0, _len = this.data.length; i < _len; i++ ) {
+            total += this.data[i][prop]
+          }
+          return total;
+      }
+
+    }
+
 
 }

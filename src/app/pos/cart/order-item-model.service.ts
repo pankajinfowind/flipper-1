@@ -43,8 +43,12 @@ export class OrderItemsModelService {
                 el.Qty+=1;
                 alert('Quantity must be greater than 0');
               }
+            }else if(status=='discount'){
+              el.total_discount=((el.price=el.discount*el.price)/100)*el.Qty;
             }
             el.Total=el.currency+ ' '+ (el.Qty*el.price);
+            el.total_tax=((el.Qty*el.price)*18)/100;
+            el.total_amount=(el.Qty*el.price);
             check_existing=true;
           }
         });

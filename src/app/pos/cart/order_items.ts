@@ -8,6 +8,12 @@ export class OrderItems {
   Qty?:number;
   Total?:any;
   price?:number;
+  total_discount?:number;
+  total_amount?:number;
+  total_tax?:number;
+  discount?:number;
+  tax?:number;
+  note?:string;
     constructor(params: Object = {}) {
       for (let name in params) {
           this[name] = params[name];

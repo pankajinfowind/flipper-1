@@ -93,10 +93,13 @@ export class SalePointComponent implements OnInit {
   }
 
   updateCartItem(stock){
-    const cart_data={available_qty:stock.available_stock_qty, id:stock.stock_id,Item:stock.name,order_id:this.current_order.id,order_item:stock.stock_id,Each:'',price:stock.item.unit_sale,currency:stock.item.currency,
+    const cart_data={total_amount:0,note:null,discount:2,tax:18,total_discount:0,total_tax:0,available_qty:stock.available_stock_qty, id:stock.stock_id,Item:stock.name,order_id:this.current_order.id,order_item:stock.stock_id,Each:'',price:stock.item.unit_sale,currency:stock.item.currency,
       Qty:1,Total:''};
       cart_data.Total=cart_data.currency +' ' + (cart_data.Qty*cart_data.price);
       cart_data.Each=cart_data.currency +' ' + stock.item.unit_sale;
+      cart_data.total_discount=((cart_data.price=cart_data.discount*cart_data.price)/100)*cart_data.Qty;
+      cart_data.total_tax=((cart_data.Qty*cart_data.price)*18)/100;
+      cart_data.total_amount=(cart_data.Qty*cart_data.price);
     this.orderItemModelService.update(cart_data);
 
 this.getCartItem();

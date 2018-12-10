@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { AuthRoutingModule } from "./auth.routing";
 import { LoginComponent } from "./login/login.component";
-import { RegisterComponent } from "./register/register.component";
 
 import { RequestExtraCredentialsModalComponent } from "./request-extra-credentials-modal/request-extra-credentials-modal.component";
 import { CommonModule } from "@angular/common";
@@ -12,7 +11,6 @@ import { MaterialModule } from "../../material/material.module";
 import { ChangePasswordComponent } from "./reset-password/change-password/change-password.component";
 import { EmailVerifyComponent } from "./login/email-verify/email-verify.component";
 import { PasswordVerifyComponent } from "./login/password-verify/password-verify.component";
-import { SendResetPassLinkComponent } from "./reset-password/send-reset-pass-link.component";
 
 @NgModule({
   imports: [
@@ -29,17 +27,13 @@ import { SendResetPassLinkComponent } from "./reset-password/send-reset-pass-lin
     LoginComponent,
     EmailVerifyComponent,
     PasswordVerifyComponent,
-    RegisterComponent,
-    ChangePasswordComponent,
-    SendResetPassLinkComponent
+    ChangePasswordComponent
   ],
   declarations: [
     LoginComponent,
     EmailVerifyComponent,
     PasswordVerifyComponent,
-    RegisterComponent,
     ChangePasswordComponent,
-    SendResetPassLinkComponent,
     RequestExtraCredentialsModalComponent
   ],
   entryComponents: [RequestExtraCredentialsModalComponent]

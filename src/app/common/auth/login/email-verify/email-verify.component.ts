@@ -1,37 +1,37 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { MatDialog } from "@angular/material";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { GlobalVariables } from "../../../core/global-variables";
 import { AuthService } from "../../auth.service";
-import { SocialAuthService } from "../../social-auth.service";
 import { Settings } from "../../../core/config/settings.service";
-import { ipcRenderer } from "electron";
 
+import { ElectronService } from "ngx-electron";
 @Component({
   selector: "app-email-verify",
   templateUrl: "./email-verify.component.html",
   styleUrls: ["./email-verify.component.scss"]
 })
-export class EmailVerifyComponent implements OnInit {
+export class EmailVerifyComponent {
   emailForm: FormGroup;
   @Input() label;
   @Input() token;
   @Input() appname;
   @Input() redirecturl;
   @Output() valueChange = new EventEmitter<any>();
-  ipcRenderer: typeof ipcRenderer;
+  ipcRenderer: any;
   constructor(
-    public socialAuth: SocialAuthService,
     public settings: Settings,
     private auth: AuthService,
-    public dialog: MatDialog,
-    public v: GlobalVariables
+    public v: GlobalVariables,
+    private _electronService: ElectronService
   ) {
+    this.emailForm = new FormGroup({
+      email: new FormControl("", [Validators.required, Validators.email])
+    });
     this.v.loading = false;
     if (this.isElectron()) {
-      this.ipcRenderer = window.require("electron").ipcRenderer;
-      ipcRenderer.send("version-ping", "ping");
-      ipcRenderer.on("version-pong", (event, version) => {
+      this.ipcRenderer = this._electronService.ipcRenderer;
+      this.ipcRenderer.send("version-ping", "ping");
+      this.ipcRenderer.on("version-pong", (event, version) => {
         this.v.webTitle("Sign in - eNexus Accounts" + "v" + version);
       });
     } else {
@@ -45,11 +45,6 @@ export class EmailVerifyComponent implements OnInit {
     return require("electron").shell.openExternal("https://yegobox.rw/register");
   }
 
-  ngOnInit() {
-    this.emailForm = new FormGroup({
-      email: new FormControl("", [Validators.required, Validators.email])
-    });
-  }
   get email() {
     return this.emailForm.get("email");
   }
@@ -78,6 +73,11 @@ export class EmailVerifyComponent implements OnInit {
           this.v.errorMsg = _error.messages.email;
         }
       );
+    }
+  }
+  public openRegister() {
+    if (this.isElectron()) {
+      this._electronService.shell.openExternal("https://yegobox.rw/register");
     }
   }
 }

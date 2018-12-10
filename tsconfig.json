@@ -10,21 +10,15 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "es2016",
-      "es2015",
-      "dom"
-    ]
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "es2016", "es2015", "dom"]
   },
   "include": [
     "main.ts",
-    "src/**/*", "win-state-keeper.ts"
+    "src/**/*",
+    "win-state-keeper.ts",
+    "test/Spec.js",
+    "wallaby.js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

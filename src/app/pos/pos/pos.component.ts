@@ -5,27 +5,26 @@ import { Pos } from '../pos';
 import { PosModelService } from '../pos-model.service';
 
 @Component({
-  selector: 'app-pos',
-  templateUrl: './pos.component.html',
-  styleUrls: ['./pos.component.scss']
+  selector: "app-pos",
+  templateUrl: "./pos.component.html",
+  styleUrls: ["./pos.component.scss"]
 })
-export class PosComponent implements OnInit,AfterViewInit {
-
+export class PosComponent implements OnInit, AfterViewInit {
   public appearance;
-  /**
-     * Controls left column visibility.
-     */
-    public leftColumnIsHidden = false;
-    isMobile=false;
-    pos$: Observable<Pos>;
-  constructor(private posModelService:PosModelService,public setting:Settings,private changeDetectionRef: ChangeDetectorRef) { }
+  public leftColumnIsHidden: boolean = false;
+  isMobile: boolean;
 
-  ngOnInit() {
-    this.pos$ = this.posModelService.pos$;
+  constructor(
+    public setting: Settings,
+    private changeDetectionRef: ChangeDetectorRef
+  ) {}
+  ngAfterViewInit(): void {
+    this.changeDetectionRef.detectChanges();
   }
-
-ngAfterViewInit() {
-  this.changeDetectionRef.detectChanges();
-}
-
+  ngOnInit() {
+    this.isMobile = false;
+  }
+  public toggleLeftColumn(is_toggled: boolean) {
+    this.leftColumnIsHidden = is_toggled;
+  }
 }

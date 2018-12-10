@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.4.10",
+  "version": "0.4.15",
   "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventory, sales and used in point of sale.",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -35,10 +35,11 @@
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build -p  always --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build -p always --windows",
-    "electron:mac": "npm run build:prod && npx electron-builder build --mac",
-    "test": "npm run postinstall:web && ng test",
+    "electron:mac": "npm run build:prod && npx electron-builder build -p always  --mac",
+    "test": "npm run postinstall:web && ng test --watch",
     "e2e": "npm run postinstall:web && ng e2e",
-    "release": "standard-version"
+    "release": "standard-version",
+    "mocha": "mocha"
   },
   "dependencies": {
     "@angular/animations": "7.0.4",
@@ -59,6 +60,7 @@
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
     "ngx-color-picker": "^7.0.1",
+    "ngx-electron": "^2.0.0",
     "ngx-model": "^6.0.2",
     "ngx-webstorage": "^3.0.0-beta.13",
     "perfect-scrollbar": "^1.4.0",
@@ -98,16 +100,20 @@
     "karma-coverage-istanbul-reporter": "2.0.0",
     "karma-jasmine": "1.1.2",
     "karma-jasmine-html-reporter": "1.1.0",
+    "mocha": "^5.2.0",
     "npm-run-all": "4.1.3",
     "npx": "10.2.0",
     "perm": "^1.0.0",
     "protractor": "^5.4.1",
     "rxjs": "6.3.3",
+    "spectron": "^5.0.0",
     "ts-node": "6.0.3",
     "tslint": "5.10.0",
     "typescript": "3.1.6",
     "wait-on": "2.1.0",
     "webdriver-manager": "12.0.6",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "angular2-template-loader": "^0.6.2",
+    "wallaby-webpack": "*"
   }
 }

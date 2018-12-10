@@ -1,16 +1,20 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { PosComponent } from "./pos.component";
+import { PosModule } from "../pos.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterTestingModule } from "@angular/router/testing";
 
-import { PosComponent } from './pos.component';
-
-describe('PosComponent', () => {
+describe("PosComponent", () => {
   let component: PosComponent;
   let fixture: ComponentFixture<PosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PosComponent ]
-    })
-    .compileComponents();
+      imports: [PosModule, BrowserAnimationsModule, RouterTestingModule],
+      declarations: []
+      //can be used to ignore the nested component
+      // schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
   }));
 
   beforeEach(() => {
@@ -19,7 +23,13 @@ describe('PosComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
+  });
+  it("should toggle on and off side nav", () => {
+    component.toggleLeftColumn(true);
+    expect(component.leftColumnIsHidden).toBeTruthy();
+    component.toggleLeftColumn(false);
+    expect(component.leftColumnIsHidden).toBeFalsy();
   });
 });

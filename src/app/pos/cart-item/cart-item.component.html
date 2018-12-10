@@ -1,14 +1,96 @@
 <div class="card text-center w-100">
     <div class="card-header">
-      title
+        title
     </div>
     <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <table *ngIf="data.length > 0" mat-table [dataSource]="dataSource" multiTemplateDataRows>
+            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+            </ng-container>
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+
+            <ng-container matColumnDef="expandedDetail" class="element-detail">
+                <td class="element-detail" mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="element-detail row" [class.row-highlighted]="expandedElement === element"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+                        <div class="col-4">
+                            <div class="button-row">
+                                <button mat-icon-button class="col-6 float-left">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                                </button>
+
+                                <button mat-icon-button class="col-6 float-left">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">local_offer</mat-icon>
+
+                                </button>
+                            </div>
+                            <div class="button-row">
+                                <span class="col-4 text-left">Note</span>
+
+                                <span class="col-8 text-left">Discount</span>
+                            </div>
+
+
+                        </div>
+                        <div class="col-5">
+                            <div class="button-row">
+                                <button mat-icon-button class="btn-border col-3">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">remove</mat-icon>
+                                </button>
+
+                                <button mat-button class="col-6">{{element.Qty}}</button>
+
+                                <button mat-icon-button class="btn-border col-3">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                </button>
+                            </div>
+                            <div class="button-row text-center">
+                                Quantity
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="button-row float-right col-12">
+                                <button mat-icon-button class="text-center">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
+                                </button>
+
+                            </div>
+                            <div class="button-row float-right col-12"><span class="text-center">&nbsp;&nbsp;&nbsp;&nbsp;Delete</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
+                [class.row-highlighted]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+        </table>
+
+        <div class="no-results-message" *ngIf="data.length == 0">
+            <img class="icon" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OTIuMiA0OTIuMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDkyLjIgNDkyLjI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4Ij4KPGc+Cgk8Zz4KCQk8Zz4KCQkJPGc+CgkJCQk8cGF0aCBkPSJNMzcyLjIsMzU4Ljc1SDIwLjljLTExLjUsMC0yMC45LTkuNC0yMC45LTIwLjlzOS40LTIwLjksMjAuOS0yMC45aDMzMS41di0yOTVjMC0xMS41LDkuNC0yMC45LDIwLjktMjAuOWg5OCAgICAgIGMxMS41LDAsMjAuOSw5LjQsMjAuOSwyMC45cy05LjQsMjAuOS0yMC45LDIwLjloLTc3LjJ2Mjk3LjFDMzkyLjEsMzUwLjQ1LDM4My43LDM1OC43NSwzNzIuMiwzNTguNzV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTwvZz4KCQkJPGc+CgkJCQk8cGF0aCBkPSJNODQuNSw0OTEuMTVjLTMyLjMsMC01OC40LTI2LjEtNTguNC01OC40czI2LjEtNTguNCw1OC40LTU4LjRzNTguNCwyNi4xLDU4LjQsNTguNCAgICAgIEMxNDMuOSw0NjUuMDUsMTE2LjgsNDkxLjE1LDg0LjUsNDkxLjE1eiBNODQuNSw0MTUuMDVjLTEwLjQsMC0xNy43LDguMy0xNy43LDE3LjdzOC4zLDE3LjcsMTcuNywxNy43czE3LjctOC4zLDE3LjctMTcuNyAgICAgIFM5NC45LDQxNS4wNSw4NC41LDQxNS4wNXoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPC9nPgoJCQk8Zz4KCQkJCTxwYXRoIGQ9Ik0yOTguMiw0OTEuMTVjLTMyLjMsMC01OC40LTI2LjEtNTguNC01OC40czI2LjEtNTguNCw1OC40LTU4LjRzNTkuNCwyNi4xLDU5LjQsNTguNFMzMzEuNiw0OTEuMTUsMjk4LjIsNDkxLjE1eiAgICAgICBNMjk4LjIsNDE1LjA1Yy0xMC40LDAtMTcuNyw4LjMtMTcuNywxNy43czguMywxNy43LDE3LjcsMTcuN2MxMC40LDAsMTcuNy04LjMsMTcuNy0xNy43UzMwOC43LDQxNS4wNSwyOTguMiw0MTUuMDV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTwvZz4KCQkJPGc+CgkJCQk8cGF0aCBkPSJNMjk3LjIsMjg2Ljg1SDY0LjdjLTExLjUsMC0yMC45LTkuNC0yMC45LTIwLjlWNDcuMDVjMC0xMS41LDkuNC0yMC45LDIwLjktMjAuOWgyMzIuNWMxMS41LDAsMjAuOSw5LjQsMjAuOSwyMC45djIyMCAgICAgIEMzMTgsMjc4LjQ1LDMwOC43LDI4Ni44NSwyOTcuMiwyODYuODV6IE04NS41LDI0Ni4xNWgxOTAuOFY2Ny44NUg4NS41VjI0Ni4xNXoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPC9nPgoJCQk8Zz4KCQkJCTxnPgoJCQkJCTxwYXRoIGQ9Ik0xNjksMjE4LjA1di00OWgtNDl2LTI0aDUwdi00OWgyMi45djQ5aDUwdjI0aC01MHY0OUgxNjl6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCQk8L2c+CgkJCTwvZz4KCQk8L2c+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
+            <div class="main" trans>Add an item</div>
+            <div class="secondary" trans>Tap an item to add to the transction</div>
+        </div>
 
     </div>
     <div class="card-footer">
-      button
+
+        <div class="row row-divided">
+            <div class="col-6">
+                <h2>Column 1</h2>
+                <p>6 column wide (col-xs-6)</p>
+            </div>
+            <div class="vertical-divider"></div>
+            <div class="col-6">
+                <h2>Column 2</h2>
+                <p>6 column wide (col-xs-6)</p>
+            </div>
+        </div>
     </div>
-    
-  </div>
+
+</div>

@@ -12,7 +12,7 @@ export class OrderItemsModelService {
   order_items$: Observable<OrderItems[]>;
   private model: Model<OrderItems[]>;
   constructor(private modelFactory: ModelFactory<OrderItems[]>) {
-    this.create({orders_items:[]});
+    this.create([]);
     this.order_items$ = this.model.data$;
    }
 
@@ -25,19 +25,23 @@ export class OrderItemsModelService {
    }
 
    update(stateUpdates: any) {
-    // retrieve raw model data
+
     const modelSnapshot = this.model.get();
-    // mutate model data
-    console.log('recently model',modelSnapshot);
-    console.log('incaming model',stateUpdates);
+    let check_existing=false;
+        modelSnapshot.forEach(el=>{
+          if(el.id===stateUpdates.id){
+            el.Qty+=1;
+            el.Total=el.currency+ ' '+ (el.Qty*el.price);
+            check_existing=true;
+          }
+        });
 
-    const newModel = {...modelSnapshot, ...stateUpdates };
-    console.log('new model',newModel);
-      this.model.set(newModel);
+      if(!check_existing){
+        modelSnapshot.push(stateUpdates);
+      }
 
-    // set new model data (after mutation)
+    this.model.set(modelSnapshot);
 
-    //console.log('am here booss',this.model.get());
   }
 
 

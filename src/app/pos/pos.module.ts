@@ -22,6 +22,7 @@ import { BackendHttpErrorHandler } from "../common/core/http/errors/backend-http
 import { ravenErrorHandlerFactory } from "../common/core/errors/raven-error-handler";
 import { CustomerService } from "../customers/customer.service";
 import { HttpClient } from "@angular/common/http";
+import { ModelFactory } from "ngx-model";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { HttpClient } from "@angular/common/http";
   ],
   imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule],
   exports: [SessionsComponent, SalePointComponent, PosComponent],
-  providers: [ApiPosService]
+  providers: [ApiPosService, ModelFactory]
 })
 export class PosModule {
   static forRoot(): ModuleWithProviders {

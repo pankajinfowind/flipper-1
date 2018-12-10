@@ -7,10 +7,17 @@ import { CustomerService } from "../../customers/customer.service";
 import { of } from "rxjs/internal/observable/of";
 import { Customer } from "../../customers/customer";
 import { Observable } from "rxjs";
+import { PosModelService } from "../pos-model.service";
+import { OrderItemsModelService } from "../cart/order-item-model.service";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("CartItemComponent", () => {
   let component: CartItemComponent;
   let fixture: ComponentFixture<CartItemComponent>;
+  let pos: PosModelService;
+  let order: OrderItemsModelService;
+
   let service: CustomerService;
   let customers: Observable<Customer[]>;
   let customer: Array<Customer> = [
@@ -20,21 +27,32 @@ describe("CartItemComponent", () => {
   const customerMockService = jasmine.createSpyObj("CustomerService", [
     "getCustomers"
   ]);
+  const posmodelMockService = jasmine.createSpyObj("PosModelService", [
+    "getCustomers" //Todo: change method to be from PosModelService
+  ]);
+  const orderItemMockService = jasmine.createSpyObj("OrderItemsModelService", [
+    "getCustomers" //Todo: change method to be from OrderItemsModelService
+  ]);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PosModule],
+      imports: [PosModule, HttpClientTestingModule],
       providers: [
         { provide: ModelFactory },
-        { provide: CustomerService, useValue: customerMockService }
+        { provide: CustomerService, useValue: customerMockService },
+        { provide: PosModelService, useValue: posmodelMockService },
+        { provide: OrderItemsModelService, useValue: orderItemMockService }
       ]
+      // schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
   beforeEach(() => {
     service = TestBed.get(CustomerService);
+    order = TestBed.get(OrderItemsModelService);
+    pos = TestBed.get(PosModelService);
     fixture = TestBed.createComponent(CartItemComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // ?
   });
   it("should create", () => {
     expect(component).toBeTruthy();

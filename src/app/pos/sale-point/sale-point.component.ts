@@ -65,6 +65,7 @@ export class SalePointComponent implements OnInit {
 
   getCartItem(){
     this.order_items$.subscribe(res=>{
+      console.log(res);
       if(res['order_items'] !=undefined || null){
        console.log(res);
       }
@@ -92,10 +93,11 @@ export class SalePointComponent implements OnInit {
   }
 
   updateCartItem(stock){
-    const carts=[];
-    const cart_data={id:stock.stock_id,order_id:this.current_order.id,order_item:stock.stock_id,price:stock.item.unit_sale,currency:stock.item.currency,quantity:1};
-    carts.push(cart_data);
-    this.orderItemModelService.update({orders_items:cart_data});
+    const cart_data={id:stock.stock_id,Item:stock.name,order_id:this.current_order.id,order_item:stock.stock_id,Each:'',price:stock.item.unit_sale,currency:stock.item.currency,
+      Qty:1,Total:''};
+      cart_data.Total=cart_data.currency +' ' + (cart_data.Qty*cart_data.price);
+      cart_data.Each=cart_data.currency +' ' + stock.item.unit_sale;
+    this.orderItemModelService.update(cart_data);
 
 this.getCartItem();
   }

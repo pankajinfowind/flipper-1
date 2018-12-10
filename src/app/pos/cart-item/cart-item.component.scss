@@ -1,6 +1,153 @@
 .w-100{
   height: 100% !important;
 }
-.card-footer{
-  height: 20%;
+
+.card{
+  padding: 0;
+  margin: 0;
+  .card-footer{
+    height: 40%;
+  }
+  .card-body{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+  }
 }
+@import "../../app_sass/variables";
+
+.no-results-message {
+  margin-top:8.6%;
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  font-weight: 300;
+  color: #43484d;
+
+  .icon {
+    width: 150px;
+    height: 150px;
+    fill: currentColor;
+    margin-top: 25px;
+  }
+
+  .main {
+    font-size: 2.6rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  .main:first-letter {text-transform: uppercase}
+
+  .secondary {
+    font-size: 1.7rem;
+    font-weight: 400;
+    text-align: center;
+  }
+}
+
+table {
+  width: 100%;
+
+  tr.detail-row {
+    height: 0;
+  }
+
+  // tr.example-element-row:not(.example-expanded-row):hover {
+  //   background: #f5f5f5;
+  // }
+
+
+  .row-highlighted {
+    background: #03a9f4;
+    color: #fff!important;
+    font-weight: 500!important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0;
+
+  }
+
+
+  .element-row td {
+    width: 30.2%;
+    border-bottom-width: 0;
+    text-align: center;
+  }
+  .detail-row{
+    width: 100%;
+    padding: 0px;
+    margin: 0;
+  }
+  .element-detail {
+    width: 100%;
+    padding: 0px;
+    margin: 0;
+
+  }
+
+  .button-row button{
+    width: 100%;
+    display: inline-block;
+  }
+  .btn-border{
+    border: 1px solid white;
+  }
+
+}
+
+
+
+.vertical-divider {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  height: 100%;
+  line-height: 0;
+  text-align:center;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.vertical-divider:before,
+.vertical-divider:after {
+  position: absolute;
+  left: 50%;
+  content: '';
+  z-index: 9;
+  border-left: 1px solid rgba(34,36,38,.15);
+  border-right: 1px solid rgba(255,255,255,.1);
+  width: 0;
+}
+
+.row-divided > .vertical-divider {
+  height: calc(50% - 1rem);
+}
+
+// .vertical-divider:before {
+//   top: -100%;
+// }
+
+// .vertical-divider:after {
+//   top: auto;
+//   bottom: 0;
+// }
+
+.row-divided {
+  position:relative;
+}
+
+.row-divided > [class^="col-"],
+.row-divided > [class*=" col-"] {
+  padding-left: 30px;  /* gutter width (give a little extra room) 2x default */
+  padding-right: 30px; /* gutter width (give a little extra room) 2x default */
+}
+

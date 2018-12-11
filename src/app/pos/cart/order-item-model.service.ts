@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Model, ModelFactory } from 'ngx-model';
-import { Pos } from '../pos';
 import { OrderItems } from './order_items';
 
 @Injectable({
@@ -28,7 +27,7 @@ export class OrderItemsModelService {
 
     const modelSnapshot = this.model.get();
     let check_existing=false;
-        modelSnapshot.forEach(el=>{
+        modelSnapshot.forEach((el,index,object)=>{
           if(el.id===stateUpdates.id){
             if(status=='add-qty'){
               el.Qty+=1;
@@ -44,12 +43,19 @@ export class OrderItemsModelService {
                 alert('Quantity must be greater than 0');
               }
             }else if(status=='discount'){
-              el.total_discount=((el.price=el.discount*el.price)/100)*el.Qty;
+              console.log('elem',stateUpdates);
+              el.total_discount=this.calculateDiscount(stateUpdates);
+            }else if(status=='delete'){
+                 modelSnapshot.splice(index, 1);
+
+            }else if(status=='update-qty'){
+              el.Qty=stateUpdates.Qty;
             }
-            el.Total=el.currency+ ' '+ (el.Qty*el.price);
-            el.total_tax=((el.Qty*el.price)*18)/100;
-            el.total_amount=(el.Qty*el.price);
-            check_existing=true;
+
+              el.Total=el.currency+ ' '+ (el.Qty*el.price);
+              el.total_tax=this.calcalTax(el);
+              el.total_amount=(el.Qty*el.price);
+              check_existing=true;
           }
         });
 
@@ -60,6 +66,30 @@ export class OrderItemsModelService {
     this.model.set(modelSnapshot);
 
   }
+  calculateDiscount(item:OrderItems){
 
+    // Cost of one chocolate pack = $10
+
+    // Cost of two chocolate pack = $10*2=$20
+
+    // Discount (10%) on two packs= $20/100*10=$2
+
+    // Discounted price of two chocolate packs=$20-$2=$18
+
+    if(item.discount > 0){
+      const cost_of_one=item.price;
+      const total_cost_of_many=cost_of_one*item.Qty;
+      const discount=(total_cost_of_many/100)*item.discount;
+      return total_cost_of_many-discount;
+    }else{
+      return 0;
+    }
+
+
+
+  }
+calcalTax(item:OrderItems){
+ return ((item.Qty*item.price)*18)/100;
+}
 
 }

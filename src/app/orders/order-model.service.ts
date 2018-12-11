@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Model, ModelFactory } from 'ngx-model';
-import { Pos } from '../pos';
 import { Orders } from './orders';
 
 @Injectable({

@@ -1,6 +1,8 @@
 <div class="card text-center w-100">
     <div class="card-header">
-        title
+        <button (click)="updatePosLayout('customers')" type="button" mat-button class="cancel-button" trans><mat-icon>edit</mat-icon> CUSTOMERS</button>
+        <button (click)="updatePosLayout('insurances')" type="button" mat-button class="cancel-button" trans><mat-icon>edit</mat-icon> INSURANCES</button>
+        <button (click)="updatePosLayout('orders')" type="button" mat-button class="cancel-button" trans><mat-icon>edit</mat-icon> ORDERS</button>
     </div>
     <div class="card-body">
         <table *ngIf="data.length > 0" mat-table [dataSource]="dataSource" multiTemplateDataRows>
@@ -17,11 +19,11 @@
 
                         <div class="col-4">
                             <div class="button-row">
-                                <button mat-icon-button class="col-6 float-left">
+                                <button mat-icon-button class="col-6 float-left" (click)="cartDialog(element,'Note')">
                                     <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
                                 </button>
 
-                                <button mat-icon-button class="col-6 float-left">
+                                <button mat-icon-button class="col-6 float-left" (click)="cartDialog(element,'Discount')">
                                     <mat-icon aria-label="Example icon-button with a heart icon">local_offer</mat-icon>
 
                                 </button>
@@ -40,7 +42,7 @@
                                 <mat-icon aria-label="Example icon-button with a heart icon">remove</mat-icon>
                               </button>
 
-                                <button mat-button class="col-6">{{element.Qty}}</button>
+                                <button mat-button class="col-6" (click)="cartDialog(element,'Quantity')">{{element.Qty}}</button>
 
                               <button mat-icon-button (click)="update(element,'add-qty')" class="btn-border col-3">
                                   <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
@@ -64,7 +66,7 @@
                     </div>
                 </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true" class="element-row"></tr>
             <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
                 [class.row-highlighted]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
             </tr>
@@ -82,11 +84,15 @@
 
         <div class="row grid-divider">
             <div class="col-6">
-              Total items:{{data.length}}
+              <h6 class="col-12">TOTAL ITEMS:{{data.length}}</h6>
+              <h6 class="col-12">TOTAL DISCOUNT:{{total('total_discount')}}</h6>
             </div>
 
             <div class="col-6">
-              Total amount:{{total('total_amount')}}
+                <h6 class="col-12">TOTAL AMOUNT:{{total('total_amount')}}</h6>
+                <h6 class="col-12">DUE:{{total('total_amount')}}</h6>
+                <h6 class="col-12">TAX:{{total('total_tax')}}</h6>
+
               </div>
 
            </div>

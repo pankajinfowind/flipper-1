@@ -49,7 +49,7 @@ export class Bootstrapper {
   /**
    * Handle specified bootstrap data.
    */
-  protected orders(): Promise<Orders[]> {
+  protected orders(): Promise<Orders> {
     let url;
     if (this.settings.getBaseUrl() != "http://localhost:4200/") {
       url = AppConfig.url + "secure/" + API_ROUTES.ORDER;
@@ -63,9 +63,8 @@ export class Bootstrapper {
         .pipe(finalize(() => this.posModelService.update({ loading: false })))
         .subscribe(
           res => {
-            console.log(res);
-            this.orderModelService.update({ orders: res["orders"] });
-
+            this.posModelService.update({ loading: false,current_order:res['orders']?res['orders'].filter(item=>item.status==='pending')[0]:null,choosen_insurance:null,choose_customer:null,panel_content:'home'});
+                this.orderModelService.update({orders: res["orders"]?res['orders']:null});
             resolve();
           },
           error => {

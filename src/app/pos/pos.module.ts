@@ -13,7 +13,7 @@ import { PosRoutingModule } from "./pos-routing.module";
 import { UiModule } from "../common/core/ui/ui.module";
 
 import { MasterModule } from "../admin/master/master/master.module";
-import { CartItemComponent } from "./cart-item/cart-item.component";
+import { CartItemComponent, CartDialog } from "./cart-item/cart-item.component";
 import { ApiPosService } from "./api/api.service";
 import { CurrentUser } from "../common/auth/current-user";
 import { Bootstrapper, init_app } from "./bootstrapper.service";
@@ -29,10 +29,12 @@ import { ModelFactory } from "ngx-model";
     SalePointComponent,
     SessionsComponent,
     PosComponent,
-    CartItemComponent
+    CartItemComponent,
+    CartDialog
   ],
   imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule],
-  exports: [SessionsComponent, SalePointComponent, PosComponent],
+  exports: [SessionsComponent, SalePointComponent, PosComponent,CartDialog],
+  entryComponents: [CartDialog],
   providers: [ApiPosService, ModelFactory]
 })
 export class PosModule {

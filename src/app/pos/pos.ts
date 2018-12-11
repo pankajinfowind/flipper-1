@@ -1,9 +1,15 @@
-import { Orders } from './orders/orders';
+import { Insurance } from '../admin/master/insurance/api/insurance';
+import { Customer } from '../customers/customer';
+import { Orders } from '../orders/orders';
 
 
 export class Pos {
   id?:number;
   loading:boolean;
+  choosen_insurance?:Insurance;
+  current_order?:Orders;
+  choose_customer?:Customer;
+  panel_content?:string;
     constructor(params: Object = {}) {
       for (let name in params) {
           this[name] = params[name];

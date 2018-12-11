@@ -12,6 +12,8 @@ export class OrderItems {
   total_amount?:number;
   total_tax?:number;
   discount?:number;
+  available_qty?:number;
+  Item?:string;
   tax?:number;
   note?:string;
     constructor(params: Object = {}) {

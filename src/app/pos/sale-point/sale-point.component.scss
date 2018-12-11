@@ -7,3 +7,9 @@ margin-top:-3%
 small {
   font-size: smaller;
 }
+
+@import "../../app_sass/variables";
+@import "../../app_sass/modal.scss";
+.panel-center{
+  background: #fff;
+}

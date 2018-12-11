@@ -6,13 +6,13 @@ import { Category } from '../../admin/master/categories/api/category';
 import { Stock } from '../../stock/api/stock';
 import { StockModelService } from '../../stock/stock-model.service';
 import { Pos } from '../pos';
-import { OrderModelService } from '../orders/order-model.service';
 import { ApiPosService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { PosModelService } from '../pos-model.service';
-import { Orders } from '../orders/orders';
 import { OrderItemsModelService } from '../cart/order-item-model.service';
 import { OrderItems } from '../cart/order_items';
+import { OrderModelService } from '../../orders/order-model.service';
+import { Orders } from '../../orders/orders';
 
 @Component({
   selector: 'app-sale-point',
@@ -51,13 +51,19 @@ export class SalePointComponent implements OnInit {
   this.order_items$=this.orderItemModelService.order_items$;
 
       this.getCurrentOrder();
+      this.pos$.subscribe(res=>{
+        console.log('pos',res);
+      });
+  }
 
+  updatePosLayout(panel='home'){
+    this.posModelService.update({panel_content:panel});
   }
 
   getCurrentOrder(){
     this.order$.subscribe(res=>{
       if(res['orders'] !=undefined || null){
-        this.current_order=res['orders'].filter(item=>item.status==='pending');
+        this.current_order=res['orders'].filter(item=>item.status==='pending')[0];
       }
 
  });
@@ -65,12 +71,7 @@ export class SalePointComponent implements OnInit {
 
   getCartItem(){
     this.order_items$.subscribe(res=>{
-      console.log(res);
-      if(res['order_items'] !=undefined || null){
-       console.log(res);
-      }
-
- });
+    });
   }
 
 
@@ -93,16 +94,21 @@ export class SalePointComponent implements OnInit {
   }
 
   updateCartItem(stock){
-    const cart_data={total_amount:0,note:null,discount:2,tax:18,total_discount:0,total_tax:0,available_qty:stock.available_stock_qty, id:stock.stock_id,Item:stock.name,order_id:this.current_order.id,order_item:stock.stock_id,Each:'',price:stock.item.unit_sale,currency:stock.item.currency,
-      Qty:1,Total:''};
+    const cart_data:OrderItems={total_amount:0,note:null,discount:0,tax:18,total_discount:0,total_tax:0,available_qty:stock.available_stock_qty, id:stock.stock_id,Item:stock.name,order_id:this.current_order.id,order_item:stock.stock_id,Each:'',price:stock.item.unit_sale,currency:stock.item.currency,
+    Qty:1,Total:''};
       cart_data.Total=cart_data.currency +' ' + (cart_data.Qty*cart_data.price);
-      cart_data.Each=cart_data.currency +' ' + stock.item.unit_sale;
-      cart_data.total_discount=((cart_data.price=cart_data.discount*cart_data.price)/100)*cart_data.Qty;
-      cart_data.total_tax=((cart_data.Qty*cart_data.price)*18)/100;
+
       cart_data.total_amount=(cart_data.Qty*cart_data.price);
+
+      cart_data.Each=cart_data.currency +' ' + stock.item.unit_sale;
+
+      cart_data.total_tax=this.orderItemModelService.calcalTax(cart_data);
+
+      cart_data.total_discount=this.orderItemModelService.calculateDiscount(cart_data);
+
     this.orderItemModelService.update(cart_data);
 
-this.getCartItem();
+    this.getCartItem();
   }
 
   createNewOrder(params){
@@ -139,3 +145,7 @@ this.getCartItem();
       }
   }
 }
+
+
+
+

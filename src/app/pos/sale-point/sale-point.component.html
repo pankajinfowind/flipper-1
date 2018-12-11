@@ -1,11 +1,13 @@
 <mat-toolbar color='accent'>
     <mat-toolbar-row class="header">
       <div class="col-8">
-          <button mat-button class="text-center text-uppercase"(click)="is_categry_clicked=!is_categry_clicked">HOME</button>
-         <mat-icon class="mat-icon" *ngIf="is_categry_clicked">  chevron_right </mat-icon>
-          <button mat-button class="text-uppercase" *ngIf="is_categry_clicked">
-              {{category_selected.name}}
-        </button>
+
+        <button mat-button class="text-center text-uppercase"(click)="updatePosLayout();is_categry_clicked=!is_categry_clicked">HOME</button>
+
+            <mat-icon class="mat-icon" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'">  chevron_right </mat-icon>
+              <button mat-button class="text-uppercase" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'">
+                  {{category_selected.name}}
+            </button>
 
         <span class="spacer"></span>
         <span class="spacer"></span>
@@ -14,18 +16,17 @@
     </mat-toolbar-row>
 
 </mat-toolbar>
-<div class="row m-2" *ngIf="!is_categry_clicked && categories.length > 0">
-        <mat-card  *ngFor="let category of categories"  class="col-2 col-md-2 col-sm-4 col-xs-6 p-4 m-2 text-center text-uppercase mat-card" (click)="categoriesClicked(category)">{{category.name}}</mat-card>
+<div *ngIf="(pos$ | async).panel_content=='home'">
+<div class="row m-3" *ngIf="!is_categry_clicked && categories.length > 0">
+        <mat-card  *ngFor="let category of categories"  class="col-2  p-4 m-2 text-center text-uppercase mat-card" (click)="categoriesClicked(category)">{{category.name}}</mat-card>
 </div>
-<div #notCat>
-    <p>no cart found</p>
-</div>
-<div *ngIf="is_categry_clicked  && categories.length == 0">
+
+<!-- <div *ngIf="is_categry_clicked  && categories.length == 0">
     no categories could found
-  </div>
+  </div> -->
 
   <div class="row m-1" *ngIf="is_categry_clicked  && currently_stocks.length > 0">
-      <mat-card  *ngFor="let stock of currently_stocks"  class="col-2 col-md-2 col-sm-4 col-xs-6 m-2 mat-card" (click)=" addItemToCart(stock)">
+      <mat-card  *ngFor="let stock of currently_stocks"  class="col-3  m-2 mat-card" (click)=" addItemToCart(stock)">
         <span class="text-left text-secondary">{{stock.name.length > 18?stock.name.substring(0,17)+'...':stock.name}} </span>
         <div class="clearfix"></div>
 
@@ -41,6 +42,29 @@
 
       </mat-card>
 </div>
-<div *ngIf="is_categry_clicked  && currently_stocks.length == 0">
-  no stock could found
 </div>
+
+<div *ngIf="(pos$ | async).panel_content=='customers'">
+  customer
+
+</div>
+<mat-card *ngIf="(pos$ | async).panel_content=='orders'" class="mt-2 mb-2 mr-5 ml-5 panel-center">
+    <div class="modal-header">
+        <h2 mat-dialog-title trans>Orders</h2>
+        <button type="button" mat-icon-button (click)="updatePosLayout()" class="close-button" tabindex="-1">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+        <mat-dialog-content class="many-inputs">
+          hello
+        </mat-dialog-content>
+
+  </mat-card>
+
+  <div *ngIf="(pos$ | async).panel_content=='insurances'">
+      insurances
+    </div>
+<!-- <div *ngIf="is_categry_clicked  && currently_stocks.length == 0">
+  no stock could found
+</div> -->

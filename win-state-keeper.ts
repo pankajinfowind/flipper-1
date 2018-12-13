@@ -32,7 +32,7 @@ export function windowStateKeeper(windowName) {
     });
   }
   setBounds();
-  return({
+  return ({
     x: windowState.x,
     y: windowState.y,
     width: windowState.width,

@@ -19,7 +19,8 @@ export class StockComponent implements OnInit {
     { path: "new", label: "Create New Stock" },
     { path: "available", label: "Current Stock" },
     { path: "stockout", label: "Out of Stock Items" },
-    { path: "damaged", label: "Damaged Items" }
+    { path: "damaged", label: "Damaged Items" },
+    { path: "report", label: "Report" }
   ];
 
   @Select(MasterState.loading) loading$: Observable<boolean>;

@@ -22,12 +22,11 @@ export interface SelectorBox {
 })
 export class NewBusinessComponent implements OnInit {
   businessForm: FormGroup;
-
   view_more=false;
   error='';
   public loading = new BehaviorSubject(false);
   types: SelectorBox[] = [
-    {value: 'pharamcy', viewValue: 'Pharamcy'},
+    {value: 'pharmacy', viewValue: 'Pharmacy'},
     {value: 'resto', viewValue: 'Restaurant'},
     {value: 'shop', viewValue: 'Shop'}
   ];
@@ -94,6 +93,7 @@ export class NewBusinessComponent implements OnInit {
       });
      },error=>{
        if(error.status == 422){
+           this.businessForm.setErrors({"wrong":"something wrong happened"});
         this.error='The business name already was taken!';
        }
      });

@@ -36,7 +36,6 @@ export class Bootstrapper {
     this.settings = this.injector.get(Settings);
     this.user = this.injector.get(CurrentUser);
   }
-
   /**
    * Bootstrap application with data returned from server.
    */
@@ -65,12 +64,12 @@ export class Bootstrapper {
         .pipe(finalize(() => this.posModelService.update({ loading: false })))
         .subscribe(
           res => {
-            if(res['status']=='success'){
-              const order=res['orders'].length > 0?res['orders'].filter(order=>order.is_currently_processing==='1')[0]:null;
-              this.posModelService.update({ loading: false,currently_ordered:order?order:null,choosen_insurance:null,choose_customer:null,panel_content:'home'});
-              this.orderModelService.update({orders: res["orders"].length > 0?res['orders']:[]});
-              if(order){
-                this.orderItemModelService.update(order['order_items'],'all');
+            if (res['status'] == 'success') {
+              const order = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
+              this.posModelService.update({ loading: false, currently_ordered: order ? order : null, choosen_insurance: null, choose_customer: null, panel_content: 'home' });
+              this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
+              if (order) {
+                this.orderItemModelService.update(order['order_items'], 'all');
               }
 
 
@@ -80,8 +79,7 @@ export class Bootstrapper {
           },
           error => {
             this.orderModelService.update([]);
-            console.log("bootstrap error", error);
-            reject();
+            // reject();
           }
         );
     });

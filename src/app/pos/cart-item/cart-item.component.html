@@ -1,8 +1,14 @@
 <div class="card text-center w-100">
     <div class="card-header">
-        <button (click)="updatePosLayout('customers')" type="button" mat-button class="cancel-button" trans><mat-icon>assignment_ind</mat-icon> CUSTOMERS</button>
-        <button (click)="updatePosLayout('insurances')" type="button" mat-button class="cancel-button" trans><mat-icon>assignment</mat-icon> INSURANCES</button>
-        <button (click)="updatePosLayout('orders')" type="button" mat-button class="cancel-button" trans><mat-icon>list_alt</mat-icon> ORDERS</button>
+        <button (click)="updatePosLayout('customers')" type="button" mat-button class="cancel-button" trans>
+            <mat-icon>assignment_ind</mat-icon> CUSTOMERS
+        </button>
+        <button (click)="updatePosLayout('insurances')" type="button" mat-button class="cancel-button" trans>
+            <mat-icon>assignment</mat-icon> INSURANCES
+        </button>
+        <button (click)="updatePosLayout('orders')" type="button" mat-button class="cancel-button" trans>
+            <mat-icon>list_alt</mat-icon> ORDERS
+        </button>
     </div>
     <div class="card-body">
         <table *ngIf="data.length > 0" mat-table [dataSource]="dataSource" multiTemplateDataRows>
@@ -35,28 +41,28 @@
                             </div>
 
 
-                    </div>
-                    <div class="col-5">
-                        <div class="button-row">
+                        </div>
+                        <div class="col-5">
+                            <div class="button-row">
                                 <button mat-icon-button (click)="update(element,'remove-qty')" class="btn-border col-3">
-                                <mat-icon aria-label="Example icon-button with a heart icon">remove</mat-icon>
-                              </button>
+                                    <mat-icon aria-label="Example icon-button with a heart icon">remove</mat-icon>
+                                </button>
 
                                 <button mat-button class="col-6" (click)="cartDialog(element,'Quantity')">{{element.qty}}</button>
 
-                              <button mat-icon-button (click)="update(element,'add-qty')" class="btn-border col-3">
-                                  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-                              </button>
-                          </div>
-                          <div class="button-row text-center">
-                              Quantity
-                          </div>
-                      </div>
-                      <div class="col-3">
-                          <div class="button-row float-right col-12">
-                              <button mat-icon-button class="text-center" (click)="update(element,'delete')">
-                                  <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
-                              </button>
+                                <button mat-icon-button (click)="update(element,'add-qty')" class="btn-border col-3">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                </button>
+                            </div>
+                            <div class="button-row text-center">
+                                Quantity
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="button-row float-right col-12">
+                                <button mat-icon-button class="text-center" (click)="update(element,'delete')">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
+                                </button>
 
                             </div>
                             <div class="button-row float-right col-12"><span class="text-center">&nbsp;&nbsp;&nbsp;&nbsp;Delete</span>
@@ -85,8 +91,8 @@
 
         <div class="row grid-divider">
             <div class="col-6">
-              <h6 class="col-12">TOTAL ITEMS:{{data.length}}</h6>
-              <h6 class="col-12">TOTAL DISCOUNT:{{total('total_discount')}}</h6>
+                <h6 class="col-12">TOTAL ITEMS:{{data.length}}</h6>
+                <h6 class="col-12">TOTAL DISCOUNT:{{total('total_discount')}}</h6>
             </div>
 
             <div class="col-6">
@@ -94,10 +100,12 @@
                 <h6 class="col-12">DUE:{{total('total_amount')}}</h6>
                 <h6 class="col-12">TAX:{{total('total_tax')}}</h6>
 
-              </div>
+            </div>
 
-           </div>
-
-           <button (click)="pay()" type="button" mat-button class="cancel-button" trans><mat-icon>pay</mat-icon> Pay</button>
         </div>
-  </div>
+
+        <button (click)="pay()" type="button" mat-button class="cancel-button" trans>
+            <mat-icon>pay</mat-icon> Pay
+        </button>
+    </div>
+</div>

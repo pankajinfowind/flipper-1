@@ -11,41 +11,30 @@ import { Pay } from '../pay';
   templateUrl: './pay.component.html',
   styleUrls: ['./pay.component.scss']
 })
-export class PayComponent implements OnInit {
-  pay$: Observable<Pay>;
-  pos$: Observable<Pos>;
-  panelOpenState = false;
-  constructor(private orderItemModelService:OrderItemsModelService,private orderModelService:OrderModelService,private posModelService:PosModelService) { }
+export class PayComponent {
+  // pay$: Observable<Pay>;
+  // pos$: Observable<Pos>;
+  // panelOpenState = false;
+  // constructor(private orderItemModelService:OrderItemsModelService,private orderModelService:OrderModelService,private posModelService:PosModelService) { }
 
-  ngOnInit() {
-    this.pos$ = this.posModelService.pos$;
-    this.pay$ = this.orderModelService.pay$;
+  // ngOnInit() {
+  //   this.pos$ = this.posModelService.pos$;
+  //   this.pay$ = this.orderModelService.pay$;
 
-  }
-  updatePosLayout(panel='home'){
-    this.posModelService.update({panel_content:panel});
-  }
-  total(data){
-    var total=0;
-      if(data.length > 0){
-          for ( var i = 0, _len = data.length; i < _len; i++ ) {
-            total += data[i]['total_amount'];
-          }
-      }
+  // }
+  // updatePosLayout(panel='home'){
+  //   this.posModelService.update({panel_content:panel});
+  // }
+  // total(data){
+  //   var total=0;
+  //     if(data.length > 0){
+  //         for ( var i = 0, _len = data.length; i < _len; i++ ) {
+  //           total += data[i]['total_amount'];
+  //         }
+  //     }
 
-      return total;
+  //     return total;
 
-    }
-    // orderedItem(order_id){
-    //   const ordered_item=[];
-    //    this.order_items$.forEach(orders=>{
-    //      orders.filter(o=>{
-    //           if(o.order_id==order_id){
-    //             ordered_item.push(o);
-    //           }
-    //      }
-    //      );
-    //   });
-    //   return ordered_item;
-    // }
+  //   }
+
 }

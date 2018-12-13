@@ -25,24 +25,24 @@ export class SalePointComponent implements OnInit {
   currently_stocks: Stock[] = [];
   stocks$: Observable<Stock[]>;
   pos$: Observable<Pos>;
-  is_order_currently=false;
-  current_order=null;
-  ordered_items=[];
+  is_order_currently = false;
+  current_order = null;
+  ordered_items = [];
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
-  constructor(private orderItemModelService:OrderItemsModelService,private orderModelService:OrderModelService,private api:ApiPosService,private posModelService:PosModelService,private modelService:StockModelService,private msterModelService:MasterModelService) { }
-  category_selected:Category;
-  is_categry_clicked=false;
+  constructor(private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
+  category_selected: Category;
+  is_categry_clicked = false;
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
 
   this.stocks$ = this.modelService.stocks$;
 
-  this.pos$ = this.posModelService.pos$;
+    this.pos$ = this.posModelService.pos$;
 
-  this.order$ = this.orderModelService.order$;
+    this.order$ = this.orderModelService.order$;
 
-  this.order_items$=this.orderItemModelService.order_items$;
+    this.order_items$ = this.orderItemModelService.order_items$;
 
       this.getCurrentOrder();
       this.getCategories();
@@ -80,15 +80,15 @@ export class SalePointComponent implements OnInit {
   updatePosLayout(panel='home'){
     this.posModelService.update({panel_content:panel});
   }
-  homeDir(){
-    this.is_categry_clicked=!this.is_categry_clicked;
+  homeDir() {
+    this.is_categry_clicked = !this.is_categry_clicked;
     this.updatePosLayout('home');
   }
 
-  getCurrentOrder(){
-    this.pos$.subscribe(res=>{
-      if(res){
-        this.current_order=res.currently_ordered;
+  getCurrentOrder() {
+    this.pos$.subscribe(res => {
+      if (res) {
+        this.current_order = res.currently_ordered;
         return;
       }
     });
@@ -97,36 +97,38 @@ export class SalePointComponent implements OnInit {
 
 
 
-  addItemToCart(stock){
+  addItemToCart(stock) {
     this.getCurrentOrder();
 
-       if(this.is_categry_clicked){
-      if(stock.available_stock_qty === 0){
-      alert("Stock Quantity is unavailable");
-      }else{
-        const cart_data:OrderItems={total_amount:0,note:null,discount:0,tax:18,total_discount:0,total_tax:0,available_qty:stock.available_stock_qty, id:stock.id,item:stock.name,order_id:this.current_order?this.current_order.id:0,stock_id:stock.stock_id,each:'',price:stock.item.unit_sale,currency:stock.item.currency,
-        qty:1,total:''};
-        cart_data.total=cart_data.currency +' ' + (cart_data.qty*cart_data.price);
+    if (this.is_categry_clicked) {
+      if (stock.available_stock_qty === 0) {
+        alert("Stock Quantity is unavailable");
+      } else {
+        const cart_data: OrderItems = {
+          total_amount: 0, note: null, discount: 0, tax: 18, total_discount: 0, total_tax: 0, available_qty: stock.available_stock_qty, id: stock.id, item: stock.name, order_id: this.current_order ? this.current_order.id : 0, stock_id: stock.stock_id, each: '', price: stock.item.unit_sale, currency: stock.item.currency,
+          qty: 1, total: ''
+        };
+        cart_data.total = cart_data.currency + ' ' + (cart_data.qty * cart_data.price);
 
-        cart_data.total_amount=(cart_data.qty*cart_data.price);
+        cart_data.total_amount = (cart_data.qty * cart_data.price);
 
-        cart_data.each=cart_data.currency +' ' + stock.item.unit_sale;
+        cart_data.each = cart_data.currency + ' ' + stock.item.unit_sale;
 
-        cart_data.total_tax=this.orderItemModelService.calcalTax(cart_data);
+        cart_data.total_tax = this.orderItemModelService.calcalTax(cart_data);
 
-        cart_data.total_discount=this.orderItemModelService.calculateDiscount(cart_data);
+        cart_data.total_discount = this.orderItemModelService.calculateDiscount(cart_data);
 
-          if(this.current_order){
-            this.updateCartItemModel(cart_data);
-          }else{
-             this.createNewOrder({status:'pending',user_id:2,business_id:14,cart_data:cart_data});
-          }
+        if (this.current_order) {
+          this.updateCartItemModel(cart_data);
+        } else {
+          this.createNewOrder({ status: 'pending', user_id: 2, business_id: 14, cart_data: cart_data });
+        }
       }
 
-     }
+    }
   }
 
-  updateCartItemModel(cart_data){
+  updateCartItemModel(cart_data) {
     this.orderItemModelService.update(cart_data);
     this.findCartItemModelChanged(cart_data);
   }
@@ -134,34 +136,34 @@ export class SalePointComponent implements OnInit {
 findCartItemModelChanged(cart_data){
   this.order_items$.subscribe(ordered=>{
     if(ordered){
-      const check_ordered=ordered.filter(order_item=>order_item.order_id===cart_data.order_id && order_item.stock_id===cart_data.stock_id);
-      if(check_ordered.length > 0){
-        this. updateOrderItemApi(check_ordered[0]);
+        const check_ordered=ordered.filter(order_item=>order_item.order_id===cart_data.order_id && order_item.stock_id===cart_data.stock_id);
+        if(check_ordered.length > 0){
+          this. updateOrderItemApi(check_ordered[0]);
+        }
       }
-    }
-  });
-}
-  updateOrderItemApi(params){
+    });
+  }
+  updateOrderItemApi(params) {
     this.api.updateOrderItem(params).subscribe(
       res => {
         console.log(res)
       },
       _error => {
-      console.error(_error);
+        console.error(_error);
       }
     );
   }
-  createNewOrder(params){
-    this.posModelService.update({loading:true});
-    this.api.createOrder(params).pipe(finalize(() =>  this.posModelService.update({loading:false}) )).subscribe(
+  createNewOrder(params) {
+    this.posModelService.update({ loading: true });
+    this.api.createOrder(params).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
       res => {
-        if(res['order']){
-          this.posModelService.update({currently_ordered:res['order']})
+        if (res['order']) {
+          this.posModelService.update({ currently_ordered: res['order'] })
           this.updateOrderItemApi(res['order']['order_items']);
         }
       },
       _error => {
-      console.error(_error);
+        console.error(_error);
       }
     );
   }
@@ -172,7 +174,7 @@ findCartItemModelChanged(cart_data){
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
-    return color=='#ffffff' || color == '#303f9f'?this.getRandomColor():color;
+    return color == '#ffffff' || color == '#303f9f' ? this.getRandomColor() : color;
   }
   //[style.color]="'#ffff'" [style.background-color]="getRandomColor()"
   categoriesClicked(category){

@@ -34,7 +34,6 @@ export class Bootstrapper {
     this.settings = this.injector.get(Settings);
     this.user = this.injector.get(CurrentUser);
   }
-
   /**
    * Bootstrap application with data returned from server.
    */
@@ -63,15 +62,13 @@ export class Bootstrapper {
         .pipe(finalize(() => this.posModelService.update({ loading: false })))
         .subscribe(
           res => {
-            console.log(res);
             this.orderModelService.update({ orders: res["orders"] });
 
             resolve();
           },
           error => {
             this.orderModelService.update([]);
-            console.log("bootstrap error", error);
-            reject();
+            // reject();
           }
         );
     });

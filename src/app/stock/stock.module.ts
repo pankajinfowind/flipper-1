@@ -21,10 +21,14 @@ import { StockModelService } from './stock-model.service';
 import { StockModelModule } from './stock-model/stock-model.module';
 import { DetailsModule } from '../details/details.module';
 import { CurrentUser } from '../common/auth/current-user';
+import { ReportsModule } from '../reports/reports.module';
+import { ReportManagerComponent } from './report-manager/report-manager.component';
+
+
 
 @NgModule({
   declarations:
-   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockDamagedComponent, StockTableComponent,NoEntryFoundStockComponent],
+   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockDamagedComponent, StockTableComponent,NoEntryFoundStockComponent, ReportManagerComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -33,7 +37,8 @@ import { CurrentUser } from '../common/auth/current-user';
     StockRoutingModule,
     UiModule,
     StockModelModule,
-    DetailsModule
+    DetailsModule,
+    ReportsModule
   ],
   exports:
   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,NoEntryFoundStockComponent]

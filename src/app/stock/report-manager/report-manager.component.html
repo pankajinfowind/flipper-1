@@ -1,0 +1,22 @@
+<div class="row" style="margin-left: 15px;">
+    <div class="col-4">
+    <mat-form-field>
+        <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Sales</mat-option>
+        </mat-select>
+    </mat-form-field>
+    </div>
+    <div class="col-4">
+    <mat-form-field>
+        <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Sales</mat-option>
+        </mat-select>
+    </mat-form-field>
+    </div>
+
+</div>
+<div class="col-12">
+    <app-report-manager [reportType]="reportType"></app-report-manager>
+</div>

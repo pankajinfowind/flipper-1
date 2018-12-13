@@ -43,7 +43,6 @@ describe("CartItemComponent", () => {
         { provide: PosModelService, useValue: posmodelMockService },
         { provide: OrderItemsModelService, useValue: orderItemMockService }
       ]
-      // schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
   beforeEach(() => {
@@ -65,5 +64,10 @@ describe("CartItemComponent", () => {
       expect(cust).toEqual(customer);
     });
     expect(customerMockService.getCustomers).toHaveBeenCalled();
+  });
+  it("should update item with status", () => {
+    // spyOn(comp, 'onSelect');
+    // el = fixture.debugElement.query(By.css('li')).nativeElement.click();
+    // expect(comp.onSelect).toHaveBeenCalled();
   });
 });

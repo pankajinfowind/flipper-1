@@ -7,7 +7,6 @@ import { RedirectComponent } from "./redirect/redirect.component";
 import { NewBusinessComponent } from "./business/new-business/new-business.component";
 
 const routes: Routes = [
-
     {path: '', pathMatch: 'full', component: RedirectComponent, canActivate: [AuthGuard]},
     {path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
     {path: 'customer', component: NewBusinessComponent, canActivate: [AuthGuard]},

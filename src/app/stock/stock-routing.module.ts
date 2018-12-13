@@ -6,6 +6,7 @@ import { NewStockComponent } from './new-stock/new-stock.component';
 import { StockSoldOutComponent } from './stock-sold-out/stock-sold-out.component';
 import { StockDamagedComponent } from './stock-damaged/stock-damaged.component';
 import { StockComponent } from './stock.component';
+import {ReportManagerComponent} from "./report-manager/report-manager.component";
 
 const stockRoutes: Routes = [
     {
@@ -21,8 +22,8 @@ const stockRoutes: Routes = [
             { path: 'available', component: AvailabeStockComponent},
             { path: 'new', component: NewStockComponent},
             { path: 'stockout', component: StockSoldOutComponent},
-            { path: 'damaged', component: StockDamagedComponent}
-
+            { path: 'damaged', component: StockDamagedComponent},
+            { path: 'report', component: ReportManagerComponent}
         ]
 
     }

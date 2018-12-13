@@ -30,6 +30,6 @@ export class PosModelService {
     const newModel = { ...modelSnapshot, ...stateUpdates };
     // set new model data (after mutation)
     this.model.set(newModel);
-    console.log('am here booss',this.model.get());
+    // console.log('am here booss',this.model.get());
   }
 }

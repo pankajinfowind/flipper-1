@@ -23,6 +23,7 @@ import { ravenErrorHandlerFactory } from "../common/core/errors/raven-error-hand
 import { CustomerService } from "../customers/customer.service";
 import { HttpClient } from "@angular/common/http";
 import { ModelFactory } from "ngx-model";
+import { OrdersModule } from '../orders/orders.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { ModelFactory } from "ngx-model";
     CartItemComponent,
     CartDialog
   ],
-  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule],
+  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule,OrdersModule],
   exports: [SessionsComponent, SalePointComponent, PosComponent,CartDialog],
   entryComponents: [CartDialog],
   providers: [ApiPosService, ModelFactory]

@@ -29,7 +29,9 @@ import {
   MatCommonModule,
   MatRadioModule,
   MatTooltipModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTreeModule,
+  MatExpansionModule
 } from "@angular/material";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
@@ -91,9 +93,9 @@ const MATERIAL_MODULES = [
   MatSliderModule,
 
   MatSlideToggleModule,
-
+  MatExpansionModule,
   MatSnackBarModule,
-
+  MatTreeModule,
   MatSortModule,
   MatNativeDateModule,
   MatStepperModule,

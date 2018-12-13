@@ -2,18 +2,18 @@
 export class OrderItems {
   id?:number;
   order_id?:number;
-  order_item?:number;
-  Each?:any;
+  stock_id?:number;
+  each?:any;
   currency?:any;
-  Qty?:number;
-  Total?:any;
+  qty?:number;
+  total?:any;
   price?:number;
   total_discount?:number;
   total_amount?:number;
   total_tax?:number;
   discount?:number;
   available_qty?:number;
-  Item?:string;
+  item?:string;
   tax?:number;
   note?:string;
     constructor(params: Object = {}) {

@@ -7,9 +7,10 @@ export class Pos {
   id?:number;
   loading:boolean;
   choosen_insurance?:Insurance;
-  current_order?:Orders;
+  currently_ordered?:Orders;
   choose_customer?:Customer;
   panel_content?:string;
+
     constructor(params: Object = {}) {
       for (let name in params) {
           this[name] = params[name];

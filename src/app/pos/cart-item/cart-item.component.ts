@@ -15,6 +15,7 @@ import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@a
 import { CustomerService } from "../../customers/customer.service";
 import { Customer } from "../../customers/customer";
 import { Toast } from '../../common/core/ui/toast.service';
+import { ApiPosService } from '../api/api.service';
 
 
 @Component({
@@ -27,11 +28,13 @@ export class CartDialog {
   public loading = new BehaviorSubject(false);
   cart_item:any;
   status:string;
-  constructor(private orderItemModelService: OrderItemsModelService,private toast: Toast,
+  order_items$: Observable<OrderItems[]>;
+  constructor(private api:ApiPosService,private orderItemModelService: OrderItemsModelService,private toast: Toast,
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
       this.cart_item=this.data.data;
       this.status=this.data.status;
+      this.order_items$=this.orderItemModelService.order_items$;
     }
 
 
@@ -39,12 +42,12 @@ export class CartDialog {
     displays(nums){
       if(this.status=='Quantity'){
           if(nums=='x'){
-            this.cart_item.Qty=0;
+            this.cart_item.qty=0;
           }else{
-            if(this.cart_item.Qty+''+nums > this.cart_item.available_qty ){
+            if(this.cart_item.qty+''+nums > this.cart_item.available_qty ){
               alert('Quantity will create a negative stock level');
             }else{
-              this.cart_item.Qty=this.cart_item.Qty==0?nums:this.cart_item.Qty+''+nums;
+              this.cart_item.qty=this.cart_item.qty==0?nums:this.cart_item.qty+''+nums;
             }
           }
         }else{
@@ -60,9 +63,9 @@ export class CartDialog {
       if(sign== '+'){
         //case of puls
         if(this.status=='Quantity'){
-          this.cart_item.Qty+=1;
-          if(this.cart_item.Qty > this.cart_item.available_qty){
-            this.cart_item.Qty-=1;
+          this.cart_item.qty+=1;
+          if(this.cart_item.qty > this.cart_item.available_qty){
+            this.cart_item.qty-=1;
             alert('Quantity will create a negative stock level');
           }
         }else{
@@ -72,9 +75,9 @@ export class CartDialog {
       }else{
         // case of minus
             if(this.status=='Quantity'){
-            this.cart_item.Qty-=1;
-            if(this.cart_item.Qty < 0){
-              this.cart_item.Qty+=1;
+            this.cart_item.qty-=1;
+            if(this.cart_item.qty < 0){
+              this.cart_item.qty+=1;
               alert('Quantity must be greater than 0');
             }
           }else{
@@ -85,11 +88,31 @@ export class CartDialog {
 
     update(cart_item,status){
       cart_item.discount=parseInt(cart_item.discount);
-      cart_item.Qty=parseInt(cart_item.Qty);
+      cart_item.qty=parseInt(cart_item.qty);
       const cart=cart_item;
-      return this.orderItemModelService.update(cart,status);
+       this.orderItemModelService.update(cart,status);
+       return this.findCartItemModelChanged(cart);
    }
-
+   findCartItemModelChanged(cart_data){
+    this.order_items$.subscribe(ordered=>{
+      if(ordered){
+        const check_ordered=ordered.filter(order_item=>order_item.order_id===cart_data.order_id && order_item.stock_id===cart_data.stock_id);
+        if(check_ordered.length > 0){
+          this. updateOrderItemApi(check_ordered[0]);
+        }
+      }
+    });
+  }
+    updateOrderItemApi(params){
+      this.api.updateOrderItem(params).subscribe(
+        res => {
+          console.log(res)
+        },
+        _error => {
+        console.error(_error);
+        }
+      );
+    }
   close(): void {
     this.dialogRef.close({status:'none'});
   }
@@ -120,22 +143,27 @@ export class CartItemComponent implements OnInit {
   all_total={num_item:0,total_tax:0,total_amount:0,total_due:0,total_discount:0};
   dataSource = new MatTableDataSource<OrderItems>([]);
   constructor(
+    private api:ApiPosService,
     private orderItemModelService: OrderItemsModelService,
     private posModelService: PosModelService,
     private customer: CustomerService,
     public dialog: MatDialog
   ) { }
-  columnsToDisplay = ["Item", "Qty", "Each", "Total"];
+  columnsToDisplay = ["item", "qty", "each", "total"];
   expandedElement: OrderItems | null;
 
   getCartItem() {
     if (this.order_items$) {
       this.order_items$.subscribe(res => {
-        this.data = res;
-        this.dataSource.data = this.data;
-        this.expandedElement = this.data
-          ? this.data[this.data.length - 1]
-          : null;
+        if(res){
+          console.log('response',res);
+          this.data = res;
+          this.dataSource.data = this.data;
+          this.expandedElement = this.data
+            ? this.data[this.data.length - 1]
+            : null;
+        }
+
       });
 
     }
@@ -160,9 +188,23 @@ export class CartItemComponent implements OnInit {
     this.posModelService.update({panel_content:panel});
   }
 
+
+  pay(){
+
+  }
+
   update(element,status){
+    if(status=='delete'){
+        this.deleteOrderedItem(element.id);
+    }
      return this.orderItemModelService.update(element,status);
+
      //return this.expandedElement = element;
+  }
+  deleteOrderedItem(id){
+    this.api.deleteOrderedItem(id).subscribe(deleted=>{
+      //console.log(deleted);
+    });
   }
 
   cartDialog(element,status): void {

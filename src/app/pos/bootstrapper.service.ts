@@ -6,10 +6,11 @@ import { CurrentUser } from "../common/auth/current-user";
 import { Settings } from "../common/core/config/settings.service";
 import { ApiPosService } from "./api/api.service";
 import { PosModelService } from "./pos-model.service";
-import { OrderModelService } from "./orders/order-model.service";
-import { Orders } from "./orders/orders";
 import { AppConfig } from "../../environments/environment";
 import { API_ROUTES } from "./api/api-routes.enum";
+import { OrderModelService } from '../orders/order-model.service';
+import { Orders } from '../orders/orders';
+import { OrderItemsModelService } from './cart/order-item-model.service';
 
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
@@ -23,6 +24,7 @@ export class Bootstrapper {
   protected apiPos: ApiPosService;
   protected posModelService: PosModelService;
   protected orderModelService: OrderModelService;
+  protected orderItemModelService: OrderItemsModelService
   constructor(protected injector: Injector) {
     this.http = this.injector.get(HttpClient);
 
@@ -30,7 +32,7 @@ export class Bootstrapper {
 
     this.posModelService = this.injector.get(PosModelService);
     this.orderModelService = this.injector.get(OrderModelService);
-
+    this.orderItemModelService = this.injector.get(OrderItemsModelService);
     this.settings = this.injector.get(Settings);
     this.user = this.injector.get(CurrentUser);
   }
@@ -49,7 +51,7 @@ export class Bootstrapper {
   /**
    * Handle specified bootstrap data.
    */
-  protected orders(): Promise<Orders> {
+  protected orders(): Promise<Orders[]> {
     let url;
     if (this.settings.getBaseUrl() != "http://localhost:4200/") {
       url = AppConfig.url + "secure/" + API_ROUTES.ORDER;
@@ -63,8 +65,17 @@ export class Bootstrapper {
         .pipe(finalize(() => this.posModelService.update({ loading: false })))
         .subscribe(
           res => {
-            this.posModelService.update({ loading: false,current_order:res['orders']?res['orders'].filter(item=>item.status==='pending')[0]:null,choosen_insurance:null,choose_customer:null,panel_content:'home'});
-                this.orderModelService.update({orders: res["orders"]?res['orders']:null});
+            if(res['status']=='success'){
+              const order=res['orders'].length > 0?res['orders'].filter(order=>order.is_currently_processing==='1')[0]:null;
+              this.posModelService.update({ loading: false,currently_ordered:order?order:null,choosen_insurance:null,choose_customer:null,panel_content:'home'});
+              this.orderModelService.update({orders: res["orders"].length > 0?res['orders']:[]});
+              if(order){
+                this.orderItemModelService.update(order['order_items'],'all');
+              }
+
+
+            }
+
             resolve();
           },
           error => {

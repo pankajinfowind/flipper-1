@@ -2,7 +2,7 @@
     <mat-toolbar-row class="header">
       <div class="col-8">
 
-        <button mat-button class="text-center text-uppercase"(click)="updatePosLayout();is_categry_clicked=!is_categry_clicked">HOME</button>
+        <button mat-button class="text-center text-uppercase"(click)="homeDir()">HOME</button>
 
             <mat-icon class="mat-icon" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'">  chevron_right </mat-icon>
               <button mat-button class="text-uppercase" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'">
@@ -44,27 +44,19 @@
 </div>
 </div>
 
-<div *ngIf="(pos$ | async).panel_content=='customers'">
-  customer
 
-</div>
-<mat-card *ngIf="(pos$ | async).panel_content=='orders'" class="mt-2 mb-2 mr-5 ml-5 panel-center">
-    <div class="modal-header">
-        <h2 mat-dialog-title trans>Orders</h2>
-        <button type="button" mat-icon-button (click)="updatePosLayout()" class="close-button" tabindex="-1">
-            <mat-icon>close</mat-icon>
-        </button>
+<mat-card class="m-4 panel-center" *ngIf="(pos$ | async).panel_content!=='home'">
+    <div *ngIf="(pos$ | async).panel_content=='customers'">
+        customer
+
+      </div>
+    <app-orders *ngIf="(pos$ | async).panel_content=='orders'"></app-orders>
+    <div *ngIf="(pos$ | async).panel_content=='insurances'">
+        insurances
     </div>
+</mat-card>
 
-        <mat-dialog-content class="many-inputs">
-          hello
-        </mat-dialog-content>
 
-  </mat-card>
-
-  <div *ngIf="(pos$ | async).panel_content=='insurances'">
-      insurances
-    </div>
 <!-- <div *ngIf="is_categry_clicked  && currently_stocks.length == 0">
   no stock could found
 </div> -->

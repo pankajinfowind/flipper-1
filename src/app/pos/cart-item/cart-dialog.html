@@ -10,10 +10,10 @@
         <div class="row">
 
           <div class="col-7">
-            <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('+')">+</button>
-            <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('-')">-</button>
+            <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('+')"><mat-icon>add</mat-icon></button>
+            <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('-')"><mat-icon>remove</mat-icon></button>
           </div>
-            <div class="col-5 text-right" style="font-size:25px;font-weight: 500">{{cart_item.Qty}}</div>
+            <div class="col-5 text-right" style="font-size:25px;font-weight: 500">{{cart_item.qty}}</div>
         </div>
         <br />
             <mat-grid-list cols="3" rowHeight="3:2">
@@ -31,19 +31,24 @@
 
                 <mat-grid-tile (click)="displays('.')">.</mat-grid-tile>
                 <mat-grid-tile (click)="displays('0')">0</mat-grid-tile>
-                <mat-grid-tile (click)="displays('x')">X</mat-grid-tile>
+                <mat-grid-tile (click)="displays('x')"><mat-icon>backspace</mat-icon></mat-grid-tile>
               </mat-grid-list>
 
       </mat-dialog-content>
 
+      <mat-dialog-content class="many-inputs" *ngIf="status=='Note'">
+          <mat-form-field>
+              <textarea class="col-12" matInput placeholder="Write note!" (input)="cart_item.note=$event.target.value"></textarea>
+            </mat-form-field>
+      </mat-dialog-content>
 
       <mat-dialog-content class="many-inputs" *ngIf="status=='Discount'">
           <br />
           <div class="row">
 
             <div class="col-7">
-              <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('+')">+</button>
-              <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('-')">-</button>
+              <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('+')"><mat-icon>add</mat-icon></button>
+              <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increseDescrise('-')"><mat-icon>remove</mat-icon></button>
             </div>
               <div class="col-5 text-right" style="font-size:25px;font-weight: 500">{{cart_item.discount}} % </div>
           </div>
@@ -63,7 +68,7 @@
 
                   <mat-grid-tile (click)="displays('.')">.</mat-grid-tile>
                   <mat-grid-tile (click)="displays('0')">0</mat-grid-tile>
-                  <mat-grid-tile (click)="displays('x')">X</mat-grid-tile>
+                  <mat-grid-tile (click)="displays('x')"><mat-icon>backspace</mat-icon></mat-grid-tile>
                 </mat-grid-list>
 
         </mat-dialog-content>
@@ -74,4 +79,5 @@
         <button (click)="close()" type="button" mat-button class="cancel-button" trans [disabled]="loading | async">Cancel</button>
         <button type="button" (click)="update(cart_item,'update-qty')" *ngIf="status=='Quantity'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
         <button type="button" (click)="update(cart_item,'discount')" *ngIf="status=='Discount'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
+        <button type="button" (click)="update(cart_item,'note')" *ngIf="status=='Note'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
     </mat-dialog-actions>

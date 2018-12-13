@@ -34,7 +34,6 @@ before_script:
   # - cd ../../
   # removed this: -e clientId=${clientId} \
   # -e clientSecret=${clientSecret} \ bellow
-
 script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then

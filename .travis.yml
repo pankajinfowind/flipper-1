@@ -19,24 +19,24 @@ matrix:
       sudo: required
       services: docker
       language: generic
-
+      
 cache:
   yarn: true
   directories:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
-addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
-install:
-  - npm install
-before_script:
-  - npm run test
-  - npm run mocha
+# addons:
+#   apt:
+#     sources:
+#       - google-chrome
+#     packages:
+#       - google-chrome-stable
+# install:
+#   - npm install
+# before_script:
+#   - npm run test
+#   - npm run mocha
 script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then

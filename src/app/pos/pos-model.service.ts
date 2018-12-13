@@ -10,11 +10,11 @@ export class PosModelService {
   pos$: Observable<Pos>;
   private model: Model<Pos>;
   constructor(private modelFactory: ModelFactory<Pos>) {
-    this.create();
+    this.create([]);
     this.pos$ = this.model.data$;
   }
 
-  public create(stateCreation: Pos = { loading: false }) {
+  public create(stateCreation) {
     this.model = this.modelFactory.create(stateCreation);
   }
 
@@ -25,10 +25,11 @@ export class PosModelService {
   update(stateUpdates: any) {
     // retrieve raw model data
     const modelSnapshot = this.model.get();
-    // mutate model data
+    // // mutate model data
+    // console.log('am here booss',stateUpdates);
     const newModel = { ...modelSnapshot, ...stateUpdates };
     // set new model data (after mutation)
     this.model.set(newModel);
-    //console.log('am here booss',this.model.get());
+    // console.log('am here booss',this.model.get());
   }
 }

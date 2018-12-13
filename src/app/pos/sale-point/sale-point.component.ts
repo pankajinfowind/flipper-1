@@ -6,13 +6,13 @@ import { Category } from '../../admin/master/categories/api/category';
 import { Stock } from '../../stock/api/stock';
 import { StockModelService } from '../../stock/stock-model.service';
 import { Pos } from '../pos';
-import { OrderModelService } from '../orders/order-model.service';
 import { ApiPosService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { PosModelService } from '../pos-model.service';
-import { Orders } from '../orders/orders';
 import { OrderItemsModelService } from '../cart/order-item-model.service';
 import { OrderItems } from '../cart/order_items';
+import { OrderModelService } from '../../orders/order-model.service';
+import { Orders } from '../../orders/orders';
 
 @Component({
   selector: 'app-sale-point',
@@ -25,91 +25,121 @@ export class SalePointComponent implements OnInit {
   currently_stocks: Stock[] = [];
   stocks$: Observable<Stock[]>;
   pos$: Observable<Pos>;
-  is_order_currently=false;
-  current_order=null;
-  ordered_items=[];
+  is_order_currently = false;
+  current_order = null;
+  ordered_items = [];
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
-  constructor(private orderItemModelService:OrderItemsModelService,private orderModelService:OrderModelService,private api:ApiPosService,private posModelService:PosModelService,private modelService:StockModelService,private msterModelService:MasterModelService) { }
-  category_selected:Category;
-  is_categry_clicked=false;
+  constructor(private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
+  category_selected: Category;
+  is_categry_clicked = false;
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
 
-    this.master$.subscribe(res=>{
-      if(res.categories.length  > 0){
-        this.categories=res.categories;
+    this.master$.subscribe(res => {
+      if (res.categories.length > 0) {
+        this.categories = res.categories;
       }
-  });
+    });
 
-  this.stocks$ = this.modelService.stocks$;
+    this.stocks$ = this.modelService.stocks$;
 
-  this.pos$ = this.posModelService.pos$;
+    this.pos$ = this.posModelService.pos$;
 
-  this.order$ = this.orderModelService.order$;
+    this.order$ = this.orderModelService.order$;
 
-  this.order_items$=this.orderItemModelService.order_items$;
+    this.order_items$ = this.orderItemModelService.order_items$;
 
-      this.getCurrentOrder();
-
-  }
-
-  getCurrentOrder(){
-    this.order$.subscribe(res=>{
-      if(res['orders'] !=undefined || null){
-        this.current_order=res['orders'].filter(item=>item.status==='pending');
-      }
-
- });
-  }
-
-  getCartItem(){
-    this.order_items$.subscribe(res=>{
-      console.log(res);
-      if(res['order_items'] !=undefined || null){
-       console.log(res);
-      }
-
- });
-  }
-
-
-  addItemToCart(stock){
     this.getCurrentOrder();
-      if(this.is_categry_clicked){
-      if(stock.available_stock_qty === 0){
-      alert("Stock Quantity is unavailable");
-      }else{
 
-          if(this.current_order!==undefined || null){
-            this.updateCartItem(stock);
-            //console.log(this.current_order);
-          }else{
+  }
 
-          }
+  updatePosLayout(panel = 'home') {
+    this.posModelService.update({ panel_content: panel });
+  }
+  homeDir() {
+    this.is_categry_clicked = !this.is_categry_clicked;
+    this.updatePosLayout('home');
+  }
+
+  getCurrentOrder() {
+    this.pos$.subscribe(res => {
+      if (res) {
+        this.current_order = res.currently_ordered;
+        return;
+      }
+    });
+  }
+
+
+
+
+  addItemToCart(stock) {
+    this.getCurrentOrder();
+
+    if (this.is_categry_clicked) {
+      if (stock.available_stock_qty === 0) {
+        alert("Stock Quantity is unavailable");
+      } else {
+        const cart_data: OrderItems = {
+          total_amount: 0, note: null, discount: 0, tax: 18, total_discount: 0, total_tax: 0, available_qty: stock.available_stock_qty, id: stock.id, item: stock.name, order_id: this.current_order ? this.current_order.id : 0, stock_id: stock.stock_id, each: '', price: stock.item.unit_sale, currency: stock.item.currency,
+          qty: 1, total: ''
+        };
+        cart_data.total = cart_data.currency + ' ' + (cart_data.qty * cart_data.price);
+
+        cart_data.total_amount = (cart_data.qty * cart_data.price);
+
+        cart_data.each = cart_data.currency + ' ' + stock.item.unit_sale;
+
+        cart_data.total_tax = this.orderItemModelService.calcalTax(cart_data);
+
+        cart_data.total_discount = this.orderItemModelService.calculateDiscount(cart_data);
+
+        if (this.current_order) {
+          this.updateCartItemModel(cart_data);
+        } else {
+          this.createNewOrder({ status: 'pending', user_id: 2, business_id: 14, cart_data: cart_data });
+        }
       }
 
     }
   }
 
-  updateCartItem(stock){
-    const cart_data={available_qty:stock.available_stock_qty, id:stock.stock_id,Item:stock.name,order_id:this.current_order.id,order_item:stock.stock_id,Each:'',price:stock.item.unit_sale,currency:stock.item.currency,
-      Qty:1,Total:''};
-      cart_data.Total=cart_data.currency +' ' + (cart_data.Qty*cart_data.price);
-      cart_data.Each=cart_data.currency +' ' + stock.item.unit_sale;
+  updateCartItemModel(cart_data) {
     this.orderItemModelService.update(cart_data);
-
-this.getCartItem();
+    this.findCartItemModelChanged(cart_data);
   }
-
-  createNewOrder(params){
-    this.posModelService.update({loading:true});
-    this.api.createOrder(params).pipe(finalize(() =>  this.posModelService.update({loading:false}) )).subscribe(
+  findCartItemModelChanged(cart_data) {
+    this.order_items$.subscribe(ordered => {
+      if (ordered) {
+        const check_ordered = ordered.filter(order_item => order_item.order_id === cart_data.order_id && order_item.stock_id === cart_data.stock_id);
+        if (check_ordered.length > 0) {
+          this.updateOrderItemApi(check_ordered[0]);
+        }
+      }
+    });
+  }
+  updateOrderItemApi(params) {
+    this.api.updateOrderItem(params).subscribe(
       res => {
-        this.orderModelService.update(res['orders'])
+        console.log(res)
       },
       _error => {
-      console.error(_error);
+        console.error(_error);
+      }
+    );
+  }
+  createNewOrder(params) {
+    this.posModelService.update({ loading: true });
+    this.api.createOrder(params).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
+      res => {
+        if (res['order']) {
+          this.posModelService.update({ currently_ordered: res['order'] })
+          this.updateOrderItemApi(res['order']['order_items']);
+        }
+      },
+      _error => {
+        console.error(_error);
       }
     );
   }
@@ -120,19 +150,26 @@ this.getCartItem();
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
-    return color=='#ffffff' || color == '#303f9f'?this.getRandomColor():color;
+    return color == '#ffffff' || color == '#303f9f' ? this.getRandomColor() : color;
   }
   //[style.color]="'#ffff'" [style.background-color]="getRandomColor()"
-  categoriesClicked(category){
-    this.category_selected=category;
-    this.is_categry_clicked=true;
-      if(this.is_categry_clicked){
-        this.stocks$.subscribe(res=>{
-          if(res['available']){
-            this.currently_stocks=res['available'].filter(stock=>stock['category']['id']===this.category_selected.category_id);
-          }
+  categoriesClicked(category) {
+    this.category_selected = category;
+    this.is_categry_clicked = true;
+    if (this.is_categry_clicked) {
+      this.stocks$.subscribe(res => {
 
-        });
-      }
+        if (res['available']) {
+
+          this.currently_stocks = res['available'].filter(stock => stock['category_id'] === category.category_id);
+          console.log('wwww', res['available'].filter(stock => stock['category_id'] === category.category_id));
+        }
+
+      });
+    }
   }
 }
+
+
+
+

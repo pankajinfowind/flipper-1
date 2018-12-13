@@ -15,7 +15,7 @@ function windowStateKeeper(windowName) {
         windowState = {
             x: undefined,
             y: undefined,
-            width: 1100,
+            width: 1000,
             height: 800,
         };
     }

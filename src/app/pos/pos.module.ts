@@ -13,7 +13,7 @@ import { PosRoutingModule } from "./pos-routing.module";
 import { UiModule } from "../common/core/ui/ui.module";
 
 import { MasterModule } from "../admin/master/master/master.module";
-import { CartItemComponent } from "./cart-item/cart-item.component";
+import { CartItemComponent, CartDialog } from "./cart-item/cart-item.component";
 import { ApiPosService } from "./api/api.service";
 import { CurrentUser } from "../common/auth/current-user";
 import { Bootstrapper, init_app } from "./bootstrapper.service";
@@ -23,16 +23,19 @@ import { ravenErrorHandlerFactory } from "../common/core/errors/raven-error-hand
 import { CustomerService } from "../customers/customer.service";
 import { HttpClient } from "@angular/common/http";
 import { ModelFactory } from "ngx-model";
+import { OrdersModule } from '../orders/orders.module';
 
 @NgModule({
   declarations: [
     SalePointComponent,
     SessionsComponent,
     PosComponent,
-    CartItemComponent
+    CartItemComponent,
+    CartDialog
   ],
-  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule],
-  exports: [SessionsComponent, SalePointComponent, PosComponent],
+  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule,OrdersModule],
+  exports: [SessionsComponent, SalePointComponent, PosComponent,CartDialog],
+  entryComponents: [CartDialog],
   providers: [ApiPosService, ModelFactory]
 })
 export class PosModule {

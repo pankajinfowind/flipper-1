@@ -19,7 +19,6 @@ matrix:
       sudo: required
       services: docker
       language: generic
-      
 cache:
   yarn: true
   directories:

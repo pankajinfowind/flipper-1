@@ -36,7 +36,7 @@ export class SalePointComponent implements OnInit {
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
 
-  this.stocks$ = this.modelService.stocks$;
+    this.stocks$ = this.modelService.stocks$;
 
     this.pos$ = this.posModelService.pos$;
 
@@ -44,42 +44,40 @@ export class SalePointComponent implements OnInit {
 
     this.order_items$ = this.orderItemModelService.order_items$;
 
-      this.getCurrentOrder();
-      this.getCategories();
+    this.getCurrentOrder();
+    this.getCategories();
 
   }
-  getCategories(){
-    this.stocks$.subscribe(res=>{
-      if(res){
-        const cat=this.getRows(res['available']);
-        //TODO: remove duplicate from this Array ASAP.
-        this.categories=this.pushCat(cat);
+  getCategories() {
+    this.stocks$.subscribe(res => {
+      if (res) {
+        this.categories = this.getRows(res['available']);
       }
     });
   }
-  getRows(data){
-    const cat=[];
+  getRows(data) {
+    const cat: Array<any> = [];
     data.forEach(stock => {
-          if(stock['category']){
-            cat.push(stock['category']);
-          }
+      if (stock['category']) {
+        cat.push(stock['category']);
+      }
     });
-  return cat;
+    return cat.filter((v, i) => cat.indexOf(v) === i);
   }
-  pushCat(cat){
-    const cats=[];
-        if(cat.length > 0){
-          for (let i=0; i<cat.length; i++) {
-            if (!cats.includes(cat[i])) {
-              cats.push(cat[i]);
-            }
+  pushCat(cat) {
+    const cats = [];
+    if (cat.length > 0) {
+      for (let i = 0; i < cat.length; i++) {
+        if (!cats.includes(cat[i])) {
+          cats.push(cat[i]);
         }
       }
-  return cats;
+    }
+    return cats;
 
   }
-  updatePosLayout(panel='home'){
-    this.posModelService.update({panel_content:panel});
+  updatePosLayout(panel = 'home') {
+    this.posModelService.update({ panel_content: panel });
   }
   homeDir() {
     this.is_categry_clicked = !this.is_categry_clicked;
@@ -134,12 +132,12 @@ export class SalePointComponent implements OnInit {
     this.findCartItemModelChanged(cart_data);
   }
 
-findCartItemModelChanged(cart_data){
-  this.order_items$.subscribe(ordered=>{
-    if(ordered){
-        const check_ordered=ordered.filter(order_item=>order_item.order_id===cart_data.order_id && order_item.stock_id===cart_data.stock_id);
-        if(check_ordered.length > 0){
-          this. updateOrderItemApi(check_ordered[0]);
+  findCartItemModelChanged(cart_data) {
+    this.order_items$.subscribe(ordered => {
+      if (ordered) {
+        const check_ordered = ordered.filter(order_item => order_item.order_id === cart_data.order_id && order_item.stock_id === cart_data.stock_id);
+        if (check_ordered.length > 0) {
+          this.updateOrderItemApi(check_ordered[0]);
         }
       }
     });
@@ -178,17 +176,17 @@ findCartItemModelChanged(cart_data){
     return color == '#ffffff' || color == '#303f9f' ? this.getRandomColor() : color;
   }
   //[style.color]="'#ffff'" [style.background-color]="getRandomColor()"
-  categoriesClicked(category){
-    this.category_selected=category;
-    this.is_categry_clicked=true;
-      if(this.is_categry_clicked){
-        this.stocks$.subscribe(res=>{
-          if(res['available']){
-            this.currently_stocks=res['available'].filter(stock=>stock['category']['id']===this.category_selected.id);
-          }
+  categoriesClicked(category) {
+    this.category_selected = category;
+    this.is_categry_clicked = true;
+    if (this.is_categry_clicked) {
+      this.stocks$.subscribe(res => {
+        if (res['available']) {
+          this.currently_stocks = res['available'].filter(stock => stock['category']['id'] === this.category_selected.id);
+        }
 
-        });
-      }
+      });
+    }
   }
 }
 

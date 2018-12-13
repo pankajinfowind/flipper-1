@@ -36,12 +36,6 @@ export class SalePointComponent implements OnInit {
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
 
-    this.master$.subscribe(res=>{
-      if(res.categories.length  > 0){
-        this.categories=res.categories;
-      }
-  });
-
   this.stocks$ = this.modelService.stocks$;
 
   this.pos$ = this.posModelService.pos$;
@@ -51,9 +45,38 @@ export class SalePointComponent implements OnInit {
   this.order_items$=this.orderItemModelService.order_items$;
 
       this.getCurrentOrder();
+      this.getCategories();
 
   }
+  getCategories(){
+    this.stocks$.subscribe(res=>{
+      if(res){
+        const cat=this.getRows(res['available']);
+        this.categories=this.pushCat(cat);
+      }
+    });
+  }
+  getRows(data){
+    const cat=[];
+    data.forEach(stock => {
+          if(stock['category']){
+            cat.push(stock['category']);
+          }
+    });
+  return cat;
+  }
+  pushCat(cat){
+    const cats=[];
+        if(cat.length > 0){
+          for (let i=0; i<cat.length; i++) {
+            if (!cats.includes(cat[i])) {
+              cats.push(cat[i]);
+            }
+        }
+      }
+  return cats;
 
+  }
   updatePosLayout(panel='home'){
     this.posModelService.update({panel_content:panel});
   }
@@ -107,6 +130,7 @@ export class SalePointComponent implements OnInit {
     this.orderItemModelService.update(cart_data);
     this.findCartItemModelChanged(cart_data);
   }
+
 findCartItemModelChanged(cart_data){
   this.order_items$.subscribe(ordered=>{
     if(ordered){
@@ -157,7 +181,7 @@ findCartItemModelChanged(cart_data){
       if(this.is_categry_clicked){
         this.stocks$.subscribe(res=>{
           if(res['available']){
-            this.currently_stocks=res['available'].filter(stock=>stock['category']['id']===this.category_selected.category_id);
+            this.currently_stocks=res['available'].filter(stock=>stock['category']['id']===this.category_selected.id);
           }
 
         });

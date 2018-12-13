@@ -52,6 +52,7 @@ export class SalePointComponent implements OnInit {
     this.stocks$.subscribe(res=>{
       if(res){
         const cat=this.getRows(res['available']);
+        //TODO: remove duplicate from this Array ASAP.
         this.categories=this.pushCat(cat);
       }
     });

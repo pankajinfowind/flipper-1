@@ -17,7 +17,7 @@ export class ApiPosService {
     }
 
 
-    public createOrder(params: Orders): BackendResponse<{ data: Item }> {
+    public createOrder(params: Orders): BackendResponse<{ data: Orders }> {
         return this.http.post(API_ROUTES.ORDER, params);
     }
     public updateOrderItem(params: Orders): BackendResponse<{ data: OrderItems }> {
@@ -26,9 +26,9 @@ export class ApiPosService {
   public deleteOrderedItem(id): BackendResponse<{ data: OrderItems }> {
         return this.http.delete(API_ROUTES.DELETEORDEREDITEM+'/'+id);
      }
-//     public update(params: Item,id:number): BackendResponse<{ data: Item }> {
-//       return this.http.put(API_ROUTES.ITEM+'/'+id, params);
-//    }
+    public updateOrder(params: Orders,id:number): BackendResponse<{ data: Orders[] }> {
+      return this.http.put(API_ROUTES.ORDER+'/'+id, params);
+   }
 //    public delete(params:any): BackendResponse<{ data: Item[] }> {
 //     return this.http.post(API_ROUTES.DELETE,params);
 //  }

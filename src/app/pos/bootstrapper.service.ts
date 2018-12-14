@@ -53,9 +53,9 @@ export class Bootstrapper {
   protected orders(): Promise<Orders[]> {
     let url;
     if (this.settings.getBaseUrl() != "http://localhost:4200/") {
-      url = AppConfig.url + "secure/" + API_ROUTES.ORDER;
+      url = AppConfig.url + "secure/" + API_ROUTES.USERORDER;
     } else {
-      url = this.settings.getBaseUrl() + "secure/" + API_ROUTES.ORDER;
+      url = this.settings.getBaseUrl() + "secure/" + API_ROUTES.USERORDER;
     }
     this.posModelService.update({ loading: true });
     return new Promise((resolve, reject) => {

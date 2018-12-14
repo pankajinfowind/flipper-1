@@ -5,6 +5,25 @@
     </button>
 </div>
 
+
+
+<form [formGroup]="insuranceForm" *ngIf="status=='Insurances'" (ngSubmit)="saveOrderInsurence()">
+<mat-dialog-content class="many-inputs">
+  <h6>Choose customer insurance</h6>
+
+  <mat-radio-group *ngIf="insurances.length > 0" formControlName="insurance_id">
+      <mat-radio-button class="col-12"  *ngFor="let opt of insurances" [value]="opt.insurance_id"><b>{{opt.name}}</b></mat-radio-button>
+  </mat-radio-group>
+  <br />
+  <mat-divider></mat-divider>
+</mat-dialog-content>
+  <mat-dialog-actions class="float-right">
+  <button type="submit" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Submit</button>
+  </mat-dialog-actions>
+</form>
+
+
+
     <mat-dialog-content class="many-inputs" *ngIf="status=='Quantity'">
         <br />
         <div class="row">
@@ -37,7 +56,7 @@
       </mat-dialog-content>
 
       <mat-dialog-content class="many-inputs" *ngIf="status=='Note'">
-          <mat-form-field>
+          <mat-form-field class="w-100">
               <textarea class="col-12" matInput placeholder="Write note!" (input)="cart_item.note=$event.target.value"></textarea>
             </mat-form-field>
       </mat-dialog-content>
@@ -72,7 +91,8 @@
                 </mat-grid-list>
 
         </mat-dialog-content>
-<br />
+  <div *ngIf="status!=='Insurances'">
+    <br />
     <mat-divider></mat-divider>
 
     <mat-dialog-actions class="float-right">
@@ -81,3 +101,4 @@
         <button type="button" (click)="update(cart_item,'discount')" *ngIf="status=='Discount'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
         <button type="button" (click)="update(cart_item,'note')" *ngIf="status=='Note'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
     </mat-dialog-actions>
+    </div>

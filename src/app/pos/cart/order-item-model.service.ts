@@ -95,9 +95,6 @@ export class OrderItemsModelService {
     }else{
       return 0;
     }
-
-
-
   }
 calcalTax(item:OrderItems){
  return ((item.qty*item.price)*18)/100;

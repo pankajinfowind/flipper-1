@@ -63,18 +63,18 @@ export class Bootstrapper {
                 .subscribe(
                     res => {
                         if (status == 'available') {
+                            //console.log('stock', res);
                             if (res["stocks"]) {
-                                console.log('urugo', res["stocks"]);
-                                this.modelStockService.update({ loading: false, available: res["stocks"]["data"] });
+                                this.modelStockService.update({ loading: false, available: res["stocks"] });
                             }
 
                         } else if (status == 'stockout') {
                             if (res["stocks"]) {
-                                this.modelStockService.update({ loading: false, stockout: res["stocks"]["data"] });
+                                this.modelStockService.update({ loading: false, stockout: res["stocks"] });
                             }
                         } else if (status == 'damaged') {
                             if (res["stocks"]) {
-                                this.modelStockService.update({ loading: false, damaged: res["stocks"]["data"] });
+                                this.modelStockService.update({ loading: false, damaged: res["stocks"] });
                             }
 
                         }

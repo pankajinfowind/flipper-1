@@ -13,6 +13,7 @@ import { OrderItemsModelService } from '../cart/order-item-model.service';
 import { OrderItems } from '../cart/order_items';
 import { OrderModelService } from '../../orders/order-model.service';
 import { Orders } from '../../orders/orders';
+import { CurrentUser } from '../../common/auth/current-user';
 
 @Component({
   selector: 'app-sale-point',
@@ -30,12 +31,7 @@ export class SalePointComponent implements OnInit {
   ordered_items = [];
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
-  constructor(private orderItemModelService: OrderItemsModelService,
-    private orderModelService: OrderModelService,
-    private api: ApiPosService,
-    private posModelService: PosModelService,
-    private modelService: StockModelService,
-    private msterModelService: MasterModelService) { }
+  constructor(private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
   category_selected: Category;
   is_categry_clicked = false;
   ngOnInit() {
@@ -51,10 +47,10 @@ export class SalePointComponent implements OnInit {
     this.getCategories();
   }
   getCategories() {
-    if (!this.stocks$) return;
+    //if (!this.stocks$) return;
     this.stocks$.subscribe(res => {
       if (res) {
-        console.log('rrr', res);
+        console.log('rrr', res['available']);
         this.categories = this.getRows(res['available']);
       }
     });
@@ -69,19 +65,17 @@ export class SalePointComponent implements OnInit {
     return Object.keys(unique);
   }
   getRows(data: Array<any>) {
-    console.log('called...', data);
     let cat = [];
     if (!data) {
       return [];
     } else {
       data.forEach(stock => {
         if (stock['category']) {
-          cat = [...stock['category']]; // ?
+          cat.push(stock['category']);
         }
       });
-      console.log("jjj", cat);
-      cat = cat.filter((v, i) => cat.indexOf(v) === i); // 
-      return cat; // ?
+      cat = cat.filter((v, i) => cat.indexOf(v) === i);
+      return cat;
     }
 
   }
@@ -101,7 +95,7 @@ export class SalePointComponent implements OnInit {
     this.posModelService.update({ panel_content: panel });
   }
   homeDir() {
-    this.is_categry_clicked = !this.is_categry_clicked;
+    this.is_categry_clicked = false
     this.updatePosLayout('home');
   }
 
@@ -142,7 +136,7 @@ export class SalePointComponent implements OnInit {
         if (this.current_order) {
           this.updateCartItemModel(cart_data);
         } else {
-          this.createNewOrder({ status: 'pending', user_id: 2, business_id: 14, cart_data: cart_data });
+          this.createNewOrder({ status: 'ordered', branch_id: this.currentUser.get('business')[0]['branches'][0]['id'], user_id: this.currentUser.get('id'), business_id: this.currentUser.get('business')[0].id, cart_data: cart_data });
         }
       }
 
@@ -179,8 +173,10 @@ export class SalePointComponent implements OnInit {
     this.api.createOrder(params).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
       res => {
         if (res['order']) {
-          this.posModelService.update({ currently_ordered: res['order'] })
-          this.updateOrderItemApi(res['order']['order_items']);
+          this.posModelService.update({ currently_ordered: res['order'] });
+          console.log(res['order']['order_items'][0]);
+          this.orderItemModelService.update(res['order']['order_items'][0]);
+          // this.updateOrderItemApi(res['order']['order_items']);
         }
       },
       _error => {

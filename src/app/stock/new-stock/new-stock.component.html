@@ -11,7 +11,7 @@
         <span class="spacer"></span>
         </div>
         <div class="col-4">
-            <button type="button" class="float-right" (click)="addItem()" mat-raised-button color='accent' *ngIf="selection.selected.length > 1" [disabled]="(loading | async) || itemForm.invalid">Save all</button>
+            <button type="button" class="float-right" (click)="addItem()" mat-raised-button color='accent' *ngIf="selection.selected.length > 0" [disabled]="(loading | async) || itemForm.invalid">Save all</button>
         </div>
     </mat-toolbar-row>
   </mat-toolbar>

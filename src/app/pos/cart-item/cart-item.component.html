@@ -3,7 +3,7 @@
         <button (click)="updatePosLayout('customers')" type="button" mat-button class="cancel-button" trans>
             <mat-icon>assignment_ind</mat-icon> CUSTOMERS
         </button>
-        <button (click)="updatePosLayout('insurances')" type="button" mat-button class="cancel-button" trans>
+        <button [disabled]="!currently_ordered" (click)="cartDialog(currently_ordered,'Insurances')" type="button" mat-button class="cancel-button" trans>
             <mat-icon>assignment</mat-icon> INSURANCES
         </button>
         <button (click)="updatePosLayout('orders')" type="button" mat-button class="cancel-button" trans>
@@ -92,13 +92,14 @@
         <div class="row grid-divider">
             <div class="col-6">
                 <h6 class="col-12">TOTAL ITEMS:{{data.length}}</h6>
-                <h6 class="col-12">TOTAL DISCOUNT:{{total('total_discount')}}</h6>
+                <h6 class="col-12">TOTAL DISCOUNT:Rwf {{total('total_discount')}}</h6>
+                <h6 class="col-12" *ngIf="choosen_insurance">{{choosen_insurance.name }} ({{choosen_insurance.discount}}%):Rwf {{ (total('total_amount')/100)*choosen_insurance.discount}}</h6>
             </div>
 
             <div class="col-6">
-                <h6 class="col-12">TOTAL AMOUNT:{{total('total_amount')}}</h6>
-                <h6 class="col-12">DUE:{{total('total_amount')}}</h6>
-                <h6 class="col-12">TAX:{{total('total_tax')}}</h6>
+                <h6 class="col-12">TOTAL AMOUNT:Rwf {{total('total_amount')}}</h6>
+                <h6 class="col-12">DUE:Rwf {{total('total_amount')}}</h6>
+                <h6 class="col-12">TAX:Rwf {{total('total_tax')}}</h6>
 
             </div>
 

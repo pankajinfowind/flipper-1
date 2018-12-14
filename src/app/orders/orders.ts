@@ -1,4 +1,5 @@
 import { OrderItems } from '../pos/cart/order_items';
+import { Insurance } from '../admin/master/insurance/api/insurance';
 
 export class Orders {
 
@@ -11,7 +12,7 @@ export class Orders {
   all?:string;
   order_items?:OrderItems[]=[];
   branch_id?:number;
-  insurance_id?:number;
+  insurance?:Insurance;
   business_id?:number;
 
     constructor(params: Object = {}) {

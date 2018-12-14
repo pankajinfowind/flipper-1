@@ -64,7 +64,6 @@ export class Bootstrapper {
                     res => {
                         if (status == 'available') {
                             if (res["stocks"]) {
-                                console.log('urugo', res["stocks"]);
                                 this.modelStockService.update({ loading: false, available: res["stocks"]["data"] });
                             }
 

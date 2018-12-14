@@ -16,26 +16,69 @@ import { CustomerService } from "../../customers/customer.service";
 import { Customer } from "../../customers/customer";
 import { Toast } from '../../common/core/ui/toast.service';
 import { ApiPosService } from '../api/api.service';
+import { Orders } from '../../orders/orders';
+import { MasterModelService } from '../../admin/master/master-model.service';
+import { Master } from '../../admin/master/master';
+import { Insurance } from '../../admin/master/insurance/api/insurance';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',
   styleUrls: ["./cart-item.component.scss"]
 })
-export class CartDialog {
+export class CartDialog implements OnInit {
   item_deleted = [];
   public loading = new BehaviorSubject(false);
   cart_item: any;
   status: string;
   order_items$: Observable<OrderItems[]>;
-  constructor(private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private toast: Toast,
+  master$: Observable<Master>;
+  insurances:Insurance[]=[];
+  insuranceForm: FormGroup;
+  pos$: Observable<Pos>;
+  constructor(private posModelService: PosModelService,private msterModelService:MasterModelService,private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private toast: Toast,
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
     this.cart_item = this.data.data;
     this.status = this.data.status;
     this.order_items$ = this.orderItemModelService.order_items$;
+    this.master$ = this.msterModelService.master$;
+    this.pos$ = this.posModelService.pos$;
   }
 
+  ngOnInit() {
+    this.master$.subscribe(res=>{
+      if(res.insurances.length  > 0){
+        this.insurances=res.insurances;
+      }
+  });
 
+  this.insuranceForm = new FormGroup({
+          insurance_id:new FormControl(null,[Validators.required])
+        });
+  }
+  saveOrderInsurence(){
+    if(this.insuranceForm.invalid){
+      alert('No insurance choosen!');
+    }else{
+      this.posModelService.update({ loading: true });
+      this.api.updateOrder(this.insuranceForm.value,this.data.data['id']).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
+        res => {
+
+          if (res['orders']) {
+            const order = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
+            this.posModelService.update({ loading: false, currently_ordered: order ? order : null });
+            this.close();
+           // this.orderItemModelService.update(res['order']['order_items'][0]);
+          }
+        },
+        _error => {
+          console.error(_error);
+        }
+      );
+    }
+  }
 
   displays(nums) {
     if (this.status == 'Quantity') {
@@ -100,11 +143,13 @@ export class CartDialog {
         }
       }
     });
+
   }
   updateOrderItemApi(params) {
     this.api.updateOrderItem(params).subscribe(
       res => {
-        console.log(res)
+       // console.log(res)
+        this.close();
       },
       _error => {
         console.error(_error);
@@ -140,6 +185,8 @@ export class CartItemComponent implements OnInit {
   data: OrderItems[] = [];
   all_total = { num_item: 0, total_tax: 0, total_amount: 0, total_due: 0, total_discount: 0 };
   dataSource = new MatTableDataSource<OrderItems>([]);
+  currently_ordered:Orders;
+  choosen_insurance:Insurance;
   constructor(
     private api: ApiPosService,
     private orderItemModelService: OrderItemsModelService,
@@ -154,7 +201,6 @@ export class CartItemComponent implements OnInit {
     if (this.order_items$) {
       this.order_items$.subscribe(res => {
         if (res) {
-          console.log('response', res);
           this.data = res;
           this.dataSource.data = this.data;
           this.expandedElement = this.data
@@ -172,11 +218,12 @@ export class CartItemComponent implements OnInit {
     this.pos$ = this.posModelService.pos$;
     this.order_items$ = this.orderItemModelService.order_items$;
     this.getCartItem();
-    if (this.getCustomers()) {
-      this.getCustomers().subscribe(customer => {
-        this.customer.create(customer);
+      this.pos$.subscribe(p=>{
+            if(p){
+              this.currently_ordered=p.currently_ordered;
+              this.choosen_insurance=p.currently_ordered?p.currently_ordered.insurance:null;
+            }
       });
-    }
   }
   getCustomers(): Observable<Customer[]> {
     this.customers = this.customer.getCustomers();

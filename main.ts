@@ -76,7 +76,6 @@ function createWindow() {
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
     title: app.getName() + "v" + app.getVersion(),
-
     icon: null
   };
 
@@ -201,7 +200,7 @@ app.on("window-all-closed", () => {
 });
 try {
   app.on("ready", createWindow);
-  app.on("ready", function() {
+  app.on("ready", function () {
     if (!isDev) {
       autoUpdater.checkForUpdatesAndNotify();
     }
@@ -217,7 +216,7 @@ try {
       createWindow();
     }
   });
-} catch (e) {}
+} catch (e) { }
 
 /////////////////////////////////////////  MENU
 

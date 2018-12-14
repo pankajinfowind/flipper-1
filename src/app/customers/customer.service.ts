@@ -9,7 +9,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class CustomerService {
   public model: Model<Customer[]>;
-  ROOT_URL = "customers";
+  ROOT_URL = "secure/customers";
   customers$: Observable<Customer[]>;
   protected http: HttpClient;
   custObs: Observable<Customer[]>;

@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/takeUntil';
 import { Select } from "@ngxs/store";
@@ -20,19 +20,19 @@ export class StockComponent implements OnInit {
     { path: "available", label: "Current Stock" },
     { path: "stockout", label: "Out of Stock Items" },
     { path: "damaged", label: "Damaged Items" },
-    { path: "report", label: "Report" }
+    // { path: "report", label: "Report" }
   ];
 
   @Select(MasterState.loading) loading$: Observable<boolean>;
-  isMobile=false;
-  leftColumnIsHidden=false;
+  isMobile = false;
+  leftColumnIsHidden = false;
   stocks$: Observable<any>;
 
   subscription: Observable<Details>;
   details$: Observable<Details>;
 
 
-  constructor(private detailsService:DetailsService,private modelService:StockModelService) {
+  constructor(private detailsService: DetailsService, private modelService: StockModelService) {
   }
 
   ngOnInit() {

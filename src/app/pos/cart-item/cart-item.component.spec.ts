@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
 import { PosModelService } from "../pos-model.service";
 import { OrderItemsModelService } from "../cart/order-item-model.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+
 
 describe("CartItemComponent", () => {
   let component: CartItemComponent;

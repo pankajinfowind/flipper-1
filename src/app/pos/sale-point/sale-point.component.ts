@@ -30,12 +30,16 @@ export class SalePointComponent implements OnInit {
   ordered_items = [];
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
-  constructor(private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
+  constructor(private orderItemModelService: OrderItemsModelService,
+    private orderModelService: OrderModelService,
+    private api: ApiPosService,
+    private posModelService: PosModelService,
+    private modelService: StockModelService,
+    private msterModelService: MasterModelService) { }
   category_selected: Category;
   is_categry_clicked = false;
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
-
     this.stocks$ = this.modelService.stocks$;
 
     this.pos$ = this.posModelService.pos$;
@@ -43,26 +47,43 @@ export class SalePointComponent implements OnInit {
     this.order$ = this.orderModelService.order$;
 
     this.order_items$ = this.orderItemModelService.order_items$;
-
     this.getCurrentOrder();
     this.getCategories();
-
   }
   getCategories() {
+    if (!this.stocks$) return;
     this.stocks$.subscribe(res => {
       if (res) {
+        console.log('rrr', res);
         this.categories = this.getRows(res['available']);
       }
     });
   }
-  getRows(data) {
-    const cat: Array<any> = [];
-    data.forEach(stock => {
-      if (stock['category']) {
-        cat.push(stock['category']);
+  removeDups(names) {
+    let unique = {};
+    names.forEach(function (i) {
+      if (!unique[i]) {
+        unique[i] = true;
       }
     });
-    return cat.filter((v, i) => cat.indexOf(v) === i);
+    return Object.keys(unique);
+  }
+  getRows(data: Array<any>) {
+    console.log('called...', data);
+    let cat = [];
+    if (!data) {
+      return [];
+    } else {
+      data.forEach(stock => {
+        if (stock['category']) {
+          cat = [...stock['category']]; // ?
+        }
+      });
+      console.log("jjj", cat);
+      cat = cat.filter((v, i) => cat.indexOf(v) === i); // 
+      return cat; // ?
+    }
+
   }
   pushCat(cat) {
     const cats = [];
@@ -85,6 +106,7 @@ export class SalePointComponent implements OnInit {
   }
 
   getCurrentOrder() {
+    if (!this.pos$) return;
     this.pos$.subscribe(res => {
       if (res) {
         this.current_order = res.currently_ordered;

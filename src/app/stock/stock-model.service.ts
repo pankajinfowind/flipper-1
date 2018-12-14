@@ -13,16 +13,15 @@ export class StockModelService {
   constructor(private modelFactory: ModelFactory<Stock[]>) {
     this.create([]);
     this.stocks$ = this.model.data$;
-   }
-   public create(stateCreation:Stock[]){
+  }
+  public create(stateCreation: Stock[]) {
     this.model = this.modelFactory.create(stateCreation);
+  }
 
-   }
-
-   public get(){
-       return this.model.get();
-   }
-   update(stateUpdates: any) {
+  public get() {
+    return this.model.get();
+  }
+  update(stateUpdates: any) {
     // retrieve raw model data
     const modelSnapshot = this.model.get();
     // mutate model data

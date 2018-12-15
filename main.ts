@@ -75,42 +75,43 @@ function createWindow() {
     y: mainWindowStateKeeper.y,
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
-    title: app.getName() + "v" + app.getVersion(),
-    icon: null
+    title: app.getName() + "Version:" + app.getVersion(),
+    icon: path.join(__dirname, "src/assets/app-icon/png/64.png")
   };
 
   if (serve) {
     if (process.platform === "linux") {
       windowOptions.icon = path.join(
         __dirname,
-        "src/assets/app-icon/png/512.png"
+        "src/assets/app-icon/png/64.png"
       );
     } else if (process.platform === "win32") {
       windowOptions.icon = path.join(
         __dirname,
-        "src/assets/app-icon/win/app.ico"
+        "src/assets/app-icon/png/64.png"
       );
     } else {
       windowOptions.icon = path.join(
         __dirname,
-        "src/assets/app-icon/mac/app.icns"
+        "src/assets/app-icon/png/64.png"
       );
     }
   } else {
     if (process.platform === "linux") {
       windowOptions.icon = path.join(
         __dirname,
-        "dist/assets/app-icon/png/512.png"
+        "dist/assets/app-icon/png/64.png"
       );
     } else if (process.platform === "win32") {
       windowOptions.icon = path.join(
         __dirname,
-        "dist/assets/app-icon/win/app.ico"
+        "dist/assets/app-icon/win/favicon.ico"
       );
     } else {
+      //TODO: check if the icon work on the platforms
       windowOptions.icon = path.join(
         __dirname,
-        "dist/assets/app-icon/mac/app.icns"
+        "assets/app-icon/png/64.png"
       );
     }
   }
@@ -254,7 +255,7 @@ const menu = Menu.buildFromTemplate([
     submenu: [
       { role: "reload" },
       { role: "forcereload" },
-      { role: "toggledevtools" },
+      // { role: "toggledevtools" },
       { type: "separator" },
       { role: "resetzoom" },
       { role: "zoomin" },
@@ -264,10 +265,6 @@ const menu = Menu.buildFromTemplate([
     ]
   },
   {
-    label: "History",
-    submenu: [{ role: "back" }, { role: "forward" }]
-  },
-  {
     role: "window",
     submenu: [{ role: "minimize" }, { role: "maximize" }, { role: "close" }]
   },
@@ -275,7 +272,7 @@ const menu = Menu.buildFromTemplate([
     role: "help",
     submenu: [
       {
-        label: "Learn More",
+        label: "Report issue",
         click() {
           require("electron").shell.openExternal("https://flipper.yegobox.rw");
         }

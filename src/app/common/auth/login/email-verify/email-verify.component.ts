@@ -41,8 +41,8 @@ export class EmailVerifyComponent {
   isElectron = () => {
     return window && window.process && window.process.type;
   };
-  gotoWebRegister(){
-    return require("electron").shell.openExternal("https://yegobox.rw/register");
+  gotoWebRegister() {
+    this._electronService.shell.openExternal("https://yegobox.rw/register");
   }
 
   get email() {

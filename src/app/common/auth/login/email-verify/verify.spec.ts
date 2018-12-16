@@ -1,4 +1,4 @@
-import { async, TestBed, inject } from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
 
 import { NgZone } from "@angular/core";
 import { EmailVerifyComponent } from "./email-verify.component";

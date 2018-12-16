@@ -4,7 +4,7 @@ import * as url from "url";
 //update
 import { windowStateKeeper } from "./win-state-keeper";
 
-
+//TODO: make sure to fix icon thing it is not building
 const mainWindowStateKeeper = windowStateKeeper("main");
 
 let win, serve;

@@ -47,7 +47,7 @@ export class SalePointComponent implements OnInit {
     this.getCategories();
   }
   getCategories() {
-    //if (!this.stocks$) return;
+    if (!this.stocks$) return;
     this.stocks$.subscribe(res => {
       if (res) {
         console.log('rrr', res['available']);
@@ -75,7 +75,7 @@ export class SalePointComponent implements OnInit {
         }
       });
       cat = cat.filter((v, i) => cat.indexOf(v) === i);
-      return cat;
+      return cat; // ?
     }
 
   }

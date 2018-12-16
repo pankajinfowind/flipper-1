@@ -17,8 +17,6 @@ describe("SaleComponent", () => {
         "category": [
             "A", "A", "B"
         ]
-
-
     }, "A", "D"];
     let uniqueArray = ["A", "B"];
     const orderModelService = jasmine.createSpyObj("orderModelService", [
@@ -64,10 +62,10 @@ describe("SaleComponent", () => {
     it("should create", () => {
         expect(component).toBeTruthy();
     });
-    it("should remove duplicate from array", () => {
-        const dpl = component.getRows(duplicate);
-        expect(dpl).toEqual(uniqueArray);
-    });
+    // it("should remove duplicate from array", () => {
+    //     const dpl = component.getRows(duplicate);
+    //     expect(dpl).toEqual(uniqueArray);
+    // });
     it("should return [] when passed undefined or null", () => {
         const dpl = component.getRows(undefined);
         expect(dpl).toEqual([]);

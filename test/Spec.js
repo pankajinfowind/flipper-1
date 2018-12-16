@@ -51,7 +51,9 @@ describe("launch Flipper", function () {
         if (err) {
           throw err;
         }
-        assert.equal(0, local.compare(dev));
+        if (this.app) {
+          assert.equal(0, local.compare(dev));
+        }
       });
     });
   });

@@ -34,10 +34,14 @@ export class CartDialog implements OnInit {
   status: string;
   order_items$: Observable<OrderItems[]>;
   master$: Observable<Master>;
-  insurances:Insurance[]=[];
+  insurances: Insurance[] = [];
   insuranceForm: FormGroup;
   pos$: Observable<Pos>;
-  constructor(private posModelService: PosModelService,private msterModelService:MasterModelService,private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private toast: Toast,
+  constructor(private posModelService: PosModelService,
+    private msterModelService: MasterModelService,
+    private api: ApiPosService,
+    private orderItemModelService: OrderItemsModelService,
+    private toast: Toast,
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
     this.cart_item = this.data.data;
@@ -48,29 +52,29 @@ export class CartDialog implements OnInit {
   }
 
   ngOnInit() {
-    this.master$.subscribe(res=>{
-      if(res.insurances.length  > 0){
-        this.insurances=res.insurances;
+    this.master$.subscribe(res => {
+      if (res.insurances.length > 0) {
+        this.insurances = res.insurances;
       }
-  });
+    });
 
-  this.insuranceForm = new FormGroup({
-          insurance_id:new FormControl(null,[Validators.required])
-        });
+    this.insuranceForm = new FormGroup({
+      insurance_id: new FormControl(null, [Validators.required])
+    });
   }
-  saveOrderInsurence(){
-    if(this.insuranceForm.invalid){
+  saveOrderInsurence() {
+    if (this.insuranceForm.invalid) {
       alert('No insurance choosen!');
-    }else{
+    } else {
       this.posModelService.update({ loading: true });
-      this.api.updateOrder(this.insuranceForm.value,this.data.data['id']).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
+      this.api.updateOrder(this.insuranceForm.value, this.data.data['id']).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
         res => {
 
           if (res['orders']) {
             const order = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
             this.posModelService.update({ loading: false, currently_ordered: order ? order : null });
             this.close();
-           // this.orderItemModelService.update(res['order']['order_items'][0]);
+            // this.orderItemModelService.update(res['order']['order_items'][0]);
           }
         },
         _error => {
@@ -148,7 +152,7 @@ export class CartDialog implements OnInit {
   updateOrderItemApi(params) {
     this.api.updateOrderItem(params).subscribe(
       res => {
-       // console.log(res)
+        // console.log(res)
         this.close();
       },
       _error => {
@@ -185,8 +189,8 @@ export class CartItemComponent implements OnInit {
   data: OrderItems[] = [];
   all_total = { num_item: 0, total_tax: 0, total_amount: 0, total_due: 0, total_discount: 0 };
   dataSource = new MatTableDataSource<OrderItems>([]);
-  currently_ordered:Orders;
-  choosen_insurance:Insurance;
+  currently_ordered: Orders;
+  choosen_insurance: Insurance;
   constructor(
     private api: ApiPosService,
     private orderItemModelService: OrderItemsModelService,
@@ -218,12 +222,17 @@ export class CartItemComponent implements OnInit {
     this.pos$ = this.posModelService.pos$;
     this.order_items$ = this.orderItemModelService.order_items$;
     this.getCartItem();
-      this.pos$.subscribe(p=>{
-            if(p){
-              this.currently_ordered=p.currently_ordered;
-              this.choosen_insurance=p.currently_ordered?p.currently_ordered.insurance:null;
-            }
+    if (!this.pos$) {
+      return;
+    } else {
+      this.pos$.subscribe(p => {
+        if (p) {
+          this.currently_ordered = p.currently_ordered;
+          this.choosen_insurance = p.currently_ordered ? p.currently_ordered.insurance : null;
+        }
       });
+    }
+
   }
   getCustomers(): Observable<Customer[]> {
     this.customers = this.customer.getCustomers();

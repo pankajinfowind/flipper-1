@@ -76,7 +76,7 @@ export class SalePointComponent implements OnInit {
       });
       cat = cat.filter((v, i) => cat.indexOf(v) === i);
       return cat; // ?
-    }
+    };
 
   }
   pushCat(cat) {

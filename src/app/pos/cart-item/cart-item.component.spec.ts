@@ -65,6 +65,7 @@ describe("CartItemComponent", () => {
 
     }).compileComponents();
   }));
+
   beforeEach(() => {
     service = TestBed.get(CustomerService);
     order = TestBed.get(OrderItemsModelService);
@@ -79,15 +80,11 @@ describe("CartItemComponent", () => {
   it("should list customers", () => {
     service.getCustomers = () => of(customer);
     component.ngOnInit();
-    customers = component.getCustomers();
+    customers = component.cu();
     customers.subscribe(cust => {
       expect(cust).toEqual(customer);
     });
-    //expect(customerMockService.getCustomers).toHaveBeenCalled();
+    // expect(customerMockService.getCustomers).toHaveBeenCalled(); // ?
   });
-  it("should update item with status", () => {
-    // spyOn(comp, 'onSelect');
-    // el = fixture.debugElement.query(By.css('li')).nativeElement.click();
-    // expect(comp.onSelect).toHaveBeenCalled();
-  });
+
 });

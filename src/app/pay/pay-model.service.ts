@@ -6,7 +6,7 @@ import { Pay } from './pay';
 @Injectable({
   providedIn: 'root'
 })
-export class OrderModelService {
+export class PayModelService {
 
   pay$: Observable<Pay>;
 private model: Model<Pay>;

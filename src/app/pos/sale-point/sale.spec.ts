@@ -4,10 +4,10 @@ import { PosModelService } from "../pos-model.service";
 import { OrderItemsModelService } from "../cart/order-item-model.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { SalePointComponent } from './sale-point.component';
-import { OrderModelService } from '../../pay/pay-model.service';
 import { ApiPosService } from '../api/api.service';
 import { StockModelService } from '../../stock/stock-model.service';
 import { MasterModelService } from '../../admin/master/master-model.service';
+import { OrderModelService } from '../../orders/order-model.service';
 
 
 describe("SaleComponent", () => {
@@ -17,7 +17,9 @@ describe("SaleComponent", () => {
         "category": [
             "A", "A", "B"
         ]
-    }, "A", "D"];
+    },
+    "A", "D"];
+
     let uniqueArray = ["A", "B"];
     const orderModelService = jasmine.createSpyObj("orderModelService", [
         "getRows"
@@ -62,10 +64,10 @@ describe("SaleComponent", () => {
     it("should create", () => {
         expect(component).toBeTruthy();
     });
-    // it("should remove duplicate from array", () => {
-    //     const dpl = component.getRows(duplicate);
-    //     expect(dpl).toEqual(uniqueArray);
-    // });
+    it("should remove duplicate from array", () => {
+        const dpl = component.getRows(duplicate);
+        expect(dpl).toEqual(uniqueArray);
+    });
     it("should return [] when passed undefined or null", () => {
         const dpl = component.getRows(undefined);
         expect(dpl).toEqual([]);

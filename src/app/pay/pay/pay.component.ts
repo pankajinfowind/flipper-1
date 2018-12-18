@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrderModelService } from '../pay-model.service';
 import { PosModelService } from '../../pos/pos-model.service';
 import { Pos } from '../../pos/pos';
 import { OrderItemsModelService } from '../../pos/cart/order-item-model.service';
@@ -36,5 +35,9 @@ export class PayComponent {
   //     return total;
 
   //   }
+
+  pay(){
+// ?
+  }
 
 }

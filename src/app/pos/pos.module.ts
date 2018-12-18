@@ -24,6 +24,7 @@ import { CustomerService } from "../customers/customer.service";
 import { HttpClient } from "@angular/common/http";
 import { ModelFactory } from "ngx-model";
 import { OrdersModule } from '../orders/orders.module';
+import { PayModule } from '../pay/pay.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { OrdersModule } from '../orders/orders.module';
     CartItemComponent,
     CartDialog
   ],
-  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule,OrdersModule],
+  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule,OrdersModule,PayModule],
   exports: [SessionsComponent, SalePointComponent, PosComponent,CartDialog],
   entryComponents: [CartDialog],
   providers: [ApiPosService, ModelFactory]

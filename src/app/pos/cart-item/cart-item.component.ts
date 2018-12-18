@@ -22,6 +22,7 @@ import { Master } from '../../admin/master/master';
 import { Insurance } from '../../admin/master/insurance/api/insurance';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
+import { OrderModelService } from '../../orders/order-model.service';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',
@@ -74,7 +75,6 @@ export class CartDialog implements OnInit {
             const order = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
             this.posModelService.update({ loading: false, currently_ordered: order ? order : null });
             this.close();
-            // this.orderItemModelService.update(res['order']['order_items'][0]);
           }
         },
         _error => {
@@ -192,6 +192,7 @@ export class CartItemComponent implements OnInit {
   currently_ordered: Orders;
   choosen_insurance: Insurance;
   constructor(
+    private orderModelService: OrderModelService,
     private api: ApiPosService,
     private orderItemModelService: OrderItemsModelService,
     private posModelService: PosModelService,
@@ -234,9 +235,9 @@ export class CartItemComponent implements OnInit {
     }
 
   }
-  getCustomers(): Observable<Customer[]> {
+  cu(): Observable<Customer[]> {
     this.customers = this.customer.getCustomers();
-    return this.customers;
+    return this.customers; // ?
   }
   updatePosLayout(panel = 'home') {
     this.posModelService.update({ panel_content: panel });
@@ -244,9 +245,27 @@ export class CartItemComponent implements OnInit {
 
 
   pay() {
-
+      this.posModelService.update({panel_content:'pay'});
   }
 
+  hold(){
+    this.currently_ordered.status="hold";
+    this.currently_ordered.is_currently_processing='0';
+    this.api.updateOrder(this.currently_ordered,this.currently_ordered.id).subscribe(
+      res => {
+        if(res.status=='success'){
+          this.posModelService.update({currently_ordered:null});
+          this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
+          this.orderItemModelService.update([], 'all');
+        }
+
+
+      },
+      _error => {
+        console.error(_error);
+      }
+    );
+  }
   update(element, status) {
     if (status == 'delete') {
       this.deleteOrderedItem(element.id);

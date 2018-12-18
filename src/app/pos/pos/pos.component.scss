@@ -2,7 +2,7 @@
 
 .pos{
   height: 100%;
-  background-color: $admin-background-color;
+  background-color: #0175a8;
 
   .mat-sidenav-container {
     width: 100%;
@@ -10,9 +10,9 @@
 
 
     .right-sidebar {
-      width: 500px;
-      min-width: 400px;
-      flex: 0 0 400px;
+      width: 460px;
+      min-width: 350px;
+      flex: 0 0 350px;
       padding: 0;
       margin: 0;
       border-left: 1px solid $site-border-color-200;
@@ -23,8 +23,8 @@
     .content-inner {
       flex: 1 1 auto;
       overflow: auto;
-      background-color:$site-primary-color-100;;
-      box-shadow: $admin-card-box-shadow;
+      background-color: #0175a8;
+      // box-shadow: $admin-card-box-shadow;
       line-height: inherit;
       white-space: nowrap;
       text-overflow: ellipsis;

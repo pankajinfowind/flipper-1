@@ -1,59 +1,70 @@
-<mat-toolbar color='accent'>
-    <mat-toolbar-row class="header">
-        <div class="col-8">
 
-            <button mat-button class="text-center text-uppercase" (click)="homeDir()">HOME</button>
+<div class="primary-section__body">
+  <div class="product-area">
+    <div class="primary-section-content">
+          <div class="primary-section-content__header">
+            <div class="breadcrumb-menu product-area__breadcrumb-menu">
 
-            <mat-icon class="mat-icon" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'">
-                chevron_right </mat-icon>
-            <button mat-button class="text-uppercase" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'">
-                {{category_selected.name}}
-            </button>
 
-            <span class="spacer"></span>
-            <span class="spacer"></span>
-        </div>
+                <span class="breadcrumb-menu__item" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'"><svg viewBox="0 0 24 24"
+                  preserveAspectRatio="xMidYMid meet" class="breadcrumb-menu__chevron" style="width: 1.5rem; height: 2rem; fill: rgb(0, 0, 0);">
+                  <g>
+                    <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
+                  </g>
+                </svg><a class="breadcrumb-menu__link">{{category_selected.name}}</a></span>
+                <span class="breadcrumb-menu__item"><a class="breadcrumb-menu__link" (click)="homeDir()">Home</a></span>
 
-    </mat-toolbar-row>
+             </div>
+          </div>
 
-</mat-toolbar>
-<div *ngIf="pos$ && categories">
-    <div *ngIf="(pos$ | async).panel_content=='home'">
-        <div class="row m-3" *ngIf="!is_categry_clicked && categories.length > 0">
-            <mat-card *ngFor="let category of categories" class="col-2  p-4 m-2 text-center text-uppercase mat-card"
-                (click)="categoriesClicked(category)">{{category.name}}</mat-card>
-        </div>
 
-        <div class="row m-1" *ngIf="is_categry_clicked  && currently_stocks.length > 0">
-            <mat-card *ngFor="let stock of currently_stocks" class="col-3  m-2 mat-card" (click)=" addItemToCart(stock)">
-                <span class="text-left text-secondary">{{stock.name.length >
-                    18?stock.name.substring(0,17)+'...':stock.name}} </span>
-                <div class="clearfix"></div>
+          <div class="primary-section-content__body">
+            <div class="product-area__main">
+              <div *ngIf="pos$ && categories" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                <div *ngIf="(pos$ | async).panel_content=='home'">
+                  <div *ngIf="!is_categry_clicked && categories.length > 0">
 
-                <small class="row row-divided">
-                    <div class="text-left col-6 column-one">
-                        {{stock.item.currency}} {{stock.item.unit_sale}}
+                    <div class="row m-3" style="margin-right: 0.75rem; margin-bottom: 0.75rem;">
+                      <mat-card *ngFor="let category of categories" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 generic-tile generic-tile--MEDIUM category-tile user-defined-colour__darkBlue category-tile--MEDIUM"
+                        (click)="categoriesClicked(category)">{{category.name}}</mat-card>
                     </div>
-                    <div class="vertical-divider"></div>
-                    <div class="text-right col-6 column-two">
-                        {{stock.available_stock_qty}} Qty
-                    </div>
-                </small>
+                  </div>
 
-            </mat-card>
-        </div>
+                  <div  *ngIf="is_categry_clicked  && currently_stocks.length > 0">
+                      <div class="row m-3" style="margin-right: 0.75rem; margin-bottom: 0.75rem;">
+                    <mat-card *ngFor="let stock of currently_stocks" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1" (click)=" addItemToCart(stock)">
+                      <span class="text-left text-secondary">{{stock.name.length >
+                        18?stock.name.substring(0,17)+'...':stock.name}} </span>
+                      <div class="clearfix"></div>
+
+                      <small class="row row-divided">
+                        <div class="text-left col-6 column-one">
+                          {{stock.item.currency}} {{stock.item.unit_sale}}
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="text-right col-6 column-two">
+                          {{stock.available_stock_qty}} Qty
+                        </div>
+                      </small>
+
+                    </mat-card>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="pos$">
+              <mat-card class="m-4 panel-center" *ngIf="(pos$ | async).panel_content!=='home'">
+                <div *ngIf="(pos$ | async).panel_content=='customers'">
+                  customer
+
+                </div>
+                <app-orders *ngIf="(pos$ | async).panel_content=='orders'"></app-orders>
+                <app-pay *ngIf="(pos$ | async).panel_content=='pay'"></app-pay>
+              </mat-card>
+            </div>
+          </div>
     </div>
-</div>
-
-<div *ngIf="pos$">
-    <mat-card class="m-4 panel-center" *ngIf="(pos$ | async).panel_content!=='home'">
-        <div *ngIf="(pos$ | async).panel_content=='customers'">
-            customer
-
-        </div>
-        <app-orders *ngIf="(pos$ | async).panel_content=='orders'"></app-orders>
-        <div *ngIf="(pos$ | async).panel_content=='insurances'">
-            insurances
-        </div>
-    </mat-card>
+  </div>
 </div>

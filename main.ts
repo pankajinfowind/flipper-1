@@ -255,7 +255,7 @@ const menu = Menu.buildFromTemplate([
     submenu: [
       { role: "reload" },
       { role: "forcereload" },
-      // { role: "toggledevtools" },
+      { role: "toggledevtools" },
       { type: "separator" },
       { role: "resetzoom" },
       { role: "zoomin" },

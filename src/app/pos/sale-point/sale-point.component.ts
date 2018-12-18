@@ -32,12 +32,12 @@ export class SalePointComponent implements OnInit {
   ordered_items = [];
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
-  business:Business;
+  business: Business;
   constructor(private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
   category_selected: Category;
   is_categry_clicked = false;
   ngOnInit() {
-    this.business=this.currentUser.get('business')[0];
+    //this.business=this.currentUser.get('business')[0];
     this.master$ = this.msterModelService.master$;
     this.stocks$ = this.modelService.stocks$;
 
@@ -67,7 +67,7 @@ export class SalePointComponent implements OnInit {
     return Object.keys(unique);
   }
   getRows(data: Array<any>) {
-    let cat = [];
+    let cat: Category[] = [];
     if (!data) {
       return [];
     } else {
@@ -76,10 +76,13 @@ export class SalePointComponent implements OnInit {
           cat.push(stock['category']);
         }
       });
-      cat = [...cat.reduce((acc, c) => Object.assign(acc, { id: c.id, name: c.name, active: c.active, parent_id: c.parent_id, business_id: c.business_id, created_at: c.created_at, updated_at: c.updated_at }), {})];
-      return cat; // ? 
+      let obj = {};
+      cat = Object.keys(cat.reduce((prev, next) => {
+        if (!obj[next.id]) obj[next.id] = next;
+        return obj;
+      }, obj)).map((i) => obj[i]);
+      return cat;
     };
-
   }
   pushCat(cat) {
     const cats = [];

@@ -50,7 +50,6 @@ export class SalePointComponent implements OnInit {
     if (!this.stocks$) return;
     this.stocks$.subscribe(res => {
       if (res) {
-        console.log('rrr', res['available']);
         this.categories = this.getRows(res['available']);
       }
     });
@@ -74,8 +73,8 @@ export class SalePointComponent implements OnInit {
           cat.push(stock['category']);
         }
       });
-      cat = cat.filter((v, i) => cat.indexOf(v) === i);
-      return cat; // ?
+      cat = [...cat.reduce((acc, c) => Object.assign(acc, { id: c.id, name: c.name, active: c.active, parent_id: c.parent_id, business_id: c.business_id, created_at: c.created_at, updated_at: c.updated_at }), {})];
+      return cat; // ? 
     };
 
   }

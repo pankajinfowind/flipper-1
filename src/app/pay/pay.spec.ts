@@ -13,8 +13,8 @@ describe("PayComponent", () => {
     let uniqueArray = ["A", "B"];
 
     const payModelService = jasmine.createSpyObj("PayModelService", [
-      "update"
-  ]);
+        "update"
+    ]);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -34,12 +34,5 @@ describe("PayComponent", () => {
     it("should create", () => {
         expect(component).toBeTruthy();
     });
-    it("should remove duplicate from array", () => {
-        const dpl = component.pay();
-        expect(dpl).toEqual(uniqueArray);
-    });
-    it("should return [] when passed undefined or null", () => {
-       const dpl = component.pay();
-        expect(dpl).toEqual([]);
-    });
+
 });

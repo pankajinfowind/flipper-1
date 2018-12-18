@@ -13,14 +13,64 @@ import { OrderModelService } from '../../orders/order-model.service';
 describe("SaleComponent", () => {
     let component: SalePointComponent;
     let fixture: ComponentFixture<SalePointComponent>;
-    let duplicate = [{
-        "category": [
-            "A", "A", "B"
-        ]
-    },
-    "A", "D"];
+    let duplicate = [
+        {
+            "category": {
+                "id": 1310,
+                "name": "ZOLPIDEM",
+                "active": 1,
+                "parent_id": 0,
+                "business_id": 42,
+                "created_at": "2018-12-18 09:41:23",
+                "updated_at": "2018-12-18 09:41:23"
+            }
+        },
+        {
+            "category": {
+                "id": 1310,
+                "name": "ZOLPIDEM",
+                "active": 1,
+                "parent_id": 0,
+                "business_id": 42,
+                "created_at": "2018-12-18 09:41:23",
+                "updated_at": "2018-12-18 09:41:23"
+            },
+        },
+        {
+            "category": {
+                "id": 1310,
+                "name": "ZOLPIDEM",
+                "active": 1,
+                "parent_id": 0,
+                "business_id": 42,
+                "created_at": "2018-12-18 09:41:23",
+                "updated_at": "2018-12-18 09:41:23"
+            },
+        },
+        {
+            "category": {
+                "id": 1310,
+                "name": "ZOLPIDEM",
+                "active": 1,
+                "parent_id": 0,
+                "business_id": 42,
+                "created_at": "2018-12-18 09:41:23",
+                "updated_at": "2018-12-18 09:41:23"
+            }
+        }
+    ];
 
-    let uniqueArray = ["A", "B"];
+    let uniqueArray = [
+        {
+            "id": 1310,
+            "name": "ZOLPIDEM",
+            "active": 1,
+            "parent_id": 0,
+            "business_id": 42,
+            "created_at": "2018-12-18 09:41:23",
+            "updated_at": "2018-12-18 09:41:23"
+        }
+    ];
     const orderModelService = jasmine.createSpyObj("orderModelService", [
         "getRows"
     ]);
@@ -39,8 +89,6 @@ describe("SaleComponent", () => {
     const posModelService = jasmine.createSpyObj("PosModelService", [
         "master"
     ]);
-
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [PosModule, HttpClientTestingModule],

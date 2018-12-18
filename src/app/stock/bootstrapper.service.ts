@@ -68,6 +68,7 @@ export class Bootstrapper {
                                 this.modelStockService.update({ loading: false, available: res["stocks"] });
                             }
 
+
                         } else if (status == 'stockout') {
                             if (res["stocks"]) {
                                 this.modelStockService.update({ loading: false, stockout: res["stocks"] });

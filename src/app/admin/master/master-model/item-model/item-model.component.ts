@@ -10,6 +10,8 @@ import { DetailsService } from '../../../../details/details.service';
 import { Details } from '../../../../details/details';
 import { MasterModelService } from '../../master-model.service';
 import { Master } from '../../master';
+import { CurrentUser } from '../../../../common/auth/current-user';
+import { Business } from '../../../../business/api/business';
 
 @Component({
   selector: 'app-item-model',
@@ -23,15 +25,18 @@ export class ItemModelComponent implements OnInit {
   numberPatern = '^[0-9.]+$';
   public loading = new BehaviorSubject(false);
   details$: Observable<Details>;
-  currencies: string[] = ['Rwf','$'];
+  currencies: string[];
   need_to_add_new:boolean=true;
   category_placeholder='Choose Item Category';
   item_id:number=0;
+  business:Business;
   upc_tool_tips="The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
   sku_tool_tips="The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
-  constructor(private msterModelService:MasterModelService,private toast: Toast,private apiItem:ApiItemService,private detailsService:DetailsService) { }
+  constructor(public currentUser:CurrentUser,private msterModelService:MasterModelService,private toast: Toast,private apiItem:ApiItemService,private detailsService:DetailsService) { }
 
   ngOnInit() {
+    this.business=this.currentUser.get('business')[0];
+    this.currencies= [this.business.currency_code];
     this.master$ = this.msterModelService.master$;
     this. getActiveCategories();
     this.details$ = this.detailsService.details$;

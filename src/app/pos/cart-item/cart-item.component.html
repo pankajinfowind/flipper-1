@@ -107,7 +107,7 @@
               </div>
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Total
                   Discount</dt>
-                <dd class="transaction-summary__value">Rwf {{total('total_discount')}}</dd>
+                <dd class="transaction-summary__value">{{business.currency_code}} {{total('total_discount')}}</dd>
               </div>
                  <div *ngIf="choosen_insurance" class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">
                   Insurance</dt>
@@ -116,13 +116,13 @@
             </div>
             <div class="transaction-summary__column">
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Total</dt>
-                <dd class="qa_basket-total transaction-summary__value transaction-summary__value--large-text">Rwf {{total('total_amount')}}</dd>
+                <dd class="qa_basket-total transaction-summary__value transaction-summary__value--large-text">{{business.currency_code}} {{total('total_amount')}}</dd>
               </div>
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Due</dt>
-                <dd class="transaction-summary__value transaction-summary__value--warning">Rwf {{total('total_amount')}}</dd>
+                <dd class="transaction-summary__value transaction-summary__value--warning">{{business.currency_code}} {{total('total_amount')}}</dd>
               </div>
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Tax(vat)</dt>
-                <dd class="transaction-summary__value">Rwf {{total('total_tax')}}0</dd>
+                <dd class="transaction-summary__value">{{business.currency_code}} {{total('total_tax')}}0</dd>
               </div>
             </div>
           </dl>
@@ -134,9 +134,9 @@
 
     <div class="buttonwrapper buttonwrapper--margin">
 
-      <li (click)="delete()" class="transaction-payment-buttons__button transaction-payment-buttons__delete-button m-1">Delete</li>
-      <li (click)="hold()" class="transaction-payment-buttons__button transaction-payment-buttons__order-button m-1">Hold</li>
-      <li (click)="pay()" class="transaction-payment-buttons__button transaction-payment-buttons__pay-button m-1">Pay</li></div>
+      <li (click)="deleteOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__delete-button m-1">Delete</li>
+      <li (click)="holdOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__order-button m-1">Hold</li>
+      <li (click)="payOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__pay-button m-1">Pay</li></div>
 
     </div>
 

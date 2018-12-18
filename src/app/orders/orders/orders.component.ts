@@ -6,6 +6,7 @@ import { PosModelService } from '../../pos/pos-model.service';
 import { Pos } from '../../pos/pos';
 import { OrderItemsModelService } from '../../pos/cart/order-item-model.service';
 import { OrderItems } from '../../pos/cart/order_items';
+import { ApiPosService } from '../../pos/api/api.service';
 
 @Component({
   selector: 'app-orders',
@@ -21,7 +22,7 @@ export class OrdersComponent implements OnInit {
   ordered_orders:Orders[]=[];
   panelOpenState = false;
   order_items$: Observable<OrderItems[]>;
-  constructor(private orderItemModelService:OrderItemsModelService,private orderModelService:OrderModelService,private posModelService:PosModelService) { }
+  constructor(private api: ApiPosService,private orderItemModelService:OrderItemsModelService,private orderModelService:OrderModelService,private posModelService:PosModelService) { }
 
   ngOnInit() {
     this.pos$ = this.posModelService.pos$;
@@ -42,11 +43,11 @@ export class OrdersComponent implements OnInit {
   updatePosLayout(panel='home'){
     this.posModelService.update({panel_content:panel});
   }
-  total(data){
+  total(data,arg){
     var total=0;
       if(data.length > 0){
           for ( var i = 0, _len = data.length; i < _len; i++ ) {
-            total += data[i]['total_amount'];
+            total += data[i][arg];
           }
       }
 
@@ -64,5 +65,46 @@ export class OrdersComponent implements OnInit {
          );
       });
       return ordered_item;
+    }
+
+    updateOrdered(currently_ordered){
+    currently_ordered.status="ordered";
+    currently_ordered.is_currently_processing='1';
+      this.api.updateOrder(currently_ordered,currently_ordered.id).subscribe(
+        res => {
+          if(res.status=='success'){
+            this.posModelService.update({currently_ordered:currently_ordered});
+            this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
+            this.orderItemModelService.update([], 'all');
+            this.orderItemModelService.update(currently_ordered['order_items'], 'all');
+            this.updatePosLayout('home');
+          }
+
+
+        },
+        _error => {
+          console.error(_error);
+        }
+      );
+    }
+
+    deleteOrdered(id){
+      let result = confirm("Are you sure,you want to delete this order?");
+          if (result) {
+              this.api.deleteOrder(id).subscribe(
+                res => {
+                  if(res.status=='success'){
+                    this.posModelService.update({currently_ordered:null});
+                    this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
+                    this.orderItemModelService.update([], 'all');
+                    this.updatePosLayout('home');
+                  }
+
+                },
+                _error => {
+                  console.error(_error);
+                }
+              );
+              }
     }
 }

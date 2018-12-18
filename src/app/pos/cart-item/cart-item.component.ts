@@ -23,6 +23,8 @@ import { Insurance } from '../../admin/master/insurance/api/insurance';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { OrderModelService } from '../../orders/order-model.service';
+import { CurrentUser } from '../../common/auth/current-user';
+import { Business } from '../../business/api/business';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',
@@ -191,7 +193,9 @@ export class CartItemComponent implements OnInit {
   dataSource = new MatTableDataSource<OrderItems>([]);
   currently_ordered: Orders;
   choosen_insurance: Insurance;
+  business:Business;
   constructor(
+    public currentUser:CurrentUser,
     private orderModelService: OrderModelService,
     private api: ApiPosService,
     private orderItemModelService: OrderItemsModelService,
@@ -220,6 +224,7 @@ export class CartItemComponent implements OnInit {
   customers: Observable<Customer[]>;
 
   ngOnInit() {
+    this.business=this.currentUser.get('business')[0];
     this.pos$ = this.posModelService.pos$;
     this.order_items$ = this.orderItemModelService.order_items$;
     this.getCartItem();
@@ -244,11 +249,29 @@ export class CartItemComponent implements OnInit {
   }
 
 
-  pay() {
+  payOrdered() {
       this.posModelService.update({panel_content:'pay'});
   }
 
-  hold(){
+  deleteOrdered(){
+    let result = confirm("Are you sure,you want to delete this order?");
+        if (result) {
+            this.api.deleteOrder(this.currently_ordered.id).subscribe(
+              res => {
+                if(res.status=='success'){
+                  this.posModelService.update({currently_ordered:null});
+                  this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
+                  this.orderItemModelService.update([], 'all');
+                }
+
+              },
+              _error => {
+                console.error(_error);
+              }
+            );
+            }
+  }
+  holdOrdered(){
     this.currently_ordered.status="hold";
     this.currently_ordered.is_currently_processing='0';
     this.api.updateOrder(this.currently_ordered,this.currently_ordered.id).subscribe(

@@ -17,38 +17,47 @@
                   <br />
                   <mat-accordion class="m-2 row">
                       <div class="col-3">
+                          Operator
+                      </div>
+                      <div class="col-3">
                         Time
                       </div>
-                      <div class="col-3 text-center">
+                      <div class="col-2 text-center">
                         Customer
                       </div>
-                      <div class="col-3 text-center">
+                      <div class="col-2 text-center">
                           Items
                         </div>
-                      <div class="col-3 text-center">
+                      <div class="col-2 text-center">
                           Total
                         </div>
                       <mat-expansion-panel class="w-100" *ngFor="let ordered of held_orders" (opened)="panelOpenState = true"
                       (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
+                      <mat-expansion-panel-header>
+                          <mat-panel-title class="col-3">
+                            {{ordered.employee.first_name}} {{ordered.employee.last_name}}
+                          </mat-panel-title>
                           <mat-panel-title class="col-3">
                             {{ordered.created_at | date:'fullDate'}}
                           </mat-panel-title>
 
-                          <mat-panel-title class="col-3 text-center">
-                              {{ordered.customer_id}}
-                            </mat-panel-title>
-
-                          <mat-panel-title class="col-3 text-center">
-                              {{ordered.order_items.length}}
+                          <mat-panel-title class="col-2 text-center">
+                              {{ordered.customer}}
                           </mat-panel-title>
 
-                            <mat-panel-title class="col-3 text-center">
-                              <b>{{total(ordered.order_items)}}</b>
+                          <mat-panel-title class="col-2 text-center">
+                              {{total(ordered.order_items,'qty')}}
+                          </mat-panel-title>
+
+                            <mat-panel-title class="col-2 text-center">
+                              <b>Rwf {{total(ordered.order_items,'total_amount')}}</b>
                             </mat-panel-title>
 
                         </mat-expansion-panel-header>
                           <div *ngIf="ordered.order_items.length > 0">
+                            <div class="w-100 float-right m-2">
+                              <button mat-raised-button color="accent" (click)="updateOrdered(ordered)" class="m-1">UNHOLD</button>
+                              <button mat-raised-button color="warn" (click)="deleteOrdered(ordered.id)" class="m-1 text-white">DELETE</button></div>
                             <table class="w-100">
                                 <table class="table table-hover">
                                     <thead>
@@ -83,38 +92,48 @@
                 <br />
                     <mat-accordion class="m-2 row">
                         <div class="col-3">
+                            Operator
+                        </div>
+                        <div class="col-3">
                           Time
                         </div>
-                        <div class="col-3 text-center">
+                        <div class="col-2 text-center">
                           Customer
                         </div>
-                        <div class="col-3 text-center">
+                        <div class="col-2 text-center">
                             Items
                           </div>
-                        <div class="col-3 text-center">
+                        <div class="col-2 text-center">
                             Total
                           </div>
                         <mat-expansion-panel class="w-100" *ngFor="let ordered of ordered_orders" (opened)="panelOpenState = true"
                         (closed)="panelOpenState = false">
-                          <mat-expansion-panel-header>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="col-3">
+                              {{ordered.employee.first_name}} {{ordered.employee.last_name}}
+                            </mat-panel-title>
                             <mat-panel-title class="col-3">
                               {{ordered.created_at | date:'fullDate'}}
                             </mat-panel-title>
 
-                            <mat-panel-title class="col-3 text-center">
-                                {{ordered.customer_id}}
-                              </mat-panel-title>
-
-                            <mat-panel-title class="col-3 text-center">
-                                {{ordered.order_items.length}}
+                            <mat-panel-title class="col-2 text-center">
+                                {{ordered.customer}}
                             </mat-panel-title>
 
-                              <mat-panel-title class="col-3 text-center">
-                                <b>{{total(ordered.order_items)}}</b>
+                            <mat-panel-title class="col-2 text-center">
+                                {{total(ordered.order_items,'qty')}}
+                            </mat-panel-title>
+
+                              <mat-panel-title class="col-2 text-center">
+                                <b>Rwf {{total(ordered.order_items,'total_amount')}}</b>
                               </mat-panel-title>
 
                           </mat-expansion-panel-header>
                             <div *ngIf="ordered.order_items.length > 0">
+                                <div class="w-100 float-right m-2">
+                                <button mat-raised-button color="primary" (click)="updateOrdered(ordered)" class="m-1">RESUME</button>
+                                <button mat-raised-button color="warn" (click)="deleteOrdered(ordered.id)" class="m-1 text-white">DELETE</button>
+                                </div>
                               <table class="w-100">
                                   <table class="table table-hover">
                                       <thead>

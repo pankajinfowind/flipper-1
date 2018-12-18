@@ -14,6 +14,7 @@ import { OrderItems } from '../cart/order_items';
 import { OrderModelService } from '../../orders/order-model.service';
 import { Orders } from '../../orders/orders';
 import { CurrentUser } from '../../common/auth/current-user';
+import { Business } from '../../business/api/business';
 
 @Component({
   selector: 'app-sale-point',
@@ -31,10 +32,12 @@ export class SalePointComponent implements OnInit {
   ordered_items = [];
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
+  business:Business;
   constructor(private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
   category_selected: Category;
   is_categry_clicked = false;
   ngOnInit() {
+    this.business=this.currentUser.get('business')[0];
     this.master$ = this.msterModelService.master$;
     this.stocks$ = this.modelService.stocks$;
 
@@ -50,7 +53,6 @@ export class SalePointComponent implements OnInit {
     if (!this.stocks$) return;
     this.stocks$.subscribe(res => {
       if (res) {
-        console.log('rrr', res['available']);
         this.categories = this.getRows(res['available']);
       }
     });
@@ -123,11 +125,11 @@ export class SalePointComponent implements OnInit {
           total_amount: 0, note: null, discount: 0, tax: 18, total_discount: 0, total_tax: 0, available_qty: stock.available_stock_qty, id: stock.id, item: stock.name, order_id: this.current_order ? this.current_order.id : 0, stock_id: stock.stock_id, each: '', price: stock.item.unit_sale, currency: stock.item.currency,
           qty: 1, total: ''
         };
-        cart_data.total = cart_data.currency + ' ' + (cart_data.qty * cart_data.price);
+        cart_data.total = this.business.currency_code + ' ' + (cart_data.qty * cart_data.price);
 
         cart_data.total_amount = (cart_data.qty * cart_data.price);
 
-        cart_data.each = cart_data.currency + ' ' + stock.item.unit_sale;
+        cart_data.each = this.business.currency_code + ' ' + stock.item.unit_sale;
 
         cart_data.total_tax = this.orderItemModelService.calcalTax(cart_data);
 

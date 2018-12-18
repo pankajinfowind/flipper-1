@@ -29,9 +29,9 @@ export class ApiPosService {
     public updateOrder(params: Orders,id:number): BackendResponse<{ data: Orders[] }> {
       return this.http.put(API_ROUTES.ORDER+'/'+id, params);
    }
-//    public delete(params:any): BackendResponse<{ data: Item[] }> {
-//     return this.http.post(API_ROUTES.DELETE,params);
-//  }
+   public deleteOrder(id:number): BackendResponse<{ data: Orders[] }> {
+    return this.http.delete(API_ROUTES.ORDER+'/'+id);
+ }
 //     public get(): BackendResponse<{ data: Item []}> {
 //       return this.http.get(API_ROUTES.ITEM);
 //   }

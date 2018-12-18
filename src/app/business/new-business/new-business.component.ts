@@ -49,7 +49,7 @@ export class NewBusinessComponent implements OnInit {
       description: new FormControl(""),
       tin: new FormControl(""),
       tax_charge: new FormControl(""),
-      currency_code: new FormControl("")
+      currency_code: new FormControl("Rwf")
     });
   }
   get name() {
@@ -79,6 +79,7 @@ export class NewBusinessComponent implements OnInit {
     if (this.businessForm.valid) {
       this.loading.next(true);
       this.v.response = [];
+      this.businessForm.value.currency_code=this.businessForm.value.currency_code?this.businessForm.value.currency_code:'Rwf';
      this.api.create(this.businessForm.value) .pipe(finalize(() =>  this.loading.next(false)))
      .subscribe(res=>{
       this.bootstrapper.bootstrap(res.data);

@@ -8,6 +8,8 @@ import { ApiPosService } from '../api/api.service';
 import { StockModelService } from '../../stock/stock-model.service';
 import { MasterModelService } from '../../admin/master/master-model.service';
 import { OrderModelService } from '../../orders/order-model.service';
+import { CurrentUser } from '../../common/auth/current-user';
+import { Category } from '../../admin/master/categories/api/category';
 
 
 describe("SaleComponent", () => {
@@ -27,8 +29,8 @@ describe("SaleComponent", () => {
         },
         {
             "category": {
-                "id": 1310,
-                "name": "ZOLPIDEM",
+                "id": 1312,
+                "name": "LK",
                 "active": 1,
                 "parent_id": 0,
                 "business_id": 42,
@@ -38,13 +40,13 @@ describe("SaleComponent", () => {
         },
         {
             "category": {
-                "id": 1310,
-                "name": "ZOLPIDEM",
+                "id": 1312,
+                "name": "LK",
                 "active": 1,
                 "parent_id": 0,
                 "business_id": 42,
-                "created_at": "2018-12-18 09:41:23",
-                "updated_at": "2018-12-18 09:41:23"
+                "created_at": "2018-12-18 09:41:21",
+                "updated_at": "2018-12-18 09:41:21"
             },
         },
         {
@@ -60,10 +62,19 @@ describe("SaleComponent", () => {
         }
     ];
 
-    let uniqueArray = [
+    let uniqueArray: Category = [
         {
             "id": 1310,
             "name": "ZOLPIDEM",
+            "active": 1,
+            "parent_id": 0,
+            "business_id": 42,
+            "created_at": "2018-12-18 09:41:23",
+            "updated_at": "2018-12-18 09:41:23"
+        },
+        {
+            "id": 1312,
+            "name": "LK",
             "active": 1,
             "parent_id": 0,
             "business_id": 42,
@@ -89,11 +100,15 @@ describe("SaleComponent", () => {
     const posModelService = jasmine.createSpyObj("PosModelService", [
         "master"
     ]);
+    const currentUser = jasmine.createSpyObj("CurrentUser", [
+        "master"
+    ]);
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [PosModule, HttpClientTestingModule],
             providers: [
                 { provide: PosModelService, useValue: posModelService },
+                { provide: CurrentUser, useValue: currentUser },
                 { provide: OrderItemsModelService, useValue: orderItemMockService },
                 { provide: OrderModelService, useValue: orderModelService },
                 { provide: ApiPosService, useValue: posmodelMockService },

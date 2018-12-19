@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 import { OrderModelService } from '../../orders/order-model.service';
 import { StockModelService } from '../../stock/stock-model.service';
 import { MasterModelService } from '../../admin/master/master-model.service';
+import { CurrentUser } from '../../common/auth/current-user';
 
 
 describe("CartItemComponent", () => {
@@ -32,9 +33,7 @@ describe("CartItemComponent", () => {
   const customerMockService = jasmine.createSpyObj("CustomerService", [
     "getCustomers"
   ]);
-  const orderModelService = jasmine.createSpyObj("orderModelService", [
-    "getRows"
-  ]);
+
   const posmodelMockService = jasmine.createSpyObj("ApiPosService", [
     "updateOrderItem"
   ]);
@@ -44,19 +43,19 @@ describe("CartItemComponent", () => {
   const model = jasmine.createSpyObj("MatDialog", [
     "dummy"
   ]);
-  const msterModelService = jasmine.createSpyObj("MasterModelService", [
-    "master"
-  ]);
   const posModelService = jasmine.createSpyObj("PosModelService", [
     "master"
   ]);
-
-
+  const currentUser = jasmine.createSpyObj("CurrentUser", [
+    "dummy"
+  ]);
+  let user: CurrentUser;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [PosModule, HttpClientTestingModule],
       providers: [
         { provide: ApiPosService, useValue: posmodelMockService },
+        { provide: currentUser, useValue: CurrentUser },
         { provide: OrderItemsModelService, useValue: orderItemMockService },
         { provide: PosModelService, useValue: posModelService },
         { provide: customerMockService, useValue: CustomerService },
@@ -67,6 +66,7 @@ describe("CartItemComponent", () => {
   }));
 
   beforeEach(() => {
+    user = TestBed.get(CurrentUser);
     service = TestBed.get(CustomerService);
     order = TestBed.get(OrderItemsModelService);
     pos = TestBed.get(PosModelService);

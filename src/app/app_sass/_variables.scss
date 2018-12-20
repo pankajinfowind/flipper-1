@@ -167,4 +167,8 @@ $drive-text-color: #656565;
     border-bottom-right-radius: 25px;
   }
 }
-
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -282,8 +282,6 @@ export class CartItemComponent implements OnInit {
           this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
           this.orderItemModelService.update([], 'all');
         }
-
-
       },
       _error => {
         console.error(_error);
@@ -295,8 +293,6 @@ export class CartItemComponent implements OnInit {
       this.deleteOrderedItem(element.id);
     }
     return this.orderItemModelService.update(element, status);
-
-    //return this.expandedElement = element;
   }
   deleteOrderedItem(id) {
     this.api.deleteOrderedItem(id).subscribe(deleted => {
@@ -316,11 +312,8 @@ export class CartItemComponent implements OnInit {
         //   this.selection = new SelectionModel<Item>(true, []);
         //  }
       });
-
     }
-
   }
-
   total(prop) {
     var total = 0;
     if (this.data.length > 0) {

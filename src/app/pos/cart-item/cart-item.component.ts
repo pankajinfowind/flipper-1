@@ -223,6 +223,7 @@ export class CartItemComponent implements OnInit {
   customers: Observable<Customer[]>;
 
   ngOnInit() {
+    this.getCustomers();
     if (this.currentUser.get('business')) {
       this.business = this.currentUser.get('business')[0];
     }
@@ -239,11 +240,9 @@ export class CartItemComponent implements OnInit {
         }
       });
     }
-
   }
-  listCustomers(): Observable<Customer[]> {
-    this.customers = this.customer.getCustomers();
-    return this.customers;
+  getCustomers(): Observable<Customer[]> {
+    return this.customers = this.customer.getCustomers();
   }
   updatePosLayout(panel = 'home') {
     this.posModelService.update({ panel_content: panel });
@@ -288,6 +287,7 @@ export class CartItemComponent implements OnInit {
       }
     );
   }
+
   update(element, status) {
     if (status == 'delete') {
       this.deleteOrderedItem(element.id);

@@ -16,7 +16,7 @@ import { OrderModelService } from '../../orders/order-model.service';
 import { StockModelService } from '../../stock/stock-model.service';
 import { MasterModelService } from '../../admin/master/master-model.service';
 import { CurrentUser } from '../../common/auth/current-user';
-import { BUSINESS, ROLE, USER } from '../../mock-data/MOCK';
+import { BUSINESS, ROLE, USER, CUSTOMER } from '../../mock-data/MOCK';
 
 
 describe("CartItemComponent", () => {
@@ -26,10 +26,7 @@ describe("CartItemComponent", () => {
   let order: OrderItemsModelService;
   let service: CustomerService;
   let customers: Observable<Customer[]>;
-  let customer: Array<Customer> = [
-    { name: "richie", id: 1 },
-    { name: "Mura", id: 2 }
-  ];
+  let customer: Array<Customer> = CUSTOMER;
   const customerMockService = jasmine.createSpyObj("CustomerService", [
     "getCustomers"
   ]);
@@ -51,7 +48,6 @@ describe("CartItemComponent", () => {
   const orderModelService = jasmine.createSpyObj("OrderModelService", [
     "dummy"
   ]);
-
   let user: CurrentUser;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -65,7 +61,6 @@ describe("CartItemComponent", () => {
         { provide: customerMockService, useValue: CustomerService },
         { provide: MatDialog, useValue: model }
       ]
-
     }).compileComponents();
   }));
 
@@ -84,13 +79,10 @@ describe("CartItemComponent", () => {
   });
   it("should list customers", () => {
     service.getCustomers = () => of(customer);
-    component.ngOnInit();
-    customers = component.listCustomers();
+    customers = component.getCustomers();
     customers.subscribe(cust => {
       expect(cust).toEqual(customer);
     });
-
-    // expect(customerMockService.getCustomers).toHaveBeenCalled(); // ?
   });
 
 });

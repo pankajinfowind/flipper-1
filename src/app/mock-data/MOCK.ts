@@ -3,6 +3,7 @@ import { Stock } from '../stock/api/stock';
 import { Business } from '../business/api/business';
 import { User } from '../common/core/types/models/User';
 import { Role } from '../common/core/types/models/Role';
+import { Customer } from '../customers/customer';
 
 export const CATEGORY_MOCK_DUPLICATE = [
     {
@@ -349,3 +350,23 @@ export const ROLE: Role = {
     "updated_at": "",
     "users": []
 }
+export const CUSTOMER: Customer[] = [{
+    "cstomer_no": "002",
+    "full_name": "Ganza Respice",
+    "email": "respinho2012@gmail.com",
+    "phone": "0781945189",
+    "address": "kigali,rwanda",
+    "city": "kigali",
+    "country": "Rwanda",
+    "user_id": "1",
+    "created_by": "1",
+    "insurance_number": "23939",
+    "insurance_type": "RAMA",
+    "misc": "he likes food",
+    "organization": "StreamUpBox",
+    "insurance_percentage": "15",
+    "insurance_expiration_date": "12",
+    "updated_at": "2018-12-20 12:21:50",
+    "created_at": "2018-12-20 12:21:50",
+    "id": 7
+}]

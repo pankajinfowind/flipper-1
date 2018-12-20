@@ -21,14 +21,13 @@ export class CustomerService {
     this.customers$ = this.model.data$;
     this.http = this.injector.get(HttpClient);
   }
-  public create(customer: Array<Customer>) {
+  create(customer: Array<Customer>) {
     return (this.model = this.modelFactory.create(customer));
   }
-
-  public getCustomers(): Observable<Customer[]> {
+  getCustomers() {
     return this.http.get<Customer[]>(this.ROOT_URL);
   }
-  public initCustomerList(customer: Observable<Customer[]>) {
+  initCustomerList(customer: Observable<Customer[]>) {
     customer.subscribe(cust => {
       this.modelFactory.create(cust);
     });

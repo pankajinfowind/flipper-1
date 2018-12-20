@@ -10,7 +10,6 @@ export class Pos {
   currently_ordered?: Orders;
   choose_customer?: Customer;
   panel_content?: string;
-
   constructor(params: Object = {}) {
     for (let name in params) {
       this[name] = params[name];

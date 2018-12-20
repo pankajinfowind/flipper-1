@@ -16,6 +16,7 @@ import { OrderModelService } from '../../orders/order-model.service';
 import { StockModelService } from '../../stock/stock-model.service';
 import { MasterModelService } from '../../admin/master/master-model.service';
 import { CurrentUser } from '../../common/auth/current-user';
+import { BUSINESS, ROLE, USER } from '../../mock-data/MOCK';
 
 
 describe("CartItemComponent", () => {
@@ -23,7 +24,6 @@ describe("CartItemComponent", () => {
   let fixture: ComponentFixture<CartItemComponent>;
   let pos: PosModelService;
   let order: OrderItemsModelService;
-
   let service: CustomerService;
   let customers: Observable<Customer[]>;
   let customer: Array<Customer> = [
@@ -33,7 +33,6 @@ describe("CartItemComponent", () => {
   const customerMockService = jasmine.createSpyObj("CustomerService", [
     "getCustomers"
   ]);
-
   const posmodelMockService = jasmine.createSpyObj("ApiPosService", [
     "updateOrderItem"
   ]);
@@ -49,13 +48,18 @@ describe("CartItemComponent", () => {
   const currentUser = jasmine.createSpyObj("CurrentUser", [
     "dummy"
   ]);
+  const orderModelService = jasmine.createSpyObj("OrderModelService", [
+    "dummy"
+  ]);
+
   let user: CurrentUser;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [PosModule, HttpClientTestingModule],
       providers: [
-        { provide: ApiPosService, useValue: posmodelMockService },
         { provide: currentUser, useValue: CurrentUser },
+        { provide: OrderModelService, useValue: orderModelService },
+        { provide: ApiPosService, useValue: posmodelMockService },
         { provide: OrderItemsModelService, useValue: orderItemMockService },
         { provide: PosModelService, useValue: posModelService },
         { provide: customerMockService, useValue: CustomerService },
@@ -67,12 +71,13 @@ describe("CartItemComponent", () => {
 
   beforeEach(() => {
     user = TestBed.get(CurrentUser);
+    user.init({ user: USER, guestsRole: ROLE });
     service = TestBed.get(CustomerService);
     order = TestBed.get(OrderItemsModelService);
     pos = TestBed.get(PosModelService);
     fixture = TestBed.createComponent(CartItemComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // ?
+    fixture.detectChanges();
   });
   it("should create", () => {
     expect(component).toBeTruthy();
@@ -80,10 +85,11 @@ describe("CartItemComponent", () => {
   it("should list customers", () => {
     service.getCustomers = () => of(customer);
     component.ngOnInit();
-    customers = component.cu();
+    customers = component.listCustomers();
     customers.subscribe(cust => {
       expect(cust).toEqual(customer);
     });
+
     // expect(customerMockService.getCustomers).toHaveBeenCalled(); // ?
   });
 

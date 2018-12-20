@@ -9,7 +9,7 @@ export class Role {
     guests: boolean;
     created_at?: string;
     updated_at?: string;
-    users?: User[];
+    users?: any[] | User[] = [];
 
     constructor(params: Object = {}) {
         for (let name in params) {

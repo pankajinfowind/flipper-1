@@ -36,10 +36,9 @@ export class CurrentUser {
   /**
    * Get property of currently logged in user model.
    */
-  user: any[];
   public get<K extends keyof User>(prop: K): User[K] {
-    this.user = this.current && this.current[prop];
-    return this.user;
+    return this.current && this.current[prop];
+
   }
 
   /**
@@ -128,34 +127,7 @@ export class CurrentUser {
     return false;
   }
 
-  // public getSubscription(filters: { gateway?: string, planId?: number } = {}): Subscription {
-  //     if (!this.isSubscribed()) return null;
 
-  //     let subs = this.current.subscriptions.slice();
-
-  //     if (filters.gateway) {
-  //         subs = subs.filter(sub => sub.gateway === filters.gateway);
-  //     }
-
-  //     if (filters.planId) {
-  //         subs = subs.filter(sub => sub.plan_id === filters.planId);
-  //     }
-
-  //     return subs[0];
-  // }
-
-  /**
-   * Set specified subscription on current user model.
-   */
-  // public setSubscription(subscription: Subscription) {
-  //     const i = this.current.subscriptions.findIndex(sub => sub.id === subscription.id);
-
-  //     if (i > -1) {
-  //         this.current.subscriptions[i] = subscription;
-  //     } else {
-  //         this.current.subscriptions.push(subscription);
-  //     }
-  // }
 
   /**
    * Check if current user is an admin.
@@ -194,15 +166,6 @@ export class CurrentUser {
 
     // merge role permissions
     const roles = this.get("roles") || [];
-    // roles.forEach((role: Role) => {
-    //     if (role) Object.assign(permissions, role.permissions);
-    // });
-
-    // merge billing plan permissions
-    // const subscription = this.getSubscription();
-    // if (subscription && subscription.plan) {
-    //     Object.assign(permissions, subscription.plan.permissions);
-    // }
 
     return (this.cachedPermissions = permissions);
   }

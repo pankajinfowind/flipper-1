@@ -8,15 +8,15 @@ export class Plan {
     name: string;
     amount: number;
     currency: string;
-    currency_symbol =  '$';
-    interval: 'day'|'week'|'month'|'year' = 'month';
+    currency_symbol = '$';
+    interval: 'day' | 'week' | 'month' | 'year' = 'month';
     interval_count = 1;
     parent_id: number = null;
     parent?: Plan;
     permissions: object = {};
-    recommended: 0|1 = 0;
-    show_permissions: 0|1 = 0;
-    free: 0|1 = 0;
+    recommended: 0 | 1 = 0;
+    show_permissions: 0 | 1 = 0;
+    free: 0 | 1 = 0;
     position = 0;
     features: string[] = [];
 
@@ -48,15 +48,15 @@ export class Subscription {
         }
     }
 }
-export class Settings{
-  apperance?:Appearance;
-  base_url:string;
-  version:string;
+export class Settings {
+    apperance?: Appearance;
+    base_url: string;
+    version: string;
 }
-export class Appearance{
-  navLinks:any[] = [{path:'',label:'Dashboard'},{path:'master',label:'Master'} ,{path:'stock',label:'Stock'},{path:'sold',label:'Sold'},{path:'pos',label:'Pos'}];
-  tabLayout ={color:'primary',backgroundColor:'primary',size:12};
-  navLayout={color:'accent',backgroundColor:'primary',size:12};
+export class Appearance {
+    navLinks: any[] = [{ path: '', label: 'Dashboard' }, { path: 'master', label: 'Master' }, { path: 'stock', label: 'Stock' }, { path: 'sold', label: 'Sold' }, { path: 'pos', label: 'Pos' }];
+    tabLayout = { color: 'primary', backgroundColor: 'primary', size: 12 };
+    navLayout = { color: 'accent', backgroundColor: 'primary', size: 12 };
 }
 export class User {
     id: number;
@@ -75,15 +75,15 @@ export class User {
     updated_at: string;
     is_subscribed?: boolean;
     confirmed: true;
-    roles?: Role[]=[];
-    business?: Business[]=[];
+    roles?: any[] | Role[] = [];
+    business?: Business[] = [];
     has_business_belongs?: boolean;
-    social_profiles?: SocialProfile[];
+    social_profiles?: any[] | SocialProfile[] = [];
     has_password?: boolean;
-    oauth?: Social[];
-    available_space?: number|null;
-    settings?:Settings
-    current:any;
+    oauth?: any[] | Social[] = [];
+    available_space?: number | null;
+    settings?: any | Settings
+    current: any;
     constructor(params: Object = {}) {
         for (let name in params) {
             this[name] = params[name];

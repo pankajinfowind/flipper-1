@@ -13,13 +13,13 @@ export class PosComponent implements OnInit {
   /**
      * Controls left column visibility.
      */
-    public leftColumnIsHidden = false;
-    isMobile=false;
-    pos$: Observable<Pos>;
-  constructor(private posModelService:PosModelService) { }
+  // public leftColumnIsHidden = false;
+  // isMobile = false;
+  // pos$: Observable<Pos>;
+  // constructor(private posModelService: PosModelService) { }
 
 
   ngOnInit() {
-    this.pos$ = this.posModelService.pos$;
+    // this.pos$ = this.posModelService.pos$;
   }
 }

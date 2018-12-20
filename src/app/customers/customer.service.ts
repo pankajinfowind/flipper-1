@@ -24,6 +24,7 @@ export class CustomerService {
   public create(customer: Array<Customer>) {
     return (this.model = this.modelFactory.create(customer));
   }
+
   public getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.ROOT_URL);
   }

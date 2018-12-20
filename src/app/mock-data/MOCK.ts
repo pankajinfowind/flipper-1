@@ -1,5 +1,8 @@
 import { Category } from '../admin/master/categories/api/category';
 import { Stock } from '../stock/api/stock';
+import { Business } from '../business/api/business';
+import { User } from '../common/core/types/models/User';
+import { Role } from '../common/core/types/models/Role';
 
 export const CATEGORY_MOCK_DUPLICATE = [
     {
@@ -218,3 +221,131 @@ export const STOCK: Stock[] = [
         "available": [],
     }
 ];
+export const BUSINESS: Business[] = [
+    {
+        "bussiness_id": 42,
+        "name": "4amv",
+        "type": "pharmacy",
+        "address": "kigali,rwanda",
+        "tin": null,
+        "tax_charge": null,
+        "currency_code": null,
+        "currency_symbol": null,
+        "web_url": null,
+        "zip_code": null,
+        "description": "for pharmacy",
+        "is_active": true,
+        "created_at": "2018-12-18 09:39:53",
+        "updated_at": "2018-12-18 09:39:53",
+        "user_logged_in": {
+            "id": 6,
+            "yego_user_id": null,
+            "username": null,
+            "first_name": null,
+            "last_name": null,
+            "avatar": null,
+            "address": null,
+            "phone": null,
+            "company": null,
+            "website_url": null,
+            "location": null,
+            "language": null,
+            "country": null,
+            "timezone": null,
+            "bio": null,
+            "email": "ganza@yegobox.com",
+            "created_at": "2018-12-13 10:25:01",
+            "updated_at": "2018-12-13 10:25:01"
+        },
+        "user_logged_role": {
+            "id": 42,
+            "name": "admin",
+            "display_name": "4amv-admin",
+            "description": null,
+            "created_at": "2018-12-18 09:41:23",
+            "updated_at": "2018-12-18 09:41:23"
+        },
+        "branches": [
+            {
+                "id": 37,
+                "name": "kigali,rwanda",
+                "business_id": 42,
+                "active": 1,
+                "created_at": "2018-12-18 09:41:23",
+                "updated_at": "2018-12-18 09:41:23"
+            }
+        ],
+        "users_belongs": [
+            {
+                "id": 6,
+                "yego_user_id": null,
+                "username": null,
+                "first_name": null,
+                "last_name": null,
+                "avatar": null,
+                "address": null,
+                "phone": null,
+                "company": null,
+                "website_url": null,
+                "location": null,
+                "language": null,
+                "country": null,
+                "timezone": null,
+                "bio": null,
+                "email": "ganza@yegobox.com",
+                "created_at": "2018-12-13 10:25:01",
+                "updated_at": "2018-12-13 10:25:01",
+                "pivot": {
+                    "business_id": 42,
+                    "user_id": 6
+                }
+            }
+        ],
+        "can_view_business": true,
+        "can_edit_business": true,
+        "can_delete_business": true,
+        "can_view_users": true,
+        "can_grant_users": true,
+        "can_revoke_users": true
+    }
+];
+
+export const USER: User = {
+    "id": 1,
+    "display_name": "richie",
+    "username": "Richie",
+    "first_name": "Mura",
+    "last_name": "Mura",
+    "avatar": "",
+    "permissions": "",
+    "email": "",
+    "password": "",
+    "language": "",
+    "timezone": "",
+    "country": "",
+    "created_at": "",
+    "updated_at": "",
+    "is_subscribed": true,
+    "confirmed": true,
+    "roles": [],
+    "business": BUSINESS,
+    "has_business_belongs": true,
+    "social_profiles": [],
+    "has_password": true,
+    "oauth": [],
+    "available_space": 2,
+    "settings": "",
+    "current": ""
+};
+
+export const ROLE: Role = {
+    "id": 1,
+    "name": "role",
+    "display_name": "role",
+    "permissions": "e,d",
+    "default": false,
+    "guests": false,
+    "created_at": "",
+    "updated_at": "",
+    "users": []
+}

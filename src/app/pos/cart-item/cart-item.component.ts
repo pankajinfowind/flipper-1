@@ -44,7 +44,6 @@ export class CartDialog implements OnInit {
     private msterModelService: MasterModelService,
     private api: ApiPosService,
     private orderItemModelService: OrderItemsModelService,
-    private toast: Toast,
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
     this.cart_item = this.data.data;
@@ -224,7 +223,7 @@ export class CartItemComponent implements OnInit {
   customers: Observable<Customer[]>;
 
   ngOnInit() {
-    if (this.currentUser.user) {
+    if (this.currentUser.get('business')) {
       this.business = this.currentUser.get('business')[0];
     }
     this.pos$ = this.posModelService.pos$;
@@ -242,9 +241,9 @@ export class CartItemComponent implements OnInit {
     }
 
   }
-  cu(): Observable<Customer[]> {
+  listCustomers(): Observable<Customer[]> {
     this.customers = this.customer.getCustomers();
-    return this.customers; // ?
+    return this.customers;
   }
   updatePosLayout(panel = 'home') {
     this.posModelService.update({ panel_content: panel });

@@ -129,9 +129,9 @@ export class SalePointComponent implements OnInit {
           total_amount: 0, note: null, discount: 0, tax: 18, total_discount: 0, total_tax: 0, available_qty: stock.available_stock_qty, id: stock.id, item: stock.name, order_id: this.current_order ? this.current_order.id : 0, stock_id: stock.stock_id, each: '', price: stock.item.unit_sale, currency: stock.item.currency,
           qty: 1, total: ''
         };
-        cart_data.total = this.business.currency_code + ' ' + (cart_data.qty * parseInt(cart_data.price));
+        cart_data.total = this.business.currency_code + ' ' + (cart_data.qty * cart_data.price);
 
-        cart_data.total_amount = (cart_data.qty * parseInt(cart_data.price));
+        cart_data.total_amount = (cart_data.qty * cart_data.price);
 
         cart_data.each = this.business.currency_code + ' ' + stock.item.unit_sale;
 

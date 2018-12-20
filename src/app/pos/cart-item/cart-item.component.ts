@@ -105,7 +105,7 @@ export class CartDialog implements OnInit {
 
     }
   }
-  increseDescrise(sign) {
+  increaseDecrease(sign) {
     if (sign == '+') {
       //case of puls
       if (this.status == 'Quantity') {

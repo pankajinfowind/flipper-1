@@ -7,7 +7,7 @@ export class OrderItems {
   currency?: any;
   qty?: number;
   total?: any;
-  price?: string;
+  price?: number;
   total_discount?: number;
   total_amount?: number;
   total_tax?: number;

@@ -28,7 +28,7 @@ export class SalePointComponent implements OnInit {
   stocks$: Observable<Stock[]>;
   pos$: Observable<Pos>;
   is_order_currently = false;
-  current_order = null;
+  current_order = null; //TODO: why this has no type?
   ordered_items = [];
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
@@ -37,14 +37,13 @@ export class SalePointComponent implements OnInit {
   category_selected: Category;
   is_categry_clicked = false;
   ngOnInit() {
-    //this.business=this.currentUser.get('business')[0];
+    if (this.currentUser.user) {
+      this.business = this.currentUser.user[0]; // ?
+    }
     this.master$ = this.msterModelService.master$;
     this.stocks$ = this.modelService.stocks$;
-
     this.pos$ = this.posModelService.pos$;
-
     this.order$ = this.orderModelService.order$;
-
     this.order_items$ = this.orderItemModelService.order_items$;
     this.getCurrentOrder();
     this.getCategories();
@@ -84,6 +83,7 @@ export class SalePointComponent implements OnInit {
       return cat;
     };
   }
+  //TODO:Ithink this function is not useful check with Ganza
   pushCat(cat) {
     const cats = [];
     if (cat.length > 0) {
@@ -117,9 +117,10 @@ export class SalePointComponent implements OnInit {
 
 
 
-  addItemToCart(stock) {
-    this.getCurrentOrder();
+  addItemToCart(stock: Stock) {
 
+    if (!this.business) return;
+    this.getCurrentOrder();
     if (this.is_categry_clicked) {
       if (stock.available_stock_qty === 0) {
         alert("Stock Quantity is unavailable");
@@ -128,9 +129,9 @@ export class SalePointComponent implements OnInit {
           total_amount: 0, note: null, discount: 0, tax: 18, total_discount: 0, total_tax: 0, available_qty: stock.available_stock_qty, id: stock.id, item: stock.name, order_id: this.current_order ? this.current_order.id : 0, stock_id: stock.stock_id, each: '', price: stock.item.unit_sale, currency: stock.item.currency,
           qty: 1, total: ''
         };
-        cart_data.total = this.business.currency_code + ' ' + (cart_data.qty * cart_data.price);
+        cart_data.total = this.business.currency_code + ' ' + (cart_data.qty * parseInt(cart_data.price));
 
-        cart_data.total_amount = (cart_data.qty * cart_data.price);
+        cart_data.total_amount = (cart_data.qty * parseInt(cart_data.price));
 
         cart_data.each = this.business.currency_code + ' ' + stock.item.unit_sale;
 

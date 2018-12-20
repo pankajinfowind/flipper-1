@@ -36,8 +36,10 @@ export class CurrentUser {
   /**
    * Get property of currently logged in user model.
    */
+  user: any[];
   public get<K extends keyof User>(prop: K): User[K] {
-    return this.current && this.current[prop];
+    this.user = this.current && this.current[prop];
+    return this.user;
   }
 
   /**

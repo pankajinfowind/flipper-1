@@ -10,78 +10,16 @@ import { MasterModelService } from '../../admin/master/master-model.service';
 import { OrderModelService } from '../../orders/order-model.service';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Category } from '../../admin/master/categories/api/category';
+import { CATEGORY_MOCK_DUPLICATE, CATEGORY_UNIQUE, STOCK } from '../../mock-data/MOCK';
+
 
 
 describe("SaleComponent", () => {
     let component: SalePointComponent;
     let fixture: ComponentFixture<SalePointComponent>;
-    let duplicate = [
-        {
-            "category": {
-                "id": 1310,
-                "name": "ZOLPIDEM",
-                "active": 1,
-                "parent_id": 0,
-                "business_id": 42,
-                "created_at": "2018-12-18 09:41:23",
-                "updated_at": "2018-12-18 09:41:23"
-            }
-        },
-        {
-            "category": {
-                "id": 1312,
-                "name": "LK",
-                "active": 1,
-                "parent_id": 0,
-                "business_id": 42,
-                "created_at": "2018-12-18 09:41:23",
-                "updated_at": "2018-12-18 09:41:23"
-            },
-        },
-        {
-            "category": {
-                "id": 1312,
-                "name": "LK",
-                "active": 1,
-                "parent_id": 0,
-                "business_id": 42,
-                "created_at": "2018-12-18 09:41:21",
-                "updated_at": "2018-12-18 09:41:21"
-            },
-        },
-        {
-            "category": {
-                "id": 1310,
-                "name": "ZOLPIDEM",
-                "active": 1,
-                "parent_id": 0,
-                "business_id": 42,
-                "created_at": "2018-12-18 09:41:23",
-                "updated_at": "2018-12-18 09:41:23"
-            }
-        }
-    ];
+    let duplicate = CATEGORY_MOCK_DUPLICATE;
 
-    let uniqueArray: Category = [
-        {
-            "id": 1310,
-            "name": "ZOLPIDEM",
-            "active": 1,
-            "parent_id": 0,
-            "business_id": 42,
-            "created_at": "2018-12-18 09:41:23",
-            "updated_at": "2018-12-18 09:41:23"
-        },
-        {
-            "id": 1312,
-            "name": "LK",
-            "active": 1,
-            "parent_id": 0,
-            "business_id": 42,
-            "created_at": "2018-12-18 09:41:23",
-            "updated_at": "2018-12-18 09:41:23"
-        }
-    ];
+    let uniqueArray: Category[] = CATEGORY_UNIQUE;
     const orderModelService = jasmine.createSpyObj("orderModelService", [
         "getRows"
     ]);
@@ -118,7 +56,6 @@ describe("SaleComponent", () => {
 
         }).compileComponents();
     }));
-
     beforeEach(() => {
         fixture = TestBed.createComponent(SalePointComponent);
         component = fixture.componentInstance;
@@ -130,6 +67,14 @@ describe("SaleComponent", () => {
     it("should remove duplicate from array", () => {
         const dpl = component.getRows(duplicate);
         expect(dpl).toEqual(uniqueArray);
+    });
+    it("should push item into cat", () => {
+        // expect(component.C).toEqual();
+    });
+    it("should add itemToCatd", () => {
+        component.is_categry_clicked = true;
+        component.addItemToCart(STOCK[0]);
+
     });
     it("should return [] when passed undefined or null", () => {
         const dpl = component.getRows(undefined);

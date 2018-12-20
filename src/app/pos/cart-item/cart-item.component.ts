@@ -86,7 +86,7 @@ export class CartDialog implements OnInit {
     }
   }
 
-  displays(nums) {
+  keysClicked(nums) {
     if (this.status == 'Quantity') {
       if (nums == 'x') {
         this.cart_item.qty = 0;
@@ -256,7 +256,7 @@ export class CartItemComponent implements OnInit {
   }
 
   deleteOrdered() {
-    let result = confirm("Are you sure,you want to delete this order?");
+    let result = confirm("Are you sure,you want to delete this current transction?");
     if (result) {
       this.api.deleteOrder(this.currently_ordered.id).subscribe(
         res => {
@@ -264,6 +264,7 @@ export class CartItemComponent implements OnInit {
             this.posModelService.update({ currently_ordered: null });
             this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
             this.orderItemModelService.update([], 'all');
+            this. updatePosLayout('home');
           }
 
         },
@@ -282,6 +283,7 @@ export class CartItemComponent implements OnInit {
           this.posModelService.update({ currently_ordered: null });
           this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
           this.orderItemModelService.update([], 'all');
+          this. updatePosLayout('home');
         }
 
 

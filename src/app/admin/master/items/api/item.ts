@@ -6,7 +6,7 @@ export class Item {
   upc?: number;
   summary?: string;
   manufacturer?: string;
-  unit_cost: string;
+  unit_cost: number;
   category_id?: number;
   cover: string;
   business_id: number;
@@ -15,7 +15,7 @@ export class Item {
 
   category?: { id: number, active: number, parent_id: number, business_id: number, created_at: string, updated_at: string, name: string };
   barcode?: string;
-  unit_sale?: string;
+  unit_sale?: number;
   currency?: string;
 
 

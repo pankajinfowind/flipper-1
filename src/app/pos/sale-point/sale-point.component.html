@@ -54,14 +54,15 @@
             </div>
 
             <div *ngIf="pos$">
-              <mat-card class="m-4 panel-center" *ngIf="(pos$ | async).panel_content!=='home'">
+              <mat-card class="m-4 panel-center" *ngIf="(pos$ | async).panel_content!=='home' && (pos$ | async).panel_content!='pay'">
                 <div *ngIf="(pos$ | async).panel_content=='customers'">
                   customer
-
                 </div>
                 <app-orders *ngIf="(pos$ | async).panel_content=='orders'"></app-orders>
-                <app-pay *ngIf="(pos$ | async).panel_content=='pay'"></app-pay>
               </mat-card>
+
+                <app-pay *ngIf="(pos$ | async).panel_content=='pay'"></app-pay>
+
             </div>
           </div>
     </div>

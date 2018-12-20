@@ -1,102 +1,108 @@
-<!--
-    <div class="modal-header">
-        <h2 mat-dialog-title trans>Orders</h2>
-        <button type="button" mat-icon-button (click)="updatePosLayout('home')" class="close-button">
-            <mat-icon>close</mat-icon>
-        </button>
+<div class="primary-section-screen-replacement__page-content flipper-pay-panel">
+  <div class="iscroll__wrapper flipper-pay-panel__items-iscroll-wrapper">
+    <div class="flipper-pay-panel__items-iscroll-scroller" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+      <div class="flipper-pay-panel__cash-entry primary-section-screen-replacement__card">
+        <ul class="button-group button-group--inline flipper-pay-panel__function-buttons">
+          <!-- <li class="button-group__button flipper-pay-panel__list-button">Show Tenders</li>
+          <li class="button-group__button flipper-pay-panel__list-button">Tax Exemption</li>
+          <li class="button-group__button flipper-pay-panel__list-button">Split by item</li> -->
+        </ul>
+        <div class="flipper-pay-panel__numeric-selector-container">
+          <div class="flipper-pay-panel__numeric-selector">
+            <div class="flipper-pay-panel__predefined-container">
+              <ul class="flipper-pay-panel__predefined-inner">
+                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£5</li>
+                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£10</li>
+                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£20</li>
+                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£2</li>
+              </ul>
+            </div>
+            <div class="flipper-pay-panel__numeric-selector-display-container">
+              <div class="flipper-pay-panel__numeric-selector-display">
+                <!-- react-text: 803 -->£
+                <!-- /react-text -->
+                <!-- react-text: 804 -->
+                <!-- /react-text -->
+              </div>
+              <div class="flipper-pay-panel__num-pad num-pad--dark num-pad">
+                <div class="num-pad__inner">
+                  <div class="num-pad__top">
+                    <div class="num-pad__row"><span data-qa-id="numpad__digit-1" class="Tappable-inactive num-pad__tappable"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">1</div>
+                      </span><span data-qa-id="numpad__digit-2" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">2</div>
+                      </span><span data-qa-id="numpad__digit-3" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">3</div>
+                      </span></div>
+                    <div class="num-pad__row"><span data-qa-id="numpad__digit-4" class="Tappable-inactive num-pad__tappable"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">4</div>
+                      </span><span data-qa-id="numpad__digit-5" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">5</div>
+                      </span><span data-qa-id="numpad__digit-6" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">6</div>
+                      </span></div>
+                    <div class="num-pad__row"><span data-qa-id="numpad__digit-7" class="Tappable-inactive num-pad__tappable"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">7</div>
+                      </span><span data-qa-id="numpad__digit-8" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">8</div>
+                      </span><span data-qa-id="numpad__digit-9" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">9</div>
+                      </span></div>
+                  </div>
+                  <div class="num-pad__row num-pad__bottom"><span data-qa-id="numpad__digit-decimal" class="Tappable-inactive num-pad__tappable"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                      <div class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__decimal-point-key">.</div>
+                    </span><span data-qa-id="numpad__digit-0" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                      <div class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__zero-key">0</div>
+                    </span><span data-qa-id="numpad__digit-delete" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                      <div class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__delete-key"><svg viewBox="0 0 24 24"
+                          preserveAspectRatio="xMidYMid meet" style="width: 1.5rem; height: 2rem; fill: rgb(255, 255, 255);">
+                          <g>
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"></path>
+                          </g>
+                        </svg></div>
+                    </span></div>
+                </div>
+              </div>
+            </div>
+            <div class="flipper-pay-panel__summary">
+              <ul class="flipper-pay-panel__summary--left">
+                <li class="flipper-pay-panel__summary--label">Amount Due</li>
+                <li class="flipper-pay-panel__summary--amount-due">£1.05</li>
+                <li class="flipper-pay-panel__summary--label">Tax</li>
+                <li>£0.18</li>
+                <li class="flipper-pay-panel__summary--label">Basket Discount</li>
+                <li>£0.00</li>
+              </ul>
+              <ul class="flipper-pay-panel__summary--right">
+                <li class="flipper-pay-panel__summary--label">Item Discount</li>
+                <li>£0.00</li>
+                <li class="flipper-pay-panel__summary--label">Customer Discount</li>
+                <li>£0.00</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+        <ul class="button-group button-group--inline flipper-pay-buttons">
+          <li class="button-group__button flipper-pay-panel__list-button">
+            <div class="flipper-pay-panel__list-button-label">Cash</div>
+          </li>
+          <li class="button-group__button flipper-pay-panel__list-button">
+            <div class="flipper-pay-panel__list-button-label">Card</div>
+          </li>
+
+          <li class="button-group__button flipper-pay-panel__list-button">
+            <div class="flipper-pay-panel__list-button-label">Gift Voucher</div>
+          </li>
+        </ul>
+        <ul class="button-group button-group--inline flipper-pay-buttons"></ul>
+      </div>
     </div>
-
-        <mat-dialog-content class="many-inputs">
-          <mat-tab-group>
-            <mat-tab *ngIf="held_orders.length">
-                <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">pause</mat-icon>
-                    HELD
-                  </ng-template>
-            </mat-tab>
-
-            <mat-tab *ngIf="ordered_orders.length > 0">
-                <ng-template mat-tab-label>
-                  <mat-icon class="example-tab-icon">list_alt</mat-icon>
-                  ORDERED
-                </ng-template>
-                <br />
-                    <mat-accordion class="m-2 row">
-                        <div class="col-3">
-                          Time
-                        </div>
-                        <div class="col-3 text-center">
-                          Customer
-                        </div>
-                        <div class="col-3 text-center">
-                            Items
-                          </div>
-                        <div class="col-3 text-center">
-                            Total
-                          </div>
-                        <mat-expansion-panel class="w-100" *ngFor="let ordered of ordered_orders" (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false">
-                          <mat-expansion-panel-header>
-                            <mat-panel-title class="col-3">
-                              {{ordered.created_at | date:'fullDate'}}
-                            </mat-panel-title>
-
-                            <mat-panel-title class="col-3 text-center">
-                                {{ordered.customer_id}}
-                              </mat-panel-title>
-
-                            <mat-panel-title class="col-3 text-center">
-                                {{ordered.order_items.length}}
-                            </mat-panel-title>
-
-                              <mat-panel-title class="col-3 text-center">
-                                <b>{{total(ordered.order_items)}}</b>
-                              </mat-panel-title>
-
-                          </mat-expansion-panel-header>
-                            <div *ngIf="ordered.order_items.length > 0">
-                              <table class="w-100">
-                                  <table class="table table-hover">
-                                      <thead>
-                                        <tr>
-                                          <th>Item</th>
-                                          <th>Qty</th>
-                                          <th>Each</th>
-                                          <th>Total</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody *ngFor="let ord_items of ordered.order_items">
-                                          <tr>
-                                              <th>{{ord_items.item}}</th>
-                                              <th>{{ord_items.qty}}</th>
-                                              <th>{{ord_items.each}}</th>
-                                              <th>{{ord_items.total}}</th>
-                                            </tr>
-                                        </tbody>
-                                      </table>
-                              </table>
-                            </div>
-
-                        </mat-expansion-panel>
-                      </mat-accordion>
-
-            </mat-tab>
-
-            <mat-tab *ngIf="pending_orders.length">
-              <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">access_time</mat-icon>
-                PENDING
-              </ng-template>
-            </mat-tab>
-            <mat-tab *ngIf="complete_orders.length">
-                <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">done</mat-icon>
-                    COMPLETE
-                  </ng-template>
-              Content 3
-            </mat-tab>
-          </mat-tab-group>
-        </mat-dialog-content>
-
- -->
- pay
+  </div>
+</div>

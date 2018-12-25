@@ -25,14 +25,12 @@ describe('ListComponent', () => {
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
   }));
   it('should create', () => {
     expect(component).toBeTruthy();
   });
   it("should list customers given []", () => {
     cusomerServiceInstance.getCustomers = () => of(CUSTOMER);
-
     let customers = component.listCustomers();
     customers.subscribe(cust => {
       // expect(cust).toEqual(customer);
@@ -45,5 +43,4 @@ describe('ListComponent', () => {
   it("should edit a customer", () => {
 
   });
-
 });

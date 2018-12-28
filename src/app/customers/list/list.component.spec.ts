@@ -8,7 +8,7 @@ import { CUSTOMER } from '../../mock-data/MOCK';
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
-  let customerServiceMock = jasmine.createSpyObj("CustomerService", ["mock"]);
+  let customerServiceMock = jasmine.createSpyObj("CustomerService", ["getCustomers"]);
   let cusomerServiceInstance: CustomerService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,9 +33,9 @@ describe('ListComponent', () => {
     cusomerServiceInstance.getCustomers = () => of(CUSTOMER);
     let customers = component.listCustomers();
     customers.subscribe(cust => {
-      // expect(cust).toEqual(customer);
+      expect(cust).toEqual(CUSTOMER);
     });
-    // expect(customerServiceMock.getCustomers).toHaveBeenCalled(); // ?
+    expect(customerServiceMock.getCustomers).toHaveBeenCalled();
   });
   it("should add a new customers", () => {
 

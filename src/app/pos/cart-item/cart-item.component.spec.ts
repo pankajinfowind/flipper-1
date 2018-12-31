@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CartItemComponent } from "./cart-item.component";
 import { PosModule } from "../pos.module";
-import { ModelFactory } from "ngx-model";
 import { CustomerService } from "../../customers/customer.service";
 import { of } from "rxjs/internal/observable/of";
 import { Customer } from "../../customers/customer";
@@ -42,13 +41,12 @@ describe("CartItemComponent", () => {
   const posModelService = jasmine.createSpyObj("PosModelService", [
     "master"
   ]);
-  const currentUser = jasmine.createSpyObj("CurrentUser", [
-    "dummy"
-  ]);
   const orderModelService = jasmine.createSpyObj("OrderModelService", [
     "dummy"
   ]);
-  let user: CurrentUser;
+  let user, currentUser: CurrentUser = jasmine.createSpyObj("CurrentUser", [
+    "dummy"
+  ]);
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [PosModule, HttpClientTestingModule],

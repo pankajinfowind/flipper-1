@@ -3,15 +3,16 @@ import { Customer } from "./customer";
 import { ModelFactory, Model } from "ngx-model";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { AppHttpClient } from '../common/core/http/app-http-client.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class CustomerService {
   public model: Model<Customer[]>;
-  ROOT_URL = "secure/customers";
+  ROOT_URL = "customers";
   customers$: Observable<Customer[]>;
-  protected http: HttpClient;
+  protected http: AppHttpClient;
   custObs: Observable<Customer[]>;
   constructor(
     public modelFactory: ModelFactory<Customer[]>,
@@ -19,13 +20,16 @@ export class CustomerService {
   ) {
     this.model = this.modelFactory.create([]);
     this.customers$ = this.model.data$;
-    this.http = this.injector.get(HttpClient);
+    this.http = this.injector.get(AppHttpClient);
   }
-  create(customer: Array<Customer>) {
-    return (this.model = this.modelFactory.create(customer));
+  createCustomer(customer: Partial<Customer>): Observable<Customer> {
+    return this.http.post<Customer>(this.ROOT_URL, customer);
   }
   getCustomers() {
     return this.http.get<Customer[]>(this.ROOT_URL);
+  }
+  editCustomer(customer: Partial<Customer>): Observable<Customer> {
+    return this.http.put<Customer>(this.ROOT_URL, customer);
   }
   initCustomerList(customer: Observable<Customer[]>) {
     customer.subscribe(cust => {

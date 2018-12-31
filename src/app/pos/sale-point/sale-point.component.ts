@@ -37,8 +37,8 @@ export class SalePointComponent implements OnInit {
   category_selected: Category;
   is_categry_clicked = false;
   ngOnInit() {
-    if (this.currentUser.user) {
-      this.business = this.currentUser.user[0]; // ?
+    if (this.currentUser.get) {
+      this.business = this.currentUser.get[0];
     }
     this.master$ = this.msterModelService.master$;
     this.stocks$ = this.modelService.stocks$;
@@ -174,13 +174,13 @@ export class SalePointComponent implements OnInit {
       }
     );
   }
+
   createNewOrder(params) {
     this.posModelService.update({ loading: true });
     this.api.createOrder(params).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
       res => {
         if (res['order']) {
           this.posModelService.update({ currently_ordered: res['order'] });
-          console.log(res['order']['order_items'][0]);
           this.orderItemModelService.update(res['order']['order_items'][0]);
           // this.updateOrderItemApi(res['order']['order_items']);
         }

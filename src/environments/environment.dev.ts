@@ -6,5 +6,5 @@
 export const AppConfig = {
   production: false,
   environment: "DEV",
-  url: "https://flipper.yegobox.rw/"
+  url: "http://localhost:8000/"
 };

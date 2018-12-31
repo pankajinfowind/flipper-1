@@ -1,3 +1,15 @@
-<p>
-  list works!
-</p>
+<li *ngFor="let customer of customers">
+  <span style="color:black;">{{customer.full_name}}</span>
+</li>
+<div class="add-customer">
+  <form [formGroup]="register_customer_form">
+    <input placeholder="full name" formControlName="full_name" type="text"><br>
+    <input placeholder="email" formControlName="email" type="text"><br>
+    <input placeholder="customer no" formControlName="cstomer_no" type="text"><br>
+    <input placeholder="Phone" formControlName="phone" type="text"><br>
+
+    <button mat-button class="add-customer-button" type="submit" (click)="addCustomer()">
+      Submit
+    </button>
+  </form>
+</div>

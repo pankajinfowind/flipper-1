@@ -8,56 +8,38 @@ import {
   HttpTestingController
 } from "@angular/common/http/testing";
 
-import { of } from "rxjs/observable/of";
-import { Observable } from "rxjs";
+import { CUSTOMER } from '../mock-data/MOCK';
 
 describe("CustomerService", () => {
   let service: CustomerService;
   let httpMock: HttpTestingController;
-
-  let customer: Array<Customer> = [
-    { name: "richie", id: 1 },
-    { name: "Mura", id: 2 }
-  ];
+  let customer: Array<Customer> = CUSTOMER;
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [ModelFactory, CustomerService]
-    })
+    }).compileComponents()
   );
   afterEach(() => {
     httpMock.verify();
   });
   beforeEach(() => {
     service = TestBed.get(CustomerService);
-    customer = service.create(customer).get();
     httpMock = TestBed.get(HttpTestingController);
   });
   it("should be created", () => {
     expect(service).toBeTruthy();
   });
-  it("should create a customer", () => {
-    expect(service.model.get()).toEqual(customer);
-  });
-  it("should list customers", () => {
+
+  it("should list customers", (done) => {
     service.getCustomers().subscribe(customers => {
-      expect(customers.length).toBe(2);
+      expect(customers.length).toBe(1);
       expect(customers).toEqual(customer);
     });
-    const request = httpMock.expectOne(`${service.ROOT_URL}`);
+    const request = httpMock.expectOne(`http://localhost:8000/secure/${service.ROOT_URL}`);
     expect(request.request.method).toBe("GET");
     request.flush(customer);
+    done();
   });
-  it("should Init customer List", () => {
-    let customer: Observable<Customer[]> = of([
-      { name: "richie", id: 1 },
-      { name: "Mura", id: 2 }
-    ]);
-    service.initCustomerList(customer).subscribe(cust => {
-      expect(cust).toEqual([
-        { name: "richie", id: 1 },
-        { name: "Mura", id: 2 }
-      ]);
-    });
-  });
+
 });

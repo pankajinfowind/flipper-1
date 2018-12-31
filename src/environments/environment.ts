@@ -1,5 +1,5 @@
 export const AppConfig = {
   production: false,
   environment: "dev",
-  url: "https://flipper.yegobox.rw/"
+  url: "http://localhost:8000/"
 };

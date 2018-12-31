@@ -5,9 +5,9 @@ export interface Customer {
   address?: string;
   city?: string;
   country?: string;
-  user_id: string;
+  user_id?: string;
   updated_at?: string;
-  created_at: string;
+  created_at?: string;
   id?: number;
   created_by?: string;
   insurance_number?: string;
@@ -19,5 +19,14 @@ export interface Customer {
   cstomer_no?: string;
   customer_insurance_number?: string;
   create_by?: string;
-  misc?: string; // to be used in case you want to add anything
+  misc?: string;
+  customer_created?: {
+    cstomer_no: string;
+    full_name: string;
+    email: string;
+    phone: string;
+    updated_at: string;
+    created_at: string;
+    id: number;
+  } // to be used in case you want to add anything
 }

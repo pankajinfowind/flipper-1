@@ -28,7 +28,6 @@ describe('ReportManagerComponent', () => {
     expect(component).toBeTruthy();
   });
   it("should set report type", () => {
-    const tyep = "sale";
     component.setReportType("sale");
     expect(component.reportType).toEqual("sale");
   })

@@ -4,7 +4,7 @@
   display: block;
   padding: 24px;
   margin-top:3px;
-
+  height: calc(100%  - #{$admin-nav-height+1});
   .details-list {
     .item {
       display: flex;

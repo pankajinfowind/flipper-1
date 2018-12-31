@@ -1,9 +1,8 @@
-export class Category {
+export class Pricing {
   name?: string;
   id?: number;
-  category_id?: number;
+  pricing_id?: number;
   active?: number;
-  color?:string;
   parent_id?: number;
   business_id?: number;
   created_at?: any;

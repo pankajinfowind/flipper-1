@@ -3,10 +3,11 @@
    <mat-tab label="Details">
            <div  class="details-panel">
              <div>
-              <mat-progress-bar *ngIf="percentage(entry.available_stock_qty,entry.entry_stock_qty) >= 70" [mode]="determinate" [color]="accent" [value]="percentage(entry.available_stock_qty,entry.entry_stock_qty)"></mat-progress-bar>
-              <mat-progress-bar *ngIf="percentage(entry.available_stock_qty,entry.entry_stock_qty) < 70 && percentage(entry.available_stock_qty,entry.entry_stock_qty) >= 40" [mode]="determinate"  [value]="percentage(entry.available_stock_qty,entry.entry_stock_qty)"></mat-progress-bar>
-              <mat-progress-bar *ngIf="percentage(entry.available_stock_qty,entry.entry_stock_qty) < 40 && percentage(entry.available_stock_qty,entry.entry_stock_qty) >= 0" [mode]="warn" [value]="percentage(entry.available_stock_qty,entry.entry_stock_qty)"></mat-progress-bar>
+                <button  mat-button class="d-inline-block" color="accent" (click)="openDetails('Add to Existing','add',entry,'app-update-stock-model')"><mat-icon>add</mat-icon>Add </button>
+                <button  mat-button class="d-inline-block" color="warn"   (click)="openDetails('Remove to Existing','remove',entry,'app-update-stock-model')"><mat-icon>remove</mat-icon> Remove</button>
               </div>
+              <hr />
+
               <div class="details-list">
                <div class="item">
                    <div class="name" trans>Stock</div>

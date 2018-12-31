@@ -11,54 +11,51 @@
           <div class="flipper-pay-panel__numeric-selector">
             <div class="flipper-pay-panel__predefined-container">
               <ul class="flipper-pay-panel__predefined-inner">
-                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£5</li>
-                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£10</li>
-                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£20</li>
-                <li class="flipper-pay-panel__predefined-item flipper-pay-panel__key">£2</li>
+                <li (click)="mainKeyClicked('50')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  50</li>
+                <li (click)="mainKeyClicked('100')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  100</li>
+                <li (click)="mainKeyClicked('200')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  200</li>
+                <li (click)="mainKeyClicked('1000')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  1000</li>
               </ul>
             </div>
             <div class="flipper-pay-panel__numeric-selector-display-container">
               <div class="flipper-pay-panel__numeric-selector-display">
-                <!-- react-text: 803 -->£
-                <!-- /react-text -->
-                <!-- react-text: 804 -->
-                <!-- /react-text -->
+               <span class="currency">{{business.currency_code}} {{numeric_selector}}</span>
               </div>
               <div class="flipper-pay-panel__num-pad num-pad--dark num-pad">
                 <div class="num-pad__inner">
                   <div class="num-pad__top">
                     <div class="num-pad__row"><span data-qa-id="numpad__digit-1" class="Tappable-inactive num-pad__tappable"
                         style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">1</div>
+                        <div (click)="keysClicked('1')" class="flipper-pay-panel__key num-pad__item num-pad__key">1</div>
                       </span><span data-qa-id="numpad__digit-2" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">2</div>
+                        <div (click)="keysClicked('2')" class="flipper-pay-panel__key num-pad__item num-pad__key">2</div>
                       </span><span data-qa-id="numpad__digit-3" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">3</div>
+                        <div (click)="keysClicked('3')" class="flipper-pay-panel__key num-pad__item num-pad__key">3</div>
                       </span></div>
                     <div class="num-pad__row"><span data-qa-id="numpad__digit-4" class="Tappable-inactive num-pad__tappable"
                         style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">4</div>
+                        <div (click)="keysClicked('4')" class="flipper-pay-panel__key num-pad__item num-pad__key">4</div>
                       </span><span data-qa-id="numpad__digit-5" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">5</div>
+                        <div (click)="keysClicked('5')" class="flipper-pay-panel__key num-pad__item num-pad__key">5</div>
                       </span><span data-qa-id="numpad__digit-6" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">6</div>
+                        <div (click)="keysClicked('6')" class="flipper-pay-panel__key num-pad__item num-pad__key">6</div>
                       </span></div>
                     <div class="num-pad__row"><span data-qa-id="numpad__digit-7" class="Tappable-inactive num-pad__tappable"
                         style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">7</div>
+                        <div (click)="keysClicked('7')" class="flipper-pay-panel__key num-pad__item num-pad__key">7</div>
                       </span><span data-qa-id="numpad__digit-8" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">8</div>
+                        <div (click)="keysClicked('8')" class="flipper-pay-panel__key num-pad__item num-pad__key">8</div>
                       </span><span data-qa-id="numpad__digit-9" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                        <div class="flipper-pay-panel__key num-pad__item num-pad__key">9</div>
+                        <div (click)="keysClicked('9')" class="flipper-pay-panel__key num-pad__item num-pad__key">9</div>
                       </span></div>
                   </div>
                   <div class="num-pad__row num-pad__bottom"><span data-qa-id="numpad__digit-decimal" class="Tappable-inactive num-pad__tappable"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                      <div class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__decimal-point-key">.</div>
+                      <div (click)="keysClicked('.')" class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__decimal-point-key">.</div>
                     </span><span data-qa-id="numpad__digit-0" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                      <div class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__zero-key">0</div>
+                      <div (click)="keysClicked('0')" class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__zero-key">0</div>
                     </span><span data-qa-id="numpad__digit-delete" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
-                      <div class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__delete-key"><svg viewBox="0 0 24 24"
+                      <div  (click)="keysClicked('x')" class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__delete-key"><svg viewBox="0 0 24 24"
                           preserveAspectRatio="xMidYMid meet" style="width: 1.5rem; height: 2rem; fill: rgb(255, 255, 255);">
                           <g>
                             <path d="M0 0h24v24H0z" fill="none"></path>
@@ -72,17 +69,21 @@
             <div class="flipper-pay-panel__summary">
               <ul class="flipper-pay-panel__summary--left">
                 <li class="flipper-pay-panel__summary--label">Amount Due</li>
-                <li class="flipper-pay-panel__summary--amount-due">£1.05</li>
+                <li class="flipper-pay-panel__summary--amount-due"><span class="currency">{{business.currency_code}} </span> {{total('total_amount')}}</li>
                 <li class="flipper-pay-panel__summary--label">Tax</li>
-                <li>£0.18</li>
+                <li><span class="currency">{{business.currency_code}} </span> {{total('total_tax')}}</li>
                 <li class="flipper-pay-panel__summary--label">Basket Discount</li>
-                <li>£0.00</li>
+                <li><span class="currency">{{business.currency_code}} </span> 0.00</li>
               </ul>
               <ul class="flipper-pay-panel__summary--right">
                 <li class="flipper-pay-panel__summary--label">Item Discount</li>
-                <li>£0.00</li>
+                <li><span class="currency">{{business.currency_code}} </span> {{total('total_discount')}}</li>
                 <li class="flipper-pay-panel__summary--label">Customer Discount</li>
-                <li>£0.00</li>
+                <li><span class="currency">{{business.currency_code}} </span> 0.00</li>
+                <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}">Change Due</li>
+                <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}"><span class="currency">{{business.currency_code}} </span>
+                  {{amount_return}}</li>
+
               </ul>
             </div>
           </div>
@@ -91,13 +92,13 @@
 
         <ul class="button-group button-group--inline flipper-pay-buttons">
           <li class="button-group__button flipper-pay-panel__list-button">
-            <div class="flipper-pay-panel__list-button-label">Cash</div>
+            <div (click)="payingInvoice('cash')" class="flipper-pay-panel__list-button-label">Cash</div>
           </li>
-          <li class="button-group__button flipper-pay-panel__list-button">
+          <!-- <li class="button-group__button flipper-pay-panel__list-button">
             <div class="flipper-pay-panel__list-button-label">Card</div>
-          </li>
+          </li> -->
 
-          <li class="button-group__button flipper-pay-panel__list-button">
+          <li (click)="payingInvoice('gift')" class="button-group__button flipper-pay-panel__list-button">
             <div class="flipper-pay-panel__list-button-label">Gift Voucher</div>
           </li>
         </ul>

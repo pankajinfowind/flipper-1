@@ -26,8 +26,7 @@ export class StockTableComponent implements OnInit {
     "expire_date",
     "unit_sale",
     "available_stock_qty",
-    "progress",
-    "operation"
+    "progress"
   ];
   upc_tool_tips="The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
   sku_tool_tips="The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC";

@@ -1,31 +1,23 @@
 <div class="details-list">
    <!-- Items ---------------------------------- -->
 
-    <form [formGroup]="cateogryForm" (ngSubmit)="saveCategory()">
+    <form [formGroup]="pricingForm" (ngSubmit)="savePricing()">
       <mat-card-content>
         <p>
           <mat-form-field class="ybx-mat mat-full-wdth">
-              <input class="text-secondary" matInput placeholder="Category name" formControlName="name" required>
+              <input class="text-secondary" matInput placeholder="Price name" formControlName="name" required>
 
               <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
                     <mat-error *ngIf="name.errors.name && !name.errors.required">
-                      Please enter a valid category
+                      Please enter a valid price name
                     </mat-error>
                     <mat-error *ngIf="name.errors.required">
-                        Category is <strong>required</strong>
+                      Price name is <strong>required</strong>
                     </mat-error>
               </mat-error>
 
           </mat-form-field>
-          <mat-form-field class="ybx-mat mat-full-wdth">
-            <mat-select placeholder="Choose Color" formControlName="color" required>
-              <mat-option>None</mat-option>
-              <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">{{color.valueName}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="color.invalid && (color.dirty || color.touched)">
-              <strong *ngIf="color.errors.required">Color is required.</strong>
-            </mat-error>
-          </mat-form-field>
+
         </p>
       </mat-card-content>
 

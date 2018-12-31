@@ -24,25 +24,26 @@
               <div *ngIf="!is_categry_clicked && categories.length > 0">
 
                 <div class="row m-3" style="margin-right: 0.75rem; margin-bottom: 0.75rem;">
-                  <mat-card *ngFor="let category of categories" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 generic-tile generic-tile--MEDIUM category-tile user-defined-colour__darkBlue category-tile--MEDIUM ellipsis"
+                  <mat-card *ngFor="let category of categories" [style.color]="'#ffff'" [style.background-color]="category.color"
+                    class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 generic-tile generic-tile--MEDIUM category-tile user-defined-colour__darkBlue category-tile--MEDIUM ellipsis"
                     (click)="categoriesClicked(category)"><span class="ellipsis">{{category.name}}</span></mat-card>
                 </div>
               </div>
 
               <div *ngIf="is_categry_clicked  && currently_stocks.length > 0">
                 <div class="row m-3" style="margin-right: 0.75rem; margin-bottom: 0.75rem;">
-                  <mat-card *ngFor="let stock of currently_stocks" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1"
+                  <mat-card *ngFor="let stock of currently_stocks" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 ellipsis"
                     (click)=" addItemToCart(stock)">
-                    <span class="text-left text-secondary ellipsis">{{stock.name}} </span>
+                    <span class="ellipsis">{{stock.name}} </span>
                     <div class="clearfix"></div>
 
-                    <small class="row row-divided">
+                    <small class="row row-divided ellipsis">
                       <div class="text-left col-6 column-one">
-                        {{stock.item.currency}} {{stock.item.unit_sale}}
+                        <span class="ellipsis">{{stock.item.currency}} {{stock.item.unit_sale}}</span>
                       </div>
                       <div class="vertical-divider"></div>
                       <div class="text-right col-6 column-two">
-                        {{stock.available_stock_qty}} Qty
+                        <span class="ellipsis">{{stock.available_stock_qty}} Qty</span>
                       </div>
                     </small>
 
@@ -53,12 +54,11 @@
           </div>
         </div>
 
-        <div *ngIf="pos$">
+
+        <div *ngIf="pos$  && !(pos$ | async).loading">
           <mat-card class="m-4 panel-center" *ngIf="(pos$ | async).panel_content!=='home' && (pos$ | async).panel_content!='pay'">
             <div *ngIf="(pos$ | async).panel_content=='customers'">
-
               <customer-list></customer-list>
-
             </div>
             <app-orders *ngIf="(pos$ | async).panel_content=='orders'"></app-orders>
           </mat-card>

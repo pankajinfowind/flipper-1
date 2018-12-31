@@ -23,12 +23,34 @@ export class CategoryModelComponent implements OnInit {
   need_to_add_new:boolean=true;
   category_id:number=0;
   cateogryForm: FormGroup;
+  colors:any[]=[{
+    value:'#0e0d0d',valueName:'Black',
+  },{
+    value:'#f44336',valueName:'Red',
 
+  },{
+    value:'#490f0f',valueName:'Red - Dark',
+
+  },{
+    value:'#4caf50',valueName:'Green',
+
+  },{
+    value:'#1da1f2',valueName:'Blue Sky',
+
+  },{
+    value:'#3b5998',valueName:'Blue',
+
+  },{
+    value:'#b57541',valueName:'Coffee',
+
+  },{
+    value:'#b541a6',valueName:'Violet',
+
+  }]
+//
   constructor(private msterModelService:MasterModelService,private toast: Toast,private apiCat:ApiCategoryService,private apiItem:ApiItemService,private detailsService:DetailsService) { }
 
   ngOnInit() {
-
-
 
     this.details$ = this.detailsService.details$;
     this.details$.subscribe(res=>{
@@ -41,7 +63,8 @@ export class CategoryModelComponent implements OnInit {
         this.category_id=res.sender_data?res.sender_data.category_id:0;
 
         this.cateogryForm = new FormGroup({
-          name: new FormControl(res.sender_data?res.sender_data.name:"", [Validators.required])
+          name: new FormControl(res.sender_data?res.sender_data.name:"", [Validators.required]),
+          color: new FormControl(res.sender_data?res.sender_data.color:"", [Validators.required])
         });
   });
   }
@@ -53,12 +76,14 @@ export class CategoryModelComponent implements OnInit {
   get name() {
     return this.cateogryForm.get("name");
   }
-
+  get color() {
+    return this.cateogryForm.get("color");
+  }
 
   saveCategory(){
     if (this.cateogryForm.valid) {
       this.loading.next(true)
-      const data = { name: this.cateogryForm.value.name };
+      const data = { name: this.cateogryForm.value.name,color:this.cateogryForm.value.color };
       return  this.need_to_add_new?this.create(data):this.update(data,this.category_id);
     }
   }

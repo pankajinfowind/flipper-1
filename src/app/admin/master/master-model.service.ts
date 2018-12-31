@@ -14,7 +14,7 @@ export class MasterModelService {
     this.create();
     this.master$ = this.model.data$;
    }
-   public create(stateCreation:Master={loading:false,items:[],categories:[],insurances:[]}){
+   public create(stateCreation:Master={loading:false,items:[],categories:[],insurances:[],pricing:[]}){
     this.model = this.modelFactory.create(stateCreation);
    }
 

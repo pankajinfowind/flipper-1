@@ -6,11 +6,12 @@ import { CategoryModelComponent } from './category-model/category-model.componen
 import { MaterialModule } from '../../../material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InsuranceModelComponent } from './insurance-model/insurance-model.component';
+import { PricingModelComponent } from './pricing-model/pricing-model.component';
 
 
 @NgModule({
   declarations:
-  [MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent
+  [MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent,PricingModelComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +20,7 @@ import { InsuranceModelComponent } from './insurance-model/insurance-model.compo
     ReactiveFormsModule
   ],
   exports:[
-    MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent
+    MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent,PricingModelComponent
   ]
 })
 export class MasterModelModule {

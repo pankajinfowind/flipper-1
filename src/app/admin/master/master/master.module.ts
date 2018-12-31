@@ -24,6 +24,7 @@ import { ApiInsuranceService } from '../insurance/api/ap.service';
 import { ApiItemService } from '../items/api/api.service';
 import { HttpModule } from '../../../common/core/http/http.module';
 import {HttpClientModule} from '@angular/common/http';
+import { PricingComponent, RemovePricingDialog } from '../pricing/pricing.component';
 
 @NgModule({
   imports: [CommonModule,MasterRoutingModule,DetailsModule, MaterialModule, FormsModule, UiModule, ReactiveFormsModule,HttpClientModule,HttpModule],
@@ -31,23 +32,27 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule,
     ItemsComponent,
     CategoriesComponent,
+    PricingComponent,
     MasterComponent,
     ModalComponent,
     InsuranceComponent,
     RemoveItemDialog,
     RemoveCategoryDialog,
     RemoveInsuranceDialog,
+    RemovePricingDialog,
     NoEntryFoundMasterComponent
   ],
   declarations: [
     ItemsComponent,
     CategoriesComponent,
+    PricingComponent,
     MasterComponent,
     ModalComponent,
     InsuranceComponent,
     RemoveItemDialog,
     RemoveCategoryDialog,
     RemoveInsuranceDialog,
+    RemovePricingDialog,
     NoEntryFoundMasterComponent
 
   ],
@@ -56,7 +61,7 @@ import {HttpClientModule} from '@angular/common/http';
     ApiCategoryService,
     ApiInsuranceService
   ],
-entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemoveInsuranceDialog]
+entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemovePricingDialog,RemoveInsuranceDialog]
 })
 export class MasterModule {
   static forRoot(): ModuleWithProviders {

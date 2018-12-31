@@ -15,7 +15,7 @@ import { MasterModelService } from '../master-model.service';
 })
 export class MasterComponent implements OnInit,OnDestroy {
 
-links: any[] = [{path:'category',label:'Categories'},{path:'item',label:'Items'},{path:'insurance',label:'Insurances'} ];
+links: any[] = [{path:'category',label:'Categories'},{path:'item',label:'Items'},{path:'pricing',label:'Price Setting'},{path:'insurance',label:'Insurances'} ];
 
 @Select(MasterState.loading) loading$: Observable<boolean>;
 isMobile=false;

@@ -25,7 +25,7 @@
                   <div *ngIf="!is_categry_clicked && categories.length > 0">
 
                     <div class="row m-3" style="margin-right: 0.75rem; margin-bottom: 0.75rem;">
-                      <mat-card *ngFor="let category of categories" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 generic-tile generic-tile--MEDIUM category-tile user-defined-colour__darkBlue category-tile--MEDIUM ellipsis"
+                      <mat-card *ngFor="let category of categories" [style.color]="'#ffff'" [style.background-color]="category.color" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 generic-tile generic-tile--MEDIUM category-tile user-defined-colour__darkBlue category-tile--MEDIUM ellipsis"
                         (click)="categoriesClicked(category)"><span class="ellipsis">{{category.name}}</span></mat-card>
                     </div>
                   </div>

@@ -5,6 +5,7 @@ import { AuthGuard } from '../../../common/guards/auth-guard.service';
 import { ItemsComponent } from '../items/items.component';
 import { CategoriesComponent } from '../categories/categories.component';
 import { InsuranceComponent } from '../insurance/insurance.component';
+import { PricingComponent } from '../pricing/pricing.component';
 
 const masterRoutes: Routes = [
     {
@@ -19,7 +20,9 @@ const masterRoutes: Routes = [
             },
             { path: 'item', component: ItemsComponent},
             { path: 'category', component: CategoriesComponent},
-            { path: 'insurance', component: InsuranceComponent}
+            { path: 'pricing', component: PricingComponent},
+            { path: 'insurance', component: InsuranceComponent},
+
 
             //TODO:
         ]

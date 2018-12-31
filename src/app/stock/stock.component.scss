@@ -3,11 +3,12 @@
 .stock{
   height: 100%;
   background-color: $admin-background-color;
+  overflow: hidden;
 
   .mat-sidenav-container {
     width: 100%;
     height: calc(100% - #{$admin-nav-height+1});
-
+    overflow: hidden;
     .left-column {
       display: flex;
       flex-direction: column;
@@ -87,17 +88,22 @@
       border-left: 1px solid $site-border-color-200;
       background-color: $site-bg-color-100;
       color: $site-text-color-400;
+      overflow: hidden;
+
+      .mat-drawer-inner-container{
+        overflow: hidden;
+      }
     }
 
     .content-inner {
       height: 100%;
       flex: 1 1 auto;
-      overflow: auto;
       background-color:$site-bg-color-100;
       box-shadow: $admin-card-box-shadow;
       line-height: inherit;
       white-space: nowrap;
       text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 }

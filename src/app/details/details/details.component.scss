@@ -4,6 +4,7 @@
   display: block;
   padding: 28px 0;
   margin-top: -7px;
+  overflow: hidden;
    .header {
     margin-bottom: 8.7px;
     padding: 0 24px;
@@ -36,4 +37,5 @@
   .mat-tab-label {
     min-width: 50%;
   }
+
 }

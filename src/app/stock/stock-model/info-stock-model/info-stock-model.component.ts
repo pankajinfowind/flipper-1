@@ -28,6 +28,10 @@ export class InfoStockModelComponent implements OnInit {
       });
   }
   percentage(num,num1) {
-    return Math.round(num *100)/num1;
+    let sum=Math.round(parseInt(num) *100)/parseInt(num1);
+  return isNaN(sum)?0:sum.toFixed(1);
+}
+openDetails(title='Stock Details',action='info',obj,component='app-info-stock-model'){
+  this.detailsService.update({title:title,sender_data:obj,module:'app-stock',component:component,action:action,detailsVisible:true});
 }
 }

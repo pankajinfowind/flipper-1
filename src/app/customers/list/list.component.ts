@@ -3,6 +3,8 @@ import { CustomerService } from '../customer.service';
 import { Observable, of } from 'rxjs';
 import { Customer } from '../customer';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { AddComponent } from '../add/add.component';
 
 @Component({
   selector: 'customer-list',
@@ -16,7 +18,8 @@ export class ListComponent implements OnInit {
   customer: Customer;
   customers: Customer[] = []; //make it to be observable
   tableHeads: string[] = ['cstomer_no', 'full_name', 'phone'];
-  constructor(private api: CustomerService) {
+  //TODO: matDialog not covered by unit test
+  constructor(private api: CustomerService, public dialog: MatDialog) {
     this.register_customer_form = new FormBuilder().group({
       'full_name': [undefined, Validators.required],
       'email': [undefined, Validators.required],
@@ -44,5 +47,17 @@ export class ListComponent implements OnInit {
   }
   editCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.api.editCustomer(customer);
+  }
+  openAddCustomerDialog(): void {
+    const dialogRef = this.dialog.open(AddComponent, {
+      width: '450px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      //TODO:show a toast of the action to be completed
+      // this.animal = result;
+    });
   }
 }

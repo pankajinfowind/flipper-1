@@ -15,6 +15,7 @@ export class ListComponent implements OnInit {
   formValid: boolean = false;
   customer: Customer;
   customers: Customer[] = []; //make it to be observable
+  tableHeads: string[] = ['cstomer_no', 'full_name', 'phone'];
   constructor(private api: CustomerService) {
     this.register_customer_form = new FormBuilder().group({
       'full_name': [undefined, Validators.required],
@@ -31,6 +32,7 @@ export class ListComponent implements OnInit {
   }
   listCustomers(): void {
     this.api.getCustomers().subscribe(res => {
+      console.log(res.customers.data);
       this.customers = res.customers.data;
     });
   }

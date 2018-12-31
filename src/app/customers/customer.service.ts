@@ -2,7 +2,6 @@ import { Injectable, Injector } from "@angular/core";
 import { Customer } from "./customer";
 import { ModelFactory, Model } from "ngx-model";
 import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
 import { AppHttpClient } from '../common/core/http/app-http-client.service';
 
 @Injectable({

@@ -35,7 +35,6 @@ export class ListComponent implements OnInit {
   }
   listCustomers(): void {
     this.api.getCustomers().subscribe(res => {
-      console.log(res.customers.data);
       this.customers = res.customers.data;
     });
   }

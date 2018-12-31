@@ -20,23 +20,23 @@ export class PayComponent implements OnInit {
   pos$: Observable<Pos>;
   order_items$: Observable<OrderItems[]>;
   data: OrderItems[] = [];
-  numeric_selector: any = 0;
-  amount_return: number = 0;
-  amount_return_color: string = 'black';
-  currently_ordered: Orders = null;
-  choosen_insurance: Insurance = null;
+  numeric_selector:any=0;
+  amount_return:number=0;
+  amount_return_color:string='black';
+  currently_ordered:Orders=null;
+  choosen_insurance:Insurance=null;
   constructor(
     private orderItemModelService: OrderItemsModelService,
     private posModelService: PosModelService,
     public currentUser: CurrentUser
-  ) { }
+  ){ }
 
   ngOnInit() {
     this.pos$ = this.posModelService.pos$;
     this.order_items$ = this.orderItemModelService.order_items$;
-
-    this.business = this.currentUser.get('business')[0];
-
+    if (this.currentUser.user) {
+      this.business = this.currentUser.get('business')[0];
+    }
 
     if (this.order_items$) {
       this.order_items$.subscribe(res => {
@@ -72,58 +72,58 @@ export class PayComponent implements OnInit {
   }
 
   keysClicked(key) {
-    if (key == 'x') {
-      this.numeric_selector = this.numeric_selector == 0 ? 0 : this.numeric_selector.slice(0, -1);
-      if (!this.numeric_selector) {
-        this.numeric_selector = 0;
+      if (key == 'x') {
+        this.numeric_selector=this.numeric_selector == 0?0:this.numeric_selector.slice(0, -1);
+        if(!this.numeric_selector){
+             this.numeric_selector=0;
+        }
+      } else {
+        this.numeric_selector=this.numeric_selector==0?key:this.numeric_selector+''+key;
+        this.numeric_selector =this.numeric_selector.replace('..', ".");
       }
-    } else {
-      this.numeric_selector = this.numeric_selector == 0 ? key : this.numeric_selector + '' + key;
-      this.numeric_selector = this.numeric_selector.replace('..', ".");
+      this.displayBalanceChangesDue();
     }
-    this.displayBalanceChangesDue();
-  }
-  mainKeyClicked(key) {
-    this.numeric_selector = 0;
-    this.numeric_selector = key;
-    this.displayBalanceChangesDue();
-  }
-  displayBalanceChangesDue() {
-    this.amount_return = 0;
-    this.amount_return = this.numeric_selector == 0 ? 0 : this.numeric_selector - this.total('total_amount');
-    if (this.amount_return > 0) {
-      this.amount_return_color = 'green';
-    } else if (this.amount_return == 0) {
-      this.amount_return_color = 'black';
-    } else {
-      this.amount_return_color = 'red';
+    mainKeyClicked(key){
+      this.numeric_selector=0;
+      this.numeric_selector=key;
+      this.displayBalanceChangesDue();
     }
-  }
+    displayBalanceChangesDue(){
+      this.amount_return=0;
+      this.amount_return= this.numeric_selector == 0?0:this.numeric_selector - this.total('total_amount');
+      if(this.amount_return > 0){
+        this.amount_return_color='green';
+      }else if(this.amount_return == 0){
+        this.amount_return_color='black';
+      }else{
+        this.amount_return_color='red';
+      }
+    }
 
-  payingInvoice(payment_method) {
-    if (this.amount_return_color == 'red') {
-      alert('Amount entered is less than amount due.');
-    } else {
-      const forming_invoice: Pay = {
-        invoice_no: '',
-        invoice_date: new Date(),
-        insurance_id: this.choosen_insurance ? this.choosen_insurance.id : 0,
-        discounts: this.total('total_discount'),
-        total_items: this.total('qty'),
-        tax: this.total('total_tax'),
-        amount: this.total('total_amount'),
-        amount_given: this.numeric_selector == 0 ? this.total('total_amount') : this.numeric_selector,
-        amount_return: this.amount_return,
-        currency: this.business.currency_code,
-        status: 'complete',
-        pos_session_id: 0,
-        branch_id: this.business['branches'][0]['id'],
-        customer_id: 0,
-        payment_method: payment_method,
-        order: this.currently_ordered ? this.currently_ordered : null,
-        order_items: this.data
+    payingInvoice(payment_method){
+      if(this.amount_return_color =='red'){
+          alert('Amount entered is less than amount due.');
+      }else{
+        const forming_invoice:Pay={
+          invoice_no:'',
+          invoice_date:new Date(),
+          insurance_id:this.choosen_insurance?this.choosen_insurance.id:0,
+          discounts:this.total('total_discount'),
+          total_items:this.total('qty'),
+          tax:this.total('total_tax'),
+          amount:this.total('total_amount'),
+          amount_given:this.numeric_selector==0?this.total('total_amount'):this.numeric_selector,
+          amount_return:this.amount_return,
+          currency:this.business.currency_code,
+          status:'complete',
+          pos_session_id:0,
+          branch_id:this.business['branches'][0]['id'],
+          customer_id:0,
+          payment_method:payment_method,
+          order:this.currently_ordered?this.currently_ordered:null,
+          order_items:this.data
+        }
+        console.log(forming_invoice);
       }
-      console.log(forming_invoice);
     }
-  }
 }

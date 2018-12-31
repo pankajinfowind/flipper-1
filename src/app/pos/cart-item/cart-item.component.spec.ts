@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CartItemComponent } from "./cart-item.component";
 import { PosModule } from "../pos.module";
+import { ModelFactory } from "ngx-model";
 import { CustomerService } from "../../customers/customer.service";
 import { of } from "rxjs/internal/observable/of";
 import { Customer } from "../../customers/customer";
@@ -15,7 +16,6 @@ import { OrderModelService } from '../../orders/order-model.service';
 import { StockModelService } from '../../stock/stock-model.service';
 import { MasterModelService } from '../../admin/master/master-model.service';
 import { CurrentUser } from '../../common/auth/current-user';
-import { BUSINESS, ROLE, USER, CUSTOMER } from '../../mock-data/MOCK';
 
 
 describe("CartItemComponent", () => {
@@ -23,12 +23,17 @@ describe("CartItemComponent", () => {
   let fixture: ComponentFixture<CartItemComponent>;
   let pos: PosModelService;
   let order: OrderItemsModelService;
+
   let service: CustomerService;
   let customers: Observable<Customer[]>;
-  let customer: Array<Customer> = CUSTOMER;
+  let customer: Array<Customer> = [
+    { name: "richie", id: 1 },
+    { name: "Mura", id: 2 }
+  ];
   const customerMockService = jasmine.createSpyObj("CustomerService", [
     "getCustomers"
   ]);
+
   const posmodelMockService = jasmine.createSpyObj("ApiPosService", [
     "updateOrderItem"
   ]);
@@ -41,46 +46,45 @@ describe("CartItemComponent", () => {
   const posModelService = jasmine.createSpyObj("PosModelService", [
     "master"
   ]);
-  const orderModelService = jasmine.createSpyObj("OrderModelService", [
+  const currentUser = jasmine.createSpyObj("CurrentUser", [
     "dummy"
   ]);
-  let user, currentUser: CurrentUser = jasmine.createSpyObj("CurrentUser", [
-    "dummy"
-  ]);
+  let user: CurrentUser;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [PosModule, HttpClientTestingModule],
       providers: [
-        { provide: currentUser, useValue: CurrentUser },
-        { provide: OrderModelService, useValue: orderModelService },
         { provide: ApiPosService, useValue: posmodelMockService },
+        { provide: currentUser, useValue: CurrentUser },
         { provide: OrderItemsModelService, useValue: orderItemMockService },
         { provide: PosModelService, useValue: posModelService },
         { provide: customerMockService, useValue: CustomerService },
         { provide: MatDialog, useValue: model }
       ]
+
     }).compileComponents();
   }));
 
   beforeEach(() => {
     user = TestBed.get(CurrentUser);
-    user.init({ user: USER, guestsRole: ROLE });
     service = TestBed.get(CustomerService);
     order = TestBed.get(OrderItemsModelService);
     pos = TestBed.get(PosModelService);
     fixture = TestBed.createComponent(CartItemComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // ?
   });
   it("should create", () => {
     expect(component).toBeTruthy();
   });
   it("should list customers", () => {
     service.getCustomers = () => of(customer);
-    customers = component.getCustomers();
+    component.ngOnInit();
+    customers = component.cu();
     customers.subscribe(cust => {
       expect(cust).toEqual(customer);
     });
+    // expect(customerMockService.getCustomers).toHaveBeenCalled(); // ?
   });
 
 });

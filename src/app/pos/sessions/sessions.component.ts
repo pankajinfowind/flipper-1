@@ -18,7 +18,7 @@ export interface Session {
 })
 export class SessionsComponent {
   cart_items: Stock[] = [];
-  constructor(private current_user: CurrentUser, private api: ApiService) { }
+  constructor(private current_user: CurrentUser, private api: ApiService) {}
 
   createSession() {
     //TODO: branch_id should not be hard coded
@@ -31,7 +31,6 @@ export class SessionsComponent {
   }
   errorHandler(problem: string, prex: any): any {
     console.log(prex);
-    //TODO: make ravenReporing a common class that can be used anywere error happened
     // Raven.captureException(problem);
     // Raven.showReportDialog();
   }

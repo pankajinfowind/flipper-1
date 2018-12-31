@@ -54,7 +54,6 @@
           </div>
         </div>
 
-
         <div *ngIf="pos$  && !(pos$ | async).loading">
           <mat-card class="m-4 panel-center" *ngIf="(pos$ | async).panel_content!=='home' && (pos$ | async).panel_content!='pay'">
             <div *ngIf="(pos$ | async).panel_content=='customers'">

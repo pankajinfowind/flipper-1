@@ -44,6 +44,7 @@ export class CartDialog implements OnInit {
     private msterModelService: MasterModelService,
     private api: ApiPosService,
     private orderItemModelService: OrderItemsModelService,
+    private toast: Toast,
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
     this.cart_item = this.data.data;
@@ -223,8 +224,7 @@ export class CartItemComponent implements OnInit {
   customers: Observable<Customer[]>;
 
   ngOnInit() {
-    this.getCustomers();
-    if (this.currentUser.get('business')) {
+    if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
     }
     this.pos$ = this.posModelService.pos$;
@@ -240,9 +240,11 @@ export class CartItemComponent implements OnInit {
         }
       });
     }
+
   }
-  getCustomers(): Observable<Customer[]> {
-    return this.customers = this.customer.getCustomers();
+  cu(): Observable<Customer[]> {
+    this.customers = this.customer.getCustomers();
+    return this.customers; // ?
   }
   updatePosLayout(panel = 'home') {
     this.posModelService.update({ panel_content: panel });
@@ -283,18 +285,21 @@ export class CartItemComponent implements OnInit {
           this.orderItemModelService.update([], 'all');
           this. updatePosLayout('home');
         }
+
+
       },
       _error => {
         console.error(_error);
       }
     );
   }
-
   update(element, status) {
     if (status == 'delete') {
       this.deleteOrderedItem(element.id);
     }
     return this.orderItemModelService.update(element, status);
+
+    //return this.expandedElement = element;
   }
   deleteOrderedItem(id) {
     this.api.deleteOrderedItem(id).subscribe(deleted => {
@@ -314,8 +319,11 @@ export class CartItemComponent implements OnInit {
         //   this.selection = new SelectionModel<Item>(true, []);
         //  }
       });
+
     }
+
   }
+
   total(prop) {
     var total = 0;
     if (this.data.length > 0) {

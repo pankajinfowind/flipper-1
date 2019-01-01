@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var svgstore = require('gulp-svgstore');
 var svgmin = require('gulp-svgmin');
 var rename = require('gulp-rename');
 var filter = require('gulp-filter');
@@ -12,7 +11,6 @@ var svgSprite = require('gulp-svg-sprite');
 
 const CLIENT_APP_PATH = './src/app/';
 const CLIENT_ICONS_PATH = './src/assets/icons/';
-//TODO: rename all vars soon.
 const YEGO_CLIENT_PATH = './src/common/';
 const NODE_MODULES_PATH = './node_modules/';
 const CUSTOM_ICONS_PATHS = [

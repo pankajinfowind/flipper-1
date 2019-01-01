@@ -21,7 +21,7 @@
 
 
   <tr mat-header-row *matHeaderRowDef="tableHeads"></tr>
-  <tr mat-row *matRowDef="let row; columns: tableHeads;"></tr>
+  <tr (click)="emitCustomer(row)" mat-row *matRowDef="let row; columns: tableHeads;"></tr>
 </table>
 
 

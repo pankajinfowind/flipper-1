@@ -59,6 +59,7 @@
             <div *ngIf="(pos$ | async).panel_content=='customers'">
               <customer-list></customer-list>
             </div>
+
             <app-orders *ngIf="(pos$ | async).panel_content=='orders'"></app-orders>
           </mat-card>
 

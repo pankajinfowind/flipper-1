@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { Observable, BehaviorSubject } from "rxjs";
+import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
+import { Observable, BehaviorSubject, Subject } from "rxjs";
 import { Pos } from "../pos";
 import { PosModelService } from "../pos-model.service";
 import {
@@ -12,7 +12,6 @@ import {
 import { OrderItems } from "../cart/order_items";
 import { OrderItemsModelService } from "../cart/order-item-model.service";
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
-import { CustomerService } from "../../customers/customer.service";
 import { Customer } from "../../customers/customer";
 import { Toast } from '../../common/core/ui/toast.service';
 import { ApiPosService } from '../api/api.service';
@@ -21,10 +20,11 @@ import { MasterModelService } from '../../admin/master/master-model.service';
 import { Master } from '../../admin/master/master';
 import { Insurance } from '../../admin/master/insurance/api/insurance';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { OrderModelService } from '../../orders/order-model.service';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
+import { NgxService } from '../../common/ngx-db/ngx-service';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',
@@ -53,7 +53,6 @@ export class CartDialog implements OnInit {
     this.master$ = this.msterModelService.master$;
     this.pos$ = this.posModelService.pos$;
   }
-
   ngOnInit() {
     this.master$.subscribe(res => {
       if (res.insurances.length > 0) {
@@ -185,7 +184,8 @@ export class CartDialog implements OnInit {
     ])
   ]
 })
-export class CartItemComponent implements OnInit {
+export class CartItemComponent implements OnInit, OnDestroy {
+
   pos$: Observable<Pos>;
   order_items$: Observable<OrderItems[]>;
   data: OrderItems[] = [];
@@ -200,8 +200,8 @@ export class CartItemComponent implements OnInit {
     private api: ApiPosService,
     private orderItemModelService: OrderItemsModelService,
     private posModelService: PosModelService,
-    private customer: CustomerService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public db: NgxService //TODO: this line no unit test for it
   ) { }
   columnsToDisplay = ["item", "qty", "each", "total"];
   expandedElement: OrderItems | null;
@@ -221,9 +221,22 @@ export class CartItemComponent implements OnInit {
 
     }
   }
-  customers: Observable<Customer[]>;
-
+  customers: Customer[] = [];
+  private unsubscribe$: Subject<void> = new Subject<void>();
+  //TODO:use this strategy of unsubscribing to orders.components
+  ngOnDestroy(): void {
+    // for declarative unsubscription
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   ngOnInit() {
+    this.db.items$
+      .pipe(
+        takeUntil(this.unsubscribe$) // declarative unsubscription
+      )
+      .subscribe(customer => {
+        this.customers = customer;
+      });
     if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
     }
@@ -242,16 +255,13 @@ export class CartItemComponent implements OnInit {
     }
 
   }
-  cu(): Observable<Customer[]> {
-    this.customers = this.customer.getCustomers();
-    return this.customers; // ?
-  }
   updatePosLayout(panel = 'home') {
     this.posModelService.update({ panel_content: panel });
   }
 
 
   payOrdered() {
+
     this.posModelService.update({ panel_content: 'pay' });
   }
 
@@ -264,9 +274,8 @@ export class CartItemComponent implements OnInit {
             this.posModelService.update({ currently_ordered: null });
             this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
             this.orderItemModelService.update([], 'all');
-            this. updatePosLayout('home');
+            this.updatePosLayout('home');
           }
-
         },
         _error => {
           console.error(_error);
@@ -275,18 +284,22 @@ export class CartItemComponent implements OnInit {
     }
   }
   holdOrdered() {
+
     this.currently_ordered.status = "hold";
     this.currently_ordered.is_currently_processing = '0';
+    //TODO: when order is unholded remember to get associated customer re-add him on our ngx db again
+    //TODO: do this on pay action
+    if (this.customers.length > 0) {
+      this.currently_ordered.customer_id = this.customers[0].customer_id;
+    }
     this.api.updateOrder(this.currently_ordered, this.currently_ordered.id).subscribe(
       res => {
         if (res.status == 'success') {
           this.posModelService.update({ currently_ordered: null });
           this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
           this.orderItemModelService.update([], 'all');
-          this. updatePosLayout('home');
+          this.updatePosLayout('home');
         }
-
-
       },
       _error => {
         console.error(_error);
@@ -315,9 +328,6 @@ export class CartItemComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        // if(result.status=="success"){
-        //   this.selection = new SelectionModel<Item>(true, []);
-        //  }
       });
 
     }

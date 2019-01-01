@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { Observable, of } from 'rxjs';
 import { Customer } from '../customer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AddComponent } from '../add/add.component';
+import { NgxService } from '../../common/ngx-db/ngx-service';
+
 
 @Component({
   selector: 'customer-list',
@@ -19,7 +21,7 @@ export class ListComponent implements OnInit {
   customers: Customer[] = []; //make it to be observable
   tableHeads: string[] = ['cstomer_no', 'full_name', 'phone'];
   //TODO: matDialog not covered by unit test
-  constructor(private api: CustomerService, public dialog: MatDialog) {
+  constructor(private api: CustomerService, public dialog: MatDialog, private db: NgxService) {
     this.register_customer_form = new FormBuilder().group({
       'full_name': [undefined, Validators.required],
       'email': [undefined, Validators.required],
@@ -58,5 +60,9 @@ export class ListComponent implements OnInit {
       //TODO:show a toast of the action to be completed
       // this.animal = result;
     });
+  }
+  // TODO: change type after drafting
+  emitCustomer(customer: any) {
+    this.db.addItem(customer);
   }
 }

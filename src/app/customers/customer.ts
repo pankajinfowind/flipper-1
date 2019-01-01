@@ -1,6 +1,7 @@
 export interface Customer {
   full_name?: string;
   email?: string;
+  customer_id?: number;
   phone?: string;
   address?: string;
   city?: string;

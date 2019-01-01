@@ -66,7 +66,9 @@ export class Bootstrapper {
           res => {
             if (res['status'] == 'success') {
               const order = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
+
               this.posModelService.update({ loading: false, currently_ordered: order ? order : null, choosen_insurance: null, choose_customer: null, panel_content: 'home' });
+
               this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
               if (order) {
                 this.orderItemModelService.update(order['order_items'], 'all');

@@ -13,17 +13,17 @@ export class OrderModelService {
   constructor(private modelFactory: ModelFactory<Orders[]>) {
     this.create([]);
     this.order$ = this.model.data$;
-   }
+  }
 
-   public create(stateCreation:Orders[]){
+  public create(stateCreation: Orders[]) {
     this.model = this.modelFactory.create(stateCreation);
-   }
+  }
 
-   public get(){
-       return this.model.get();
-   }
+  public get() {
+    return this.model.get();
+  }
 
-   update(stateUpdates: any) {
+  update(stateUpdates: any) {
     // retrieve raw model data
     const modelSnapshot = this.model.get();
     // mutate model data

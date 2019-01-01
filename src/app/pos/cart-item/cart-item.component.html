@@ -11,6 +11,14 @@
       <mat-icon>assignment</mat-icon> ORDERS
     </button>
   </div>
+  <div>
+    <!-- retrive customer from our ngx db as an item -->
+    <li *ngFor="let item of customers">
+      #Customer no: {{item.cstomer_no}}
+      #Phone: {{item.phone}}
+    </li>
+  </div>
+
   <div class="card-body">
     <table *ngIf="data.length > 0" mat-table [dataSource]="dataSource" multiTemplateDataRows>
       <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
@@ -72,7 +80,8 @@
           </div>
         </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true" class="element-row"></tr>
+      <!-- hide heads for a customer to be seen as tied to the bill -->
+      <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true" class="element-row"></tr> -->
       <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row" [class.row-highlighted]="expandedElement === element"
         (click)="expandedElement = expandedElement === element ? null : element">
       </tr>
@@ -109,17 +118,19 @@
                   Discount</dt>
                 <dd class="transaction-summary__value">{{business.currency_code}} {{total('total_discount')}}</dd>
               </div>
-                 <div *ngIf="choosen_insurance" class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">
+              <div *ngIf="choosen_insurance" class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">
                   Insurance</dt>
                 <dd class="transaction-summary__value">{{choosen_insurance.name }} </dd>
               </div>
             </div>
             <div class="transaction-summary__column">
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Total</dt>
-                <dd class="qa_basket-total transaction-summary__value transaction-summary__value--large-text">{{business.currency_code}} {{total('total_amount')}}</dd>
+                <dd class="qa_basket-total transaction-summary__value transaction-summary__value--large-text">{{business.currency_code}}
+                  {{total('total_amount')}}</dd>
               </div>
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Due</dt>
-                <dd class="transaction-summary__value transaction-summary__value--warning">{{business.currency_code}} {{total('total_amount')}}</dd>
+                <dd class="transaction-summary__value transaction-summary__value--warning">{{business.currency_code}}
+                  {{total('total_amount')}}</dd>
               </div>
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Tax(vat)</dt>
                 <dd class="transaction-summary__value">{{business.currency_code}} {{total('total_tax')}}</dd>
@@ -136,8 +147,9 @@
 
       <li (click)="deleteOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__delete-button m-1">Delete</li>
       <li (click)="holdOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__order-button m-1">Hold</li>
-      <li (click)="payOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__pay-button m-1">Pay</li></div>
-
+      <li (click)="payOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__pay-button m-1">Pay</li>
     </div>
+
+  </div>
 
 </div>

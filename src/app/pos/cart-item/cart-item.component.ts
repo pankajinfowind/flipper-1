@@ -284,7 +284,7 @@ export class CartItemComponent implements OnInit, OnDestroy {
     }
   }
   holdOrdered() {
-
+    this.db.addItem([]); //reset our customer object.
     this.currently_ordered.status = "hold";
     this.currently_ordered.is_currently_processing = '0';
     //TODO: when order is unholded remember to get associated customer re-add him on our ngx db again

@@ -8,6 +8,7 @@ import { OrderItemsModelService } from '../../pos/cart/order-item-model.service'
 import { OrderItems } from '../../pos/cart/order_items';
 import { ApiPosService } from '../../pos/api/api.service';
 import { takeUntil } from 'rxjs/operators';
+import { NgxService } from '../../common/ngx-db/ngx-service';
 
 @Component({
   selector: 'app-orders',
@@ -24,7 +25,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ordered_orders: Orders[] = [];
   panelOpenState = false;
   order_items$: Observable<OrderItems[]>;
-  constructor(private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private posModelService: PosModelService) { }
+  constructor(private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private posModelService: PosModelService, private db: NgxService) { }
 
   private unsubscribe$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
@@ -44,7 +45,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
           this.pending_orders = res['orders'].filter(order => order.status == 'pending');
           this.ordered_orders = res['orders'].filter(order => order.status == 'ordered');
           this.complete_orders = res['orders'].filter(order => order.status == 'complete');
-          console.log(res['orders']);
+
         }
       });
   }
@@ -81,6 +82,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.api.updateOrder(currently_ordered, currently_ordered.id).subscribe(
       res => {
         if (res.status == 'success') {
+          if (res['orders'].customer) {
+            this.db.addItem(res['orders'].customer);
+          }
           this.posModelService.update({ currently_ordered: currently_ordered });
           this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
           this.orderItemModelService.update([], 'all');

@@ -144,7 +144,6 @@
 
 
     <div class="buttonwrapper buttonwrapper--margin">
-
       <li (click)="deleteOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__delete-button m-1">Delete</li>
       <li (click)="holdOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__order-button m-1">Hold</li>
       <li (click)="payOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__pay-button m-1">Pay</li>

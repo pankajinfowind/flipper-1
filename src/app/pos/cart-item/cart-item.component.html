@@ -13,9 +13,12 @@
   </div>
   <div>
     <!-- retrive customer from our ngx db as an item -->
-    <li *ngFor="let item of customers">
-      #Customer no: {{item.cstomer_no}}
-      #Phone: {{item.phone}}
+
+    <li *ngFor="let customer of customers">
+
+      <span *ngIf="customer.cstomer_no">#Customer no: {{customer.cstomer_no}}</span>
+      <span *ngIf="customer.phone">#Phone: {{customer.phone}}</span>
+
     </li>
   </div>
 

@@ -82,8 +82,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.api.updateOrder(currently_ordered, currently_ordered.id).subscribe(
       res => {
         if (res.status == 'success') {
-          if (res['orders'].customer) {
-            this.db.addItem(res['orders'].customer);
+          if (currently_ordered.customer) {
+            this.db.addItem(currently_ordered.customer); //do we have customer on this order set him on resumed order
+          } else {
+            this.db.addItem([]); // otherwise remove any if there was someone before show order with no customer
           }
           this.posModelService.update({ currently_ordered: currently_ordered });
           this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });

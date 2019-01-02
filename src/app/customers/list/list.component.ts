@@ -1,12 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { CustomerService } from '../customer.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Customer } from '../customer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AddComponent } from '../add/add.component';
 import { NgxService } from '../../common/ngx-db/ngx-service';
 
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'customer-list',
@@ -14,38 +16,77 @@ import { NgxService } from '../../common/ngx-db/ngx-service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  //virtual scrolling start
+  @ViewChild(CdkVirtualScrollViewport)
+  viewport: CdkVirtualScrollViewport;
+
+  batch = 20;
+  theEnd = false;
+
+  offset = new BehaviorSubject(null);
+  customers: Observable<any[]>;
+  //virtual scrolling end
+
   cust: Partial<Customer>;
-  register_customer_form: FormGroup;
-  formValid: boolean = false;
+
   customer: Customer;
-  customers: Customer[] = []; //make it to be observable
   tableHeads: string[] = ['cstomer_no', 'full_name', 'phone'];
+
   //TODO: matDialog not covered by unit test
   constructor(private api: CustomerService, public dialog: MatDialog, private db: NgxService) {
-    this.register_customer_form = new FormBuilder().group({
-      'full_name': [undefined, Validators.required],
-      'email': [undefined, Validators.required],
-      'cstomer_no': [undefined, Validators.required],
-      'phone': [undefined, Validators.required]
-    });
-    this.register_customer_form.valueChanges.subscribe(() => {
-      this.formValid = this.register_customer_form.valid;
-    });
+
   }
   ngOnInit(): void {
     this.listCustomers();
   }
+  //virtual scroll func
+
+
+  getBatch(offset) {
+    //TODO: replace this func with my database call
+    // return this.db
+    //   .collection('people', ref =>
+    //     ref
+    //       .orderBy('name')
+    //       .startAfter(offset)
+    //       .limit(this.batch)
+    //   )
+    //   .snapshotChanges()
+    //   .pipe(
+    //     tap(arr => (arr.length ? null : (this.theEnd = true))),
+    //     map(arr => {
+    //       return arr.reduce((acc, cur) => {
+    //         const id = cur.payload.doc.id;
+    //         const data = cur.payload.doc.data();
+    //         return { ...acc, [id]: data };
+    //       }, {});
+    //     })
+    // );
+  }
+
+  nextBatch(e, offset) {
+    if (this.theEnd) {
+      return;
+    }
+
+    const end = this.viewport.getRenderedRange().end;
+    const total = this.viewport.getDataLength();
+    console.log(`${end}, '>=', ${total}`);
+    if (end === total) {
+      this.offset.next(offset);
+    }
+  }
+
+  trackByIdx(i) {
+    return i;
+  }
+
   listCustomers(): void {
     this.api.getCustomers().subscribe(res => {
       this.customers = res.customers.data;
     });
   }
-  addCustomer() {
-    const customer = this.register_customer_form.value;
-    this.api.createCustomer(customer).subscribe(res => {
-      this.customers.push(res.customer_created);
-    });
-  }
+
   editCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.api.editCustomer(customer);
   }

@@ -33,17 +33,19 @@ import { RedirectComponent } from "./redirect/redirect.component";
 import { NgxsModule } from "@ngxs/store";
 import { NgxModelModule } from "ngx-model";
 import { NgxElectronModule } from "ngx-electron";
-
+import { AppConfig } from '../environments/environment';
 Sentry.init({
   dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 });
 // TODO: improve sentry with this article: https://alligator.io/angular/error-tracking-sentry/
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
-  constructor() {}
+  constructor() { }
   handleError(error) {
-    Sentry.captureException(error.originalError || error);
-    throw error;
+    if (AppConfig.production) {
+      Sentry.captureException(error.originalError || error);
+      throw error;
+    }
   }
 }
 // AoT requires an exported function for factories
@@ -95,4 +97,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

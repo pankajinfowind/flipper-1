@@ -262,6 +262,7 @@ export class CartItemComponent implements OnInit, OnDestroy {
 
   payOrdered() {
 
+    //TODO: ask ganza the service that complete payment action
     this.posModelService.update({ panel_content: 'pay' });
   }
 

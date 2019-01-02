@@ -4,6 +4,7 @@ import { ListComponent } from './list/list.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatTableModule, MatDialogModule, MatButtonModule, MatInputModule } from '@angular/material';
 import { AddComponent } from './add/add.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [ListComponent, AddComponent],
@@ -15,7 +16,8 @@ import { AddComponent } from './add/add.component';
     FormsModule,
     MatTableModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    ScrollingModule
   ],
   exports: [ListComponent],
 

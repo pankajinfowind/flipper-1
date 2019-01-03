@@ -23,6 +23,7 @@ export class StockComponent implements OnInit {
     // { path: "report", label: "Report" }
   ];
 
+
   @Select(MasterState.loading) loading$: Observable<boolean>;
   isMobile = false;
   leftColumnIsHidden = false;

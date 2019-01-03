@@ -15,8 +15,25 @@ import { MasterModelService } from '../master-model.service';
 })
 export class MasterComponent implements OnInit,OnDestroy {
 
-links: any[] = [{path:'category',label:'Categories'},{path:'item',label:'Items'},{path:'pricing',label:'Price Setting'},{path:'insurance',label:'Insurances'} ];
-
+links: any[] = [
+  {
+menu:'Products',icon:'assignment',
+submenu:[
+        {path:'item',label:'Product List'},
+        {path:'category',label:'Categories'},
+        {path:'pricing',label:'Price Type'},
+        {path:'brand',label:'Brands'}
+      ]
+  },
+  {
+    menu:'Staff',icon:'assignment',
+    submenu:[
+            {path:'category',label:'Staff'},
+            {path:'pricing',label:'Staff Roles'}
+          ]
+      }
+];
+toggled=false;
 @Select(MasterState.loading) loading$: Observable<boolean>;
 isMobile=false;
 leftColumnIsHidden=false;
@@ -29,10 +46,21 @@ constructor(private msterModelService:MasterModelService,private detailsService:
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
     this.subscription = this.details$ = this.detailsService.details$;
+
   }
 
   ngOnDestroy() {
     //this.subscription.next();
   }
+  clickedMenu(menu){
+    localStorage.setItem('menu',menu);
+  }
+  getMenuHighlighted(){
+    if(localStorage.getItem('menu')==null){
+      return 'Products';
+    }else{
+      return localStorage.getItem('menu');
+    }
 
+  }
 }

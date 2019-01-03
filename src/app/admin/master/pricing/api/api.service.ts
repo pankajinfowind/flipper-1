@@ -21,9 +21,7 @@ export class ApiPricingService {
   public get(): BackendResponse<{ Pricingies: Pricing[] }> {
       return this.http.get(API_ROUTES_PRICING.PRICING);
   }
-  public getCategories(): Observable<PricingEntriesPaginationResponse> {
-    return this.http.get(API_ROUTES_PRICING.PRICING);
-  }
+
   public update(params: Pricing,id:number): BackendResponse<{ data: Pricing }> {
     return this.http.put(API_ROUTES_PRICING.PRICING+'/'+id, params);
  }

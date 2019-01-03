@@ -18,7 +18,6 @@ public appearance;
   constructor(public setting:Settings,private changeDetectionRef: ChangeDetectorRef) { }
 
 
-
   ngOnInit() {
     this.appearance=this.setting.getAll().appearance;
   }

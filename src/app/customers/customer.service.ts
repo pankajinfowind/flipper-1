@@ -42,7 +42,6 @@ export class CustomerService extends Sqlite3Service {
     this.sqlite3Data.subscribe(customers => {
       //console.log('I Am emited data', res);
       if (customers.length === 0) {
-        console.log('now is zero');
         //we do not have any customer from our sqlite3 database so go back and fetch from remote server
         this.http.get<Customer[]>(this.ROOT_URL).subscribe(customers => {
           //need to do it the right way, on first load should add this data
@@ -52,14 +51,12 @@ export class CustomerService extends Sqlite3Service {
           customers.customers.data.forEach(customer => {
             this.saveSqliteData(customer, 'users');
           });
-
         });
       } else {
         this.observed.emit(customers);
       }
-    })
-    //return this.observed;
-    return this.http.get<Customer[]>(this.ROOT_URL);
+    });
+    return this.observed;
   }
   editCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.http.put<Customer>(this.ROOT_URL, customer);

@@ -97,42 +97,42 @@ function createWindow() {
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
     title: app.getName() + "Version:" + app.getVersion(),
-    icon: path.join(__dirname, "src/assets/app-icon/png/64.png")
+    icon: path.join(__dirname, "src/assets/app-icon/png/icon.png")
   };
 
   if (serve) {
     if (process.platform === "linux") {
       windowOptions.icon = path.join(
         __dirname,
-        "src/assets/app-icon/png/64.png"
+        "src/assets/app-icon/png/icon.png"
       );
     } else if (process.platform === "win32") {
       windowOptions.icon = path.join(
         __dirname,
-        "src/assets/app-icon/png/64.png"
+        "src/assets/app-icon/win/ico.ico"
       );
     } else {
       windowOptions.icon = path.join(
         __dirname,
-        "src/assets/app-icon/png/64.png"
+        "src/assets/app-icon/png/icon.png"
       );
     }
   } else {
     if (process.platform === "linux") {
       windowOptions.icon = path.join(
         __dirname,
-        "dist/assets/app-icon/png/64.png"
+        "dist/assets/app-icon/png/icon.png"
       );
     } else if (process.platform === "win32") {
       windowOptions.icon = path.join(
         __dirname,
-        "dist/assets/app-icon/win/favicon.ico"
+        "dist/assets/app-icon/win/ico.ico"
       );
     } else {
       //TODO: check if the icon work on the platforms
       windowOptions.icon = path.join(
         __dirname,
-        "assets/app-icon/png/64.png"
+        "assets/app-icon/png/icon.png"
       );
     }
   }

@@ -3,6 +3,7 @@ import { GlobalVariables } from "../../common/core/global-variables";
 
 import { ElectronService } from "ngx-electron";
 
+
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { MasterState } from '../../../state/master-state';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DetailsService } from '../../../details/details.service';
 import { Details } from '../../../details/details';
 import { Master } from '../master';
@@ -13,18 +13,18 @@ import { MasterModelService } from '../master-model.service';
   styleUrls: ['./master.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MasterComponent implements OnInit,OnDestroy {
+export class MasterComponent implements OnInit, OnDestroy {
 
-links: any[] = [{path:'category',label:'Categories'},{path:'item',label:'Items'},{path:'pricing',label:'Price Setting'},{path:'insurance',label:'Insurances'} ];
+  links: any[] = [{ path: 'category', label: 'Categories' }, { path: 'item', label: 'Items' }, { path: 'pricing', label: 'Price Setting' }, { path: 'insurance', label: 'Insurances' }];
 
-@Select(MasterState.loading) loading$: Observable<boolean>;
-isMobile=false;
-leftColumnIsHidden=false;
-subscription: Observable<Details>;
-details$: Observable<Details>;
-master$: Observable<Master>;
-constructor(private msterModelService:MasterModelService,private detailsService:DetailsService) {
- }
+  @Select(MasterState.loading) loading$: Observable<boolean>;
+  isMobile = false;
+  leftColumnIsHidden = false;
+  subscription: Observable<Details>;
+  details$: Observable<Details>;
+  master$: Observable<Master>;
+  constructor(private msterModelService: MasterModelService, private detailsService: DetailsService) {
+  }
 
   ngOnInit() {
     this.master$ = this.msterModelService.master$;

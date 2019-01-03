@@ -5,9 +5,7 @@ import * as url from "url";
 import { windowStateKeeper } from "./win-state-keeper";
 import { DB } from './db/db';
 
-DB.select('users').subscribe(users => {
-  console.log('users', users);
-});
+
 //TODO: make sure to fix icon thing it is not building
 const mainWindowStateKeeper = windowStateKeeper("main");
 
@@ -25,10 +23,29 @@ function sendStatusToWindow(text) {
   log.info(app.getVersion() + "::" + text);
   win.webContents.send("message", text);
 }
+
+
+//Events listerns
+ipcMain.on("iWantDataWith", (event, dataType) => {
+  if (dataType == "customers") {
+    log.info("I have been pinged with::" + dataType);
+    DB.select('users').subscribe(users => {
+      event.sender.send("hereIsYourData", users);
+    });
+  }
+});
+ipcMain.on("iWantToSaveDataOf", (event, args) => {
+
+  DB.insert(args.table, args.data).subscribe(users => {
+    event.sender.send("hereIsYourData", users);
+  });
+
+});
+
 ipcMain.on("version-ping", (event, arg) => {
   event.sender.send("version-pong", app.getVersion());
 });
-
+// End of events listers
 if (!isDev) {
   autoUpdater.on("checking-for-update", () => {
     sendStatusToWindow("Checking for update...");

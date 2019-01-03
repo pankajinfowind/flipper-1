@@ -6,9 +6,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AddComponent } from '../add/add.component';
 import { NgxService } from '../../common/ngx-db/ngx-service';
-
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { tap, map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'customer-list',

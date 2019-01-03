@@ -3,7 +3,11 @@ import * as path from "path";
 import * as url from "url";
 //update
 import { windowStateKeeper } from "./win-state-keeper";
+import { DB } from './db/db';
 
+DB.select('users').subscribe(users => {
+  console.log('users', users);
+});
 //TODO: make sure to fix icon thing it is not building
 const mainWindowStateKeeper = windowStateKeeper("main");
 

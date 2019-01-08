@@ -1,6 +1,8 @@
 
 @import "../../app_sass/modal.scss";
-
+li{
+  list-style-type: none;
+}
 .w-100{
   height: 100% !important;
 }
@@ -47,15 +49,15 @@ mat-grid-tile {
   }
 
   ._main {
-    font-size: 2.6rem;
-    font-weight: 500;
+    font-size: 1.6rem;
+    font-weight: 100;
     text-align: center;
   }
   ._main:first-letter {text-transform: uppercase}
 
   ._secondary {
-    font-size: 1.7rem;
-    font-weight: 400;
+    font-size: 0.7rem;
+    // font-weight: 100;
     text-align: center;
   }
 }

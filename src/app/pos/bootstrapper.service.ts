@@ -1,6 +1,5 @@
 import { Injectable, Injector } from "@angular/core";
 import { finalize } from "rxjs/operators";
-import { BehaviorSubject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { CurrentUser } from "../common/auth/current-user";
 import { Settings } from "../common/core/config/settings.service";
@@ -11,6 +10,7 @@ import { API_ROUTES } from "./api/api-routes.enum";
 import { OrderModelService } from '../orders/order-model.service';
 import { Orders } from '../orders/orders';
 import { OrderItemsModelService } from './cart/order-item-model.service';
+import { NgxService } from '../common/ngx-db/ngx-service';
 
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
@@ -25,7 +25,7 @@ export class Bootstrapper {
   protected posModelService: PosModelService;
   protected orderModelService: OrderModelService;
   protected orderItemModelService: OrderItemsModelService
-  constructor(protected injector: Injector) {
+  constructor(protected injector: Injector, private db: NgxService) {
     this.http = this.injector.get(HttpClient);
 
     this.apiPos = this.injector.get(ApiPosService);
@@ -65,14 +65,17 @@ export class Bootstrapper {
         .subscribe(
           res => {
             if (res['status'] == 'success') {
-              const order = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
+              const order: Orders = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
+
               this.posModelService.update({ loading: false, currently_ordered: order ? order : null, choosen_insurance: null, choose_customer: null, panel_content: 'home' });
+
               this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
               if (order) {
+                if (order.customer) {
+                  this.db.addItem(order.customer);
+                }
                 this.orderItemModelService.update(order['order_items'], 'all');
               }
-
-
             }
 
             resolve();

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { MasterState } from '../../../state/master-state';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DetailsService } from '../../../details/details.service';
 import { Details } from '../../../details/details';
 import { Master } from '../master';
@@ -13,7 +13,7 @@ import { MasterModelService } from '../master-model.service';
   styleUrls: ['./master.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MasterComponent implements OnInit,OnDestroy {
+export class MasterComponent implements OnInit, OnDestroy {
 
 links: any[] = [
   {
@@ -31,7 +31,7 @@ submenu:[
             {path:'category',label:'Staff'},
             {path:'pricing',label:'Staff Roles'}
           ]
-      }
+  }
 ];
 toggled=false;
 @Select(MasterState.loading) loading$: Observable<boolean>;
@@ -53,13 +53,13 @@ constructor(private msterModelService:MasterModelService,private detailsService:
     //this.subscription.next();
   }
   clickedMenu(menu){
-    localStorage.setItem('menu',menu);
+    localStorage.setItem('master-menu',menu);
   }
   getMenuHighlighted(){
-    if(localStorage.getItem('menu')==null){
+    if(localStorage.getItem('master-menu')==null){
       return 'Products';
     }else{
-      return localStorage.getItem('menu');
+      return localStorage.getItem('master-menu');
     }
 
   }

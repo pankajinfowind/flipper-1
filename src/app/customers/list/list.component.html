@@ -1,0 +1,45 @@
+<div>
+  <button mat-raised-button color="accent" (click)="openAddCustomerDialog()">+</button>
+</div>
+  <table mat-table [dataSource]="customers" class="mat-elevation-z8" style="width:100%;margin-top:20px;">
+  <ng-container matColumnDef="cstomer_no">
+    <th mat-header-cell *matHeaderCellDef> Cust no. </th>
+    <td mat-cell *matCellDef="let customer"> {{customer.cstomer_no}} </td>
+  </ng-container>
+  <ng-container matColumnDef="full_name">
+    <th mat-header-cell *matHeaderCellDef> Full name </th>
+    <td mat-cell *matCellDef="let customer"> {{customer.full_name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
+    <td mat-cell *matCellDef="let customer"> {{customer.phone}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="tableHeads"></tr>
+  <tr (click)="emitCustomer(row)" mat-row *matRowDef="let row; columns: tableHeads;"></tr>
+</table>
+
+
+<!-- <div>
+  <button mat-raised-button color="accent" (click)="openAddCustomerDialog()">+</button>
+</div>
+<cdk-virtual-scroll-viewport [itemSize]="100">
+  <ul *cdkVirtualFor="let customer of customers" (click)="emitCustomer(customer)">
+    <li>#full name: {{customer.full_name}}|#phone {{customer.phone}}</li>
+  </ul>
+</cdk-virtual-scroll-viewport> -->
+
+<!-- <div class="add-customer">
+  <form [formGroup]="register_customer_form">
+    <input placeholder="full name" formControlName="full_name" type="text"><br>
+    <input placeholder="email" formControlName="email" type="text"><br>
+    <input placeholder="customer no" formControlName="cstomer_no" type="text"><br>
+    <input placeholder="Phone" formControlName="phone" type="text"><br>
+
+    <button mat-button class="add-customer-button" type="submit" (click)="addCustomer()">
+      Submit
+    </button>
+  </form>
+</div> -->

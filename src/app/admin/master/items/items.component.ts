@@ -67,6 +67,7 @@ export class RemoveItemDialog {
 })
 export class ItemsComponent implements OnInit {
   public loading = new BehaviorSubject(false);
+  add_item: boolean;
   constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {}
   data: Item[] = [];
   displayedColumns: string[] = [
@@ -162,5 +163,18 @@ export class ItemsComponent implements OnInit {
   }
   subMessage(t){
     return 'There are no '+t.trim().toLowerCase()+' currently.';
+  }
+
+  addItem(){
+    localStorage.setItem('add-item','Yes');
+  }
+  canUserAddItem(){
+    if(this.data.length == 0){
+      localStorage.setItem('add-item','Yes');
+      return true;
+    }else{
+      return localStorage.getItem('add-item') =='Yes'?true:false;
+    }
+
   }
 }

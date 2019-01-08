@@ -1,30 +1,30 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { MasterComponent } from './master.component';
 import { AuthGuard } from '../../../common/guards/auth-guard.service';
 import { ItemsComponent } from '../items/items.component';
 import { CategoriesComponent } from '../categories/categories.component';
 import { InsuranceComponent } from '../insurance/insurance.component';
 import { PricingComponent } from '../pricing/pricing.component';
+import { BrandComponent } from '../brands/brand.component';
 
 const masterRoutes: Routes = [
     {
         path: '',
-        component: MasterComponent,canActivate: [AuthGuard],
+        component: MasterComponent, canActivate: [AuthGuard],
 
         children: [
-          {
-            path: '',
-            redirectTo: 'item',
-            pathMatch: 'full',
+            {
+                path: '',
+                redirectTo: 'item',
+                pathMatch: 'full',
             },
-            { path: 'item', component: ItemsComponent},
-            { path: 'category', component: CategoriesComponent},
-            { path: 'pricing', component: PricingComponent},
-            { path: 'insurance', component: InsuranceComponent},
+            { path: 'item', component: ItemsComponent },
+            { path: 'category', component: CategoriesComponent },
+            { path: 'pricing', component: PricingComponent },
+            { path: 'brand', component: BrandComponent },
+            { path: 'insurance', component: InsuranceComponent },
 
-
-            //TODO:
         ]
 
     }

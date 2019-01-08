@@ -4,6 +4,7 @@
         <div class="details-list">
             <app-master-model  *ngIf="details.module=='app-master'"></app-master-model>
             <app-stock-model  *ngIf="details.module=='app-stock'"></app-stock-model>
+            <app-setup-model  *ngIf="details.module=='app-setup'"></app-setup-model>
        </div>
 
         <ng-template *ngSwitchDefault>

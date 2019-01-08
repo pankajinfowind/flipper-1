@@ -108,7 +108,7 @@ export class BrandComponent implements   OnInit {
 
   }
   openDetails(title='New Brand',action='new',obj){
-     this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-Brand',action:action,detailsVisible:true});
+     this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-brand',action:action,detailsVisible:true});
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -1,0 +1,34 @@
+
+<mat-sidenav-container class="content">
+  <mat-sidenav [opened]="!leftColumnIsHidden" mode="side" class="left-column">
+      <mat-list class="menu-items"  *ngFor="let link of links">
+          <a class="menu-item" [class.highlighted] ="getMenuHighlighted()==link.menu" (click)="clickedMenu(link.menu)">
+              <mat-icon >{{link.icon}}</mat-icon>
+              <span class="text" trans>{{link.menu}}</span>
+          </a>
+          <span *ngIf="getMenuHighlighted()==link.menu">
+          <mat-list-item  *ngFor="let sub of link.submenu">
+              <a class="menu-item" [routerLink]="sub.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                  <mat-icon >remove</mat-icon>
+                  <span class="text" trans>{{sub.label}}</span>
+              </a>
+           </mat-list-item>
+           </span>
+       </mat-list>
+
+    <div class="version">
+
+        <!-- Version: {{settings.get('version')}} -->
+    </div>
+</mat-sidenav>
+
+
+<mat-sidenav [opened]="(details$ | async).detailsVisible" [mode]="(isMobile) ? 'over' : 'side'" position="end" class="right-sidebar">
+  <app-details></app-details>
+</mat-sidenav>
+
+<mat-sidenav-content class="content-inner">
+  <loading-indicator [isVisible]="(setup$ | async).loading" class="overlay"></loading-indicator>
+    <router-outlet></router-outlet>
+</mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,4 +1,8 @@
 
+
+<app-add-item *ngIf="canUserAddItem()"></app-add-item>
+
+<div *ngIf="!canUserAddItem()">
 <mat-toolbar>
     <mat-toolbar-row>
       <div class="col-8">
@@ -7,7 +11,7 @@
         <span class="spacer"></span>
         </div>
         <div class="col-4">
-           <button color='accent' class="float-right" mat-raised-button   *ngIf="!(details$ | async).detailsVisible" (click)="openDetails('New Item','new',null)">
+           <button color='accent' class="float-right" mat-raised-button    (click)="addItem()">
            <mat-icon class="">add</mat-icon>New Item</button>
            <button mat-button color='warn' class="float-right" *ngIf="selection.selected.length > 0" (click)="removeDialog()"><mat-icon class="">delete</mat-icon>Delete ({{selection.selected.length}}) selected</button>
         </div>
@@ -110,3 +114,4 @@
 
 <master-no-entry-found *ngIf="data && data.length == 0"  [message]="message('Items')" [subMessage]='subMessage("Items")'></master-no-entry-found>
 
+</div>

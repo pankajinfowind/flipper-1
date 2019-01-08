@@ -16,6 +16,7 @@ export function init_app(bootstrapper: Bootstrapper) {
 
 @Injectable()
 export class Bootstrapper {
+
     protected apiStock: ApiStockService;
     protected modelStockService: StockModelService;
     protected http: HttpClient;

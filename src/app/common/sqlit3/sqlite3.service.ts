@@ -35,6 +35,7 @@ export class Sqlite3Service {
       data: data,
       table: table
     }
+
     if (this.isElectron()) {
       this.ipcRenderer = this._electronService.ipcRenderer;
       this.ipcRenderer.send("iWantToSaveDataOf", insertableObject);

@@ -39,6 +39,7 @@ export class CustomerService extends Sqlite3Service {
     //i.e I will sync this newly created data to online
     //With Shared data such as customers every user should have all data so we can avoid conflict
     this.getSqliteData('customers');
+
     this.sqlite3Data.subscribe(customers => {
       //console.log('I Am emited data', res);
       if (customers.length === 0) {

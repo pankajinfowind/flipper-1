@@ -4,7 +4,7 @@ import * as url from "url";
 //update
 import { windowStateKeeper } from "./win-state-keeper";
 import { DB } from './db/db';
-
+import { Sync } from './sync/sync'
 
 //TODO: make sure to fix icon thing it is not building
 const mainWindowStateKeeper = windowStateKeeper("main");
@@ -18,6 +18,9 @@ const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
+
+//init a sync...
+new Sync();
 const isDev = require("electron-is-dev");
 function sendStatusToWindow(text) {
   log.info(app.getVersion() + "::" + text);
@@ -28,7 +31,6 @@ function sendStatusToWindow(text) {
 //Events listerns
 ipcMain.on("iWantDataWith", (event, dataType) => {
   if (dataType == "customers") {
-    log.info("I have been pinged with::" + dataType);
     DB.select('users').subscribe(users => {
       event.sender.send("hereIsYourData", users);
     });

@@ -94,7 +94,6 @@ export class ListComponent implements OnInit {
       width: '450px',
       // data: {name: this.name, animal: this.animal}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
       //TODO:show a toast of the action to be completed

@@ -42,6 +42,7 @@ export class Sqlite3Service {
         this.sqlite3Data.emit(users);
       });
     }
+
   }
 
 }

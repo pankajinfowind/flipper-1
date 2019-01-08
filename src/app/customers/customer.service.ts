@@ -52,6 +52,7 @@ export class CustomerService extends Sqlite3Service {
             this.saveSqliteData(customer, 'users');
           });
         });
+
       } else {
         this.observed.emit(customers);
       }

@@ -24,7 +24,7 @@
     placeholder="Search"
   />
 </mat-form-field>
-
+<div class="section-container">
 <table mat-table [dataSource]="dataSource" matSort class="w-100">
   <!-- Checkbox Column -->
   <ng-container matColumnDef="select">
@@ -54,7 +54,6 @@
           (click)="selection.toggle(row)">
       </tr>
   </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 <master-no-entry-found *ngIf="data && data.length == 0" [message]="message('Pricing')" [subMessage]='subMessage("Pricing")'></master-no-entry-found>

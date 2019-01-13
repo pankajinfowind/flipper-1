@@ -4,12 +4,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material/material.module';
 import { TaxRateModelComponent } from './tax-rate-model/tax-rate-model.component';
 import { SetUpModelComponent } from './setup-model.component';
+import { ReasonModelComponent } from './reason-model/reason-model.component';
 
 
 @NgModule({
   declarations:
   [TaxRateModelComponent,
-    SetUpModelComponent
+    SetUpModelComponent,
+    ReasonModelComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { SetUpModelComponent } from './setup-model.component';
   ],
   exports:[
     TaxRateModelComponent,
-    SetUpModelComponent
+    SetUpModelComponent,
+    ReasonModelComponent
   ]
 })
 export class SetUpModelModule {

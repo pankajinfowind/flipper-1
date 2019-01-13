@@ -19,6 +19,8 @@ import { Pricing } from './pricing/api/pricing';
 import { API_ROUTES_PRICING } from './pricing/api/api-routes.enum';
 import { Brand } from './brands/api/brand';
 import { API_ROUTES_BRAND } from './brands/api/api-routes.enum';
+import { API_ROUTES_BRANCH } from './branch/api/api-routes.enum';
+import { Branch } from './branch/api/branch';
 
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
@@ -57,6 +59,7 @@ export class Bootstrapper {
         this.pricing();
         this.brands();
         this.insurances();
+        this.branchies();
       }
     });
   }
@@ -84,6 +87,39 @@ export class Bootstrapper {
               loading: false,
               categories: res["categories"]["data"]
                 ? res["categories"]["data"]
+                : []
+            });
+
+            resolve();
+          },
+          error => {
+            this.modelMasterService.update({ loading: false });
+            console.log("bootstrap error", error);
+            reject();
+          }
+        );
+    });
+  }
+  protected branchies(): Promise<Branch[]> {
+    let url;
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+      url = AppConfig.url + "secure/" + API_ROUTES_BRANCH.BRANCH;
+    } else {
+      url = this.settings.getBaseUrl() + "secure/" + API_ROUTES_BRANCH.BRANCH;
+    }
+    this.modelMasterService.update({ loading: true });
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(url)
+        .pipe(
+          finalize(() => this.modelMasterService.update({ loading: false }))
+        )
+        .subscribe(
+          res => {
+            this.modelMasterService.update({
+              loading: false,
+              branchs: res["branchs"]["data"]
+                ? res["branchs"]["data"]
                 : []
             });
 

@@ -1,0 +1,88 @@
+
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div class="col-8">
+        <button mat-button><mat-icon class="">menu</mat-icon>Reason > {{reason}}</button>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      </div>
+
+      <div class="col-4">
+          <button color='accent' class="float-right" mat-raised-button   *ngIf="!(details$ | async).detailsVisible" (click)="openDetails('Add '+reason+' reason','new',null,reason)">
+              <mat-icon class="">add</mat-icon>Add {{reason}} reason</button>
+              <button mat-button color='warn' class="float-right" *ngIf="selection.selected.length > 0 && can_delete" (click)="removeDialog()"><mat-icon class="">delete</mat-icon>Delete ({{selection.selected.length}}) selected</button>
+       </div>
+
+      </mat-toolbar-row>
+</mat-toolbar>
+<div class="col-12" *ngIf="data && data.length > 0">
+
+<mat-form-field class="w-100 px-2">
+  <input
+    matInput
+    (keyup)="applyFilter($event.target.value)"
+    placeholder="Search"
+  />
+</mat-form-field>
+<div class="section-container">
+<table mat-table [dataSource]="dataSource" matSort class="w-100">
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row" (click)="openDetails('Edit '+reason+' reason','edit',row,reason)">
+        <mat-checkbox (click)="$event.stopPropagation();openDetails('Edit Tax Rate','edit',row)"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit '+reason+' reason','edit',element,reason)">
+          <span class="text">{{element.name}}</span> </td>
+    </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit '+reason+' reason','edit',element,reason)">
+              <span class="text">{{element.description}}</span> </td>
+        </ng-container>
+
+            <!-- Name Column -->
+    <ng-container matColumnDef="stock_movements_status" *ngIf="reason=='stock_movements'">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit '+reason+' reason','edit',element,reason)">
+          <span class="text">{{element.stock_movements_status}} </span> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="discount_value" *ngIf="reason=='discount'">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount Value </th>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit '+reason+' reason','edit',element,reason)">
+          <span class="text">{{element.discount_value}} %</span> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="return_to_stock" *ngIf="reason=='refund'">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Return to stock</th>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit '+reason+' reason','edit',element,reason)">
+          <span class="text">
+            <mat-checkbox [checked]="element.return_to_stock" [disabled]="true"></mat-checkbox>
+          </span> </td>
+    </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr [class.highlighted]="((details$ | async).sender_data?(details$ | async).sender_data.reason_id==row.reason_id:false)" mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="selection.toggle(row)">
+      </tr>
+  </table>
+</div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<setup-no-entry-found *ngIf="data && data.length == 0" [message]="message('Reason ('+reason+')')" [subMessage]="subMessage('Reason ('+reason+')')"></setup-no-entry-found>

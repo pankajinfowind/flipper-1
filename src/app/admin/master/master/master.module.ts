@@ -26,6 +26,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { PricingComponent, RemovePricingDialog } from '../pricing/pricing.component';
 import { BrandComponent, RemoveBrandDialog } from '../brands/brand.component';
 import { AddItemComponent } from '../items/add-item/add-item.component';
+import { BranchComponent, RemoveBranchDialog } from '../branch/branch.component';
+import { ApiBranchService } from '../branch/api/api.service';
 
 @NgModule({
   imports: [CommonModule,MasterRoutingModule,DetailsModule, MaterialModule, FormsModule, UiModule, ReactiveFormsModule,HttpClientModule,HttpModule],
@@ -36,6 +38,7 @@ import { AddItemComponent } from '../items/add-item/add-item.component';
     CategoriesComponent,
     PricingComponent,
     BrandComponent,
+    BranchComponent,
     MasterComponent,
     ModalComponent,
     InsuranceComponent,
@@ -44,7 +47,8 @@ import { AddItemComponent } from '../items/add-item/add-item.component';
     RemoveInsuranceDialog,
     RemovePricingDialog,
     RemoveBrandDialog,
-    NoEntryFoundMasterComponent
+    NoEntryFoundMasterComponent,
+    RemoveBranchDialog
   ],
   declarations: [
     ItemsComponent,
@@ -52,6 +56,7 @@ import { AddItemComponent } from '../items/add-item/add-item.component';
     CategoriesComponent,
     PricingComponent,
     BrandComponent,
+    BranchComponent,
     MasterComponent,
     ModalComponent,
     InsuranceComponent,
@@ -60,15 +65,17 @@ import { AddItemComponent } from '../items/add-item/add-item.component';
     RemoveInsuranceDialog,
     RemoveBrandDialog,
     RemovePricingDialog,
-    NoEntryFoundMasterComponent
+    NoEntryFoundMasterComponent,
+    RemoveBranchDialog
 
   ],
   providers: [
     ApiItemService,
     ApiCategoryService,
-    ApiInsuranceService
+    ApiInsuranceService,
+    ApiBranchService
   ],
-entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemovePricingDialog,RemoveInsuranceDialog,RemoveBrandDialog]
+entryComponents: [RemoveItemDialog,RemoveBranchDialog,RemoveCategoryDialog,RemovePricingDialog,RemoveInsuranceDialog,RemoveBrandDialog]
 })
 export class MasterModule {
   static forRoot(): ModuleWithProviders {
@@ -94,6 +101,7 @@ export class MasterModule {
                   ApiItemService,
                   ApiCategoryService,
                   ApiInsuranceService,
+                  ApiBranchService,
                   CurrentUser],
             },
         ]

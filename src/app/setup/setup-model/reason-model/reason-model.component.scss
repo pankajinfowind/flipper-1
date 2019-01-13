@@ -1,0 +1,27 @@
+@import "../../../app_sass/variables";
+
+.details-list {
+  margin-top: -18px;
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+
+    .name {
+      width: 120px;
+      flex: 0 0 120px;
+      color:  $site-text-color-300;;
+    }
+
+    .value {
+      flex: 1 1 auto;
+    }
+
+    .type-value {
+      text-transform: capitalize;
+    }
+  }
+  .card-actions{
+    margin-top: -17px                                                                                                                                                                                                                                                                                                                                                                                                                                                                                x;
+  }
+}

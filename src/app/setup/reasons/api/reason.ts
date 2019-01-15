@@ -4,6 +4,7 @@ export class Reason {
   reason_id?: number;
   active?: number;
   description?: string;
+  type?:string;
   reason_type?:string;
   discount_value?:number;
   return_to_stock?:string;

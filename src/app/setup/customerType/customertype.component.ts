@@ -2,40 +2,40 @@ import { Component, OnInit, ViewChild, Input, ChangeDetectorRef, DoCheck, Inject
 import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, isEmpty } from 'rxjs/operators';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Pricing } from './api/pricing';
-import { Select } from '@ngxs/store';
-import { MasterState } from '../../../state/master-state';
-import { AsyncPipe } from '@angular/common';
-import { Details } from '../../../details/details';
+import { SetUpModelService } from '../setup-model.service';
+import { Toast } from '../../common/core/ui/toast.service';
+import { MasterModelService } from '../../admin/master/master-model.service';
+import { DetailsService } from '../../details/details.service';
+import { Master } from '../../admin/master/master';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DetailsService } from '../../../details/details.service';
-import { Toast } from '../../../common/core/ui/toast.service';
-import { Master } from '../master';
-import { MasterModelService } from '../master-model.service';
-import { ApiPricingService } from './api/api.service';
+import { ApiCustomerTypeService } from './api/api.service';
+import { CustomerType } from './api/CustomerType';
+import { Details } from '../../details/details';
+import { SetUp } from '../setup';
+
 
 @Component({
   selector: "remove-dialog",
   templateUrl: './remove-dialog.html',
-  styleUrls: ["./pricing.component.scss"]
+  styleUrls: ["./customertype.component.scss"]
 })
-export class RemovePricingDialog {
+export class RemoveCustomertypeDialog {
   cat_deleted=[];
   public loading = new BehaviorSubject(false);
-  constructor(private msterModelService:MasterModelService,private toast: Toast,private api: ApiPricingService,
-    public dialogRef: MatDialogRef<RemovePricingDialog>,
+  constructor(private msterModelService:SetUpModelService,private toast: Toast,private api: ApiCustomerTypeService,
+    public dialogRef: MatDialogRef<RemoveCustomertypeDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
-    deletePricing(){
+    deletecustomertype(){
       this.loading.next(true);
         this.data.forEach(element => {
           this.api
-          .delete(element.Pricing_id).subscribe(
+          .delete(element.customertype_id).subscribe(
               res => {
                   if(res.status=='success'){
                     this.dialogRef.close({status:'success'});
-                    this.msterModelService.update({loading: false, categories: res['pricing']['data']?res['pricing']['data']:[]});
+                    this.msterModelService.update({loading: false, categories: res['customertype']['data']?res['customertype']['data']:[]});
                   }
               },
               _error => {
@@ -55,27 +55,27 @@ export class RemovePricingDialog {
   }
 }
 @Component({
-  selector: 'app-pricing',
-  templateUrl: './pricing.component.html',
-  styleUrls: ['./pricing.component.scss']
+  selector: 'app-customertype',
+  templateUrl: './customertype.component.html',
+  styleUrls: ['./customertype.component.scss']
 })
-export class PricingComponent implements   OnInit {
+export class CustomerTypeComponent implements   OnInit {
 
   public loading = new BehaviorSubject(false);
   can_delete=false;
 
-  constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api:ApiPricingService,private ref: ChangeDetectorRef) { }
-  data: Pricing[] = [];
-  displayedColumns: string[] = ['select', 'name'];
-  dataSource = new MatTableDataSource<Pricing>([]);
+  constructor(private setupModelService:SetUpModelService,public dialog: MatDialog,private detailsService:DetailsService,private api:ApiCustomerTypeService,private ref: ChangeDetectorRef) { }
+  data: CustomerType[] = [];
+  displayedColumns: string[] = ['select', 'name','discount','description'];
+  dataSource = new MatTableDataSource<CustomerType>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  master$: Observable<Master>;
+  setup$: Observable<SetUp>;
 
   subscription: Observable<Details>;
   details$: Observable<Details>;
-  selection = new SelectionModel<Pricing>(true, []);
+  selection = new SelectionModel<CustomerType>(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -97,18 +97,18 @@ export class PricingComponent implements   OnInit {
     this.dataSource.sort = this.sort;
     this.subscription = this.details$ = this.detailsService.details$;
 
-    this.master$ = this.msterModelService.master$;
+    this.setup$ = this.setupModelService.setup$;
 
-        this.master$.subscribe(res=>{
-          if(res.pricing.length  > 0){
-            this.data=res.pricing;
+        this.setup$.subscribe(res=>{
+          if(res.customertypes.length  > 0){
+            this.data=res.customertypes.filter(c=>c.is_active==1);
             this.dataSource.data=this.data;
           }
       });
-
   }
-  openDetails(title='New Pricing',action='new',obj){
-     this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-pricing',action:action,detailsVisible:true});
+
+  openDetails(title='New Customer Type',action='new',obj){
+     this.detailsService.update({title:title,sender_data:obj,module:'app-setup',component:'app-customertype',action:action,detailsVisible:true});
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -116,14 +116,14 @@ export class PricingComponent implements   OnInit {
 
   removeDialog(): void {
     if (this.selection.selected.length > 0) {
-      const dialogRef = this.dialog.open(RemovePricingDialog, {
+      const dialogRef = this.dialog.open(RemoveCustomertypeDialog, {
         width: '400px',
         data: this.selection.selected
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if(result.status=="success"){
-          this.selection = new SelectionModel<Pricing>(true, []);
+          this.selection = new SelectionModel<CustomerType>(true, []);
          }
       });
 

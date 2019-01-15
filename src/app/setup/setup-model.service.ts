@@ -14,7 +14,7 @@ export class SetUpModelService {
     this.create();
     this.setup$ = this.model.data$;
    }
-   public create(stateCreation:SetUp={loading:false,taxRates:[],reasons:[]}){
+   public create(stateCreation:SetUp={loading:false,taxRates:[],reasons:[],customertypes:[]}){
     this.model = this.modelFactory.create(stateCreation);
    }
 

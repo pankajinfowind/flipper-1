@@ -17,6 +17,12 @@ export class SetupComponent implements OnInit, OnDestroy {
 
 links: any[] = [
   {
+    menu:'Company',icon:'assessment',
+    submenu:[
+            {path:'customertype',label:'Customer Types'},
+          ]
+      },
+  {
 menu:'Banking',icon:'assessment',
 submenu:[
         {path:'tax-rate',label:'Tax rates'},
@@ -31,7 +37,7 @@ submenu:[
           ]
       }
 ];
-
+//customertype
 toggled=false;
 isMobile=false;
 leftColumnIsHidden=false;
@@ -64,7 +70,7 @@ constructor(private router: Router,private msterModelService:SetUpModelService,p
   }
   getMenuHighlighted(){
     if(localStorage.getItem('setup-menu')==null){
-      return 'Banking';
+      return 'Company';
     }else{
       return localStorage.getItem('setup-menu');
     }

@@ -19,10 +19,12 @@ import { ApiTaxRateService } from './tax-rates/api/api.service';
 import { NoEntryFoundSetUpComponent } from './messages/no-entry-found/no-entry-found.component';
 import { ReasonComponent } from './reasons/reason.component';
 import { ApiReasonService } from './reasons/api/api.service';
+import { CustomerTypeComponent, RemoveCustomertypeDialog } from './customerType/customertype.component';
+import { ApiCustomerTypeService } from './customerType/api/api.service';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent],
-  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
+  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
   imports: [
     CommonModule,
     SetupRoutingModule,
@@ -36,8 +38,10 @@ import { ApiReasonService } from './reasons/api/api.service';
   ],
   providers: [
     ApiTaxRateService,
-    ApiReasonService
+    ApiReasonService,
+    ApiCustomerTypeService
   ],
+  entryComponents: [RemoveCustomertypeDialog]
 })
 export class SetupModule {
   static forRoot(): ModuleWithProviders {
@@ -63,6 +67,7 @@ export class SetupModule {
                   SetUpModelService,
                   ApiTaxRateService,
                   ApiReasonService,
+                  ApiCustomerTypeService,
                   CurrentUser],
             },
         ]

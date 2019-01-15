@@ -23,7 +23,6 @@ import { ApiInsuranceService } from '../insurance/api/ap.service';
 import { ApiItemService } from '../items/api/api.service';
 import { HttpModule } from '../../../common/core/http/http.module';
 import {HttpClientModule} from '@angular/common/http';
-import { PricingComponent, RemovePricingDialog } from '../pricing/pricing.component';
 import { BrandComponent, RemoveBrandDialog } from '../brands/brand.component';
 import { AddItemComponent } from '../items/add-item/add-item.component';
 import { BranchComponent, RemoveBranchDialog } from '../branch/branch.component';
@@ -36,7 +35,6 @@ import { ApiBranchService } from '../branch/api/api.service';
     ItemsComponent,
     AddItemComponent,
     CategoriesComponent,
-    PricingComponent,
     BrandComponent,
     BranchComponent,
     MasterComponent,
@@ -45,7 +43,6 @@ import { ApiBranchService } from '../branch/api/api.service';
     RemoveItemDialog,
     RemoveCategoryDialog,
     RemoveInsuranceDialog,
-    RemovePricingDialog,
     RemoveBrandDialog,
     NoEntryFoundMasterComponent,
     RemoveBranchDialog
@@ -54,7 +51,6 @@ import { ApiBranchService } from '../branch/api/api.service';
     ItemsComponent,
     AddItemComponent,
     CategoriesComponent,
-    PricingComponent,
     BrandComponent,
     BranchComponent,
     MasterComponent,
@@ -64,7 +60,6 @@ import { ApiBranchService } from '../branch/api/api.service';
     RemoveCategoryDialog,
     RemoveInsuranceDialog,
     RemoveBrandDialog,
-    RemovePricingDialog,
     NoEntryFoundMasterComponent,
     RemoveBranchDialog
 
@@ -75,7 +70,7 @@ import { ApiBranchService } from '../branch/api/api.service';
     ApiInsuranceService,
     ApiBranchService
   ],
-entryComponents: [RemoveItemDialog,RemoveBranchDialog,RemoveCategoryDialog,RemovePricingDialog,RemoveInsuranceDialog,RemoveBrandDialog]
+entryComponents: [RemoveItemDialog,RemoveBranchDialog,RemoveCategoryDialog,RemoveInsuranceDialog,RemoveBrandDialog]
 })
 export class MasterModule {
   static forRoot(): ModuleWithProviders {

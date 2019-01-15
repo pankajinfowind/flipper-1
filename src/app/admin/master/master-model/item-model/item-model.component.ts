@@ -12,6 +12,10 @@ import { MasterModelService } from '../../master-model.service';
 import { Master } from '../../master';
 import { CurrentUser } from '../../../../common/auth/current-user';
 import { Business } from '../../../../business/api/business';
+import { Brand } from '../../brands/api/brand';
+import { TAXRATE } from '../../../../setup/tax-rates/api/tax-rate';
+import { SetUp } from '../../../../setup/setup';
+import { SetUpModelService } from '../../../../setup/setup-model.service';
 
 @Component({
   selector: 'app-item-model',
@@ -20,8 +24,11 @@ import { Business } from '../../../../business/api/business';
 })
 export class ItemModelComponent implements OnInit {
   master$: Observable<Master>;
+  setup$: Observable<SetUp>;
   itemForm: FormGroup;
   categories: Category[] = [];
+  brands: Brand[] = [];
+  taxrates: TAXRATE[] = [];
   numberPatern = '^[0-9.]+$';
   public loading = new BehaviorSubject(false);
   details$: Observable<Details>;
@@ -32,14 +39,17 @@ export class ItemModelComponent implements OnInit {
   business: Business;
   upc_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
-  constructor(public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
+  constructor(private setupModelService: SetUpModelService,public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
 
 
   ngOnInit() {
     this.business = this.currentUser.get('business')[0];
     this.currencies = [this.business.currency_code];
     this.master$ = this.msterModelService.master$;
+    this.setup$ = this.setupModelService.setup$;
     this.getActiveCategories();
+    this.getActiveBrands();
+    this.getActiveTaxRates();
     this.details$ = this.detailsService.details$;
     this.loadingFormGroup();
   }
@@ -56,18 +66,33 @@ export class ItemModelComponent implements OnInit {
       this.itemForm = new FormGroup({
         item: new FormControl(res.sender_data ? res.sender_data.item : "", [Validators.required]),
         sku: new FormControl(res.sender_data ? res.sender_data.sku : 0, [Validators.required]),
-        upc: new FormControl(res.sender_data ? res.sender_data.upc : 0, [Validators.required]),
         summary: new FormControl(res.sender_data ? res.sender_data.summary : 'null'),
         manufacturer: new FormControl(res.sender_data ? res.sender_data.manufacturer : 'null'),
-        currency: new FormControl(res.sender_data ? res.sender_data.currency : "Rwf", [Validators.required]),
-        unit_cost: new FormControl(res.sender_data ? res.sender_data.unit_cost : 0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
-        unit_sale: new FormControl(res.sender_data ? res.sender_data.unit_sale : 0.00, [Validators.required, Validators.pattern(this.numberPatern)]),
-        category_id: new FormControl(res.sender_data ? res.sender_data.category.category_id : 0, [Validators.required]),
-        barcode: new FormControl(res.sender_data ? res.sender_data.barcode : "barcode")
+        product_order_code: new FormControl(res.sender_data ? res.sender_data.product_order_code : 0),
+        article_code: new FormControl(res.sender_data ? res.sender_data.article_code : 0),
+        category_id: new FormControl(res.sender_data && res.sender_data.category? res.sender_data.category.id : 0, [Validators.required]),
+        brand_id: new FormControl(res.sender_data && res.sender_data.brand ? res.sender_data.brand.id : 0, [Validators.required]),
+        tax_rate_id:new FormControl(res.sender_data && res.sender_data.tax_rate? res.sender_data.tax_rate.id : 0, [Validators.required]),
+        barcode: new FormControl(res.sender_data ? res.sender_data.barcode : 0)
       });
     });
   }
+  getActiveBrands() {
+    this.master$.subscribe(res => {
+      if (res.brands.length > 0) {
+        this.brands = res.brands;
+      }
+    });
 
+  }
+  getActiveTaxRates() {
+    this.setup$.subscribe(res => {
+      if (res.taxRates.length > 0) {
+        this.taxrates = res.taxRates;
+      }
+    });
+
+  }
 
   getActiveCategories() {
     this.master$.subscribe(res => {
@@ -83,32 +108,34 @@ export class ItemModelComponent implements OnInit {
   get item() {
     return this.itemForm.get("item");
   }
-
+ get barcode(){
+  return this.itemForm.get("barcode");
+ }
   get sku() {
     return this.itemForm.get("sku");
   }
 
-  get unit_sale() {
-    return this.itemForm.get("unit_sale");
-  }
   get category_id() {
     return this.itemForm.get("category_id");
   }
-  get barcode() {
-    return this.itemForm.get("barcode");
+  get product_order_code() {
+    return this.itemForm.get("product_order_code");
   }
-  get unit_cost() {
-    return this.itemForm.get("unit_cost");
+  get article_code() {
+    return this.itemForm.get("article_code");
   }
-  get upc() {
-    return this.itemForm.get("upc");
+  get brand_id() {
+    return this.itemForm.get("brand_id");
   }
+  //
+  get tax_rate_id() {
+    return this.itemForm.get("tax_rate_id");
+  }
+
   get summary() {
     return this.itemForm.get("summary");
   }
-  get currency() {
-    return this.itemForm.get("currency");
-  }
+
   get manufacturer() {
     return this.itemForm.get("manufacturer");
   }
@@ -167,5 +194,8 @@ export class ItemModelComponent implements OnInit {
   close() {
     this.detailsService.update({ title: null, receriver_data: null, sender_data: null, module: null, component: null, action: null, detailsVisible: false });
   }
+  openDetails(title='New Category',action='new',component='app-categories',modules='app-master',obj){
+    this.detailsService.update({title:title,sender_data:obj,module:modules,component:component,action:action,detailsVisible:true});
+ }
 
 }

@@ -33,6 +33,11 @@ const routes: Routes = [
               path: 'pos',
               loadChildren: 'app/pos/pos.module#PosModule',
               canActivate: [AuthGuard]
+            },
+            {
+              path: 'setup',
+              loadChildren: 'app/setup/setup.module#SetupModule',
+              canActivate: [AuthGuard]
             }
 
         ]

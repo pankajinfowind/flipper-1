@@ -17,6 +17,8 @@ import { API_ROUTES_INSURANCES } from "./insurance/api/api-routes.enum";
 import { Item } from "./items/api/item";
 import { Pricing } from './pricing/api/pricing';
 import { API_ROUTES_PRICING } from './pricing/api/api-routes.enum';
+import { Brand } from './brands/api/brand';
+import { API_ROUTES_BRAND } from './brands/api/api-routes.enum';
 
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
@@ -53,6 +55,7 @@ export class Bootstrapper {
         this.categories();
         this.items();
         this.pricing();
+        this.brands();
         this.insurances();
       }
     });
@@ -115,6 +118,40 @@ export class Bootstrapper {
               loading: false,
               pricing: res["pricing"]["data"]
                 ? res["pricing"]["data"]
+                : []
+            });
+
+            resolve();
+          },
+          error => {
+            this.modelMasterService.update({ loading: false });
+            console.log("bootstrap error", error);
+            reject();
+          }
+        );
+    });
+  }
+
+  protected brands(): Promise<Brand[]> {
+    let url;
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+      url = AppConfig.url + "secure/" + API_ROUTES_BRAND.BRAND;
+    } else {
+      url = this.settings.getBaseUrl() + "secure/" + API_ROUTES_BRAND.BRAND;
+    }
+    this.modelMasterService.update({ loading: true });
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(url)
+        .pipe(
+          finalize(() => this.modelMasterService.update({ loading: false }))
+        )
+        .subscribe(
+          res => {
+            this.modelMasterService.update({
+              loading: false,
+              brands: res["brands"]["data"]
+                ? res["brands"]["data"]
                 : []
             });
 

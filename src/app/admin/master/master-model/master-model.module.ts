@@ -7,11 +7,12 @@ import { MaterialModule } from '../../../material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InsuranceModelComponent } from './insurance-model/insurance-model.component';
 import { PricingModelComponent } from './pricing-model/pricing-model.component';
+import { BrandModelComponent } from './brand-model/brand-model.component';
 
 
 @NgModule({
   declarations:
-  [MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent,PricingModelComponent
+  [MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent,PricingModelComponent,BrandModelComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +21,7 @@ import { PricingModelComponent } from './pricing-model/pricing-model.component';
     ReactiveFormsModule
   ],
   exports:[
-    MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent,PricingModelComponent
+    MasterModelComponent,ItemModelComponent,CategoryModelComponent,InsuranceModelComponent,PricingModelComponent,BrandModelComponent
   ]
 })
 export class MasterModelModule {

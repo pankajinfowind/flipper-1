@@ -19,20 +19,23 @@ import { HttpErrorHandler } from '../../../common/core/http/errors/http-error-ha
 import { BackendHttpErrorHandler } from '../../../common/core/http/errors/backend-http-error-handler.service';
 import { ravenErrorHandlerFactory } from '../../../common/core/errors/raven-error-handler';
 import { ApiCategoryService } from '../categories/api/api.service';
-import { MasterModelService } from '../master-model.service';
 import { ApiInsuranceService } from '../insurance/api/ap.service';
 import { ApiItemService } from '../items/api/api.service';
 import { HttpModule } from '../../../common/core/http/http.module';
 import {HttpClientModule} from '@angular/common/http';
 import { PricingComponent, RemovePricingDialog } from '../pricing/pricing.component';
+import { BrandComponent, RemoveBrandDialog } from '../brands/brand.component';
+import { AddItemComponent } from '../items/add-item/add-item.component';
 
 @NgModule({
   imports: [CommonModule,MasterRoutingModule,DetailsModule, MaterialModule, FormsModule, UiModule, ReactiveFormsModule,HttpClientModule,HttpModule],
   exports: [
     HttpClientModule,
     ItemsComponent,
+    AddItemComponent,
     CategoriesComponent,
     PricingComponent,
+    BrandComponent,
     MasterComponent,
     ModalComponent,
     InsuranceComponent,
@@ -40,18 +43,22 @@ import { PricingComponent, RemovePricingDialog } from '../pricing/pricing.compon
     RemoveCategoryDialog,
     RemoveInsuranceDialog,
     RemovePricingDialog,
+    RemoveBrandDialog,
     NoEntryFoundMasterComponent
   ],
   declarations: [
     ItemsComponent,
+    AddItemComponent,
     CategoriesComponent,
     PricingComponent,
+    BrandComponent,
     MasterComponent,
     ModalComponent,
     InsuranceComponent,
     RemoveItemDialog,
     RemoveCategoryDialog,
     RemoveInsuranceDialog,
+    RemoveBrandDialog,
     RemovePricingDialog,
     NoEntryFoundMasterComponent
 
@@ -61,7 +68,7 @@ import { PricingComponent, RemovePricingDialog } from '../pricing/pricing.compon
     ApiCategoryService,
     ApiInsuranceService
   ],
-entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemovePricingDialog,RemoveInsuranceDialog]
+entryComponents: [RemoveItemDialog,RemoveCategoryDialog,RemovePricingDialog,RemoveInsuranceDialog,RemoveBrandDialog]
 })
 export class MasterModule {
   static forRoot(): ModuleWithProviders {

@@ -6,6 +6,7 @@ import { ItemsComponent } from '../items/items.component';
 import { CategoriesComponent } from '../categories/categories.component';
 import { InsuranceComponent } from '../insurance/insurance.component';
 import { PricingComponent } from '../pricing/pricing.component';
+import { BrandComponent } from '../brands/brand.component';
 
 const masterRoutes: Routes = [
     {
@@ -21,6 +22,7 @@ const masterRoutes: Routes = [
             { path: 'item', component: ItemsComponent },
             { path: 'category', component: CategoriesComponent },
             { path: 'pricing', component: PricingComponent },
+            { path: 'brand', component: BrandComponent },
             { path: 'insurance', component: InsuranceComponent },
 
         ]

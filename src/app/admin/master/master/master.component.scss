@@ -59,9 +59,9 @@ app-master {
 
           &.active {
             color: $site-primary-color-100;
-            background-color: $site-selected-item-bg-color;
-            border-top-right-radius: 25px;
-            border-bottom-right-radius: 25px;
+            // background-color: $site-selected-item-bg-color;
+            // border-top-right-radius: 25px;
+            // border-bottom-right-radius: 25px;
             .text {
               font-weight: 500!important;
             }

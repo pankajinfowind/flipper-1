@@ -1,140 +1,140 @@
-
-
 <!-- <div *ngIf="dataSource.data.length > 0;else notDataFound"> -->
 
- <form  [formGroup]="itemForm"  novalidate (ngSubmit)="addItem()">
-<mat-toolbar>
+<form [formGroup]="itemForm" novalidate (ngSubmit)="addItem()">
+  <mat-toolbar>
     <mat-toolbar-row>
       <div class="col-8">
-          <button mat-button [disabled]='true'><mat-icon class="">menu</mat-icon>New Stock </button>
+        <button mat-button [disabled]='true'>
+          <mat-icon class="">menu</mat-icon>New Stock
+        </button>
         <span class="spacer"></span>
         <span class="spacer"></span>
-        </div>
-        <div class="col-4">
-            <button type="button" class="float-right" (click)="addItem()" mat-raised-button color='accent' *ngIf="selection.selected.length > 0" [disabled]="(loading | async) || itemForm.invalid">Save all</button>
-        </div>
+      </div>
+      <div class="col-4">
+        <button type="button" class="float-right" (click)="addItem()" mat-raised-button color='accent' *ngIf="selection.selected.length > 0"
+          [disabled]="(loading | async) || itemForm.invalid">Save all</button>
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
 
   <loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
 
-    <mat-form-field class="w-100 px-2">
-        <input matInput (keyup)="applyFilter($event.target.value)" [disabled]="data.length == 0" placeholder="Search">
-      </mat-form-field>
+  <mat-form-field class="w-100 px-2">
+    <input matInput (keyup)="applyFilter($event.target.value)" [disabled]="data.length == 0" placeholder="Search">
+  </mat-form-field>
 
 
-            <table formArrayName="newStock" mat-table [dataSource]="dataSource" matSort class="col-12">
+  <table formArrayName="newStock" mat-table [dataSource]="dataSource" matSort class="col-12">
 
-            <!-- Checkbox Column -->
-              <ng-container matColumnDef="select">
-                  <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox [disabled]="data.length == 0" (change)="$event ? masterToggle() : null"
-                                  [checked]="selection.hasValue() && isAllSelected()"
-                                  [indeterminate]="selection.hasValue() && !isAllSelected()">
-                    </mat-checkbox>
-                  </th>
-                  <td mat-cell *matCellDef="let row">
-                    <mat-checkbox (click)="$event.stopPropagation()"
-                                  (change)="$event ? selection.toggle(row) : null"
-                                  [checked]="selection.isSelected(row)">
-                    </mat-checkbox>
-                  </td>
-                </ng-container>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox [disabled]="data.length == 0" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
 
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="item">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index" >
-                <mat-form-field class="text">
-                <input matInput  formControlName="item"  required>
-                <input matInput  formControlName="id" required hidden>
-                <input matInput  formControlName="branch_id" required hidden>
-                <input matInput  formControlName="sku" required hidden>
+    <!-- Name Column -->
+    <ng-container matColumnDef="item">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+        <mat-form-field class="text">
+          <input matInput formControlName="item" required>
+          <input matInput formControlName="id" required hidden>
+          <input matInput formControlName="branch_id" required hidden>
+          <input matInput formControlName="sku" required hidden>
 
-                </mat-form-field>
-              </td>
-          </ng-container>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-              <ng-container matColumnDef="available_stock_qty">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity</th>
-                  <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-                        <!-- unit quantity input field -->
-                    <mat-form-field>
-                        <span class="text">
-                      <input matInput placeholder="New Qty" (input)="$event ? selection.toggle(element) : true" type="number" formControlName="qty" required>
-                      </span>
-                      <!-- <mat-error *ngIf="qty.invalid && (qty.dirty || qty.touched)">
+    <ng-container matColumnDef="available_stock_qty">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity</th>
+      <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+        <!-- unit quantity input field -->
+        <mat-form-field>
+          <span class="text">
+            <input matInput placeholder="New Qty" (input)="$event ? selection.toggle(element) : true" type="number"
+              formControlName="qty" required>
+          </span>
+          <!-- <mat-error *ngIf="qty.invalid && (qty.dirty || qty.touched)">
                           <strong *ngIf="qty.errors.required">Quantity is required.</strong>
                           <strong *ngIf="qty.errors.min">Quantity must be greater than 0.</strong>
                         </mat-error> -->
-                    </mat-form-field>
-                  </td>
-                  </ng-container>
-                        <!--  Category Column -->
-              <ng-container matColumnDef="unit_cost">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit Cost </th>
-                  <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-                      <mat-form-field class="text">
-                          <input class="text-secondary" (input)="$event ? selection.toggle(element) : true" matInput placeholder="New unit cost" type="text" formControlName="unit_cost" required>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <!--  Category Column -->
+    <ng-container matColumnDef="unit_cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit Cost </th>
+      <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+        <mat-form-field class="text">
+          <input class="text-secondary" (input)="$event ? selection.toggle(element) : true" matInput placeholder="New unit cost"
+            type="text" formControlName="unit_cost" required>
 
-                      </mat-form-field>
+        </mat-form-field>
 
-                  </td>
-                </ng-container>
+      </td>
+    </ng-container>
 
-                <ng-container matColumnDef="expired_date">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Expired date </th>
-                    <td mat-cell *matCellDef="let element;let index = index"  [formGroupName]="index" >
-                        <mat-form-field class="text">
+    <ng-container matColumnDef="expired_date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expired date </th>
+      <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+        <mat-form-field class="text">
 
-                            <input matInput [matDatepicker]="expireddate" placeholder="Expired date (if needed)" formControlName="expired_date">
-                            <mat-datepicker-toggle matSuffix [for]="expireddate"></mat-datepicker-toggle>
-                            <mat-datepicker #expireddate></mat-datepicker>
+          <input matInput [matDatepicker]="expireddate" placeholder="Expired date (if needed)" formControlName="expired_date">
+          <mat-datepicker-toggle matSuffix [for]="expireddate"></mat-datepicker-toggle>
+          <mat-datepicker #expireddate></mat-datepicker>
 
-                          </mat-form-field>
-                    </td>
-                  </ng-container>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-                <ng-container matColumnDef="transction_date">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transction date </th>
-                    <td mat-cell *matCellDef="let element;let index = index"  [formGroupName]="index" >
-                        <mat-form-field class="text">
+    <ng-container matColumnDef="transction_date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transction date </th>
+      <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+        <mat-form-field class="text">
 
-                            <input matInput [matDatepicker]="transctiondate" placeholder="Transction date" formControlName="transction_date" required>
-                            <mat-datepicker-toggle matSuffix [for]="transctiondate"></mat-datepicker-toggle>
-                            <mat-datepicker #transctiondate></mat-datepicker>
+          <input matInput [matDatepicker]="transctiondate" placeholder="Transction date" formControlName="transction_date"
+            required>
+          <mat-datepicker-toggle matSuffix [for]="transctiondate"></mat-datepicker-toggle>
+          <mat-datepicker #transctiondate></mat-datepicker>
 
-                          </mat-form-field>
-                    </td>
-                  </ng-container>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-                  <ng-container matColumnDef="comments">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments </th>
-                      <td mat-cell *matCellDef="let element; let index = index"  [formGroupName]="index">
-                          <mat-form-field class="text">
-                              <textarea class="text-secondary" matInput placeholder="Leave a summary"  (input)="$event ? selection.toggle(element) : true" formControlName="comments"></textarea>
-                          </mat-form-field>
+    <ng-container matColumnDef="comments">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments </th>
+      <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+        <mat-form-field class="text">
+          <textarea class="text-secondary" matInput placeholder="Leave a summary" (input)="$event ? selection.toggle(element) : true"
+            formControlName="comments"></textarea>
+        </mat-form-field>
 
-                      </td>
-                    </ng-container>
+      </td>
+    </ng-container>
 
-                  <ng-container matColumnDef="operation">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Operation </th>
-                      <td mat-cell *matCellDef="let element">
-                          <button type="button" class="float-right" (click)="addItem()" mat-raised-button  color="accent" [disabled]="!selection.isSelected(element) || (loading | async) || itemForm.invalid">Save</button>
-                      </td>
-                    </ng-container>
+    <ng-container matColumnDef="operation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Operation </th>
+      <td mat-cell *matCellDef="let element">
+        <button type="button" class="float-right" (click)="addItem()" mat-raised-button color="accent" [disabled]="!selection.isSelected(element) || (loading | async) || itemForm.invalid">Save</button>
+      </td>
+    </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-                    <tr [class.highlighted]="selection.isSelected(row)" mat-row *matRowDef="let row; columns: displayedColumns; let index = index"
-                        (click)="selection.toggle(row)">
-                    </tr>
+    <tr [class.highlighted]="selection.isSelected(row)" mat-row *matRowDef="let row; columns: displayedColumns; let index = index"
+      (click)="selection.toggle(row)">
+    </tr>
 
 
-        </table>
+  </table>
 </form>
 <stock-no-entry-found *ngIf="data && data.length == 0" [message]="message()" [subMessage]='subMessage()'></stock-no-entry-found>
-
-

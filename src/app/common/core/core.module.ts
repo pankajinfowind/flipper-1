@@ -16,6 +16,7 @@ import { CurrentUser } from '../auth/current-user';
 import { StockModule } from '../../stock/stock.module';
 import { MasterModule } from '../../admin/master/master/master.module';
 import { PosModule } from '../../pos/pos.module';
+import { SetupModule } from '../../setup/setup.module';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { PosModule } from '../../pos/pos.module';
         TranslationsModule,
         StockModule.forRoot(),
         MasterModule.forRoot(),
-        PosModule.forRoot()
+        PosModule.forRoot(),
+        SetupModule.forRoot(),
     ],
     exports: [
         CommonModule,

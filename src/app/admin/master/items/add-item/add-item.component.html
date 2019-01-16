@@ -1,0 +1,205 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div class="col-8">
+      <button mat-button>
+        <mat-icon class="">add </mat-icon>Add a Product
+      </button>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+    </div>
+    <div class="col-4">
+      <button mat-icon-button class="float-right" (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<!-- <button mat-raised-button (click)="isOptional = !isOptional">
+  {{!isOptional ? 'Enable optional steps' : 'Disable optional steps'}}
+</button> -->
+
+<mat-horizontal-stepper linear #stepper class="details-list">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Product Info</ng-template>
+      <mat-card-content class="row">
+        <br />
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="item">
+            <label class="name">Name</label>
+            <mat-form-field class="value" appearance="outline">
+              <mat-label>Enter product name</mat-label>
+              <input class="text-secondary" matInput placeholder="Name" formControlName="item" required>
+              <mat-hint>Appears on till.</mat-hint>
+              <mat-error *ngIf="item.invalid && (item.dirty || item.touched)">
+
+                <mat-error *ngIf="item.errors.item && !item.errors.required">
+                  Please enter a valid product name
+                </mat-error>
+                <mat-error *ngIf="item.errors.required">
+                  Product name is <strong>required</strong>
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="item">
+            <label class="name">S.K.U</label>
+            <mat-form-field class="value" appearance="outline">
+              <mat-label>Enter sku number</mat-label>
+              <input class="text-secondary" matInput placeholder="SKU" formControlName="sku" required>
+              <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
+              <mat-error *ngIf="sku.invalid && (sku.dirty || sku.touched)">
+
+                <mat-error *ngIf="sku.errors.sku && !sku.errors.required">
+                  Please enter a valid sku name
+                </mat-error>
+                <mat-error *ngIf="sku.errors.required">
+                  Sku number is <strong>required</strong>
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="item">
+            <label class="name">Barcode</label>
+            <mat-form-field class="value" appearance="outline">
+              <mat-label>Enter barcode number</mat-label>
+              <input class="text-secondary" matInput placeholder="Barcode" formControlName="barcode" required>
+              <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info</mat-icon>
+              <mat-error *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)">
+
+                <mat-error *ngIf="barcode.errors.barcode && !barcode.errors.required">
+                  Please enter a valid barcode
+                </mat-error>
+                <mat-error *ngIf="barcode.errors.required">
+                  Barcode number is <strong>required</strong>
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="item">
+            <label class="name">Category</label>
+            <mat-form-field class="value" appearance="outline">
+              <mat-label>Enter product category</mat-label>
+              <mat-select placeholder="Category" class="w-100" formControlName="category_id" required>
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category.category_id">
+                  {{category.name}}
+                </mat-option>
+              </mat-select>
+              <button matSuffix mat-button color="primary" [disabled]="(details$ | async).detailsVisible" (click)="openDetails('New Category','new','app-categories','app-master',null)"> Add New</button>
+              <mat-error *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)">
+                <strong *ngIf="category_id.errors.required">Category is required.</strong>
+              </mat-error>
+
+            </mat-form-field>
+          </div>
+
+          <div class="item">
+              <label class="name">Brand</label>
+              <mat-form-field class="value" appearance="outline">
+                <mat-label>Enter product brand</mat-label>
+                <mat-select placeholder="Brand" class="w-100" formControlName="brand_id" required>
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let brand of brands" [value]="brand.brand_id">
+                    {{brand.name}}
+                  </mat-option>
+                </mat-select>
+                <button matSuffix mat-button color="primary" [disabled]="(details$ | async).detailsVisible" (click)="openDetails('New Brand','new','app-brand','app-master',null)"> Add New</button>
+                <mat-error *ngIf="brand_id.invalid && (brand_id.dirty || brand_id.touched)">
+                  <strong *ngIf="brand_id.errors.required">brand is required.</strong>
+                </mat-error>
+
+              </mat-form-field>
+            </div>
+            <div class="item">
+                <label class="name">Tax Rate</label>
+                <mat-form-field class="value" appearance="outline">
+                  <mat-label>Enter product tax rate</mat-label>
+                  <mat-select placeholder="Tax rate" class="w-100" formControlName="tax_rate_id" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let taxrate of taxrates" [value]="taxrate.tax_rate_id">
+                      {{taxrate.name}}
+                    </mat-option>
+                  </mat-select>
+                  <button matSuffix mat-button color="primary" [disabled]="(details$ | async).detailsVisible" (click)="openDetails('New Tax Rate','new','app-tax-rate','app-setup',null)"> Add New</button>
+                  <mat-error *ngIf="tax_rate_id.invalid && (tax_rate_id.dirty || tax_rate_id.touched)">
+                    <strong *ngIf="tax_rate_id.errors.required">Tax rate is required.</strong>
+                  </mat-error>
+
+                </mat-form-field>
+              </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-xs-12">
+              <div class="item">
+                <label class="name">Order code</label>
+                <mat-form-field class="value" appearance="outline">
+                  <mat-label>Enter product order code</mat-label>
+                  <input class="text-secondary" matInput placeholder="Order code (optional)" formControlName="product_order_code">
+                  <mat-hint>For reference to supplier.</mat-hint>
+
+                </mat-form-field>
+              </div>
+              <div class="item">
+                  <label class="name">Article code</label>
+                  <mat-form-field class="value" appearance="outline">
+                    <mat-label>Enter product article code</mat-label>
+                    <input class="text-secondary" matInput placeholder="Article code (optional)" formControlName="article_code">
+                    <mat-hint>For use in accounting.</mat-hint>
+
+                  </mat-form-field>
+                </div>
+
+           <div class="item">
+              <label class="name">Manufacturer</label>
+              <mat-form-field class="value" appearance="outline">
+                <mat-label>Enter product manufacturer</mat-label>
+                <input class="text-secondary" matInput placeholder="Manufacturer (optional)" formControlName="manufacturer">
+              </mat-form-field>
+            </div>
+
+            <div class="item">
+                <label class="name">Description</label>
+                <mat-form-field class="value" appearance="outline">
+                  <mat-label>Enter product description</mat-label>
+                  <input class="text-secondary" matInput placeholder="Description (optional)" formControlName="summary">
+                  <mat-hint>Appears on receipt.</mat-hint>
+                </mat-form-field>
+              </div>
+
+            </div>
+      </mat-card-content>
+
+      <mat-card-actions class="card-actions">
+        <button mat-raised-button matStepperNext color="primary" class="float-right">Next</button>
+      </mat-card-actions>
+
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Price Setting</ng-template>
+
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Stock Details & Complete</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

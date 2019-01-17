@@ -32,9 +32,10 @@
             <span trans>Subscription</span>
         </a> -->
 
-        <div class="logout-item" mat-menu-item (click)="auth.logOut()">
+        <div class="logout-item" mat-menu-item (click)="logOut()">
             <mat-icon class="mat-icon" svgIcon="exit-to-app"></mat-icon>
             <span trans>Log Out</span>
         </div>
     </mat-menu>
 </ng-container>
+<loading-indicator [isVisible]="loading" class="overlay"></loading-indicator>

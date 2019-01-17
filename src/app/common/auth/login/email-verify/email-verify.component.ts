@@ -57,6 +57,9 @@ export class EmailVerifyComponent {
       const data = { email: this.emailForm.value.email };
       this.auth.verifyUserEmail(data).subscribe(
         res => {
+      if(res == 422 || res == '422'){
+        this.v.errorMsg="Please,Your account does n't exist. ";
+      }
           this.v.loading = false;
           if (res["data"]) {
             this.v.response = {
@@ -77,7 +80,7 @@ export class EmailVerifyComponent {
   }
   public openRegister() {
     if (this.isElectron()) {
-      this._electronService.shell.openExternal("https://yegobox.rw/register");
+      this._electronService.shell.openExternal("https://yegobox.com/register");
     }
   }
 }

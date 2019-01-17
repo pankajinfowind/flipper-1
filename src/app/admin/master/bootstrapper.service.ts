@@ -82,7 +82,7 @@ export class Bootstrapper {
           res => {
             this.modelMasterService.update({
               loading: false,
-              categories: res["categories"]["data"]
+              categories: res["categories"]["data"].length > 0
                 ? res["categories"]["data"]
                 : []
             });
@@ -115,7 +115,7 @@ export class Bootstrapper {
           res => {
             this.modelMasterService.update({
               loading: false,
-              branchs: res["branchs"]["data"]
+              branchs: res["branchs"]["data"].length > 0
                 ? res["branchs"]["data"]
                 : []
             });
@@ -151,7 +151,7 @@ export class Bootstrapper {
           res => {
             this.modelMasterService.update({
               loading: false,
-              brands: res["brands"]["data"]
+              brands: res["brands"]["data"] .length > 0
                 ? res["brands"]["data"]
                 : []
             });
@@ -187,7 +187,7 @@ export class Bootstrapper {
           res => {
             this.modelMasterService.update({
               loading: false,
-              items: res["items"]["data"] ? res["items"]["data"] : []
+              items: res["items"]["data"].length > 0 ? res["items"]["data"] : []
             });
 
             resolve();
@@ -227,7 +227,7 @@ export class Bootstrapper {
           res => {
             this.modelMasterService.update({
               loading: false,
-              insurances: res["business_insurance"]
+              insurances: res["business_insurance"].length > 0
                 ? res["business_insurance"]
                 : []
             });

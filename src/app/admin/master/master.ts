@@ -11,7 +11,7 @@ export class Master {
   categories:Category[]=[];
   insurances:Insurance[]=[];
   brands:Brand[]=[];
-  branchs:Branch[]
+  branchs:Branch[]=[]
     constructor(params: Object = {}) {
       for (let name in params) {
           this[name] = params[name];

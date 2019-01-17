@@ -31,7 +31,7 @@
                     <mat-icon matSuffix>person</mat-icon>
                     <mat-error *ngIf="email.invalid && (email.dirty ||
                         email.touched)">
-                        <mat-error *ngIf="email.errors.email &&
+                        <mat-error class="text-center" *ngIf="email.errors.email &&
                             !email.errors.required">
                             Please enter a valid email address
                         </mat-error>
@@ -45,6 +45,9 @@
                 <div class="clearfix"></div>
                 <div class="row" style="margin-top:17%; float: left;">
                     <mat-error *ngIf="v.errorMsg!=''">{{v.errorMsg}}
+                        <a mat-button class="mat-button pl-0"
+                        (click)="openRegister()">&nbsp;&nbsp;
+                        Create account with yegobox &nbsp;</a>
                     </mat-error>
                 </div>
 
@@ -52,11 +55,7 @@
                     <table style="margin-top: 19px;">
                         <tr>
                             <td class="btn-left">
-                                <div class="button-row" style="margin-top: 5%;">
-                                    <a mat-button class="mat-button pl-0"
-                                        (click)="openRegister()">&nbsp;&nbsp;
-                                        Create account &nbsp;</a>
-                                </div>
+
                             </td>
                             <td class="btn-right">
                                 <div style="margin-top: 49.8%;">

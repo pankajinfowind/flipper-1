@@ -70,11 +70,10 @@ export class AuthService {
   /**
    * Log current user out.
    */
-  public logOut() {
-    this.httpClient.post("auth/logout").subscribe(() => {
-      this.currentUser.clear();
-      this.router.navigate(["/login"]);
-    });
+  public logOut() : Observable<any> {
+    this.httpClient.prefix = "secure";
+    let parms={logout:true};
+    return this.httpClient.post("auth/logout",parms);
   }
 
   /**
@@ -140,9 +139,9 @@ export class AuthService {
   getLoggedUser() {
     return this.api.getLoggedUser(this.getToken());
   }
-  logout() {
-    this.clearAll();
-  }
+  // logout() {
+  //   this.clearAll();
+  // }
   clearAll() {
     this.localstorage.remove("auth_token");
     this.localstorage.remove("redirect_url");

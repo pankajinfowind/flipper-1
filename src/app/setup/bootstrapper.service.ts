@@ -67,7 +67,7 @@ export class Bootstrapper {
           res => {
             this.modelSetUpService.update({
               loading: false,
-              customertypes: res["customertypes"]["data"]
+              customertypes: res["customertypes"]["data"].length > 0
                 ? res["customertypes"]["data"]
                 : []
             });
@@ -104,7 +104,7 @@ export class Bootstrapper {
           res => {
             this.modelSetUpService.update({
               loading: false,
-              reasons: res["reasons"]["data"]
+              reasons: res["reasons"]["data"].length > 0
                 ? res["reasons"]["data"]
                 : []
             });
@@ -137,7 +137,7 @@ export class Bootstrapper {
           res => {
             this.modelSetUpService.update({
               loading: false,
-              taxRates: res["taxrates"]["data"]
+              taxRates: res["taxrates"]["data"].length > 0
                 ? res["taxrates"]["data"]
                 : []
             });

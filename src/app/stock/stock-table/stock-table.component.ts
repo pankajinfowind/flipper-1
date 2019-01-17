@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Stock } from '../api/stock';
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import { Details } from '../../details/details';
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
-  styleUrls: ['./stock-table.component.scss']
+  styleUrls: ['./stock-table.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class StockTableComponent implements OnInit {
 

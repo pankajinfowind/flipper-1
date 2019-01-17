@@ -65,19 +65,14 @@ export class Bootstrapper {
                 .subscribe(
                     res => {
                         if (status == 'available') {
-
-                            if (res["stocks"]['data'].length > 0) {
-                                this.modelStockService.update({ loading: false, available: res["stocks"]['data'] });
-                            }
+                                this.modelStockService.update({ loading: false, available: res["stocks"]['data'].length > 0 ?res["stocks"]['data']:[] });
 
                         } else if (status == 'stockout') {
-                          if (res["stocks"]['data'].length > 0) {
-                                this.modelStockService.update({ loading: false, stockout: res["stocks"]['data'] });
-                            }
+                                this.modelStockService.update({ loading: false, stockout: res["stocks"]['data'].length > 0 ?res["stocks"]['data']:[] });
+
                         } else if (status == 'damaged') {
-                          if (res["stocks"]['data'].length > 0) {
-                                this.modelStockService.update({ loading: false, damaged: res["stocks"]['data'] });
-                            }
+                                this.modelStockService.update({ loading: false, damaged: res["stocks"]['data'].length > 0 ?res["stocks"]['data']:[] });
+
 
                         }
                         resolve();

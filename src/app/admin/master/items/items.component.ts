@@ -4,7 +4,8 @@ import {
   ChangeDetectorRef,
   ViewChild,
   Input,
-  Inject
+  Inject,
+  ViewEncapsulation
 } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { ApiItemService } from "./api/api.service";
@@ -112,8 +113,9 @@ export class ItemsComponent implements OnInit {
     this.master$ = this.msterModelService.master$;
 
     this.master$.subscribe(res=>{
-      if(res.categories.length  > 0){
+      if(res.items.length  > 0){
         this.data=res.items;
+        this.canUserAddItem();
         this.dataSource.data=this.data;
       }
   });
@@ -171,7 +173,7 @@ export class ItemsComponent implements OnInit {
     localStorage.setItem('add-item','Yes');
   }
   canUserAddItem(){
-    if(this.data.length == 0){
+    if(this.data && this.data.length == 0){
       localStorage.setItem('add-item','Yes');
       return true;
     }else{

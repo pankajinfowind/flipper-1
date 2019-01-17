@@ -85,7 +85,8 @@
     "rxjs-compat": "^6.3.3",
     "singleton-js": "^1.0.0",
     "sqlite3": "^4.0.4",
-    "tslib": "^1.9.0"
+    "tslib": "^1.9.0",
+    "rxjs": "6.3.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.3",
@@ -133,7 +134,6 @@
     "perm": "^1.0.0",
     "protractor": "^5.4.1",
     "rimraf": "^2.6.2",
-    "rxjs": "6.3.3",
     "spectron": "^5.0.0",
     "ts-node": "6.0.3",
     "tslint": "5.10.0",

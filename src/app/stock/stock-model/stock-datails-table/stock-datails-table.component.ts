@@ -80,5 +80,6 @@ export class StockDatailsTableComponent implements OnInit, OnChanges {
   getStockMovements(){
     this.dataSource_in.data = this.entry.stock_transctions.filter(res=>res.type=='add');
     this.dataSource_out.data = this.entry.stock_transctions.filter(res=>res.type=='remove');
+    // console.log(this.entry.stock_transctions.filter(res=>res.type=='remove'));
   }
 }

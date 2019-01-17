@@ -1,15 +1,15 @@
 {
   "/secure": {
-    "target": "https://flipper.yegobox.rw",
+    "target": "http://127.0.0.1:8000",
     "secure": false
   },
   "/api": {
-    "target": "https://flipper.yegobox.rw",
+
+    "target": "http://127.0.0.1:8000",
     "secure": false
   },
   "/__clockwork": {
-    "target": "https://flipper.yegobox.rw",
+    "target": "http://127.0.0.1:8000",
     "secure": false
   }
 }
-

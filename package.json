@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.4.20",
+  "version": "0.4.20-alpha.4",
   "description": "Flipper is software that use in diffrent business like (shop, pharmacy etc) and was build to manage inventory, sales and used in point of sale.",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -41,7 +41,7 @@
     "e2e": "npm run postinstall:web && ng e2e",
     "release": "standard-version",
     "mocha": "mocha",
-    "alpha": "npm run release --prerelease alpha"
+    "alpha": "npm run release -- --prerelease alpha"
   },
   "dependencies": {
     "@angular/animations": "7.0.4",

@@ -20,7 +20,7 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps && $(npm bin)/electron-rebuild",
+    "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps && npm rebuild node-sass && $(npm bin)/electron-rebuild",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
     "ng": "ng",

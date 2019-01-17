@@ -8,6 +8,9 @@ import { ApiStockService } from '../../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { StockModelService } from '../../stock-model.service';
 import { MasterModelService } from '../../../admin/master/master-model.service';
+import { SetUp } from '../../../setup/setup';
+import { SetUpModelService } from '../../../setup/setup-model.service';
+import { Reason } from '../../../setup/reasons/api/reason';
 
 @Component({
   selector: 'app-update-stock-model',
@@ -20,7 +23,8 @@ export class UpdateStockModelComponent implements OnInit {
   details$: Observable<Details>;
   stockForm: FormGroup;
   stock:Stock;
-
+  setup$: Observable<SetUp>;
+  reasons: Reason[] = [];
   add_options:any[]=[{
             value:'Stock-new',
             valueView:'New Stock',
@@ -47,34 +51,41 @@ export class UpdateStockModelComponent implements OnInit {
         }];
   public loading = new BehaviorSubject(false);
   action:any;
-  constructor(private msterModelService:MasterModelService,private modelStockService: StockModelService,private detailsService:DetailsService,private api:ApiStockService) {
+  constructor(private setupModelService: SetUpModelService,private msterModelService:MasterModelService,private modelStockService: StockModelService,private detailsService:DetailsService,private api:ApiStockService) {
    }
 
 
     ngOnInit() {
       this.subscription = this.details$ = this.detailsService.details$;
       this.details$ = this.detailsService.details$;
+      this.setup$ = this.setupModelService.setup$;
       this.details$.subscribe(res=>{
         if(res){
         const numberPatern = '^[0-9.,]+$';
         this.stock=res.sender_data;
+        this.getReasons(res.sender_data && res.action?res.action:'add');
         this.stockForm = new FormGroup({
             qty:res.sender_data && res.action==='add'?new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])):
             new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1),Validators.max(res.sender_data.available_stock_qty)])),
-            unit_cost: new FormControl(res.sender_data.item ?res.sender_data.item.unit_cost:1, Validators.compose([Validators.required, Validators.pattern(numberPatern)])),
             transction_date: new FormControl(new Date(), [Validators.required]),
             comments:new FormControl('no comments'),
-            transction:res.sender_data && res.action==='add'?new FormControl('Stock-new'):new FormControl('Customer-Sale'),
-            currency: new FormControl(res.sender_data.item ?res.sender_data.item.currency:'Rwf'),
             action: new FormControl(res.sender_data && res.action),
             in_stock_qty: new FormControl(0),
             total_qty: new FormControl(0),
             stock_id: new FormControl(res.sender_data && res.sender_data.stock_id),
+            reason_id:new FormControl('', [Validators.required]),
           });
         }
        });
     }
+    getReasons(action) {
+      this.setup$.subscribe(res => {
+        if (res.reasons.length > 0) {
+          this.reasons = res.reasons.filter(res=>res.reason_type=='stock_movements' && res.stock_movements_status==action);
+        }
+      });
 
+    }
 
   ///////////////////////////// Item
   get qty() {
@@ -83,13 +94,13 @@ export class UpdateStockModelComponent implements OnInit {
   get transction_date() {
     return this.stockForm.get("transction_date");
   }
-  get unit_cost() {
-    return this.stockForm.get("unit_cost");
-  }
+
   get comments() {
     return this.stockForm.get("comments");
   }
-
+  get reason_id() {
+    return this.stockForm.get("reason_id");
+  }
 
   updateStock(){
     if (this.stockForm.valid) {

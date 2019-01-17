@@ -20,11 +20,10 @@ export class StockTableComponent implements OnInit {
   displayedColumns: string[] = [
     'select',
     "sku",
-    "upc",
+    "barcode",
     "stock",
     "category",
-    "expire_date",
-    "unit_sale",
+    "tax_rate",
     "available_stock_qty",
     "progress"
   ];
@@ -54,7 +53,9 @@ export class StockTableComponent implements OnInit {
 
       if(this.status === 'available'){
         this.data=res['available'];
-        this.dataSource.data=this.data;
+        console.log(this.data);
+        this.dataSource.data=res['available'];
+
       }else if(this.status === 'stockout'){
         this.data=res['stockout'];
         this.dataSource.data=this.data;

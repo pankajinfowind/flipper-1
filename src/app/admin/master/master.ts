@@ -1,8 +1,8 @@
 import { Item } from './items/api/item';
 import { Category } from './categories/api/category';
 import { Insurance } from './insurance/api/insurance';
-import { Pricing } from './pricing/api/pricing';
 import { Brand } from './brands/api/brand';
+import { Branch } from './branch/api/branch';
 
 export class Master {
   id?:number;
@@ -10,8 +10,8 @@ export class Master {
   items:Item[]=[];
   categories:Category[]=[];
   insurances:Insurance[]=[];
-  pricing:Pricing[]=[];
   brands:Brand[]=[];
+  branchs:Branch[]
     constructor(params: Object = {}) {
       for (let name in params) {
           this[name] = params[name];

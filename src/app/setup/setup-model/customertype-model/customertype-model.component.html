@@ -1,0 +1,54 @@
+<div class="details-list">
+   <!-- Items ---------------------------------- -->
+
+    <form [formGroup]="customerTypeForm" (ngSubmit)="saveCustomerType()">
+      <mat-card-content>
+        <p>
+          <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
+            <mat-label>Enter name</mat-label>
+              <input class="text-secondary" matInput placeholder="Customer type name" formControlName="name" required>
+
+              <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+                    <mat-error *ngIf="name.errors.name && !name.errors.required">
+                      Please enter a valid name
+                    </mat-error>
+                    <mat-error *ngIf="name.errors.required">
+                     Name is <strong>required</strong>
+                    </mat-error>
+              </mat-error>
+
+          </mat-form-field>
+
+        </p>
+        <p>
+          <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
+            <mat-label>Enter Discount value</mat-label>
+              <input class="text-secondary" matInput placeholder="Discount value" formControlName="discount_value" required>
+
+              <mat-error  *ngIf="discount_value.invalid && (discount_value.dirty || discount_value.touched)">
+                    <mat-error *ngIf="discount_value.errors.discount_value && !discount_value.errors.required">
+                      Please enter a valid Discount value, only number allowed.
+                    </mat-error>
+                    <mat-error *ngIf="discount_value.errors.required">
+                      Discount value is <strong>required</strong>
+                    </mat-error>
+              </mat-error>
+
+          </mat-form-field>
+
+        </p>
+        <p>
+            <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
+                <mat-label>Enter Description</mat-label>
+                  <textarea class="text-secondary" matInput placeholder="Leave a description" formControlName="description"></textarea>
+              </mat-form-field>
+          </p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button type="submit" class="float-right" mat-button [disabled]="(loading | async)"> <span *ngIf="need_to_add_new">Save</span>
+          <span *ngIf="!need_to_add_new">Edit</span></button>
+        <button type="button" class="float-right" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button>
+      </mat-card-actions>
+    </form>
+</div>

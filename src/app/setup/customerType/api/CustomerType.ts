@@ -1,9 +1,10 @@
-export class Pricing {
+export class CustomerType {
   name?: string;
   id?: number;
-  pricing_id?: number;
-  active?: number;
-  parent_id?: number;
+  customer_type_id?: number;
+  is_active?: number;
+  discount_value?: number;
+  description?:string;
   business_id?: number;
   created_at?: any;
   updated_at?: any;

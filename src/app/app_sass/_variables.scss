@@ -179,3 +179,8 @@ html{
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.section-container {
+  height: 400px;
+  width: 100%;
+  overflow: auto;
+}

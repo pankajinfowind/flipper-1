@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input, ChangeDetectorRef, DoCheck, Inject
 import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, isEmpty } from 'rxjs/operators';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Pricing } from './api/pricing';
+import { Branch } from './api/branch';
 import { Select } from '@ngxs/store';
 import { MasterState } from '../../../state/master-state';
 import { AsyncPipe } from '@angular/common';
@@ -12,30 +12,30 @@ import { DetailsService } from '../../../details/details.service';
 import { Toast } from '../../../common/core/ui/toast.service';
 import { Master } from '../master';
 import { MasterModelService } from '../master-model.service';
-import { ApiPricingService } from './api/api.service';
+import { ApiBranchService } from './api/api.service';
 
 @Component({
   selector: "remove-dialog",
   templateUrl: './remove-dialog.html',
-  styleUrls: ["./pricing.component.scss"]
+  styleUrls: ["./branch.component.scss"]
 })
-export class RemovePricingDialog {
+export class RemoveBranchDialog {
   cat_deleted=[];
   public loading = new BehaviorSubject(false);
-  constructor(private msterModelService:MasterModelService,private toast: Toast,private api: ApiPricingService,
-    public dialogRef: MatDialogRef<RemovePricingDialog>,
+  constructor(private msterModelService:MasterModelService,private toast: Toast,private api: ApiBranchService,
+    public dialogRef: MatDialogRef<RemoveBranchDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
-    deletePricing(){
+    deleteBranch(){
       this.loading.next(true);
         this.data.forEach(element => {
           this.api
-          .delete(element.Pricing_id).subscribe(
+          .delete(element.Branch_id).subscribe(
               res => {
                   if(res.status=='success'){
                     this.dialogRef.close({status:'success'});
-                    this.msterModelService.update({loading: false, categories: res['pricing']['data']?res['pricing']['data']:[]});
+                    this.msterModelService.update({loading: false, categories: res['Branch']['data']?res['Branch']['data']:[]});
                   }
               },
               _error => {
@@ -55,19 +55,19 @@ export class RemovePricingDialog {
   }
 }
 @Component({
-  selector: 'app-pricing',
-  templateUrl: './pricing.component.html',
-  styleUrls: ['./pricing.component.scss']
+  selector: 'app-branch',
+  templateUrl: './branch.component.html',
+  styleUrls: ['./branch.component.scss']
 })
-export class PricingComponent implements   OnInit {
+export class BranchComponent implements OnInit {
 
   public loading = new BehaviorSubject(false);
   can_delete=false;
 
-  constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api:ApiPricingService,private ref: ChangeDetectorRef) { }
-  data: Pricing[] = [];
-  displayedColumns: string[] = ['select', 'name'];
-  dataSource = new MatTableDataSource<Pricing>([]);
+  constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api:ApiBranchService,private ref: ChangeDetectorRef) { }
+  data: Branch[] = [];
+  displayedColumns: string[] = ['select', 'name','description'];
+  dataSource = new MatTableDataSource<Branch>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -75,7 +75,7 @@ export class PricingComponent implements   OnInit {
 
   subscription: Observable<Details>;
   details$: Observable<Details>;
-  selection = new SelectionModel<Pricing>(true, []);
+  selection = new SelectionModel<Branch>(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -100,15 +100,15 @@ export class PricingComponent implements   OnInit {
     this.master$ = this.msterModelService.master$;
 
         this.master$.subscribe(res=>{
-          if(res.pricing.length  > 0){
-            this.data=res.pricing;
+          if(res.branchs.length  > 0){
+            this.data=res.branchs;
             this.dataSource.data=this.data;
           }
       });
 
   }
-  openDetails(title='New Pricing',action='new',obj){
-     this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-pricing',action:action,detailsVisible:true});
+  openDetails(title='New Branch',action='new',obj){
+     this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-Branch',action:action,detailsVisible:true});
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -116,14 +116,14 @@ export class PricingComponent implements   OnInit {
 
   removeDialog(): void {
     if (this.selection.selected.length > 0) {
-      const dialogRef = this.dialog.open(RemovePricingDialog, {
+      const dialogRef = this.dialog.open(RemoveBranchDialog, {
         width: '400px',
         data: this.selection.selected
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if(result.status=="success"){
-          this.selection = new SelectionModel<Pricing>(true, []);
+          this.selection = new SelectionModel<Branch>(true, []);
          }
       });
 

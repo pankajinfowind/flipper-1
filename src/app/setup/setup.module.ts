@@ -17,10 +17,14 @@ import { Bootstrapper, init_app } from './bootstrapper.service';
 import { SetUpModelService } from './setup-model.service';
 import { ApiTaxRateService } from './tax-rates/api/api.service';
 import { NoEntryFoundSetUpComponent } from './messages/no-entry-found/no-entry-found.component';
+import { ReasonComponent } from './reasons/reason.component';
+import { ApiReasonService } from './reasons/api/api.service';
+import { CustomerTypeComponent, RemoveCustomertypeDialog } from './customerType/customertype.component';
+import { ApiCustomerTypeService } from './customerType/api/api.service';
 
 @NgModule({
-  declarations: [SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent],
-  exports: [SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
+  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
   imports: [
     CommonModule,
     SetupRoutingModule,
@@ -33,8 +37,11 @@ import { NoEntryFoundSetUpComponent } from './messages/no-entry-found/no-entry-f
     HttpModule
   ],
   providers: [
-    ApiTaxRateService
+    ApiTaxRateService,
+    ApiReasonService,
+    ApiCustomerTypeService
   ],
+  entryComponents: [RemoveCustomertypeDialog]
 })
 export class SetupModule {
   static forRoot(): ModuleWithProviders {
@@ -59,6 +66,8 @@ export class SetupModule {
                 deps: [
                   SetUpModelService,
                   ApiTaxRateService,
+                  ApiReasonService,
+                  ApiCustomerTypeService,
                   CurrentUser],
             },
         ]

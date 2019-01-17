@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { Settings } from "../common/core/config/settings.service";
 import { AppConfig } from "../../environments/environment";
 import { CurrentUser } from '../common/auth/current-user';
+import { Stock } from './api/stock';
 
 export function init_app(bootstrapper: Bootstrapper) {
     return () => bootstrapper.bootstrap();
@@ -51,7 +52,7 @@ export class Bootstrapper {
     /**
      * Handle specified bootstrap data.
      */
-    protected stockHandleData(branch_id, status): Promise<any> {
+    protected stockHandleData(branch_id, status): Promise<Stock[]> {
         let url;
         if (this.settings.getBaseUrl() != "http://localhost:4200/") {
             url = AppConfig.url + "secure/" + API_ROUTES.BRANCH_STOCK + '/' + branch_id + '/' + status;
@@ -64,19 +65,18 @@ export class Bootstrapper {
                 .subscribe(
                     res => {
                         if (status == 'available') {
-                            //console.log('stock', res);
-                            if (res["stocks"]) {
-                                this.modelStockService.update({ loading: false, available: res["stocks"] });
-                            }
 
+                            if (res["stocks"]['data'].length > 0) {
+                                this.modelStockService.update({ loading: false, available: res["stocks"]['data'] });
+                            }
 
                         } else if (status == 'stockout') {
-                            if (res["stocks"]) {
-                                this.modelStockService.update({ loading: false, stockout: res["stocks"] });
+                          if (res["stocks"]['data'].length > 0) {
+                                this.modelStockService.update({ loading: false, stockout: res["stocks"]['data'] });
                             }
                         } else if (status == 'damaged') {
-                            if (res["stocks"]) {
-                                this.modelStockService.update({ loading: false, damaged: res["stocks"] });
+                          if (res["stocks"]['data'].length > 0) {
+                                this.modelStockService.update({ loading: false, damaged: res["stocks"]['data'] });
                             }
 
                         }

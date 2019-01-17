@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { TaxRatesComponent } from './tax-rates/tax-rates.component';
 import { AuthGuard } from '../common/guards/auth-guard.service';
 import { SetupComponent } from './setup.component';
+import { ReasonComponent } from './reasons/reason.component';
+import { CustomerTypeComponent } from './customerType/customertype.component';
 
 const setupRoutes: Routes = [
     {
@@ -12,10 +14,12 @@ const setupRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'tax-rate',
+                redirectTo: 'customertype',
                 pathMatch: 'full',
             },
+            { path: 'customertype', component: CustomerTypeComponent },
             { path: 'tax-rate', component: TaxRatesComponent },
+            { path: 'reasons/:reason', component: ReasonComponent},
 
         ]
 

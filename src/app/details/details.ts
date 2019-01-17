@@ -6,7 +6,7 @@ action?:any=null;
 title?:string=null;
 component?:string=null;
 module?:string=null;
-
+reason?:string=null
 constructor(params: Object = {}) {
   for (let name in params) {
       this[name] = params[name];

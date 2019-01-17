@@ -8,7 +8,7 @@
           </a>
           <span *ngIf="getMenuHighlighted()==link.menu">
           <mat-list-item  *ngFor="let sub of link.submenu">
-              <a class="menu-item" [routerLink]="sub.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              <a class="menu-item" [routerLink]="sub.path" (click)="clickedOnLink(sub.path)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                   <mat-icon >remove</mat-icon>
                   <span class="text" trans>{{sub.label}}</span>
               </a>

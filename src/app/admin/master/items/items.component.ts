@@ -73,11 +73,13 @@ export class ItemsComponent implements OnInit {
   displayedColumns: string[] = [
     'select',
     "sku",
-    "upc",
+    "barcode",
     "item",
-    "unit_cost",
-    "unit_sale",
+    "product_order_code",
+    "article_code",
     "category",
+    "brand",
+    'tax_rate',
     'manufacturer',
     'summary'
   ];

@@ -4,35 +4,40 @@
     <form [formGroup]="stockForm" (ngSubmit)="updateStock()">
        <mat-card-content>
 
-            <div class="details-list" style="overflow-x: auto">
+            <div class="details-list" style="overflow-x: hidden">
 
                 <div class="item">
-                    <div class="name" trans><b>{{stock.name}}</b></div>
+                    <div class="name" trans><b>{{stock.item.item}}</b></div>
                     <div class="value type-value" trans>({{stock.item.sku}}) {{stock.branch.name}} has <b>{{stock.available_stock_qty}}</b> in-stock</div>
                 </div>
 
                 <mat-divider></mat-divider>
-                <br />
+<br />
                 <div class="item">
-                    <div class="name" trans><b>Transction:</b></div>
+                    <div class="name" trans><b>Reason:</b></div>
                     <div class="value">
-                        <mat-radio-group *ngIf="(details$ | async).action=='add'"  formControlName="transction">
-                            <mat-radio-button  *ngFor="let opt of add_options" [value]="opt.value" [checked]="opt.checked"><b>{{opt.valueView}}</b></mat-radio-button>
-                        </mat-radio-group>
-                        <mat-radio-group *ngIf="(details$ | async).action=='remove'"  formControlName="transction">
-                            <mat-radio-button  *ngFor="let opt of remove_options" [value]="opt.value" [checked]="opt.checked"><b>{{opt.valueView}}</b></mat-radio-button>
-                        </mat-radio-group>
+                    <mat-form-field  appearance="outline" class="col-10">
+                      <mat-label>Enter stock movement reason</mat-label>
+                      <mat-select placeholder="Stock movement reason" formControlName="reason_id" required>
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let reason of reasons" [value]="reason.reason_id">
+                          {{reason.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="reason_id.invalid && (reason_id.dirty || reason_id.touched)">
+                        <strong *ngIf="reason_id.errors.required">Stock Movement Reason is required.</strong>
+                      </mat-error>
 
+                    </mat-form-field>
                     </div>
-                </div>
-
-
-                <br />
+                  </div>
 
                 <div class="item">
                     <div class="name" trans><b>Transction date:</b></div>
                     <div class="value">
-                        <mat-form-field class="text">
+                        <mat-form-field appearance="outline" class="col-9">
+                            <mat-label>Transction date</mat-label>
+
                             <input matInput [matDatepicker]="transctiondate" placeholder="Transction date" formControlName="transction_date" required>
                             <mat-datepicker-toggle matSuffix [for]="transctiondate"></mat-datepicker-toggle>
                             <mat-datepicker #transctiondate></mat-datepicker>
@@ -41,27 +46,10 @@
                 </div>
 
                 <div class="item">
-                    <div class="name" trans><b>Unit cost:({{stock.item.currency}})</b></div>
-                    <div class="value">
-                        <mat-form-field class="text">
-                            <input class="text-secondary" type="number" matInput placeholder="Unit cost" formControlName="unit_cost" required>
-                            <span matSuffix>.00</span>
-                              <mat-error  *ngIf="unit_cost.invalid && (unit_cost.dirty || unit_cost.touched)">
-                                <mat-error *ngIf="unit_cost.errors.unit_cost && !unit_cost.errors.required">
-                                  Please enter a valid unit cost
-                                </mat-error>
-                                <mat-error *ngIf="unit_cost.errors.required">
-                                    Unit cost is <strong>required</strong>
-                                </mat-error>
-                              </mat-error>
-
-                          </mat-form-field>
-                    </div>
-                </div>
-                <div class="item">
                     <div class="name" trans><b>Quantity:</b></div>
                     <div class="value">
-                        <mat-form-field class="ybx-mat mat-full-wdth" *ngIf="(details$ | async).action">
+                        <mat-form-field class="col-10" *ngIf="(details$ | async).action" appearance="outline">
+                            <mat-label>Quantity</mat-label>
                             <input class="text-secondary" type="number" matInput placeholder="Quantity" formControlName="qty" required>
                               <mat-error  *ngIf="qty.invalid && (qty.dirty || qty.touched)">
 
@@ -85,7 +73,8 @@
                 <div class="item">
                     <div class="name" trans><b>Comments</b></div>
                     <div class="value">
-                        <mat-form-field class="text">
+                        <mat-form-field class="col-10" appearance="outline">
+                            <mat-label>Comments</mat-label>
                             <textarea class="text-secondary" matInput placeholder="Comments" formControlName="comments" required></textarea>
                               <mat-error  *ngIf="comments.invalid && (comments.dirty || comments.touched)">
                                 <mat-error *ngIf="comments.errors.comments && !comments.errors.required">

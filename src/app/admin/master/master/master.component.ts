@@ -21,17 +21,16 @@ menu:'Products',icon:'assignment',
 submenu:[
         {path:'item',label:'Product List'},
         {path:'category',label:'Categories'},
-        {path:'pricing',label:'Price Type'},
         {path:'brand',label:'Brands'}
       ]
-  },
-  {
-    menu:'Staff',icon:'assignment',
-    submenu:[
-            {path:'category',label:'Staff'},
-            {path:'pricing',label:'Staff Roles'}
-          ]
   }
+  // {
+  //   menu:'Staff',icon:'assignment',
+  //   submenu:[
+  //           {path:'category',label:'Staff'},
+  //           {path:'pricing',label:'Staff Roles'}
+  //         ]
+  // }
 ];
 toggled=false;
 @Select(MasterState.loading) loading$: Observable<boolean>;

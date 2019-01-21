@@ -15,6 +15,7 @@ import { OrderModelService } from '../../orders/order-model.service';
 import { Orders } from '../../orders/orders';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
+import { CustomerTypePrices } from '../../setup/customerType/api/CustomerTypePrices';
 
 @Component({
   selector: 'app-sale-point',
@@ -36,6 +37,7 @@ export class SalePointComponent implements OnInit {
   constructor(private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
   category_selected: Category;
   is_categry_clicked = false;
+  customer_type_id=13;
   ngOnInit() {
     if (this.currentUser.user) {
       this.business = this.currentUser.user[0]; // ?
@@ -52,10 +54,41 @@ export class SalePointComponent implements OnInit {
     if (!this.stocks$) return;
     this.stocks$.subscribe(res => {
       if (res) {
-        this.categories = this.getRows(res['available']);
+        ;
+        this.categories = this.getRows(this.updateSalesPrices(res['available']));
       }
     });
   }
+
+updateSalesPrices(stocks:Array<Stock>){
+//customer_id
+const updated:Stock[]=[];
+if(stocks.length > 0){
+  stocks.forEach(el=>{
+    //console.log(el);
+    if(el.customer_type_items.length > 0){
+        const prices=el.customer_type_items.filter(p=>p['customer_type_id']==this.customer_type_id)[0];
+           el.item.unit_sale=prices.sale_price_including_tax;
+
+          if (el) {
+            updated.push(el);
+          }
+
+    }else{
+      if (el) {
+        updated.push(el);
+     }
+    }
+
+  });
+  console.log(updated);
+  return updated;
+}else{
+
+  return updated;
+}
+}
+
   removeDups(names) {
     let unique = {};
     names.forEach(function (i) {
@@ -206,7 +239,7 @@ export class SalePointComponent implements OnInit {
     if (this.is_categry_clicked) {
       this.stocks$.subscribe(res => {
         if (res['available']) {
-          this.currently_stocks = res['available'].filter(stock => stock['category']['id'] === this.category_selected.id);
+          this.currently_stocks = this.updateSalesPrices(res['available']).filter(stock => stock['category']['id'] === this.category_selected.id);
         }
 
       });

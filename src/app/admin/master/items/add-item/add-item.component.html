@@ -66,7 +66,7 @@
             <label class="name">Barcode</label>
             <mat-form-field class="value" appearance="outline">
               <mat-label>Enter barcode number</mat-label>
-              <input class="text-secondary" matInput placeholder="Barcode" formControlName="Barcode (if available)"
+              <input class="text-secondary" matInput placeholder="Barcode (if available)" formControlName="barcode"
                 required>
               <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info</mat-icon>
               <mat-error *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)">
@@ -190,46 +190,52 @@
 
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Price Setting</ng-template>
+      <b>Tax Rate: {{getTax(tax_rate_id.value)}} %</b>
 <hr />
       <table class="mt-4 w-100">
-        <tr>
+
+            <tr>
           <td>Cost price (EXC TAX)</td>
           <td>Sale price (EXC TAX)</td>
           <td>Cost price (INC TAX)</td>
           <td>Sale price (INC TAX)</td>
-          <td>Margin %</td>
-          <td>RPP</td>
+          <!-- <td>Margin %</td>
+          <td>RPP</td> -->
         </tr>
         <tr>
             <td>
               <mat-form-field  appearance="outline">
                 <mat-label>Enter cost price (EXC TAX)</mat-label>
-                <input matInput placeholder="Enter cost price (EXC TAX)" type="text" formControlName="cost_price_excluding_tax"
+                <input matInput placeholder="Enter cost price (EXC TAX)"  (input)="calculateCostIncludingTax($event)" type="number" formControlName="cost_price_excluding_tax"
                   required>
               </mat-form-field>
             </td>
             <td>
                 <mat-form-field  appearance="outline">
                     <mat-label>Enter sale price (EXC TAX)</mat-label>
-                    <input matInput placeholder="Enter sale price (EXC TAX)" type="text" formControlName="sale_price_excluding_tax"
+                    <input matInput placeholder="Enter sale price (EXC TAX)" (input)="calculateSaleIncludingTax($event)" type="number" formControlName="sale_price_excluding_tax"
                       required>
+
+                      <mat-hint>(excluding Tax) (Not saved, this is<br /> only used to calculate <br />Sale Price inc. Tax)</mat-hint>
                   </mat-form-field>
             </td>
             <td>
                 <mat-form-field  appearance="outline">
                     <mat-label>Enter cost price (INC TAX)</mat-label>
-                    <input matInput placeholder="Enter cost price (INC TAX)" type="text" formControlName="cost_price_including_tax"
+                    <input matInput placeholder="Enter cost price (INC TAX)"  (input)="calculateCostExcludingTax($event)" type="number" formControlName="cost_price_including_tax"
                       required>
+                      <mat-hint>(including Tax) (Not saved, this is <br />only used to calculate <br />Cost Price exc. Tax)</mat-hint>
+
                   </mat-form-field>
             </td>
             <td>
                 <mat-form-field  appearance="outline">
                     <mat-label>Enter sale price (INC TAX)</mat-label>
-                    <input matInput placeholder="Enter sale price (INC TAX)" type="text" formControlName="sale_price_including_tax"
+                    <input matInput placeholder="Enter sale price (INC TAX)" (input)="calculateSaleExcludingTax($event)" type="number" formControlName="sale_price_including_tax"
                       required>
                   </mat-form-field>
             </td>
-            <td><mat-form-field appearance="outline">
+            <!-- <td><mat-form-field appearance="outline">
                 <mat-label>Enter margin</mat-label>
                 <input matInput placeholder="Enter margin" type="text" formControlName="margin"
                   required>
@@ -239,7 +245,7 @@
                 <mat-label>Enter RPP</mat-label>
                 <input matInput placeholder="Enter RPP" type="text" formControlName="recommended_retail_price"
                   required>
-              </mat-form-field></td>
+              </mat-form-field></td> -->
           </tr>
       </table>
 
@@ -248,23 +254,31 @@
         <mat-expansion-panel class="w-100" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Advanced Price Setting
+              Customer Specific Prices
             </mat-panel-title>
-          </mat-expansion-panel-header>
+
+</mat-expansion-panel-header>
           <mat-card-content>
             <div class="row">
+                <div class="col-12">
+                    The section below allows you to set up prices for specific customer types for this product.<br />
+                    Prices entered cannot be the same as the default Sale Price, customers receive this price as standard.
+                  </div><br />
+
               <div class="col-10">
                 <mat-form-field class="w-100">
                   <input matInput (keyup)="applyFilter($event.target.value)" [disabled]="customertypes.length == 0"
                     placeholder="Search">
                 </mat-form-field>
               </div>
+
               <div class="col-2">
                 <button mat-raised-button class="mt-2" color="accent" [disabled]="(details$ | async).detailsVisible"
                   (click)="openDetails('New Customer Type','new','app-customertype','app-setup',null)"> + Add Customer
                   Type</button>
               </div>
             </div>
+
             <section  class="sd_section-container">
 
               <table formArrayName="price_setting" mat-table [dataSource]="dataSource">
@@ -282,13 +296,13 @@
                 </ng-container>
 
                 <ng-container matColumnDef="sale_price_including_tax">
-                  <th scope="col" mat-header-cell *matHeaderCellDef> Sale Price (INC TAX)
+                  <th scope="col" mat-header-cell *matHeaderCellDef>Price
                     <mat-icon class="float-left" matSuffix [matTooltip]="'Sale Price Including Tax.'" aria-label="including Tax">info</mat-icon>
                   </th>
                   <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
                     <mat-form-field class="input" appearance="outline">
-                      <mat-label>Enter sale price (INC TAX)</mat-label>
-                      <input matInput placeholder="Sale Price (INC TAX)" type="text" formControlName="sale_price_including_tax"
+                      <mat-label>Enter Price</mat-label>
+                      <input matInput placeholder="Price" type="text" formControlName="sale_price_including_tax"
                         required>
 
                     </mat-form-field>

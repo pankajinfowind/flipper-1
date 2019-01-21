@@ -19,6 +19,7 @@ import { Item } from "./api/item";
 import { Toast } from "../../../common/core/ui/toast.service";
 import { MasterModelService } from '../master-model.service';
 import { Master } from '../master';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "remove-dialog",
@@ -69,7 +70,7 @@ export class RemoveItemDialog {
 export class ItemsComponent implements OnInit {
   public loading = new BehaviorSubject(false);
   add_item: boolean;
-  constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {}
+  constructor(private router: Router,private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {}
   data: Item[] = [];
   displayedColumns: string[] = [
     'select',
@@ -115,8 +116,10 @@ export class ItemsComponent implements OnInit {
     this.master$.subscribe(res=>{
       if(res.items.length  > 0){
         this.data=res.items;
-        this.canUserAddItem();
         this.dataSource.data=this.data;
+        this.detailsService.close();
+      }else{
+        this.canUserAddItem();
       }
   });
   }
@@ -170,15 +173,13 @@ export class ItemsComponent implements OnInit {
   }
 
   addItem(){
-    localStorage.setItem('add-item','Yes');
+    this.router.navigate(["/admin/master/add-item"]);
+   // localStorage.setItem('add-item','Yes');
   }
   canUserAddItem(){
     if(this.data && this.data.length == 0){
-      localStorage.setItem('add-item','Yes');
-      return true;
-    }else{
-      return localStorage.getItem('add-item') =='Yes'?true:false;
-    }
+      this.router.navigate(["/admin/master/add-item"]);
+     }
 
   }
 }

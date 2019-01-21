@@ -65,6 +65,7 @@ export class Bootstrapper {
         )
         .subscribe(
           res => {
+            console.log('cast',res);
             this.modelSetUpService.update({
               loading: false,
               customertypes: res["customertypes"]["data"].length > 0

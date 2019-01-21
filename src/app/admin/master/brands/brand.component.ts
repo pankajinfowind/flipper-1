@@ -103,6 +103,9 @@ export class BrandComponent implements   OnInit {
           if(res.brands.length  > 0){
             this.data=res.brands;
             this.dataSource.data=this.data;
+            this.detailsService.close();
+          }else{
+            this.canUserAddBrand();
           }
       });
 
@@ -132,7 +135,11 @@ export class BrandComponent implements   OnInit {
   }
 
 
-
+  canUserAddBrand(){
+    if(this.data && this.data.length == 0){
+        return this.openDetails('New Brand','new',null);
+     }
+    }
   message(t){
     return ''+t.trim().toLowerCase()+' is empty';
   }

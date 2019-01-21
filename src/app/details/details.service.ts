@@ -35,4 +35,7 @@ export class DetailsService {
 
     console.log('model: ', this.model.get());
   }
+  close(){
+    this.update({title:null,receriver_data:null,sender_data:null,module:null,component:null,action:null,detailsVisible:false});
+  }
 }

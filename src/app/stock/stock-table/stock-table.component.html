@@ -126,10 +126,11 @@
         </tr>
       </tbody>
     </table>
+  </div>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons></mat-paginator>
-  </div>
+
 </div>
 
 <stock-no-entry-found *ngIf="data && data.length == 0"

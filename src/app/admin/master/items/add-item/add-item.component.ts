@@ -21,6 +21,7 @@ import { Reason } from '../../../../setup/reasons/api/reason';
 import { finalize } from 'rxjs/operators';
 import { CustomerType } from '../../../../setup/customerType/api/CustomerType';
 import { StockModelService } from '../../../../stock/stock-model.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-item',
@@ -48,7 +49,9 @@ export class AddItemComponent implements OnInit {
   barcode_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   public loading = new BehaviorSubject(false);
-  constructor(private modelStockService: StockModelService, private _formBuilder: FormBuilder, public currentUser: CurrentUser, private setupModelService: SetUpModelService, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
+  constructor(private router: Router,private modelStockService: StockModelService, private _formBuilder: FormBuilder, public currentUser: CurrentUser, private setupModelService: SetUpModelService, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) {
+    this.loadingFormGroup();
+   }
   rows: FormArray = this._formBuilder.array([]);
   selection = new SelectionModel<any>(true, []);
   displayedColumns: string[] = ['name', 'sale_price_including_tax'];
@@ -56,7 +59,6 @@ export class AddItemComponent implements OnInit {
   panelOpenState = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
 
   branchList: Branch[] = [];
   branchs = new FormControl();
@@ -113,12 +115,12 @@ export class AddItemComponent implements OnInit {
     });
 
     this.secondFormGroup = new FormGroup({
-      recommended_retail_price: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
+      recommended_retail_price: new FormControl(0.00),
       cost_price_excluding_tax: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       sale_price_excluding_tax: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       cost_price_including_tax: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       sale_price_including_tax: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
-      margin: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
+      margin: new FormControl(0.00),
       price_setting: this.rows
     });
   }
@@ -188,9 +190,9 @@ export class AddItemComponent implements OnInit {
 
   }
   ///////////////////////////// Item
-  get recommended_retail_price() {
-    return this.secondFormGroup.get("recommended_retail_price");
-  }
+  // get recommended_retail_price() {
+  //   return this.secondFormGroup.get("recommended_retail_price");
+  // }
   get cost_price_excluding_tax() {
     return this.secondFormGroup.get("cost_price_excluding_tax");
   }
@@ -203,9 +205,9 @@ export class AddItemComponent implements OnInit {
   get sale_price_including_tax() {
     return this.secondFormGroup.get("sale_price_including_tax");
   }
-  get margin() {
-    return this.secondFormGroup.get("margin");
-  }
+  // get margin() {
+  //   return this.secondFormGroup.get("margin");
+  // }
 
   get item() {
     return this.firstFormGroup.get("item");
@@ -264,7 +266,8 @@ export class AddItemComponent implements OnInit {
 
 
   close() {
-    localStorage.setItem('add-item', 'No');
+    this.router.navigate(["/admin/master/item"]);
+    //localStorage.setItem('add-item', 'No');
   }
   openDetails(title = 'New Category', action = 'new', component = 'app-categories', modules = 'app-master', obj) {
     this.detailsService.update({ title: title, sender_data: obj, module: modules, component: component, action: action, detailsVisible: true });
@@ -276,15 +279,46 @@ export class AddItemComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+
+calculateCostIncludingTax(event){
+  const inputed_value=event.target.value;
+  this.secondFormGroup.get('cost_price_including_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'inc'));
+
+}
+
+
+calculateCostExcludingTax(event){
+  const inputed_value=event.target.value;
+  this.secondFormGroup.get('cost_price_excluding_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'exc'));
+
+}
+
+calculateSaleIncludingTax(event){
+  const inputed_value=event.target.value;
+  this.secondFormGroup.get('sale_price_including_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'inc'));
+
+}
+calculateSaleExcludingTax(event){
+  const inputed_value=event.target.value;
+  this.secondFormGroup.get('sale_price_including_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'exc'));
+
+}
+
+
+
   calculateTax(tax, inputed_value, object, type = 'inc') {
-    const value = inputed_value;
+    const value:number = inputed_value;
+    const taxs:number= parseFloat(1+'.'+parseInt(tax));
+
     if (type === "inc") {
-      return value * tax;
+      return value * taxs;
     } else if (type === "exc") {
-      return value / tax;
+      return  value / taxs;
     }
 
   }
+
+
   getTax(tax_id) {
     const tax = this.taxrates.filter(tax => tax.tax_rate_id == tax_id);
     return tax.length > 0 ? tax[0].percentage : 0;
@@ -297,8 +331,8 @@ export class AddItemComponent implements OnInit {
       this.firstFormGroup.value.manufacturer = this.firstFormGroup.value.manufacturer ? this.firstFormGroup.value.manufacturer : 'None';
       this.thirdFormGroup.value.tax_rate_id = this.firstFormGroup.value.tax_rate_id ? this.firstFormGroup.value.tax_rate_id : 0;
 
-      this.firstFormGroup.value.margin = this.secondFormGroup.value.margin;
-      this.firstFormGroup.value.recommended_retail_price = this.secondFormGroup.value.recommended_retail_price;
+      // this.firstFormGroup.value.margin = this.secondFormGroup.value.margin;
+      // this.firstFormGroup.value.recommended_retail_price = this.secondFormGroup.value.recommended_retail_price;
       this.firstFormGroup.value.cost_price_excluding_tax = this.secondFormGroup.value.cost_price_excluding_tax;
       this.firstFormGroup.value.cost_price_including_tax = this.secondFormGroup.value.cost_price_including_tax;
       this.formCustomerPriceType();
@@ -318,7 +352,7 @@ export class AddItemComponent implements OnInit {
 
   }
   formCustomerPriceType() {
-    this.customertype_default;
+    //this.customertype_default;
     this.secondFormGroup.value.price_setting.push(
       {
         customer_type_id: this.customertype_default.customer_type_id,
@@ -335,9 +369,8 @@ export class AddItemComponent implements OnInit {
           this.toast.open('Item added Successfully!');
           this.thirdFormGroup.reset();
           this.loadingFormGroup();
-
-          this.msterModelService.update({ loading: false, items: res['item']["items"]["data"] ? res['item']["items"]["data"] : [] });
-          this.modelStockService.update({ loading: false, available: res['stock']["stocks"]['data'] ? res['stock']["stocks"]['data'] : [] });
+          this.msterModelService.update({ loading: false, items: res['item']['original']["items"]["data"] ? res['item']['original']["items"]["data"] : [] });
+          this.modelStockService.update({ loading: false, available: res['stock']['original']["stocks"]['data'] ? res['stock']['original']["stocks"]['data'] : [] });
         }
       },
       _error => {

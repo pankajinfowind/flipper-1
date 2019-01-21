@@ -1,6 +1,6 @@
-<app-add-item *ngIf="canUserAddItem()"></app-add-item>
+<!-- <app-add-item></app-add-item> -->
 
-<div *ngIf="!canUserAddItem()">
+<div>
 <mat-toolbar>
     <mat-toolbar-row>
       <div class="col-8">
@@ -9,8 +9,8 @@
         <span class="spacer"></span>
         </div>
         <div class="col-4">
-           <button color='accent' class="float-right" mat-raised-button    (click)="addItem()">
-           <mat-icon class="">add</mat-icon>New Item</button>
+           <button color='accent' class="float-right" mat-raised-button   (click)="addItem()">
+           <mat-icon class="">add</mat-icon>Add a Product</button>
            <button mat-button color='warn' class="float-right" *ngIf="selection.selected.length > 0" (click)="removeDialog()"><mat-icon class="">delete</mat-icon>Delete ({{selection.selected.length}}) selected</button>
         </div>
     </mat-toolbar-row>

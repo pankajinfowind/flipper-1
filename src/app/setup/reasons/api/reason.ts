@@ -2,7 +2,7 @@ export class Reason {
   name?: string;
   id?: number;
   reason_id?: number;
-  active?: number;
+  is_active?: number;
   description?: string;
   type?:string;
   reason_type?:string;

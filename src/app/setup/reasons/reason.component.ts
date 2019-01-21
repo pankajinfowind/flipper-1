@@ -61,8 +61,11 @@ export class ReasonComponent implements OnInit {
       this.changeReasons(params['reason']);
           this.setup$.subscribe(res=>{
             if(res.reasons.length  > 0){
-              this.data=res.reasons.filter(res=>res.reason_type === params['reason']);
+              this.data=res.reasons.filter(res=>res.reason_type === params['reason'] && res.is_active==1);
               this.dataSource.data=this.data;
+              this.detailsService.close();
+            }else{
+              this.canUserAddCustomerType();
             }
         });
 
@@ -77,6 +80,11 @@ export class ReasonComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+  canUserAddCustomerType(){
+    if(this.data && this.data.length == 0){
+        return this.openDetails('New Reason '+this.reason,'new',null,this.reason);
+     }
+    }
 
   removeDialog(): void {
     if (this.selection.selected.length > 0) {

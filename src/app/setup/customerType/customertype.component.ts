@@ -103,6 +103,9 @@ export class CustomerTypeComponent implements   OnInit {
           if(res.customertypes.length  > 0){
             this.data=res.customertypes.filter(c=>c.is_active==1);
             this.dataSource.data=this.data;
+            this.detailsService.close();
+          }else{
+            this.canUserAddCustomerType();
           }
       });
   }
@@ -131,7 +134,11 @@ export class CustomerTypeComponent implements   OnInit {
 
   }
 
-
+  canUserAddCustomerType(){
+    if(this.data && this.data.length == 0){
+        return this.openDetails('New Customer Type','new',null);
+     }
+    }
 
   message(t){
     return ''+t.trim().toLowerCase()+' is empty';
@@ -139,4 +146,5 @@ export class CustomerTypeComponent implements   OnInit {
   subMessage(t){
     return 'There are no '+t.trim().toLowerCase()+' currently.';
   }
+
 }

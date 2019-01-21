@@ -103,6 +103,9 @@ export class CategoriesComponent implements   OnInit {
           if(res.categories.length  > 0){
             this.data=res.categories;
             this.dataSource.data=this.data;
+            this.detailsService.close();
+          }else{
+            this.canUserAddCategory();
           }
       });
 
@@ -131,7 +134,11 @@ export class CategoriesComponent implements   OnInit {
 
   }
 
-
+  canUserAddCategory(){
+    if(this.data && this.data.length == 0){
+        return this.openDetails('New Category','new',null);
+     }
+    }
 
   message(t){
     return ''+t.trim().toLowerCase()+' is empty';

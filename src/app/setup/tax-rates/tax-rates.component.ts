@@ -56,13 +56,22 @@ export class TaxRatesComponent implements OnInit {
           if(res.taxRates.length  > 0){
             this.data=res.taxRates;
             this.dataSource.data=this.data;
+            this.detailsService.close();
+          }else{
+            this.canUserAddTaxRates();
           }
       });
+
 
   }
   openDetails(title='New Tax Rate',action='new',obj){
      this.detailsService.update({title:title,sender_data:obj,module:'app-setup',component:'app-tax-rate',action:action,detailsVisible:true});
   }
+  canUserAddTaxRates(){
+    if(this.data && this.data.length == 0){
+        return this.openDetails('New Tax Rate','new',null);
+     }
+    }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

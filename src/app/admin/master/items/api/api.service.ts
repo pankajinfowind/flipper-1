@@ -17,7 +17,7 @@ export class ApiItemService {
     public create(params: Item): BackendResponse<{ data: any[] }> {
         return this.http.post(API_ROUTES_ITEMS.ITEM, params);
     }
-    public update(params: Item, id: number): BackendResponse<{ data: Item }> {
+    public update(params: Item, id: number): BackendResponse<{ data: any[] }> {
         return this.http.put(API_ROUTES_ITEMS.ITEM + '/' + id, params);
     }
     public delete(params: any): BackendResponse<{ data: Item[] }> {

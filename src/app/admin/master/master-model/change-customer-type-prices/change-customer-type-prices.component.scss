@@ -1,0 +1,29 @@
+tr.fp-detail-row {
+  height: 0;
+}
+
+tr.fp-element-row:not(.fp-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.fp-element-row:not(.fp-expanded-row):active {
+  background: #efefef;
+}
+
+.fp-element-row td {
+  border-bottom-width: 0;
+}
+
+.fp-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+.fp-headers-align .mat-expansion-panel-header-title,
+.fp-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.fp-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}

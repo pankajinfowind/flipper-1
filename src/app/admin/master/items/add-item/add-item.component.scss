@@ -33,12 +33,12 @@
 
 
   .sd_section-container {
-    height: 320px;
+    max-height: 320px;
     width: 100%;
     overflow: auto;
   }
   .fst_section-container{
-    height: 400px;
+    max-height: 400px;
     width: 100%;
     overflow: auto;
   }

@@ -17,7 +17,12 @@ export class ApiStockService {
     public addOrRemoveExistingItem(params: any): BackendResponse<{ data: any }> {
       return this.http.post(API_ROUTES.ADD_OR_REMOVE_EXISTING_ITEM, params);
   }
-
+  public update(params: any,id:number): BackendResponse<{ data: any }> {
+    return this.http.put(API_ROUTES.STOCK+'/'+id, params);
+ }
+ public delete(id:number): BackendResponse<{ data: any }> {
+  return this.http.delete(API_ROUTES.STOCK+'/'+id);
+}
 
     public get(): BackendResponse<{ data: any }> {
       return this.http.get(API_ROUTES.STOCK);

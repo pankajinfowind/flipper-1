@@ -1,3 +1,5 @@
+import { CustomerTypePrices } from './CustomerTypePrices';
+
 export class CustomerType {
   name?: string;
   id?: number;
@@ -6,6 +8,7 @@ export class CustomerType {
   discount_value?: number;
   description?:string;
   business_id?: number;
+  customer_type_items?:CustomerTypePrices[]=[];
   created_at?: any;
   updated_at?: any;
 

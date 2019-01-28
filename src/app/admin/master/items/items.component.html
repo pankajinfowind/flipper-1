@@ -1,10 +1,8 @@
-<!-- <app-add-item></app-add-item> -->
-
 <div>
 <mat-toolbar>
     <mat-toolbar-row>
       <div class="col-8">
-          <button mat-button><mat-icon class="">menu</mat-icon>Items </button>
+          <button mat-button><mat-icon class="">menu</mat-icon>Products </button>
         <span class="spacer"></span>
         <span class="spacer"></span>
         </div>
@@ -35,7 +33,7 @@
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation();openDetails('Edit Item','edit',row)"
+          <mat-checkbox (click)="$event.stopPropagation();openDetails('Edit a Product','edit',row)"
                         (change)="$event ? selection.toggle(row) : null"
                         [checked]="selection.isSelected(row)">
           </mat-checkbox>
@@ -44,25 +42,25 @@
     <!-- Position Column -->
     <ng-container matColumnDef="sku">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
           <span class="text">{{ element.sku }}</span></td>
     </ng-container>
     <!-- Position Column -->
     <ng-container matColumnDef="barcode">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Barcode</th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
             <span class="text">{{ element.barcode }}</span></td>
       </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="item">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.item }}</span></td>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.item }}</span></td>
     </ng-container>
 
     <!-- Purchase Price Column -->
     <ng-container matColumnDef="product_order_code">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Order code</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
           <span class="text">{{ element.product_order_code }}</span>
       </td>
     </ng-container>
@@ -70,45 +68,37 @@
     <!-- Sales Price Column -->
     <ng-container matColumnDef="article_code">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Article code</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)">
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
           <span class="text">{{ element.article_code }}</span>
       </td>
     </ng-container>
     <!-- Category Column -->
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.category.name }}</span></td>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.category.name }}</span></td>
     </ng-container>
        <!-- Category Column -->
        <ng-container matColumnDef="brand">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand</th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.brand?element.brand.name:'null' }}</span></td>
+        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.brand?element.brand.name:'null' }}</span></td>
       </ng-container>
 
       <!-- Category Column -->
       <ng-container matColumnDef="tax_rate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax rate</th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.tax_rate?element.tax_rate.name:'null' }}</span></td>
+        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.tax_rate?element.tax_rate.name:'null' }}</span></td>
       </ng-container>
       <!-- Category Column -->
       <ng-container matColumnDef="manufacturer">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Manufacturer</th>
-          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text">{{ element.manufacturer }}</span></td>
+          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.manufacturer }}</span></td>
         </ng-container>
               <!-- Category Column -->
       <ng-container matColumnDef="summary">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Summary</th>
-          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Item','edit',element)"><span class="text" trans>{{ element.summary }}</span></td>
+          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text" trans>{{ element.summary }}</span></td>
         </ng-container>
 
-    <!-- Action Column -->
-    <!-- <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button class="d-inline-block" color="primary" (click)="openDetails('Edit Item','edit',element)" [disabled]="!selection.isSelected(element) || isAllSelected()"><mat-icon>create</mat-icon> Edit</button>
-          <button mat-button class="d-inline-block" color="warn" (click)="removeDialog()" [disabled]="!selection.isSelected(element) || isAllSelected()"> <mat-icon>delete</mat-icon> Delete</button>
-        </td>
-      </ng-container> -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr [class.highlighted]="((details$ | async).sender_data?(details$ | async).sender_data.id==row.id:false)" mat-row *matRowDef="let row; columns: displayedColumns;"
@@ -123,6 +113,6 @@
 
 </div>
 
-<master-no-entry-found *ngIf="data && data.length == 0"  [message]="message('Items')" [subMessage]='subMessage("Items")'></master-no-entry-found>
+<master-no-entry-found *ngIf="data && data.length == 0"  [message]="message('Products')" [subMessage]='subMessage("Products")'></master-no-entry-found>
 
 </div>

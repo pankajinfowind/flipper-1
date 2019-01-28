@@ -103,7 +103,7 @@ export class AddItemComponent implements OnInit {
       max_stock: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       on_order: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       show_alert: new FormControl(0),
-      unit_of_sale: new FormControl(''),
+      unit_of_sale: new FormControl('units'),
       unit_of_volume: new FormControl(0),
       reason_id: new FormControl('', [Validators.required]),
       transction_date: new FormControl(new Date()),
@@ -173,7 +173,7 @@ export class AddItemComponent implements OnInit {
   getActiveCustomerTypes() {
     this.setup$.subscribe(res => {
       if (res.customertypes.length > 0) {
-        this.customertype_default = res.customertypes.filter(c => c.is_active == 0)[0];
+        this.customertype_default = res.customertypes.find(c => c.is_active == 0);
         this.customertypes = res.customertypes.filter(c => c.is_active == 1);
         this.customertypes.forEach((d: CustomerType) => this.addRow(d, false));
         this.dataSource = new MatTableDataSource<CustomerType>(this.customertypes);
@@ -300,7 +300,7 @@ calculateSaleIncludingTax(event){
 }
 calculateSaleExcludingTax(event){
   const inputed_value=event.target.value;
-  this.secondFormGroup.get('sale_price_including_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'exc'));
+  this.secondFormGroup.get('sale_price_excluding_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'exc'));
 
 }
 
@@ -311,10 +311,13 @@ calculateSaleExcludingTax(event){
     const taxs:number= parseFloat(1+'.'+parseInt(tax));
 
     if (type === "inc") {
-      return value * taxs;
+      const res= (value * taxs).toString();
+      return parseFloat(res).toFixed(2);
     } else if (type === "exc") {
-      return  value / taxs;
+      const res= (value / taxs).toString();
+      return parseFloat(res).toFixed(2);
     }
+
 
   }
 

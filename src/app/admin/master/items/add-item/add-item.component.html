@@ -23,7 +23,7 @@
 <mat-horizontal-stepper linear #stepper class="details-list scroll">
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Product Info</ng-template>
+      <ng-template matStepLabel>Product Details</ng-template>
       <mat-card-content class="fst_section-container row">
         <br />
         <div class="col-4">
@@ -189,12 +189,12 @@
   <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
 
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Price Setting</ng-template>
+      <ng-template matStepLabel>Product Pricing</ng-template>
       <b>Tax Rate: {{getTax(tax_rate_id.value)}} %</b>
-<hr />
+      <hr />
       <table class="mt-4 w-100">
 
-            <tr>
+        <tr>
           <td>Cost price (EXC TAX)</td>
           <td>Sale price (EXC TAX)</td>
           <td>Cost price (INC TAX)</td>
@@ -203,39 +203,39 @@
           <td>RPP</td> -->
         </tr>
         <tr>
-            <td>
-              <mat-form-field  appearance="outline">
-                <mat-label>Enter cost price (EXC TAX)</mat-label>
-                <input matInput placeholder="Enter cost price (EXC TAX)"  (input)="calculateCostIncludingTax($event)" type="number" formControlName="cost_price_excluding_tax"
-                  required>
-              </mat-form-field>
-            </td>
-            <td>
-                <mat-form-field  appearance="outline">
-                    <mat-label>Enter sale price (EXC TAX)</mat-label>
-                    <input matInput placeholder="Enter sale price (EXC TAX)" (input)="calculateSaleIncludingTax($event)" type="number" formControlName="sale_price_excluding_tax"
-                      required>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>Enter cost price (EXC TAX)</mat-label>
+              <input matInput placeholder="Enter cost price (EXC TAX)" (input)="calculateCostIncludingTax($event)" type="number"
+                formControlName="cost_price_excluding_tax" required>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>Enter sale price (EXC TAX)</mat-label>
+              <input matInput placeholder="Enter sale price (EXC TAX)" (input)="calculateSaleIncludingTax($event)" type="number"
+                formControlName="sale_price_excluding_tax" required>
 
-                      <mat-hint>(excluding Tax) (Not saved, this is<br /> only used to calculate <br />Sale Price inc. Tax)</mat-hint>
-                  </mat-form-field>
-            </td>
-            <td>
-                <mat-form-field  appearance="outline">
-                    <mat-label>Enter cost price (INC TAX)</mat-label>
-                    <input matInput placeholder="Enter cost price (INC TAX)"  (input)="calculateCostExcludingTax($event)" type="number" formControlName="cost_price_including_tax"
-                      required>
-                      <mat-hint>(including Tax) (Not saved, this is <br />only used to calculate <br />Cost Price exc. Tax)</mat-hint>
+              <mat-hint>(excluding Tax) (Not saved, this is<br /> only used to calculate <br />Sale Price inc. Tax)</mat-hint>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>Enter cost price (INC TAX)</mat-label>
+              <input matInput placeholder="Enter cost price (INC TAX)" (input)="calculateCostExcludingTax($event)" type="number"
+                formControlName="cost_price_including_tax" required>
+              <mat-hint>(including Tax) (Not saved, this is <br />only used to calculate <br />Cost Price exc. Tax)</mat-hint>
 
-                  </mat-form-field>
-            </td>
-            <td>
-                <mat-form-field  appearance="outline">
-                    <mat-label>Enter sale price (INC TAX)</mat-label>
-                    <input matInput placeholder="Enter sale price (INC TAX)" (input)="calculateSaleExcludingTax($event)" type="number" formControlName="sale_price_including_tax"
-                      required>
-                  </mat-form-field>
-            </td>
-            <!-- <td><mat-form-field appearance="outline">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>Enter sale price (INC TAX)</mat-label>
+              <input matInput placeholder="Enter sale price (INC TAX)" (input)="calculateSaleExcludingTax($event)" type="number"
+                formControlName="sale_price_including_tax" required>
+            </mat-form-field>
+          </td>
+          <!-- <td><mat-form-field appearance="outline">
                 <mat-label>Enter margin</mat-label>
                 <input matInput placeholder="Enter margin" type="text" formControlName="margin"
                   required>
@@ -246,7 +246,7 @@
                 <input matInput placeholder="Enter RPP" type="text" formControlName="recommended_retail_price"
                   required>
               </mat-form-field></td> -->
-          </tr>
+        </tr>
       </table>
 
       <br />
@@ -257,13 +257,13 @@
               Customer Specific Prices
             </mat-panel-title>
 
-</mat-expansion-panel-header>
+          </mat-expansion-panel-header>
           <mat-card-content>
             <div class="row">
-                <div class="col-12">
-                    The section below allows you to set up prices for specific customer types for this product.<br />
-                    Prices entered cannot be the same as the default Sale Price, customers receive this price as standard.
-                  </div><br />
+              <div class="col-12">
+                The section below allows you to set up prices for specific customer types for this product.<br />
+                Prices entered cannot be the same as the default Sale Price, customers receive this price as standard.
+              </div><br />
 
               <div class="col-10">
                 <mat-form-field class="w-100">
@@ -279,7 +279,7 @@
               </div>
             </div>
 
-            <section  class="sd_section-container">
+            <section class="sd_section-container">
 
               <table formArrayName="price_setting" mat-table [dataSource]="dataSource">
 
@@ -296,13 +296,13 @@
                 </ng-container>
 
                 <ng-container matColumnDef="sale_price_including_tax">
-                  <th scope="col" mat-header-cell *matHeaderCellDef>Price
+                  <th scope="col" mat-header-cell *matHeaderCellDef>Price (INC TAX)
                     <mat-icon class="float-left" matSuffix [matTooltip]="'Sale Price Including Tax.'" aria-label="including Tax">info</mat-icon>
                   </th>
                   <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
                     <mat-form-field class="input" appearance="outline">
-                      <mat-label>Enter Price</mat-label>
-                      <input matInput placeholder="Price" type="text" formControlName="sale_price_including_tax"
+                      <mat-label>Enter Price (INC TAX)</mat-label>
+                      <input matInput placeholder="Price (INC TAX)" type="number" formControlName="sale_price_including_tax"
                         required>
 
                     </mat-form-field>
@@ -319,7 +319,7 @@
               </table>
             </section>
           </mat-card-content>
-          </mat-expansion-panel>
+        </mat-expansion-panel>
 
       </mat-accordion>
 
@@ -333,10 +333,10 @@
   <mat-step>
 
     <form [formGroup]="thirdFormGroup">
-      <ng-template matStepLabel>Stock Details & Complete</ng-template>
+      <ng-template matStepLabel>Stock Adjustment</ng-template>
       <mat-card-content class="fst_section-container row">
         <mat-tab-group class="w-100">
-          <mat-tab label="Stock Adjustment">
+          <mat-tab label="Stock Adjustment" class="row">
             <br />
             <div class="col-6">
               <div class="item row">
@@ -353,6 +353,7 @@
               </div>
 
               <div class="item row">
+
                 <table class="col-12">
 
                   <tr>
@@ -375,7 +376,6 @@
                       <mat-form-field class="col-12" appearance="outline">
                         <mat-label>Add Unit of Sale</mat-label>
                         <input class="text-secondary" matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
-                        <mat-hint>Minimum measurement in which this product <br />is used (e.g half pints in a barrel)</mat-hint>
                       </mat-form-field>
                     </td>
                   </tr>
@@ -401,54 +401,56 @@
                 </mat-form-field>
               </div>
             </div>
+            <div class="col-6">
+              <div class="item row">
+                <pre>
 
-            <div class="col-5">
-              <table>
+* Check the "alerts" to receive email notifications when products are low on stock.
+* Minimum value is the stock level at which to reorder.
+* Maximum value is used to calculate the number of products to reorder.
 
-                <tr class="item row">
-                  <td class="col-6">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Minimum stock value</mat-label>
-                      <input class="text-secondary" matInput placeholder="Minimum stock value" formControlName="min_stock"
-                        required>
-                      <mat-hint>Minimum value is the stock level at which to reorder. </mat-hint>
+For example: If the Minimum value is 2 and the Maximum value is 5,
+            when the current stock drops below 2, reorder more items to bring
+            the stock back to the maximum value.
+                      </pre>
+                <table class="col-12">
 
-                    </mat-form-field>
-                  </td>
-                  <td class="col-6">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Maximum stock value</mat-label>
-                      <input class="text-secondary" matInput placeholder="Maximum stock value" formControlName="max_stock"
-                        required>
-                      <mat-hint>Maximum value is used to calculate <br />the number of products to reorder.
-                      </mat-hint>
-                    </mat-form-field>
-                  </td>
-                </tr>
+                  <tr>
+                    <td>
+                      <mat-form-field class="col-12" appearance="outline">
+                        <mat-label>Minimum stock value</mat-label>
+                        <input class="text-secondary" matInput placeholder="Minimum stock value" formControlName="min_stock"
+                          required>
+
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="col-12" appearance="outline">
+                        <mat-label>Maximum stock value</mat-label>
+                        <input class="text-secondary" matInput placeholder="Maximum stock value" formControlName="max_stock"
+                          required>
+                      </mat-form-field>
+                    </td>
+                  </tr>
 
 
-                <tr class="item row">
-                  <td class="col-6">
-                    <mat-form-field appearance="outline">
-                      <mat-label>On Order</mat-label>
-                      <input class="text-secondary" matInput placeholder="On Order value" formControlName="on_order"
-                        required>
-                    </mat-form-field>
-                  </td>
-                  <td class="col-6">
-                    <mat-checkbox formControlName="show_alert">Show alerts Messages</mat-checkbox>
-                  </td>
-                </tr>
+                  <tr>
+                    <td>
+                      <mat-form-field class="col-12" appearance="outline">
+                        <mat-label>On Order</mat-label>
+                        <input class="text-secondary" matInput placeholder="On Order value" formControlName="on_order"
+                          required>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-checkbox class="col-12" formControlName="show_alert">Show alerts Messages</mat-checkbox>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td colspan='2' style="word-wrap: break-word;">
-                    For example: If the Minimum value is 2 and the Maximum value is 5,<br />when the current stock
-                    drops below 2,reorder more items to bring the stock back to the maximum value.
-                  </td>
-                </tr>
 
-              </table>
+                </table>
 
+              </div>
             </div>
           </mat-tab>
         </mat-tab-group>

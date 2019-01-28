@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Category } from '../../categories/api/category';
 import { finalize } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Toast } from '../../../../common/core/ui/toast.service';
-import { ApiCategoryService } from '../../categories/api/api.service';
 import { ApiItemService } from '../../items/api/api.service';
 import { DetailsService } from '../../../../details/details.service';
 import { Details } from '../../../../details/details';
@@ -16,13 +15,231 @@ import { Brand } from '../../brands/api/brand';
 import { TAXRATE } from '../../../../setup/tax-rates/api/tax-rate';
 import { SetUp } from '../../../../setup/setup';
 import { SetUpModelService } from '../../../../setup/setup-model.service';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { CustomerType } from '../../../../setup/customerType/api/CustomerType';
+import { CustomerTypePrices } from '../../../../setup/customerType/api/CustomerTypePrices';
+import { StockModelService } from '../../../../stock/stock-model.service';
+import { Item } from '../../items/api/item';
+import { ApiCustomerTypeService } from '../../../../setup/customerType/api/api.service';
+import { element } from '@angular/core/src/render3';
 
+
+@Component({
+  selector: "edit-item-dialog",
+  templateUrl: './edit-item-dialog.html',
+  styleUrls: ["./item-model.component.scss"]
+})
+export class EditItemDialog implements OnInit {
+  item_deleted=[];
+  public loading = new BehaviorSubject(false);
+  isLinear = false;
+  master$: Observable<Master>;
+  setup$: Observable<SetUp>;
+  subscription: Observable<Details>;
+  details$: Observable<Details>;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup:FormGroup;
+  taxrates: TAXRATE[] = [];
+  customertypes: CustomerType[] = [];
+  customer_type_sales_default: CustomerTypePrices = null
+  rows: FormArray = this._formBuilder.array([]);
+
+  constructor(private capi:ApiCustomerTypeService,private modelStockService: StockModelService,private setupModelService: SetUpModelService,  private detailsService: DetailsService,private _formBuilder: FormBuilder,private msterModelService:MasterModelService,private toast: Toast,private api: ApiItemService,
+    public dialogRef: MatDialogRef<EditItemDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+    ngOnInit() {
+    this.master$ = this.msterModelService.master$;
+    this.setup$ = this.setupModelService.setup$;
+    this.subscription = this.details$ = this.detailsService.details$;
+    this.getActiveCustomerTypes();
+      this.loadingFormGroup();
+      this.secondFormGroup = this._formBuilder.group({
+        secondCtrl: ['', Validators.required]
+      });
+      this.thirdFormGroup = this._formBuilder.group({
+        thirdCtrl: ['', Validators.required]
+      });
+
+    }
+
+    loadingFormGroup() {
+      const numberPatern = '^[0-9.,]+$';
+      this.customer_type_sales_default=this.data.customer_type_items.find(c=>c.item_id === this.data.id);
+      this.firstFormGroup = new FormGroup({
+        cost_price_excluding_tax: new FormControl(this.data?this.data.cost_price_excluding_tax:0.00, [Validators.required, Validators.pattern(numberPatern)]),
+        sale_price_excluding_tax: new FormControl(this.customer_type_sales_default?this.customer_type_sales_default.sale_price_excluding_tax:0.00, [Validators.required, Validators.pattern(numberPatern)]),
+        cost_price_including_tax: new FormControl(this.data?this.data.cost_price_including_tax:0.00, [Validators.required, Validators.pattern(numberPatern)]),
+        sale_price_including_tax: new FormControl(this.customer_type_sales_default?this.customer_type_sales_default.sale_price_including_tax:0.00, [Validators.required, Validators.pattern(numberPatern)]),
+      });
+    }
+
+    getActiveCustomerTypes() {
+      this.setup$.subscribe(res => {
+        if (res.customertypes.length > 0) {
+          //this.customertype_default = res.customertypes.find(c => c.is_active == 0).customer_type_items.find(c=>c.item_id === this.data.id);
+          this.customertypes = res.customertypes.filter(c => c.is_active == 1);
+          this.customertypes.forEach((d: CustomerType) => this.addRow(d, false));
+        }
+      });
+
+    }
+    addRow(d?: CustomerType, noUpdate?: boolean) {
+      const numberPatern = '^[0-9.,]+$';
+      const row = new FormGroup({
+        //TODO:
+        customer_type_id: new FormControl(d && d.customer_type_id ? d.customer_type_id : null, [Validators.required]),
+        name: new FormControl(d && d.name ? d.name : null, [Validators.required]),
+        sale_price_including_tax: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
+        sale_price_excluding_tax: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
+      });
+      this.rows.push(row);
+    }
+
+  close(): void {
+    this.dialogRef.close({status:'none'});
+  }
+  get cost_price_excluding_tax() {
+    return this.firstFormGroup.get("cost_price_excluding_tax");
+  }
+  get sale_price_excluding_tax() {
+    return this.firstFormGroup.get("sale_price_excluding_tax");
+  }
+  get cost_price_including_tax() {
+    return this.firstFormGroup.get("cost_price_including_tax");
+  }
+  get sale_price_including_tax() {
+    return this.firstFormGroup.get("sale_price_including_tax");
+  }
+  calculateCostIncludingTax(event){
+    const inputed_value=event.target.value;
+    this.firstFormGroup.get('cost_price_including_tax').setValue(this.calculateTax(this.getTax(this.data.tax_rate.id), inputed_value, null,  'inc'));
+
+  }
+
+
+  calculateCostExcludingTax(event){
+    const inputed_value=event.target.value;
+    this.firstFormGroup.get('cost_price_excluding_tax').setValue(this.calculateTax(this.data.tax_rate.percentage, inputed_value, null,  'exc'));
+
+  }
+
+  calculateSaleIncludingTax(event){
+    const inputed_value=event.target.value;
+    this.firstFormGroup.get('sale_price_including_tax').setValue(this.calculateTax(this.data.tax_rate.percentage, inputed_value, null,  'inc'));
+
+  }
+  calculateSaleExcludingTax(event){
+    const inputed_value=event.target.value;
+    this.firstFormGroup.get('sale_price_excluding_tax').setValue(this.calculateTax(this.data.tax_rate.percentage, inputed_value, null,  'exc'));
+
+  }
+
+
+
+    calculateTax(tax, inputed_value, object, type = 'inc') {
+      const value:number = inputed_value;
+      const taxs:number= parseFloat(1+'.'+parseInt(this.data.tax_rate.percentage));
+      if (type === "inc") {
+        const res= (value * taxs).toString();
+        return parseFloat(res).toFixed(2);
+      } else if (type === "exc") {
+        const res= (value / taxs).toString();
+        return parseFloat(res).toFixed(2);
+      }
+
+
+    }
+
+
+    getTax(tax_id) {
+      const tax = this.taxrates.filter(tax => tax.tax_rate_id == tax_id);
+      return tax.length > 0 ? tax[0].percentage : 0;
+    }
+
+    saveItemPrice(){
+      this.saveCustomerTypePricing();
+      return this.saveProductDetails();
+    }
+
+    saveCustomerTypePricing(show_alert=false){
+      const data:CustomerTypePrices={
+        sale_price_excluding_tax:this.firstFormGroup.value.sale_price_excluding_tax,
+        sale_price_including_tax:this.firstFormGroup.value.sale_price_including_tax,
+      }
+      this.loading.next(true);
+      this.capi.updateItemPricesByCustomerType(data,this.customer_type_sales_default.id).pipe(finalize(() => this.loading.next(false))).subscribe(
+          res => {
+            if (res.status == 'success') {
+              if(show_alert){
+                this.toast.open('Customer Specific Prices updated Successfully!');
+              }
+            // this.updateItemModelService(res["items"]["data"]);
+
+            }
+          },
+          _error => {
+            console.error(_error);
+          }
+      );
+    }
+    updateItemModelService(data){
+      const item =data.find(item=>item.id==this.data.id);
+      this.msterModelService.update({ loading: false, items: data ? data : [] });
+      this.detailsService.update({title:'Edit a Product',sender_data:item,module:'app-master',component:'app-items',action:'edit',detailsVisible:true});
+    }
+    saveProductDetails(){
+      const data:Item={
+        category_id:this.data.category.id,
+        item:this.data.item,
+        cost_price_excluding_tax:this.firstFormGroup.value.cost_price_excluding_tax,
+        cost_price_including_tax:this.firstFormGroup.value.cost_price_including_tax
+      }
+      this.loading.next(true);
+      this.api.update(data,this.data.id).pipe(finalize(() => this.loading.next(false))).subscribe(
+          res => {
+            if (res.status == 'success') {
+              this.toast.open('Item updated Successfully!');
+              this. updateItemModelService(res["items"]["data"]);
+            }
+          },
+          _error => {
+            console.error(_error);
+          }
+        );
+    }
+}
 @Component({
   selector: 'app-item-model',
   templateUrl: './item-model.component.html',
   styleUrls: ['./item-model.component.scss']
 })
 export class ItemModelComponent implements OnInit {
+  colors:any[]=[{
+    value:'#0e0d0d',valueName:'Black',
+  },{
+    value:'#f44336',valueName:'Red',
+
+  },{
+    value:'#490f0f',valueName:'Red - Dark',
+
+  },{
+    value:'#4caf50',valueName:'Green',
+
+  },{
+    value:'#1da1f2',valueName:'Blue Sky',
+
+  },{
+    value:'#3b5998',valueName:'Blue',
+
+  },{
+    value:'#b57541',valueName:'Coffee',
+
+  },{
+    value:'#b541a6',valueName:'Violet',
+
+  }];
   master$: Observable<Master>;
   setup$: Observable<SetUp>;
   itemForm: FormGroup;
@@ -37,9 +254,10 @@ export class ItemModelComponent implements OnInit {
   category_placeholder = 'Choose Item Category';
   item_id: number = 0;
   business: Business;
-  upc_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
+  barcode_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
-  constructor(private setupModelService: SetUpModelService,public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
+  data: Item=null;
+constructor(public dialog: MatDialog,private setupModelService: SetUpModelService,public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
 
 
   ngOnInit() {
@@ -54,13 +272,25 @@ export class ItemModelComponent implements OnInit {
     this.loadingFormGroup();
   }
 
+  openEditItemDialog(): void {
+    this.loadingFormGroup();
+    this.dialog.open(EditItemDialog, {
+      width: '1200px',
+      data: this.data?this.data:null
+    });
+    }
+
+
+
   loadingFormGroup() {
+
     this.details$.subscribe(res => {
       if (res.action == 'new') {
         this.need_to_add_new = true;
       } else {
         this.need_to_add_new = false;
       }
+      this.data=res.sender_data ? res.sender_data : null;
       this.category_placeholder = res.sender_data ? res.sender_data.category.name : 'Choose Item Category';
       this.item_id = res.sender_data ? res.sender_data.id : 0;
       this.itemForm = new FormGroup({
@@ -73,7 +303,8 @@ export class ItemModelComponent implements OnInit {
         category_id: new FormControl(res.sender_data && res.sender_data.category? res.sender_data.category.id : 0, [Validators.required]),
         brand_id: new FormControl(res.sender_data && res.sender_data.brand ? res.sender_data.brand.id : 0, [Validators.required]),
         tax_rate_id:new FormControl(res.sender_data && res.sender_data.tax_rate? res.sender_data.tax_rate.id : 0, [Validators.required]),
-        barcode: new FormControl(res.sender_data ? res.sender_data.barcode : 0)
+        barcode: new FormControl(res.sender_data ? res.sender_data.barcode : 0),
+        color:new FormControl(res.sender_data ? res.sender_data.color : '#0e0d0d'),
       });
     });
   }
@@ -111,6 +342,10 @@ export class ItemModelComponent implements OnInit {
  get barcode(){
   return this.itemForm.get("barcode");
  }
+ get color(){
+  return this.itemForm.get("color");
+ }
+
   get sku() {
     return this.itemForm.get("sku");
   }
@@ -145,16 +380,17 @@ export class ItemModelComponent implements OnInit {
       const data = {
         item: this.itemForm.value.item,
         sku: this.itemForm.value.sku,
-        upc: this.itemForm.value.upc,
         summary: this.itemForm.value.summary,
         manufacturer: this.itemForm.value.manufacturer == '' ? 'null' : this.itemForm.value.manufacturer,
-        currency: this.itemForm.value.currency,
-        unit_cost: this.itemForm.value.unit_cost,
-        unit_sale: this.itemForm.value.unit_sale,
+        tax_rate_id: this.itemForm.value.tax_rate_id,
+        brand_id: this.itemForm.value.brand_id,
         category_id: this.itemForm.value.category_id,
-        barcode: this.itemForm.value.barcode
+        barcode: this.itemForm.value.barcode,
+        color:this.itemForm.value.color,
+        product_order_code:this.itemForm.value.product_order_code,
+        article_code:this.itemForm.value.article_code,
       };
-      return this.need_to_add_new ? this.create(data) : this.update(data, this.item_id);
+      return this.update(data, this.item_id);
     }
   }
 
@@ -181,7 +417,7 @@ export class ItemModelComponent implements OnInit {
           this.toast.open('Item updated Successfully!');
           this.loadingFormGroup();
           this.msterModelService.update({ loading: false, items: res["items"]["data"] ? res["items"]["data"] : [] });
-          this.close();
+         this.close();
         }
       },
       _error => {

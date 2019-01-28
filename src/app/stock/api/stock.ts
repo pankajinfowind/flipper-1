@@ -35,6 +35,12 @@ export class Stock {
   unit_of_sale?:number;
   item_entries: {};
   item_soldout: {};
+  min_stock?:number;
+  max_stock?:number;
+  on_order?: number;
+  show_alert?: boolean;
+  unit_of_sal?: string;
+  unit_of_volume?: string;
   available: any[] | Stock[];
   constructor(params: Object = {}) {
     for (let name in params) {

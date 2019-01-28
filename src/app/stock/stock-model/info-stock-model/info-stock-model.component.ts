@@ -1,8 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Details } from '../../../details/details';
 import { Observable } from 'rxjs';
 import { DetailsService } from '../../../details/details.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Stock } from '../../api/stock';
+@Component({
+  selector: "advanced-option-dialog",
+  templateUrl: './advanced-option.component.html',
+  styleUrls: ["./info-stock-model.component.scss"]
+})
+export class AdvancedOptionDialog implements OnInit {
+  entry:Stock[]=[];
+  item_id:number=0;
+  constructor(public dialogRef: MatDialogRef<AdvancedOptionDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
+  ngOnInit(): void {
+    this.entry=this.data.data;
+    this.item_id=this.data.item_id;
+  }
+  close(): void {
+    this.dialogRef.close({status:'none'});
+  }
+}
 @Component({
   selector: 'app-info-stock-model',
   templateUrl: './info-stock-model.component.html',
@@ -18,7 +39,7 @@ export class InfoStockModelComponent implements OnInit {
   subscription: Observable<Details>;
   details$: Observable<Details>;
   info:any={};
-  constructor(private detailsService:DetailsService) {
+  constructor(public dialog: MatDialog,private detailsService:DetailsService) {
    }
 
     ngOnInit() {
@@ -34,4 +55,12 @@ export class InfoStockModelComponent implements OnInit {
 openDetails(title='Stock Details',action='info',obj,component='app-info-stock-model'){
   this.detailsService.update({title:title,sender_data:obj,module:'app-stock',component:component,action:action,detailsVisible:true});
 }
+openAdvancedStockDialog(): void {
+const convert_to_array=[];
+    convert_to_array.push(this.info);
+  this.dialog.open(AdvancedOptionDialog, {
+    width: '900px',
+    data: this.info?{data:convert_to_array,item_id:this.info.item.id}:null
+  });
+  }
 }

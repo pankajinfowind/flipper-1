@@ -16,7 +16,7 @@ import { MasterModule } from "../admin/master/master/master.module";
 import { CartItemComponent, CartDialog } from "./cart-item/cart-item.component";
 import { ApiPosService } from "./api/api.service";
 import { CurrentUser } from "../common/auth/current-user";
-import { Bootstrapper, init_app } from "./bootstrapper.service";
+import { BootstrapperPos, init_app } from "./bootstrapper.service";
 import { HttpErrorHandler } from "../common/core/http/errors/http-error-handler.service";
 import { BackendHttpErrorHandler } from "../common/core/http/errors/backend-http-error-handler.service";
 import { ravenErrorHandlerFactory } from "../common/core/errors/raven-error-handler";
@@ -48,7 +48,7 @@ export class PosModule {
         CustomerService,
         HttpClient,
         CurrentUser,
-        Bootstrapper,
+        BootstrapperPos,
         {
           provide: HttpErrorHandler,
           useClass: BackendHttpErrorHandler
@@ -56,7 +56,7 @@ export class PosModule {
         {
           provide: APP_INITIALIZER,
           useFactory: init_app,
-          deps: [Bootstrapper, CurrentUser],
+          deps: [BootstrapperPos, CurrentUser],
           multi: true
         },
         {

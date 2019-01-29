@@ -12,12 +12,12 @@ import { Orders } from '../orders/orders';
 import { OrderItemsModelService } from './cart/order-item-model.service';
 import { NgxService } from '../common/ngx-db/ngx-service';
 
-export function init_app(bootstrapper: Bootstrapper) {
+export function init_app(bootstrapper: BootstrapperPos) {
   return () => bootstrapper.bootstrap();
 }
 
 @Injectable()
-export class Bootstrapper {
+export class BootstrapperPos {
   protected http: HttpClient;
   protected settings: Settings;
   protected user: CurrentUser;
@@ -40,11 +40,11 @@ export class Bootstrapper {
    * Bootstrap application with data returned from server.
    */
   public bootstrap() {
-    this.user.userChanged.subscribe(res => {
-      if (res["business"][0]) {
+    //this.user.userChanged.subscribe(res => {
+      if (localStorage.getItem('active_branch')) {
         this.orders();
       }
-    });
+    //});
   }
 
   /**

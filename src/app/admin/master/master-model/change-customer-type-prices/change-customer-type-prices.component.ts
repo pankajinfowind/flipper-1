@@ -43,7 +43,6 @@ export class ChangeCustomerTypePricesComponent implements OnInit,OnChanges {
   subscription: Observable<Details>;
   details$: Observable<Details>;
   item:Item=null;
-  entry: any;
   newCustomerTypeForm: FormGroup;
   setStep(index: number) {
     this.step = index;

@@ -14,7 +14,7 @@ import { MasterRoutingModule } from "./master-routing.module";
 import { DetailsModule } from "../../../details/details.module";
 import { NoEntryFoundMasterComponent } from "../messages/no-entry-found/no-entry-found.component";
 import { CurrentUser } from '../../../common/auth/current-user';
-import { Bootstrapper, init_app } from '../bootstrapper.service';
+import { BootstrapperMaster, init_app } from '../bootstrapper.service';
 import { HttpErrorHandler } from '../../../common/core/http/errors/http-error-handler.service';
 import { BackendHttpErrorHandler } from '../../../common/core/http/errors/backend-http-error-handler.service';
 import { ravenErrorHandlerFactory } from '../../../common/core/errors/raven-error-handler';
@@ -78,7 +78,7 @@ export class MasterModule {
         ngModule: MasterModule,
         providers: [
             CurrentUser,
-            Bootstrapper,
+            BootstrapperMaster,
             {
                 provide: HttpErrorHandler,
                 useClass: BackendHttpErrorHandler,
@@ -86,20 +86,22 @@ export class MasterModule {
             {
                 provide: APP_INITIALIZER,
                 useFactory: init_app,
-                deps: [Bootstrapper,CurrentUser],
+                deps: [BootstrapperMaster,CurrentUser],
                 multi: true,
             },
             {
                 provide: ErrorHandler,
                 useFactory: ravenErrorHandlerFactory,
-                deps: [
+                deps:
+                [
                   ApiItemService,
                   ApiCategoryService,
                   ApiInsuranceService,
                   ApiBranchService,
-                  CurrentUser],
+                  CurrentUser
+                ],
             },
         ]
     };
-}
+  }
 }

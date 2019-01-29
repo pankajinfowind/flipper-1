@@ -117,7 +117,7 @@ export class PayComponent implements OnInit {
           currency:this.business.currency_code,
           status:'complete',
           pos_session_id:0,
-          branch_id:this.business['branches'][0]['id'],
+          branch_id: parseInt(localStorage.getItem('active_branch')),
           customer_id:0,
           payment_method:payment_method,
           order:this.currently_ordered?this.currently_ordered:null,

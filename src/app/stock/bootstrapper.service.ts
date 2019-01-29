@@ -36,15 +36,17 @@ export class Bootstrapper {
      * Bootstrap application with data returned from server.
      */
     public bootstrap() {
-        this.user.userChanged.subscribe(res => {
-            if (res['business'][0]) {
+      //  this.user.userChanged.subscribe(res => {
+
+            if (localStorage.getItem('active_branch')) {
+              const active_branch =parseInt(localStorage.getItem('active_branch'));
                 this.modelStockService.update({ loading: true });
-                this.stockHandleData(res['business'][0]['branches'][0]['id'], 'available');
-                this.stockHandleData(res['business'][0]['branches'][0]['id'], 'stockout');
-                this.stockHandleData(res['business'][0]['branches'][0]['id'], 'damaged');
+                this.stockHandleData(active_branch, 'available');
+                this.stockHandleData(active_branch, 'stockout');
+                this.stockHandleData(active_branch, 'damaged');
             }
 
-        });
+        //});
 
     }
 

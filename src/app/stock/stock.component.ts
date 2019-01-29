@@ -6,6 +6,7 @@ import { MasterState } from "../state/master-state";
 import { StockModelService } from "./stock-model.service";
 import { DetailsService } from "../details/details.service";
 import { Details } from "../details/details";
+import { Bootstrapper } from './bootstrapper.service';
 
 @Component({
   selector: "app-stock",
@@ -33,9 +34,13 @@ export class StockComponent implements OnInit {
   details$: Observable<Details>;
 
 
-  constructor(private detailsService: DetailsService, private modelService: StockModelService) {
+  constructor(private bootstrapper: Bootstrapper,private detailsService: DetailsService, private modelService: StockModelService) {
+   this.init_stock();
   }
 
+      init_stock() {
+      return this.bootstrapper.bootstrap();
+    }
   ngOnInit() {
     this.stocks$ = this.modelService.stocks$;
     this.subscription = this.details$ = this.detailsService.details$;

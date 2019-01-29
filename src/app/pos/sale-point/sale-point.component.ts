@@ -15,7 +15,8 @@ import { OrderModelService } from '../../orders/order-model.service';
 import { Orders } from '../../orders/orders';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
-import { CustomerTypePrices } from '../../setup/customerType/api/CustomerTypePrices';
+import { Bootstrapper } from '../../stock/bootstrapper.service';
+import { BootstrapperPos } from '../bootstrapper.service';
 
 @Component({
   selector: 'app-sale-point',
@@ -34,7 +35,16 @@ export class SalePointComponent implements OnInit {
   order$: Observable<Orders[]>;
   order_items$: Observable<OrderItems[]>;
   business: Business;
-  constructor(private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) { }
+  constructor(private bootstrapper_pos: BootstrapperPos,private bootstrapper_stock: Bootstrapper,private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) {
+    this.init_stock();
+    this.init_pos();
+   }
+   init_stock() {
+    return this.bootstrapper_stock.bootstrap();
+    }
+    init_pos() {
+      return this.bootstrapper_pos.bootstrap();
+      }
   category_selected: Category;
   is_categry_clicked = false;
   customer_type_id=13;
@@ -175,7 +185,7 @@ if(stocks.length > 0){
         if (this.current_order) {
           this.updateCartItemModel(cart_data);
         } else {
-          this.createNewOrder({ status: 'ordered', branch_id: this.currentUser.get('business')[0]['branches'][0]['id'], user_id: this.currentUser.get('id'), business_id: this.currentUser.get('business')[0].id, cart_data: cart_data });
+          this.createNewOrder({ status: 'ordered', branch_id: parseInt(localStorage.getItem('active_branch')), user_id: this.currentUser.get('id'), business_id: this.currentUser.get('business')[0].id, cart_data: cart_data });
         }
       }
 
@@ -213,7 +223,6 @@ if(stocks.length > 0){
       res => {
         if (res['order']) {
           this.posModelService.update({ currently_ordered: res['order'] });
-          console.log(res['order']['order_items'][0]);
           this.orderItemModelService.update(res['order']['order_items'][0]);
           // this.updateOrderItemApi(res['order']['order_items']);
         }

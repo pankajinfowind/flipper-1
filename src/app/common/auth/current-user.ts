@@ -65,7 +65,8 @@ export class CurrentUser {
     if (model) {
       this.current = model;
     }
-
+    const active_branch=model.branches.find(branch=>branch.active==1);
+    localStorage.setItem('active_branch',active_branch.id.toString());
     this.userChanged.emit(this.current);
   }
 

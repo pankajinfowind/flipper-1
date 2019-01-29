@@ -339,13 +339,13 @@ calculateSaleExcludingTax(event){
       this.firstFormGroup.value.cost_price_excluding_tax = this.secondFormGroup.value.cost_price_excluding_tax;
       this.firstFormGroup.value.cost_price_including_tax = this.secondFormGroup.value.cost_price_including_tax;
       this.formCustomerPriceType();
-
+      const active_branch = parseInt(localStorage.getItem('active_branch'));
       const data = {
         item: this.firstFormGroup.value,
         pricing: this.uniqueArray(this.secondFormGroup.value.price_setting),
         stock: this.thirdFormGroup.value,
         branchs: this.branchs.value,
-        main_branch: this.currentUser.get('business')[0]['branches'][0]['id']
+        main_branch: active_branch
       }
       this.loading.next(true);
       return this.create(data);
@@ -372,8 +372,7 @@ calculateSaleExcludingTax(event){
           this.toast.open('Item added Successfully!');
           this.thirdFormGroup.reset();
           this.loadingFormGroup();
-          this.msterModelService.update({ loading: false, items: res['item']['original']["items"]["data"] ? res['item']['original']["items"]["data"] : [] });
-          this.modelStockService.update({ loading: false, available: res['stock']['original']["stocks"]['data'] ? res['stock']['original']["stocks"]['data'] : [] });
+          this.msterModelService.update({ loading: false, items: res["items"]["data"] ? res["items"]["data"] : [] });
         }
       },
       _error => {

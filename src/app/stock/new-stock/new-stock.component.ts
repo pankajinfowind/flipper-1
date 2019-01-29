@@ -55,7 +55,7 @@ export class NewStockComponent implements OnInit {
     const row = new FormGroup({
       //TODO:
       id:  new FormControl(d && d.id ? d.id : null,[Validators.required]),
-      branch_id:  new FormControl(this.currentUser.get('business')[0]['branches'][0]['id'],[Validators.required]),
+      branch_id:  new FormControl(parseInt(localStorage.getItem('active_branch')),[Validators.required]),
       sku:  new FormControl(d && d.sku ? d.sku : null,[Validators.required]),
       item: new FormControl(d && d.item ? d.item : null,[Validators.required]),
       qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern), Validators.min(1)]),
@@ -75,7 +75,7 @@ export class NewStockComponent implements OnInit {
 
   items(){
       this.loading.next(true);
-      this.api.getNewStockItem(this.currentUser.get('business')[0]['branches'][0]['id']).pipe(finalize(() =>this.loading.next(false))).subscribe(
+      this.api.getNewStockItem(parseInt(localStorage.getItem('active_branch'))).pipe(finalize(() =>this.loading.next(false))).subscribe(
         res => {
           this.data = res['items'];
           this.data.forEach((d: Item) => this.addRow(d, false));

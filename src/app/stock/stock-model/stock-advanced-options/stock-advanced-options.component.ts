@@ -18,6 +18,9 @@ import { SetUpModelService } from '../../../setup/setup-model.service';
 import { Reason } from '../../../setup/reasons/api/reason';
 import { StockModelService } from '../../stock-model.service';
 import { filter } from 'bluebird';
+import { DetailsService } from '../../../details/details.service';
+import { Details } from '../../../details/details';
+import { Item } from '../../../admin/master/items/api/item';
 
 @Component({
   selector: 'app-stock-advanced-options',
@@ -43,13 +46,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
   newStockForm: FormGroup;
   dataSource_new_stock = new MatTableDataSource < Branch > ([]);
 
-  @Input()
-  set entry(data: any) {
-    this._data = data;
-  }
-  get entry(): any {
-    return this._data;
-  }
+
   @Input()
   set canAddNew(data: any) {
     this._canAddNew = data;
@@ -57,13 +54,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
   get canAddNew(): any {
     return this._canAddNew;
   }
-  @Input()
-  set item_id(data: any) {
-    this._item_id = data;
-  }
-  get item_id(): any {
-    return this._item_id;
-  }
+
 
   displayedColumns: string[] = [
     "location",
@@ -91,8 +82,11 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
   ];
   master$: Observable < Master > ;
   setup$: Observable<SetUp>;
+  subscription: Observable<Details>;
+  details$: Observable<Details>;
   dataSource = new MatTableDataSource < any > ([]);
   public loading = new BehaviorSubject(false);
+  item:Item=null;
   reasons: Reason[] = [];
   min_stock_value_valid_value = 0;
 
@@ -110,20 +104,20 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
     this.step--;
   }
 
-  constructor(private setupModelService: SetUpModelService,protected settings: Settings,public currentUser: CurrentUser, private _fb: FormBuilder, private toast: Toast, private api: ApiStockService, private msterModelService: MasterModelService) {}
+  constructor(private detailsService: DetailsService,private setupModelService: SetUpModelService,protected settings: Settings,public currentUser: CurrentUser, private _fb: FormBuilder, private toast: Toast, private api: ApiStockService, private msterModelService: MasterModelService) {}
   rows: FormArray = this._fb.array([]);
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
     this.setup$ = this.setupModelService.setup$;
+    this.subscription = this.details$ = this.detailsService.details$;
     this.getBranches();
     this.getReasons();
     this.loadingFormGroup(null);
-    this.getNewStockBranch(this.entry);
-    this.loadNewStockFormGroup();
+    this.loadItemModelDetails();
   }
   ngOnChanges(changes: SimpleChanges) {
-    this.entry = changes.entry.currentValue;
-    this.dataSource.data = this.entry;
+    // this.entry = changes.entry.currentValue;
+    // this.dataSource.data = this.entry;
 
 
   }
@@ -144,9 +138,8 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
         res => {
           if (res.status == 'success') {
             this.toast.open('Stock Deleted Successfully!');
-              const el=this.dataSource.data.find(b=>b.id===element.id);
-              const index= this.dataSource.data.indexOf(el);
-              this.dataSource.data.slice(index,1);
+            this.updateItemModelService(res["items"]["data"]);
+            this.loadItemModelDetails();
 
           }
         },
@@ -156,31 +149,47 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
       );
     }
   }
+  loadItemModelDetails(){
+    this.details$.subscribe(res => {
+      if(res.sender_data){
+        this.item=res.sender_data;
+        this.dataSource.data = res.sender_data.stocks;
+        this.getNewStockAccordingToBranch(res.sender_data.stocks);
+        this.loadNewStockFormGroup();
+      }
+    });
+  }
 
+  getNewStockAccordingToBranch(data){
+    const arr:Branch[]=[];
 
-  getNewStockBranch(entry) {
-    const arr = [];
-    if (entry && entry.length === 0) {
-      this.master$.subscribe(res => {
-        if (res.branchs && res.branchs.length > 0) {
-          res.branchs.forEach(branch => {
-            if (branch) {
-              this.addRow(branch, false);
-              arr.push(branch);
-            }
+    if(data.length == 0){
+          this.master$.subscribe(res => {
+                if (res.branchs.length > 0) {
+                      res.branchs.forEach(branch => {
+                        if(!this.dataSource.data.find(b=>b.branch_id==branch.branch_id)){
+                          if(!arr.find(b=>b.branch_id==branch.branch_id)){
+                            this.addRow(branch, false);
+                            arr.push(branch);
+                          }
+                        }
+                  });
+                }
           });
-        }
-      });
 
-    } else {
-      for (var i = 0; i < entry.length; i++) {
-
+    }else{
+      for (var i = 0; i <  data.length; i++) {
         this.master$.subscribe(res => {
-          if (res && res.branchs.length > 0) {
+          if (res.branchs.length > 0) {
             res.branchs.forEach(branch => {
-              if (branch && branch.branch_id !== entry[i].branch.id) {
-                this.addRow(branch, false);
-                arr.push(branch);
+              if (branch && branch.branch_id !==  data[i].branch_id) {
+                if(!this.dataSource.data.find(b=>b.branch_id==branch.branch_id)){
+                  if(!arr.find(b=>b.branch_id==branch.branch_id)){
+                    this.addRow(branch, false);
+                    arr.push(branch);
+                  }
+
+                }
               }
             });
 
@@ -189,9 +198,11 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
 
       }
     }
+
     this.dataSource_new_stock = new MatTableDataSource < Branch > (arr);
 
   }
+
   applyFilter(filterValue: string) {
     this.dataSource_new_stock.filter = filterValue.trim().toLowerCase();
   }
@@ -203,7 +214,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
   addRow(d ? : Branch, noUpdate ? : boolean) {
     const numberPatern = '^[0-9.,]+$';
     const row = new FormGroup({
-      item_id:new FormControl(this.item_id && this.item_id ? this.item_id : 0),
+      item_id:new FormControl(this.item && this.item.id ? this.item.id : 0),
       branch_id: new FormControl(d && d.branch_id ? d.branch_id : null, [Validators.required]),
       name: new FormControl(d && d.name ? d.name : null, [Validators.required]),
       qty: new FormControl(1, [Validators.required, Validators.pattern(numberPatern)]),
@@ -235,6 +246,15 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
       branch_id: new FormControl(data ? data.branch_id : 0)
 
     });
+  }
+
+  uniqueObjectInArray(arr){
+    let obj = {};
+    arr = Object.keys(arr.reduce((prev, next) => {
+      if (!obj[next.branch_id]) obj[next.branch_id] = next;
+      return obj;
+    }, obj)).map((i) => obj[i]);
+    return arr;
   }
   updateMinValue(event) {
 
@@ -287,12 +307,8 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
           if (res.status == 'success') {
 
             this.toast.open('Stock updated Successfully!');
-            const el=this.dataSource.data.find(c=>c.id==stock.id);
-            el.min_stock=this.stockFormGroup.value.min_stock;
-            el.max_stock=this.stockFormGroup.value.max_stock;
-            el.unit_of_sale=this.stockFormGroup.value.unit_of_sale;
-            el.show_alert=this.stockFormGroup.value.show_alert
-            el.branch.name=this.branchList.find(b=>b.branch_id==this.stockFormGroup.value.branch_id).name;
+            this.updateItemModelService(res["items"]["data"]);
+            this.loadItemModelDetails();
           }
         },
         _error => {
@@ -319,18 +335,13 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
           form_data.push(form_item);
         }
     });
-    this.api.create({data:form_data}).pipe(finalize(() =>  this.loading.next(false))).subscribe(
+    const data= this.uniqueObjectInArray(form_data);
+    this.api.create({data:data}).pipe(finalize(() =>  this.loading.next(false))).subscribe(
       res => {
       if(res.status=='success'){
-        this.msterModelService.update({
-          loading: false,
-          items: res["items"]["data"].length > 0 ? res["items"]["data"] : []
-        });
-        if(res["items"]["data"].length > 0){
-          this.dataSource.data=[];
-          this.dataSource.data=res["items"]["data"].filter(item=>item.id===this.item_id)[0]['stocks'];
-        }
-        this.removeSelectedRows(form_data);
+          this.updateItemModelService(res["items"]["data"]);
+          this.loadItemModelDetails();
+
           this.toast.open('Stock created successfully!');
         }
       },
@@ -342,26 +353,11 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
     this.toast.open('Invalid some field(s) data');
   }
   }
+  updateItemModelService(data){
+    const item =data.find(item=>item.id==this.item.id);
+    this.msterModelService.update({ loading: false, items: data ? data : [] });
 
-  removeSelectedRows(form_data) {
-    const data=this.dataSource_new_stock.data ;
-// data.forEach(i=>{
-//   form_data.forEach(e => {
-//     if (i === e) {
-//       data.shift(); ;
-//    });
-// });
-
-    this.dataSource_new_stock.data = data;
-
-  }
-  removeElementInCollection(array_data,element){
-    for (var i = 0; i < array_data.length; i++) {
-      if (array_data[i] === element) {
-        array_data.splice(i, 1);
-      }
-  }
-  return array_data;
+    this.detailsService.update({title:'Edit a Product',sender_data:item,module:'app-master',component:'app-items',action:'edit',detailsVisible:true});
   }
 }
 

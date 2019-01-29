@@ -13,12 +13,12 @@ import { API_ROUTES_REASON } from './reasons/api/api-routes.enum';
 import { CustomerType } from './customerType/api/CustomerType';
 import { API_ROUTES_CUSTOMER_TYPE } from './customerType/api/api-routes.enum';
 
-export function init_app(bootstrapper: Bootstrapper) {
+export function init_app(bootstrapper: BootstrapperSetUp) {
   return () => bootstrapper.bootstrap();
 }
 
 @Injectable()
-export class Bootstrapper {
+export class BootstrapperSetUp {
   protected taxrate: ApiTaxRateService;
   protected modelSetUpService: SetUpModelService;
   protected http: HttpClient;
@@ -39,13 +39,13 @@ export class Bootstrapper {
    * Bootstrap application with data returned from server.
    */
   public bootstrap() {
-    this.user.userChanged.subscribe(res => {
-      if (res["business"][0]) {
+    //this.user.userChanged.subscribe(res => {
+      if (localStorage.getItem('active_branch')) {
         this.taxRates();
         this.reasons();
         this.customerTypes();
       }
-    });
+   // });
   }
 
 

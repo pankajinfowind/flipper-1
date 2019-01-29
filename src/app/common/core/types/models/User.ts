@@ -2,6 +2,7 @@ import { Social } from './Social';
 import { SocialProfile } from './SocialProfile';
 import { Role } from './Role';
 import { Business } from '../../../../business/api/business';
+import { Branch } from '../../../../admin/master/branch/api/branch';
 
 export class Plan {
     id: number;
@@ -77,6 +78,7 @@ export class User {
     confirmed: true;
     roles?: Role[]=[];
     business?: Business[]=[];
+    branches?: Branch[]=[];
     has_business_belongs?: boolean;
     social_profiles?: SocialProfile[];
     has_password?: boolean;

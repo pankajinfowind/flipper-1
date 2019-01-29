@@ -20,6 +20,7 @@ import { Toast } from "../../../common/core/ui/toast.service";
 import { MasterModelService } from '../master-model.service';
 import { Master } from '../master';
 import { Router } from '@angular/router';
+import { BootstrapperMaster } from '../bootstrapper.service';
 
 @Component({
   selector: "remove-dialog",
@@ -70,7 +71,9 @@ export class RemoveItemDialog {
 export class ItemsComponent implements OnInit {
   public loading = new BehaviorSubject(false);
   add_item: boolean;
-  constructor(private router: Router,private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {}
+  constructor(private bootstrapper_master:BootstrapperMaster,private router: Router,private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {
+    this.init_master();
+  }
   data: Item[] = [];
   displayedColumns: string[] = [
     'select',
@@ -85,6 +88,7 @@ export class ItemsComponent implements OnInit {
     'manufacturer',
     'summary'
   ];
+
   dataSource = new MatTableDataSource<Item>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -107,6 +111,10 @@ export class ItemsComponent implements OnInit {
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
+  init_master() {
+    return this.bootstrapper_master.bootstrap();
+    }
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

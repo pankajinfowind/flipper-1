@@ -13,7 +13,7 @@ import { CurrentUser } from '../common/auth/current-user';
 import { HttpErrorHandler } from '../common/core/http/errors/http-error-handler.service';
 import { BackendHttpErrorHandler } from '../common/core/http/errors/backend-http-error-handler.service';
 import { ravenErrorHandlerFactory } from '../common/core/errors/raven-error-handler';
-import { Bootstrapper, init_app } from './bootstrapper.service';
+import { BootstrapperSetUp, init_app } from './bootstrapper.service';
 import { SetUpModelService } from './setup-model.service';
 import { ApiTaxRateService } from './tax-rates/api/api.service';
 import { NoEntryFoundSetUpComponent } from './messages/no-entry-found/no-entry-found.component';
@@ -49,7 +49,7 @@ export class SetupModule {
         ngModule: SetupModule,
         providers: [
             CurrentUser,
-            Bootstrapper,
+            BootstrapperSetUp,
             {
                 provide: HttpErrorHandler,
                 useClass: BackendHttpErrorHandler,
@@ -57,7 +57,7 @@ export class SetupModule {
             {
                 provide: APP_INITIALIZER,
                 useFactory: init_app,
-                deps: [Bootstrapper,CurrentUser],
+                deps: [BootstrapperSetUp,CurrentUser],
                 multi: true,
             },
             {

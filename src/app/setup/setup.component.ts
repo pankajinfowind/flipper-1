@@ -5,6 +5,7 @@ import { Details } from '../details/details';
 import { SetUpModelService } from './setup-model.service';
 import { SetUp } from './setup';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BootstrapperSetUp } from './bootstrapper.service';
 
 @Component({
   selector: 'app-setup',
@@ -44,9 +45,12 @@ leftColumnIsHidden=false;
 subscription: Observable<Details>;
 details$: Observable<Details>;
 setup$: Observable<SetUp>;
-constructor(private router: Router,private msterModelService:SetUpModelService,private detailsService:DetailsService) {
- }
-
+constructor(private bootstrapper_setup:BootstrapperSetUp,private router: Router,private msterModelService:SetUpModelService,private detailsService:DetailsService) {
+  this.init_setup();
+}
+ init_setup() {
+  return this.bootstrapper_setup.bootstrap();
+  }
   ngOnInit() {
     this.redirectLink();
     this.getMenuHighlighted();

@@ -20,12 +20,12 @@ import { API_ROUTES_BRAND } from './brands/api/api-routes.enum';
 import { API_ROUTES_BRANCH } from './branch/api/api-routes.enum';
 import { Branch } from './branch/api/branch';
 
-export function init_app(bootstrapper: Bootstrapper) {
+export function init_app(bootstrapper: BootstrapperMaster) {
   return () => bootstrapper.bootstrap();
 }
 
 @Injectable()
-export class Bootstrapper {
+export class BootstrapperMaster {
   protected apiItem: ApiItemService;
   protected apiCategories: ApiCategoryService;
   protected apiInsurances: ApiInsuranceService;
@@ -50,15 +50,15 @@ export class Bootstrapper {
    * Bootstrap application with data returned from server.
    */
   public bootstrap() {
-    this.user.userChanged.subscribe(res => {
-      if (res["business"][0]) {
+    //this.user.userChanged.subscribe(res => {
+      if (localStorage.getItem('active_branch')) {
         this.categories();
         this.items();
         this.brands();
         this.insurances();
         this.branchies();
       }
-    });
+   // });
   }
 
   /**

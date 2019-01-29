@@ -54,7 +54,6 @@ export class StockTableComponent implements OnInit {
 
       if(this.status === 'available'){
         this.data=res['available'];
-        console.log(this.data);
         this.dataSource.data=res['available'];
 
       }else if(this.status === 'stockout'){

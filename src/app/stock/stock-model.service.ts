@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Stock } from './api/stock';
 import { Model, ModelFactory } from 'ngx-model';
+import { StockModel } from './stock-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockModelService {
 
-  stocks$: Observable<Stock[]>;
-  private model: Model<Stock[]>;
-  constructor(private modelFactory: ModelFactory<Stock[]>) {
-    this.create([]);
+  stocks$: Observable<StockModel>;
+  private model: Model<StockModel>;
+  constructor(private modelFactory: ModelFactory<StockModel>) {
+    this.create();
     this.stocks$ = this.model.data$;
   }
-  public create(stateCreation: Stock[]) {
+  public create(stateCreation: StockModel={loading:false,available:[],stockout:[],lowerstock:[]}) {
     this.model = this.modelFactory.create(stateCreation);
   }
 

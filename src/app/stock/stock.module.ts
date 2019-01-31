@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewStockComponent } from './new-stock/new-stock.component';
 import { AvailabeStockComponent } from './availabe-stock/availabe-stock.component';
 import { StockSoldOutComponent } from './stock-sold-out/stock-sold-out.component';
-import { StockDamagedComponent } from './stock-damaged/stock-damaged.component';
 import { StocksComponent } from './stocks/stocks.component';
 import { StockRoutingModule } from './stock-routing.module';
 import { UiModule } from '../common/core/ui/ui.module';
@@ -23,12 +22,13 @@ import { DetailsModule } from '../details/details.module';
 import { CurrentUser } from '../common/auth/current-user';
 import { ReportsModule } from '../reports/reports.module';
 import { ReportManagerComponent } from './report-manager/report-manager.component';
+import { StockLowerComponent } from './stock-lower/stock-lower.component';
 
 
 
 @NgModule({
   declarations:
-   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockDamagedComponent, StockTableComponent,NoEntryFoundStockComponent, ReportManagerComponent],
+   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockLowerComponent, StockTableComponent,NoEntryFoundStockComponent, ReportManagerComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -41,7 +41,7 @@ import { ReportManagerComponent } from './report-manager/report-manager.componen
     ReportsModule
   ],
   exports:
-  [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,NoEntryFoundStockComponent]
+  [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockLowerComponent,NoEntryFoundStockComponent]
 })
 export class StockModule {
       static forRoot(): ModuleWithProviders {

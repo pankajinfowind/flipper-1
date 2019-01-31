@@ -29,7 +29,7 @@ export class StockDatailsTableComponent implements OnInit, OnChanges {
   selection = new SelectionModel<any>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ["quantity", "transction_date", "reason","comments"];
+  displayedColumns: string[] = ["batch_no","quantity", "transction_date", "manufacture_date","expired_date","reason","comments"];
 
   private _data: any;
 

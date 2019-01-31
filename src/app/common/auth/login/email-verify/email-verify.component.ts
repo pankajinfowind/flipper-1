@@ -58,8 +58,14 @@ export class EmailVerifyComponent {
       this.auth.verifyUserEmail(data).subscribe(
         res => {
       if(res == 422 || res == '422'){
-        this.v.errorMsg="Please,Your account does n't exist. ";
+        this.v.errorMsg="We can't find a user with that e-mail address. ";
+
       }
+      if(res == 403 || res == '403'){
+        this.v.errorMsg="Flipper token unauthorized.(Contact to Flipper Team) ";
+
+      }
+      //console.log(res);
           this.v.loading = false;
           if (res["data"]) {
             this.v.response = {
@@ -72,6 +78,7 @@ export class EmailVerifyComponent {
           }
         },
         _error => {
+         // console.log(_error);
           this.v.loading = false;
           this.v.errorMsg = _error.messages.email;
         }

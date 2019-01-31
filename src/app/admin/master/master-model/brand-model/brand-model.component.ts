@@ -40,7 +40,8 @@ export class BrandModelComponent implements OnInit {
         this.brand_id=res.sender_data?res.sender_data.brand_id:0;
 
         this.brandForm = new FormGroup({
-          name: new FormControl(res.sender_data?res.sender_data.name:"", [Validators.required])
+          name: new FormControl(res.sender_data?res.sender_data.name:"", [Validators.required]),
+          description:new FormControl('---'),
         });
   });
   }
@@ -52,10 +53,13 @@ export class BrandModelComponent implements OnInit {
   get name() {
     return this.brandForm.get("name");
   }
+  get description() {
+    return this.brandForm.get("description");
+  }
   saveBrand(){
     if (this.brandForm.valid) {
       this.loading.next(true)
-      const data = { name: this.brandForm.value.name};
+      const data = { name: this.brandForm.value.name,description:this.brandForm.value.description};
       return  this.need_to_add_new?this.create(data):this.update(data,this.brand_id);
     }
   }

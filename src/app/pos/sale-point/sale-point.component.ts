@@ -17,6 +17,7 @@ import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
 import { Bootstrapper } from '../../stock/bootstrapper.service';
 import { BootstrapperPos } from '../bootstrapper.service';
+import { StockModel } from '../../stock/stock-model';
 
 @Component({
   selector: 'app-sale-point',
@@ -27,7 +28,7 @@ export class SalePointComponent implements OnInit {
   master$: Observable<Master>;
   categories: Category[] = [];
   currently_stocks: Stock[] = [];
-  stocks$: Observable<Stock[]>;
+  stocks$: Observable<StockModel>;
   pos$: Observable<Pos>;
   is_order_currently = false;
   current_order = null; //TODO: why this has no type?
@@ -64,8 +65,7 @@ export class SalePointComponent implements OnInit {
     if (!this.stocks$) return;
     this.stocks$.subscribe(res => {
       if (res) {
-        ;
-        this.categories = this.getRows(this.updateSalesPrices(res['available']));
+        this.categories = this.getRows(this.updateSalesPrices(res.available));
       }
     });
   }
@@ -91,7 +91,6 @@ if(stocks.length > 0){
     }
 
   });
-  console.log(updated);
   return updated;
 }else{
 
@@ -247,8 +246,8 @@ if(stocks.length > 0){
     this.is_categry_clicked = true;
     if (this.is_categry_clicked) {
       this.stocks$.subscribe(res => {
-        if (res['available']) {
-          this.currently_stocks = this.updateSalesPrices(res['available']).filter(stock => stock['category']['id'] === this.category_selected.id);
+        if (res.available) {
+          this.currently_stocks = this.updateSalesPrices(res.available).filter(stock => stock['category']['id'] === this.category_selected.id);
         }
 
       });

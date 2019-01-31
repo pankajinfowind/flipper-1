@@ -1,7 +1,7 @@
 <ng-container *ngIf="info as entry; else nothingSelected">
-        <button  mat-button class="col-4" color="accent" (click)="openDetails('Add to Existing','add',entry,'app-update-stock-model')"><mat-icon>add</mat-icon>Add </button>
-        <button  mat-button class="col-4" color="warn"   (click)="openDetails('Remove to Existing','remove',entry,'app-update-stock-model')"><mat-icon>remove</mat-icon> Remove</button>
-        <button  mat-button class="col-4" color="primary"   (click)="openAdvancedStockDialog()"><mat-icon>setting</mat-icon>Advanced</button>
+        <button  mat-button class="col-6" color="accent" (click)="stockAdjustment('add')"><mat-icon>add</mat-icon>Add in stock</button>
+        <button  mat-button class="col-6" *ngIf="entry.available_stock_qty!==0" color="warn"   (click)="stockAdjustment('remove')"><mat-icon>remove</mat-icon> Remove in stock</button>
+        <!-- <button  mat-button class="col-4" color="primary"   (click)="openAdvancedStockDialog()"><mat-icon>setting</mat-icon>Advanced</button> -->
     <mat-tab-group>
 
    <mat-tab label="Details">

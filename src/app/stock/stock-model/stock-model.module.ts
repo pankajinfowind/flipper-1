@@ -18,7 +18,7 @@ import { StockAdvancedOptionsComponent } from './stock-advanced-options/stock-ad
     ReactiveFormsModule
   ],
   exports:[UpdateStockModelComponent, StockModelComponent,StockAdvancedOptionsComponent,AdvancedOptionDialog],
-  entryComponents:[AdvancedOptionDialog],
+  entryComponents:[AdvancedOptionDialog,UpdateStockModelComponent],
   providers: [
     {
       provide: MAT_STEPPER_GLOBAL_OPTIONS,

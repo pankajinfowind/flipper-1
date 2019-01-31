@@ -19,8 +19,8 @@ export class StockComponent implements OnInit {
   links: any[] = [
     // { path: "new", label: "Create New Stock" },
     { path: "available", label: "Current Stock" },
-    { path: "stockout", label: "Out of Stock Items" }
-    // { path: "damaged", label: "Damaged Items" },
+    { path: "stockout", label: "Out of Stock" },
+    { path: "lowerstock", label: "Lower Stock" },
     // { path: "report", label: "Report" }
   ];
 

@@ -41,9 +41,7 @@ export class Bootstrapper {
             if (localStorage.getItem('active_branch')) {
               const active_branch =parseInt(localStorage.getItem('active_branch'));
                 this.modelStockService.update({ loading: true });
-                this.stockHandleData(active_branch, 'available');
-                this.stockHandleData(active_branch, 'stockout');
-                this.stockHandleData(active_branch, 'damaged');
+                this.stockHandleData(active_branch);
             }
 
         //});
@@ -54,29 +52,27 @@ export class Bootstrapper {
     /**
      * Handle specified bootstrap data.
      */
-    protected stockHandleData(branch_id, status): Promise<Stock[]> {
+    protected stockHandleData(branch_id): Promise<Stock[]> {
         let url;
         if (this.settings.getBaseUrl() != "http://localhost:4200/") {
-            url = AppConfig.url + "secure/" + API_ROUTES.BRANCH_STOCK + '/' + branch_id + '/' + status;
+            url = AppConfig.url + "secure/" + API_ROUTES.BRANCH_STOCK + '/' + branch_id ;
         } else {
-            url = this.settings.getBaseUrl() + "secure/" + API_ROUTES.BRANCH_STOCK + '/' + branch_id + '/' + status;
+            url = this.settings.getBaseUrl() + "secure/" + API_ROUTES.BRANCH_STOCK + '/' + branch_id;
         }
         return new Promise((resolve, reject) => {
             this.http.get(url)
                 .pipe(finalize(() => this.modelStockService.update({ loading: false })))
                 .subscribe(
                     res => {
-                        if (status == 'available') {
-                                this.modelStockService.update({ loading: false, available: res["stocks"]['data'].length > 0 ?res["stocks"]['data']:[] });
-
-                        } else if (status == 'stockout') {
-                                this.modelStockService.update({ loading: false, stockout: res["stocks"]['data'].length > 0 ?res["stocks"]['data']:[] });
-
-                        } else if (status == 'damaged') {
-                                this.modelStockService.update({ loading: false, damaged: res["stocks"]['data'].length > 0 ?res["stocks"]['data']:[] });
-
-
-                        }
+                  let available=[];
+                  let lowerstock=[];
+                  let stockout=[];
+                    if(res["stocks"]['data'].length > 0){
+                      available=res["stocks"]['data'].filter(stock=>stock.status==='available');
+                      lowerstock=res["stocks"]['data'].filter(stock=>stock.status==='lowerstock');
+                      stockout =res["stocks"]['data'].filter(stock=>stock.status==='stockout');
+                    }
+                    this.modelStockService.update({ loading: false, available: available,lowerstock:lowerstock,stockout:stockout });
                         resolve();
                     },
                     error => {

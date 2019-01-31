@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-stock-damaged',
-  templateUrl: './stock-damaged.component.html',
-  styleUrls: ['./stock-damaged.component.scss']
+  selector: 'app-stock-lower',
+  templateUrl: './stock-lower.component.html',
+  styleUrls: ['./stock-lower.component.scss']
 })
-export class StockDamagedComponent implements OnInit {
+export class StockLowerComponent implements OnInit {
 
   public loading = new BehaviorSubject(false);
 

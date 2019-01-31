@@ -4,9 +4,9 @@ import { AuthGuard } from '../common/guards/auth-guard.service';
 import { AvailabeStockComponent } from './availabe-stock/availabe-stock.component';
 import { NewStockComponent } from './new-stock/new-stock.component';
 import { StockSoldOutComponent } from './stock-sold-out/stock-sold-out.component';
-import { StockDamagedComponent } from './stock-damaged/stock-damaged.component';
 import { StockComponent } from './stock.component';
 import {ReportManagerComponent} from "./report-manager/report-manager.component";
+import { StockLowerComponent } from './stock-lower/stock-lower.component';
 
 const stockRoutes: Routes = [
     {
@@ -22,7 +22,7 @@ const stockRoutes: Routes = [
             { path: 'available', component: AvailabeStockComponent},
             { path: 'new', component: NewStockComponent},
             { path: 'stockout', component: StockSoldOutComponent},
-            { path: 'damaged', component: StockDamagedComponent},
+            { path: 'lowerstock', component: StockLowerComponent},
             { path: 'report', component: ReportManagerComponent}
         ]
 

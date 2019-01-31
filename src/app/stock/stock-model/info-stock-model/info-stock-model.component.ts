@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { DetailsService } from '../../../details/details.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Stock } from '../../api/stock';
+import { UpdateStockModelComponent } from '../update-stock-model/update-stock-model.component';
 @Component({
   selector: "advanced-option-dialog",
   templateUrl: './advanced-option.component.html',
@@ -62,5 +63,12 @@ const convert_to_array=[];
     width: '900px',
     data: this.info?{data:convert_to_array,item_id:this.info.item.id}:null
   });
+  }
+
+  stockAdjustment(action){
+    this.dialog.open(UpdateStockModelComponent, {
+      width: '450px',
+      data: action?action:null
+    });
   }
 }

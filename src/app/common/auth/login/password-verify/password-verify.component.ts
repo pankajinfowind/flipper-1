@@ -17,6 +17,7 @@ import { Toast } from "../../../core/ui/toast.service";
 import { GlobalVariables } from "../../global-variables";
 import { YLocalStorage } from "../../../classes/local-storage";
 import { ApiService } from "../../../../api/api.service";
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: "app-password-verify",
@@ -38,7 +39,7 @@ export class PasswordVerifyComponent implements OnInit {
   valueChange = new EventEmitter<any>();
   form: FormGroup;
   password_hide = true;
-
+  ipcRenderer: any;
   constructor(
     private toast: Toast,
     public socialAuth: SocialAuthService,
@@ -51,10 +52,20 @@ export class PasswordVerifyComponent implements OnInit {
     public dialog: MatDialog,
     private api: ApiService,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private _electronService: ElectronService
   ) {
     this.v.loading = false;
-    this.v.webTitle("Sign in - eNexus Accounts");
+    if (this.isElectron()) {
+      this.ipcRenderer = this._electronService.ipcRenderer;
+      this.ipcRenderer.send("version-ping", "ping");
+      this.ipcRenderer.on("version-pong", (event, version) => {
+        this.v.webTitle("Sign in - eNexus Accounts" + "v" + version);
+      });
+    } else {
+      this.v.webTitle("Sign in - eNexus Accounts");
+    }
+
   }
 
   ngOnInit() {
@@ -86,6 +97,15 @@ export class PasswordVerifyComponent implements OnInit {
 
     this.auth.login(this.v.model).subscribe(
       response => {
+
+        if(response == 422 || response == '422'){
+          this.v.errorMsg="These credentials do not match our records. ";
+
+        }
+        if(response == 403 || response == '403'){
+          this.v.errorMsg="Flipper token unauthorized.(Contact to Flipper Team) ";
+
+        }
         this.bootstrapper.bootstrap(response.data);
         this.router.navigate([""]).then(navigated => {
           this.v.loading = false;
@@ -95,9 +115,19 @@ export class PasswordVerifyComponent implements OnInit {
         });
       },
       error => {
+        this.v.errorMsg="These credentials do not match our records. ";
+       // console.log(error)
         this.v.errors = error["messages"];
         this.v.loading = false;
       }
     );
+  }
+  isElectron = () => {
+    return window && window.process && window.process.type;
+  };
+  public openForgetPassword() {
+    if (this.isElectron()) {
+      this._electronService.shell.openExternal("https://yegobox.com/login");
+    }
   }
 }

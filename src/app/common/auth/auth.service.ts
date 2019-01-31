@@ -46,7 +46,7 @@ export class AuthService {
   /**
    * Log user in with specified credentials.
    */
-  public login(credentials: Object): Observable<{ data: string }> {
+  public login(credentials: Object): Observable<any> {
     this.httpClient.prefix = "secure";
     return this.httpClient.post("auth/login", credentials);
   }

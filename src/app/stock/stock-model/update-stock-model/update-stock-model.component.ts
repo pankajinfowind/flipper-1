@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Details } from '../../../details/details';
 import { DetailsService } from '../../../details/details.service';
@@ -11,6 +11,7 @@ import { MasterModelService } from '../../../admin/master/master-model.service';
 import { SetUp } from '../../../setup/setup';
 import { SetUpModelService } from '../../../setup/setup-model.service';
 import { Reason } from '../../../setup/reasons/api/reason';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-update-stock-model',
@@ -25,35 +26,14 @@ export class UpdateStockModelComponent implements OnInit {
   stock:Stock;
   setup$: Observable<SetUp>;
   reasons: Reason[] = [];
-  add_options:any[]=[{
-            value:'Stock-new',
-            valueView:'New Stock',
-            checked:true
-          },{
-          value:'Usable-Return',
-          valueView:'Usable Return',
-          checked:false
-        },
-        {
-          value:'Unusable-Return',
-          valueView:'Unusable Return',
-          checked:false
-        }];
-
-        remove_options:any[]=[{
-          value:'Customer-Sale',
-          valueView:'Customer Sale',
-          checked:true
-        },{
-          value:'Stock-Damaged',
-          valueView:'Stock Damaged',
-          checked:false
-        }];
   public loading = new BehaviorSubject(false);
-  action:any;
-  constructor(private setupModelService: SetUpModelService,private msterModelService:MasterModelService,private modelStockService: StockModelService,private detailsService:DetailsService,private api:ApiStockService) {
+  // action:any;
+  constructor(private setupModelService: SetUpModelService,private msterModelService:MasterModelService,private modelStockService: StockModelService,private detailsService:DetailsService,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
+    @Inject(MAT_DIALOG_DATA) public action: any) {
    }
-
+   close(): void {
+    this.dialogRef.close({status:'none'});
+  }
 
     ngOnInit() {
       this.subscription = this.details$ = this.detailsService.details$;
@@ -63,13 +43,16 @@ export class UpdateStockModelComponent implements OnInit {
         if(res){
         const numberPatern = '^[0-9.,]+$';
         this.stock=res.sender_data;
-        this.getReasons(res.sender_data && res.action?res.action:'add');
+        this.getReasons(this.action);
         this.stockForm = new FormGroup({
-            qty:res.sender_data && res.action==='add'?new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])):
+            qty:this.action && this.action==='add'?new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])):
             new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1),Validators.max(res.sender_data.available_stock_qty)])),
             transction_date: new FormControl(new Date(), [Validators.required]),
+            expired_date: new FormControl(),
+            manufacture_date: new FormControl(),
+            batch_no:new FormControl('',[Validators.required]),
             comments:new FormControl('no comments'),
-            action: new FormControl(res.sender_data && res.action),
+            action: new FormControl(this.action),
             in_stock_qty: new FormControl(0),
             total_qty: new FormControl(0),
             stock_id: new FormControl(res.sender_data && res.sender_data.stock_id),
@@ -94,7 +77,15 @@ export class UpdateStockModelComponent implements OnInit {
   get transction_date() {
     return this.stockForm.get("transction_date");
   }
-
+  get expired_date() {
+    return this.stockForm.get("expired_date");
+  }
+  get manufacture_date() {
+    return this.stockForm.get("manufacture_date");
+  }
+  get batch_no() {
+    return this.stockForm.get("batch_no");
+  }
   get comments() {
     return this.stockForm.get("comments");
   }
@@ -103,6 +94,7 @@ export class UpdateStockModelComponent implements OnInit {
   }
 
   updateStock(){
+
     if (this.stockForm.valid) {
       this.loading.next(true);
       this.stockForm.value.in_stock_qty=this.stockForm.value.action=='add'?this.stock.in_stock_qty+parseInt(this.stockForm.value.qty):this.stock.in_stock_qty-parseInt(this.stockForm.value.qty);
@@ -111,7 +103,16 @@ export class UpdateStockModelComponent implements OnInit {
       .subscribe(
             res => {
             if(res.status=='success'){
-             this.modelStockService.update({loading:false, available:res["available"]["data"]?res["available"]["data"]:[],stockout:res["stockout"]["data"]?res["stockout"]["data"]:[]});
+              let available=[];
+              let lowerstock=[];
+              let stockout=[];
+                if(res["stocks"]['data'].length > 0){
+                  available=res["stocks"]['data'].filter(stock=>stock.status==='available');
+                  lowerstock=res["stocks"]['data'].filter(stock=>stock.status==='lowerstock');
+                  stockout =res["stocks"]['data'].filter(stock=>stock.status==='stockout');
+                }
+                this.modelStockService.update({ loading: false, available: available,lowerstock:lowerstock,stockout:stockout });
+
             this.close();
               }
             },
@@ -124,7 +125,9 @@ export class UpdateStockModelComponent implements OnInit {
   calculateTQty(action){
     return action=='add'?this.stock.available_stock_qty+parseInt(this.qty.value):this.stock.available_stock_qty-parseInt(this.qty.value);
   }
-  close(){
-    this.detailsService.update({title:null,receriver_data:null,sender_data:null,module:null,component:null,action:null,detailsVisible:false});
-  }
+  // close(){
+  //   this.detailsService.update({title:null,receriver_data:null,sender_data:null,module:null,component:null,action:null,detailsVisible:false});
+  // }
+
 }
+

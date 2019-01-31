@@ -128,7 +128,7 @@
                               <input class="text-secondary" matInput placeholder="Minimum stock value" (input)="updateMinValue($event)"
                                 formControlName="min_stock" required>
                               <mat-error *ngIf="min_stock.invalid && (min_stock.dirty || min_stock.touched)">
-                                <strong *ngIf="min_stock.errors.max">Should be less than maximum stock value.</strong>
+                                <!-- <strong *ngIf="min_stock.errors.max">Should be less than maximum stock value.</strong> -->
                               </mat-error>
 
                             </mat-form-field>

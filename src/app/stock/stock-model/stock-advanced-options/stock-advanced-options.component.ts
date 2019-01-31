@@ -238,7 +238,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
     const numberPatern = '^[0-9.,]+$';
     this.min_stock_value_valid_value = data ? data.max_stock : 0;
     this.stockFormGroup = new FormGroup({
-      min_stock: new FormControl(data ? data.min_stock : 0.00, [Validators.required, Validators.pattern(numberPatern), Validators.max(this.min_stock_value_valid_value)]),
+      min_stock: new FormControl(data ? data.min_stock : 0.00, [Validators.required, Validators.pattern(numberPatern)]),
       max_stock: new FormControl(data ? data.max_stock : 0.00, [Validators.required, Validators.pattern(numberPatern)]),
       on_order: new FormControl(data ? data.on_order : 0.00, [Validators.required, Validators.pattern(numberPatern)]),
       show_alert: new FormControl(data ? data.show_alert : false),

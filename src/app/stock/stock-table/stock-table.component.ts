@@ -7,6 +7,7 @@ import { StockModelService } from '../stock-model.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DetailsService } from '../../details/details.service';
 import { Details } from '../../details/details';
+import { StockModel } from '../stock-model';
 
 @Component({
   selector: 'app-stock-table',
@@ -40,7 +41,7 @@ export class StockTableComponent implements OnInit {
   accent='accent';
   primary='primary';
   mode = 'determinate';
-  stocks$: Observable<Stock[]>;
+  stocks$: Observable<StockModel>;
   data:Stock[]=[];
   subscription: Observable<Details>;
   details$: Observable<Details>;
@@ -53,15 +54,15 @@ export class StockTableComponent implements OnInit {
     this.stocks$.subscribe(res=>{
 
       if(this.status === 'available'){
-        this.data=res['available'];
-        this.dataSource.data=res['available'];
+        this.data=res.available;
+        this.dataSource.data=res.available;
 
       }else if(this.status === 'stockout'){
-        this.data=res['stockout'];
-        this.dataSource.data=this.data;
-      }else if(this.status === 'damaged'){
-        this.data=res['damaged'];
-        this.dataSource.data=this.data;
+        this.data=res.stockout;
+        this.dataSource.data=res.stockout
+      }else if(this.status === 'lowerstock'){
+        this.data=res.lowerstock;
+        this.dataSource.data=res.lowerstock;
       }
     });
 

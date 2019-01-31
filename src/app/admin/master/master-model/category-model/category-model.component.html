@@ -2,10 +2,11 @@
    <!-- Items ---------------------------------- -->
 
     <form [formGroup]="cateogryForm" (ngSubmit)="saveCategory()">
-      <mat-card-content>
+      <mat-card-content class="row">
         <p>
-          <mat-form-field class="ybx-mat mat-full-wdth">
-              <input class="text-secondary" matInput placeholder="Category name" formControlName="name" required>
+            <mat-form-field  appearance="outline" class="col-12">
+                <mat-label>Enter category name</mat-label>
+              <input matInput placeholder="Category name" formControlName="name" required>
 
               <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
                     <mat-error *ngIf="name.errors.name && !name.errors.required">
@@ -17,7 +18,9 @@
               </mat-error>
 
           </mat-form-field>
-          <mat-form-field class="ybx-mat mat-full-wdth">
+
+          <mat-form-field  appearance="outline" class="col-12">
+              <mat-label>Choose Color</mat-label>
             <mat-select placeholder="Choose Color" formControlName="color" required>
               <mat-option>None</mat-option>
               <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">{{color.valueName}}</mat-option>

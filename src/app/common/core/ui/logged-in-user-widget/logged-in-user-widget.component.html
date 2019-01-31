@@ -15,14 +15,14 @@
     </div>
 
     <mat-menu #menu="matMenu" [overlapTrigger]="false" class="logged-in-user-widget-menu">
-        <a class="admin-link" mat-menu-item routerLink="/admin" *ngIf="currentUser.hasPermission('admin.access')">
+        <!-- <a class="admin-link" mat-menu-item routerLink="/admin" *ngIf="currentUser.hasPermission('admin.access')">
             <mat-icon class="mat-icon" svgIcon="dashboard"></mat-icon>
             <span trans>Admin Area</span>
-        </a>
+        </a> -->
 
         <ng-content></ng-content>
 
-        <a class="account-settings-link" mat-menu-item routerLink="/">
+        <a class="account-settings-link" mat-menu-item (click)="openAccountSettings()">
             <mat-icon class="mat-icon" svgIcon="settings"></mat-icon>
             <span trans>Account Settings</span>
         </a>

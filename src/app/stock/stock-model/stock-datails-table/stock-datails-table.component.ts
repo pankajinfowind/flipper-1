@@ -68,7 +68,10 @@ export class StockDatailsTableComponent implements OnInit, OnChanges {
       "There are no " + t.trim().toLowerCase() + " in your stock currently."
     );
   }
-  applyFilter(filterValue: string) {
+  applyFilterOutStock(filterValue: string) {
+    this.dataSource_out.filter = filterValue.trim().toLowerCase();
+  }
+  applyFilterInStock(filterValue: string) {
     this.dataSource_in.filter = filterValue.trim().toLowerCase();
   }
 

@@ -1,47 +1,57 @@
 <div class="details-panel" *ngIf="data && data.length> 0">
     <mat-tab-group class="row">
         <mat-tab label="In"  class="col-12">
+
+            <mat-form-field class="col-12 m-3">
+                <input
+                  matInput
+                  (keyup)="applyFilterInStock($event.target.value)"
+                  placeholder="Search everything..."
+                />
+              </mat-form-field>
+
             <div class="section-container">
-            <table mat-table [dataSource]="dataSource_in" >
+
+            <table mat-table [dataSource]="dataSource_in">
 
                 <ng-container matColumnDef="batch_no">
                   <th mat-header-cell *matHeaderCellDef >Batch No
                   </th>
-                  <td mat-cell *matCellDef="let element" >
-                      <span class="text">{{element.batch_no?element.batch_no:''}}</span> </td>
+                  <td mat-cell *matCellDef="let element">
+                      <span class="text">{{element.batch_no?element.batch_no:'---'}}</span> </td>
               </ng-container>
 
                 <ng-container matColumnDef="quantity">
-                    <th mat-header-cell *matHeaderCellDef >Qty
+                    <th mat-header-cell *matHeaderCellDef>&nbsp;In . Qty&nbsp;
                     </th>
                     <td mat-cell *matCellDef="let element" >
-                        <span class="text">{{element.quantity}}</span> </td>
+                        <span class="text">&nbsp;{{element.in_qty?element.in_qty:element.quantity}}&nbsp;</span> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="transction_date">
                     <th mat-header-cell *matHeaderCellDef >Trans . Date
                     </th>
-                    <td mat-cell *matCellDef="let element" >
-                        <span class="text">{{element.transction_date}}</span> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="text">{{element.transction_date | date: 'mediumDate'}}</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="manufacture_date">
                   <th mat-header-cell *matHeaderCellDef >Manf. Date
                   </th>
                   <td mat-cell *matCellDef="let element" >
-                      <span class="text">{{element.manufacture_date?element.manufacture_date:''}}</span> </td>
+                      <span class="text">{{element.manufacture_date | date: 'mediumDate'}}</span> </td>
               </ng-container>
 
               <ng-container matColumnDef="expired_date">
                 <th mat-header-cell *matHeaderCellDef >Exp. Date
                 </th>
                 <td mat-cell *matCellDef="let element" >
-                    <span class="text">{{element.expired_date?element.expired_date:''}}</span> </td>
+                    <span class="text">{{element.expired_date | date: 'mediumDate'}}</span> </td>
             </ng-container>
 
                 <ng-container matColumnDef="reason">
                     <th mat-header-cell *matHeaderCellDef >Reason
                     </th>
-                    <td mat-cell *matCellDef="let element" >
+                    <td mat-cell *matCellDef="let element">
                         <span class="text">{{element.reason?element.reason.name:''}}</span>
                     </td>
                 </ng-container>
@@ -49,7 +59,7 @@
                 <ng-container matColumnDef="comments">
                     <th mat-header-cell *matHeaderCellDef >comments
                     </th>
-                    <td mat-cell *matCellDef="let element" >
+                    <td mat-cell *matCellDef="let element">
                         <span class="text">{{element.comments}}</span> </td>
                 </ng-container>
 
@@ -61,55 +71,63 @@
             </div>
         </mat-tab>
         <mat-tab label="Out"  class="col-12">
+            <mat-form-field class="col-12 m-3">
+                <input
+                  matInput
+                  (keyup)="applyFilterOutStock($event.target.value)"
+                  placeholder="Search everything..."
+                />
+              </mat-form-field>
             <div class="section-container">
-            <table mat-table [dataSource]="dataSource_out" >
+
+            <table mat-table [dataSource]="dataSource_out">
 
                 <ng-container matColumnDef="batch_no">
                   <th mat-header-cell *matHeaderCellDef >Batch No
                   </th>
-                  <td mat-cell *matCellDef="let element" >
-                      <span class="text">{{element.batch_no?element.batch_no:''}}</span> </td>
+                  <td mat-cell *matCellDef="let element">
+                      <span class="text">{{element.batch_no?element.batch_no:'---'}}</span> </td>
               </ng-container>
 
                 <ng-container matColumnDef="quantity">
-                    <th mat-header-cell *matHeaderCellDef >Qty
+                    <th mat-header-cell *matHeaderCellDef>&nbsp;Out . Qty&nbsp;
                     </th>
-                    <td mat-cell *matCellDef="let element" >
-                        <span class="text">{{element.quantity}}</span> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="text">&nbsp;{{element.out_qty?element.out_qty:element.quantity}}&nbsp;</span> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="transction_date">
                   <th mat-header-cell *matHeaderCellDef >Trans . Date
                   </th>
-                  <td mat-cell *matCellDef="let element" >
-                      <span class="text">{{element.transction_date}}</span> </td>
+                  <td mat-cell *matCellDef="let element">
+                      <span class="text">{{element.transction_date | date: 'mediumDate'}}</span> </td>
               </ng-container>
               <ng-container matColumnDef="manufacture_date">
                 <th mat-header-cell *matHeaderCellDef >Manf. Date
                 </th>
-                <td mat-cell *matCellDef="let element" >
-                    <span class="text">{{element.manufacture_date?element.manufacture_date:''}}</span> </td>
+                <td mat-cell *matCellDef="let element">
+                    <span class="text">{{element.manufacture_date | date: 'mediumDate'}}</span> </td>
             </ng-container>
 
             <ng-container matColumnDef="expired_date">
               <th mat-header-cell *matHeaderCellDef >Exp. Date
               </th>
-              <td mat-cell *matCellDef="let element" >
-                  <span class="text">{{element.expired_date?element.expired_date:''}}</span> </td>
+              <td mat-cell *matCellDef="let element">
+                  <span class="text">{{element.expired_date | date: 'mediumDate'}}</span> </td>
           </ng-container>
 
                 <ng-container matColumnDef="reason">
                     <th mat-header-cell *matHeaderCellDef >Reason
                     </th>
-                    <td mat-cell *matCellDef="let element" >
+                    <td mat-cell *matCellDef="let element">
                         <span class="text">{{element.reason?element.reason.name:''}}</span>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="comments">
-                    <th mat-header-cell *matHeaderCellDef >comments
+                    <th mat-header-cell *matHeaderCellDef>comments
                     </th>
-                    <td mat-cell *matCellDef="let element" >
+                    <td mat-cell *matCellDef="let element">
                         <span class="text">{{element.comments}}</span> </td>
                 </ng-container>
 

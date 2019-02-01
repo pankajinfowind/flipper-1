@@ -24,7 +24,7 @@
           <mat-form-field appearance="outline" class="col-12">
             <mat-label>Batch No</mat-label>
 
-            <input  type="text" matInput placeholder="Batch No" formControlName="batch_no"
+            <input  type="text" matInput placeholder="Batch No" (click)="empty()" (focusout)="checkEmpty()" formControlName="batch_no"
               required>
             <mat-error *ngIf="batch_no.invalid && (batch_no.dirty || batch_no.touched)">
 

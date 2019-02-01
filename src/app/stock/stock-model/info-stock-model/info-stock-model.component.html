@@ -1,6 +1,6 @@
 <ng-container *ngIf="info as entry; else nothingSelected">
-        <button  mat-button class="col-6" color="accent" (click)="stockAdjustment('add')"><mat-icon>add</mat-icon>Add in stock</button>
-        <button  mat-button class="col-6" *ngIf="entry.available_stock_qty!==0" color="warn"   (click)="stockAdjustment('remove')"><mat-icon>remove</mat-icon> Remove in stock</button>
+        <button  mat-button class="col-6" color="accent" (click)="stockAdjustment('add')"><mat-icon>add</mat-icon>Add stock</button>
+        <button  mat-button class="col-6" *ngIf="entry.available_stock_qty!==0" color="warn"   (click)="stockAdjustment('remove')"><mat-icon>remove</mat-icon> Remove stock</button>
         <!-- <button  mat-button class="col-4" color="primary"   (click)="openAdvancedStockDialog()"><mat-icon>setting</mat-icon>Advanced</button> -->
     <mat-tab-group>
 

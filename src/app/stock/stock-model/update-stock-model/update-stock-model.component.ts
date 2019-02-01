@@ -50,7 +50,7 @@ export class UpdateStockModelComponent implements OnInit {
             transction_date: new FormControl(new Date(), [Validators.required]),
             expired_date: new FormControl(),
             manufacture_date: new FormControl(),
-            batch_no:new FormControl('',[Validators.required]),
+            batch_no:new FormControl(this.stock.item.sku,[Validators.required]),
             comments:new FormControl('no comments'),
             action: new FormControl(this.action),
             in_stock_qty: new FormControl(0),
@@ -67,6 +67,16 @@ export class UpdateStockModelComponent implements OnInit {
           this.reasons = res.reasons.filter(res=>res.reason_type=='stock_movements' && res.stock_movements_status==action);
         }
       });
+
+    }
+    empty(){
+      this.stockForm.get('batch_no').setValue('');
+    }
+    checkEmpty(){
+      console.log('here');
+      if(this.stockForm.value.batch_no =='' || null){
+        this.stockForm.get('batch_no').setValue(this.stock.item.sku);
+      }
 
     }
 

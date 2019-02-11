@@ -12,6 +12,8 @@ import { Reason } from './reasons/api/reason';
 import { API_ROUTES_REASON } from './reasons/api/api-routes.enum';
 import { CustomerType } from './customerType/api/CustomerType';
 import { API_ROUTES_CUSTOMER_TYPE } from './customerType/api/api-routes.enum';
+import { ExpirationSetting } from './expiration_setting/api/expiration_setting';
+import { API_ROUTES_EXPIRATIONSETTING } from './expiration_setting/api/api-routes.enum';
 
 export function init_app(bootstrapper: BootstrapperSetUp) {
   return () => bootstrapper.bootstrap();
@@ -44,6 +46,7 @@ export class BootstrapperSetUp {
         this.taxRates();
         this.reasons();
         this.customerTypes();
+        this.expirationSettings();
       }
    // });
   }
@@ -69,6 +72,40 @@ export class BootstrapperSetUp {
               loading: false,
               customertypes: res["customertypes"]["data"].length > 0
                 ? res["customertypes"]["data"]
+                : []
+            });
+
+            resolve();
+          },
+          error => {
+            this.modelSetUpService.update({ loading: false });
+            console.log("bootstrap error", error);
+            reject();
+          }
+        );
+    });
+  }
+
+  protected expirationSettings(): Promise<ExpirationSetting[]> {
+    let url;
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+      url = AppConfig.url + "secure/" + API_ROUTES_EXPIRATIONSETTING.EXPIRATIONSETTING;
+    } else {
+      url = this.settings.getBaseUrl() + "secure/" + API_ROUTES_EXPIRATIONSETTING.EXPIRATIONSETTING;
+    }
+    this.modelSetUpService.update({ loading: true });
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(url)
+        .pipe(
+          finalize(() => this.modelSetUpService.update({ loading: false }))
+        )
+        .subscribe(
+          res => {
+            this.modelSetUpService.update({
+              loading: false,
+              expirationSetting: res["expiration_setting"]["data"].length > 0
+                ? res["expiration_setting"]["data"]
                 : []
             });
 

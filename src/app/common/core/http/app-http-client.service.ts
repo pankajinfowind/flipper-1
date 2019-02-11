@@ -3,7 +3,8 @@ import {
   HttpClient,
   HttpEvent,
   HttpParams,
-  HttpRequest
+  HttpRequest,
+  HttpHeaders
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { HttpErrorHandler } from "./errors/http-error-handler.service";
@@ -16,7 +17,7 @@ import { AppConfig } from "../../../../environments/environment";
 })
 export class AppHttpClient {
   public prefix = "secure";
-
+  headers = new HttpHeaders({'Accept':'application/json'});
   /**
    * AppHttpClient Constructor.
    */
@@ -40,7 +41,7 @@ export class AppHttpClient {
   public post<T>(uri: string, params: object = null): Observable<T> | any {
     params['_token']=this.settings.csrfToken;
     return this.httpClient
-      .post<T>(this.prefixUri(uri), params)
+      .post<T>(this.prefixUri(uri), params,{headers:this.headers})
       .pipe(catchError(err => this.errorHandler.handle(err, uri)));
   }
 
@@ -48,7 +49,7 @@ export class AppHttpClient {
     params['_token']=this.settings.csrfToken;
     params = this.spoofHttpMethod(params, "PUT");
     return this.httpClient
-      .post<T>(this.prefixUri(uri), params)
+      .post<T>(this.prefixUri(uri), params,{headers:this.headers})
       .pipe(catchError(err => this.errorHandler.handle(err, uri)));
   }
 

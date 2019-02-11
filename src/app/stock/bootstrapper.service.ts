@@ -9,6 +9,8 @@ import { Settings } from "../common/core/config/settings.service";
 import { AppConfig } from "../../environments/environment";
 import { CurrentUser } from '../common/auth/current-user';
 import { Stock } from './api/stock';
+import { StockExpired } from './expired-stock/api/expired-stock';
+import { API_ROUTES_EXPITEDITEM } from './expired-stock/api/api-routes.enum';
 
 export function init_app(bootstrapper: Bootstrapper) {
     return () => bootstrapper.bootstrap();
@@ -42,16 +44,17 @@ export class Bootstrapper {
               const active_branch =parseInt(localStorage.getItem('active_branch'));
                 this.modelStockService.update({ loading: true });
                 this.stockHandleData(active_branch);
+                this.stockExpired(active_branch);
             }
 
         //});
 
     }
 
-
     /**
      * Handle specified bootstrap data.
      */
+
     protected stockHandleData(branch_id): Promise<Stock[]> {
         let url;
         if (this.settings.getBaseUrl() != "http://localhost:4200/") {
@@ -73,6 +76,30 @@ export class Bootstrapper {
                       stockout =res["stocks"]['data'].filter(stock=>stock.status==='stockout');
                     }
                     this.modelStockService.update({ loading: false, available: available,lowerstock:lowerstock,stockout:stockout });
+                        resolve();
+                    },
+                    error => {
+                        this.modelStockService.update({ loading: false });
+                        console.log("bootstrap error", error);
+                        reject();
+                    }
+                );
+        });
+    }
+
+      protected stockExpired(branch_id): Promise<StockExpired[]> {
+        let url;
+        if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+            url = AppConfig.url + "secure/" + API_ROUTES_EXPITEDITEM.EXPITEDITEM_ALL + '/' + branch_id ;
+        } else {
+            url = this.settings.getBaseUrl() + "secure/" + API_ROUTES_EXPITEDITEM.EXPITEDITEM_ALL + '/' + branch_id;
+        }
+        return new Promise((resolve, reject) => {
+            this.http.get(url)
+                .pipe(finalize(() => this.modelStockService.update({ loading: false})))
+                .subscribe(
+                    res => {
+                      this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
                         resolve();
                     },
                     error => {

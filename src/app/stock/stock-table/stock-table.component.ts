@@ -20,7 +20,6 @@ export class StockTableComponent implements OnInit {
   cart: EventEmitter<Stock> = new EventEmitter();
   constructor(private detailsService:DetailsService,private modelService:StockModelService,private router: Router) {}
   displayedColumns: string[] = [
-    'select',
     "sku",
     "barcode",
     "stock",

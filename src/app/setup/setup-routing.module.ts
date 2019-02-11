@@ -5,6 +5,7 @@ import { AuthGuard } from '../common/guards/auth-guard.service';
 import { SetupComponent } from './setup.component';
 import { ReasonComponent } from './reasons/reason.component';
 import { CustomerTypeComponent } from './customerType/customertype.component';
+import { ExpirationSettingComponent } from './expiration_setting/expiration_setting.component';
 
 const setupRoutes: Routes = [
     {
@@ -20,6 +21,8 @@ const setupRoutes: Routes = [
             { path: 'customertype', component: CustomerTypeComponent },
             { path: 'tax-rate', component: TaxRatesComponent },
             { path: 'reasons/:reason', component: ReasonComponent},
+            { path: 'expiration_setting', component: ExpirationSettingComponent},
+
 
         ]
 

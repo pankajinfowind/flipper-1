@@ -7,7 +7,7 @@ import { CustomerTypePrices } from '../../setup/customerType/api/CustomerTypePri
 
 export class Stock {
   id?: number;
-  stock_transctions: [{ id: number, stock_id: number, quantity: number, unit_price?:any;currency?:string;type: string, transaction: string, comments: string, transction_date: string, branch_id: number, created_at: string, updated_at: string,reason_id?:number;reason?:Reason }];
+  stock_transctions: [{ id: number, stock_id: number, quantity: number,batch_no?:string, unit_price?:any;currency?:string;type: string, transaction: string, comments: string, transction_date: string, branch_id: number, created_at: string, updated_at: string,reason_id?:number;reason?:Reason }];
   customer_type_items?:CustomerTypePrices[]=[]
   created_at: string;
   updated_at: string;

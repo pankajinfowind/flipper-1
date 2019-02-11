@@ -23,12 +23,15 @@ import { CurrentUser } from '../common/auth/current-user';
 import { ReportsModule } from '../reports/reports.module';
 import { ReportManagerComponent } from './report-manager/report-manager.component';
 import { StockLowerComponent } from './stock-lower/stock-lower.component';
+import { ExpiredStockComponent } from './expired-stock/expired-stock.component';
+import { DiplayExpiredStockComponent } from './diplay-expired-stock/diplay-expired-stock.component';
+import { ApiExpiredItemService } from './expired-stock/api/api.service';
 
 
 
 @NgModule({
   declarations:
-   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockLowerComponent, StockTableComponent,NoEntryFoundStockComponent, ReportManagerComponent],
+   [StockComponent,StocksComponent,NewStockComponent, AvailabeStockComponent, StockSoldOutComponent,StockLowerComponent, StockTableComponent,NoEntryFoundStockComponent, ReportManagerComponent, ExpiredStockComponent, DiplayExpiredStockComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -63,7 +66,7 @@ export class StockModule {
                 {
                     provide: ErrorHandler,
                     useFactory: ravenErrorHandlerFactory,
-                    deps: [ApiStockService, StockModelService],
+                    deps: [ApiStockService, StockModelService,ApiExpiredItemService],
                 },
             ]
         };

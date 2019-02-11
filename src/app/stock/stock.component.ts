@@ -21,6 +21,7 @@ export class StockComponent implements OnInit {
     { path: "available", label: "Current Stock" },
     { path: "stockout", label: "Out of Stock" },
     { path: "lowerstock", label: "Lower Stock" },
+    { path: "expireditem", label: "Expired Stock" },
     // { path: "report", label: "Report" }
   ];
 

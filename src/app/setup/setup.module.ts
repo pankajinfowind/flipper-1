@@ -21,10 +21,12 @@ import { ReasonComponent } from './reasons/reason.component';
 import { ApiReasonService } from './reasons/api/api.service';
 import { CustomerTypeComponent, RemoveCustomertypeDialog } from './customerType/customertype.component';
 import { ApiCustomerTypeService } from './customerType/api/api.service';
+import { ExpirationSettingComponent } from './expiration_setting/expiration_setting.component';
+import { ApiExpirationSettingService } from './expiration_setting/api/api.service';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
-  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent,RemoveCustomertypeDialog],
+  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
   imports: [
     CommonModule,
     SetupRoutingModule,
@@ -39,7 +41,8 @@ import { ApiCustomerTypeService } from './customerType/api/api.service';
   providers: [
     ApiTaxRateService,
     ApiReasonService,
-    ApiCustomerTypeService
+    ApiCustomerTypeService,
+    ApiExpirationSettingService
   ],
   entryComponents: [RemoveCustomertypeDialog]
 })
@@ -68,6 +71,7 @@ export class SetupModule {
                   ApiTaxRateService,
                   ApiReasonService,
                   ApiCustomerTypeService,
+                  ApiExpirationSettingService,
                   CurrentUser],
             },
         ]

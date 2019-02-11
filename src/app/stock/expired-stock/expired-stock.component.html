@@ -1,0 +1,109 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div class="col-8">
+      <button mat-button>
+        <mat-icon class="">menu</mat-icon>Expired Stock
+      </button>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+    </div>
+
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="col-12 m-2">
+  <loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
+  <mat-tab-group class="w-100">
+    <mat-tab style="overflow: hidden;">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" (click)="viewAllExpired()">help_outline</mat-icon>
+        <span (click)="viewAllExpired()">All Expired</span>
+      </ng-template>
+      <div class="m-3">
+          <h5>All Expired Items</h5>
+          <hr />
+          <app-diplay-expired-stock></app-diplay-expired-stock>
+      </div>
+    </mat-tab>
+
+    <mat-tab style="overflow: hidden;">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" (click)="viewExpiredBySearch()">search</mat-icon>
+        <span (click)="viewExpiredBySearch()">By Search</span>
+      </ng-template>
+      <div class="m-3">
+      <form [formGroup]="searchForm" (ngSubmit)="viewExpiredBySearch()">
+        <mat-dialog-content style="overflow: hidden;">
+
+            <h5>Search By Expired Date</h5>
+            <hr />
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field appearance="outline" class="col-12">
+                  <mat-label>From</mat-label>
+
+                  <input matInput [matDatepicker]="from" placeholder="From" formControlName="from">
+                  <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                  <mat-datepicker #from></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field appearance="outline" class="col-12">
+                  <mat-label>To</mat-label>
+
+                  <input matInput [matDatepicker]="to" placeholder="to" formControlName="to">
+                  <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                  <mat-datepicker #to></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <button type="submit" mat-raised-button color='accent' [disabled]="(loading | async) || searchForm.invalid">
+                  Search
+                </button>
+              </div>
+            </div>
+
+        </mat-dialog-content>
+      </form>
+      <app-diplay-expired-stock></app-diplay-expired-stock>
+    </div>
+    </mat-tab>
+
+    <mat-tab style="overflow: hidden;">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" (click)="viewExpiredByPeriod()">schedule</mat-icon>
+        <span (click)="viewExpiredByPeriod()">By Period</span>
+      </ng-template>
+      <div class="m-3">
+          <h5>Expired Items By Period </h5>
+          <hr />
+      <mat-accordion>
+        <mat-expansion-panel class="mt-4" *ngFor="let element of expirationSetting" (opened)="panelOpenState = false"
+          (closed)="panelOpenState = false" [style.color]="'#ffff'" [style.background-color]="element.color?element.color:'#1da1f2'">
+          <mat-expansion-panel-header [style.color]="'#ffff'" (click)="viewExpiredByperiodical(element,triggerState=!triggerState)">
+            <mat-panel-title [style.color]="'#ffff'">
+              <span class="text" [style.color]="'#ffff'" [ngSwitch]="element.period">
+                <label *ngSwitchCase="'tomorrow'">Tomorrow</label>
+                <label *ngSwitchCase="'today'">Today</label>
+                <label *ngSwitchCase="'yestarday'">Yestarday</label>
+                <label *ngSwitchCase="'day'">{{element.period_value}} Day(s)</label>
+                <label *ngSwitchCase="'week'">{{element.period_value}} Week(s)</label>
+                <label *ngSwitchCase="'month'">{{element.period_value}} Month(s)</label>
+                <label *ngSwitchCase="'year'">{{element.period_value}} Year(s)</label>
+                <label *ngSwitchDefault>Now..</label>
+              </span>
+            </mat-panel-title>
+            <mat-panel-description class="float-left">
+              <span [style.color]="'#ffff'">{{element.description}}</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <app-diplay-expired-stock></app-diplay-expired-stock>
+
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

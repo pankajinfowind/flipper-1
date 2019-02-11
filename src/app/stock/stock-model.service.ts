@@ -15,7 +15,7 @@ export class StockModelService {
     this.create();
     this.stocks$ = this.model.data$;
   }
-  public create(stateCreation: StockModel={loading:false,available:[],stockout:[],lowerstock:[]}) {
+  public create(stateCreation: StockModel={loading:false,available:[],stockout:[],lowerstock:[],expiredStock:[]}) {
     this.model = this.modelFactory.create(stateCreation);
   }
 

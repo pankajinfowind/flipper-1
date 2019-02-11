@@ -7,6 +7,7 @@ import { StockSoldOutComponent } from './stock-sold-out/stock-sold-out.component
 import { StockComponent } from './stock.component';
 import {ReportManagerComponent} from "./report-manager/report-manager.component";
 import { StockLowerComponent } from './stock-lower/stock-lower.component';
+import { ExpiredStockComponent } from './expired-stock/expired-stock.component';
 
 const stockRoutes: Routes = [
     {
@@ -23,6 +24,7 @@ const stockRoutes: Routes = [
             { path: 'new', component: NewStockComponent},
             { path: 'stockout', component: StockSoldOutComponent},
             { path: 'lowerstock', component: StockLowerComponent},
+            { path: 'expireditem', component: ExpiredStockComponent},
             { path: 'report', component: ReportManagerComponent}
         ]
 

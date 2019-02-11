@@ -1,0 +1,79 @@
+<div class="col-12" *ngIf="dataSource.data && dataSource.data.length> 0">
+  <mat-form-field class="w-100 px-2">
+    <input
+      matInput
+      (keyup)="applyFilter($event.target.value)"
+      placeholder="Search"
+      />
+  </mat-form-field>
+  <div>
+    <table mat-table [dataSource]="dataSource.data" matSort class="w-100">
+
+      <ng-container matColumnDef="sku">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
+        <td mat-cell *matCellDef="let element"><span class="text">
+          {{element.item.sku}}
+        </span></td>
+      </ng-container>
+      <!-- Position Column -->
+      <ng-container matColumnDef="batch_no">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Batch No</th>
+        <td mat-cell *matCellDef="let element"><span class="text">{{element.batch_no}}</span></td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.item.item}} </td>
+      </ng-container>
+
+      <!--  Category Column -->
+      <ng-container matColumnDef="in_qty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>In Qty </th>
+        <td mat-cell *matCellDef="let element"><span class="text">{{element.in_qty}}</span>
+        </td>
+      </ng-container>
+      <!--  Qty Column -->
+      <ng-container matColumnDef="out_qty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Out Qty </th>
+        <td mat-cell *matCellDef="let element"><span class="text">
+            {{element.out_qty}}</span></td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="total_qty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Qty </th>
+        <td mat-cell *matCellDef="let element"><span class="text">{{element.total_qty}}</span></td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="expired_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Expired Date </th>
+          <td mat-cell *matCellDef="let element"><span class="text">{{element.expired_date}}</span></td>
+        </ng-container>
+
+      <ng-container matColumnDef="manufacture_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Manf. Date </th>
+          <td mat-cell *matCellDef="let element"><span class="text">{{element.manufacture_date}}</span></td>
+        </ng-container>
+
+
+      <thead>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      </thead>
+      <tbody style="overflow: auto;">
+        <tr [class.highlighted]="false" mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons></mat-paginator>
+
+</div>
+
+<stock-no-entry-found *ngIf="dataSource.data && dataSource.data.length == 0"
+  [message]="message('expired item(s)')" [subMessage]='subMessage("expired item(s)")'></stock-no-entry-found>

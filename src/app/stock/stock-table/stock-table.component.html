@@ -25,7 +25,7 @@
   <div class="section-container">
     <table mat-table [dataSource]="dataSource" matSort class="w-100">
       <!-- Checkbox Column -->
-      <ng-container matColumnDef="select">
+      <!-- <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggle() : null"
             [checked]="selection.hasValue() && isAllSelected()"
@@ -39,7 +39,7 @@
             [checked]="selection.isSelected(row)">
           </mat-checkbox>
         </td>
-      </ng-container>
+      </ng-container> -->
       <!-- Position Column -->
       <ng-container matColumnDef="sku">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU <mat-icon
@@ -121,8 +121,7 @@
       <tbody style="overflow: auto;">
         <tr [class.highlighted]="((details$ | async).sender_data?(details$ |
           async).sender_data.stock_id==row.stock_id:false)" mat-row
-          *matRowDef="let row; columns: displayedColumns;"
-          (click)="selection.toggle(row)">
+          *matRowDef="let row; columns: displayedColumns;">
         </tr>
       </tbody>
     </table>

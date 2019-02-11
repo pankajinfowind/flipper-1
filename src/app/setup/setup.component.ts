@@ -36,6 +36,12 @@ submenu:[
             {path:'reasons/discount',label:'Discount'},
             {path:'reasons/refund',label:'Refund'},
           ]
+      },
+      {
+        menu:'Stock',icon:'assessment',
+        submenu:[
+                {path:'expiration_setting',label:'Expiration Setting'}
+              ]
       }
 ];
 //customertype

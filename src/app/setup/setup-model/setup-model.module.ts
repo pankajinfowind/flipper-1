@@ -6,6 +6,7 @@ import { TaxRateModelComponent } from './tax-rate-model/tax-rate-model.component
 import { SetUpModelComponent } from './setup-model.component';
 import { ReasonModelComponent } from './reason-model/reason-model.component';
 import { CustomerTypeModelComponent } from './customertype-model/customertype-model.component';
+import { ExpirationSettingModelComponent } from './expiration-setting-model/expiration-setting-model.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CustomerTypeModelComponent } from './customertype-model/customertype-mo
   [TaxRateModelComponent,
     SetUpModelComponent,
     ReasonModelComponent,
-    CustomerTypeModelComponent
+    CustomerTypeModelComponent,
+    ExpirationSettingModelComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { CustomerTypeModelComponent } from './customertype-model/customertype-mo
     TaxRateModelComponent,
     SetUpModelComponent,
     ReasonModelComponent,
-    CustomerTypeModelComponent
+    CustomerTypeModelComponent,
+    ExpirationSettingModelComponent
   ]
 })
 export class SetUpModelModule {

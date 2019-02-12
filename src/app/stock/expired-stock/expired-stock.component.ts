@@ -7,6 +7,7 @@ import { ApiExpiredItemService } from './api/api.service';
 import { finalize } from 'rxjs/operators';
 import { StockModelService } from '../stock-model.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-expired-stock',
@@ -27,6 +28,9 @@ triggerState=false;
   ngOnInit() {
     this.setup$ = this.setupModelService.setup$;
     this.viewExpiredByPeriod();
+    this.loadingSearchForm();
+  }
+  loadingSearchForm(){
     this.searchForm = new FormGroup({
       from: new FormControl(new Date(), [Validators.required]),
       to:new FormControl(new Date(), [Validators.required])
@@ -71,23 +75,30 @@ triggerState=false;
   }
 
   viewExpiredBySearch(){
+    this.loading.next(true);
     if (this.searchForm.valid) {
-        this.loading.next(true);
+        console.log(this.searchForm.value);
     this.api.getBySearchExpiredItems(parseInt(localStorage.getItem('active_branch')),this.searchForm.value.from,this.searchForm.value.to).pipe(finalize(() =>this.loading.next(false))).subscribe(
       res => {
+        console.log(res);
           this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
+         // this.loadingSearchForm();
       },
       _error => {
       console.error(_error);
       }
     );
+    }else{
+      this.loading.next(false);
     }
   }
 
   viewExpiredByPeriod(){
     this.entries=[];
+    this.loading.next(true);
         this.setup$.subscribe(res=>{
           if(res.expirationSetting.length  > 0){
+            this.loading.next(false);
             this.expirationSetting=res.expirationSetting;
           }else{
             //this.canUserAddExpirationSettings();

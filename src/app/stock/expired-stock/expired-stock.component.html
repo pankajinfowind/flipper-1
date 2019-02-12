@@ -8,10 +8,9 @@
       <span class="spacer"></span>
     </div>
 
-
   </mat-toolbar-row>
 </mat-toolbar>
-<div class="col-12 m-2">
+<div class="col-12 m-1">
   <loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
   <mat-tab-group class="w-100">
     <mat-tab style="overflow: hidden;">
@@ -21,7 +20,8 @@
       </ng-template>
       <div class="m-3">
           <h5>All Expired Items</h5>
-          <hr />
+          <mat-divider></mat-divider>
+          <br />
           <app-diplay-expired-stock></app-diplay-expired-stock>
       </div>
     </mat-tab>
@@ -36,7 +36,8 @@
         <mat-dialog-content style="overflow: hidden;">
 
             <h5>Search By Expired Date</h5>
-            <hr />
+            <mat-divider></mat-divider>
+            <br />
             <div class="row">
               <div class="col-4">
                 <mat-form-field appearance="outline" class="col-12">
@@ -76,13 +77,14 @@
       </ng-template>
       <div class="m-3">
           <h5>Expired Items By Period </h5>
-          <hr />
+          <mat-divider></mat-divider>
+          <br />
       <mat-accordion>
         <mat-expansion-panel class="mt-4" *ngFor="let element of expirationSetting" (opened)="panelOpenState = false"
-          (closed)="panelOpenState = false" [style.color]="'#ffff'" [style.background-color]="element.color?element.color:'#1da1f2'">
-          <mat-expansion-panel-header [style.color]="'#ffff'" (click)="viewExpiredByperiodical(element,triggerState=!triggerState)">
-            <mat-panel-title [style.color]="'#ffff'">
-              <span class="text" [style.color]="'#ffff'" [ngSwitch]="element.period">
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header  (click)="viewExpiredByperiodical(element,triggerState=!triggerState)">
+            <mat-panel-title>
+              <span class="text" [ngSwitch]="element.period">
                 <label *ngSwitchCase="'tomorrow'">Tomorrow</label>
                 <label *ngSwitchCase="'today'">Today</label>
                 <label *ngSwitchCase="'yestarday'">Yestarday</label>
@@ -94,7 +96,7 @@
               </span>
             </mat-panel-title>
             <mat-panel-description class="float-left">
-              <span [style.color]="'#ffff'">{{element.description}}</span>
+              <span>{{element.description}}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
 

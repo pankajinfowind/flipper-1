@@ -33,7 +33,7 @@ export class OrderItemsModelService {
     let check_existing=false;
 
         modelSnapshot.forEach((el,index,object)=>{
-          if(el.stock_id===stateUpdates.stock_id && el.order_id===stateUpdates.order_id ){
+          if(el.batch_no===stateUpdates.batch_no && el.order_id === stateUpdates.order_id && el.stock_id === stateUpdates.stock_id){
             if(status=='add-qty'){
               el.qty+=1;
               if(el.qty > stateUpdates.available_qty){
@@ -48,7 +48,7 @@ export class OrderItemsModelService {
                 alert('Quantity must be greater than 0');
               }
             }else if(status=='discount'){
-              el.total_discount=this.calculateDiscount(stateUpdates);
+             // el.discount_value=this.calculateDiscount(stateUpdates);
             }else if(status=='note'){
               el.note=stateUpdates.note;
             }
@@ -59,10 +59,10 @@ export class OrderItemsModelService {
               el.qty=stateUpdates.qty;
             }
 
-              el.total=el.currency+ ' '+ (el.qty*el.price);
-              el.total_tax=this.calcalTax(el);
-              el.total_amount=(el.qty*el.price);
-              check_existing=true;
+              // el.total=el.currency+ ' '+ (el.qty*el.price);
+              // el.total_tax=this.calcalTax(el);
+              // el.total_amount=(el.qty*el.price);
+              // check_existing=true;
           }
         });
 
@@ -87,14 +87,14 @@ export class OrderItemsModelService {
 
     // Discounted price of two chocolate packs=$20-$2=$18
 
-    if(item.discount > 0){
-      const cost_of_one=item.price;
-      const total_cost_of_many=cost_of_one*item.qty;
-      const discount=(total_cost_of_many/100)*item.discount;
-      return total_cost_of_many-discount;
-    }else{
-      return 0;
-    }
+    // if(item.discount > 0){
+    //   const cost_of_one=item.price;
+    //   const total_cost_of_many=cost_of_one*item.qty;
+    //   const discount=(total_cost_of_many/100)*item.discount;
+    //   return total_cost_of_many-discount;
+    // }else{
+    //   return 0;
+    // }
   }
 calcalTax(item:OrderItems){
  return ((item.qty*item.price)*18)/100;

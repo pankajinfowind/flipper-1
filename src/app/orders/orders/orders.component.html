@@ -7,7 +7,7 @@
 
 <mat-dialog-content class="many-inputs">
   <mat-tab-group>
-    <mat-tab *ngIf="held_orders.length">
+    <mat-tab *ngIf="held_orders.length > 0">
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">pause</mat-icon>
         HELD
@@ -34,9 +34,7 @@
           (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title class="col-3">
-
-              <!-- user is consiered to be employee here -->
-              {{ordered.user.first_name}} {{ordered.user.last_name}}
+              {{ordered.employee.first_name}} {{ordered.employee.last_name}}
             </mat-panel-title>
             <mat-panel-title class="col-3">
               {{ordered.created_at | date:'fullDate'}}
@@ -51,7 +49,7 @@
             </mat-panel-title>
 
             <mat-panel-title class="col-2 text-center">
-              <b>Rwf {{total(ordered.order_items,'total_amount')}}</b>
+              <b>{{business.currency_code}}  {{total(ordered.order_items,'total_amount')}}</b>
             </mat-panel-title>
 
           </mat-expansion-panel-header>
@@ -74,7 +72,7 @@
                     <th>{{ord_items.item}}</th>
                     <th>{{ord_items.qty}}</th>
                     <th>{{ord_items.each}}</th>
-                    <th>{{ord_items.total}}</th>
+                    <th>{{business.currency_code}} {{ord_items.total_amount}}</th>
                   </tr>
                 </tbody>
               </table>
@@ -109,9 +107,10 @@
         </div>
         <mat-expansion-panel class="w-100" *ngFor="let ordered of ordered_orders" (opened)="panelOpenState = true"
           (closed)="panelOpenState = false">
+
           <mat-expansion-panel-header>
             <mat-panel-title class="col-3">
-              {{ordered.user.first_name}} {{ordered.user.last_name}}
+              {{ordered.employee.first_name}} {{ordered.employee.last_name}}
             </mat-panel-title>
             <mat-panel-title class="col-3">
               {{ordered.created_at | date:'fullDate'}}
@@ -126,14 +125,23 @@
             </mat-panel-title>
 
             <mat-panel-title class="col-2 text-center">
-              <b>Rwf {{total(ordered.order_items,'total_amount')}}</b>
+              <b>{{business.currency_code}}  {{total(ordered.order_items,'total_amount')}}</b>
             </mat-panel-title>
 
+
+
           </mat-expansion-panel-header>
+
+          <mat-chip-list>
+              <mat-chip *ngIf="ordered.is_currently_processing=='1'" color="'primary'">Current ordered</mat-chip>
+              <mat-chip *ngIf="ordered.is_currently_processing=='0'">Recent ordered</mat-chip>
+            </mat-chip-list>
+
+
           <div *ngIf="ordered.order_items.length > 0">
             <div class="w-100 float-right m-2">
-              <button mat-raised-button color="primary" (click)="updateOrdered(ordered)" class="m-1">RESUME</button>
-              <button mat-raised-button color="warn" (click)="deleteOrdered(ordered.id)" class="m-1 text-white">DELETE</button>
+              <button mat-raised-button color="primary" (click)="updateOrdered(ordered)" [disabled]="ordered.is_currently_processing=='1'" class="m-1">RESUME</button>
+              <button mat-raised-button color="warn" (click)="deleteOrdered(ordered)" [disabled]="ordered.is_currently_processing=='1'" class="m-1 text-white">DELETE</button>
             </div>
             <table class="w-100">
               <table class="table table-hover">
@@ -150,7 +158,7 @@
                     <th>{{ord_items.item}}</th>
                     <th>{{ord_items.qty}}</th>
                     <th>{{ord_items.each}}</th>
-                    <th>{{ord_items.total}}</th>
+                    <th>{{business.currency_code}} {{ord_items.total_amount}}</th>
                   </tr>
                 </tbody>
               </table>
@@ -162,13 +170,13 @@
 
     </mat-tab>
 
-    <mat-tab *ngIf="pending_orders.length">
+    <mat-tab *ngIf="pending_orders.length > 0">
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">access_time</mat-icon>
         PENDING
       </ng-template>
     </mat-tab>
-    <mat-tab *ngIf="complete_orders.length">
+    <mat-tab *ngIf="complete_orders.length > 0">
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">done</mat-icon>
         COMPLETE

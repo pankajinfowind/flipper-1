@@ -31,7 +31,8 @@ import {
   MatTooltipModule,
   MatNativeDateModule,
   MatTreeModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatBottomSheetModule
 } from "@angular/material";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
@@ -107,7 +108,8 @@ const MATERIAL_MODULES = [
   BidiModule,
   A11yModule,
   MatCommonModule,
-  ObserversModule
+  ObserversModule,
+  MatBottomSheetModule
 ];
 
 @NgModule({

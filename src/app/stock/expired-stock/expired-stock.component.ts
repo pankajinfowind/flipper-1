@@ -29,6 +29,7 @@ triggerState=false;
     this.setup$ = this.setupModelService.setup$;
     this.viewExpiredByPeriod();
     this.loadingSearchForm();
+   // this. viewAllExpired();
   }
   loadingSearchForm(){
     this.searchForm = new FormGroup({
@@ -77,12 +78,9 @@ triggerState=false;
   viewExpiredBySearch(){
     this.loading.next(true);
     if (this.searchForm.valid) {
-        console.log(this.searchForm.value);
     this.api.getBySearchExpiredItems(parseInt(localStorage.getItem('active_branch')),this.searchForm.value.from,this.searchForm.value.to).pipe(finalize(() =>this.loading.next(false))).subscribe(
       res => {
-        console.log(res);
           this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
-         // this.loadingSearchForm();
       },
       _error => {
       console.error(_error);

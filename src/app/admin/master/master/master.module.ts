@@ -46,7 +46,7 @@ import { ApiBranchService } from '../branch/api/api.service';
     RemoveBrandDialog,
     NoEntryFoundMasterComponent,
     RemoveBranchDialog
-  ],
+    ],
   declarations: [
     ItemsComponent,
     AddItemComponent,
@@ -62,7 +62,6 @@ import { ApiBranchService } from '../branch/api/api.service';
     RemoveBrandDialog,
     NoEntryFoundMasterComponent,
     RemoveBranchDialog
-
   ],
   providers: [
     ApiItemService,

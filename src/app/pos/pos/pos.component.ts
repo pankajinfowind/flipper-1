@@ -23,6 +23,6 @@ export class PosComponent implements OnInit {
     this.pos$ = this.posModelService.pos$;
   }
   listenOnCustomer(e: any) {
-    console.log(e);
+    // console.log(e);
   }
 }

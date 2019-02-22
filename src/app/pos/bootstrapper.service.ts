@@ -11,6 +11,8 @@ import { OrderModelService } from '../orders/order-model.service';
 import { Orders } from '../orders/orders';
 import { OrderItemsModelService } from './cart/order-item-model.service';
 import { NgxService } from '../common/ngx-db/ngx-service';
+import { Stock } from '../stock/api/stock';
+import { Pos } from './pos';
 
 export function init_app(bootstrapper: BootstrapperPos) {
   return () => bootstrapper.bootstrap();
@@ -40,16 +42,43 @@ export class BootstrapperPos {
    * Bootstrap application with data returned from server.
    */
   public bootstrap() {
-    //this.user.userChanged.subscribe(res => {
       if (localStorage.getItem('active_branch')) {
+        const active_branch =parseInt(localStorage.getItem('active_branch'));
+        this.posSaleStocks(active_branch);
         this.orders();
       }
-    //});
   }
 
   /**
    * Handle specified bootstrap data.
    */
+  protected posSaleStocks(branch_id): Promise<Stock[]> {
+    let url;
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+      url = AppConfig.url + "secure/" + API_ROUTES.POSSALESSTOCK+'/'+branch_id;
+    } else {
+      url = this.settings.getBaseUrl() + "secure/" + API_ROUTES.POSSALESSTOCK+'/'+branch_id;
+    }
+    this.posModelService.update({ loading: true });
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(url)
+        .pipe(finalize(() => this.posModelService.update({ loading: false })))
+        .subscribe(
+          res => {
+            if (res['status'] == 'success') {
+              const stocks: Stock[] = res['stocks']['data'].length > 0 ? res['stocks']['data']:[];
+              this.posModelService.update({ loading: false, stocks:stocks});
+            }
+            resolve();
+          },
+          error => {
+            this.posModelService.update({ loading: false, pos_sale_stock:[]});
+             reject();
+          }
+        );
+    });
+  }
   protected orders(): Promise<Orders[]> {
     let url;
     if (this.settings.getBaseUrl() != "http://localhost:4200/") {
@@ -65,16 +94,29 @@ export class BootstrapperPos {
         .subscribe(
           res => {
             if (res['status'] == 'success') {
-              const order: Orders = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
+              if(res['orders']){
+              const order: Orders = res['orders'].length > 0 ? res['orders'].find(order => order.is_currently_processing === '1') : null;
+              const obj:Pos={ loading: false,
+                currently_ordered: order ? order : null,panel_content: 'home',orders: res["orders"].length > 0 ? res['orders'] : []
+                };
 
-              this.posModelService.update({ loading: false, currently_ordered: order ? order : null, choosen_insurance: null, choose_customer: null, panel_content: 'home' });
 
-              this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
-              if (order) {
-                if (order.customer) {
-                  this.db.addItem(order.customer);
-                }
-                this.orderItemModelService.update(order['order_items'], 'all');
+                  if(order && order.customer){
+                    this.db.addItem(order.customer);
+                    obj.choose_customer=order.customer;
+                    obj.customer_type_price=order.customer.customer_type;
+                  }else{
+                    obj.choose_customer=null;
+                    obj.customer_type_price=null;
+                  }
+
+
+                this.posModelService.update(obj);
+                  if(obj){
+                    this.orderItemModelService.update(order['order_items'], 'all');
+                  }
+
+
               }
             }
 
@@ -82,7 +124,7 @@ export class BootstrapperPos {
           },
           error => {
             this.orderModelService.update([]);
-            // reject();
+            reject();
           }
         );
     });

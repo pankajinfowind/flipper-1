@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h2 mat-dialog-title trans *ngIf="action=='add'">Add a new Customer</h2>
+  <h2 mat-dialog-title trans *ngIf="action=='edit'">Edit a new Customer</h2>
+  <button type="button" mat-icon-button (click)="close(true)" class="close-button" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+
+<form [formGroup]="customerForm" (ngSubmit)="onSubmitCustomer()">
+  <mat-dialog-content class="many-inputs">
+    <div class="input-container">
+
+      <div class="item row">
+        <div class="col-12">
+          <mat-form-field appearance="outline" class="col-3">
+            <mat-label>Title</mat-label>
+            <mat-select placeholder="Mr or Mrs" formControlName="title" required>
+              <mat-option *ngFor="let t of titles" [value]="t">
+                {{t}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="title.invalid && (title.dirty || title.touched)">
+              Title is required.
+            </mat-error>
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-3">
+            <mat-label>Full name</mat-label>
+
+            <input matInput placeholder="Full name" formControlName="full_name" required>
+            <mat-error *ngIf="full_name.invalid && (full_name.dirty || full_name.touched)">
+              <mat-error *ngIf="full_name.errors.required">
+                Full name is required
+              </mat-error>
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button color="accent" type="submit" [disabled]="customerForm.invalid">Save</button>
+  </mat-dialog-content>
+
+</form>

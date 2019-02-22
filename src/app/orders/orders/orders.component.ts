@@ -9,6 +9,8 @@ import { OrderItems } from '../../pos/cart/order_items';
 import { ApiPosService } from '../../pos/api/api.service';
 import { takeUntil } from 'rxjs/operators';
 import { NgxService } from '../../common/ngx-db/ngx-service';
+import { CurrentUser } from '../../common/auth/current-user';
+import { Business } from '../../business/api/business';
 
 @Component({
   selector: 'app-orders',
@@ -25,7 +27,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ordered_orders: Orders[] = [];
   panelOpenState = false;
   order_items$: Observable<OrderItems[]>;
-  constructor(private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private posModelService: PosModelService, private db: NgxService) { }
+  business: Business;
+  constructor(public currentUser: CurrentUser,private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private posModelService: PosModelService, private db: NgxService) { }
 
   private unsubscribe$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
@@ -33,18 +36,20 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
   ngOnInit() {
+    if (this.currentUser.user) {
+      this.business = this.currentUser.get('business')[0];
+    }
     this.pos$ = this.posModelService.pos$;
-    this.order$ = this.orderModelService.order$;
-    this.order_items$ = this.orderItemModelService.order_items$;
-    this.order$
-      .pipe(
-        takeUntil(this.unsubscribe$) // declarative unsubscription
-      ).subscribe(res => {
-        if (res['orders'].length > 0) {
-          this.held_orders = res['orders'].filter(order => order.status == 'hold');
-          this.pending_orders = res['orders'].filter(order => order.status == 'pending');
-          this.ordered_orders = res['orders'].filter(order => order.status == 'ordered');
-          this.complete_orders = res['orders'].filter(order => order.status == 'complete');
+    this.getOrders();
+  }
+  getOrders(){
+    if (!this.pos$) return;
+    this.pos$.subscribe(res => {
+        if (res.orders && res.orders.length > 0) {
+          this.held_orders = res.orders.filter(order => order.status == 'hold');
+          this.pending_orders = res.orders.filter(order => order.status == 'pending');
+          this.ordered_orders = res.orders.filter(order => order.status == 'ordered');
+          this.complete_orders = res.orders.filter(order => order.status == 'complete');
 
         }
       });
@@ -82,15 +87,24 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.api.updateOrder(currently_ordered, currently_ordered.id).subscribe(
       res => {
         if (res.status == 'success') {
-          if (currently_ordered.customer) {
-            this.db.addItem(currently_ordered.customer); //do we have customer on this order set him on resumed order
-          } else {
-            this.db.addItem([]); // otherwise remove any if there was someone before show order with no customer
-          }
-          this.posModelService.update({ currently_ordered: currently_ordered });
-          this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
+
+          const pos=this.posModelService.get();
+          pos.orders=res["orders"].length > 0 ? res['orders'] as Orders[]:[];
+          pos.currently_ordered=currently_ordered;
+
+              if(currently_ordered.customer){
+                pos.choose_customer=currently_ordered.customer;
+                pos.customer_type_price=currently_ordered.customer.customer_type;
+              }else{
+                pos.choose_customer=null;
+                pos.customer_type_price=null;
+              }
+
+          this.posModelService.update(pos);
+
           this.orderItemModelService.update([], 'all');
           this.orderItemModelService.update(currently_ordered['order_items'], 'all');
+
           this.updatePosLayout('home');
         }
 
@@ -102,16 +116,27 @@ export class OrdersComponent implements OnInit, OnDestroy {
     );
   }
 
-  deleteOrdered(id) {
+  deleteOrdered(order) {
     let result = confirm("Are you sure,you want to delete this order?");
     if (result) {
-      this.api.deleteOrder(id).subscribe(
+      this.api.deleteOrder(order.id).subscribe(
         res => {
           if (res.status == 'success') {
-            this.posModelService.update({ currently_ordered: null });
-            this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
-            this.orderItemModelService.update([], 'all');
-            this.updatePosLayout('home');
+            if(res['deleted']){
+              const pos= this.posModelService.get();
+              const orders = pos.orders.filter(obj => {
+                    return obj.id !== order.id;
+              });
+                pos.currently_ordered=null;
+                pos.choose_customer=null;
+                pos.customer_type_price=null;
+                pos.loading=false;
+                pos.panel_content='home';
+                pos.orders=orders;
+                this.posModelService.update(pos);
+                this.orderItemModelService.update([], 'all');
+
+            }
           }
 
         },
@@ -121,4 +146,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
       );
     }
   }
+
+  // callGetFormData(event:Event){
+  //   event.preventDefault();
+  //   let form=event.target as HTMLFormElement;
+  //   let d=this.getFormData(form);
+  //     console.log(d);
+  // }
+
+  // getFormData(ele:HTMLFormElement){
+  //     return ele.elements;
+  // }
 }

@@ -1,5 +1,5 @@
 
-@import "../../app_sass/modal.scss";
+@import "../../app_sass/variables";
 li{
   list-style-type: none;
 }
@@ -64,9 +64,18 @@ mat-grid-tile {
 
 table {
   width: 100%;
-
+  overflow: hidden;
   tr.detail-row {
     height: 0;
+  }
+   td{
+    width: 25%;
+
+  }
+  span.text{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   // tr.example-element-row:not(.example-expanded-row):hover {
@@ -84,6 +93,9 @@ table {
 
   }
 
+.row-highlighted span.text{
+  color: #fff!important;
+}
 
   .element-row td {
     width: 30%;

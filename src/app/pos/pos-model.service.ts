@@ -10,11 +10,11 @@ export class PosModelService {
   pos$: Observable<Pos>;
   private model: Model<Pos>;
   constructor(private modelFactory: ModelFactory<Pos>) {
-    this.create([]);
+    this.create();
     this.pos$ = this.model.data$;
   }
 
-  public create(stateCreation) {
+  public create(stateCreation: Pos={loading:false,currently_ordered:null,choose_customer:null,panel_content:'home',stocks:[],orders:[],customer_type_price:null}) {
     this.model = this.modelFactory.create(stateCreation);
   }
 

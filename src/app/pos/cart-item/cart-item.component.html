@@ -3,10 +3,7 @@
     <button (click)="updatePosLayout('customers')" type="button" mat-button class="cancel-button" trans>
       <mat-icon>assignment_ind</mat-icon> CUSTOMERS
     </button>
-    <button [disabled]="!currently_ordered" (click)="cartDialog(currently_ordered,'Insurances')" type="button"
-      mat-button class="cancel-button" trans>
-      <mat-icon>list_alt</mat-icon> INSURANCES
-    </button>
+
     <button (click)="updatePosLayout('orders')" type="button" mat-button class="cancel-button" trans>
       <mat-icon>assignment</mat-icon> ORDERS
     </button>
@@ -24,11 +21,34 @@
 
   <div class="card-body">
     <table *ngIf="data.length > 0" mat-table [dataSource]="dataSource" multiTemplateDataRows>
-      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-        <td mat-cell *matCellDef="let element" class="ellipsis"> <span class="ellipsis">{{element[column]}}</span> </td>
-      </ng-container>
-      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="item">
+            <th mat-header-cell *matHeaderCellDef class="col-3 text-left"  style="width:20%">Item
+            </th>
+            <td mat-cell *matCellDef="let element" class="col-3 text-left"  style="width:20%">
+              <span class="text ellipsis" matTooltip="{{element.item}}"
+              [matTooltipPosition]="'left'">{{textEllipsis(element.item, 20)}}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="qty">
+              <th mat-header-cell *matHeaderCellDef class="col-3 text-center">Qty
+              </th>
+              <td mat-cell *matCellDef="let element" class="col-3 text-center">
+                <span class="text ellipsis">{{element.qty}}</span> </td>
+            </ng-container>
+            <ng-container matColumnDef="each" >
+                <th mat-header-cell *matHeaderCellDef class="col-3 text-center">Each
+                </th>
+                <td mat-cell *matCellDef="let element" class="col-3 text-center">
+                  <span class="text ellipsis">{{business.currency_code}} {{convertToDecimal(element.price)}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef class="col-3 text-right">Total
+                  </th>
+                  <td mat-cell *matCellDef="let element" class="col-3 text-right">
+                    <span class="text ellipsis">{{business.currency_code}} {{convertToDecimal(element.total_amount)}}</span>
+                  </td>
+                </ng-container>
 
       <ng-container matColumnDef="expandedDetail" class="element-detail">
         <td class="element-detail" mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
@@ -36,32 +56,31 @@
 
             <div class="col-4">
               <div class="button-row">
-                <button mat-icon-button class="col-6 float-left" (click)="cartDialog(element,'Note')">
+                <button mat-icon-button class="col-12 float-left" (click)="cartDialog(element,'Note')">
                   <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
                 </button>
 
-                <button mat-icon-button class="col-6 float-left" (click)="cartDialog(element,'Discount')">
+                <!-- <button mat-icon-button class="col-6 float-left" (click)="cartDialog(element,'Discount')">
                   <mat-icon aria-label="Example icon-button with a heart icon">local_offer</mat-icon>
 
-                </button>
+                </button> -->
               </div>
               <div class="button-row">
-                <span class="col-4 text-left text-smaller">Note</span>
-
-                <span class="col-8 text-left text-smaller">Discount</span>
+                <span class="col-12 text-left text-smaller">Note</span>
+                <!-- <span class="col-8 text-left text-smaller">Discount</span> -->
               </div>
 
 
             </div>
             <div class="col-5">
               <div class="button-row">
-                <button mat-icon-button (click)="update(element,'remove-qty')" class="btn-border col-3">
+                <button mat-icon-button (click)="updateQty(element,'remove')" class="btn-border col-3">
                   <mat-icon aria-label="Example icon-button with a heart icon">remove</mat-icon>
                 </button>
 
                 <button mat-button class="col-6" (click)="cartDialog(element,'Quantity')">{{element.qty}}</button>
 
-                <button mat-icon-button (click)="update(element,'add-qty')" class="btn-border col-3">
+                <button mat-icon-button (click)="updateQty(element,'add')" class="btn-border col-3">
                   <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
                 </button>
               </div>
@@ -71,7 +90,7 @@
             </div>
             <div class="col-3">
               <div class="button-row float-right col-12">
-                <button mat-icon-button class="text-center" (click)="update(element,'delete')">
+                <button mat-icon-button class="text-center" (click)="deleteOrderedItem(element)">
                   <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
                 </button>
 
@@ -79,16 +98,29 @@
               <div class="button-row float-right col-12"><span class="text-center text-smaller">&nbsp;&nbsp;&nbsp;&nbsp;Delete</span>
               </div>
             </div>
-            <div class="col-12 text-left" *ngIf="element.note">Note:{{element.note}}</div>
+            <mat-divider></mat-divider>
+            <div class="col-6 text-left " *ngIf="element.note"><span class="ellipsis">Note:{{element.note}}</span></div>
+            <div class="col-6 text-left" *ngIf="element.tax_rate_name"><span class="ellipsis">Tax:{{element.tax_rate_name}}({{element.tax_rate_percentage}}%)</span></div>
+            <div class="col-12 text-left" *ngIf="element.customer_type_name"><span class="ellipsis">Customer type:{{element.customer_type_name}}({{element.customer_type_discount_value}}%)</span></div>
           </div>
         </td>
       </ng-container>
       <!-- hide heads for a customer to be seen as tied to the bill -->
-      <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true" class="element-row"></tr> -->
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true" class="element-row"></tr>
       <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row" [class.row-highlighted]="expandedElement === element"
-        (click)="expandedElement = expandedElement === element ? null : element">
+        (click)="expandedElement = expandedElement === element ? null : element" matRipple
+        [matRippleCentered]="centered"
+        [matRippleDisabled]="disabled"
+        [matRippleUnbounded]="unbounded"
+        [matRippleRadius]="radius"
+        [matRippleColor]="color">
       </tr>
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" matRipple
+      [matRippleCentered]="centered"
+      [matRippleDisabled]="disabled"
+      [matRippleUnbounded]="unbounded"
+      [matRippleRadius]="radius"
+      [matRippleColor]="color"></tr>
     </table>
 
     <div class="_no-results-message" *ngIf="data.length == 0">
@@ -119,7 +151,7 @@
               </div>
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Total
                   Discount</dt>
-                <dd class="transaction-summary__value">{{business.currency_code}} {{total('total_discount')}}</dd>
+                <dd class="transaction-summary__value">{{business.currency_code}} {{total('total_amount_discount')}}</dd>
               </div>
               <div *ngIf="choosen_insurance" class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">
                   Insurance</dt>
@@ -136,7 +168,7 @@
                   {{total('total_amount')}}</dd>
               </div>
               <div class="transaction-summary__item can-disable-animation"><dt class="transaction-summary__key">Tax(vat)</dt>
-                <dd class="transaction-summary__value">{{business.currency_code}} {{total('total_tax')}}</dd>
+                <dd class="transaction-summary__value">{{business.currency_code}} {{total('taxable_vat')}}</dd>
               </div>
             </div>
           </dl>

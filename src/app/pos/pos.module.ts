@@ -5,7 +5,7 @@ import {
   ErrorHandler
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { SalePointComponent } from "./sale-point/sale-point.component";
+import { SalePointComponent, BottomSheetOverviewStock } from "./sale-point/sale-point.component";
 import { SessionsComponent } from "./sessions/sessions.component";
 import { MaterialModule } from "../material/material.module";
 import { PosComponent } from "./pos/pos.component";
@@ -33,17 +33,21 @@ import { CustomersModule } from '../customers/customers.module';
     SessionsComponent,
     PosComponent,
     CartItemComponent,
-    CartDialog
+    CartDialog,
+    BottomSheetOverviewStock
   ],
-  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule, OrdersModule, PayModule, CustomersModule],
-  exports: [SessionsComponent, SalePointComponent, PosComponent, CartDialog],
-  entryComponents: [CartDialog],
+  imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule, OrdersModule,
+     PayModule,
+      CustomersModule,
+    ],
+  exports: [SessionsComponent, SalePointComponent, PosComponent, CartDialog,BottomSheetOverviewStock],
+  entryComponents: [CartDialog,BottomSheetOverviewStock],
   providers: [ApiPosService, ModelFactory]
 })
 export class PosModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: MasterModule,
+      ngModule: PosModule,
       providers: [
         CustomerService,
         HttpClient,

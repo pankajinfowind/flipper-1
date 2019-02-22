@@ -20,7 +20,7 @@ export class ApiPosService {
     public createOrder(params: Orders): BackendResponse<{ data: Orders }> {
         return this.http.post(API_ROUTES.ORDER, params);
     }
-    public updateOrderItem(params: Orders): BackendResponse<{ data: OrderItems }> {
+    public updateOrderItem(params: OrderItems): BackendResponse<{ data: OrderItems }> {
       return this.http.post(API_ROUTES.ORDERITEM, params);
   }
   public deleteOrderedItem(id): BackendResponse<{ data: OrderItems }> {

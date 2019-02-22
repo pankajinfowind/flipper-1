@@ -1,4 +1,5 @@
 <form class="example-form" [formGroup]="form">
+
   <mat-form-field>
     <input matInput placeholder="Full name" formControlName="full_name">
   </mat-form-field>
@@ -11,4 +12,7 @@
 
   <button mat-raised-button color="accent" style="float:right;" [disabled]="!formValid" (click)="addCustomer()">Add
     Customer</button>
+
 </form>
+<!-- <button mat-raised-button color="accent" style="float:right;"  (click)="saveCustomer()">Save</button> -->
+

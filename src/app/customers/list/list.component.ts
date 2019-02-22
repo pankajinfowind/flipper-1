@@ -1,14 +1,14 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { CustomerService } from '../customer.service';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Customer } from '../customer';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AddComponent } from '../add/add.component';
 import { NgxService } from '../../common/ngx-db/ngx-service';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
-
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../store';
+import { PosModelService } from '../../pos/pos-model.service';
 @Component({
   selector: 'customer-list',
   templateUrl: './list.component.html',
@@ -16,8 +16,9 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 })
 export class ListComponent implements OnInit {
   //virtual scrolling start
-  @ViewChild(CdkVirtualScrollViewport)
-  viewport: CdkVirtualScrollViewport;
+
+  action:string='add';
+  data:Customer=null;
 
   batch = 20;
   theEnd = false;
@@ -30,16 +31,24 @@ export class ListComponent implements OnInit {
 
   customer: Customer;
   tableHeads: string[] = ['cstomer_no', 'full_name', 'phone'];
-
+customers$:Observable<Customer[]>;
+loading$:Observable<boolean>;
+loaded$:Observable<boolean>;
+toggled$:BehaviorSubject<boolean>=new BehaviorSubject(false);
   //TODO: matDialog not covered by unit test
-  constructor(private api: CustomerService, public dialog: MatDialog, private db: NgxService) {
-
+  constructor(private posModelService: PosModelService,private store:Store<fromStore.CustomersState>, private api: CustomerService, public dialog: MatDialog, private db: NgxService) {
+    this.store.dispatch(new fromStore.LoadCustomers());
   }
   ngOnInit(): void {
-    this.listCustomers();
+   // this.listCustomers();
+    this.customers$=this.store.select(fromStore.getAllCustomers);
+    this.loading$=this.store.select(fromStore.getCustomersLoading);
+    this.loaded$=this.store.select(fromStore.getCustomersLoaded);
   }
   //virtual scroll func
-
+  updatePosLayout(panel = 'home') {
+    this.posModelService.update({ panel_content: panel });
+  }
 
   getBatch(offset) {
     //TODO: replace this func with my database call
@@ -68,12 +77,11 @@ export class ListComponent implements OnInit {
       return;
     }
 
-    const end = this.viewport.getRenderedRange().end;
-    const total = this.viewport.getDataLength();
-    console.log(`${end}, '>=', ${total}`);
-    if (end === total) {
-      this.offset.next(offset);
-    }
+    // const end = this.viewport.getRenderedRange().end;
+    // const total = this.viewport.getDataLength();
+    // if (end === total) {
+    //   this.offset.next(offset);
+    // }
   }
 
   trackByIdx(i) {
@@ -90,19 +98,32 @@ export class ListComponent implements OnInit {
   editCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.api.editCustomer(customer);
   }
-  openAddCustomerDialog(): void {
-    const dialogRef = this.dialog.open(AddComponent, {
-      width: '450px',
-      // data: {name: this.name, animal: this.animal}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
-      //TODO:show a toast of the action to be completed
-      // this.animal = result;
-    });
-  }
+
   // TODO: change type after drafting
   emitCustomer(customer: any) {
     this.db.addItem(customer);
+  }
+
+  saveCustomer(){
+    const customer:Partial<Customer>={
+        full_name:'respice',
+        email:'resp@gmail.com',
+        customer_type_id:1,
+        branch_id:1,
+        title:'Mr',
+        gender:'Male',
+        state:'single',
+
+
+    }
+        this.store.dispatch(new fromStore.AddCustomer(customer));
+      }
+
+      toggled($event) {
+            this.toggled$.next($event!=$event);
+      }
+      actions(action,data:Customer=null) {
+        this.action=action;this.data=data;
+        this.toggled$.next(true);
   }
 }

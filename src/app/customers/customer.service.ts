@@ -6,6 +6,7 @@ import { AppHttpClient } from '../common/core/http/app-http-client.service';
 import { Sqlite3Service } from '../common/sqlit3/sqlite3.service';
 import { ElectronService } from 'ngx-electron';
 import { Orders } from '../orders/orders';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -33,7 +34,7 @@ export class CustomerService extends Sqlite3Service {
   observed: EventEmitter<Customer | Orders> = new EventEmitter<Customer | Orders>();
   getCustomers() {
     //experiment if I can get data from sqlite3
-    //I want to check if we have internet then query from sqlite3 
+    //I want to check if we have internet then query from sqlite3
     //and On Application load I use internet for only once, save data into sqlit3
     //from that point on, I wont go back to backend unless If I created Data
     //i.e I will sync this newly created data to online
@@ -60,6 +61,13 @@ export class CustomerService extends Sqlite3Service {
     });
     return this.observed;
   }
+
+  getAllCustomers():Observable<Customer[]>{
+        return this.http.get<Customer[]>(this.ROOT_URL).pipe(catchError((error:any)=>Observable.throw(error.json())));
+  }
+  create(customer: Partial<Customer>):Observable<Customer>{
+    return this.http.post<Customer>(this.ROOT_URL, customer).pipe(catchError((error:any)=>Observable.throw(error.json())));
+}
   editCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.http.put<Customer>(this.ROOT_URL, customer);
   }

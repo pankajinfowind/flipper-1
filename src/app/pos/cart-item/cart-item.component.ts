@@ -33,13 +33,21 @@ import { NgxService } from '../../common/ngx-db/ngx-service';
 export class CartDialog implements OnInit {
   item_deleted = [];
   public loading = new BehaviorSubject(false);
-  cart_item: any;
+  cart_item: OrderItems;
   status: string;
   order_items$: Observable<OrderItems[]>;
   master$: Observable<Master>;
   insurances: Insurance[] = [];
   insuranceForm: FormGroup;
   pos$: Observable<Pos>;
+
+  centered = true;
+  disabled = false;
+  unbounded = false;
+
+  radius: number=50;
+  color: string='green';
+default_qty:number=0;
   constructor(private posModelService: PosModelService,
     private msterModelService: MasterModelService,
     private api: ApiPosService,
@@ -47,7 +55,9 @@ export class CartDialog implements OnInit {
     private toast: Toast,
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
-    this.cart_item = this.data.data;
+      const _data=this.data;
+    this.default_qty=_data.data.qty as number;
+    this.cart_item = _data.data as OrderItems;
     this.status = this.data.status;
     this.order_items$ = this.orderItemModelService.order_items$;
     this.master$ = this.msterModelService.master$;
@@ -64,33 +74,14 @@ export class CartDialog implements OnInit {
       insurance_id: new FormControl(null, [Validators.required])
     });
   }
-  saveOrderInsurence() {
-    if (this.insuranceForm.invalid) {
-      alert('No insurance choosen!');
-    } else {
-      this.posModelService.update({ loading: true });
-      this.api.updateOrder(this.insuranceForm.value, this.data.data['id']).pipe(finalize(() => this.posModelService.update({ loading: false }))).subscribe(
-        res => {
-
-          if (res['orders']) {
-            const order = res['orders'].length > 0 ? res['orders'].filter(order => order.is_currently_processing === '1')[0] : null;
-            this.posModelService.update({ loading: false, currently_ordered: order ? order : null });
-            this.close();
-          }
-        },
-        _error => {
-          console.error(_error);
-        }
-      );
-    }
-  }
 
   keysClicked(nums) {
     if (this.status == 'Quantity') {
       if (nums == 'x') {
         this.cart_item.qty = 0;
       } else {
-        if (this.cart_item.qty + '' + nums > this.cart_item.available_qty) {
+        const converted=parseInt(this.cart_item.qty + '' + nums);
+        if ( converted > this.cart_item.available_qty) {
           alert('Quantity will create a negative stock level');
         } else {
           this.cart_item.qty = this.cart_item.qty == 0 ? nums : this.cart_item.qty + '' + nums;
@@ -98,9 +89,9 @@ export class CartDialog implements OnInit {
       }
     } else {
       if (nums == 'x') {
-        this.cart_item.discount = 0;
+        //this.cart_item.discount = 0;
       } else {
-        this.cart_item.discount = this.cart_item.discount == 0 ? nums : this.cart_item.discount + '' + nums;
+       // this.cart_item.discount = this.cart_item.discount == 0 ? nums : this.cart_item.discount + '' + nums;
       }
 
     }
@@ -114,8 +105,6 @@ export class CartDialog implements OnInit {
           this.cart_item.qty -= 1;
           alert('Quantity will create a negative stock level');
         }
-      } else {
-        this.cart_item.discount += 1;
       }
 
     } else {
@@ -126,41 +115,85 @@ export class CartDialog implements OnInit {
           this.cart_item.qty += 1;
           alert('Quantity must be greater than 0');
         }
-      } else {
-        this.cart_item.discount -= 1;
       }
     }
+    this.cart_item.action=this.default_qty < this.cart_item.qty?'add':'remove';
   }
 
-  update(cart_item, status) {
-    cart_item.discount = parseInt(cart_item.discount);
-    cart_item.qty = parseInt(cart_item.qty);
-    const cart = cart_item;
-    this.orderItemModelService.update(cart, status);
-    return this.findCartItemModelChanged(cart);
-  }
-  findCartItemModelChanged(cart_data) {
-    this.order_items$.subscribe(ordered => {
-      if (ordered) {
-        const check_ordered = ordered.filter(order_item => order_item.order_id === cart_data.order_id && order_item.stock_id === cart_data.stock_id);
-        if (check_ordered.length > 0) {
-          this.updateOrderItemApi(check_ordered[0]);
-        }
-      }
-    });
 
-  }
-  updateOrderItemApi(params) {
-    this.api.updateOrderItem(params).subscribe(
+  update() {
+    if(this.default_qty == this.cart_item.qty && this.status=='Quantity'){
+        alert("Nothing Updated. Quantity didn't changed");
+    }
+    const params:OrderItems=this.cart_item;
+    this.cart_item
+    const cart_data: OrderItems = {
+      batch_no:params.batch_no,
+      note: params.note,
+      reason_id: params.reason_id,
+      discount_value:params.customer_type_discount_value || 0.00,
+      tax_rate_id:params.tax_rate.id || null,
+      sale_price_id: params.sale_price_id || null,
+      order_id: params.order_id || null,
+      stock_id: params.stock_id || null,
+      discount_reason_id: params.discount_reason_id || null,
+      refund_reason_id:params.refund_reason_id || null,
+      qty: this.cart_item.qty,
+      action:params.action
+    };
+if(this.status=='Note'){
+  cart_data.action="note";
+}
+
+//console.log(cart_data);
+    this.posModelService.update(this.posModelService.get().loading=true);
+
+    this.api.updateOrderItem(cart_data).pipe(finalize(() =>
+    this.posModelService.update(this.posModelService.get().loading=false))).subscribe(
       res => {
-        // console.log(res)
-        this.close();
+      const order_item=res['order_item'] as OrderItems || null ;
+
+        if(order_item){
+          const ordered_items:OrderItems[]=this.orderItemModelService.get();
+
+              if(ordered_items && ordered_items.length > 0){
+
+                    ordered_items.forEach((item, i)=> {
+
+                          if (item.id===order_item.id){
+                               ordered_items[i] = order_item;
+                          }else{
+                            if (!ordered_items.includes(order_item)) {
+                                    ordered_items.push(order_item);
+                            }
+                          }
+                    });
+
+              }else{
+                ordered_items.push(order_item);
+              }
+              let _ordered_items: OrderItems[] = this.removeDuplicate(ordered_items,'id');
+              this.orderItemModelService.update(_ordered_items,"all");
+
+            }
+
       },
       _error => {
         console.error(_error);
       }
     );
   }
+
+  removeDuplicate(ordered_items:OrderItems[]= [],id){
+    let obj = {};
+    let _ordered_items: OrderItems[] = [];
+    _ordered_items = Object.keys(ordered_items.reduce((prev, next) => {
+      if (!obj[next[id]]) obj[next[id]] = next;
+      return obj;
+    }, obj)).map((i) => obj[i]);
+    return _ordered_items;
+  }
+
   close(): void {
     this.dialogRef.close({ status: 'none' });
   }
@@ -272,10 +305,22 @@ export class CartItemComponent implements OnInit, OnDestroy {
       this.api.deleteOrder(this.currently_ordered.id).subscribe(
         res => {
           if (res.status == 'success') {
-            this.posModelService.update({ currently_ordered: null });
-            this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
-            this.orderItemModelService.update([], 'all');
-            this.updatePosLayout('home');
+            if(res['deleted']){
+              const pos= this.posModelService.get();
+              const orders = pos.orders.filter(obj => {
+                    return obj.id !== this.currently_ordered.id;
+              });
+
+                pos.currently_ordered=null;
+                pos.choose_customer=null;
+                pos.customer_type_price=null;
+                pos.loading=false;
+                pos.panel_content='home';
+                pos.orders=orders;
+                this.posModelService.update(pos);
+                this.orderItemModelService.update([], 'all');
+                this.currently_ordered=null;
+            }
           }
         },
         _error => {
@@ -296,9 +341,15 @@ export class CartItemComponent implements OnInit, OnDestroy {
     this.api.updateOrder(this.currently_ordered, this.currently_ordered.id).subscribe(
       res => {
         if (res.status == 'success') {
-          this.posModelService.update({ currently_ordered: null });
-          this.orderModelService.update({ orders: res["orders"].length > 0 ? res['orders'] : [] });
+
+          const pos=this.posModelService.get();
+
+          pos.currently_ordered=null;
+          pos.orders=res["orders"].length > 0 ? res['orders'] as Orders[]:[];
+          this.posModelService.update(pos);
+
           this.orderItemModelService.update([], 'all');
+
           this.updatePosLayout('home');
         }
       },
@@ -315,9 +366,82 @@ export class CartItemComponent implements OnInit, OnDestroy {
 
     //return this.expandedElement = element;
   }
-  deleteOrderedItem(id) {
-    this.api.deleteOrderedItem(id).subscribe(deleted => {
-      //console.log(deleted);
+
+  updateQty(params:OrderItems,action) {
+    const cart_data: OrderItems = {
+      batch_no:params.batch_no,
+      note: params.note,
+      reason_id: params.reason_id,
+      discount_value:params.customer_type_discount_value || 0.00,
+      tax_rate_id:params.tax_rate.id || null,
+      sale_price_id: params.sale_price_id || null,
+      order_id: params.order_id || null,
+      stock_id: params.stock_id || null,
+      discount_reason_id: params.discount_reason_id || null,
+      refund_reason_id:params.refund_reason_id || null,
+      qty: 1,
+      action:action
+    };
+
+    this.posModelService.update(this.posModelService.get().loading=true);
+
+    this.api.updateOrderItem(cart_data).pipe(finalize(() =>
+    this.posModelService.update(this.posModelService.get().loading=false))).subscribe(
+      res => {
+      const order_item=res['order_item'] as OrderItems || null ;
+
+        if(order_item){
+          const ordered_items:OrderItems[]=this.orderItemModelService.get();
+
+              if(ordered_items && ordered_items.length > 0){
+
+                    ordered_items.forEach((item, i)=> {
+
+                          if (item.id===order_item.id){
+                               ordered_items[i] = order_item;
+                          }else{
+                            if (!ordered_items.includes(order_item)) {
+                                    ordered_items.push(order_item);
+                            }
+                          }
+                    });
+
+              }else{
+                ordered_items.push(order_item);
+              }
+              let _ordered_items: OrderItems[] = this.removeDuplicate(ordered_items,'id');
+              this.orderItemModelService.update(_ordered_items,"all");
+
+            }
+
+      },
+      _error => {
+        console.error(_error);
+      }
+    );
+  }
+
+  removeDuplicate(ordered_items:OrderItems[]= [],id){
+    let obj = {};
+    let _ordered_items: OrderItems[] = [];
+    _ordered_items = Object.keys(ordered_items.reduce((prev, next) => {
+      if (!obj[next[id]]) obj[next[id]] = next;
+      return obj;
+    }, obj)).map((i) => obj[i]);
+    return _ordered_items;
+  }
+
+  deleteOrderedItem(element) {
+    this.api.deleteOrderedItem(element.id).subscribe(res => {
+
+        if(res['deleted']){
+            const data=this.dataSource.data;
+          const index: number = this.dataSource.data.indexOf(element);
+            if (index !== -1) {
+              data.splice(index, 1);
+            }
+            this.dataSource.data=data;
+        }
     });
   }
 
@@ -342,10 +466,26 @@ export class CartItemComponent implements OnInit, OnDestroy {
         total += this.data[i][prop]
       }
     }
-
-    return total;
+    const s=total.toString();
+    return  parseFloat(s).toFixed(2);
 
   }
+convertToDecimal(total:number){
+  const s=total.toString();
+  return  parseFloat(s).toFixed(2);
+}
+ textEllipsis(str, maxLength, { side = "end", ellipsis = "..." } = {}) {
+  if (str.length > maxLength) {
+    switch (side) {
+      case "start":
+        return ellipsis + str.slice(-(maxLength - ellipsis.length));
+      case "end":
+      default:
+        return str.slice(0, maxLength - ellipsis.length) + ellipsis;
+    }
+  }
+  return str;
+}
 
 
 }

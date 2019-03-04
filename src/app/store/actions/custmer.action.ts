@@ -3,7 +3,7 @@ import { Customer } from '../../customers/customer';
 
 //load customers
 export const LOAD_CUSTOMERS='[CUSTOMERS] Load Customers';
-export const LOAD_CUSTOMER='[CUSTOMERS] Load Customer';
+export const UPDATE_CUSTOMER_RECORD='[UPDATE_CUSTOMER_RECORD] Update Customer Record';
 export const LOAD_CUSTOMERS_FAIL='[CUSTOMERS] Load Customers Fail';
 export const LOAD_CUSTOMERS_SUCCESSS='[CUSTOMERS] Load Customers Success';
 export const ADD_CUSTOMER='[CUSTOMERS] Add Customer';
@@ -31,13 +31,13 @@ export class LoadCustomersSuccess implements Action{
       constructor(public payload:Customer[]){
       }
 }
-export class LoadCustomer implements Action{
+export class UpdateCustomerRecord implements Action{
 
-  readonly type = LOAD_CUSTOMER;
+  readonly type = UPDATE_CUSTOMER_RECORD;
   constructor(public payload:Customer){
   }
 }
 
 // export action types
 
-export type CustomerAction = LoadCustomers | LoadCustomersFail | LoadCustomersSuccess | AddCustomer | LoadCustomer;
+export type CustomerAction = LoadCustomers | LoadCustomersFail | LoadCustomersSuccess | AddCustomer | UpdateCustomerRecord;

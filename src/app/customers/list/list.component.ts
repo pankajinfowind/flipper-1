@@ -3,7 +3,6 @@ import { CustomerService } from '../customer.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Customer } from '../customer';
 import { MatDialog } from '@angular/material';
-import { AddComponent } from '../add/add.component';
 import { NgxService } from '../../common/ngx-db/ngx-service';
 
 import {Store} from '@ngrx/store';

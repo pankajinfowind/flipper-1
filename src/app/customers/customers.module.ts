@@ -9,16 +9,20 @@ import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '../material/material.module';
 import { UiModule } from '../common/core/ui/ui.module';
 import { ManageCustomerComponent } from './manage-customer/manage-customer.component';
+import { HttpModule } from '../common/core/http/http.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [ListComponent, AddComponent, ManageCustomerComponent],
   entryComponents: [],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MaterialModule,
-    UiModule,
     FormsModule,
+    UiModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    HttpModule,
     StoreModule.forFeature('customers',reducers),
     EffectsModule.forFeature(effect),
   ],

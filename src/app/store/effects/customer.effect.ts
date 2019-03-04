@@ -33,7 +33,7 @@ addCustomer$: Observable<Action> = this.action$.pipe(
   switchMap(action =>
     this.api.create(action.payload)
       .pipe(
-        map(customer=>new customerActions.LoadCustomer(customer),
+        map(customer=>new customerActions.UpdateCustomerRecord(customer),
         ),
         catchError(error=> of(new customerActions.LoadCustomersFail(error)))
       )

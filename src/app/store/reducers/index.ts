@@ -22,5 +22,8 @@ export const getCustomerState=createSelector(
       export const getCustomersLoading=createSelector(
         getCustomerState,fromCustomers.getCustomersLoading);
 
+        export const isSuccess=createSelector(
+          getCustomerState,fromCustomers.isSuccess);
+
         export const addCustomer=createSelector(
           getCustomerState,fromCustomers.addCustomer);

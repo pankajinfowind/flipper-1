@@ -96,21 +96,21 @@ export class BootstrapperPos {
             if (res['status'] == 'success') {
               if(res['orders']){
               const order: Orders = res['orders'].length > 0 ? res['orders'].find(order => order.is_currently_processing === '1') : null;
+
               const obj:Pos={ loading: false,
                 currently_ordered: order ? order : null,panel_content: 'home',orders: res["orders"].length > 0 ? res['orders'] : []
                 };
 
 
                   if(order && order.customer){
-                    this.db.addItem(order.customer);
                     obj.choose_customer=order.customer;
-                    obj.customer_type_price=order.customer.customer_type;
+                    obj.customer_type_price=order.customer_type;
                   }else{
                     obj.choose_customer=null;
                     obj.customer_type_price=null;
                   }
 
-
+                  console.log(obj);
                 this.posModelService.update(obj);
                   if(obj){
                     this.orderItemModelService.update(order['order_items'], 'all');

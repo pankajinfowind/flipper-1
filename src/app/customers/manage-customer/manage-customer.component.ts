@@ -29,7 +29,7 @@ export class ManageCustomerComponent implements OnInit {
   loading$:Observable<boolean>;
   loaded$:Observable<boolean>;
   isSuccess$:Observable<boolean>;
-  constructor(private setupModelService: SetUpModelService,private store:Store<fromStore.CustomersState>,) {
+  constructor(private setupModelService: SetUpModelService,private store:Store<fromStore.FlipperState>,) {
     this.customerFormData();
   }
 
@@ -37,9 +37,8 @@ export class ManageCustomerComponent implements OnInit {
     this.setup$ = this.setupModelService.setup$;
     this.loading$=this.store.select(fromStore.getCustomersLoading);
     this.loaded$=this.store.select(fromStore.getCustomersLoaded);
-     this.isSuccess$=this.store.select(fromStore.isSuccess);
+     this.isSuccess$=this.store.select(fromStore.isCustomerSuccess);
     this.customerFormData();
-    this.makeSureIsSuccess();
   }
 
   close(element: boolean) {
@@ -114,13 +113,14 @@ export class ManageCustomerComponent implements OnInit {
   }
 
   create(form_data:Partial<Customer>){
-        return this.store.dispatch(new fromStore.AddCustomer(form_data));
+     this.store.dispatch(new fromStore.AddCustomer(form_data));
+      return this.IsCreateOrUpdateSuccess();
     }
     update(form_data:Partial<Customer>){
       return this.store.dispatch(new fromStore.AddCustomer(form_data));
   }
 
- makeSureIsSuccess(){
+  IsCreateOrUpdateSuccess(){
   this.isSuccess$.subscribe(issuccess=>{
   if(issuccess){
       return this.close(true);

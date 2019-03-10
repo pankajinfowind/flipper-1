@@ -1,29 +1,78 @@
 import {ActionReducerMap, createSelector, createFeatureSelector} from '@ngrx/store';
 import * as fromCustomers from './customer.reducer';
-export interface CustomersState{
-    customers:fromCustomers.CustomerState
+import * as fromOrders from './order.reducer';
+export interface FlipperState{
+    customers:fromCustomers.CustomerState,
+    orders:fromOrders.OrderState
 }
 
-export const reducers:ActionReducerMap<CustomersState> ={
-customers:fromCustomers.reducer,
-};
-export const getCustomersState=createFeatureSelector<CustomersState>('customers');
 
-export const getCustomerState=createSelector(
-  getCustomersState,
-  (state:CustomersState)=>state.customers);
+export const reducers:ActionReducerMap<FlipperState> ={
+customers:fromCustomers.reducer,
+orders:fromOrders.reducer,
+};
+
+export const getAllState=createFeatureSelector<FlipperState>('flipperModel');
+
+////////////////////////////////////////////// CustomerSelesctor
+
+export const getCustomersState=createSelector(
+  getAllState,
+  (state:FlipperState)=>state.customers);
 
   export const getAllCustomers=createSelector(
-    getCustomerState,fromCustomers.getCustomers);
+    getCustomersState,fromCustomers.getCustomers);
+
+    export const getCustomerMeta=createSelector(
+      getCustomersState,fromCustomers.getCustomerMeta);
+
 
     export const getCustomersLoaded=createSelector(
-      getCustomerState,fromCustomers.getCustomersLoaded);
+      getCustomersState,fromCustomers.getCustomersLoaded);
 
       export const getCustomersLoading=createSelector(
-        getCustomerState,fromCustomers.getCustomersLoading);
+        getCustomersState,fromCustomers.getCustomersLoading);
 
-        export const isSuccess=createSelector(
-          getCustomerState,fromCustomers.isSuccess);
+        export const isCustomerSuccess=createSelector(
+          getCustomersState,fromCustomers.isSuccess);
 
         export const addCustomer=createSelector(
-          getCustomerState,fromCustomers.addCustomer);
+          getCustomersState,fromCustomers.addCustomer);
+
+
+
+          ////////////////////////////////////////////// OrderState
+
+
+          export const getOrdersState=createSelector(
+            getAllState,
+            (state:FlipperState)=>state.orders);
+
+            export const getAllOrdered=createSelector(
+              getOrdersState,fromOrders.getOrdered);
+
+              export const getAllOrderHeld=createSelector(
+                getOrdersState,fromOrders.getOrderHeld);
+
+                export const getAllOrderComplete=createSelector(
+                  getOrdersState,fromOrders.getOrderComplete);
+
+                  export const getAllOrderPending=createSelector(
+                    getOrdersState,fromOrders.getOrderPending);
+
+                    export const getAllOrderFailed=createSelector(
+                      getOrdersState,fromOrders.getOrderFailed);
+
+                      export const getOrdersLoaded=createSelector(
+                        getOrdersState,fromOrders.getOrdersLoaded);
+
+                        export const getOrdersLoading=createSelector(
+                          getOrdersState,fromOrders.getOrdersLoading);
+
+                          export const isOrderSuccess=createSelector(
+                            getOrdersState,fromOrders.isSuccess);
+
+                          export const addOrder=createSelector(
+                            getOrdersState,fromOrders.addOrder);
+
+

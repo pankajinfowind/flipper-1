@@ -71,13 +71,13 @@
                 <li class="flipper-pay-panel__summary--label">Amount Due</li>
                 <li class="flipper-pay-panel__summary--amount-due"><span class="currency">{{business.currency_code}} </span> {{total('total_amount')}}</li>
                 <li class="flipper-pay-panel__summary--label">Tax</li>
-                <li><span class="currency">{{business.currency_code}} </span> {{total('total_tax')}}</li>
+                <li><span class="currency">{{business.currency_code}} </span> {{total('taxable_vat')}}</li>
                 <li class="flipper-pay-panel__summary--label">Basket Discount</li>
                 <li><span class="currency">{{business.currency_code}} </span> 0.00</li>
               </ul>
               <ul class="flipper-pay-panel__summary--right">
                 <li class="flipper-pay-panel__summary--label">Item Discount</li>
-                <li><span class="currency">{{business.currency_code}} </span> {{total('total_discount')}}</li>
+                <li><span class="currency">{{business.currency_code}} </span> {{total('total_amount_discount')}}</li>
                 <li class="flipper-pay-panel__summary--label">Customer Discount</li>
                 <li><span class="currency">{{business.currency_code}} </span> 0.00</li>
                 <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}">Change Due</li>

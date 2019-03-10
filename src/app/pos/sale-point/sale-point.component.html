@@ -50,11 +50,20 @@
                     [matRippleColor]="color">
 
                     <span class="ellipsis">{{stock.name}} </span>
+
+                    <mat-chip-list *ngIf="stock.customer_type && stock.customer_type.active==1">
+                      <mat-chip>{{stock.customer_type.name}} price : {{stock.item.currency}} {{stock.item.unit_sale}}</mat-chip>
+                      </mat-chip-list>
+                      <mat-chip-list *ngIf="stock.customer_type && stock.customer_type.active==0">
+                        <mat-chip>Retail price: {{stock.item.currency}} {{stock.item.unit_sale}}</mat-chip>
+                        </mat-chip-list>
                     <div class="clearfix"></div>
 
                     <small class="row row-divided ellipsis">
                       <div class="text-left col-6 column-one">
-                        <span class="ellipsis">{{stock.item.currency}} {{stock.item.unit_sale}}</span>
+                        <span class="ellipsis">
+                        Level:{{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %
+                        </span>
                       </div>
                       <div class="vertical-divider"></div>
                       <div class="text-right col-6 column-two">

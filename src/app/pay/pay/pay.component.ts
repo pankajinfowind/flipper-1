@@ -41,6 +41,7 @@ export class PayComponent implements OnInit {
     if (this.order_items$) {
       this.order_items$.subscribe(res => {
         if (res) {
+          console.log(res);
           this.data = res;
         }
 
@@ -59,7 +60,7 @@ export class PayComponent implements OnInit {
     }
   }
 
-  total(prop) {
+  _total(prop) {
     var total = 0;
     if (this.data.length > 0) {
       for (var i = 0, _len = this.data.length; i < _len; i++) {
@@ -71,6 +72,18 @@ export class PayComponent implements OnInit {
 
   }
 
+
+  total(prop) {
+    var total = 0;
+    if (this.data.length > 0) {
+      for (var i = 0, _len = this.data.length; i < _len; i++) {
+        total += this.data[i][prop]
+      }
+    }
+    const s=total.toString();
+    return  parseFloat(s).toFixed(2);
+
+  }
   keysClicked(key) {
       if (key == 'x') {
         this.numeric_selector=this.numeric_selector == 0?0:this.numeric_selector.slice(0, -1);
@@ -90,7 +103,7 @@ export class PayComponent implements OnInit {
     }
     displayBalanceChangesDue(){
       this.amount_return=0;
-      this.amount_return= this.numeric_selector == 0?0:this.numeric_selector - this.total('total_amount');
+      this.amount_return= this.numeric_selector == 0?0:this.numeric_selector - this._total('total_amount');
       if(this.amount_return > 0){
         this.amount_return_color='green';
       }else if(this.amount_return == 0){
@@ -108,10 +121,10 @@ export class PayComponent implements OnInit {
           invoice_no:'',
           invoice_date:new Date(),
           insurance_id:this.choosen_insurance?this.choosen_insurance.id:0,
-          discounts:this.total('total_discount'),
-          total_items:this.total('qty'),
-          tax:this.total('total_tax'),
-          amount:this.total('total_amount'),
+          discounts:this._total('total_discount'),
+          total_items:this._total('qty'),
+          tax:this._total('total_tax'),
+          amount:this._total('total_amount'),
           amount_given:this.numeric_selector==0?this.total('total_amount'):this.numeric_selector,
           amount_return:this.amount_return,
           currency:this.business.currency_code,

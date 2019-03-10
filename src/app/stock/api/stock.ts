@@ -3,12 +3,14 @@ import { Category } from '../../admin/master/categories/api/category';
 import { Reason } from '../../setup/reasons/api/reason';
 import { TAXRATE } from '../../setup/tax-rates/api/tax-rate';
 import { CustomerTypePrices } from '../../setup/customerType/api/CustomerTypePrices';
+import { CustomerType } from '../../setup/customerType/api/CustomerType';
 
 
 export class Stock {
   id?: number;
   stock_transctions: [{ id: number, stock_id: number, quantity: number,batch_no?:string, unit_price?:any;currency?:string;type: string, transaction: string, comments: string, transction_date: string, branch_id: number, created_at: string, updated_at: string,reason_id?:number;reason?:Reason }];
-  customer_type_items?:CustomerTypePrices[]=[]
+  customer_type_items?:CustomerTypePrices[]=[];
+  customer_type?:CustomerType;
   created_at: string;
   updated_at: string;
   minimum_stock_counts: number;

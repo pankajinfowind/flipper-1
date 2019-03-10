@@ -1,3 +1,4 @@
+@import "../../app_sass/variables";
 @import "../../app_sass/modal.scss";
 cdk-virtual-scroll-viewport,
 ul {
@@ -28,4 +29,8 @@ ul {
   &::-webkit-scrollbar-thumb {
     background-color: rgb(238, 169, 79);
   }
+}
+.selectedcustomer{
+  background:#000;
+  color:#fff;
 }

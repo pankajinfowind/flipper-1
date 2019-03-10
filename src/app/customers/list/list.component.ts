@@ -2,12 +2,15 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Customer } from '../customer';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { NgxService } from '../../common/ngx-db/ngx-service';
 
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store';
 import { PosModelService } from '../../pos/pos-model.service';
+import { Orders } from '../../orders/orders';
+import { Pos } from '../../pos/pos';
+import { ApiPosService } from '../../pos/api/api.service';
 @Component({
   selector: 'customer-list',
   templateUrl: './list.component.html',
@@ -29,13 +32,19 @@ export class ListComponent implements OnInit {
   cust: Partial<Customer>;
 
   customer: Customer;
-  tableHeads: string[] = ['cstomer_no', 'full_name', 'phone'];
+  tableHeads: string[] = ['cstomer_no', 'full_name', 'phone','operation'];
 customers$:Observable<Customer[]>;
+orders$:Observable<Orders[]>;
 loading$:Observable<boolean>;
 loaded$:Observable<boolean>;
+meta$:Observable<any>;
 toggled$:BehaviorSubject<boolean>=new BehaviorSubject(false);
+pos$: Observable<Pos>;
+current_order:Orders = null; //TODO: why this has no type?
+selected_customer: Customer=null;
+dataSource = new MatTableDataSource<Customer>([]);
   //TODO: matDialog not covered by unit test
-  constructor(private posModelService: PosModelService,private store:Store<fromStore.CustomersState>, private api: CustomerService, public dialog: MatDialog, private db: NgxService) {
+  constructor(private oapi: ApiPosService,private posModelService: PosModelService,private store:Store<fromStore.FlipperState>, private api: CustomerService, public dialog: MatDialog, private db: NgxService) {
     this.store.dispatch(new fromStore.LoadCustomers());
   }
   ngOnInit(): void {
@@ -43,10 +52,98 @@ toggled$:BehaviorSubject<boolean>=new BehaviorSubject(false);
     this.customers$=this.store.select(fromStore.getAllCustomers);
     this.loading$=this.store.select(fromStore.getCustomersLoading);
     this.loaded$=this.store.select(fromStore.getCustomersLoaded);
+    this.meta$=this.store.select(fromStore.getCustomerMeta);
+    this.pos$ = this.posModelService.pos$;
+    this.getCurrentOrder();
+
   }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   //virtual scroll func
   updatePosLayout(panel = 'home') {
     this.posModelService.update({ panel_content: panel });
+  }
+  getCurrentOrder() {
+    if (!this.pos$) return;
+    this.current_order=null;
+    this.pos$.subscribe(res => {
+      if (res) {
+        if(res.currently_ordered){
+          this.current_order = res.currently_ordered;
+          this.selected_customer=res.choose_customer?res.choose_customer:null;
+        }
+      }
+    });
+  }
+
+  updateOrdered(row) {
+if(!(this.current_order || row)) return;
+    const params:Orders={
+      is_currently_processing:1,
+      customer_id:row.customer_id,
+      status:'ordered'
+    }
+    this.oapi.updateOrder(params,  this.current_order.id).subscribe(
+      res => {
+        if (res.status == 'success') {
+          const order: Orders = res['orders'].length > 0 ? res['orders'].find(order => order.is_currently_processing === '1') : null;
+          const obj:Pos={ loading: false,
+            currently_ordered: order ? order : null,panel_content: 'home',orders: res["orders"].length > 0 ? res['orders'] : []
+            };
+            localStorage.setItem('customer_id',row.customer_id);
+              if(order && order.customer){
+                obj.choose_customer=order.customer;
+                obj.customer_type_price=order.customer_type;
+              }else{
+                obj.choose_customer=null;
+                obj.customer_type_price=null;
+              }
+
+            this.posModelService.update(obj);
+        }
+
+
+      },
+      _error => {
+        console.error(_error);
+      }
+    );
+  }
+
+  createNewOrder(params) {
+    this.posModelService.update({ loading: true });
+    this.oapi.createOrder(params).subscribe(
+      res => {
+        if(res['order']){
+
+            const order: Orders = res['order'] as Orders;
+            const pos=this.posModelService.get();
+
+            pos.currently_ordered=order;
+            pos.loading=false;
+            pos.orders.unshift(res['order']);
+
+            if(order && order.customer){
+              pos.choose_customer=order.customer;
+              pos.customer_type_price=order.customer_type;
+            }else{
+              pos.choose_customer=null;
+              pos.customer_type_price=null;
+            }
+
+            this.posModelService.update(pos);
+
+
+
+          }
+      },
+      _error => {
+        console.error(_error);
+      }
+    );
   }
 
   getBatch(offset) {
@@ -103,22 +200,8 @@ toggled$:BehaviorSubject<boolean>=new BehaviorSubject(false);
     this.db.addItem(customer);
   }
 
-  saveCustomer(){
-    const customer:Partial<Customer>={
-        full_name:'respice',
-        email:'resp@gmail.com',
-        customer_type_id:1,
-        branch_id:1,
-        title:'Mr',
-        gender:'Male',
-        state:'single',
 
-
-    }
-        this.store.dispatch(new fromStore.AddCustomer(customer));
-      }
-
-      toggled($event) {
+      toggleEvent($event) {
             this.toggled$.next($event!=$event);
       }
       actions(action,data:Customer=null) {

@@ -94,7 +94,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
               if(currently_ordered.customer){
                 pos.choose_customer=currently_ordered.customer;
-                pos.customer_type_price=currently_ordered.customer.customer_type;
+                pos.customer_type_price=currently_ordered.customer_type;
               }else{
                 pos.choose_customer=null;
                 pos.customer_type_price=null;

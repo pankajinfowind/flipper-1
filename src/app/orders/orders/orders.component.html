@@ -41,7 +41,7 @@
             </mat-panel-title>
 
             <mat-panel-title class="col-2 text-center">
-              {{ordered.customer?.cstomer_no}}
+                {{ordered.customer?ordered.customer.full_name:''}}
             </mat-panel-title>
 
             <mat-panel-title class="col-2 text-center">
@@ -117,7 +117,7 @@
             </mat-panel-title>
 
             <mat-panel-title class="col-2 text-center">
-              {{ordered.customer?.cstomer_no}}
+              {{ordered.customer?ordered.customer.full_name:'--no customer--'}}
             </mat-panel-title>
 
             <mat-panel-title class="col-2 text-center">

@@ -18,7 +18,7 @@ export class AddComponent {
   closed: EventEmitter<boolean> = new EventEmitter(false);
 
   constructor(
-    private store:Store<fromStore.CustomersState>,
+    private store:Store<fromStore.FlipperState>,
     public dialogRef: MatDialogRef<AddComponent>,
     private api: CustomerService,
     private customer: CustomerService,

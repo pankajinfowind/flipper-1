@@ -9,7 +9,6 @@ import { Action } from '@ngrx/store';
 export class CustomerEffects{
 constructor(private api:fromServices.CustomerService,private action$:Actions){}
 
-
 @Effect()
 loadCustomers$: Observable<Action> = this.action$.pipe(
   ofType<customerActions.LoadCustomers>(
@@ -24,7 +23,6 @@ loadCustomers$: Observable<Action> = this.action$.pipe(
       )
   )
 );
-
 @Effect()
 addCustomer$: Observable<Action> = this.action$.pipe(
   ofType<customerActions.AddCustomer>(
@@ -51,3 +49,7 @@ serverFailure$: Observable<Action> = this.action$.pipe(
     }));
 
 }
+
+
+
+

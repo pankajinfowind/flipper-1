@@ -1,6 +1,7 @@
 import { OrderItems } from '../pos/cart/order_items';
 import { Insurance } from '../admin/master/insurance/api/insurance';
 import { Customer } from '../customers/customer';
+import { CustomerType } from '../setup/customerType/api/CustomerType';
 
 export class Orders {
 
@@ -12,7 +13,8 @@ export class Orders {
   is_currently_processing: any;
   all?: string;
   user?: any;
-  customer: Customer;
+  customer?: Customer;
+  customer_type?:CustomerType;
   order_items?: OrderItems[] = [];
   branch_id?: number;
   insurance?: Insurance;

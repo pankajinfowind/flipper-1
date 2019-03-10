@@ -74,6 +74,10 @@ export class SalePointComponent implements OnInit {
 
   radius: number;
   color: string;
+  warn = 'warn';
+  accent='accent';
+  primary='primary';
+  mode = 'determinate';
   constructor(private setupModelService:SetUpModelService,private bottomSheet: MatBottomSheet,private bootstrapper_pos: BootstrapperPos,private bootstrapper_stock: Bootstrapper,private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) {
     //this.init_stock();
     this.init_pos();
@@ -116,7 +120,6 @@ checkingCustomerTypeExist(){
 updatePosSetPrice(){
   this.setup$.subscribe(res => {
     if (res) {
-      // this.customer_type = res.customertypes?res.customertypes.find(p=>p.is_active==0):null;
     if(res.customertypes.find(p=>p.is_active==0)){
         const pos= this.posModelService.get();
           pos.customer_type_price=res.customertypes.find(p=>p.is_active==0);
@@ -138,25 +141,26 @@ updatePosSetPrice(){
 getDefaultCustomerPrice(){
   if (!this.pos$) return;
       this.pos$.subscribe(res => {
-        if (res) {
-          this.customer_type =res.customer_type_price || null;
+        if (res && res.customer_type_price) {
+          this.customer_type =res.customer_type_price?res.customer_type_price:null;
         }
       });
 }
-updateSalesPrices(stocks:Array<Stock>){
+updateSalesPrices(stocks:Array<Stock>):Stock[]{
 const updated:Stock[]=[];
 if(stocks.length > 0){
   stocks.forEach(el=>{
     if(el.customer_type_items.length > 0){
-        const prices=el.customer_type_items.find(p=>p['customer_type_id']==this.customer_type.customer_type_id);
-           el.item.unit_sale=prices.sale_price_including_tax;
-
+        const prices=el.customer_type_items.find(p=>p['customer_type_id']==this.customer_type.id);
+              el.item.unit_sale=prices.sale_price_including_tax;
+              el.customer_type=prices.customer_type;
           if (el) {
             updated.push(el);
           }
 
     }else{
       if (el) {
+        el.customer_type=null;
         updated.push(el);
      }
     }
@@ -257,8 +261,7 @@ saveToCartWithOrder(cart,stock:Stock){
       if (cart.total_qty === 0) {
         alert("Stock Quantity is unavailable");
       } else {
-    const sale_price=stock.customer_type_items.find(p=>p.customer_type_id==this.customer_type.customer_type_id);
-
+       const sale_price=stock.customer_type_items.find(p=>p.customer_type_id==stock.customer_type.id);
         const cart_data: OrderItems = {
           batch_no:cart.batch_no,
           note: null,
@@ -346,7 +349,7 @@ saveToCartWithOrder(cart,stock:Stock){
 
             if(order && order.customer){
               pos.choose_customer=order.customer;
-              pos.customer_type_price=order.customer.customer_type;
+              pos.customer_type_price=order.customer_type;
             }else{
               pos.choose_customer=null;
               pos.customer_type_price=null;
@@ -387,6 +390,10 @@ saveToCartWithOrder(cart,stock:Stock){
       });
     }
   }
+  percentage(num,num1) {
+    let sum=Math.round(parseInt(num) *100)/parseInt(num1);
+  return isNaN(sum)?0:sum.toFixed(1);
+}
 }
 
 

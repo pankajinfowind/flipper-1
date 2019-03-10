@@ -7,17 +7,29 @@
     </button>
   </div>
 
-  <app-manage-customer [action]='action' [data]="data" *ngIf="(toggled$ | async)" (closed)="toggled($event)"></app-manage-customer>
-  <div *ngIf="!(toggled$ | async)">
-    <button mat-raised-button color="accent" (click)="actions('add')">+</button>
-    <!-- <button mat-raised-button color="accent" style="float:right;"  (click)="saveCustomer()">Save</button> -->
+
+  <app-manage-customer [action]='action' [data]="data" *ngIf="(toggled$ | async)" (closed)="toggleEvent($event)"></app-manage-customer>
+  <div *ngIf="!(toggled$ | async)" class="row m-2">
+      <div class="col-8">
+          <!-- <mat-form-field class="w-100 px-2">
+              <input
+                matInput
+                (keyup)="applyFilter($event.target.value)"
+                placeholder="Search"
+              />
+            </mat-form-field> -->
+        </div>
+        <div class="col-4">
+           <button color='accent' class="float-right" mat-raised-button   (click)="actions('add')">
+           <mat-icon class="">add</mat-icon>Add a Customer</button>
+        </div>
   </div>
   <mat-dialog-content class="many-inputs" *ngIf="(loaded$ | async) && !(toggled$ | async)">
 
     <span *ngIf="(customers$ | async)?.length == 0">
     no data found
     </span>
-
+    <div class="section-container">
 <table *ngIf="(customers$ | async)?.length > 0" mat-table [dataSource]="(customers$ | async)" class="mat-elevation-z8"
   style="width:100%;margin-top:20px;">
   <ng-container matColumnDef="cstomer_no">
@@ -31,13 +43,20 @@
 
   <ng-container matColumnDef="phone">
     <th mat-header-cell *matHeaderCellDef> Phone </th>
-    <td mat-cell *matCellDef="let customer"> {{customer.phone}} </td>
+    <td mat-cell *matCellDef="let customer"> {{customer.phone}}</td>
   </ng-container>
 
+  <ng-container matColumnDef="operation">
+    <th mat-header-cell *matHeaderCellDef> Action </th>
+
+    <td mat-cell *matCellDef="let customer">
+        <button mat-raised-button color="accent" (click)="updateOrdered(customer)" [disabled]="selected_customer.id===customer.id?true:false">Select<span *ngIf="selected_customer.id===customer.id?true:false">ed</span></button>
+      </td>
+  </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="tableHeads"></tr>
-  <tr (click)="emitCustomer(row)" mat-row *matRowDef="let row; columns:
-    tableHeads;"></tr>
+  <tr [class.highlighted]="selected_customer.id===row.id?true:false" mat-row *matRowDef="let row; columns:tableHeads;"></tr>
 </table>
+</div>
 
 </mat-dialog-content>

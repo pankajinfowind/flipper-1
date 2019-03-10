@@ -23,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
-    StoreModule.forFeature('customers',reducers),
+    StoreModule.forFeature('flipperModel',reducers),
     EffectsModule.forFeature(effect),
   ],
   exports: [ListComponent,ManageCustomerComponent],

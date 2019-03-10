@@ -1,5 +1,6 @@
 import{Action} from'@ngrx/store';
 import { Customer } from '../../customers/customer';
+import { PaginationResponse } from '../../common/core/types/pagination-response';
 
 //load customers
 export const LOAD_CUSTOMERS='[CUSTOMERS] Load Customers';
@@ -28,7 +29,7 @@ export class LoadCustomersFail implements Action{
 export class LoadCustomersSuccess implements Action{
 
       readonly type = LOAD_CUSTOMERS_SUCCESSS;
-      constructor(public payload:Customer[]){
+      constructor(public payload:PaginationResponse<Customer>){
       }
 }
 export class UpdateCustomerRecord implements Action{

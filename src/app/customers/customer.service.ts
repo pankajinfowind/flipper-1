@@ -7,6 +7,8 @@ import { Sqlite3Service } from '../common/sqlit3/sqlite3.service';
 import { ElectronService } from 'ngx-electron';
 import { Orders } from '../orders/orders';
 import { catchError } from 'rxjs/operators';
+import { PaginationResponse } from '../common/core/types/pagination-response';
+import { HttpCacheClient } from '../common/core/http/http-cache-client';
 
 
 @Injectable({
@@ -16,7 +18,7 @@ export class CustomerService extends Sqlite3Service {
   public model: Model<Customer[]>;
   ROOT_URL = "customers";
   customers$: Observable<Customer[]>;
-  protected http: AppHttpClient;
+  protected http: HttpCacheClient;
   custObs: Observable<Customer[]>;
   constructor(
     _electronService: ElectronService,
@@ -26,7 +28,7 @@ export class CustomerService extends Sqlite3Service {
     super(_electronService);
     this.model = this.modelFactory.create([]);
     this.customers$ = this.model.data$;
-    this.http = this.injector.get(AppHttpClient);
+    this.http = this.injector.get(HttpCacheClient);
   }
   createCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.http.post<Customer>(this.ROOT_URL, customer);
@@ -62,11 +64,11 @@ export class CustomerService extends Sqlite3Service {
     return this.observed;
   }
 
-  getAllCustomers():Observable<Customer[]>{
-        return this.http.get<Customer[]>(this.ROOT_URL).pipe(catchError((error:any)=>Observable.throw(error.json())));
+  getAllCustomers(params = {order_by:'created_at',order_dir:'desc',per_page:30,query:null}): Observable<PaginationResponse<Customer>> {
+        return this.http.getWithCache(this.ROOT_URL,params);
   }
-  create(customer: Partial<Customer>):Observable<Customer>{
-    return this.http.post<Customer>(this.ROOT_URL, customer).pipe(catchError((error:any)=>Observable.throw(error.json())));
+  create(customer: Partial<Customer>): Observable<Customer> {
+    return this.http.post(this.ROOT_URL, customer);
 }
   editCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.http.put<Customer>(this.ROOT_URL, customer);

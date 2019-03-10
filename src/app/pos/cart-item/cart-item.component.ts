@@ -254,7 +254,7 @@ export class CartItemComponent implements OnInit, OnDestroy {
 
     }
   }
-  customers: Customer[] = [];
+  customers: Customer=null;
   private unsubscribe$: Subject<void> = new Subject<void>();
   //TODO:use this strategy of unsubscribing to orders.components
   ngOnDestroy(): void {
@@ -263,13 +263,7 @@ export class CartItemComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
   ngOnInit() {
-    this.db.items$
-      .pipe(
-        takeUntil(this.unsubscribe$) // declarative unsubscription
-      )
-      .subscribe(customer => {
-        this.customers = customer;
-      });
+
     if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
     }
@@ -283,6 +277,7 @@ export class CartItemComponent implements OnInit, OnDestroy {
         if (p) {
           this.currently_ordered = p.currently_ordered;
           this.choosen_insurance = p.currently_ordered ? p.currently_ordered.insurance : null;
+          this.customers=p.choose_customer;
         }
       });
     }
@@ -335,8 +330,8 @@ export class CartItemComponent implements OnInit, OnDestroy {
     this.currently_ordered.is_currently_processing = '0';
     //TODO: when order is unholded remember to get associated customer re-add him on our ngx db again
     //TODO: do this on pay action
-    if (this.customers.length > 0) {
-      this.currently_ordered.customer_id = this.customers[0].customer_id;
+    if (this.customers) {
+      this.currently_ordered.customer_id = this.customers.customer_id;
     }
     this.api.updateOrder(this.currently_ordered, this.currently_ordered.id).subscribe(
       res => {

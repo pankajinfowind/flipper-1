@@ -1,21 +1,25 @@
 import * as appConfig from "electron-settings";
+import { screen } from 'electron';
 ///building this.windowStateKeeper
 ///building windowStateKeeper
 
 export function windowStateKeeper(windowName) {
   let window, windowState;
   function setBounds() {
+    const electronScreen = screen;
+    const size = electronScreen.getPrimaryDisplay().workAreaSize;
     // Restore from appConfig
     if (appConfig.has(`windowState.${windowName}`)) {
       windowState = appConfig.get(`windowState.${windowName}`);
       return;
     }
+
     // Default
     windowState = {
       x: undefined,
       y: undefined,
-      width: 1000,
-      height: 800,
+      width: size.width,
+      height: size.height
     };
   }
   function saveState() {

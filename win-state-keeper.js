@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var appConfig = require("electron-settings");
+var electron_1 = require("electron");
 ///building this.windowStateKeeper
 ///building windowStateKeeper
 function windowStateKeeper(windowName) {
     var window, windowState;
     function setBounds() {
+        var electronScreen = electron_1.screen;
+        var size = electronScreen.getPrimaryDisplay().workAreaSize;
         // Restore from appConfig
         if (appConfig.has("windowState." + windowName)) {
             windowState = appConfig.get("windowState." + windowName);
@@ -15,8 +18,8 @@ function windowStateKeeper(windowName) {
         windowState = {
             x: undefined,
             y: undefined,
-            width: 1000,
-            height: 800,
+            width: size.width,
+            height: size.height
         };
     }
     function saveState() {

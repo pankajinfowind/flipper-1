@@ -7,7 +7,7 @@ import { DB } from './db/db';
 import { Sync } from './sync/sync'
 
 //TODO: make sure to fix icon thing it is not building
-const mainWindowStateKeeper = windowStateKeeper("main");
+
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -92,7 +92,9 @@ if (!isDev) {
 }
 
 makeSingleInstance();
+
 function createWindow() {
+  const mainWindowStateKeeper = windowStateKeeper("main");
   const windowOptions = {
     x: mainWindowStateKeeper.x,
     y: mainWindowStateKeeper.y,
@@ -224,6 +226,7 @@ app.on("window-all-closed", () => {
 });
 try {
   app.on("ready", createWindow);
+
   app.on("ready", function () {
     if (!isDev) {
       autoUpdater.checkForUpdatesAndNotify();

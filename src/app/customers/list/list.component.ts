@@ -80,7 +80,14 @@ dataSource = new MatTableDataSource<Customer>([]);
   }
 
   updateOrdered(row) {
-if(!(this.current_order || row)) return;
+    if(!this.current_order){
+      const pos=this.posModelService.get();
+      pos.choose_customer=row;
+      pos.customer_type_price=row.customer_type;
+      pos.panel_content='home';
+      this.posModelService.update(pos);
+
+    }else{
     const params:Orders={
       is_currently_processing:1,
       customer_id:row.customer_id,
@@ -111,40 +118,10 @@ if(!(this.current_order || row)) return;
         console.error(_error);
       }
     );
+    }
   }
 
-  createNewOrder(params) {
-    this.posModelService.update({ loading: true });
-    this.oapi.createOrder(params).subscribe(
-      res => {
-        if(res['order']){
 
-            const order: Orders = res['order'] as Orders;
-            const pos=this.posModelService.get();
-
-            pos.currently_ordered=order;
-            pos.loading=false;
-            pos.orders.unshift(res['order']);
-
-            if(order && order.customer){
-              pos.choose_customer=order.customer;
-              pos.customer_type_price=order.customer_type;
-            }else{
-              pos.choose_customer=null;
-              pos.customer_type_price=null;
-            }
-
-            this.posModelService.update(pos);
-
-
-
-          }
-      },
-      _error => {
-        console.error(_error);
-      }
-    );
-  }
 
   getBatch(offset) {
     //TODO: replace this func with my database call

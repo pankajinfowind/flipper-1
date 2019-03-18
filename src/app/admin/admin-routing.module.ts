@@ -30,6 +30,11 @@ const routes: Routes = [
               canActivate: [AuthGuard]
             },
             {
+              path: 'sales',
+              loadChildren: 'app/sales/sales.module#SalesModule',
+              canActivate: [AuthGuard]
+            },
+            {
               path: 'pos',
               loadChildren: 'app/pos/pos.module#PosModule',
               canActivate: [AuthGuard]

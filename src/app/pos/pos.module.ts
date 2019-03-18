@@ -26,6 +26,7 @@ import { ModelFactory } from "ngx-model";
 import { OrdersModule } from '../orders/orders.module';
 import { PayModule } from '../pay/pay.module';
 import { CustomersModule } from '../customers/customers.module';
+import { InvoicesModule } from '../invoices/invoices.module';
 
 @NgModule({
   declarations: [
@@ -38,8 +39,7 @@ import { CustomersModule } from '../customers/customers.module';
   ],
   imports: [CommonModule, MaterialModule, PosRoutingModule, UiModule, OrdersModule,
      PayModule,
-      CustomersModule,
-    ],
+      CustomersModule,InvoicesModule],
   exports: [SessionsComponent, SalePointComponent, PosComponent, CartDialog,BottomSheetOverviewStock],
   entryComponents: [CartDialog,BottomSheetOverviewStock],
   providers: [ApiPosService, ModelFactory]

@@ -339,13 +339,15 @@ export class CartItemComponent implements OnInit, OnDestroy {
 
           const pos=this.posModelService.get();
 
-          pos.currently_ordered=null;
-          pos.orders=res["orders"].length > 0 ? res['orders'] as Orders[]:[];
+            pos.currently_ordered=null;
+            pos.orders=res["orders"].length > 0 ? res['orders'] as Orders[]:[];
+            pos.choose_customer=null;
+            pos.customer_type_price=null;
+            pos.panel_content='home';
           this.posModelService.update(pos);
 
           this.orderItemModelService.update([], 'all');
 
-          this.updatePosLayout('home');
         }
       },
       _error => {

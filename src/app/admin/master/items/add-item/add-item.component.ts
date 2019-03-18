@@ -98,20 +98,20 @@ export class AddItemComponent implements OnInit {
     });
     const numberPatern = '^[0-9.,]+$';
     this.thirdFormGroup = new FormGroup({
-      qty: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
+      qty: new FormControl(0.00),
       min_stock: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       max_stock: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       on_order: new FormControl(0.00, [Validators.required, Validators.pattern(numberPatern)]),
       show_alert: new FormControl(0),
       unit_of_sale: new FormControl('units'),
       unit_of_volume: new FormControl(0),
-      reason_id: new FormControl('', [Validators.required]),
+      reason_id: new FormControl(null),
       transction_date: new FormControl(new Date()),
       expired_date: new FormControl(null),
       currency: new FormControl(this.currentUser.get('business')[0].currency_code),
       comments: new FormControl('New stock'),
       unit_price: new FormControl(0.00),
-      tax_rate_id: new FormControl(0)
+      tax_rate_id: new FormControl(null)
     });
 
     this.secondFormGroup = new FormGroup({

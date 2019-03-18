@@ -1,15 +1,18 @@
 import {ActionReducerMap, createSelector, createFeatureSelector} from '@ngrx/store';
 import * as fromCustomers from './customer.reducer';
 import * as fromOrders from './order.reducer';
+import * as fromInvoices from './invoice.reducer';
 export interface FlipperState{
     customers:fromCustomers.CustomerState,
-    orders:fromOrders.OrderState
+    orders:fromOrders.OrderState,
+    invoices:fromInvoices.InvoiceState
 }
 
 
 export const reducers:ActionReducerMap<FlipperState> ={
 customers:fromCustomers.reducer,
 orders:fromOrders.reducer,
+invoices:fromInvoices.reducer
 };
 
 export const getAllState=createFeatureSelector<FlipperState>('flipperModel');
@@ -74,5 +77,32 @@ export const getCustomersState=createSelector(
 
                           export const addOrder=createSelector(
                             getOrdersState,fromOrders.addOrder);
+
+
+
+                            ////////////////////////////////////////////// InvoicesSelesctor
+
+                      export const getInvoicesState=createSelector(
+                        getAllState,
+                        (state:FlipperState)=>state.invoices);
+
+                        export const getAllInvoices=createSelector(
+                          getInvoicesState,fromInvoices.getInvoices);
+
+                          export const getInvoiceMeta=createSelector(
+                            getInvoicesState,fromInvoices.getInvoiceMeta);
+
+
+                          export const getInvoicesLoaded=createSelector(
+                            getInvoicesState,fromInvoices.getInvoicesLoaded);
+
+                            export const getInvoicesLoading=createSelector(
+                              getInvoicesState,fromInvoices.getInvoicesLoading);
+
+                              export const isInvoiceSuccess=createSelector(
+                                getInvoicesState,fromInvoices.isSuccess);
+
+                              export const addInvoice=createSelector(
+                                getInvoicesState,fromInvoices.addInvoice);
 
 

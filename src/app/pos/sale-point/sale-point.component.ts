@@ -118,12 +118,14 @@ checkingCustomerTypeExist(){
   });
 }
 updatePosSetPrice(){
+  if (!this.setup$) return;
   this.setup$.subscribe(res => {
     if (res) {
     if(res.customertypes.find(p=>p.is_active==0)){
         const pos= this.posModelService.get();
           pos.customer_type_price=res.customertypes.find(p=>p.is_active==0);
           this.posModelService.update(pos);
+
       }
 
     }
@@ -280,7 +282,13 @@ saveToCartWithOrder(cart,stock:Stock){
         if (this.current_order) {
           this.updateOrderItem(cart_data);
         } else {
-        this.createNewOrder({ status: 'ordered', branch_id: parseInt(localStorage.getItem('active_branch')), user_id: this.currentUser.get('id'), business_id: this.currentUser.get('business')[0].id, cart_data: cart_data });
+          const pos=this.posModelService.get();
+        this.createNewOrder({ status: 'ordered',
+          branch_id: parseInt(localStorage.getItem('active_branch')),
+          user_id: this.currentUser.get('id'),
+          business_id: this.currentUser.get('business')[0].id,
+          customer_id:pos.choose_customer?pos.choose_customer.customer_id:null,
+          cart_data: cart_data });
         }
       }
   }

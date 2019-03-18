@@ -110,7 +110,6 @@ export class BootstrapperPos {
                     obj.customer_type_price=null;
                   }
 
-                  console.log(obj);
                 this.posModelService.update(obj);
                   if(obj){
                     this.orderItemModelService.update(order['order_items'], 'all');

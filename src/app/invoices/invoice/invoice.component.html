@@ -1,0 +1,147 @@
+<div>
+  <mat-toolbar>
+      <mat-toolbar-row>
+        <div class="col-8">
+            <button mat-button><mat-icon class="">menu</mat-icon>Invoices </button>
+          <span class="spacer"></span>
+          <span class="spacer"></span>
+          </div>
+          <div class="col-4">
+             <!-- <button color='accent' class="float-right" mat-raised-button   (click)="addItem()">
+             <mat-icon class="">add</mat-icon>Add a Product</button> -->
+             <!-- <button mat-button color='warn' class="float-right" *ngIf="selection.selected.length > 0" (click)="removeDialog()"><mat-icon class="">delete</mat-icon>Delete ({{selection.selected.length}}) selected</button> -->
+          </div>
+      </mat-toolbar-row>
+  </mat-toolbar>
+  <loading-indicator [isVisible]="dataSource.loading$ | async" class="overlay"></loading-indicator>
+<div class="m-3 row">
+    <mat-form-field class="col-3" appearance="outline" *ngIf="(setup$ | async)?.customertypes.length > 0">
+        <mat-label>Search By Customer Type</mat-label>
+            <select matNativeControl  #findCustomerType>
+                <option *ngFor="let  c of (setup$ | async)?.customertypes" [value]="c.id">
+                    {{c.name}}
+                </option>
+                </select>
+
+        <mat-icon *ngIf="findCustomerType.value" (click)="clear()" color='primary' style="cursor:pointer"
+        matSuffix>close</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="col-3" appearance="outline">
+          <mat-label>Search Invoice No</mat-label>
+          <input matInput placeholder="Enter Invoice No." #input>
+          <mat-icon *ngIf="input.value" (click)="clear()" color='primary' style="cursor:pointer"
+          matSuffix>close</mat-icon>
+      </mat-form-field>
+
+      <!-- <div class="col-6">
+          <form [formGroup]="searchForm" #searchInvoiceByDate>
+          <div class="col-4">
+            <mat-form-field appearance="outline" class="col-12">
+              <mat-label>From</mat-label>
+
+              <input matInput [matDatepicker]="from" placeholder="From" formControlName="from">
+              <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+              <mat-datepicker #from></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-4">
+            <mat-form-field appearance="outline" class="col-12">
+              <mat-label>To</mat-label>
+
+              <input matInput [matDatepicker]="to" placeholder="to" formControlName="to">
+              <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+              <mat-datepicker #to></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-4">
+            <button type="submit" mat-raised-button color='accent' [disabled]="(dataSource.loading$ | async) || searchForm.invalid">
+              Search
+            </button>
+          </div>
+          </form>
+        </div> -->
+  </div>
+
+  <div class="section-container">
+    <mat-table [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" matSortDisableClear>
+
+      <ng-container matColumnDef="invoice_no">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>#No</mat-header-cell>
+        <mat-cell *matCellDef="let invoice">{{invoice.invoice_no}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="customer">
+      <mat-header-cell *matHeaderCellDef>Customer</mat-header-cell>
+      <mat-cell *matCellDef="let invoice" class="ellipsis">{{invoice.customer?invoice.customer.full_name:'--no customer--'}}
+      </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="customer_type">
+    <mat-header-cell *matHeaderCellDef>Customer Type</mat-header-cell>
+    <mat-cell *matCellDef="let invoice" class="ellipsis">{{invoice.customer_type?invoice.customer_type.name:''}}
+    </mat-cell>
+</ng-container>
+
+    <ng-container matColumnDef="invoice_date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Date</mat-header-cell>
+      <mat-cell *matCellDef="let invoice">{{invoice.invoice_date | date}}
+      </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="invoice_time">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Time</mat-header-cell>
+    <mat-cell *matCellDef="let invoice">{{invoice.invoice_date | date:'shortTime' }}
+    </mat-cell>
+</ng-container>
+  <ng-container matColumnDef="total_items">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Items</mat-header-cell>
+    <mat-cell *matCellDef="let invoice">{{invoice.total_items}}</mat-cell>
+</ng-container>
+<ng-container matColumnDef="total_amount">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Total Amount</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{currency_code}} {{invoice.total_amount}}</mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="total_discounts">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Total Discount</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{currency_code}} {{invoice.total_discounts}}</mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="amount_given">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Amount Paid</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{currency_code}} {{invoice.amount_given}}</mat-cell>
+</ng-container>
+<ng-container matColumnDef="amount_return">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Change Due</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{currency_code}} {{invoice.amount_return}}</mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="payment_method">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Method</mat-header-cell>
+    <mat-cell *matCellDef="let invoice">{{invoice.payment_method}}</mat-cell>
+</ng-container>
+<ng-container matColumnDef="status">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">
+      <span class="wv-tooltip__target">
+        <span class="wv-badge wv-badge--success" *ngIf="invoice.status=='complete'">Complete</span>
+        <span class="wv-badge wv-badge--muted" *ngIf="invoice.status=='pending'">Pending</span>
+        <span class="wv-badge wv-badge--danger" *ngIf="invoice.status=='failed'">Failed</span>
+        </span>
+    </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="created_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Created at</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{invoice.created_at | date}}</mat-cell>
+</ng-container>
+<mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <invoice-no-entry-found *ngIf="dataSource.count == 0"  [message]="message('Invoice list')" [subMessage]='subMessage("invoice list")'></invoice-no-entry-found>
+
+  </div>
+
+  <mat-paginator [length]="dataSource.count" [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 15,30,50,80,100]"></mat-paginator>
+
+
+  </div>

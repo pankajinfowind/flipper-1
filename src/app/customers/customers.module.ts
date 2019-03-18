@@ -29,4 +29,5 @@ import { HttpClientModule } from '@angular/common/http';
   exports: [ListComponent,ManageCustomerComponent],
 
 })
+
 export class CustomersModule { }

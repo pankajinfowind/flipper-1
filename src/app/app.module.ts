@@ -4,11 +4,8 @@ import "../polyfills";
 import { BrowserModule } from "@angular/platform-browser";
 import {
   NgModule,
-  APP_INITIALIZER,
   Injectable,
-  ErrorHandler,
-  CUSTOM_ELEMENTS_SCHEMA
-} from "@angular/core";
+  ErrorHandler} from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";

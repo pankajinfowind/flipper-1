@@ -50,12 +50,12 @@
     <th mat-header-cell *matHeaderCellDef> Action </th>
 
     <td mat-cell *matCellDef="let customer">
-        <button mat-raised-button color="accent" (click)="updateOrdered(customer)" [disabled]="selected_customer.id===customer.id?true:false">Select<span *ngIf="selected_customer.id===customer.id?true:false">ed</span></button>
+        <button mat-raised-button color="accent" (click)="updateOrdered(customer)" [disabled]="selected_customer && selected_customer.id===customer.id?true:false">Select<span *ngIf="selected_customer && selected_customer.id===customer.id?true:false">ed</span></button>
       </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="tableHeads"></tr>
-  <tr [class.highlighted]="selected_customer.id===row.id?true:false" mat-row *matRowDef="let row; columns:tableHeads;"></tr>
+  <tr [class.highlighted]="selected_customer && selected_customer.id===row.id?true:false" mat-row *matRowDef="let row; columns:tableHeads;"></tr>
 </table>
 </div>
 

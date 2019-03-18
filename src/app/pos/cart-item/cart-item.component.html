@@ -10,12 +10,12 @@
   </div>
   <div>
     <!-- retrive customer from our ngx db as an item -->
-    <mat-toolbar *ngIf="customers" style="background: #000;color:#fff; font-size: 15px;font-family: 'Times New Roman', Times, serif ">
+    <mat-toolbar *ngIf="(pos$ | async).choose_customer" style="background: #000;color:#fff; font-size: 15px;font-family: 'Times New Roman', Times, serif ">
     <mat-toolbar-row>
-      <span>{{customers.title}} {{customers.full_name}} <span *ngIf="customers.addres">,{{customers.address}}</span></span>
+      <span>{{(pos$ | async).choose_customer.title}} {{(pos$ | async).choose_customer.full_name}} <span *ngIf="(pos$ | async).choose_customer.address">,{{(pos$ | async).choose_customer.address}}</span></span>
       <span class="example-spacer"></span>
-      <span class="example-icon">{{customers.customer_type.name}}({{customers.customer_type.discount_value}} %)</span>
-      <span class="example-icon" *ngIf="customers.customer_no">No:#{{customers.customer_no}}</span>
+      <span class="example-icon">{{(pos$ | async).choose_customer.customer_type.name}}({{(pos$ | async).choose_customer.customer_type.discount_value}} %)</span>
+      <span class="example-icon" *ngIf="(pos$ | async).choose_customer.customer_no">No:#{{(pos$ | async).choose_customer.customer_no}}</span>
     </mat-toolbar-row>
   </mat-toolbar>
 

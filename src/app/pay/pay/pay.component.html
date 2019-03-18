@@ -1,3 +1,4 @@
+<loading-indicator [isVisible]="(loading$ | async)" class="overlay"></loading-indicator>
 <div class="primary-section-screen-replacement__page-content flipper-pay-panel">
   <div class="iscroll__wrapper flipper-pay-panel__items-iscroll-wrapper">
     <div class="flipper-pay-panel__items-iscroll-scroller" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
@@ -73,16 +74,20 @@
                 <li class="flipper-pay-panel__summary--label">Tax</li>
                 <li><span class="currency">{{business.currency_code}} </span> {{total('taxable_vat')}}</li>
                 <li class="flipper-pay-panel__summary--label">Basket Discount</li>
-                <li><span class="currency">{{business.currency_code}} </span> 0.00</li>
+                <li><span class="currency">{{business.currency_code}} </span> {{total('total_amount_discount')}}</li>
               </ul>
               <ul class="flipper-pay-panel__summary--right">
                 <li class="flipper-pay-panel__summary--label">Item Discount</li>
                 <li><span class="currency">{{business.currency_code}} </span> {{total('total_amount_discount')}}</li>
                 <li class="flipper-pay-panel__summary--label">Customer Discount</li>
-                <li><span class="currency">{{business.currency_code}} </span> 0.00</li>
+                <li><span class="currency">{{business.currency_code}} </span> {{total('total_amount_discount')}}</li>
                 <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}">Change Due</li>
                 <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}"><span class="currency">{{business.currency_code}} </span>
                   {{amount_return}}</li>
+
+                  <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}">Discount Change Due</li>
+                  <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '400'}"><span class="currency">{{business.currency_code}} </span>
+                    {{d_amount_return}}</li>
 
               </ul>
             </div>
@@ -92,18 +97,20 @@
 
         <ul class="button-group button-group--inline flipper-pay-buttons">
           <li class="button-group__button flipper-pay-panel__list-button">
-            <div (click)="payingInvoice('cash')" class="flipper-pay-panel__list-button-label">Cash</div>
+            <div (click)="payingInvoice()" class="flipper-pay-panel__list-button-label">Cash</div>
           </li>
           <!-- <li class="button-group__button flipper-pay-panel__list-button">
             <div class="flipper-pay-panel__list-button-label">Card</div>
           </li> -->
 
-          <li (click)="payingInvoice('gift')" class="button-group__button flipper-pay-panel__list-button">
+          <!-- <li (click)="payingInvoice('Other')" class="button-group__button flipper-pay-panel__list-button">
             <div class="flipper-pay-panel__list-button-label">Gift Voucher</div>
-          </li>
+          </li> -->
         </ul>
         <ul class="button-group button-group--inline flipper-pay-buttons"></ul>
       </div>
     </div>
   </div>
 </div>
+<!-- <button type="button" class="btn btn-success btn-md" (click)="print()"><i class="mdi mdi-printer"></i>print </button>
+<div id="print-section" style="height:auto;overflow-y: auto; display:none">  </div> -->

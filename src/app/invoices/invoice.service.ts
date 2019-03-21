@@ -3,6 +3,7 @@ import { Observable } from "rxjs";;
 import { PaginationResponse } from '../common/core/types/pagination-response';
 import { HttpCacheClient } from '../common/core/http/http-cache-client';
 import { Invoice } from './invoice';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -18,10 +19,10 @@ export class InvoiceService {
   }
 
   get(params): Observable<PaginationResponse<Invoice>> {
+
         return this.http.getWithCache(this.ROOT_URL,params);
   }
   create(invoice: Partial<Invoice>): Observable<Invoice> {
-    console.log(invoice);
     return this.http.post(this.ROOT_URL, invoice);
 }
   edit(invoice: Partial<Invoice>): Observable<Invoice> {

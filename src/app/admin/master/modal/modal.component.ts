@@ -80,10 +80,10 @@ export class ModalComponent implements OnInit {
       const data = { name: this.cateogryForm.value.name };
       this.apiCat.create(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
         res => {
-        if(res.status=='success'){
-            this.toast.open('Category recorded successfull!');
-            //this.valueChange.emit(res);
-          }
+        // if(res.status=='success'){
+        //     this.toast.open('Category recorded successfull!');
+        //     //this.valueChange.emit(res);
+        //   }
         },
         _error => {
         console.error(_error);

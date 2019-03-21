@@ -59,17 +59,21 @@ app-master {
 
           &.active {
             color: $site-primary-color-100;
-            // background-color: $site-selected-item-bg-color;
-            // border-top-right-radius: 25px;
-            // border-bottom-right-radius: 25px;
+            background-color: $site-selected-item-bg-color;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
             .text {
+              color: $site-primary-color-100;
               font-weight: 500!important;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             &:not(.active):not(.drag-over):hover {
               background-color: $site-bg-color-300;
               border-top-right-radius: 25px;
               border-bottom-right-radius: 25px;
+              color: $site-primary-color-100;
             }
           }
         }

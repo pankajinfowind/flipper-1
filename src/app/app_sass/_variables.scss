@@ -1,3 +1,4 @@
+@import '../common/scss/variables';
 @import '~@angular/material/theming';
 //media queries
 $phone: 576px !default;
@@ -158,19 +159,15 @@ html{
 .highlighted {
   color: $site-primary-color-100;
   background-color: $site-selected-item-bg-color;
-  border-top-right-radius: 25px;
-  border-bottom-right-radius: 25px;
-  .text {
+  .mat-cell {
     color: $site-primary-color-100;
     font-weight: 500!important;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  &:not(.active):not(.drag-over):hover {
+  &:not(.highlighted):not(.drag-over):hover {
     background-color: $site-bg-color-300;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
     color: $site-primary-color-100;
   }
 }
@@ -183,4 +180,31 @@ html{
   height: 400px;
   width: 100%;
   overflow: auto;
+}
+.button{
+  color: #fff;
+  background: #136acd;
+}
+.button-cancel{
+  color: none;
+  background: none;
+}
+.button-cancel,.button{
+
+    border: 1px solid transparent;
+    text-align: center;
+    min-width: 100px;
+    border-radius: 500px;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: middle;
+    outline: 0;
+    font-family: Averta,sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    white-space: nowrap;
 }

@@ -17,20 +17,15 @@ export class MasterComponent implements OnInit, OnDestroy {
 
 links: any[] = [
   {
-menu:'Products',icon:'assignment',
-submenu:[
-        {path:'item',label:'Product List'},
-        {path:'category',label:'Categories'},
-        {path:'brand',label:'Brands'}
-      ]
+    menu:'Categories',icon:'assignment',path:'category',
+  },
+  {
+    menu:'Brands',icon:'assignment',path:'brand',
+  },
+  {
+    menu:'Products',icon:'assignment',path:'item',
   }
-  // {
-  //   menu:'Staff',icon:'assignment',
-  //   submenu:[
-  //           {path:'category',label:'Staff'},
-  //           {path:'pricing',label:'Staff Roles'}
-  //         ]
-  // }
+
 ];
 toggled=false;
 @Select(MasterState.loading) loading$: Observable<boolean>;

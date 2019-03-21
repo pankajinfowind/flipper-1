@@ -1,149 +1,80 @@
-import { Component, OnInit, ViewChild, Input, ChangeDetectorRef, DoCheck, Inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit, ViewChild,ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ApiCategoryService } from './api/api.service';
-import { finalize, isEmpty } from 'rxjs/operators';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import {MatSort } from '@angular/material';
 import { Category } from './api/category';
-import { Select } from '@ngxs/store';
-import { MasterState } from '../../../state/master-state';
-import { AsyncPipe } from '@angular/common';
-import { Details } from '../../../details/details';
-import { SelectionModel } from '@angular/cdk/collections';
-import { DetailsService } from '../../../details/details.service';
-import { Toast } from '../../../common/core/ui/toast.service';
-import { Master } from '../master';
-import { MasterModelService } from '../master-model.service';
+import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
+import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
+import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
+import { Modal } from '../../../common/core/ui/dialogs/modal.service';
+import { CrupdateCategoryModalComponent } from './crupdate-category-modal/crupdate-category-modal.component';
 
-@Component({
-  selector: "remove-dialog",
-  templateUrl: './remove-dialog.html',
-  styleUrls: ["./categories.component.scss"]
-})
-export class RemoveCategoryDialog {
-  cat_deleted=[];
-  public loading = new BehaviorSubject(false);
-  constructor(private msterModelService:MasterModelService,private toast: Toast,private api: ApiCategoryService,
-    public dialogRef: MatDialogRef<RemoveCategoryDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    }
-
-    deleteCategory(){
-      this.loading.next(true);
-        this.data.forEach(element => {
-          this.api
-          .delete(element.category_id).subscribe(
-              res => {
-                  if(res.status=='success'){
-                    this.dialogRef.close({status:'success'});
-                    this.msterModelService.update({loading: false, categories: res['categories']['data']?res['categories']['data']:[]});
-                  }
-              },
-              _error => {
-                this.toast.open('Nothing deleted!');
-                this.dialogRef.close({status:'failed'});
-                console.error(_error);
-              }
-          );
-        });
-
-    }
-
-
-
-  close(): void {
-    this.dialogRef.close({status:'none'});
-  }
-}
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  styleUrls: ['./categories.component.scss'],
+  providers: [UrlAwarePaginator],
+  encapsulation: ViewEncapsulation.None,
 })
-export class CategoriesComponent implements   OnInit {
+export class CategoriesComponent implements OnInit, OnDestroy {
+  @ViewChild(MatSort) matSort: MatSort;
 
-  public loading = new BehaviorSubject(false);
-  can_delete=false;
+  public dataSource: PaginatedDataTableSource<Category>;
 
-  constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api:ApiCategoryService,private ref: ChangeDetectorRef) { }
-  data: Category[] = [];
-  displayedColumns: string[] = ['select', 'name'];
-  dataSource = new MatTableDataSource<Category>([]);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  master$: Observable<Master>;
-
-  subscription: Observable<Details>;
-  details$: Observable<Details>;
-  selection = new SelectionModel<Category>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
+  constructor( public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCategoryService) { }
 
   ngOnInit() {
+    this.dataSource = new PaginatedDataTableSource<Category>({
+      uri: 'category',
+      dataPaginator: this.paginator,
+      matSort: this.matSort
+  });
+}
 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.subscription = this.details$ = this.detailsService.details$;
+ngOnDestroy() {
+  this.paginator.destroy();
+}
 
-    this.master$ = this.msterModelService.master$;
 
-        this.master$.subscribe(res=>{
-          if(res.categories.length  > 0){
-            this.data=res.categories;
-            this.dataSource.data=this.data;
-            this.detailsService.close();
-          }else{
-            this.canUserAddCategory();
-          }
+/**
+     * Delete currently selected users.
+     */
+    public deleteSelectedCategories() {
+      const ids = this.dataSource.selectedRows.selected.map(cat => cat.id);
+
+      this.api.deleteMultiple(ids).subscribe(() => {
+          this.paginator.refresh();
+          this.dataSource.selectedRows.clear();
       });
-
   }
-  openDetails(title='New Category',action='new',obj){
-     this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-categories',action:action,detailsVisible:true});
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  removeDialog(): void {
-    if (this.selection.selected.length > 0) {
-      const dialogRef = this.dialog.open(RemoveCategoryDialog, {
-        width: '400px',
-        data: this.selection.selected
+ /**
+     * Ask user to confirm deletion of selected tags
+     * and delete selected tags if user confirms.
+     */
+    public maybeDeleteSelectedCategories() {
+      this.modal.show(ConfirmModalComponent, {
+          title: 'Delete Categories',
+          body:  'Are you sure you want to delete selected categories?',
+          ok:    'Delete'
+      }).afterClosed().subscribe(confirmed => {
+          if ( ! confirmed) return;
+          this.deleteSelectedCategories();
       });
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-        if(result.status=="success"){
-          this.selection = new SelectionModel<Category>(true, []);
-         }
+    /**
+     * Show modal for editing user if user is specified
+     * or for creating a new user otherwise.
+     */
+    public showCrupdateCategoryModal(category?: Category) {
+      this.modal.open(
+        CrupdateCategoryModalComponent,
+          {category},
+          'crupdate-category-modal-container'
+      ).beforeClose().subscribe(data => {
+          if ( ! data) return;
+          this.paginator.refresh();
       });
-
-    }
-
   }
 
-  canUserAddCategory(){
-    if(this.data && this.data.length == 0){
-        return this.openDetails('New Category','new',null);
-     }
-    }
 
-  message(t){
-    return ''+t.trim().toLowerCase()+' is empty';
-  }
-  subMessage(t){
-    return 'There are no '+t.trim().toLowerCase()+' currently.';
-  }
 }

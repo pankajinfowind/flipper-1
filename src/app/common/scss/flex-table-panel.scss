@@ -2,11 +2,9 @@
 
 .admin-table-panel {
   position: relative;
-  border: $admin-card-border;
-  box-shadow: $admin-card-box-shadow;
   margin: 25px;
-  background-color: #fff;
-  border-radius: 3px;
+  // background-color: #fff;
+  // border-radius: 3px;
 
   .admin-table-panel-header {
     > .header-inner {
@@ -16,7 +14,9 @@
       padding: $table-panel-padding;
       border-bottom: 1px solid transparent;
       overflow: hidden;
-
+      &.hidden{
+        display:none
+      }
       &.selected {
         background-color: $table-panel-active-header-background-color;
         color: $table-panel-active-header-text-color;

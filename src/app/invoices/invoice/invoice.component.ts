@@ -123,6 +123,7 @@ clear(){
 }
 
 loadInvoicePage(query=null) {
+  
   const params={
     order_by:this.sort.active,
     order_dir:this.sort.direction,

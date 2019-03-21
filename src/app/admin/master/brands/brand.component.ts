@@ -1,149 +1,77 @@
-import { Component, OnInit, ViewChild, Input, ChangeDetectorRef, DoCheck, Inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, isEmpty } from 'rxjs/operators';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Brand } from './api/brand';
-import { Select } from '@ngxs/store';
-import { MasterState } from '../../../state/master-state';
-import { AsyncPipe } from '@angular/common';
-import { Details } from '../../../details/details';
-import { SelectionModel } from '@angular/cdk/collections';
-import { DetailsService } from '../../../details/details.service';
-import { Toast } from '../../../common/core/ui/toast.service';
-import { Master } from '../master';
-import { MasterModelService } from '../master-model.service';
+import { Component, OnInit, ViewChild,ViewEncapsulation, OnDestroy } from '@angular/core';
+import {MatSort } from '@angular/material';
+import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
+import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
+import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
+import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { ApiBrandService } from './api/api.service';
+import { Brand } from './api/brand';
+import { CrupdateBrandModalComponent } from './crupdate-brand-modal/crupdate-brand-modal.component';
 
-@Component({
-  selector: "remove-dialog",
-  templateUrl: './remove-dialog.html',
-  styleUrls: ["./brand.component.scss"]
-})
-export class RemoveBrandDialog {
-  cat_deleted=[];
-  public loading = new BehaviorSubject(false);
-  constructor(private msterModelService:MasterModelService,private toast: Toast,private api: ApiBrandService,
-    public dialogRef: MatDialogRef<RemoveBrandDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    }
-
-    deleteBrand(){
-      this.loading.next(true);
-        this.data.forEach(element => {
-          this.api
-          .delete(element.Brand_id).subscribe(
-              res => {
-                  if(res.status=='success'){
-                    this.dialogRef.close({status:'success'});
-                    this.msterModelService.update({loading: false, categories: res['Brand']['data']?res['Brand']['data']:[]});
-                  }
-              },
-              _error => {
-                this.toast.open('Nothing deleted!');
-                this.dialogRef.close({status:'failed'});
-                console.error(_error);
-              }
-          );
-        });
-
-    }
-
-
-
-  close(): void {
-    this.dialogRef.close({status:'none'});
-  }
-}
 @Component({
   selector: 'app-brand',
   templateUrl: './brand.component.html',
-  styleUrls: ['./brand.component.scss']
+  styleUrls: ['./brand.component.scss'],
+  providers: [UrlAwarePaginator],
+  encapsulation: ViewEncapsulation.None,
 })
-export class BrandComponent implements   OnInit {
+export class BrandComponent implements   OnInit,OnDestroy {
+  @ViewChild(MatSort) matSort: MatSort;
 
-  public loading = new BehaviorSubject(false);
-  can_delete=false;
+  public dataSource: PaginatedDataTableSource<Brand>;
 
-  constructor(private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api:ApiBrandService,private ref: ChangeDetectorRef) { }
-  data: Brand[] = [];
-  displayedColumns: string[] = ['select', 'name','description'];
-  dataSource = new MatTableDataSource<Brand>([]);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  master$: Observable<Master>;
-
-  subscription: Observable<Details>;
-  details$: Observable<Details>;
-  selection = new SelectionModel<Brand>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
+  constructor( public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBrandService) { }
 
   ngOnInit() {
+    this.dataSource = new PaginatedDataTableSource<Brand>({
+      uri: 'brand',
+      dataPaginator: this.paginator,
+      matSort: this.matSort
+  });
+}
 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.subscription = this.details$ = this.detailsService.details$;
+ngOnDestroy() {
+  this.paginator.destroy();
+}
 
-    this.master$ = this.msterModelService.master$;
 
-        this.master$.subscribe(res=>{
-          if(res.brands.length  > 0){
-            this.data=res.brands;
-            this.dataSource.data=this.data;
-            this.detailsService.close();
-          }else{
-            this.canUserAddBrand();
-          }
+/**
+     * Delete currently selected users.
+     */
+    public deleteSelectedBrands() {
+      const ids = this.dataSource.selectedRows.selected.map(brand => brand.id);
+      this.api.deleteMultiple(ids).subscribe(() => {
+          this.paginator.refresh();
+          this.dataSource.selectedRows.clear();
       });
-
   }
-  openDetails(title='New Brand',action='new',obj){
-     this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-brand',action:action,detailsVisible:true});
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  removeDialog(): void {
-    if (this.selection.selected.length > 0) {
-      const dialogRef = this.dialog.open(RemoveBrandDialog, {
-        width: '400px',
-        data: this.selection.selected
+ /**
+     * Ask user to confirm deletion of selected tags
+     * and delete selected tags if user confirms.
+     */
+    public maybeDeleteSelectedBrands() {
+      this.modal.show(ConfirmModalComponent, {
+          title: 'Delete Brand(s)',
+          body:  'Are you sure you want to delete selected brand(s)?',
+          ok:    'Delete'
+      }).afterClosed().subscribe(confirmed => {
+          if ( ! confirmed) return;
+          this.deleteSelectedBrands();
       });
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-        if(result.status=="success"){
-          this.selection = new SelectionModel<Brand>(true, []);
-         }
+    /**
+     * Show modal for editing user if user is specified
+     * or for creating a new user otherwise.
+     */
+    public showCrupdateBrandModal(brand?: Brand) {
+      this.modal.open(
+        CrupdateBrandModalComponent,
+          {brand},
+          'crupdate-brand-modal-container'
+      ).beforeClose().subscribe(data => {
+          if ( ! data) return;
+          this.paginator.refresh();
       });
-
-    }
-
-  }
-
-
-  canUserAddBrand(){
-    if(this.data && this.data.length == 0){
-        return this.openDetails('New Brand','new',null);
-     }
-    }
-  message(t){
-    return ''+t.trim().toLowerCase()+' is empty';
-  }
-  subMessage(t){
-    return 'There are no '+t.trim().toLowerCase()+' currently.';
   }
 }

@@ -75,7 +75,7 @@
     <!-- Category Column -->
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.category.name }}</span></td>
+      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.category?element.category.name:null }}</span></td>
     </ng-container>
        <!-- Category Column -->
        <ng-container matColumnDef="brand">

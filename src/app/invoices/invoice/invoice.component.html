@@ -140,7 +140,7 @@
 
   </div>
 
-  <mat-paginator [length]="dataSource.count" [pageSize]="5"
+  <mat-paginator  *ngIf="dataSource.count > 0" [length]="dataSource.count" [pageSize]="5"
                  [pageSizeOptions]="[5, 10, 15,30,50,80,100]"></mat-paginator>
 
 

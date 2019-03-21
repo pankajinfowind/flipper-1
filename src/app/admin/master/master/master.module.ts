@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders, APP_INITIALIZER, ErrorHandler } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ItemsComponent, RemoveItemDialog } from "../items/items.component";
-import { CategoriesComponent, RemoveCategoryDialog } from "../categories/categories.component";
+import { CategoriesComponent } from "../categories/categories.component";
 import { MasterComponent } from "./master.component";
 import { MaterialModule } from "../../../material/material.module";
 import { ModalComponent } from "../modal/modal.component";
@@ -21,13 +21,16 @@ import { ApiInsuranceService } from '../insurance/api/ap.service';
 import { ApiItemService } from '../items/api/api.service';
 import { HttpModule } from '../../../common/core/http/http.module';
 import {HttpClientModule} from '@angular/common/http';
-import { BrandComponent, RemoveBrandDialog } from '../brands/brand.component';
+import { BrandComponent } from '../brands/brand.component';
 import { AddItemComponent } from '../items/add-item/add-item.component';
 import { BranchComponent, RemoveBranchDialog } from '../branch/branch.component';
 import { ApiBranchService } from '../branch/api/api.service';
+import { DataTableModule } from '../../../data-table/data-table/data-table.module';
+import { CrupdateCategoryModalComponent } from '../categories/crupdate-category-modal/crupdate-category-modal.component';
+import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crupdate-brand-modal.component';
 
 @NgModule({
-  imports: [CommonModule,MasterRoutingModule,DetailsModule, MaterialModule, FormsModule, UiModule, ReactiveFormsModule,HttpClientModule,HttpModule],
+  imports: [CommonModule,MasterRoutingModule,DetailsModule, MaterialModule, FormsModule, UiModule, ReactiveFormsModule,HttpClientModule,HttpModule,DataTableModule],
   exports: [
     HttpClientModule,
     ItemsComponent,
@@ -39,11 +42,11 @@ import { ApiBranchService } from '../branch/api/api.service';
     ModalComponent,
     InsuranceComponent,
     RemoveItemDialog,
-    RemoveCategoryDialog,
     RemoveInsuranceDialog,
-    RemoveBrandDialog,
     NoEntryFoundMasterComponent,
-    RemoveBranchDialog
+    RemoveBranchDialog,
+    CrupdateCategoryModalComponent,
+    CrupdateBrandModalComponent
     ],
   declarations: [
     ItemsComponent,
@@ -55,11 +58,11 @@ import { ApiBranchService } from '../branch/api/api.service';
     ModalComponent,
     InsuranceComponent,
     RemoveItemDialog,
-    RemoveCategoryDialog,
     RemoveInsuranceDialog,
-    RemoveBrandDialog,
     NoEntryFoundMasterComponent,
-    RemoveBranchDialog
+    RemoveBranchDialog,
+    CrupdateCategoryModalComponent,
+    CrupdateBrandModalComponent
   ],
   providers: [
     ApiItemService,
@@ -67,7 +70,7 @@ import { ApiBranchService } from '../branch/api/api.service';
     ApiInsuranceService,
     ApiBranchService
   ],
-entryComponents: [RemoveItemDialog,RemoveBranchDialog,RemoveCategoryDialog,RemoveInsuranceDialog,RemoveBrandDialog]
+entryComponents: [CrupdateCategoryModalComponent,CrupdateBrandModalComponent,RemoveItemDialog,RemoveBranchDialog,RemoveInsuranceDialog]
 })
 export class MasterModule {
   static forRoot(): ModuleWithProviders {

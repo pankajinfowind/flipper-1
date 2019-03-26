@@ -7,8 +7,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./stock-lower.component.scss']
 })
 export class StockLowerComponent implements OnInit {
-
-  public loading = new BehaviorSubject(false);
+  url="stock/"+parseInt(localStorage.getItem('active_branch'))+'/lowerstock';
 
   constructor() {
 

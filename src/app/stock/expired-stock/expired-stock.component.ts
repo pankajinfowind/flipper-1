@@ -7,13 +7,13 @@ import { ApiExpiredItemService } from './api/api.service';
 import { finalize } from 'rxjs/operators';
 import { StockModelService } from '../stock-model.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { resolve } from 'url';
 
 @Component({
   selector: 'app-expired-stock',
   templateUrl: './expired-stock.component.html',
   styleUrls: ['./expired-stock.component.scss']
 })
+
 export class ExpiredStockComponent implements OnInit {
   panelOpenState = false;
 triggerState=false;

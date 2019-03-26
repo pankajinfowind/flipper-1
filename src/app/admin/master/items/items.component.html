@@ -1,118 +1,76 @@
-<div>
-<mat-toolbar>
-    <mat-toolbar-row>
-      <div class="col-8">
-          <button mat-button><mat-icon class="">menu</mat-icon>Products </button>
-        <span class="spacer"></span>
-        <span class="spacer"></span>
-        </div>
-        <div class="col-4">
-           <button color='accent' class="float-right" mat-raised-button   (click)="addItem()">
-           <mat-icon class="">add</mat-icon>Add a Product</button>
-           <button mat-button color='warn' class="float-right" *ngIf="selection.selected.length > 0" (click)="removeDialog()"><mat-icon class="">delete</mat-icon>Delete ({{selection.selected.length}}) selected</button>
-        </div>
-    </mat-toolbar-row>
-</mat-toolbar>
-<loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator>
-<div class="col-12" *ngIf="data.length > 0">
-  <mat-form-field class="w-100 px-2">
-    <input
-      matInput
-      (keyup)="applyFilter($event.target.value)"
-      placeholder="Search"
-    />
-  </mat-form-field>
-<div class="section-container">
-  <table mat-table [dataSource]="dataSource" matSort class="w-100">
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation();openDetails('Edit a Product','edit',row)"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
-    <!-- Position Column -->
-    <ng-container matColumnDef="sku">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
-          <span class="text">{{ element.sku }}</span></td>
-    </ng-container>
-    <!-- Position Column -->
-    <ng-container matColumnDef="barcode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Barcode</th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
-            <span class="text">{{ element.barcode }}</span></td>
-      </ng-container>
-    <!-- Name Column -->
-    <ng-container matColumnDef="item">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.item }}</span></td>
-    </ng-container>
+<data-table [dataSource]="dataSource" itemsName="Products" hiddenCheckBox="false" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="addItem()"  trans>Create a Product</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
 
-    <!-- Purchase Price Column -->
-    <ng-container matColumnDef="product_order_code">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Order code</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
-          <span class="text">{{ element.product_order_code }}</span>
-      </td>
-    </ng-container>
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedProducts()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
 
-    <!-- Sales Price Column -->
-    <ng-container matColumnDef="article_code">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Article code</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)">
-          <span class="text">{{ element.article_code }}</span>
-      </td>
-    </ng-container>
-    <!-- Category Column -->
-    <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.category?element.category.name:null }}</span></td>
-    </ng-container>
-       <!-- Category Column -->
-       <ng-container matColumnDef="brand">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand</th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.brand?element.brand.name:'null' }}</span></td>
-      </ng-container>
+  <ng-container matColumnDef="sku">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>S.K.U</mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{product.sku}} </mat-cell>
+  </ng-container>
 
-      <!-- Category Column -->
-      <ng-container matColumnDef="tax_rate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax rate</th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.tax_rate?element.tax_rate.name:'null' }}</span></td>
-      </ng-container>
-      <!-- Category Column -->
-      <ng-container matColumnDef="manufacturer">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Manufacturer</th>
-          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text">{{ element.manufacturer }}</span></td>
-        </ng-container>
-              <!-- Category Column -->
-      <ng-container matColumnDef="summary">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Summary</th>
-          <td mat-cell *matCellDef="let element" (click)="openDetails('Edit a Product','edit',element)"><span class="text" trans>{{ element.summary }}</span></td>
-        </ng-container>
+  <ng-container matColumnDef="barcode">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Barcode</mat-header-cell>
+    <mat-cell *matCellDef="let product"> {{product.barcode}} </mat-cell>
+</ng-container>
 
+<ng-container matColumnDef="item">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.item}}</span> </mat-cell>
+</ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr [class.highlighted]="((details$ | async).sender_data?(details$ | async).sender_data.id==row.id:false)" mat-row *matRowDef="let row; columns: displayedColumns;"
-          (click)="selection.toggle(row)">
-      </tr>
-  </table>
-</div>
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-  ></mat-paginator>
+<ng-container matColumnDef="category">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Category</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.category?product.category.name:'----'}} </span></mat-cell>
+</ng-container>
+<ng-container matColumnDef="brand">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Brand</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.brand?product.brand.name:'----'}}</span> </mat-cell>
+</ng-container>
+<ng-container matColumnDef="tax_rate">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Tax rate</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.tax_rate?product.tax_rate.name+'('+product.tax_rate.percentage+')':'---'}}</span> </mat-cell>
+</ng-container>
 
-</div>
+<ng-container matColumnDef="manufacturer">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Manufacturer</mat-header-cell>
+  <mat-cell *matCellDef="let product"><span class="ellipsis"> {{product.manufacturer}}</span> </mat-cell>
+</ng-container>
 
-<master-no-entry-found *ngIf="data && data.length == 0"  [message]="message('Products')" [subMessage]='subMessage("Products")'></master-no-entry-found>
+<ng-container matColumnDef="summary">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Summary</mat-header-cell>
+  <mat-cell *matCellDef="let product"><span class="ellipsis"> {{product.summary}} </span></mat-cell>
+</ng-container>
+<ng-container matColumnDef="product_order_code">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Order code</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.product_order_code}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="article_code">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Article code</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.article_code}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="created_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Created at</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.created_at | date}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="updated_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Updated at</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.updated_at | date}} </mat-cell>
+</ng-container>
 
-</div>
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let product">
+          <button mat-icon-button (click)="openDetails('Edit a Product','edit',product)"  [matTooltip]="'Edit Product' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

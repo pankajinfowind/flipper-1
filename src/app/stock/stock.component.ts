@@ -17,12 +17,22 @@ import { Bootstrapper } from './bootstrapper.service';
 export class StockComponent implements OnInit {
 
   links: any[] = [
-    // { path: "new", label: "Create New Stock" },
-    { path: "available", label: "Current Stock" },
-    { path: "stockout", label: "Out of Stock" },
-    { path: "lowerstock", label: "Lower Stock" },
-    { path: "expireditem", label: "Expired Stock" },
-    // { path: "report", label: "Report" }
+    {
+      menu:'Stock Available',icon:'assignment',path:'available',
+    },
+    {
+      menu:'Out of Stock',icon:'assignment',path:'stockout',
+    },
+    {
+      menu:'Lower Stock',icon:'assignment',path:'lowerstock',
+    },
+    {
+      menu:'Stock Movements',icon:'assignment',path:'stockmovements',
+    },
+    {
+      menu:'Stock Expired',icon:'assignment',path:'expireditem',
+    }
+
   ];
 
 
@@ -35,13 +45,9 @@ export class StockComponent implements OnInit {
   details$: Observable<Details>;
 
 
-  constructor(private bootstrapper: Bootstrapper,private detailsService: DetailsService, private modelService: StockModelService) {
-   this.init_stock();
+  constructor(private detailsService: DetailsService, private modelService: StockModelService) {
   }
 
-      init_stock() {
-      return this.bootstrapper.bootstrap();
-    }
   ngOnInit() {
     this.stocks$ = this.modelService.stocks$;
     this.subscription = this.details$ = this.detailsService.details$;

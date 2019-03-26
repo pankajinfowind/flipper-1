@@ -5,10 +5,12 @@ import { CustomerType } from '../../../../setup/customerType/api/CustomerType';
 export class Item {
   id?: number;
   item?: string;
-  item_id?: number;
   sku?: string;
   summary?: string;
   manufacturer?: string;
+  tax_rate_name?:string;
+  brand_name?:string;
+  category_name?:string;
   product_order_code?: number;
   category_id?: number;
   cover?: string;

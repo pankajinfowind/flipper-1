@@ -14,7 +14,7 @@ export class MasterModelService {
     this.create();
     this.master$ = this.model.data$;
    }
-   public create(stateCreation:Master={loading:false,items:[],categories:[],insurances:[],brands:[],branchs:[]}){
+   public create(stateCreation:Master={loading:false,items:[],categories:[],brands:[],branchs:[]}){
     this.model = this.modelFactory.create(stateCreation);
    }
 
@@ -33,3 +33,4 @@ export class MasterModelService {
 
 
 }
+

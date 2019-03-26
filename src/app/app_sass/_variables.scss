@@ -156,6 +156,9 @@ body{
 html{
   overflow: hidden;
 }
+.hidden{
+  display:none
+}
 .highlighted {
   color: $site-primary-color-100;
   background-color: $site-selected-item-bg-color;
@@ -171,7 +174,7 @@ html{
     color: $site-primary-color-100;
   }
 }
-.ellipsis {
+.ellipsis,.mat-cell {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

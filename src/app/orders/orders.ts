@@ -1,5 +1,4 @@
 import { OrderItems } from '../pos/cart/order_items';
-import { Insurance } from '../admin/master/insurance/api/insurance';
 import { Customer } from '../customers/customer';
 import { CustomerType } from '../setup/customerType/api/CustomerType';
 
@@ -17,7 +16,6 @@ export class Orders {
   customer_type?:CustomerType;
   order_items?: OrderItems[] = [];
   branch_id?: number;
-  insurance?: Insurance;
   business_id?: number;
 
   constructor(params: Object = {}) {

@@ -21,7 +21,6 @@ import { CustomerTypePrices } from '../../../../setup/customerType/api/CustomerT
 import { StockModelService } from '../../../../stock/stock-model.service';
 import { Item } from '../../items/api/item';
 import { ApiCustomerTypeService } from '../../../../setup/customerType/api/api.service';
-import { element } from '@angular/core/src/render3';
 
 
 @Component({
@@ -291,7 +290,7 @@ constructor(public dialog: MatDialog,private setupModelService: SetUpModelServic
         this.need_to_add_new = false;
       }
       this.data=res.sender_data ? res.sender_data : null;
-      this.category_placeholder = res.sender_data ? res.sender_data.category.name : 'Choose Item Category';
+      this.category_placeholder = res.sender_data.category ? res.sender_data.category.name : 'Choose Item Category';
       this.item_id = res.sender_data ? res.sender_data.id : 0;
       this.itemForm = new FormGroup({
         item: new FormControl(res.sender_data ? res.sender_data.item : "", [Validators.required]),
@@ -300,9 +299,9 @@ constructor(public dialog: MatDialog,private setupModelService: SetUpModelServic
         manufacturer: new FormControl(res.sender_data ? res.sender_data.manufacturer : 'null'),
         product_order_code: new FormControl(res.sender_data ? res.sender_data.product_order_code : 0),
         article_code: new FormControl(res.sender_data ? res.sender_data.article_code : 0),
-        category_id: new FormControl(res.sender_data && res.sender_data.category? res.sender_data.category.id : 0, [Validators.required]),
-        brand_id: new FormControl(res.sender_data && res.sender_data.brand ? res.sender_data.brand.id : 0, [Validators.required]),
-        tax_rate_id:new FormControl(res.sender_data && res.sender_data.tax_rate? res.sender_data.tax_rate.id : 0, [Validators.required]),
+        category_id: new FormControl(res.sender_data.category? res.sender_data.category.id : null),
+        brand_id: new FormControl( res.sender_data.brand ? res.sender_data.brand.id : null,),
+        tax_rate_id:new FormControl(res.sender_data.tax_rate? res.sender_data.tax_rate.id : null),
         barcode: new FormControl(res.sender_data ? res.sender_data.barcode : 0),
         color:new FormControl(res.sender_data ? res.sender_data.color : '#0e0d0d'),
       });
@@ -413,19 +412,25 @@ constructor(public dialog: MatDialog,private setupModelService: SetUpModelServic
   update(data, id) {
     this.apiItem.update(data, id).pipe(finalize(() => this.loading.next(false))).subscribe(
       res => {
-        if (res.status == 'success') {
           this.toast.open('Item updated Successfully!');
           this.loadingFormGroup();
-          this.msterModelService.update({ loading: false, items: res["items"]["data"] ? res["items"]["data"] : [] });
+          this.updateModel(res,false);
          this.close();
-        }
+
       },
       _error => {
         console.error(_error);
       }
     );
   }
-
+updateModel(data,close=false){
+  const g=this.detailsService.get();
+  g.receriver_data=data;
+  if(close){
+    g.detailsVisible=false;
+  }
+  return this.detailsService.update(g);
+}
 
   close() {
     this.detailsService.update({ title: null, receriver_data: null, sender_data: null, module: null, component: null, action: null, detailsVisible: false });

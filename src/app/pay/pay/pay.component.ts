@@ -7,7 +7,6 @@ import { Business } from '../../business/api/business';
 import { CurrentUser } from '../../common/auth/current-user';
 import { OrderItems } from '../../pos/cart/order_items';
 import { Orders } from '../../orders/orders';
-import { Insurance } from '../../admin/master/insurance/api/insurance';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Invoice, Status, PaymentMethod } from '../../invoices/invoice';
@@ -28,11 +27,11 @@ export class PayComponent implements OnInit {
   amount_return_color:string='black';
   d_amount_return_color:string='black';
   currently_ordered:Orders=null;
-  choosen_insurance:Insurance=null;
 
   loading$:Observable<boolean>;
   loaded$:Observable<boolean>;
   isSuccess$:Observable<boolean>;
+
 
   constructor(private store:Store<fromStore.FlipperState>,
     private orderItemModelService: OrderItemsModelService,
@@ -67,7 +66,6 @@ export class PayComponent implements OnInit {
       this.pos$.subscribe(p => {
         if (p) {
           this.currently_ordered = p.currently_ordered;
-          this.choosen_insurance = p.currently_ordered ? p.currently_ordered.insurance : null;
         }
       });
     }

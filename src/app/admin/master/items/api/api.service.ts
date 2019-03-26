@@ -26,5 +26,7 @@ export class ApiItemService {
     public get(): BackendResponse<{ data: Item[] }> {
         return this.http.get(API_ROUTES_ITEMS.ITEM);
     }
-
+    public deleteMultiple(ids: number[]) {
+      return this.http.delete(API_ROUTES_ITEMS.DELETE_MULTIPLE, {ids});
+    }
 }

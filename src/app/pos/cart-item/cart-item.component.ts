@@ -18,7 +18,6 @@ import { ApiPosService } from '../api/api.service';
 import { Orders } from '../../orders/orders';
 import { MasterModelService } from '../../admin/master/master-model.service';
 import { Master } from '../../admin/master/master';
-import { Insurance } from '../../admin/master/insurance/api/insurance';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { OrderModelService } from '../../orders/order-model.service';
@@ -37,14 +36,12 @@ export class CartDialog implements OnInit {
   status: string;
   order_items$: Observable<OrderItems[]>;
   master$: Observable<Master>;
-  insurances: Insurance[] = [];
   insuranceForm: FormGroup;
   pos$: Observable<Pos>;
 
   centered = true;
   disabled = false;
   unbounded = false;
-
   radius: number=50;
   color: string='green';
 default_qty:number=0;
@@ -64,11 +61,6 @@ default_qty:number=0;
     this.pos$ = this.posModelService.pos$;
   }
   ngOnInit() {
-    this.master$.subscribe(res => {
-      if (res.insurances.length > 0) {
-        this.insurances = res.insurances;
-      }
-    });
 
     this.insuranceForm = new FormGroup({
       insurance_id: new FormControl(null, [Validators.required])
@@ -225,7 +217,6 @@ export class CartItemComponent implements OnInit, OnDestroy {
   all_total = { num_item: 0, total_tax: 0, total_amount: 0, total_due: 0, total_discount: 0 };
   dataSource = new MatTableDataSource<OrderItems>([]);
   currently_ordered: Orders;
-  choosen_insurance: Insurance;
   business: Business;
   constructor(
     public currentUser: CurrentUser,
@@ -276,7 +267,6 @@ export class CartItemComponent implements OnInit, OnDestroy {
       this.pos$.subscribe(p => {
         if (p) {
           this.currently_ordered = p.currently_ordered;
-          this.choosen_insurance = p.currently_ordered ? p.currently_ordered.insurance : null;
           this.customers=p.choose_customer;
         }
       });

@@ -1,136 +1,87 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <div class="col-8">
-      <button mat-button><mat-icon class="">menu</mat-icon>{{title}} </button>
-      <span class="spacer"></span>
-      <span class="spacer"></span>
+
+<data-table [dataSource]="dataSource" [itemsName]="title" hiddenCheckBox="false" matSort>
+  <div headerLeftActions>
+      <!-- <button mat-raised-button  class="button" (click)="addItem()"  trans>Create a stock</button> -->
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
     </div>
 
-    <div class="col-4">
-      <!-- <button color='accent' class="float-right" mat-raised-button
-        (click)="newStck()">
-        <mat-icon class="">add</mat-icon>Create New Stock</button> -->
-    </div>
-  </mat-toolbar-row>
-</mat-toolbar>
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedStocks()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
 
-<div class="col-12" *ngIf="data && data.length> 0">
-  <mat-form-field class="w-100 px-2">
-    <input
-      matInput
-      (keyup)="applyFilter($event.target.value)"
-      placeholder="Search"
-      />
-  </mat-form-field>
-  <div class="section-container">
-    <table mat-table [dataSource]="dataSource" matSort class="w-100">
-      <!-- Checkbox Column -->
-      <!-- <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null"
-            [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation();openDetails('Stock
-            Details','info',row,'app-info-stock-model')"
-            (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container> -->
-      <!-- Position Column -->
-      <ng-container matColumnDef="sku">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU <mat-icon
-            matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping
-            Unit">info</mat-icon></th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock
-          Details','info',element,'app-info-stock-model')"><span class="text">{{element.item.sku
-            }}</span></td>
-      </ng-container>
-      <!-- Position Column -->
-      <ng-container matColumnDef="barcode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Barcode <mat-icon
-            matSuffix [matTooltip]="upc_tool_tips" aria-label="Universal Product
-            Code">info</mat-icon></th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock
-          Details','info',element,'app-info-stock-model')"><span class="text">{{element.item.barcode
-            }}</span></td>
-      </ng-container>
+  <ng-container matColumnDef="sku">
+      <mat-header-cell *matHeaderCellDef trans>S.K.U
+        <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let stock"> {{stock.item.sku}} </mat-cell>
+  </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="stock">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock
-          Details','info',element,'app-info-stock-model')">
-          {{element.item.item}} </td>
-      </ng-container>
+  <ng-container matColumnDef="barcode">
+    <mat-header-cell *matHeaderCellDef trans>Barcode</mat-header-cell>
+    <mat-cell *matCellDef="let stock"> {{stock.item.barcode}} </mat-cell>
+</ng-container>
 
-      <!--  Category Column -->
-      <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock
-          Details','info',element,'app-info-stock-model')"><span class="text">{{element.category.name}}</span>
-        </td>
-      </ng-container>
-      <!--  Qty Column -->
-      <ng-container matColumnDef="tax_rate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax Rate </th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock
-          Details','info',element,'app-info-stock-model')"><span class="text">
-            {{element.tax_rate?element.tax_rate.name:''}}</span></td>
-      </ng-container>
+<ng-container matColumnDef="item">
+  <mat-header-cell *matHeaderCellDef trans>Name</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.item.item}}</span> </mat-cell>
+</ng-container>
 
+<ng-container matColumnDef="category">
+  <mat-header-cell *matHeaderCellDef trans>Category</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.category?stock.category.name:'----'}} </span></mat-cell>
+</ng-container>
+<ng-container matColumnDef="tax_rate">
+  <mat-header-cell *matHeaderCellDef trans>Tax rate</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.tax_rate?stock.tax_rate.name+'('+stock.tax_rate.percentage+')':'---'}}</span> </mat-cell>
+</ng-container>
 
-      <ng-container matColumnDef="available_stock_qty">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Currently
-          Quantities </th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock
-          Details','info',element,'app-info-stock-model')"><span class="text">{{element.available_stock_qty}}</span></td>
-      </ng-container>
+<ng-container matColumnDef="available_stock_qty">
+  <mat-header-cell *matHeaderCellDef  trans>Quantities</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> {{stock.available_stock_qty}} </mat-cell>
+</ng-container>
 
+<ng-container matColumnDef="created_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Created at</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> {{stock.created_at | date}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="updated_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Updated at</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> {{stock.updated_at | date}} </mat-cell>
+</ng-container>
 
-      <!--  Qty Column -->
-      <ng-container matColumnDef="progress">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress </th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Stock
-          Details','info',element,'app-info-stock-model')">
+<ng-container matColumnDef="progress">
+    <mat-header-cell *matHeaderCellDef trans>Progress</mat-header-cell>
+    <mat-cell *matCellDef="let stock">
+        <mat-progress-bar
+        *ngIf="percentage(stock.available_stock_qty,stock.in_stock_qty)
+        >= 71" [mode]="determinate" [color]="accent"
+        [value]="percentage(stock.available_stock_qty,stock.in_stock_qty)"></mat-progress-bar>
+      <mat-progress-bar
+        *ngIf="percentage(stock.available_stock_qty,stock.in_stock_qty)
+      <= 70 && percentage(stock.available_stock_qty,stock.in_stock_qty)
+        >= 41" [mode]="determinate" [color]="primary"
+        [value]="percentage(stock.available_stock_qty,stock.in_stock_qty)"></mat-progress-bar>
+      <mat-progress-bar
+        *ngIf="percentage(stock.available_stock_qty,stock.in_stock_qty)
+      <= 40 && percentage(stock.available_stock_qty,stock.in_stock_qty)
+        >= 0"[mode]="determinate" [color]="warn"
+        [value]="percentage(stock.available_stock_qty,stock.in_stock_qty)"></mat-progress-bar>
+        &nbsp; &nbsp;
+      {{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %
+    </mat-cell>
+  </ng-container>
 
-          <mat-progress-bar
-            *ngIf="percentage(element.available_stock_qty,element.in_stock_qty)
-            >= 71" [mode]="determinate" [color]="accent"
-            [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
-          <mat-progress-bar
-            *ngIf="percentage(element.available_stock_qty,element.in_stock_qty)
-          <= 70 && percentage(element.available_stock_qty,element.in_stock_qty)
-            >= 41" [mode]="determinate" [color]="primary"
-            [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
-          <mat-progress-bar
-            *ngIf="percentage(element.available_stock_qty,element.in_stock_qty)
-          <= 40 && percentage(element.available_stock_qty,element.in_stock_qty)
-            >= 0"[mode]="determinate" [color]="warn"
-            [value]="percentage(element.available_stock_qty,element.in_stock_qty)"></mat-progress-bar>
-          {{percentage(element.available_stock_qty,element.in_stock_qty)}} %
-        </td>
-      </ng-container>
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+          <button mat-icon-button (click)="openDetails('Stock
+          Details','info',stock,'app-info-stock-model')"  [matTooltip]="'Edit stock' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>
 
-      <thead>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      </thead>
-      <tbody style="overflow: auto;">
-        <tr [class.highlighted]="((details$ | async).sender_data?(details$ |
-          async).sender_data.stock_id==row.stock_id:false)" mat-row
-          *matRowDef="let row; columns: displayedColumns;">
-        </tr>
-      </tbody>
-    </table>
-  </div>
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons></mat-paginator>
-
-</div>
-
-<stock-no-entry-found *ngIf="data && data.length == 0"
-  [message]="message(title)" [subMessage]='subMessage(title)'></stock-no-entry-found>

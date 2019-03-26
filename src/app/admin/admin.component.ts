@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { CurrentUser } from '../common/auth/current-user';
 import { Settings } from '../common/core/config/settings.service';
 
 @Component({

@@ -34,5 +34,8 @@ export class ApiStockService {
     public getNewStockItem(branch_id): BackendResponse<{ data: any []}> {
       return this.http.get(API_ROUTES.NEW_STOCK_ITEM+'/'+branch_id);
   }
+  public deleteMultiple(ids: number[]) {
+    return this.http.delete(API_ROUTES.DELETE_MULTIPLE, {ids});
+  }
     //new-item
 }

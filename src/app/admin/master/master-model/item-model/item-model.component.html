@@ -49,7 +49,7 @@
 
           <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
             <mat-label>Enter category</mat-label>
-            <mat-select formControlName="category_id" required>
+            <mat-select formControlName="category_id">
               <mat-option *ngFor="let category of categories" [value]="category.category_id">
                 {{category.name}}
               </mat-option>
@@ -60,7 +60,7 @@
           </mat-form-field>
           <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
               <mat-label>Enter color</mat-label>
-              <mat-select formControlName="color" required>
+              <mat-select formControlName="color">
                 <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">
                   {{color.valueName}}
                 </mat-option>
@@ -72,7 +72,7 @@
 
           <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
             <mat-label>Enter tax rate</mat-label>
-            <mat-select class="w-100" formControlName="tax_rate_id" required>
+            <mat-select class="w-100" formControlName="tax_rate_id">
               <mat-option *ngFor="let taxrate of taxrates" [value]="taxrate.tax_rate_id">
                 {{taxrate.name}}
               </mat-option>

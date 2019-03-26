@@ -28,6 +28,7 @@ export class BrandComponent implements   OnInit,OnDestroy {
       dataPaginator: this.paginator,
       matSort: this.matSort
   });
+
 }
 
 ngOnDestroy() {

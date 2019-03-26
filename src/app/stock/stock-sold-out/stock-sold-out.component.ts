@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock-sold-out.component.scss']
 })
 export class StockSoldOutComponent implements OnInit {
-
+  url="stock/"+parseInt(localStorage.getItem('active_branch'))+'/stockout';
   constructor() {}
 
   ngOnInit() {

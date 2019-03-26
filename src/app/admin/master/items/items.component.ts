@@ -1,193 +1,87 @@
 import {
   Component,
   OnInit,
-  ChangeDetectorRef,
+  ViewEncapsulation,
   ViewChild,
-  Input,
-  Inject,
-  ViewEncapsulation
+  OnDestroy
 } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
 import { ApiItemService } from "./api/api.service";
-import { MatSort, MatPaginator, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
-import { finalize } from "rxjs/operators";
-import { Store, Select } from "@ngxs/store";
-import { Details } from "../../../details/details";
 import { DetailsService } from "../../../details/details.service";
-import { SelectionModel } from "@angular/cdk/collections";
-import { Item } from "./api/item";
-import { Toast } from "../../../common/core/ui/toast.service";
-import { MasterModelService } from '../master-model.service';
-import { Master } from '../master';
 import { Router } from '@angular/router';
-import { BootstrapperMaster } from '../bootstrapper.service';
-
-@Component({
-  selector: "remove-dialog",
-  templateUrl: './remove-dialog.html',
-  styleUrls: ["./items.component.scss"]
-})
-export class RemoveItemDialog {
-  item_deleted=[];
-  public loading = new BehaviorSubject(false);
-  constructor(private msterModelService:MasterModelService,private toast: Toast,private api: ApiItemService,
-    public dialogRef: MatDialogRef<RemoveItemDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    }
-
-    deleteItem(){
-      this.loading.next(true);
-
-          this.api
-          .delete({data:this.data}).subscribe(
-              res => {
-                  if(res.status=='success'){
-                    this.toast.open('Item(s) deleted!');
-                    this.dialogRef.close({status:'success'});
-                    this.msterModelService.update({loading:false, items:res["items"]["data"]?res["items"]["data"]:[]});
-                  }
-              },
-              _error => {
-                this.dialogRef.close({status:'not'});
-                this.toast.open('Nothing deleted!');
-                console.error(_error);
-              }
-          );
-
-
-    }
-
-
-  close(): void {
-    this.dialogRef.close({status:'none'});
-  }
-}
+import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
+import { MatSort } from '@angular/material';
+import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
+import { Item } from './api/item';
+import { Modal } from '../../../common/core/ui/dialogs/modal.service';
+import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: "app-items",
   templateUrl: "./items.component.html",
-  styleUrls: ["./items.component.scss"]
+  styleUrls: ["./items.component.scss"],
+  providers: [UrlAwarePaginator],
+  encapsulation: ViewEncapsulation.None,
 })
-export class ItemsComponent implements OnInit {
-  public loading = new BehaviorSubject(false);
-  add_item: boolean;
-  constructor(private bootstrapper_master:BootstrapperMaster,private router: Router,private msterModelService:MasterModelService,public dialog: MatDialog,private detailsService:DetailsService,private api: ApiItemService, private ref: ChangeDetectorRef) {
-    this.init_master();
-  }
-  data: Item[] = [];
-  displayedColumns: string[] = [
-    'select',
-    "sku",
-    "barcode",
-    "item",
-    "product_order_code",
-    "article_code",
-    "category",
-    "brand",
-    'tax_rate',
-    'manufacturer',
-    'summary'
-  ];
+export class ItemsComponent implements  OnInit,OnDestroy {
+  @ViewChild(MatSort) matSort: MatSort;
 
-  dataSource = new MatTableDataSource<Item>([]);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @Input() shared_output: Item;
+  public dataSource: PaginatedDataTableSource<Item>;
 
-  subscription: Observable<Details>;
-  details$: Observable<Details>;
-  selection = new SelectionModel<Item>(true, []);
-  master$: Observable<Master>;
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+  constructor(public paginator: UrlAwarePaginator,private modal: Modal,private router: Router,private detailsService:DetailsService,private api: ApiItemService) {
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  init_master() {
-    return this.bootstrapper_master.bootstrap();
-    }
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.subscription = this.details$ = this.detailsService.details$;
-    this.master$ = this.msterModelService.master$;
-
-    this.master$.subscribe(res=>{
-      if(res.items.length  > 0){
-        this.data=res.items;
-        this.dataSource.data=this.data;
-        this.detailsService.close();
-      }else{
-        this.canUserAddItem();
-      }
+    this.dataSource = new PaginatedDataTableSource<Item>({
+      uri: 'item',
+      dataPaginator: this.paginator,
+      matSort: this.matSort
   });
-  }
+   this.viewUpCommingData();
+}
+
+ngOnDestroy() {
+  this.paginator.destroy();
+}
   openDetails(title='New Items',action='new',obj){
      this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-items',action:action,detailsVisible:true});
   }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+viewUpCommingData(){
+this.detailsService.details$.subscribe(response=>{
+  if(response.receriver_data){
+    this.paginator.refresh();
+    const g=this.detailsService.get();
+    g.receriver_data=null;
+    this.detailsService.update(g);
   }
+})
 
-
-  removeDialog(): void {
-    if (this.selection.selected.length > 0) {
-      const dialogRef = this.dialog.open(RemoveItemDialog, {
-        width: '400px',
-        data: this.selection.selected
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if(result.status=="success"){
-          this.selection = new SelectionModel<Item>(true, []);
-         }
-      });
-
-    }
-
-  }
-
-  checkIncomingData() {
-    this.details$.subscribe(result=>{
-      if(result.receriver_data){
-        const _data = this.dataSource.data;
-        if(result.action=='edit'){
-          for( var i =0 ;i <_data.length; i++){
-                if(_data[i]['id'] === result.sender_data['id']){
-                  _data.splice(i, 1);
-                }
-            }
-        }
-          _data.unshift(result.receriver_data);
-          this.dataSource.data = _data;
-          this.detailsService.update({receriver_data:null,sender_data:null});
-      }
-    });
-  }
-  message(t){
-    return ''+t.trim().toLowerCase()+' is empty';
-  }
-  subMessage(t){
-    return 'There are no '+t.trim().toLowerCase()+' currently.';
-  }
-
+}
   addItem(){
     this.router.navigate(["/admin/master/add-item"]);
-   // localStorage.setItem('add-item','Yes');
   }
-  canUserAddItem(){
-    if(this.data && this.data.length == 0){
-      this.router.navigate(["/admin/master/add-item"]);
-     }
-
+/**
+     * Delete currently selected users.
+     */
+    public deleteSelectedProducts() {
+      const ids = this.dataSource.selectedRows.selected.map(item => item.id);
+      this.api.deleteMultiple(ids).subscribe(() => {
+          this.paginator.refresh();
+          this.dataSource.selectedRows.clear();
+      });
+  }
+ /**
+     * Ask user to confirm deletion of selected tags
+     * and delete selected tags if user confirms.
+     */
+    public maybeDeleteSelectedProducts() {
+      this.modal.show(ConfirmModalComponent, {
+          title: 'Delete Product(s)',
+          body:  'Are you sure you want to delete selected product(s)? the stock related will be deleted too! ',
+          ok:    'Delete'
+      }).afterClosed().subscribe(confirmed => {
+          if ( ! confirmed) return;
+          this.deleteSelectedProducts();
+      });
   }
 }
+

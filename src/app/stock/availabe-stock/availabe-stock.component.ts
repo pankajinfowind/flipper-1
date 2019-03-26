@@ -5,7 +5,10 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./availabe-stock.component.scss"]
 })
 export class AvailabeStockComponent implements OnInit {
+  url="stock/"+parseInt(localStorage.getItem('active_branch'))+'/available';
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 }

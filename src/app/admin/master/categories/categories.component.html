@@ -1,10 +1,10 @@
 
-<data-table [dataSource]="dataSource" itemsName="Categories" matSort>
+<data-table [dataSource]="dataSource" itemsName="Categories"  matSort>
   <div headerLeftActions>
       <button mat-raised-button  class="button" (click)="showCrupdateCategoryModal()"  trans>Create a Category</button>
     </div>
   <div class="input-container" headerRightActions>
-      <input type="text" class="search" placeholder="Search Categories" trans-placeholder [formControl]="dataSource.searchQuery">
+      <input type="text" class="search" placeholder="Search Categories ..." trans-placeholder [formControl]="dataSource.searchQuery">
       <mat-icon svgIcon="search"></mat-icon>
     </div>
 

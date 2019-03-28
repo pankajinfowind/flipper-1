@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild, Input, ChangeDetectorRef, DoCheck, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ChangeDetectorRef, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, isEmpty } from 'rxjs/operators';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Branch } from './api/branch';
-import { Select } from '@ngxs/store';
-import { MasterState } from '../../../state/master-state';
-import { AsyncPipe } from '@angular/common';
 import { Details } from '../../../details/details';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DetailsService } from '../../../details/details.service';

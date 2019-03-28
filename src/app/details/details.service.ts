@@ -33,9 +33,16 @@ export class DetailsService {
     // set new model data (after mutation)
     this.model.set(newModel);
 
-    console.log('model: ', this.model.get());
   }
   close(){
     this.update({title:null,receriver_data:null,sender_data:null,module:null,component:null,action:null,detailsVisible:false});
+  }
+  receiverData(data,close=false){
+    const g=this.get();
+    g.receriver_data=data;
+    if(close){
+      g.detailsVisible=false;
+    }
+    return this.update(g);
   }
 }

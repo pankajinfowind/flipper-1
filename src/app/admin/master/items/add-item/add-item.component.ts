@@ -20,7 +20,6 @@ import { Branch } from '../../branch/api/branch';
 import { Reason } from '../../../../setup/reasons/api/reason';
 import { finalize } from 'rxjs/operators';
 import { CustomerType } from '../../../../setup/customerType/api/CustomerType';
-import { StockModelService } from '../../../../stock/stock-model.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -49,7 +48,7 @@ export class AddItemComponent implements OnInit {
   barcode_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   public loading = new BehaviorSubject(false);
-  constructor(private router: Router,private modelStockService: StockModelService, private _formBuilder: FormBuilder, public currentUser: CurrentUser, private setupModelService: SetUpModelService, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) {
+  constructor(private router: Router, private _formBuilder: FormBuilder, public currentUser: CurrentUser, private setupModelService: SetUpModelService, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) {
     this.loadingFormGroup();
    }
   rows: FormArray = this._formBuilder.array([]);

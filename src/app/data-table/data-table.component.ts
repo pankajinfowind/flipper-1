@@ -9,6 +9,8 @@ import {
 } from '@angular/core';
 import {MatColumnDef, MatPaginator, MatTable} from '@angular/material';
 import {PaginatedDataTableSource} from './data/paginated-data-table-source';
+import { SharedModel, SharedModelService } from '../shared-model/shared-model-service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
     selector: 'data-table',
@@ -45,16 +47,29 @@ export class DataTableComponent<T> implements OnInit, AfterContentInit {
 
     @Input() public hiddenCheckBox: boolean=false;
 
-
     /**
      * Columns that should be displayed in data table.
      */
     public columns: string[] = ['select'];
-
+    public sharedModel$: Observable<SharedModel>;
+    enableRowSelected=null;
+    constructor(private sharedModelService:SharedModelService){}
     ngOnInit() {
         this.dataSource.config.matPaginator = this.matPaginator;
         this.dataSource.config.matSort.start = 'desc';
+        this.sharedModel$ = this.sharedModelService.shared$;
         if ( ! this.dataSource.config.delayInit) this.dataSource.init();
+        this.updateSelectedRow();
+    }
+    updateSelectedRow(){
+          this.sharedModel$.subscribe(shared=>{
+                if(shared.data){
+                   this.enableRowSelected=shared.data;
+                }else{
+                  this.enableRowSelected=null;
+                }
+      });
+
     }
 
     ngAfterContentInit() {

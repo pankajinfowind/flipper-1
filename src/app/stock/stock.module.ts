@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { StockComponent } from './stock.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StocksComponent } from './stocks/stocks.component';
 import { UiModule } from '../common/core/ui/ui.module';
 import { StockModelModule } from './stock-model/stock-model.module';
 import { DetailsModule } from '../details/details.module';
@@ -15,19 +14,17 @@ import { AvailabeStockComponent } from './availabe-stock/availabe-stock.componen
 import { StockSoldOutComponent } from './stock-sold-out/stock-sold-out.component';
 import { StockLowerComponent } from './stock-lower/stock-lower.component';
 import { StockTableComponent } from './stock-table/stock-table.component';
-import { NoEntryFoundStockComponent } from './messages/no-entry-found/no-entry-found.component';
+import { StockMovementComponent } from './stock-movement/stock-movement.component';
 
 @NgModule({
   declarations:
    [StockComponent,
-    StocksComponent,
        ExpiredStockComponent,
         DiplayExpiredStockComponent,
         AvailabeStockComponent,
     StockSoldOutComponent,
     StockLowerComponent,
-     StockTableComponent,
-     NoEntryFoundStockComponent],
+     StockTableComponent,StockMovementComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -40,36 +37,13 @@ import { NoEntryFoundStockComponent } from './messages/no-entry-found/no-entry-f
     DataTableModule
   ],
   exports:
-  [StockComponent,StocksComponent,
+  [StockComponent,
     AvailabeStockComponent,
     StockSoldOutComponent,
     StockLowerComponent,
-     StockTableComponent,
-     NoEntryFoundStockComponent]
+     StockTableComponent,StockMovementComponent]
 })
 export class StockModule {
-    //   static forRoot(): ModuleWithProviders {
-    //     return {
-    //         ngModule: StockModule,
-    //         providers: [
-    //             CurrentUser,
-    //             Bootstrapper,
-    //             {
-    //                 provide: HttpErrorHandler,
-    //                 useClass: BackendHttpErrorHandler,
-    //             },
-    //             {
-    //                 provide: APP_INITIALIZER,
-    //                 useFactory: init_app,
-    //                 deps: [Bootstrapper,CurrentUser],
-    //                 multi: true,
-    //             },
-    //             {
-    //                 provide: ErrorHandler,
-    //                 useFactory: ravenErrorHandlerFactory,
-    //                 deps: [ApiStockService, StockModelService,ApiExpiredItemService],
-    //             },
-    //         ]
-    //     };
-    // }
+
+
  }

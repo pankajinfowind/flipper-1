@@ -7,6 +7,7 @@ import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { ApiBrandService } from './api/api.service';
 import { Brand } from './api/brand';
 import { CrupdateBrandModalComponent } from './crupdate-brand-modal/crupdate-brand-modal.component';
+import { SharedModelService } from '../../../shared-model/shared-model-service';
 
 @Component({
   selector: 'app-brand',
@@ -20,7 +21,7 @@ export class BrandComponent implements   OnInit,OnDestroy {
 
   public dataSource: PaginatedDataTableSource<Brand>;
 
-  constructor( public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBrandService) { }
+  constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBrandService) { }
 
   ngOnInit() {
     this.dataSource = new PaginatedDataTableSource<Brand>({
@@ -66,11 +67,13 @@ ngOnDestroy() {
      * or for creating a new user otherwise.
      */
     public showCrupdateBrandModal(brand?: Brand) {
+      this.shared.update(brand);
       this.modal.open(
         CrupdateBrandModalComponent,
           {brand},
           'crupdate-brand-modal-container'
       ).beforeClose().subscribe(data => {
+        this.shared.remove();
           if ( ! data) return;
           this.paginator.refresh();
       });

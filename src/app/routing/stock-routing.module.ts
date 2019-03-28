@@ -6,6 +6,7 @@ import { ExpiredStockComponent } from '../stock/expired-stock/expired-stock.comp
 import { AvailabeStockComponent } from '../stock/availabe-stock/availabe-stock.component';
 import { StockSoldOutComponent } from '../stock/stock-sold-out/stock-sold-out.component';
 import { StockLowerComponent } from '../stock/stock-lower/stock-lower.component';
+import { StockMovementComponent } from '../stock/stock-movement/stock-movement.component';
 
 const stockRoutes: Routes = [
     {
@@ -23,6 +24,7 @@ const stockRoutes: Routes = [
           { path: 'available', component: AvailabeStockComponent },
           { path: 'stockout', component: StockSoldOutComponent },
           { path: 'lowerstock', component: StockLowerComponent },
+          { path: 'stockmovement', component: StockMovementComponent },
           { path: 'expireditem', component: ExpiredStockComponent}
 
     ]

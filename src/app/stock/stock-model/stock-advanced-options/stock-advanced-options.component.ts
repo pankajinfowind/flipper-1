@@ -11,13 +11,10 @@ import { ApiStockService } from '../../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { Toast } from '../../../common/core/ui/toast.service';
 import { CurrentUser } from '../../../common/auth/current-user';
-import { ArrayDataSource } from '@angular/cdk/collections';
 import { Settings } from '../../../common/core/config/settings.service';
 import { SetUp } from '../../../setup/setup';
 import { SetUpModelService } from '../../../setup/setup-model.service';
 import { Reason } from '../../../setup/reasons/api/reason';
-import { StockModelService } from '../../stock-model.service';
-import { filter } from 'bluebird';
 import { DetailsService } from '../../../details/details.service';
 import { Details } from '../../../details/details';
 import { Item } from '../../../admin/master/items/api/item';
@@ -136,12 +133,9 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
       this.loading.next(true);
       this.api.delete(element.id).pipe(finalize(() => this.loading.next(false))).subscribe(
         res => {
-          if (res.status == 'success') {
-            this.toast.open('Stock Deleted Successfully!');
-            this.updateItemModelService(res["items"]["data"]);
-            this.loadItemModelDetails();
-
-          }
+          this.detailsService.receiverData(res,true);
+          this.loadItemModelDetails();
+          this.toast.open('Stock deleted Successfully!');
         },
         _error => {
           console.error(_error);
@@ -304,12 +298,10 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
       this.loading.next(true);
       this.api.update(this.stockFormGroup.value, stock.id).pipe(finalize(() => this.loading.next(false))).subscribe(
         res => {
-          if (res.status == 'success') {
+          this.detailsService.receiverData(res,true);
+          this.loadItemModelDetails();
+          this.toast.open('Stock updated Successfully!');
 
-            this.toast.open('Stock updated Successfully!');
-            this.updateItemModelService(res["items"]["data"]);
-            this.loadItemModelDetails();
-          }
         },
         _error => {
           console.error(_error);
@@ -338,12 +330,9 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
     const data= this.uniqueObjectInArray(form_data);
     this.api.create({data:data}).pipe(finalize(() =>  this.loading.next(false))).subscribe(
       res => {
-      if(res.status=='success'){
-          this.updateItemModelService(res["items"]["data"]);
-          this.loadItemModelDetails();
-
-          this.toast.open('Stock created successfully!');
-        }
+        this.detailsService.receiverData(res,true);
+        this.loadItemModelDetails();
+        this.toast.open('Stock created Successfully!');
       },
       _error => {
       console.error(_error);
@@ -353,12 +342,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
     this.toast.open('Invalid some field(s) data');
   }
   }
-  updateItemModelService(data){
-    const item =data.find(item=>item.id==this.item.id);
-    this.msterModelService.update({ loading: false, items: data ? data : [] });
 
-    this.detailsService.update({title:'Edit a Product',sender_data:item,module:'app-master',component:'app-items',action:'edit',detailsVisible:true});
-  }
 }
 
 

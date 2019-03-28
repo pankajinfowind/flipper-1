@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, EventEmitter, Input, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { Stock } from '../api/stock';
+import { Stock, StockMovements } from '../api/stock';
 import { MatSort } from '@angular/material';
 
 import { DetailsService } from '../../details/details.service';
@@ -10,28 +10,21 @@ import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import{SharedModelService} from "../../shared-model/shared-model-service";
 @Component({
-  selector: 'app-stock-table',
-  templateUrl: './stock-table.component.html',
-  styleUrls: ['./stock-table.component.scss'],
+  selector: 'app-stock-movement',
+  templateUrl: './stock-movement.component.html',
+  styleUrls: ['./stock-movement.component.scss'],
   providers: [UrlAwarePaginator],
   encapsulation: ViewEncapsulation.None,
 })
-export class StockTableComponent implements OnInit,OnDestroy {
+export class StockMovementComponent implements OnInit,OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
-  public dataSource: PaginatedDataTableSource<Stock>;
-
-  cart: EventEmitter<Stock> = new EventEmitter();
+  public dataSource: PaginatedDataTableSource<StockMovements>;
   constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {}
-  upc_tool_tips="The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
-  sku_tool_tips="The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC";
 
-  @Input() title: string='Manage Stock';
-  @Input() url:string;
-  warn = 'warn';accent='accent';primary='primary';mode = 'determinate';
 
   ngOnInit() {
-      this.dataSource = new PaginatedDataTableSource<Stock>({
-        uri: this.url,
+      this.dataSource = new PaginatedDataTableSource<StockMovements>({
+        uri: "stock-movement/"+parseInt(localStorage.getItem('active_branch')),
         dataPaginator: this.paginator,
         matSort: this.matSort
     });
@@ -52,6 +45,7 @@ export class StockTableComponent implements OnInit,OnDestroy {
       }
     })
 
+
     }
   percentage(num,num1) {
       let sum=Math.round(parseInt(num) *100)/parseInt(num1);
@@ -69,15 +63,15 @@ export class StockTableComponent implements OnInit,OnDestroy {
      */
     public deleteSelectedStocks() {
       const ids = this.dataSource.selectedRows.selected.map(item => item.id);
-      this.api.deleteMultiple(ids).subscribe(() => {
+      this.api.deleteMultipleStockMovement(ids).subscribe(() => {
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });
   }
   public maybeDeleteSelectedStocks() {
     this.modal.show(ConfirmModalComponent, {
-        title: 'Delete Stock(s)',
-        body:  'Are you sure you want to delete selected stock(s)? the stock movements(in and out stock) related will be deleted too! ',
+        title: 'Delete Stock Movement(s)',
+        body:  'Are you sure you want to delete selected stock movement(s)?',
         ok:    'Delete'
     }).afterClosed().subscribe(confirmed => {
         if ( ! confirmed) return;

@@ -18,9 +18,9 @@ import { SetUpModelService } from '../../../../setup/setup-model.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { CustomerType } from '../../../../setup/customerType/api/CustomerType';
 import { CustomerTypePrices } from '../../../../setup/customerType/api/CustomerTypePrices';
-import { StockModelService } from '../../../../stock/stock-model.service';
 import { Item } from '../../items/api/item';
 import { ApiCustomerTypeService } from '../../../../setup/customerType/api/api.service';
+import { SharedModelService } from '../../../../shared-model/shared-model-service';
 
 
 @Component({
@@ -44,7 +44,7 @@ export class EditItemDialog implements OnInit {
   customer_type_sales_default: CustomerTypePrices = null
   rows: FormArray = this._formBuilder.array([]);
 
-  constructor(private capi:ApiCustomerTypeService,private modelStockService: StockModelService,private setupModelService: SetUpModelService,  private detailsService: DetailsService,private _formBuilder: FormBuilder,private msterModelService:MasterModelService,private toast: Toast,private api: ApiItemService,
+  constructor(private capi:ApiCustomerTypeService,private setupModelService: SetUpModelService,  private detailsService: DetailsService,private _formBuilder: FormBuilder,private msterModelService:MasterModelService,private toast: Toast,private api: ApiItemService,
     public dialogRef: MatDialogRef<EditItemDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -183,10 +183,13 @@ export class EditItemDialog implements OnInit {
           }
       );
     }
-    updateItemModelService(data){
-      const item =data.find(item=>item.id==this.data.id);
-      this.msterModelService.update({ loading: false, items: data ? data : [] });
-      this.detailsService.update({title:'Edit a Product',sender_data:item,module:'app-master',component:'app-items',action:'edit',detailsVisible:true});
+    updateModel(data,close=false){
+      const g=this.detailsService.get();
+      g.receriver_data=data;
+      if(close){
+        g.detailsVisible=false;
+      }
+      return this.detailsService.update(g);
     }
     saveProductDetails(){
       const data:Item={
@@ -198,10 +201,9 @@ export class EditItemDialog implements OnInit {
       this.loading.next(true);
       this.api.update(data,this.data.id).pipe(finalize(() => this.loading.next(false))).subscribe(
           res => {
-            if (res.status == 'success') {
               this.toast.open('Item updated Successfully!');
-              this. updateItemModelService(res["items"]["data"]);
-            }
+              this.detailsService.receiverData(res,false);
+
           },
           _error => {
             console.error(_error);
@@ -209,6 +211,7 @@ export class EditItemDialog implements OnInit {
         );
     }
 }
+
 @Component({
   selector: 'app-item-model',
   templateUrl: './item-model.component.html',
@@ -256,7 +259,7 @@ export class ItemModelComponent implements OnInit {
   barcode_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   data: Item=null;
-constructor(public dialog: MatDialog,private setupModelService: SetUpModelService,public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
+constructor(public shared:SharedModelService,public dialog: MatDialog,private setupModelService: SetUpModelService,public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
 
 
   ngOnInit() {
@@ -414,9 +417,8 @@ constructor(public dialog: MatDialog,private setupModelService: SetUpModelServic
       res => {
           this.toast.open('Item updated Successfully!');
           this.loadingFormGroup();
-          this.updateModel(res,false);
-         this.close();
-
+          this.detailsService.receiverData(res,true);
+          this.shared.remove();
       },
       _error => {
         console.error(_error);

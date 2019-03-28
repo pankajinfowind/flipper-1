@@ -20,13 +20,12 @@
                   <mat-card-content>
                           <table class="mt-4 w-100 col-12">
 
-
                             <tr class="row">
                                 <td class="col-3">Cost price (EXCLUDING TAX)</td>
                                 <td class="col-9">
                                   <mat-form-field  appearance="outline">
                                     <mat-label>Enter cost price (EXCLUDING TAX)</mat-label>
-                                    <input matInput placeholder="Enter cost price (EXC TAX)"  (input)="calculateCostIncludingTax($event)" type="number" formControlName="cost_price_excluding_tax"
+                                    <input class="text-secondary" matInput placeholder="Enter cost price (EXC TAX)"  (input)="calculateCostIncludingTax($event)" type="number" formControlName="cost_price_excluding_tax"
                                       required>
                                   </mat-form-field>
                                 </td>
@@ -49,7 +48,7 @@
                                   <td class="col-9">
                                       <mat-form-field  appearance="outline">
                                           <mat-label>Enter sale price (EXCLUDING TAX)</mat-label>
-                                          <input matInput placeholder="Enter sale price (EXC TAX)" (input)="calculateSaleIncludingTax($event)" type="number" formControlName="sale_price_excluding_tax"
+                                          <input class="text-secondary" matInput placeholder="Enter sale price (EXC TAX)" (input)="calculateSaleIncludingTax($event)" type="number" formControlName="sale_price_excluding_tax"
                                           required>
                                         </mat-form-field>
                                   </td>
@@ -60,7 +59,7 @@
                                 <td class="col-9">
                                     <mat-form-field  appearance="outline">
                                         <mat-label>Enter sale price (INCLUDING TAX)</mat-label>
-                                        <input matInput placeholder="Enter sale price (INC TAX)" (input)="calculateSaleExcludingTax($event)" type="number" formControlName="sale_price_including_tax"
+                                        <input class="text-secondary" matInput placeholder="Enter sale price (INC TAX)" (input)="calculateSaleExcludingTax($event)" type="number" formControlName="sale_price_including_tax"
                                           required>
                                       </mat-form-field>
                                 </td>
@@ -68,9 +67,8 @@
                           </table>
 
                   </mat-card-content>
-                <mat-card-actions class="m-3 float-right">
-
-                  <button mat-button mat-raised-button type="submit" color='primary' [disabled]="(loading | async)">Save</button>
+                <mat-card-actions class="m-3 float-center" style="position: relative;left: 360px;">
+                  <button mat-button mat-raised-button type="submit"  class="button" [disabled]="(loading | async)">Save</button>
                 </mat-card-actions>
 
                     </form>

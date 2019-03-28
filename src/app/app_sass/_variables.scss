@@ -174,10 +174,26 @@ html{
     color: $site-primary-color-100;
   }
 }
+.highlighted_gray {
+  color: $site-primary-color-100;
+  background-color: $site-bg-color-400;
+  .mat-cell {
+    color: $site-primary-color-100;
+    font-weight: 500!important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:not(.highlighted):not(.drag-over):hover {
+    background-color: $site-bg-color-300;
+    color: $site-primary-color-100;
+  }
+}
 .ellipsis,.mat-cell {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding:2px;
 }
 .section-container {
   height: 400px;
@@ -192,7 +208,11 @@ html{
   color: none;
   background: none;
 }
-.button-cancel,.button{
+.button-success{
+  color: #fff;
+  background: #08a042;
+}
+.button-cancel,.button,.button-success{
 
     border: 1px solid transparent;
     text-align: center;

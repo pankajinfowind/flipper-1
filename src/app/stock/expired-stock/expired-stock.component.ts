@@ -5,7 +5,6 @@ import { SetUpModelService } from '../../setup/setup-model.service';
 import { ExpirationSetting } from '../../setup/expiration_setting/api/expiration_setting';
 import { ApiExpiredItemService } from './api/api.service';
 import { finalize } from 'rxjs/operators';
-import { StockModelService } from '../stock-model.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
@@ -23,7 +22,7 @@ triggerState=false;
   public loading = new BehaviorSubject(false);
   searchForm: FormGroup;
 
-  constructor(private modelStockService:StockModelService,private api:ApiExpiredItemService,private setupModelService:SetUpModelService) { }
+  constructor(private api:ApiExpiredItemService,private setupModelService:SetUpModelService) { }
 
   ngOnInit() {
     this.setup$ = this.setupModelService.setup$;
@@ -52,7 +51,7 @@ triggerState=false;
     this.loading.next(true);
       this.api.getByPeriodExpiredItems(parseInt(localStorage.getItem('active_branch')),element.period_value,element.period).pipe(finalize(() =>this.loading.next(false))).subscribe(
         res => {
-            this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
+            //this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
         },
         _error => {
         console.error(_error);
@@ -66,7 +65,7 @@ triggerState=false;
 
       this.api.getAllExpiredItems(parseInt(localStorage.getItem('active_branch'))).pipe(finalize(() =>this.loading.next(false))).subscribe(
         res => {
-            this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
+            //this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
         },
         _error => {
         console.error(_error);
@@ -80,7 +79,7 @@ triggerState=false;
     if (this.searchForm.valid) {
     this.api.getBySearchExpiredItems(parseInt(localStorage.getItem('active_branch')),this.searchForm.value.from,this.searchForm.value.to).pipe(finalize(() =>this.loading.next(false))).subscribe(
       res => {
-          this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
+         // this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
       },
       _error => {
       console.error(_error);

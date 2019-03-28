@@ -106,7 +106,7 @@
                           <td>
                             <mat-form-field class="m-3" appearance="outline">
                               <mat-label>Update Unit of Sale</mat-label>
-                              <input class="text-secondary" matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
+                              <input  matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
 
                             </mat-form-field>
                           </td>
@@ -125,7 +125,7 @@
                           <td>
                             <mat-form-field class="m-3" appearance="outline">
                               <mat-label>Update Minimum stock value</mat-label>
-                              <input class="text-secondary" matInput placeholder="Minimum stock value" (input)="updateMinValue($event)"
+                              <input matInput placeholder="Minimum stock value" (input)="updateMinValue($event)"
                                 formControlName="min_stock" required>
                               <mat-error *ngIf="min_stock.invalid && (min_stock.dirty || min_stock.touched)">
                                 <!-- <strong *ngIf="min_stock.errors.max">Should be less than maximum stock value.</strong> -->
@@ -136,7 +136,7 @@
                           <td class="m-3">
                             <mat-form-field appearance="outline">
                               <mat-label>Update Maximum stock value</mat-label>
-                              <input class="text-secondary" matInput placeholder="Maximum stock value" (input)="updateMinValue($event)"
+                              <input  matInput placeholder="Maximum stock value" (input)="updateMinValue($event)"
                                 formControlName="max_stock" required>
 
                             </mat-form-field>
@@ -148,7 +148,7 @@
                           <td>
                             <mat-form-field class="m-3" appearance="outline">
                               <mat-label>Update On Order</mat-label>
-                              <input class="text-secondary" matInput placeholder="On Order value" formControlName="on_order"
+                              <input matInput placeholder="On Order value" formControlName="on_order"
                                 required>
                             </mat-form-field>
                           </td>
@@ -167,9 +167,9 @@
                 </mat-card-content>
 
                 <mat-card-actions class="card-actions float-right m-2">
-                  <button mat-button mat-raised-button class="m-4" (click)="expandedElement = expandedElement === element ? null : element"
+                  <button mat-button mat-raised-button class="m-4 button-cancel" (click)="expandedElement = expandedElement === element ? null : element"
                     [disabled]="(loading | async)">Close</button>
-                  <button mat-raised-button type="submit" color="primary" class="m-4 float-right" [disabled]="(loading | async)">Update</button>
+                  <button mat-raised-button type="submit" class="m-4 float-right button" [disabled]="(loading | async)">Update</button>
                 </mat-card-actions>
               </form>
             </div>
@@ -286,7 +286,7 @@ For example: If the Minimum value is 2 and the Maximum value is 5,
           <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
             <mat-form-field class="m-3" appearance="outline">
               <mat-label>Minimum stock value</mat-label>
-              <input class="text-secondary" matInput placeholder="Minimum stock value"
+              <input  matInput placeholder="Minimum stock value"
                 formControlName="min_stock" required>
             </mat-form-field>
 
@@ -297,7 +297,7 @@ For example: If the Minimum value is 2 and the Maximum value is 5,
           <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
             <mat-form-field class="m-3" appearance="outline">
               <mat-label>Maximum stock value</mat-label>
-              <input class="text-secondary" matInput placeholder="Maximum stock value"
+              <input  matInput placeholder="Maximum stock value"
                 formControlName="max_stock" required>
 
             </mat-form-field>
@@ -309,7 +309,7 @@ For example: If the Minimum value is 2 and the Maximum value is 5,
           <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
             <mat-form-field class="m-3" appearance="outline">
               <mat-label>On Order</mat-label>
-              <input class="text-secondary" matInput placeholder="On Order value" formControlName="on_order"
+              <input  matInput placeholder="On Order value" formControlName="on_order"
                 required>
             </mat-form-field>
           </td>
@@ -320,7 +320,7 @@ For example: If the Minimum value is 2 and the Maximum value is 5,
           <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
             <mat-form-field class="m-3" appearance="outline">
               <mat-label>Unit of Sale</mat-label>
-              <input class="text-secondary" matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
+              <input  matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
             </mat-form-field>
           </td>
         </ng-container>
@@ -335,7 +335,7 @@ For example: If the Minimum value is 2 and the Maximum value is 5,
         <ng-container matColumnDef="operation">
           <th mat-header-cell *matHeaderCellDef > Operation </th>
           <td mat-cell *matCellDef="let element; let index = index">
-            <button type="button" class="m-3 float-right" (click)="saveNewStock(element)" mat-raised-button color="accent" [disabled]="loading | async">Save</button>
+            <button type="button" class="m-3 float-right button" (click)="saveNewStock(element)" mat-raised-button [disabled]="loading | async">Save</button>
           </td>
         </ng-container>
 

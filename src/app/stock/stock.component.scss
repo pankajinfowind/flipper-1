@@ -3,7 +3,7 @@
 .stock{
   height: 100%;
   background-color: $admin-background-color;
-  overflow: hidden;
+  // overflow: hidden;
 
   .mat-sidenav-container {
     width: 100%;
@@ -103,7 +103,7 @@
       line-height: inherit;
       white-space: nowrap;
       text-overflow: ellipsis;
-      overflow: hidden;
+      overflow: auto;
     }
   }
 }

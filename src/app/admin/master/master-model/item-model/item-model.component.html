@@ -119,12 +119,12 @@
 
       </mat-card-content>
       <mat-card-actions class="card-actions">
-          <button type="button" (click)="openEditItemDialog()" mat-raised-button  color='primary' class="float-left mt-2"  [disabled]="(loading | async)">
+          <button type="button" (click)="openEditItemDialog()" mat-raised-button  color='primary' class="button-success float-left mt-2"  [disabled]="(loading | async)">
             <span *ngIf="!need_to_add_new">Advanced options</span></button>
 
-        <button type="submit" class="float-right" mat-button [disabled]="(loading | async)"> <span *ngIf="need_to_add_new">Save</span>
+        <button type="submit" class="float-right button" mat-button [disabled]="(loading | async)"> <span *ngIf="need_to_add_new">Save</span>
           <span *ngIf="!need_to_add_new">Edit</span></button>
-        <button type="button" class="float-right" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button>
+        <!-- <button type="button" class="float-right button-cancel" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button> -->
       </mat-card-actions>
     </form>
 </div>

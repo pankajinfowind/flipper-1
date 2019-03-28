@@ -6,12 +6,13 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Stock } from '../../api/stock';
 import { ApiStockService } from '../../api/api.service';
 import { finalize } from 'rxjs/operators';
-import { StockModelService } from '../../stock-model.service';
 import { MasterModelService } from '../../../admin/master/master-model.service';
 import { SetUp } from '../../../setup/setup';
 import { SetUpModelService } from '../../../setup/setup-model.service';
 import { Reason } from '../../../setup/reasons/api/reason';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Toast } from '../../../common/core/ui/toast.service';
+import { SharedModelService } from '../../../shared-model/shared-model-service';
 
 @Component({
   selector: 'app-update-stock-model',
@@ -30,7 +31,7 @@ export class UpdateStockModelComponent implements OnInit {
   current_stock:number=0;
   found_stock:boolean=false;
   // action:any;
-  constructor(private setupModelService: SetUpModelService,private msterModelService:MasterModelService,private modelStockService: StockModelService,private detailsService:DetailsService,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
+  constructor(public shared:SharedModelService,private toast: Toast,private setupModelService: SetUpModelService,private msterModelService:MasterModelService,private detailsService:DetailsService,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
     @Inject(MAT_DIALOG_DATA) public action: any) {
    }
    close(): void {
@@ -140,12 +141,10 @@ arrayGetColumn(array,column){
       this.api.addOrRemoveExistingItem(this.stockForm.value).pipe(finalize(() =>this.loading.next(false)))
       .subscribe(
             res => {
-            if(res.status=='success'){
-                if(res["stocks"]['data'].length > 0){
-                this. updateItemModelService(res["stocks"]['data'],this.stockForm.value.stock_id)
-                }
-                  this.close();
-              }
+                  this.detailsService.receiverData(res,true);
+                  this.toast.open('Stock updated Successfully!');
+                  this.shared.remove();
+              this.close();
             },
         _error => {
         console.error(_error);
@@ -155,18 +154,6 @@ arrayGetColumn(array,column){
   }
   calculateTQty(action){
     return action=='add'?this.stock.available_stock_qty+parseInt(this.qty.value):this.stock.available_stock_qty-parseInt(this.qty.value);
-  }
-  updateItemModelService(data:Stock[]=[],stock_id){
-    let available=[];
-    let lowerstock=[];
-    let stockout=[];
-
-    const item =data.find(item=>item.stock_id==stock_id);
-    available=data.filter(stock=>stock.status==='available');
-    lowerstock=data.filter(stock=>stock.status==='lowerstock');
-    stockout =data.filter(stock=>stock.status==='stockout');
-    this.modelStockService.update({ loading: false, available: available,lowerstock:lowerstock,stockout:stockout });
-    this.detailsService.update({title:'Stock Details',sender_data:item,module:'app-stock',component:'app-info-stock-model',action:'info',detailsVisible:true});
   }
 
 }

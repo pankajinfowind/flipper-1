@@ -7,6 +7,7 @@ import { PaginatedDataTableSource } from '../../../data-table/data/paginated-dat
 import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
 import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { CrupdateCategoryModalComponent } from './crupdate-category-modal/crupdate-category-modal.component';
+import { SharedModelService } from '../../../shared-model/shared-model-service';
 
 @Component({
   selector: 'app-categories',
@@ -20,7 +21,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   public dataSource: PaginatedDataTableSource<Category>;
 
-  constructor( public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCategoryService) { }
+  constructor(public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCategoryService) { }
 
   ngOnInit() {
     this.dataSource = new PaginatedDataTableSource<Category>({
@@ -66,11 +67,13 @@ ngOnDestroy() {
      * or for creating a new user otherwise.
      */
     public showCrupdateCategoryModal(category?: Category) {
+      this.shared.update(category);
       this.modal.open(
         CrupdateCategoryModalComponent,
           {category},
           'crupdate-category-modal-container'
       ).beforeClose().subscribe(data => {
+        this.shared.remove();
           if ( ! data) return;
           this.paginator.refresh();
       });

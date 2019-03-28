@@ -14,6 +14,7 @@ import { PaginatedDataTableSource } from '../../../data-table/data/paginated-dat
 import { Item } from './api/item';
 import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
+import { SharedModelService } from '../../../shared-model/shared-model-service';
 
 @Component({
   selector: "app-items",
@@ -27,7 +28,7 @@ export class ItemsComponent implements  OnInit,OnDestroy {
 
   public dataSource: PaginatedDataTableSource<Item>;
 
-  constructor(public paginator: UrlAwarePaginator,private modal: Modal,private router: Router,private detailsService:DetailsService,private api: ApiItemService) {
+  constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private router: Router,private detailsService:DetailsService,private api: ApiItemService) {
   }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ ngOnDestroy() {
   this.paginator.destroy();
 }
   openDetails(title='New Items',action='new',obj){
+    this.shared.update(obj);
      this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-items',action:action,detailsVisible:true});
   }
 viewUpCommingData(){

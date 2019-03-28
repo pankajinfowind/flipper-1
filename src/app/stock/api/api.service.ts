@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from './api-routes.enum';
 import { BackendResponse } from '../../common/core/types/backend-response';
-import { Stock } from './stock';
 import { AppHttpClient } from '../../common/core/http/app-http-client.service';
 
 @Injectable({
@@ -26,7 +25,7 @@ export class ApiStockService {
 
     public get(): BackendResponse<{ data: any }> {
       return this.http.get(API_ROUTES.STOCK);
-  }
+    }
     public getStockByBranch(branch_id:number,status:string): BackendResponse<{ data: any }> {
       // here we can get stock available when status = 1 , damage(like expired by date(by stytem task) or branch mananger (can update the stock item damaged)) status= 3 and soldout  status=2
       return this.http.get(API_ROUTES.BRANCH_STOCK+'/'+branch_id+'/'+status);
@@ -36,6 +35,9 @@ export class ApiStockService {
   }
   public deleteMultiple(ids: number[]) {
     return this.http.delete(API_ROUTES.DELETE_MULTIPLE, {ids});
+  }
+  public deleteMultipleStockMovement(ids: number[]) {
+    return this.http.delete(API_ROUTES.DELETE_MULTIPLE_STOCKMOVEMENT, {ids});
   }
     //new-item
 }

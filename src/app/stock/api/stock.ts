@@ -50,4 +50,30 @@ export class Stock {
     }
   }
 }
+export class StockMovements {
+  id?: number;
+   stock_id?: number;
+   quantity?: number;
+   batch_no?:string;
+    type: string;
+    transaction: string;
+    comments: string;
+      branch_id: number;
+       created_at: string;
+        updated_at: string;
+        reason_id?:number;
+        reason?:Reason;
+        transction_date?:Date;
+        manufacture_date?:Date;
+        expired_date?:Date;
+        in_qty?:number;
+        out_qty?:number;
+        total_qty?:number;
+        item?:Object={};
+   constructor(params: Object = {}) {
+    for (let name in params) {
+      this[name] = params[name];
+    }
+  }
+  }
 

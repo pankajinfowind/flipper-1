@@ -3,10 +3,8 @@ import { Observable } from "rxjs";
 import 'rxjs/add/operator/takeUntil';
 import { Select } from "@ngxs/store";
 import { MasterState } from "../state/master-state";
-import { StockModelService } from "./stock-model.service";
 import { DetailsService } from "../details/details.service";
 import { Details } from "../details/details";
-import { Bootstrapper } from './bootstrapper.service';
 
 @Component({
   selector: "app-stock",
@@ -15,7 +13,6 @@ import { Bootstrapper } from './bootstrapper.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StockComponent implements OnInit {
-
   links: any[] = [
     {
       menu:'Stock Available',icon:'assignment',path:'available',
@@ -26,12 +23,13 @@ export class StockComponent implements OnInit {
     {
       menu:'Lower Stock',icon:'assignment',path:'lowerstock',
     },
-    {
-      menu:'Stock Movements',icon:'assignment',path:'stockmovements',
-    },
+
     {
       menu:'Stock Expired',icon:'assignment',path:'expireditem',
-    }
+    },
+    {
+      menu:'Stock Movements',icon:'assignment',path:'stockmovement',
+    },
 
   ];
 
@@ -45,11 +43,10 @@ export class StockComponent implements OnInit {
   details$: Observable<Details>;
 
 
-  constructor(private detailsService: DetailsService, private modelService: StockModelService) {
+  constructor(private detailsService: DetailsService) {
   }
 
   ngOnInit() {
-    this.stocks$ = this.modelService.stocks$;
     this.subscription = this.details$ = this.detailsService.details$;
   }
 

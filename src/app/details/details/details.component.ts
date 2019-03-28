@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DetailsService } from '../details.service';
 import { Details } from '../details';
+import { SharedModelService } from '../../shared-model/shared-model-service';
 
 @Component({
   selector: 'app-details',
@@ -12,10 +13,11 @@ export class DetailsComponent implements OnInit {
 
   subscription: Observable<Details>;
   details$: Observable<Details>;
-  constructor(private detailsService:DetailsService) {
+  constructor(public shared:SharedModelService,private detailsService:DetailsService) {
    }
 
    close(){
+    this.shared.remove();
     this.detailsService.update({title:null,receriver_data:null,sender_data:null,module:null,component:null,action:null,detailsVisible:false});
   }
   ngOnInit() {

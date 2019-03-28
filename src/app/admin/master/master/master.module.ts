@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { UiModule } from "../../../common/core/ui/ui.module";
 import { MasterRoutingModule } from "./master-routing.module";
 import { DetailsModule } from "../../../details/details.module";
-import { NoEntryFoundMasterComponent } from "../messages/no-entry-found/no-entry-found.component";
 import { ApiCategoryService } from '../categories/api/api.service';
 import { ApiItemService } from '../items/api/api.service';
 import { HttpModule } from '../../../common/core/http/http.module';
@@ -41,7 +40,6 @@ import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crup
     BrandComponent,
     BranchComponent,
     MasterComponent,
-    NoEntryFoundMasterComponent,
     RemoveBranchDialog,
     CrupdateCategoryModalComponent,
     CrupdateBrandModalComponent
@@ -53,7 +51,6 @@ import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crup
     BrandComponent,
     BranchComponent,
     MasterComponent,
-    NoEntryFoundMasterComponent,
     RemoveBranchDialog,
     CrupdateCategoryModalComponent,
     CrupdateBrandModalComponent

@@ -99,10 +99,8 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <form [formGroup]="newCustomerTypeForm">
-        <button type="button" class="m-3 float-right" (click)="saveNewCustomerType(null,true)" mat-raised-button color="accent" [disabled]="loading | async">Save all</button>
-      <mat-form-field class="w-100 p-2">
-        <input matInput (keyup)="applyFilter($event.target.value)" [disabled]="dataSource_new_customer_type.data.length == 0" placeholder="Search">
-      </mat-form-field>
+        <button type="button" class="m-3 float-right button-success" (click)="saveNewCustomerType(null,true)" mat-raised-button  [disabled]="loading | async">Save all</button>
+        <!-- <input matInput class="w-100 p-2" (keyup)="applyFilter($event.target.value)" [disabled]="dataSource_new_customer_type.data.length == 0" placeholder="Search"> -->
 
   <div style="overflow: auto">
       <table formArrayName="newCustomerType" mat-table [dataSource]="dataSource_new_customer_type" class="w-100">
@@ -123,13 +121,10 @@
           <th mat-header-cell *matHeaderCellDef > Price(INC TAX)</th>
           <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
             <!-- unit quantity input field -->
-            <mat-form-field class="m-3" appearance="outline">
-              <mat-label>Pirce(INC TAX)</mat-label>
-
+           
                 <input matInput placeholder="Price(INC TAX)"  type="number"
                   formControlName="sale_price_including_tax" required>
 
-            </mat-form-field>
           </td>
         </ng-container>
 
@@ -137,7 +132,7 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef > Action </th>
           <td mat-cell *matCellDef="let element; let index = index">
-            <button type="button" class="m-3 float-right" (click)="saveNewCustomerType(element)" mat-raised-button color="accent" [disabled]="loading | async">Save</button>
+            <button type="button" class="m-3 float-right button" (click)="saveNewCustomerType(element)" mat-raised-button  [disabled]="loading | async">Save</button>
           </td>
         </ng-container>
 

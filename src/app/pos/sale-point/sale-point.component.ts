@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { MasterModelService } from '../../admin/master/master-model.service';
 import { Category } from '../../admin/master/categories/api/category';
 import { Stock } from '../../stock/api/stock';
-import { StockModelService } from '../../stock/stock-model.service';
 import { Pos } from '../pos';
 import { ApiPosService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
@@ -15,9 +14,6 @@ import { OrderModelService } from '../../orders/order-model.service';
 import { Orders } from '../../orders/orders';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
-import { Bootstrapper } from '../../stock/bootstrapper.service';
-import { BootstrapperPos } from '../bootstrapper.service';
-import { StockModel } from '../../stock/stock-model';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { SetUpModelService } from '../../setup/setup-model.service';
 import { CustomerType } from '../../setup/customerType/api/CustomerType';
@@ -58,7 +54,6 @@ export class SalePointComponent implements OnInit {
   master$: Observable<Master>;
   categories: Category[] = [];
   currently_stocks: Stock[] = [];
-  stocks$: Observable<StockModel>;
   pos$: Observable<Pos>;
   is_order_currently = false;
   current_order = null; //TODO: why this has no type?
@@ -78,16 +73,10 @@ export class SalePointComponent implements OnInit {
   accent='accent';
   primary='primary';
   mode = 'determinate';
-  constructor(private setupModelService:SetUpModelService,private bottomSheet: MatBottomSheet,private bootstrapper_pos: BootstrapperPos,private bootstrapper_stock: Bootstrapper,private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private modelService: StockModelService, private msterModelService: MasterModelService) {
-    //this.init_stock();
-    this.init_pos();
+  constructor(private setupModelService:SetUpModelService,private bottomSheet: MatBottomSheet,private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private msterModelService: MasterModelService) {
+
    }
-  //  init_stock() {
-  //   return this.bootstrapper_stock.bootstrap();
-  //   }
-    init_pos() {
-      return this.bootstrapper_pos.bootstrap();
-      }
+
   category_selected: Category;
   is_categry_clicked = false;
   customer_type:CustomerType=null;

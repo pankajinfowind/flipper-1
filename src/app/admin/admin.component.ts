@@ -14,6 +14,7 @@ public appearance;
      */
     public leftColumnIsHidden = false;
     private rlaSafe: boolean = false;
+    isOpened:boolean=true;
   constructor(public setting:Settings,private changeDetectionRef: ChangeDetectorRef) { }
 
 
@@ -21,7 +22,7 @@ public appearance;
     this.appearance=this.setting.getAll().appearance;
   }
   public toggleLeftSidebar() {
-    this.leftColumnIsHidden = !this.leftColumnIsHidden;
+    this.isOpened = !this.isOpened;
 }
 ngAfterViewInit() {
   this.rlaSafe = true;

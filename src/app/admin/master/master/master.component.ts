@@ -4,6 +4,7 @@ import { MasterState } from '../../../state/master-state';
 import { Observable } from 'rxjs';
 import { DetailsService } from '../../../details/details.service';
 import { Details } from '../../../details/details';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-master',
@@ -26,12 +27,13 @@ links: any[] = [
 
 ];
 toggled=false;
+
 @Select(MasterState.loading) loading$: Observable<boolean>;
 isMobile=false;
 leftColumnIsHidden=false;
 subscription: Observable<Details>;
 details$: Observable<Details>;
-constructor(private detailsService:DetailsService) {
+constructor(private route: ActivatedRoute,private detailsService:DetailsService) {
  }
 
   ngOnInit() {

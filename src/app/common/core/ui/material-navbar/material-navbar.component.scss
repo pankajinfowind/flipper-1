@@ -2,9 +2,8 @@
 
 material-navbar {
     display: block;
-    background-color: $site-primary-color-100;
-    // $site-primary-color-100;
-    color: $nav-bar-color;
+    background-color:$site-bg-color-100;
+    color:  $admin-left-col-text-color;
     box-shadow: $box-shadow-3;
     position: relative;
     z-index: 2;
@@ -31,13 +30,14 @@ material-navbar {
         .text-logo {
           font-size: 1.4rem;
           //color: black!important;
-          color: $nav-bar-color;
+          color: $admin-left-col-text-color;
       }
       .text-logo-sm {
         margin-left: 20px;
         font-size: 1rem;
         //color: black!important;
-        color: $nav-bar-color;
+        color: $admin-left-col-text-color;
+        font-weight:400;
     }
      .text-logo-sm:first-letter {
       text-transform: uppercase;

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { GlobalVariables } from "../../common/core/global-variables";
 
 import { ElectronService } from "ngx-electron";
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -9,9 +10,9 @@ import { ElectronService } from "ngx-electron";
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
   ipcRenderer: any;
-  constructor(
+  constructor(private route: ActivatedRoute,
     public v: GlobalVariables,
     private _electronService: ElectronService
   ) {
@@ -24,6 +25,8 @@ export class DashboardComponent {
     } else {
       this.v.webTitle("Flipper");
     }
+  }
+  ngOnInit() {
   }
 
   isElectron = () => {

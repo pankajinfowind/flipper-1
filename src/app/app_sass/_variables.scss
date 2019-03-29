@@ -159,6 +159,7 @@ html{
 .hidden{
   display:none
 }
+
 .highlighted {
   color: $site-primary-color-100;
   background-color: $site-selected-item-bg-color;
@@ -231,3 +232,7 @@ html{
     appearance: none;
     white-space: nowrap;
 }
+.mat-drawer-side {
+  border-right: none!important;
+}
+.main-left-column {border-right: 1px solid $site-border-color-200!important;}

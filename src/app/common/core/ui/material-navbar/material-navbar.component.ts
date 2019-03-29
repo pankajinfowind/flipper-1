@@ -25,5 +25,6 @@ export class MaterialNavbar {
       this.business=this.currentUser.get('business')[0];
       this.branch=this.currentUser.get('branches').find(b=>b.id==parseInt(localStorage.getItem('active_branch')));
       this.version=localStorage.getItem("version");
+
     }
 }

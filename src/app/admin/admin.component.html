@@ -1,15 +1,51 @@
- <material-navbar menuPosition="admin-navbar" [showToggleButton]="true" (toggleButtonClick)="toggleLeftSidebar()"></material-navbar>
+<div class="app-admin" style="overflow:none">
+<mat-sidenav-container class="content">
+<mat-sidenav [opened]="isOpened" mode="side" class="main-left-column">
+  <div class="nH bAw nn" style="width: 83px; height: 100%; overflow:hidden;">
+    <div class="brC-aT5-aOt-Jw">
+      <div class="brC-aT5-aOt-bsf-Jw" id="main-nav-list">
+        <nav class="brC-bsf-aT5-aOt list-horizontal">
+            <mat-list class="main-menu-items" id="gsc-gab-6" *ngFor="let link of appearance.navLinks" class="bse-bvF-I aT5-aOt-I bse-bvF-aLp aT5-aOt-I-Je" [class.active]="rla?.isActive" #rla="routerLinkActive" routerLinkActive="'active'">
+            <a  class="main-menu-item" [routerLink]="link.path">
+            <div class="aT5-aOt-I-JX-Jw"
+              style="background-image: url(&quot;https://www.gstatic.com/companion/icon_assets/calendar_2x.png&quot;); user-select: none;">
+            </div>
+            <span class="titles">
+                {{link.label}}
+              </span>
+          </a>
+            <div class="bse-bvF-JX-axQ-avS" style="user-select: none;"></div>
+          </mat-list>
 
-    <nav mat-tab-nav-bar [color]="appearance.navLayout.color" [backgroundColor]="appearance.navLayout.backgroundColor">
-        <a class="menu-item" mat-tab-link
-           *ngFor="let link of appearance.navLinks"
-           [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
-           [active]="rla.isActive">
-           <mat-icon>{{link.icon}}</mat-icon>
-           <span class="text" trans>{{link.label}}</span>
-        </a>
-      </nav>
-
-      <router-outlet></router-outlet>
 
 
+          <div class="brC-aT5-aOt-axR" role="separator" style="user-select: none;" aria-hidden="false"
+            aria-disabled="true" id=":nv"></div>
+
+        </nav>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</mat-sidenav>
+  <mat-sidenav-content class="main-content-inner" [class.isLeftSideClosed]="!isOpened">
+      <div class="brC-dA-I-Jw" aria-label="Side panel">
+         <div class="aT5-aOt-I brC-dA-I" aria-pressed="false" role="button" aria-label="Hide side panel" tabindex="0"
+            style="user-select: none;">
+            <div class="aT5-aOt-I-JX-Jw" (click)="toggleLeftSidebar()"><svg class="aT5-aOt-I-JX" version="1.1" id="Layer_1" x="0px" y="0px" width="20px"
+                height="20px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve" fill="#5F6368">
+                <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z"></path>
+                <path fill="none" d="M0,0h24v24H0V0z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <material-navbar [class.fullmaterialnavbar]="!isOpened"> </material-navbar>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>

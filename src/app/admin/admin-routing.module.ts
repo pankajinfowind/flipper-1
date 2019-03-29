@@ -6,23 +6,22 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
 
-    {
-        path: '',
-        component: AdminComponent,
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        data: {},
+    {path: '',
+    component: AdminComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],data: {},
         children: [
           {
             path: '',
             redirectTo: 'dashboard',
             pathMatch: 'full',
             },
-            { path: 'dashboard', component: DashboardComponent},
+            { path: 'dashboard', component: DashboardComponent,
+            },
             {
               path: 'master',
               loadChildren: 'app/admin/master/master/master.module#MasterModule',
-              canActivate: [AuthGuard]
+              canActivate: [AuthGuard],
             },
             {
               path: 'stock',

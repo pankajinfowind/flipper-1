@@ -1,5 +1,6 @@
 @import "../app_sass/variables";
 
+
 .stock{
   height: 100%;
   background-color: $admin-background-color;
@@ -9,6 +10,7 @@
     width: 100%;
     height: calc(100% - #{$admin-nav-height+1});
     overflow: hidden;
+
     .left-column {
       display: flex;
       flex-direction: column;
@@ -16,8 +18,7 @@
       flex: 0 0 $admin-left-col-width;
       background-color: $admin-left-col-background-color;
       height: 100%;
-      // border-right: $admin-card-border;
-      // box-shadow: $admin-card-box-shadow;
+      border-right: none;
       line-height: inherit;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -99,7 +100,7 @@
       height: 100%;
       flex: 1 1 auto;
       background-color:$site-bg-color-100;
-      box-shadow: $admin-card-box-shadow;
+      // box-shadow: $admin-card-box-shadow;
       line-height: inherit;
       white-space: nowrap;
       text-overflow: ellipsis;

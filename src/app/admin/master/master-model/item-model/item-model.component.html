@@ -14,9 +14,9 @@
                   Item name is <strong>required</strong>
                 </mat-error>
               </mat-error>
-          </mat-form-field>
+          </mat-form-field><br />
 
-          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+          <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
               <mat-label>Enter SKU</mat-label>
             <input class="text-secondary" [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit" matInput placeholder="Sku (auto generated if blank)" formControlName="sku" required>
             <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
@@ -29,9 +29,9 @@
                   Item sku is <strong>required</strong>
               </mat-error>
             </mat-error>
-          </mat-form-field>
+          </mat-form-field><br />
 
-          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+          <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
               <mat-label>Enter barcode</mat-label>
             <input class="text-secondary"[matTooltip]="barcode_tool_tips" aria-label="Barcode" matInput placeholder="Barcode (if available)" formControlName="barcode" required>
             <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info</mat-icon>

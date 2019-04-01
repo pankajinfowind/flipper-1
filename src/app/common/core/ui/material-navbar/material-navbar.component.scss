@@ -32,6 +32,9 @@ material-navbar {
           //color: black!important;
           color: $admin-left-col-text-color;
       }
+      .text-logo:first-letter {
+        text-transform: uppercase;
+    }
       .text-logo-sm {
         margin-left: 20px;
         font-size: 1rem;

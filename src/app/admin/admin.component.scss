@@ -17,6 +17,7 @@
   position: relative;
   width: 83px;
 overflow:hidden;
+margin-top: 16px;
 }
 .brC-bsf-aT5-aOt {
   -webkit-box-flex: 1;
@@ -28,16 +29,7 @@ overflow:hidden;
   width:100%;
 }
 
-.aT5-aOt-I {
-  cursor: pointer;
-  height: 83px;
-  outline: none;
-  pointer-events: none;
-  position: relative;
-  -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
-  transition: all .3s cubic-bezier(.4,0,.2,1);
-  width: 83px;
-}
+
 .aT5-aOt-I-JX-Jw {
   background-color: transparent;
   background-repeat: no-repeat;
@@ -52,7 +44,6 @@ overflow:hidden;
   align-items: center;
   height: 40px;
   left: 21px;
-  pointer-events: auto;
   position: absolute;
   top: 8px;
   -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
@@ -109,7 +100,6 @@ overflow:hidden;
   cursor: pointer;
   height: 83px;
   outline: none;
-  pointer-events: none;
   position: relative;
   -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
   transition: all .3s cubic-bezier(.4,0,.2,1);
@@ -121,27 +111,7 @@ overflow:hidden;
     -webkit-border-radius: calc(83px - 8px - 10px);
     border-radius: calc(83px - 8px - 10px);
 }
-.aT5-aOt-I-JX-Jw {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    -webkit-background-size: 20px 20px;
-    background-size: 20px 20px;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    height: 40px;
-    left: 21px;
-    pointer-events: auto;
-    position: absolute;
-    top: 8px;
-    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
-    transition: all .3s cubic-bezier(.4,0,.2,1);
-    width: 40px;
-}
+
 .brC-dA-I .aT5-aOt-I-JX {
   left: 10px;
   position: absolute;
@@ -176,7 +146,7 @@ justify-content: center;
 }
 
 @import "../app_sass/variables";
-$admin-main-left-width:83px!default;
+$admin-main-left-width:90px!default;
 .app-admin{
   height: 100%;
   background-color: $admin-background-color;
@@ -225,6 +195,7 @@ $admin-main-left-width:83px!default;
       width: 100%;
 
       .main-menu-item {
+        cursor:pointer;
         display: block;
         width: 100%;
         padding: 12px;

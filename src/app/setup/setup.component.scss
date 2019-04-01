@@ -1,12 +1,15 @@
-@import "../../app/app_sass/variables";
+@import "../app_sass//variables";
 
-app-setup {
+
+app-setup{
   height: 100%;
   background-color: $admin-background-color;
+  // overflow: hidden;
 
   .mat-sidenav-container {
     width: 100%;
     height: calc(100% - #{$admin-nav-height+1});
+    overflow: hidden;
 
     .left-column {
       display: flex;
@@ -15,8 +18,7 @@ app-setup {
       flex: 0 0 $admin-left-col-width;
       background-color: $admin-left-col-background-color;
       height: 100%;
-      // border-right: $admin-card-border;
-      // box-shadow: $admin-card-box-shadow;
+      border-right: none;
       line-height: inherit;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -25,7 +27,6 @@ app-setup {
       outline: none;
       cursor: pointer;
       -webkit-user-drag: none;
-
 
        .menu-items {
         width: 100%;
@@ -59,9 +60,9 @@ app-setup {
 
           &.active {
             color: $site-primary-color-100;
-            // background-color: $site-selected-item-bg-color;
-            // border-top-right-radius: 25px;
-            // border-bottom-right-radius: 25px;
+            background-color: $site-selected-item-bg-color;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
             .text {
               font-weight: 500!important;
             }
@@ -88,17 +89,22 @@ app-setup {
       border-left: 1px solid $site-border-color-200;
       background-color: $site-bg-color-100;
       color: $site-text-color-400;
+      overflow: hidden;
+
+      .mat-drawer-inner-container{
+        overflow: hidden;
+      }
     }
 
     .content-inner {
       height: 100%;
       flex: 1 1 auto;
-      overflow: auto;
       background-color:$site-bg-color-100;
-      box-shadow: $admin-card-box-shadow;
+      // box-shadow: $admin-card-box-shadow;
       line-height: inherit;
       white-space: nowrap;
       text-overflow: ellipsis;
+      overflow: auto;
     }
   }
 }

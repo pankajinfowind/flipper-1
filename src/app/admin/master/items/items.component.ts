@@ -59,7 +59,7 @@ this.detailsService.details$.subscribe(response=>{
 
 }
   addItem(){
-    this.router.navigate(["/admin/master/add-item"]);
+    this.router.navigate(["/admin/setup/add-item"]);
   }
 /**
      * Delete currently selected users.

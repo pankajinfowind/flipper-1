@@ -265,7 +265,7 @@ export class AddItemComponent implements OnInit {
 
 
   close() {
-    this.router.navigate(["/admin/master/item"]);
+    this.router.navigate(["/admin/setup/item"]);
     //localStorage.setItem('add-item', 'No');
   }
   openDetails(title = 'New Category', action = 'new', component = 'app-categories', modules = 'app-master', obj) {

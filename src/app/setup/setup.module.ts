@@ -23,9 +23,12 @@ import { CustomerTypeComponent, RemoveCustomertypeDialog } from './customerType/
 import { ApiCustomerTypeService } from './customerType/api/api.service';
 import { ExpirationSettingComponent } from './expiration_setting/expiration_setting.component';
 import { ApiExpirationSettingService } from './expiration_setting/api/api.service';
+import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
+import { NavService } from './nav-service';
+import { MasterModule } from '../admin/master/master/master.module';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent,RemoveCustomertypeDialog],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent,RemoveCustomertypeDialog, MenuListItemComponent],
   exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
   imports: [
     CommonModule,
@@ -36,13 +39,15 @@ import { ApiExpirationSettingService } from './expiration_setting/api/api.servic
     UiModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    MasterModule
   ],
   providers: [
     ApiTaxRateService,
     ApiReasonService,
     ApiCustomerTypeService,
-    ApiExpirationSettingService
+    ApiExpirationSettingService,
+    NavService
   ],
   entryComponents: [RemoveCustomertypeDialog]
 })

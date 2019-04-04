@@ -236,3 +236,33 @@ html{
   border-right: none!important;
 }
 .main-left-column {border-right: 1px solid $site-border-color-200!important;}
+.badge__target {
+  position: relative;
+  overflow: visible;
+}
+.badge--muted, .badge--success, .badge--warning {
+  text-align: center;
+  width: auto;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 8px;
+  font-size: 13px;
+    line-height: 16px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 2px 0;
+    border-radius: 3px;
+    color: white;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+.badge--success {
+  background-color: #23c770;
+}
+.badge--danger {
+  background-color: #d74242;
+}
+.badge--muted {
+  background-color: #849194;
+}

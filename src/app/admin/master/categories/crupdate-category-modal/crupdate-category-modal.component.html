@@ -39,8 +39,8 @@
         <div class="buttons right mat-dialog-actions" mat-dialog-actions>
           <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
           <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !cateogryForm.valid">
-              <span *ngIf="updating" trans>Update Category</span>
-              <span *ngIf="!updating" trans>Create Category</span>
+              <span *ngIf="updating" trans>Update</span>
+              <span *ngIf="!updating" trans>Create</span>
           </button>
       </div>
      </mat-card-actions>

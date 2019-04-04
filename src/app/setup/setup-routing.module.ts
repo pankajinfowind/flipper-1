@@ -24,7 +24,7 @@ const setupRoutes: Routes = [
             },
             { path: 'customertype', component: CustomerTypeComponent },
             { path: 'tax-rate', component: TaxRatesComponent },
-            { path: 'reasons/:reason', component: ReasonComponent},
+            { path: 'reason', component: ReasonComponent},
             { path: 'expiration_setting', component: ExpirationSettingComponent},
             { path: 'item', component: ItemsComponent },
             { path: 'category', component: CategoriesComponent },

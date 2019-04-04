@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update Customer Type Details</h2>
+    <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a Customer Type</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+   <form autocomplete="off" [formGroup]="dataForm" (ngSubmit)="confirm()">
+     <mat-card-content class="mat-dialog-content">
+
+           <mat-form-field class="w-100" appearance="outline">
+               <mat-label>Enter name</mat-label>
+             <input matInput placeholder="Name" formControlName="name" required>
+
+             <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+                   <mat-error *ngIf="name.errors.name && !name.errors.required">
+                     Please enter a valid name
+                   </mat-error>
+                   <mat-error *ngIf="name.errors.required">
+                       Name is <strong>required</strong>
+                   </mat-error>
+             </mat-error>
+
+         </mat-form-field>
+
+         <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Enter Percentage(do not enter % sign)</mat-label>
+            <input matInput placeholder="Enter Percentage(do not enter % sign)" formControlName="discount_value" required>
+
+            <mat-error  *ngIf="discount_value.invalid && (discount_value.dirty || discount_value.touched)">
+                  <mat-error *ngIf="discount_value.errors.discount_value && !discount_value.errors.required">
+                    Please enter a valid Discount value, only number allowed.
+                  </mat-error>
+                  <mat-error *ngIf="discount_value.errors.required">
+                    Discount value is <strong>required</strong>
+                  </mat-error>
+            </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Enter Description</mat-label>
+            <textarea matInput placeholder="Leave a description" formControlName="description"></textarea>
+        </mat-form-field>
+
+
+     </mat-card-content>
+
+     <mat-card-actions>
+        <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+          <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
+          <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !dataForm.valid">
+              <span *ngIf="updating" trans>Update</span>
+              <span *ngIf="!updating" trans>Create</span>
+          </button>
+      </div>
+     </mat-card-actions>
+
+   </form>

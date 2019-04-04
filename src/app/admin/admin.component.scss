@@ -126,6 +126,7 @@ margin-top: 16px;
   transition: all .3s cubic-bezier(.4,0,.2,1);
 }
 .titles{
+  cursor:pointer;
   position: relative;
   padding-top: 35px;
   // right:0%;
@@ -186,7 +187,7 @@ $admin-main-left-width:90px!default;
       }
 
       &:not(.active):not(.drag-over):hover {
-        background-color: $site-bg-color-300;
+        background-color: $site-bg-color-200;
         border-top-right-radius: 25px;
         border-bottom-right-radius: 25px;
       }

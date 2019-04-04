@@ -16,17 +16,20 @@ export class ApiReasonService {
     constructor(private http: AppHttpClient) {}
 
 
-  public create(params: Reason): BackendResponse<{ data: any }> {
+  public create(params: Reason): Observable<Reason> {
         return this.http.post(API_ROUTES_REASON.REASON, params);
     }
   public get(): BackendResponse<{ Reasonies: Reason[] }> {
       return this.http.get(API_ROUTES_REASON.REASON);
   }
 
-  public update(params: Reason,id:number): BackendResponse<{ data: Reason }> {
+  public update(id:number,params: Reason):  Observable<Reason> {
     return this.http.put(API_ROUTES_REASON.REASON+'/'+id, params);
  }
  public delete(id:number): BackendResponse<{ data: Reason }> {
   return this.http.delete(API_ROUTES_REASON.REASON+'/'+id);
+}
+public deleteMultiple(ids: number[]) {
+  return this.http.delete(API_ROUTES_REASON.DELETE_MULTIPLE, {ids});
 }
 }

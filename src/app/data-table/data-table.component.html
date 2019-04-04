@@ -15,7 +15,7 @@
             <div class="right" #selectedActions><ng-content select="[headerSelectedActions]"></ng-content></div>
         </div>
     </div>
-    <loading-indicator [isVisible]="dataSource.loading()" class="overlay"></loading-indicator>
+    <loading-indicator [isVisible]="dataSource.loading() || isLoading" class="overlay"></loading-indicator>
     <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="select">
             <mat-header-cell  *matHeaderCellDef>

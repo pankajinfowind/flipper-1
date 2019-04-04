@@ -16,17 +16,21 @@ export class ApiTaxRateService {
     constructor(private http: AppHttpClient) {}
 
 
-  public create(params: TAXRATE): BackendResponse<{ data: any }> {
+  public create(params: TAXRATE):Observable<TAXRATE> {
         return this.http.post(API_ROUTES_TAXRATE.TAXRATE, params);
     }
   public get(): BackendResponse<{ TAXRATEies: TAXRATE[] }> {
       return this.http.get(API_ROUTES_TAXRATE.TAXRATE);
   }
 
-  public update(params: TAXRATE,id:number): BackendResponse<{ data: TAXRATE }> {
+  public update(id:number,params: TAXRATE): Observable<TAXRATE> {
     return this.http.put(API_ROUTES_TAXRATE.TAXRATE+'/'+id, params);
  }
  public delete(id:number): BackendResponse<{ data: TAXRATE }> {
   return this.http.delete(API_ROUTES_TAXRATE.TAXRATE+'/'+id);
+}
+
+public deleteMultiple(ids: number[]) {
+  return this.http.delete(API_ROUTES_TAXRATE.DELETE_MULTIPLE, {ids});
 }
 }

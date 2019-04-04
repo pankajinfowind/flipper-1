@@ -102,12 +102,12 @@ export class ReasonModelComponent implements OnInit {
     this.api.create(data).pipe(finalize(() => this.loading.next(false))).subscribe(
       res => {
 
-        if (res.status == 'success') {
-          this.toast.open('Reason added Successfully!');
-          this.loadingFormGroup();
+        // if (res.status == 'success') {
+        //   this.toast.open('Reason added Successfully!');
+        //   this.loadingFormGroup();
 
-          this.setupModelService.update({ loading: false, reasons: res["reasons"]["data"] ? res["reasons"]["data"] : [] });
-        }
+        //   this.setupModelService.update({ loading: false, reasons: res["reasons"]["data"] ? res["reasons"]["data"] : [] });
+        // }
       },
       _error => {
         console.error(_error);
@@ -117,12 +117,12 @@ export class ReasonModelComponent implements OnInit {
   update(data, id) {
     this.api.update(data, id).pipe(finalize(() => this.loading.next(false))).subscribe(
       res => {
-        if (res.status == 'success') {
-          this.toast.open('Reason  updated Successfully!');
-          this.loadingFormGroup();
-          this.setupModelService.update({ loading: false, reasons: res["reasons"]["data"] ? res["reasons"]["data"] : [] });
-          this.close();
-        }
+        // if (res.status == 'success') {
+        //   this.toast.open('Reason  updated Successfully!');
+        //   this.loadingFormGroup();
+        //   this.setupModelService.update({ loading: false, reasons: res["reasons"]["data"] ? res["reasons"]["data"] : [] });
+        //   this.close();
+        // }
       },
       _error => {
         console.error(_error);

@@ -74,12 +74,12 @@ export class CustomerTypeModelComponent implements OnInit {
   create(data){
     this.api.create(data).pipe(finalize(() =>  this.loading.next(false))).subscribe(
       res => {
-          if(res.status=='success'){
+
             this.toast.open('Customer Type added Successfully!');
             this.customerTypeForm.reset();
             this.setupModelService.update({loading:false, customertypes:res["customertypes"]["data"]?res["customertypes"]["data"]:[]});
 
-          }
+
       },
       _error => {
       console.error(_error);
@@ -89,11 +89,11 @@ export class CustomerTypeModelComponent implements OnInit {
   update(data,id){
     this.api.update(data,id).pipe(finalize(() =>  this.loading.next(false))).subscribe(
       res => {
-          if(res.status=='success'){
+
             this.toast.open('Customer Type updated Successfully!');
             this.setupModelService.update({loading:false, customertypes:res["customertypes"]["data"]?res["customertypes"]["data"]:[]});
             this.close();
-          }
+
       },
       _error => {
       console.error(_error);

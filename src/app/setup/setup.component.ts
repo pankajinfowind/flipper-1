@@ -34,7 +34,7 @@ export class SetupComponent implements OnInit, OnDestroy {
       menu:'Tax rate',icon:'settings',path:'tax-rate',
     },
     {
-      menu:'Stock Movement',icon:'settings',path:'reasons/stock_movements',
+      menu:'Reason',icon:'settings',path:'reason',
     },
 
     {

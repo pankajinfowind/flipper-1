@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update {{reasonName}} Reason Details</h2>
+    <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a {{reasonName}}</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+   <form autocomplete="off" [formGroup]="dataForm" (ngSubmit)="confirm()">
+      <mat-card-content class="row">
+          <mat-form-field  appearance="outline" class="w-100">
+              <mat-label>Enter reason</mat-label>
+            <input  matInput placeholder="Reason" formControlName="name" required>
+              <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+                <mat-error *ngIf="name.errors.name && !name.errors.required">
+                  Please enter a valid reason name
+                </mat-error>
+                <mat-error *ngIf="name.errors.required">
+                  Reason name is <strong>required</strong>
+                </mat-error>
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field  appearance="outline" class="w-100" *ngIf="reason=='discount'">
+              <mat-label>Enter Discount value</mat-label>
+            <input  matInput placeholder="Discount value" formControlName="discount_value" required>
+            <mat-error *ngIf="discount_value.invalid && (discount_value.dirty || discount_value.touched)">
+              <mat-error *ngIf="discount_value.invalid && !discount_value.errors.required">
+                Please enter a valid discount value, only number allowed
+              </mat-error>
+              <mat-error *ngIf="discount_value.errors.required">
+                Discount value is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="ybx-mat mat-full-wdth"  *ngIf="reason=='refund'">
+            <mat-checkbox formControlName="return_to_stock">Return to stock</mat-checkbox>
+          </div>
+
+
+              <mat-form-field  appearance="outline" class="w-100" *ngIf="reason=='stock_movements'">
+                  <mat-label>Choose action</mat-label>
+            <mat-select placeholder="Choose action" formControlName="stock_movements_status" required>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let status of stock_reason_status" [value]="status">{{status}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="stock_movements_status.invalid && (stock_movements_status.dirty || stock_movements_status.touched)">
+              <strong *ngIf="stock_movements_status.errors.required">Action is required.</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field  appearance="outline" class="w-100">
+              <mat-label>Description</mat-label>
+                <textarea  matInput placeholder="Description (optional)" formControlName="description"></textarea>
+            </mat-form-field>
+
+      </mat-card-content>
+
+     <mat-card-actions>
+        <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+          <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
+          <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !dataForm.valid">
+              <span *ngIf="updating" trans>Update</span>
+              <span *ngIf="!updating" trans>Create</span>
+          </button>
+      </div>
+     </mat-card-actions>
+
+   </form>

@@ -96,12 +96,12 @@ export class TaxRateModelComponent implements OnInit {
     this.api.create(data).pipe(finalize(() => this.loading.next(false))).subscribe(
       res => {
 
-        if (res.status == 'success') {
-          this.toast.open('Tax rate added Successfully!');
-          this.loadingFormGroup();
+        // if (res.status == 'success') {
+        //   this.toast.open('Tax rate added Successfully!');
+        //   this.loadingFormGroup();
 
-          this.setupModelService.update({ loading: false, taxRates: res["taxrates"]["data"] ? res["taxrates"]["data"] : [] });
-        }
+        //   this.setupModelService.update({ loading: false, taxRates: res["taxrates"]["data"] ? res["taxrates"]["data"] : [] });
+        // }
       },
       _error => {
         console.error(_error);
@@ -111,12 +111,12 @@ export class TaxRateModelComponent implements OnInit {
   update(data, id) {
     this.api.update(data, id).pipe(finalize(() => this.loading.next(false))).subscribe(
       res => {
-        if (res.status == 'success') {
-          this.toast.open('Tax rate  updated Successfully!');
-          this.loadingFormGroup();
-          this.setupModelService.update({ loading: false, taxRates: res["taxrates"]["data"] ? res["taxrates"]["data"] : [] });
-          this.close();
-        }
+        // if (res.status == 'success') {
+        //   this.toast.open('Tax rate  updated Successfully!');
+        //   this.loadingFormGroup();
+        //   this.setupModelService.update({ loading: false, taxRates: res["taxrates"]["data"] ? res["taxrates"]["data"] : [] });
+        //   this.close();
+        // }
       },
       _error => {
         console.error(_error);

@@ -16,6 +16,15 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
       <mat-cell *matCellDef="let category"> {{category.name}} </mat-cell>
   </ng-container>
+  <ng-container matColumnDef="color">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Color</mat-header-cell>
+    <mat-cell *matCellDef="let category">
+        <span class="badge__target">
+          <span class="badge badge--success" [style.color]="'#ffff'" [style.background-color]="category.color?category.color:'#1da1f2'">{{category.color?category.color:'none'}} </span>
+      </span>
+    </mat-cell>
+</ng-container>
+
 
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>

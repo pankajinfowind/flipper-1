@@ -19,17 +19,22 @@ import { ApiTaxRateService } from './tax-rates/api/api.service';
 import { NoEntryFoundSetUpComponent } from './messages/no-entry-found/no-entry-found.component';
 import { ReasonComponent } from './reasons/reason.component';
 import { ApiReasonService } from './reasons/api/api.service';
-import { CustomerTypeComponent, RemoveCustomertypeDialog } from './customerType/customertype.component';
+import { CustomerTypeComponent } from './customerType/customertype.component';
 import { ApiCustomerTypeService } from './customerType/api/api.service';
 import { ExpirationSettingComponent } from './expiration_setting/expiration_setting.component';
 import { ApiExpirationSettingService } from './expiration_setting/api/api.service';
 import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
 import { NavService } from './nav-service';
 import { MasterModule } from '../admin/master/master/master.module';
+import { CrupdateCustomerTypeModalComponent } from './customerType/crupdate-customet-type-modal/crupdate-customer-type-modal.component';
+import { DataTableModule } from '../data-table/data-table/data-table.module';
+import { CrupdateTaxRateModalComponent } from './tax-rates/crupdate-tax-rate-modal/crupdate-tax-rate-modal.component';
+import { CrupdateReasonModalComponent } from './reasons/crupdate-reason-modal/crupdate-reason-modal.component';
+import { ReasonDataTableComponent } from './reasons/reason-data-table/reason-data-table.component';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent,RemoveCustomertypeDialog, MenuListItemComponent],
-  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,RemoveCustomertypeDialog],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent],
+  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent],
   imports: [
     CommonModule,
     SetupRoutingModule,
@@ -40,7 +45,8 @@ import { MasterModule } from '../admin/master/master/master.module';
     ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
-    MasterModule
+    MasterModule,
+    DataTableModule
   ],
   providers: [
     ApiTaxRateService,
@@ -49,7 +55,7 @@ import { MasterModule } from '../admin/master/master/master.module';
     ApiExpirationSettingService,
     NavService
   ],
-  entryComponents: [RemoveCustomertypeDialog]
+  entryComponents: [CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent,CrupdateReasonModalComponent]
 })
 export class SetupModule {
   static forRoot(): ModuleWithProviders {

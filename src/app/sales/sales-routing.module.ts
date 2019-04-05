@@ -23,6 +23,11 @@ const salesRoutes: Routes = [
               loadChildren: 'app/invoices/invoices.module#InvoicesModule',
               canActivate: [AuthGuard]
             },
+            {
+              path: 'customers',
+              loadChildren: 'app/customers/customers.module#CustomersModule',
+              canActivate: [AuthGuard]
+            },
 
         ]
 

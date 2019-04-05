@@ -34,7 +34,7 @@
         <ng-content></ng-content>
 
         <mat-header-row *matHeaderRowDef="columns" [class.hidden]="dataSource.isEmpty()"></mat-header-row>
-        <mat-row  *matRowDef="let myRowData; columns: columns" [class.highlighted_gray]="!dataSource.selectedRows.isSelected(myRowData) && (enableRowSelected && enableRowSelected.id==myRowData.id)" [class.highlighted]="dataSource.selectedRows.isSelected(myRowData)"></mat-row>
+        <mat-row  *matRowDef="let myRowData; columns: columns" class="data-row" [class.highlighted_gray]="!dataSource.selectedRows.isSelected(myRowData) && (enableRowSelected && enableRowSelected.id==myRowData.id)" [class.highlighted]="dataSource.selectedRows.isSelected(myRowData)"></mat-row>
     </mat-table>
 
     <div #noResults><ng-content *ngIf="dataSource.isEmpty()" select="no-results-message"></ng-content></div>

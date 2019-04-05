@@ -9,6 +9,8 @@ import { ApiStockService } from '../api/api.service';
 import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import{SharedModelService} from "../../shared-model/shared-model-service";
+import { BehaviorSubject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-stock-movement',
   templateUrl: './stock-movement.component.html',
@@ -19,6 +21,7 @@ import{SharedModelService} from "../../shared-model/shared-model-service";
 export class StockMovementComponent implements OnInit,OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
   public dataSource: PaginatedDataTableSource<StockMovements>;
+  public loading = new BehaviorSubject(false);
   constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {}
 
 
@@ -63,7 +66,8 @@ export class StockMovementComponent implements OnInit,OnDestroy {
      */
     public deleteSelectedStocks() {
       const ids = this.dataSource.selectedRows.selected.map(item => item.id);
-      this.api.deleteMultipleStockMovement(ids).subscribe(() => {
+      this.loading.next(true);
+      this.api.deleteMultipleStockMovement(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });

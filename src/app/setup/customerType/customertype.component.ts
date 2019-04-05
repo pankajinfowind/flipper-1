@@ -7,6 +7,8 @@ import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-t
 import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import { CrupdateCustomerTypeModalComponent } from './crupdate-customet-type-modal/crupdate-customer-type-modal.component';
 import { MatSort } from '@angular/material';
+import { BehaviorSubject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customertype',
@@ -18,7 +20,7 @@ import { MatSort } from '@angular/material';
 export class CustomerTypeComponent implements  OnInit, OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
   public dataSource: PaginatedDataTableSource<CustomerType>;
-
+  public loading = new BehaviorSubject(false);
   constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCustomerTypeService) {
 
    }
@@ -41,8 +43,8 @@ ngOnDestroy() {
      */
     public deleteSelectedCustomerTypes() {
       const ids = this.dataSource.selectedRows.selected.map(cat => cat.id);
-
-      this.api.deleteMultiple(ids).subscribe(() => {
+      this.loading.next(true);
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });

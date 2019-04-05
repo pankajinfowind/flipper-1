@@ -34,6 +34,7 @@ import { AppConfig } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { effect, reducers } from './store';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 Sentry.init({
   dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 });
@@ -95,7 +96,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       useValue: FLIPPER_CONFIG,
       multi: true
     },
-    { provide: ErrorHandler, useClass: SentryErrorHandler }
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    {provide: LocationStrategy, useClass: PathLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

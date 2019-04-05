@@ -8,6 +8,8 @@ import { ApiBrandService } from './api/api.service';
 import { Brand } from './api/brand';
 import { CrupdateBrandModalComponent } from './crupdate-brand-modal/crupdate-brand-modal.component';
 import { SharedModelService } from '../../../shared-model/shared-model-service';
+import { BehaviorSubject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-brand',
@@ -20,7 +22,7 @@ export class BrandComponent implements   OnInit,OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
 
   public dataSource: PaginatedDataTableSource<Brand>;
-
+  public loading = new BehaviorSubject(false);
   constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBrandService) { }
 
   ngOnInit() {
@@ -42,7 +44,8 @@ ngOnDestroy() {
      */
     public deleteSelectedBrands() {
       const ids = this.dataSource.selectedRows.selected.map(brand => brand.id);
-      this.api.deleteMultiple(ids).subscribe(() => {
+      this.loading.next(true);
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });

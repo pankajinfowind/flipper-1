@@ -9,22 +9,16 @@ import { Router } from '@angular/router';
 })
 export class SalesComponent implements OnInit {
 
+
   links: any[] = [
     {
-      menu:'Invoices',icon:'assignment',
-      submenu:[
-        {path:'lists',label:'Invoice List'}
-      ]
+      menu:'Invoices',icon:'assignment',path:'invoices',
     },
-    // {
-    //   menu:'Customers',icon:'assignment_ind',
-    //   submenu:[
-    //     {path:'lists',label:'Customer List'},
-    //   ]
-    // }
-  ];
+    {
+      menu:'Customers',icon:'assignment',path:'customers',
+    }
 
-  //customertype
+  ];
   toggled=false;
   isMobile=false;
   leftColumnIsHidden=false;
@@ -32,30 +26,7 @@ export class SalesComponent implements OnInit {
   }
 
     ngOnInit() {
-      this.redirectLink();
-      this.getMenuHighlighted();
     }
 
-    ngOnDestroy() {
-      //this.subscription.next();
-    }
-    clickedOnLink(path){
-      localStorage.setItem('sales-path',path);
-    }
-    redirectLink(){
-      if(localStorage.getItem('sales-path') && !localStorage.getItem('sales-path')==null){
-        return this.router.navigate([localStorage.getItem('sales-path')]);
-      }
-    }
-    clickedMenu(menu){
-      localStorage.setItem('sales-menu',menu);
-    }
-    getMenuHighlighted(){
-      if(localStorage.getItem('sales-menu')==null){
-        return 'Invoices';
-      }else{
-        return localStorage.getItem('sales-menu');
-      }
 
-    }
   }

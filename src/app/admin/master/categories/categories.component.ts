@@ -8,6 +8,8 @@ import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/con
 import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { CrupdateCategoryModalComponent } from './crupdate-category-modal/crupdate-category-modal.component';
 import { SharedModelService } from '../../../shared-model/shared-model-service';
+import { BehaviorSubject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-categories',
@@ -20,7 +22,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
 
   public dataSource: PaginatedDataTableSource<Category>;
-
+  public loading = new BehaviorSubject(false);
   constructor(public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCategoryService) { }
 
   ngOnInit() {
@@ -42,7 +44,8 @@ ngOnDestroy() {
     public deleteSelectedCategories() {
       const ids = this.dataSource.selectedRows.selected.map(cat => cat.id);
 
-      this.api.deleteMultiple(ids).subscribe(() => {
+      this.loading.next(true);
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });

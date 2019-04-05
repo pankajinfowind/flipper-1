@@ -9,6 +9,8 @@ import { ApiStockService } from '../api/api.service';
 import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import{SharedModelService} from "../../shared-model/shared-model-service";
+import { BehaviorSubject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
@@ -19,7 +21,7 @@ import{SharedModelService} from "../../shared-model/shared-model-service";
 export class StockTableComponent implements OnInit,OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
   public dataSource: PaginatedDataTableSource<Stock>;
-
+  public loading = new BehaviorSubject(false);
   cart: EventEmitter<Stock> = new EventEmitter();
   constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {}
   upc_tool_tips="The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
@@ -69,7 +71,8 @@ export class StockTableComponent implements OnInit,OnDestroy {
      */
     public deleteSelectedStocks() {
       const ids = this.dataSource.selectedRows.selected.map(item => item.id);
-      this.api.deleteMultiple(ids).subscribe(() => {
+      this.loading.next(true);
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });

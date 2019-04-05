@@ -1,106 +1,83 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { SetUp } from '../setup';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Details } from '../../details/details';
-import { SetUpModelService } from '../setup-model.service';
-import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { MatSort } from '@angular/material';
 import { ExpirationSetting } from './api/expiration_setting';
-import { SelectionModel } from '@angular/cdk/collections';
-import { DetailsService } from '../../details/details.service';
 import { ApiExpirationSettingService } from './api/api.service';
+import { UrlAwarePaginator } from '../../common/pagination/url-aware-paginator.service';
+import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-table-source';
+import { Modal } from '../../common/core/ui/dialogs/modal.service';
+import { finalize } from 'rxjs/operators';
+import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
+import { CrupdatePeriodModalComponent } from './crupdate-period-modal/crupdate-period-modal.component';
 
 @Component({
   selector: 'app-expiration_setting',
   templateUrl: './expiration_setting.component.html',
-  styleUrls: ['./expiration_setting.component.scss']
+  styleUrls: ['./expiration_setting.component.scss'],
+  providers: [UrlAwarePaginator],
+  encapsulation: ViewEncapsulation.None,
 })
-export class ExpirationSettingComponent implements OnInit {
-  setup$: Observable<SetUp>;
-  subscription: Observable<Details>;
-  details$: Observable<Details>;
+export class ExpirationSettingComponent implements OnInit, OnDestroy {
+  @ViewChild(MatSort) matSort: MatSort;
+
+  public dataSource: PaginatedDataTableSource<ExpirationSetting>;
   public loading = new BehaviorSubject(false);
-  can_delete=false;
-  data:ExpirationSetting[]=[];
-  constructor(private setupModelService:SetUpModelService,public dialog: MatDialog,private detailsService:DetailsService,private api:ApiExpirationSettingService,private ref: ChangeDetectorRef) { }
-  displayedColumns: string[] = ['select','name', 'description','period','color'];
-  dataSource = new MatTableDataSource<ExpirationSetting>([]);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-
-  selection = new SelectionModel<ExpirationSetting>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
+  constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiExpirationSettingService) { }
 
   ngOnInit() {
+    this.dataSource = new PaginatedDataTableSource<ExpirationSetting>({
+      uri: 'expiration_setting',
+      dataPaginator: this.paginator,
+      matSort: this.matSort
+  });
+}
 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.subscription = this.details$ = this.detailsService.details$;
-
-    this.setup$ = this.setupModelService.setup$;
-
-        this.setup$.subscribe(res=>{
-          if(res.expirationSetting.length  > 0){
-            this.data=res.expirationSetting;
-            this.dataSource.data=this.data;
-            this.detailsService.close();
-          }else{
-            this.canUserAddExpirationSettings();
-          }
-      });
-
-
-  }
-  openDetails(title='New Expiration Period Setting',action='new',obj){
-     this.detailsService.update({title:title,sender_data:obj,module:'app-setup',component:'app-expiration-setting',action:action,detailsVisible:true});
-  }
-  canUserAddExpirationSettings(){
-    if(this.data && this.data.length == 0){
-        return this.openDetails('New Expiration Period Setting','new',null);
-     }
-    }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  removeDialog(): void {
-    if (this.selection.selected.length > 0) {
-      // const dialogRef = this.dialog.open(RemovePricingDialog, {
-      //   width: '400px',
-      //   data: this.selection.selected
-      // });
-
-      // dialogRef.afterClosed().subscribe(result => {
-      //   if(result.status=="success"){
-      //     this.selection = new SelectionModel<Pricing>(true, []);
-      //    }
-      // });
-
-    }
-
-  }
-
-
-
-  message(t){
-    return ''+t.trim().toLowerCase()+' is empty';
-  }
-  subMessage(t){
-    return 'There are no '+t.trim().toLowerCase()+' currently.';
-  }
+ngOnDestroy() {
+  this.paginator.destroy();
 }
 
 
+/**
+     * Delete currently selected users.
+     */
+    public deleteSelectedPeriods() {
+      const ids = this.dataSource.selectedRows.selected.map(cat => cat.id);
+
+      this.loading.next(true);
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
+          this.paginator.refresh();
+          this.dataSource.selectedRows.clear();
+      });
+  }
+ /**
+     * Ask user to confirm deletion of selected tags
+     * and delete selected tags if user confirms.
+     */
+    public maybeDeleteSelectedPeriods() {
+      this.modal.show(ConfirmModalComponent, {
+          title: 'Delete Periods',
+          body:  'Are you sure you want to delete selected period(s)?',
+          ok:    'Delete'
+      }).afterClosed().subscribe(confirmed => {
+          if ( ! confirmed) return;
+          this.deleteSelectedPeriods();
+      });
+  }
+
+    /**
+     * Show modal for editing user if user is specified
+     * or for creating a new user otherwise.
+     */
+    public showCrupdatePeriodModal(period?: ExpirationSetting) {
+      this.modal.open(
+        CrupdatePeriodModalComponent,
+          {period},
+          'crupdate-period-modal-container'
+      ).beforeClose().subscribe(data => {
+          if ( ! data) return;
+          this.paginator.refresh();
+      });
+  }
+
+
+}

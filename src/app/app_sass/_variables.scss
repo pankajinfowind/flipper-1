@@ -190,6 +190,10 @@ html{
     color: $site-primary-color-100;
   }
 }
+.data-row:hover{
+  color: $site-primary-color-100;
+  background-color: $site-selected-item-bg-color;
+}
 .ellipsis,.mat-cell {
   overflow: hidden;
   white-space: nowrap;

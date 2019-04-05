@@ -1,16 +1,4 @@
 <mat-sidenav-container class="content">
-  <!-- <mat-sidenav [opened]="!leftColumnIsHidden" mode="side" class="left-column"> -->
-
-       <!-- <mat-nav-list class="menu-items">
-        <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
-      </mat-nav-list> -->
-
-
-    <!-- <div class="version"> -->
-
-        <!-- Version: {{settings.get('version')}} -->
-    <!-- </div> -->
-<!-- </mat-sidenav> -->
 <mat-sidenav [opened]="!leftColumnIsHidden" mode="side" class="left-column">
   <mat-list class="menu-items"  *ngFor="let link of links">
       <a class="menu-item" [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -25,12 +13,11 @@
 </div>
 </mat-sidenav>
 
-<mat-sidenav [opened]="(details$ | async).detailsVisible" [mode]="(isMobile) ? 'over' : 'side'" position="end" class="right-sidebar">
+<!-- <mat-sidenav [opened]="(details$ | async).detailsVisible" [mode]="(isMobile) ? 'over' : 'side'" position="end" class="right-sidebar">
   <app-details></app-details>
-</mat-sidenav>
+</mat-sidenav> -->
 
 <mat-sidenav-content class="content-inner">
-  <loading-indicator [isVisible]="(setup$ | async).loading" class="overlay"></loading-indicator>
     <router-outlet></router-outlet>
 </mat-sidenav-content>
 </mat-sidenav-container>

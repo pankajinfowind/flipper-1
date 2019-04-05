@@ -25,7 +25,8 @@ export class RedirectComponent implements OnInit {
     }else{
       if(this.auth.get('roles')['name']=='admin'){
         this.v.webTitle('Admin -Flipper');
-        this.router.navigate(["/admin"]);
+        localStorage.setItem('active_menu','dashboard');
+        return this.router.navigate(["/admin"]);
       }
     }
 

@@ -15,6 +15,8 @@ import { Item } from './api/item';
 import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
 import { SharedModelService } from '../../../shared-model/shared-model-service';
+import { BehaviorSubject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: "app-items",
@@ -27,7 +29,7 @@ export class ItemsComponent implements  OnInit,OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
 
   public dataSource: PaginatedDataTableSource<Item>;
-
+  public loading = new BehaviorSubject(false);
   constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private router: Router,private detailsService:DetailsService,private api: ApiItemService) {
   }
 
@@ -66,7 +68,8 @@ this.detailsService.details$.subscribe(response=>{
      */
     public deleteSelectedProducts() {
       const ids = this.dataSource.selectedRows.selected.map(item => item.id);
-      this.api.deleteMultiple(ids).subscribe(() => {
+      this.loading.next(true);
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });

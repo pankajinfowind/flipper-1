@@ -1,4 +1,4 @@
-<data-table [dataSource]="dataSource" itemsName="Products" hiddenCheckBox="false" matSort>
+<data-table [dataSource]="dataSource" itemsName="Products" [isLoading]="(loading | async)" hiddenCheckBox="false" matSort>
   <div headerLeftActions>
       <button mat-raised-button  class="button" (click)="addItem()"  trans>Create a Product</button>
     </div>

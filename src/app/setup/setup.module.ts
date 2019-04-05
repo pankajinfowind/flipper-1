@@ -31,9 +31,10 @@ import { DataTableModule } from '../data-table/data-table/data-table.module';
 import { CrupdateTaxRateModalComponent } from './tax-rates/crupdate-tax-rate-modal/crupdate-tax-rate-modal.component';
 import { CrupdateReasonModalComponent } from './reasons/crupdate-reason-modal/crupdate-reason-modal.component';
 import { ReasonDataTableComponent } from './reasons/reason-data-table/reason-data-table.component';
+import { CrupdatePeriodModalComponent } from './expiration_setting/crupdate-period-modal/crupdate-period-modal.component';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent, CrupdatePeriodModalComponent],
   exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent],
   imports: [
     CommonModule,
@@ -55,7 +56,12 @@ import { ReasonDataTableComponent } from './reasons/reason-data-table/reason-dat
     ApiExpirationSettingService,
     NavService
   ],
-  entryComponents: [CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent,CrupdateReasonModalComponent]
+  entryComponents: [
+    CrupdateCustomerTypeModalComponent,
+    CrupdateTaxRateModalComponent,
+    CrupdateReasonModalComponent,
+    CrupdatePeriodModalComponent
+  ]
 })
 export class SetupModule {
   static forRoot(): ModuleWithProviders {

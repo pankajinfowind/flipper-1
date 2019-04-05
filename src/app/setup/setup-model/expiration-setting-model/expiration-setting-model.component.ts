@@ -138,12 +138,12 @@ autoChange(event){
     this.api.create(data).pipe(finalize(() => this.loading.next(false))).subscribe(
       res => {
 
-        if (res.status == 'success') {
-          this.toast.open(' Added Successfully!');
-          this.loadingFormGroup();
+        // if (res.status == 'success') {
+        //   this.toast.open(' Added Successfully!');
+        //   this.loadingFormGroup();
 
-          this.setupModelService.update({ loading: false, expirationSetting: res["expiration_setting"]["data"] ? res["expiration_setting"]["data"] : [] });
-        }
+        //   this.setupModelService.update({ loading: false, expirationSetting: res["expiration_setting"]["data"] ? res["expiration_setting"]["data"] : [] });
+        // }
       },
       _error => {
         console.error(_error);
@@ -153,12 +153,12 @@ autoChange(event){
   update(data, id) {
     this.api.update(data, id).pipe(finalize(() => this.loading.next(false))).subscribe(
       res => {
-        if (res.status == 'success') {
-          this.toast.open('Updated Successfully!');
-          this.loadingFormGroup();
-          this.setupModelService.update({ loading: false, expirationSetting: res["expiration_setting"]["data"] ? res["expiration_setting"]["data"] : [] });
-          this.close();
-        }
+        // if (res.status == 'success') {
+        //   this.toast.open('Updated Successfully!');
+        //   this.loadingFormGroup();
+        //   this.setupModelService.update({ loading: false, expirationSetting: res["expiration_setting"]["data"] ? res["expiration_setting"]["data"] : [] });
+        //   this.close();
+        // }
       },
       _error => {
         console.error(_error);

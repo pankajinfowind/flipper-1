@@ -1,5 +1,5 @@
 
-<data-table [dataSource]="dataSource" itemsName="Brands" matSort>
+<data-table [dataSource]="dataSource" itemsName="Brands" [isLoading]="(loading | async)" matSort>
   <div headerLeftActions>
       <button mat-raised-button  class="button" (click)="showCrupdateBrandModal()"  trans>Create a Brand</button>
     </div>

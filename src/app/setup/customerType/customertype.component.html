@@ -1,4 +1,4 @@
-<data-table [dataSource]="dataSource" itemsName="Customer type"  matSort>
+<data-table [dataSource]="dataSource" itemsName="Customer type" [isLoading]="(loading | async)"  matSort>
   <div headerLeftActions>
       <button mat-raised-button  class="button" (click)="showCrupdateCustomerTypeModal()"  trans>Create a Customer type</button>
     </div>

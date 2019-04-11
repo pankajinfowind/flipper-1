@@ -32,10 +32,11 @@ import { CrupdateTaxRateModalComponent } from './tax-rates/crupdate-tax-rate-mod
 import { CrupdateReasonModalComponent } from './reasons/crupdate-reason-modal/crupdate-reason-modal.component';
 import { ReasonDataTableComponent } from './reasons/reason-data-table/reason-data-table.component';
 import { CrupdatePeriodModalComponent } from './expiration_setting/crupdate-period-modal/crupdate-period-modal.component';
+import { SelectTaxrateModalComponent } from './tax-rates/select-taxrate-modal/select-taxrate-modal.component';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent, CrupdatePeriodModalComponent],
-  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent, CrupdatePeriodModalComponent, SelectTaxrateModalComponent],
+  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent,SelectTaxrateModalComponent],
   imports: [
     CommonModule,
     SetupRoutingModule,
@@ -60,7 +61,8 @@ import { CrupdatePeriodModalComponent } from './expiration_setting/crupdate-peri
     CrupdateCustomerTypeModalComponent,
     CrupdateTaxRateModalComponent,
     CrupdateReasonModalComponent,
-    CrupdatePeriodModalComponent
+    CrupdatePeriodModalComponent,
+    SelectTaxrateModalComponent
   ]
 })
 export class SetupModule {

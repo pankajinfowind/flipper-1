@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild,ViewEncapsulation, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ApiCategoryService } from './api/api.service';
 import {MatSort } from '@angular/material';
 import { Category } from './api/category';
@@ -20,7 +20,10 @@ import { finalize } from 'rxjs/operators';
 })
 export class CategoriesComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
+  @Input() public enableSelectButton:boolean=false;
+  @Input() public selectedId:number=0;
 
+  @Output() valueChange = new EventEmitter<Category>();
   public dataSource: PaginatedDataTableSource<Category>;
   public loading = new BehaviorSubject(false);
   constructor(public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCategoryService) { }
@@ -82,5 +85,7 @@ ngOnDestroy() {
       });
   }
 
-
+  selectCategory(category:Category){
+    return this.valueChange.emit(category);
+  }
 }

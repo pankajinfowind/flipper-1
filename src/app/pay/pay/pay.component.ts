@@ -139,7 +139,7 @@ export class PayComponent implements OnInit {
           alert('Amount entered is less than amount due.');
       }else{
         const forming_invoice:Invoice={
-          invoice_no:randomString(12),
+          invoice_no:randomString(6),
           invoice_date:new Date(),
           total_discounts:this._total('total_amount_discount'),
           total_items:this._total('qty'),

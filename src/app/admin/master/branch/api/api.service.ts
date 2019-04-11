@@ -18,7 +18,7 @@ export class ApiBranchService {
   public create(params: Branch): BackendResponse<{ data: any }> {
         return this.http.post(API_ROUTES_BRANCH.BRANCH, params);
     }
-  public get(): BackendResponse<{ Branchies: Branch[] }> {
+  public get(): BackendResponse<{ branches: Branch[] }> {
       return this.http.get(API_ROUTES_BRANCH.BRANCH);
   }
 

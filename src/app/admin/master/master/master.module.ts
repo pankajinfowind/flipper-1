@@ -19,6 +19,8 @@ import { ApiBranchService } from '../branch/api/api.service';
 import { DataTableModule } from '../../../data-table/data-table/data-table.module';
 import { CrupdateCategoryModalComponent } from '../categories/crupdate-category-modal/crupdate-category-modal.component';
 import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crupdate-brand-modal.component';
+import { SelectCategoryModelComponent } from '../categories/select-category-model/select-category-model.component';
+import { SelectBrandModalComponent } from '../brands/select-brand-modal/select-brand-modal.component';
 
 @NgModule({
   imports: [
@@ -42,7 +44,9 @@ import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crup
     MasterComponent,
     RemoveBranchDialog,
     CrupdateCategoryModalComponent,
-    CrupdateBrandModalComponent
+    CrupdateBrandModalComponent,
+    SelectCategoryModelComponent,
+    SelectBrandModalComponent
     ],
   declarations: [
     ItemsComponent,
@@ -53,14 +57,20 @@ import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crup
     MasterComponent,
     RemoveBranchDialog,
     CrupdateCategoryModalComponent,
-    CrupdateBrandModalComponent
+    CrupdateBrandModalComponent,
+    SelectCategoryModelComponent,
+    SelectBrandModalComponent
   ],
   providers: [
     ApiItemService,
     ApiCategoryService,
     ApiBranchService
   ],
-entryComponents: [CrupdateCategoryModalComponent,CrupdateBrandModalComponent,RemoveBranchDialog]
+entryComponents: [CrupdateCategoryModalComponent,
+  CrupdateBrandModalComponent,
+  RemoveBranchDialog,
+  SelectCategoryModelComponent,
+  SelectBrandModalComponent]
 })
 export class MasterModule {
 

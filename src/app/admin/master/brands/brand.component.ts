@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild,ViewEncapsulation, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {MatSort } from '@angular/material';
 import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
 import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
@@ -20,7 +20,10 @@ import { finalize } from 'rxjs/operators';
 })
 export class BrandComponent implements   OnInit,OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
+  @Input() public enableSelectButton:boolean=false;
+  @Input() public selectedId:number=0;
 
+  @Output() valueChange = new EventEmitter<Brand>();
   public dataSource: PaginatedDataTableSource<Brand>;
   public loading = new BehaviorSubject(false);
   constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBrandService) { }
@@ -80,5 +83,8 @@ ngOnDestroy() {
           if ( ! data) return;
           this.paginator.refresh();
       });
+  }
+  selectBrand(brand:Brand){
+    return this.valueChange.emit(brand);
   }
 }

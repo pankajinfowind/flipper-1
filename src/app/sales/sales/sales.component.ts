@@ -17,8 +17,8 @@ export class SalesComponent implements OnInit {
     {
       menu:'Customers',icon:'assignment',path:'customers',
     }
-
   ];
+
   toggled=false;
   isMobile=false;
   leftColumnIsHidden=false;

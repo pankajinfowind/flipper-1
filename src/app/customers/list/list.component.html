@@ -1,62 +1,56 @@
+<data-table [dataSource]="dataSource" itemsName="Customers" [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateCustomerModal()"  trans>Create a Customer</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everything ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
 
-<loading-indicator [isVisible]="(loading$ | async)" class="overlay"></loading-indicator>
-<div class="modal-header" *ngIf="!(toggled$ | async)">
-    <h2 mat-dialog-title trans>Manage Customer</h2>
-    <button type="button" mat-icon-button (click)="updatePosLayout('home')" class="close-button">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedCustomers()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
 
-
-  <app-manage-customer [action]='action' [data]="data" *ngIf="(toggled$ | async)" (closed)="toggleEvent($event)"></app-manage-customer>
-  <div *ngIf="!(toggled$ | async)" class="row m-2">
-      <div class="col-8">
-          <!-- <mat-form-field class="w-100 px-2">
-              <input
-                matInput
-                (keyup)="applyFilter($event.target.value)"
-                placeholder="Search"
-              />
-            </mat-form-field> -->
-        </div>
-        <div class="col-4">
-           <button color='accent' class="float-right" mat-raised-button   (click)="actions('add')">
-           <mat-icon class="">add</mat-icon>Add a Customer</button>
-        </div>
-  </div>
-  <mat-dialog-content class="many-inputs" *ngIf="(loaded$ | async) && !(toggled$ | async)">
-
-    <span *ngIf="(customers$ | async)?.length == 0">
-    no data found
-    </span>
-    <div class="section-container">
-<table *ngIf="(customers$ | async)?.length > 0" mat-table [dataSource]="(customers$ | async)" class="mat-elevation-z8"
-  style="width:100%;margin-top:20px;">
   <ng-container matColumnDef="cstomer_no">
-    <th mat-header-cell *matHeaderCellDef> Cust no. </th>
-    <td mat-cell *matCellDef="let customer"> {{customer.customer_no}} </td>
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Cust. No</mat-header-cell>
+      <mat-cell *matCellDef="let customer"> {{customer.customer_no}} </mat-cell>
   </ng-container>
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Title</mat-header-cell>
+      <mat-cell *matCellDef="let customer"> {{customer.title}} </mat-cell>
+</ng-container>
   <ng-container matColumnDef="full_name">
-    <th mat-header-cell *matHeaderCellDef> Full name </th>
-    <td mat-cell *matCellDef="let customer"> {{customer.full_name}} </td>
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Full Name</mat-header-cell>
+      <mat-cell *matCellDef="let customer"> <span class="ellipsis">{{customer.full_name}}</span> </mat-cell>
+</ng-container>
+<ng-container matColumnDef="customer_type_id">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Cust . Type</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> <span class="ellipsis">{{customer.customer_type?customer.customer_type.name:''}}</span> </mat-cell>
+</ng-container>
+<ng-container matColumnDef="gender">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Gender</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.gender}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="status">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Status</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.status}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="phone">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Phone</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.phone}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="address">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Address</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.address}} </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let customer">
+          <button mat-icon-button (click)="showCrupdateCustomerModal(customer)"  [matTooltip]="'Edit Customer' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
   </ng-container>
-
-  <ng-container matColumnDef="phone">
-    <th mat-header-cell *matHeaderCellDef> Phone </th>
-    <td mat-cell *matCellDef="let customer"> {{customer.phone}}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="operation">
-    <th mat-header-cell *matHeaderCellDef> Action </th>
-
-    <td mat-cell *matCellDef="let customer">
-        <button mat-raised-button color="accent" (click)="updateOrdered(customer)" [disabled]="selected_customer && selected_customer.id===customer.id?true:false">Select<span *ngIf="selected_customer && selected_customer.id===customer.id?true:false">ed</span></button>
-      </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="tableHeads"></tr>
-  <tr [class.highlighted]="selected_customer && selected_customer.id===row.id?true:false" mat-row *matRowDef="let row; columns:tableHeads;"></tr>
-</table>
-</div>
-
-</mat-dialog-content>
+</data-table>

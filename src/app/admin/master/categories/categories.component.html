@@ -16,7 +16,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
       <mat-cell *matCellDef="let category"> {{category.name}} </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="color">
+  <ng-container matColumnDef="color" *ngIf="!enableSelectButton">
     <mat-header-cell *matHeaderCellDef mat-sort-header trans>Color</mat-header-cell>
     <mat-cell *matCellDef="let category">
         <span class="badge__target">
@@ -24,7 +24,15 @@
       </span>
     </mat-cell>
 </ng-container>
-
+<ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let category">
+        <button (click)="selectCategory(category)" class="button-success" *ngIf="category.id!=selectedId" [disabled]="category.id==selectedId?true:false"  [matTooltip]="'Select Category' | trans">Select
+        </button>
+        <button  class="button-cancel" *ngIf="category.id==selectedId"  [matTooltip]="'Selected Category' | trans">Selected
+        </button>
+    </mat-cell>
+</ng-container>
 
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>

@@ -21,17 +21,23 @@ import { Reason } from '../../../../setup/reasons/api/reason';
 import { finalize } from 'rxjs/operators';
 import { CustomerType } from '../../../../setup/customerType/api/CustomerType';
 import { Router } from '@angular/router';
+import { Modal } from '../../../../common/core/ui/dialogs/modal.service';
+import { SelectCategoryModelComponent } from '../../categories/select-category-model/select-category-model.component';
+import { SelectBrandModalComponent } from '../../brands/select-brand-modal/select-brand-modal.component';
+import { SelectTaxrateModalComponent } from '../../../../setup/tax-rates/select-taxrate-modal/select-taxrate-modal.component';
+import { ApiBranchService } from '../../branch/api/api.service';
+import { PaginatedDataTableSource } from '../../../../data-table/data/paginated-data-table-source';
+import { UrlAwarePaginator } from '../../../../common/pagination/url-aware-paginator.service';
+import { CrupdateCustomerTypeModalComponent } from '../../../../setup/customerType/crupdate-customet-type-modal/crupdate-customer-type-modal.component';
 
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
-  styleUrls: ['./add-item.component.scss']
+  styleUrls: ['./add-item.component.scss'],
+  providers: [UrlAwarePaginator],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddItemComponent implements OnInit {
-  master$: Observable<Master>;
-  setup$: Observable<SetUp>;
-  subscription: Observable<Details>;
-  details$: Observable<Details>;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -44,34 +50,30 @@ export class AddItemComponent implements OnInit {
   reasons: Reason[] = [];
   item_id: number = 0;
   business: Business;
+  hiddenCheckBox:boolean=true;
+  tax_rate_percentage=0.00;
 
   barcode_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   public loading = new BehaviorSubject(false);
-  constructor(private router: Router, private _formBuilder: FormBuilder, public currentUser: CurrentUser, private setupModelService: SetUpModelService, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) {
+  constructor(public paginator: UrlAwarePaginator,private bapi:ApiBranchService,private modal: Modal,private router: Router, private _formBuilder: FormBuilder, public currentUser: CurrentUser, private setupModelService: SetUpModelService, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) {
     this.loadingFormGroup();
    }
   rows: FormArray = this._formBuilder.array([]);
   selection = new SelectionModel<any>(true, []);
   displayedColumns: string[] = ['name', 'sale_price_including_tax'];
-  dataSource = new MatTableDataSource<any>([]);
+
   panelOpenState = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) matSort: MatSort;
+
+  public dataSource: PaginatedDataTableSource<CustomerType>;
 
   branchList: Branch[] = [];
   branchs = new FormControl();
   ngOnInit() {
-    this.master$ = this.msterModelService.master$;
-    this.setup$ = this.setupModelService.setup$;
-    this.subscription = this.details$ = this.detailsService.details$;
 
-    this.getActiveCategories();
-    this.getActiveBrands();
-    this.getActiveTaxRates();
     this.getActiveCustomerTypes();
     this.getBranches();
-    this.getReasons();
     this.loadingFormGroup();
 
   }
@@ -82,10 +84,13 @@ export class AddItemComponent implements OnInit {
       summary: [''],
       manufacturer: [''],
       category_id: ['', Validators.required],
+      category:['', Validators.required],
       sku: [0, Validators.required],
       barcode: [0, Validators.required],
-      brand_id: [0, Validators.required],
-      tax_rate_id: [0, Validators.required],
+      brand_id: [null],
+      brand:[''],
+      tax_rate_id: [null],
+      tax_rate:[''],
       product_order_code: [0],
       article_code: [0],
       currency: this.currentUser.get('business')[0].currency_code,
@@ -135,59 +140,37 @@ export class AddItemComponent implements OnInit {
     });
     this.rows.push(row);
   }
-
-  getActiveCategories() {
-    this.master$.subscribe(res => {
-      if (res.categories.length > 0) {
-        this.categories = res.categories;
-      }
-    });
-
+  ngOnDestroy() {
+    this.paginator.destroy();
   }
-  //
-  getActiveBrands() {
-    this.master$.subscribe(res => {
-      if (res.brands.length > 0) {
-        this.brands = res.brands;
-      }
-    });
 
-  }
-  getActiveTaxRates() {
-    this.setup$.subscribe(res => {
-      if (res.taxRates.length > 0) {
-        this.taxrates = res.taxRates;
-      }
-    });
-
-  }
-  getReasons() {
-    this.setup$.subscribe(res => {
-      if (res.reasons.length > 0) {
-        this.reasons = res.reasons.filter(res => res.reason_type == 'stock_movements' && res.stock_movements_status == 'add');
-      }
-    });
-
-  }
   getActiveCustomerTypes() {
-    this.setup$.subscribe(res => {
-      if (res.customertypes.length > 0) {
-        this.customertype_default = res.customertypes.find(c => c.is_active == 0);
-        this.customertypes = res.customertypes.filter(c => c.is_active == 1);
-        this.customertypes.forEach((d: CustomerType) => this.addRow(d, false));
-        this.dataSource = new MatTableDataSource<CustomerType>(this.customertypes);
-      }
-    });
-
+    this.dataSource = new PaginatedDataTableSource<CustomerType>({
+      uri: 'customertype',
+      dataPaginator: this.paginator,
+      matSort: this.matSort
+  });
+  console.log(this.dataSource._data);
   }
   getBranches() {
-    this.master$.subscribe(res => {
-      if (res.branchs.length > 0) {
-        this.branchList = res.branchs;
+    this.bapi.get().subscribe(res => {
+      if (res.branches.length > 0) {
+        this.branchList = res.branches;
       }
     });
 
   }
+  public showCrupdateCustomerTypeModal(customertype?: CustomerType) {
+
+    this.modal.open(
+      CrupdateCustomerTypeModalComponent,
+        {customertype},
+        'crupdate-customer-type-modal-container'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.paginator.refresh();
+    });
+}
   ///////////////////////////// Item
   // get recommended_retail_price() {
   //   return this.secondFormGroup.get("recommended_retail_price");
@@ -217,14 +200,25 @@ export class AddItemComponent implements OnInit {
   get brand_id() {
     return this.firstFormGroup.get("brand_id");
   }
+  get brand() {
+    return this.firstFormGroup.get("brand");
+  }
   //
   get tax_rate_id() {
     return this.firstFormGroup.get("tax_rate_id");
   }
+  get tax_rate() {
+    return this.firstFormGroup.get("tax_rate");
+  }
+
   ///////////////////////////// Item
   get category_id() {
     return this.firstFormGroup.get("category_id");
   }
+  get category() {
+    return this.firstFormGroup.get("category");
+  }
+
   get reason_id() {
     return this.thirdFormGroup.get("reason_id");
   }
@@ -268,38 +262,30 @@ export class AddItemComponent implements OnInit {
     this.router.navigate(["/admin/setup/item"]);
     //localStorage.setItem('add-item', 'No');
   }
-  openDetails(title = 'New Category', action = 'new', component = 'app-categories', modules = 'app-master', obj) {
-    this.detailsService.update({ title: title, sender_data: obj, module: modules, component: component, action: action, detailsVisible: true });
-  }
-  openDetailsForReasons(title = 'New Reason', action = 'new', obj, reason) {
-    this.detailsService.update({ title: title, sender_data: obj, module: 'app-setup', component: 'app-reason', action: action, detailsVisible: true, reason });
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+
 
 
 calculateCostIncludingTax(event){
   const inputed_value=event.target.value;
-  this.secondFormGroup.get('cost_price_including_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'inc'));
+  this.secondFormGroup.get('cost_price_including_tax').setValue(this.calculateTax(this.getTax(), inputed_value, null,  'inc'));
 
 }
 
 
 calculateCostExcludingTax(event){
   const inputed_value=event.target.value;
-  this.secondFormGroup.get('cost_price_excluding_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'exc'));
+  this.secondFormGroup.get('cost_price_excluding_tax').setValue(this.calculateTax(this.getTax(), inputed_value, null,  'exc'));
 
 }
 
 calculateSaleIncludingTax(event){
   const inputed_value=event.target.value;
-  this.secondFormGroup.get('sale_price_including_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'inc'));
+  this.secondFormGroup.get('sale_price_including_tax').setValue(this.calculateTax(this.getTax(), inputed_value, null,  'inc'));
 
 }
 calculateSaleExcludingTax(event){
   const inputed_value=event.target.value;
-  this.secondFormGroup.get('sale_price_excluding_tax').setValue(this.calculateTax(this.getTax(this.tax_rate_id.value), inputed_value, null,  'exc'));
+  this.secondFormGroup.get('sale_price_excluding_tax').setValue(this.calculateTax(this.getTax(), inputed_value, null,  'exc'));
 
 }
 
@@ -321,9 +307,8 @@ calculateSaleExcludingTax(event){
   }
 
 
-  getTax(tax_id) {
-    const tax = this.taxrates.filter(tax => tax.tax_rate_id == tax_id);
-    return tax.length > 0 ? tax[0].percentage : 0;
+  getTax() {
+    return this.tax_rate_percentage ;
   }
 
   saveComplete() {
@@ -331,17 +316,17 @@ calculateSaleExcludingTax(event){
     if (this.branchs.valid && this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid) {
       this.firstFormGroup.value.summary = this.firstFormGroup.value.summary ? this.firstFormGroup.value.summary : 'None';
       this.firstFormGroup.value.manufacturer = this.firstFormGroup.value.manufacturer ? this.firstFormGroup.value.manufacturer : 'None';
-      this.thirdFormGroup.value.tax_rate_id = this.firstFormGroup.value.tax_rate_id ? this.firstFormGroup.value.tax_rate_id : 0;
+      this.thirdFormGroup.value.tax_rate_id = this.firstFormGroup.value.tax_rate_id ? this.firstFormGroup.value.tax_rate_id : null;
 
-      // this.firstFormGroup.value.margin = this.secondFormGroup.value.margin;
-      // this.firstFormGroup.value.recommended_retail_price = this.secondFormGroup.value.recommended_retail_price;
       this.firstFormGroup.value.cost_price_excluding_tax = this.secondFormGroup.value.cost_price_excluding_tax;
       this.firstFormGroup.value.cost_price_including_tax = this.secondFormGroup.value.cost_price_including_tax;
-      this.formCustomerPriceType();
       const active_branch = parseInt(localStorage.getItem('active_branch'));
+      console.log(this.secondFormGroup.value.price_setting);
       const data = {
         item: this.firstFormGroup.value,
-        pricing: this.uniqueArray(this.secondFormGroup.value.price_setting),
+        sale_price_excluding_tax:this.secondFormGroup.value.sale_price_excluding_tax,
+        sale_price_including_tax:this.secondFormGroup.value.sale_price_including_tax,
+        pricing: this.secondFormGroup.value.price_setting,
         stock: this.thirdFormGroup.value,
         branchs: this.branchs.value,
         main_branch: active_branch
@@ -353,16 +338,7 @@ calculateSaleExcludingTax(event){
     }
 
   }
-  formCustomerPriceType() {
-    //this.customertype_default;
-    this.secondFormGroup.value.price_setting.push(
-      {
-        customer_type_id: this.customertype_default.customer_type_id,
-        name: this.customertype_default.name,
-        sale_price_including_tax: this.secondFormGroup.value.sale_price_including_tax,
-        sale_price_excluding_tax_tax: this.secondFormGroup.value.sale_price_excluding_tax,
-      });
-  }
+
 
   create(data) {
     this.apiItem.create(data).pipe(finalize(() => this.loading.next(false))).subscribe(
@@ -387,5 +363,43 @@ calculateSaleExcludingTax(event){
       return obj;
     }, obj)).map((i) => obj[i]);
     return arr;
+  }
+
+  public showChooseCategoryModal() {
+    this.modal.open(
+      SelectCategoryModelComponent,
+        {enabled:true,
+          category_id:this.firstFormGroup.value.category_id?this.firstFormGroup.value.category_id:null},
+        'select-category-modal-container'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.firstFormGroup.get('category_id').setValue(data.id);
+        this.firstFormGroup.get('category').setValue(data.name);
+    });
+}
+  showChooseBrandModal() {
+    this.modal.open(
+      SelectBrandModalComponent,
+        {enabled:true,
+          brand_id:this.firstFormGroup.value.brand_id?this.firstFormGroup.value.brand_id:null},
+        'select-brand-modal-container'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.firstFormGroup.get('brand_id').setValue(data.id);
+        this.firstFormGroup.get('brand').setValue(data.name);
+    });
+  }
+  showChooseTaxRateModal() {
+    this.modal.open(
+      SelectTaxrateModalComponent,
+        {enabled:true,
+          tax_rate_id:this.firstFormGroup.value.tax_rate_id?this.firstFormGroup.value.tax_rate_id:null},
+        'select-taxrate-modal-container'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.firstFormGroup.get('tax_rate_id').setValue(data.id);
+        this.firstFormGroup.get('tax_rate').setValue(data.name+'('+data.percentage+'%)');
+        this.tax_rate_percentage=data.percentage;
+    });
   }
 }

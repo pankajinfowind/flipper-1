@@ -16,7 +16,8 @@ import { HttpCacheClient } from '../common/core/http/http-cache-client';
 })
 export class CustomerService extends Sqlite3Service {
   public model: Model<Customer[]>;
-  ROOT_URL = "customers";
+  ROOT_URL = "customer";
+  DELETE_MULTIPLE="customers/delete-multiple"
   customers$: Observable<Customer[]>;
   protected http: HttpCacheClient;
   custObs: Observable<Customer[]>;
@@ -70,6 +71,10 @@ export class CustomerService extends Sqlite3Service {
   create(customer: Partial<Customer>): Observable<Customer> {
     return this.http.post(this.ROOT_URL, customer);
 }
+
+public update(id:number,params: Customer): Observable<Customer> {
+  return this.http.put(this.ROOT_URL+'/'+id, params);
+}
   editCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.http.put<Customer>(this.ROOT_URL, customer);
   }
@@ -78,5 +83,9 @@ export class CustomerService extends Sqlite3Service {
       this.modelFactory.create(cust);
     });
     return this.model.data$;
+  }
+
+  public deleteMultiple(ids: number[]) {
+    return this.http.delete(this.DELETE_MULTIPLE, {ids});
   }
 }

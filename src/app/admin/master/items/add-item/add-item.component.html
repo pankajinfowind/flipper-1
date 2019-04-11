@@ -1,20 +1,18 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <div class="col-8">
-      <button mat-button>
-        <mat-icon class="">add </mat-icon>Add a Product
-      </button>
-      <span class="spacer"></span>
-      <span class="spacer"></span>
-    </div>
-    <div class="col-4">
-      <button mat-icon-button class="float-right" (click)="close()">
-        <mat-icon>close</mat-icon>
-      </button>
+<div class="row m-4">
+      <div class="col-8">
+        <button mat-button>
+          Add a Product
+        </button>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+      </div>
+      <div class="col-4">
+        <button mat-icon-button class="button-cancel float-right" (click)="close()">
+          <mat-icon>close</mat-icon>
+        </button>
 
-    </div>
-  </mat-toolbar-row>
-</mat-toolbar>
+      </div>
+  </div>
 
 <!-- <button mat-raised-button (click)="isOptional = !isOptional">
   {{!isOptional ? 'Enable optional steps' : 'Disable optional steps'}}
@@ -24,14 +22,13 @@
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Product Details</ng-template>
-      <mat-card-content class="fst_section-container row">
+      <mat-card-content>
         <br />
-        <div class="col-4">
-          <div class="item">
-            <label class="name">Name</label>
-            <mat-form-field class="value" appearance="outline">
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field  class="col-3" appearance="outline">
               <mat-label>Enter product name</mat-label>
-              <input class="text-secondary" matInput placeholder="Name" formControlName="item" required>
+              <input  matInput placeholder="Name" formControlName="item" required>
               <mat-hint>Appears on till.</mat-hint>
               <mat-error *ngIf="item.invalid && (item.dirty || item.touched)">
 
@@ -43,13 +40,19 @@
                 </mat-error>
               </mat-error>
             </mat-form-field>
-          </div>
+            <mat-form-field  class="col-3" appearance="outline">
+                <mat-label>Choose product Category</mat-label>
+                <input  matInput placeholder="Choose category"  (input)="showChooseCategoryModal()" (click)="showChooseCategoryModal()" formControlName="category" required>
 
-          <div class="item">
-            <label class="name">S.K.U</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter sku number</mat-label>
-              <input class="text-secondary" matInput placeholder="SKU (if available)" formControlName="sku" required>
+                <mat-error *ngIf="category.invalid && (category.dirty || category.touched)">
+                  <strong *ngIf="category.errors.required">Category is required.</strong>
+                </mat-error>
+
+              </mat-form-field>
+
+            <mat-form-field  class="col-3" appearance="outline">
+              <mat-label>Enter S.K.U number</mat-label>
+              <input  matInput placeholder="SKU (if available)" formControlName="sku" required>
               <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
               <mat-error *ngIf="sku.invalid && (sku.dirty || sku.touched)">
 
@@ -61,12 +64,10 @@
                 </mat-error>
               </mat-error>
             </mat-form-field>
-          </div>
-          <div class="item">
-            <label class="name">Barcode</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter barcode number</mat-label>
-              <input class="text-secondary" matInput placeholder="Barcode (if available)" formControlName="barcode"
+
+            <mat-form-field  class="col-3" appearance="outline">
+              <mat-label>Enter Barcode number</mat-label>
+              <input  matInput placeholder="Barcode (if available)" formControlName="barcode"
                 required>
               <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info</mat-icon>
               <mat-error *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)">
@@ -79,104 +80,57 @@
                 </mat-error>
               </mat-error>
             </mat-form-field>
-          </div>
+
 
         </div>
-        <div class="col-4">
-          <div class="item">
-            <label class="name">Category</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter product category</mat-label>
-              <mat-select placeholder="Category" class="w-100" formControlName="category_id" required>
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let category of categories" [value]="category.category_id">
-                  {{category.name}}
-                </mat-option>
-              </mat-select>
-              <button matSuffix mat-button color="primary" [disabled]="(details$ | async).detailsVisible" (click)="openDetails('New Category','new','app-categories','app-master',null)">
-                Add New</button>
-              <mat-error *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)">
-                <strong *ngIf="category_id.errors.required">Category is required.</strong>
-              </mat-error>
-
+            <div class="col-12">
+            <mat-form-field class="col-3"  appearance="outline">
+              <mat-label>Choose product Brand</mat-label>
+              <input  matInput placeholder="Choose Brand"  (input)="showChooseBrandModal()" (click)="showChooseBrandModal()" formControlName="brand">
+              <mat-error *ngIf="brand.invalid && (brand.dirty || brand.touched)">
+                  <strong *ngIf="brand.errors.required">Brand is required.</strong>
+                </mat-error>
             </mat-form-field>
-          </div>
 
-          <div class="item">
-            <label class="name">Brand</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter product brand</mat-label>
-              <mat-select placeholder="Brand" class="w-100" formControlName="brand_id" required>
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let brand of brands" [value]="brand.brand_id">
-                  {{brand.name}}
-                </mat-option>
-              </mat-select>
-              <button matSuffix mat-button color="primary" [disabled]="(details$ | async).detailsVisible" (click)="openDetails('New Brand','new','app-brand','app-master',null)">
-                Add New</button>
-              <mat-error *ngIf="brand_id.invalid && (brand_id.dirty || brand_id.touched)">
-                <strong *ngIf="brand_id.errors.required">brand is required.</strong>
-              </mat-error>
-
+            <mat-form-field class="col-3" appearance="outline">
+              <mat-label>Choose product Tax Rate</mat-label>
+              <input  matInput placeholder="Choose Tax Rate"  (input)="showChooseTaxRateModal()" (click)="showChooseTaxRateModal()" formControlName="tax_rate">
+              <mat-error *ngIf="tax_rate.invalid && (tax_rate.dirty || tax_rate.touched)">
+                  <strong *ngIf="tax_rate.errors.required">Tax rate is required.</strong>
+                </mat-error>
             </mat-form-field>
-          </div>
-          <div class="item">
-            <label class="name">Tax Rate</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter product tax rate</mat-label>
-              <mat-select class="w-100" formControlName="tax_rate_id" required>
-                <mat-option *ngFor="let taxrate of taxrates" [value]="taxrate.tax_rate_id">
-                  {{taxrate.name}}
-                </mat-option>
-              </mat-select>
-              <button matSuffix mat-button color="primary" [disabled]="(details$ | async).detailsVisible" (click)="openDetails('New Tax Rate','new','app-tax-rate','app-setup',null)">
-                Add New</button>
-              <mat-error *ngIf="tax_rate_id.invalid && (tax_rate_id.dirty || tax_rate_id.touched)">
-                <strong *ngIf="tax_rate_id.errors.required">Tax rate is required.</strong>
-              </mat-error>
 
-            </mat-form-field>
-          </div>
-
-        </div>
-
-        <div class="col-4">
-          <div class="item">
-            <label class="name">Order code</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter product order code</mat-label>
-              <input class="text-secondary" matInput placeholder="Order code (if available)" formControlName="product_order_code">
+            <mat-form-field class="col-3" appearance="outline">
+              <mat-label>Enter product Order code</mat-label>
+              <input matInput placeholder="Order code (if available)" formControlName="product_order_code">
               <mat-hint>For reference to supplier.</mat-hint>
-
+              <mat-error *ngIf="product_order_code.invalid && (product_order_code.dirty || product_order_code.touched)">
+                  <strong *ngIf="product_order_code.errors.required">product Order code is required.</strong>
+                </mat-error>
             </mat-form-field>
-          </div>
-          <div class="item">
-            <label class="name">Article code</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter product article code</mat-label>
-              <input class="text-secondary" matInput placeholder="Article code (if available)" formControlName="article_code">
+
+            <mat-form-field class="col-3" appearance="outline">
+              <mat-label>Enter product Article code</mat-label>
+              <input matInput placeholder="Article code (if available)" formControlName="article_code">
               <mat-hint>For use in accounting.</mat-hint>
-
+              <mat-error *ngIf="article_code.invalid && (article_code.dirty || article_code.touched)">
+                  <strong *ngIf="article_code.errors.required">product Article code is required.</strong>
+                </mat-error>
             </mat-form-field>
           </div>
+              <div class="col-12">
+                <mat-form-field  class="col-3" appearance="outline">
+                  <mat-label>Enter product manufacturer</mat-label>
+                  <input matInput placeholder="Manufacturer (if available)" formControlName="manufacturer">
+                </mat-form-field>
 
-          <div class="item">
-            <label class="name">Manufacturer</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter product manufacturer</mat-label>
-              <input class="text-secondary" matInput placeholder="Manufacturer (if available)" formControlName="manufacturer">
-            </mat-form-field>
-          </div>
+                <mat-form-field class="col-9" appearance="outline">
+                  <mat-label>Enter product Description</mat-label>
+                  <textarea  matInput placeholder="Description (optional)" formControlName="summary"></textarea>
+                  <mat-hint>Appears on receipt.</mat-hint>
+                </mat-form-field>
 
-          <div class="item">
-            <label class="name">Description</label>
-            <mat-form-field class="value" appearance="outline">
-              <mat-label>Enter product description</mat-label>
-              <input class="text-secondary" matInput placeholder="Description (optional)" formControlName="summary">
-              <mat-hint>Appears on receipt.</mat-hint>
-            </mat-form-field>
-          </div>
-
+        </div>
         </div>
       </mat-card-content>
 
@@ -190,18 +144,10 @@
 
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Product Pricing</ng-template>
-      <b>Tax Rate: {{getTax(tax_rate_id.value)}} %</b>
+      <b>Tax Rate: {{getTax()}} %</b>
       <hr />
       <table class="mt-4 w-100">
 
-        <tr>
-          <td>Cost price (EXC TAX)</td>
-          <td>Sale price (EXC TAX)</td>
-          <td>Cost price (INC TAX)</td>
-          <td>Sale price (INC TAX)</td>
-          <!-- <td>Margin %</td>
-          <td>RPP</td> -->
-        </tr>
         <tr>
           <td>
             <mat-form-field appearance="outline">
@@ -250,73 +196,56 @@
       </table>
 
       <br />
-      <mat-accordion class="m-2 row" *ngIf="customertypes.length > 0">
-        <mat-expansion-panel class="w-100" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-accordion class="m-2" style="width: 100%">
+        <mat-expansion-panel  (opened)="panelOpenState = true" (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Customer Specific Prices
+              <div class="col-8">Customer Specific Prices</div>
+              <div class="col-4 float-right">
+                  <button mat-raised-button  class="button float-right" (click)="showCrupdateCustomerTypeModal()"  trans>Create a Customer type</button>
+            </div>
             </mat-panel-title>
 
           </mat-expansion-panel-header>
           <mat-card-content>
-            <div class="row">
-              <div class="col-12">
-                The section below allows you to set up prices for specific customer types for this product.<br />
-                Prices entered cannot be the same as the default Sale Price, customers receive this price as standard.
-              </div><br />
 
-              <div class="col-10">
-                <mat-form-field class="w-100">
-                  <input matInput (keyup)="applyFilter($event.target.value)" [disabled]="customertypes.length == 0"
-                    placeholder="Search">
-                </mat-form-field>
-              </div>
+        <section class="w-100 col-12">
+             <data-table formArrayName="price_setting"  [dataSource]="dataSource" itemsName="Customer Specific Prices" [isLoading]="(loading | async)" [hiddenCheckBox]="hiddenCheckBox" matSort>
 
-              <div class="col-2">
-                <button mat-raised-button class="mt-2" color="accent" [disabled]="(details$ | async).detailsVisible"
-                  (click)="openDetails('New Customer Type','new','app-customertype','app-setup',null)"> + Add Customer
-                  Type</button>
-              </div>
-            </div>
 
-            <section class="sd_section-container">
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let element; let index = index" [formGroupName]="index"> {{element.name}}
+                        <div class="hidden" style="display:none">
+                            <input  formControlName="name" hidden required>
+                            <input formControlName="customer_type_id" required hidden>
+                        </div>
+                    </mat-cell>
 
-              <table formArrayName="price_setting" mat-table [dataSource]="dataSource">
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="name" sticky>
-                  <th scope="col" mat-header-cell *matHeaderCellDef> Name </th>
-                  <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
-                    {{element.name}}
-                    <mat-form-field class="hidden" style="display:none">
-                      <input matInput formControlName="name" hidden required>
-                      <input matInput formControlName="customer_type_id" required hidden>
-                    </mat-form-field>
-                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="sale_price_including_tax">
-                  <th scope="col" mat-header-cell *matHeaderCellDef>Price (INC TAX)
-                    <mat-icon class="float-left" matSuffix [matTooltip]="'Sale Price Including Tax.'" aria-label="including Tax">info</mat-icon>
-                  </th>
-                  <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
-                    <mat-form-field class="input" appearance="outline">
-                      <mat-label>Enter Price (INC TAX)</mat-label>
-                      <input matInput placeholder="Price (INC TAX)" type="number" formControlName="sale_price_including_tax"
-                        required>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Price</mat-header-cell>
+                    <mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
 
-                    </mat-form-field>
-
-                  </td>
+                      <mat-form-field class="input" appearance="outline">
+                        <mat-label>Enter Price (INC TAX)</mat-label>
+                        <input matInput placeholder="Price (INC TAX)" type="number" formControlName="sale_price_including_tax"
+                          required>
+                      </mat-form-field>
+                      </mat-cell>
                 </ng-container>
 
-                <tr class="sticky-thead" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-                <tr mat-row *matRowDef="let row; columns: displayedColumns; let index = index">
-                </tr>
-
-
-              </table>
+                <ng-container matColumnDef="edit">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="showCrupdateCustomerTypeModal(element)"  [matTooltip]="'Edit Customer Type' | trans">
+                            <mat-icon svgIcon="edit"></mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+          </data-table>
             </section>
           </mat-card-content>
         </mat-expansion-panel>
@@ -332,15 +261,12 @@
   </mat-step>
   <mat-step>
 
-    <form [formGroup]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup" class="row">
       <ng-template matStepLabel>Stock Adjustment</ng-template>
-      <mat-card-content class="fst_section-container row">
-        <mat-tab-group class="w-100">
-          <mat-tab label="Stock Adjustment" class="row">
-            <br />
-            <div class="col-6">
+
+            <div class="col-4">
               <div class="item row">
-                <mat-form-field class="col-12" appearance="outline">
+                <mat-form-field class="col-12 m-2" appearance="outline">
                   <mat-label>Choose Branch(s)</mat-label>
                   <mat-select placeholder="Branch(s)" [formControl]="branchs" multiple required>
                     <mat-option *ngFor="let branch of branchList" [value]="branch">{{branch.name}}</mat-option>
@@ -350,6 +276,44 @@
                     <strong>Please branch is required.</strong>
                   </mat-error>
                 </mat-form-field>
+<br />
+                <table class="col-12 m-2">
+
+                  <tr>
+                    <td>
+                      <mat-form-field class="col-12" appearance="outline">
+                        <mat-label>Minimum stock value</mat-label>
+                        <input  matInput placeholder="Minimum stock value" formControlName="min_stock"
+                          required>
+
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="col-12" appearance="outline">
+                        <mat-label>Maximum stock value</mat-label>
+                        <input  matInput placeholder="Maximum stock value" formControlName="max_stock"
+                          required>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>
+                      <mat-form-field class="col-12" appearance="outline">
+                        <mat-label>On Order</mat-label>
+                        <input  matInput placeholder="On Order value" formControlName="on_order"
+                          required>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-checkbox class="col-12" formControlName="show_alert">Show alerts Messages</mat-checkbox>
+                    </td>
+                  </tr>
+
+
+                </table>
+
               </div>
 
               <!-- <div class="item row">
@@ -360,7 +324,7 @@
                     <td>
                       <mat-form-field class="col-12" appearance="outline">
                         <mat-label>Add Stock Quantity</mat-label>
-                        <input class="text-secondary" matInput placeholder="Quantity" formControlName="qty" required>
+                        <input  matInput placeholder="Quantity" formControlName="qty" required>
                         <mat-hint>Quantity entered, will appear on every location.</mat-hint>
                         <mat-error *ngIf="qty.invalid && (qty.dirty || qty.touched)">
                           <mat-error *ngIf="qty.invalid && !qty.errors.required">
@@ -375,7 +339,7 @@
                     <td>
                       <mat-form-field class="col-12" appearance="outline">
                         <mat-label>Add Unit of Sale</mat-label>
-                        <input class="text-secondary" matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
+                        <input  matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
                       </mat-form-field>
                     </td>
                   </tr> -->
@@ -401,66 +365,26 @@
                 </mat-form-field>
               </div> -->
             </div>
-            <div class="col-6">
+            <div class="col-8 float-right">
               <div class="item row">
                 <pre>
 
-* Check the "alerts" to receive email notifications when products are low on stock.
-* Minimum value is the stock level at which to reorder.
-* Maximum value is used to calculate the number of products to reorder.
+          * Check the "alerts" to receive email notifications when products are low on stock.
+          * Minimum value is the stock level at which to reorder.
+          * Maximum value is used to calculate the number of products to reorder.
 
-For example: If the Minimum value is 2 and the Maximum value is 5,
-            when the current stock drops below 2, reorder more items to bring
-            the stock back to the maximum value.
+          For example: If the Minimum value is 2 and the Maximum value is 5,
+                      when the current stock drops below 2, reorder more items to bring
+                      the stock back to the maximum value.
                       </pre>
-                <table class="col-12">
-
-                  <tr>
-                    <td>
-                      <mat-form-field class="col-12" appearance="outline">
-                        <mat-label>Minimum stock value</mat-label>
-                        <input class="text-secondary" matInput placeholder="Minimum stock value" formControlName="min_stock"
-                          required>
-
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field class="col-12" appearance="outline">
-                        <mat-label>Maximum stock value</mat-label>
-                        <input class="text-secondary" matInput placeholder="Maximum stock value" formControlName="max_stock"
-                          required>
-                      </mat-form-field>
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td>
-                      <mat-form-field class="col-12" appearance="outline">
-                        <mat-label>On Order</mat-label>
-                        <input class="text-secondary" matInput placeholder="On Order value" formControlName="on_order"
-                          required>
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-checkbox class="col-12" formControlName="show_alert">Show alerts Messages</mat-checkbox>
-                    </td>
-                  </tr>
-
-
-                </table>
 
               </div>
             </div>
-          </mat-tab>
-        </mat-tab-group>
 
-      </mat-card-content>
-
-      <mat-card-actions class="card-actions float-right m-2">
-        <button mat-button mat-raised-button class="m-4 button-cancel" matStepperPrevious [disabled]="(loading | async)">Back</button>
-        <button mat-raised-button (click)="saveComplete()" color="primary" class="m-4 float-right button" [disabled]="(loading | async)">Save
-          & Complete</button>
+      <mat-card-actions class="col-12 card-actions float-right m-2">
+          <button mat-raised-button (click)="saveComplete()"  class="m-4 float-right button-success" [disabled]="(loading | async)">Save
+              & Complete</button>
+        <button mat-button mat-raised-button class="m-4 button-cancel float-right" matStepperPrevious [disabled]="(loading | async)">Back</button>
       </mat-card-actions>
 
     </form>

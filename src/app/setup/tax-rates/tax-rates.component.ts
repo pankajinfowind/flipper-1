@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {  MatSort } from '@angular/material';
 import { ApiTaxRateService } from './api/api.service';
 import { UrlAwarePaginator } from '../../common/pagination/url-aware-paginator.service';
@@ -20,6 +20,10 @@ import { finalize } from 'rxjs/operators';
 export class TaxRatesComponent implements  OnInit, OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
   public dataSource: PaginatedDataTableSource<TAXRATE>;
+  @Input() public enableSelectButton:boolean=false;
+  @Input() public selectedId:number=0;
+
+  @Output() valueChange = new EventEmitter<TAXRATE>();
   public loading = new BehaviorSubject(false);
   constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiTaxRateService) { }
 
@@ -79,7 +83,9 @@ ngOnDestroy() {
       });
   }
 
-
+  selectTaxRate(taxrate:TAXRATE){
+    return this.valueChange.emit(taxrate);
+  }
 }
 
 

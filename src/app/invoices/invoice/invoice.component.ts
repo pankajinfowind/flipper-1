@@ -1,145 +1,84 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { Observable, merge, fromEvent } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as fromStore from '../../store';
+import { Component, OnInit, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { MatSort } from '@angular/material';
+import {finalize } from 'rxjs/operators';
+import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-table-source';
+import { SharedModelService } from '../../shared-model/shared-model-service';
+import { UrlAwarePaginator } from '../../common/pagination/url-aware-paginator.service';
+import { Modal } from '../../common/core/ui/dialogs/modal.service';
+import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
+import { BehaviorSubject } from 'rxjs';
 import { Invoice } from '../invoice';
-import { MatPaginator, MatSort } from '@angular/material';
-import { InvoiceDataSource } from './load-invoice-data-source';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { CurrentUser } from '../../common/auth/current-user';
-import { SetUp } from '../../setup/setup';
-import { CustomerType } from '../../setup/customerType/api/CustomerType';
-import { SetUpModelService } from '../../setup/setup-model.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { InvoiceService } from '../invoice.service';
 
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.scss']
+  styleUrls: ['./invoice.component.scss'],
+  providers: [UrlAwarePaginator],
+  encapsulation: ViewEncapsulation.None,
 })
-export class InvoiceComponent implements AfterViewInit, OnInit {
-  setup$: Observable<SetUp>;
-  customertypes: CustomerType[] = [];
-  dataSource: InvoiceDataSource;
-  displayedColumns= ["invoice_no",'customer','customer_type','total_items','total_amount','total_discounts','amount_given','amount_return', "payment_method",'status',"invoice_date",'invoice_time','created_at'];
-  currency_code:string=null;
-  selected_customer_type = null;
-  searchForm: FormGroup;
-  constructor(private setupModelService: SetUpModelService, public currentUser: CurrentUser,private store:Store<fromStore.FlipperState>) {
-  }
+export class InvoiceComponent implements OnInit, OnDestroy{
+  @ViewChild(MatSort) matSort: MatSort;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
-  @ViewChild('findCustomerType') findCustomerType: ElementRef;
-  // @ViewChild('searchInvoiceByDate') searchInvoiceByDate: ElementRef;
+  public dataSource: PaginatedDataTableSource<Invoice>;
+  public loading = new BehaviorSubject(false);
+  constructor(public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:InvoiceService) { }
 
-
-
-  loadingSearchForm(){
-    this.searchForm = new FormGroup({
-      from: new FormControl(new Date(), [Validators.required]),
-      to:new FormControl(new Date(), [Validators.required])
-    });
-  }
-  get from() {
-    return this.searchForm.get("from");
-  }
-  get to() {
-    return this.searchForm.get("to");
-  }
-
-  ngOnInit() {
-     this.dataSource = new InvoiceDataSource(this.store);
-     this.dataSource.loadInvoices();
-     if (this.currentUser.user) {
-      this.currency_code = this.currentUser.get('business')[0].currency_code;
+      ngOnInit() {
+        this.dataSource = new PaginatedDataTableSource<Invoice>({
+          uri: 'invoices/'+parseInt(localStorage.getItem('active_branch')),
+          dataPaginator: this.paginator,
+          matSort: this.matSort
+      });
     }
-    this.setup$ = this.setupModelService.setup$;
-    this.loadingSearchForm();
+
+    ngOnDestroy() {
+      this.paginator.destroy();
+    }
+
+
+/**
+     * Delete currently selected users.
+     */
+    public deleteSelectedInvoices() {
+      const ids = this.dataSource.selectedRows.selected.map(invoice => invoice.id);
+      this.loading.next(true);
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
+          this.paginator.refresh();
+          this.dataSource.selectedRows.clear();
+      });
+  }
+ /**
+     * Ask user to confirm deletion of selected tags
+     * and delete selected tags if user confirms.
+     */
+    public maybeDeleteSelectedInvoices() {
+      this.modal.show(ConfirmModalComponent, {
+          title: 'Delete Invoices',
+          body:  'Are you sure you want to delete selected invoices?',
+          ok:    'Delete'
+      }).afterClosed().subscribe(confirmed => {
+          if ( ! confirmed) return;
+          this.deleteSelectedInvoices();
+      });
   }
 
-  ngAfterViewInit() {
-  this.onSearch();
-  this.onFindCustomerType();
-  //this.onSearchInvoiceByDate();
- this.onMerge();// on sort or paginate events, load a new page
-}
-onSearch(){
-  fromEvent(this.input.nativeElement,'keyup')
-            .pipe(
-                debounceTime(150),
-                distinctUntilChanged(),
-                tap(() => {
-                    this.paginator.pageIndex = 0;
-                    this.loadInvoicePage('invoice_no='+this.input.nativeElement.value);
-                })
-            )
-            .subscribe();
-}
-// onSearchInvoiceByDate(){
-//   fromEvent(this.searchInvoiceByDate.nativeElement,'submit')
-//             .pipe(
-//                 debounceTime(150),
-//                 distinctUntilChanged(),
-//                 tap(() => {
-//                     this.paginator.pageIndex = 0;
-//                     this.loadInvoicePage('invoice_no='+this.input.nativeElement.value);
-//                 })
-//             )
-//             .subscribe();
-// }
-
-changeCustomerType(event){
-console.log(event);
-}
-onFindCustomerType(){
-  fromEvent(this.findCustomerType.nativeElement,'change')
-  .pipe(
-      debounceTime(150),
-      distinctUntilChanged(),
-      tap(() => {
-          this.paginator.pageIndex = 0;
-          this.loadInvoicePage('customer_type_id='+this.findCustomerType.nativeElement.value);
-      })
-  )
-  .subscribe();
-}
-
-onSort(){
-  this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-}
-onMerge(){
-  merge(this.sort.sortChange, this.paginator.page)
-  .pipe(
-      tap(() => this.loadInvoicePage())
-  )
-  .subscribe();
-}
-clear(){
-  this.input.nativeElement.value=null;
-  this.paginator.pageIndex = 0;
-  return this.loadInvoicePage();
-}
-
-loadInvoicePage(query=null) {
-  
-  const params={
-    order_by:this.sort.active,
-    order_dir:this.sort.direction,
-    per_page:this.paginator.pageSize,
-    pageIndex:this.paginator.pageIndex,
-    branch_id:parseInt(localStorage.getItem('active_branch')),
-    query:query
+    /**
+     * Show modal for editing user if user is specified
+     * or for creating a new user otherwise.
+     */
+    public showCrupdateInvoiceModal(invoice?: Invoice) {
+      // this.shared.update(invoice);
+      // this.modal.open(
+      //   CrupdateInvoiceModalComponent,
+      //     {invoice},
+      //     'crupdate-Invoice-modal-container'
+      // ).beforeClose().subscribe(data => {
+      //   this.shared.remove();
+      //     if ( ! data) return;
+      //     this.paginator.refresh();
+      // });
   }
-  console.log(params);
-    this.dataSource.loadInvoices(params);
-}
-  message(t){
-    return ''+t.trim().toLowerCase()+' is empty';
-  }
-  subMessage(t){
-    return 'There are no '+t.trim().toLowerCase()+' currently.';
-  }
+
 
 }

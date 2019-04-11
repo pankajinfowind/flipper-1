@@ -13,25 +13,34 @@
 
   <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
-      <mat-cell *matCellDef="let tax"> {{tax.name}} </mat-cell>
+      <mat-cell *matCellDef="let tax"> {{tax.name}} <span *ngIf="enableSelectButton">({{tax.percentage}}%)</span> </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="percentage">
+  <ng-container matColumnDef="percentage" *ngIf="!enableSelectButton">
     <mat-header-cell *matHeaderCellDef mat-sort-header trans>Rate(%)</mat-header-cell>
     <mat-cell *matCellDef="let tax"> {{tax.percentage}}% </mat-cell>
 </ng-container>
-<ng-container matColumnDef="tax_code">
+<ng-container matColumnDef="tax_code" *ngIf="!enableSelectButton">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Tax code</mat-header-cell>
   <mat-cell *matCellDef="let tax"> {{tax.tax_code}} </mat-cell>
 </ng-container>
-<ng-container matColumnDef="tax_type">
+<ng-container matColumnDef="tax_type" *ngIf="!enableSelectButton">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Type</mat-header-cell>
   <mat-cell *matCellDef="let tax"> {{tax.tax_type}} </mat-cell>
 </ng-container>
-<ng-container matColumnDef="description">
+<ng-container matColumnDef="description" *ngIf="!enableSelectButton">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Description</mat-header-cell>
   <mat-cell *matCellDef="let tax"> {{tax.description}} </mat-cell>
 </ng-container>
 
+<ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+  <mat-cell *matCellDef="let tax">
+      <button (click)="selectTaxRate(tax)" class="button-success" *ngIf="tax.id!=selectedId" [disabled]="tax.id==selectedId?true:false"  [matTooltip]="'Select Tax Rate' | trans">Select
+      </button>
+      <button  class="button-cancel" *ngIf="tax.id==selectedId"  [matTooltip]="'Selected Tax Rate' | trans">Selected
+      </button>
+  </mat-cell>
+</ng-container>
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let tax">

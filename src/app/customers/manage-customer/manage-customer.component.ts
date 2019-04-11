@@ -1,130 +1,171 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
 import { Customer } from '../customer';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SetUpModelService } from '../../setup/setup-model.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { SetUp } from '../../setup/setup';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { finalize } from 'rxjs/operators';
+import { CustomerService } from '../customer.service';
+import { Toast } from '../../common/core/ui/toast.service';
+export interface CrupdatCustomerModalData {
+  customer?: Customer;
+}
 
 @Component({
-  selector: 'app-manage-customer',
+  selector: 'crupdate-customer-modal',
   templateUrl: './manage-customer.component.html',
   styleUrls: ['./manage-customer.component.scss']
 })
-export class ManageCustomerComponent implements OnInit {
-  @Output()
-  closed: EventEmitter<boolean> = new EventEmitter(false);
-@Input()
- data:Customer;
- @Input()
- action='add';
-  need_to_add_new: boolean;
-  cusomer_id=0;
-  customerForm: FormGroup;
-  titles:string[]=['Mr','Mrs'];
+export class CrupdateCustomerModelComponent implements OnInit {
+  dataForm: FormGroup;
+  public model:Customer;
+  public errors: any = {};
+  public loading = new BehaviorSubject(false);
+  /**
+   * If we are updating existing customer or creating a new one.
+   */
+  public updating = false;
   statuss:string[]=['Single','Married'];
   genders:string[]=['Male','Female'];
-  setup$: Observable<SetUp>;
-  loading$:Observable<boolean>;
-  loaded$:Observable<boolean>;
-  isSuccess$:Observable<boolean>;
-  constructor(private setupModelService: SetUpModelService,private store:Store<fromStore.FlipperState>,) {
-    this.customerFormData();
+  titles:string[]=['Mr','Mrs'];
+  constructor(
+    private api:CustomerService,
+    private dialogRef: MatDialogRef<CrupdateCustomerModelComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: CrupdatCustomerModalData,
+    private toast: Toast) {
+    this.resetState();
   }
+
 
   ngOnInit() {
-    this.setup$ = this.setupModelService.setup$;
-    this.loading$=this.store.select(fromStore.getCustomersLoading);
-    this.loaded$=this.store.select(fromStore.getCustomersLoaded);
-     this.isSuccess$=this.store.select(fromStore.isCustomerSuccess);
-    this.customerFormData();
-  }
+    this.resetState();
 
-  close(element: boolean) {
-    this.closed.emit(element);
-  }
-
-  customerFormData(){
-    if(this.action=='add'){
-      this.need_to_add_new=true;
-    }else{
-      this.need_to_add_new=false;
+    if (this.data.customer) {
+        this.updating = true;
+    } else {
+        this.updating = false;
     }
+    this.hydrateModel(this.data.customer);
+}
 
-     this.cusomer_id=this.data?this.data.id:0;
+ /**
+     * Close the modal.
+     */
+    public close(data?: any) {
+      this.resetState();
+      this.dialogRef.close(data);
+  }
+  private getPayload() {
+    const payload:Customer ={
+      full_name:this.dataForm.value.full_name,
+      title:this.dataForm.value.title,
+      gender: this.dataForm.value.gender,
+      status: this.dataForm.value.status,
+      customer_type_id: this.dataForm.value.customer_type_id?this.dataForm.value.customer_type_id:null,
+      customer_no: this.dataForm.value.customer_no,
+      city: this.dataForm.value.city,
+      state: this.dataForm.value.state,
+      country: this.dataForm.value.country,
+      phone: this.dataForm.value.phone,
+      email: this.dataForm.value.email,
+      address: this.dataForm.value.address
+    }
+    return payload;
+}
 
-    this.customerForm = new FormGroup({
-      full_name: new FormControl(this.data?this.data.full_name:"", [Validators.required]),
-      title: new FormControl(this.data?this.data.title:"", [Validators.required]),
-      gender: new FormControl(this.data?this.data.gender:"", [Validators.required]),
-      status: new FormControl(this.data?this.data.status:"", [Validators.required]),
-      customer_type_id: new FormControl(this.data?this.data.customer_type_id:0, [Validators.required]),
-      customer_no: new FormControl(this.data?this.data.customer_no:""),
-      city: new FormControl(this.data?this.data.city:""),
-      state: new FormControl(this.data?this.data.state:""),
-      country: new FormControl(this.data?this.data.country:""),
-      phone: new FormControl(this.data?this.data.phone:""),
-      email: new FormControl(this.data?this.data.email:""),
-      address: new FormControl(this.data?this.data.address:"")
+/**
+     * Reset all modal state to default.
+     */
+    private resetState() {
+      this.errors = {};
+  }
+
+  /**
+   * Populate user model with given data.
+   */
+  private hydrateModel(customer) {
+    this.dataForm = new FormGroup({
+      full_name: new FormControl(customer?customer.full_name:"", [Validators.required]),
+      title: new FormControl(customer?customer.title:"", [Validators.required]),
+      gender: new FormControl(customer?customer.gender:"", [Validators.required]),
+      status: new FormControl(customer?customer.status:"", [Validators.required]),
+      customer_type_id: new FormControl(customer?customer.customer_type_id:null),
+      customer_no: new FormControl(customer?customer.customer_no:""),
+      city: new FormControl(customer?customer.city:""),
+      state: new FormControl(customer?customer.state:""),
+      country: new FormControl(customer?customer.country:""),
+      phone: new FormControl(customer?customer.phone:""),
+      email: new FormControl(customer?customer.email:""),
+      address: new FormControl(customer?customer.address:"")
     });
   }
+
+  /**
+   * Format errors received from backend.
+   */
+  public handleErrors(response: {messages: object} = {messages: {}}) {
+      this.errors = response.messages || {};
+  }
+
   get full_name() {
-    return this.customerForm.get("full_name");
+    return this.dataForm.get("full_name");
   }
   get country() {
-    return this.customerForm.get("country");
+    return this.dataForm.get("country");
   }
   get gender() {
-    return this.customerForm.get("gender");
+    return this.dataForm.get("gender");
   }
   get status() {
-    return this.customerForm.get("status");
+    return this.dataForm.get("status");
   }
   get customer_no() {
-    return this.customerForm.get("customer_no");
+    return this.dataForm.get("customer_no");
   }
   get city() {
-    return this.customerForm.get("city");
+    return this.dataForm.get("city");
   }
   get state() {
-    return this.customerForm.get("state");
+    return this.dataForm.get("state");
   }
   get title() {
-    return this.customerForm.get("title");
+    return this.dataForm.get("title");
   }
   get phone() {
-    return this.customerForm.get("phone");
+    return this.dataForm.get("phone");
   }
   get email() {
-    return this.customerForm.get("email");
+    return this.dataForm.get("email");
   }
   get customer_type_id(){
-    return this.customerForm.get("customer_type_id");
+    return this.dataForm.get("customer_type_id");
   }
   get address(){
-    return this.customerForm.get("address");
+    return this.dataForm.get("address");
   }
 
-  onSubmitCustomer(){
-    if (this.customerForm.valid) {
-      return this.need_to_add_new?this.create(this.customerForm.value):this.update(this.customerForm.value);
+  public confirm() {
+    if (!this.dataForm.valid) return;
+    let request, payload: Customer = this.getPayload();
+
+    this.loading.next(true);
+
+    if (this.updating) {
+        request = this.api.update(this.data.customer.id, payload);
+    } else {
+        request = this.api.create(payload);
     }
-  }
 
-  create(form_data:Partial<Customer>){
-     this.store.dispatch(new fromStore.AddCustomer(form_data));
-      return this.IsCreateOrUpdateSuccess();
-    }
-    update(form_data:Partial<Customer>){
-      return this.store.dispatch(new fromStore.AddCustomer(form_data));
-  }
-
-  IsCreateOrUpdateSuccess(){
-  this.isSuccess$.subscribe(issuccess=>{
-  if(issuccess){
-      return this.close(true);
-  }
-  });
- }
+    request.pipe(finalize(() => this.loading.next(false)))
+        .subscribe(response => {
+            this.close(response);
+            const action = this.updating ? 'updated' : 'created';
+            this.toast.open('Customer has been ' + action);
+        }, error => {
+            this.handleErrors(error);
+        });
+}
 }

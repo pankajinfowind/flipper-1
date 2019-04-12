@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { BootstrapperSetUp } from './bootstrapper.service';
+import { Details } from '../details/details';
+import { DetailsService } from '../details/details.service';
 
 @Component({
   selector: 'app-setup',
@@ -41,11 +43,13 @@ export class SetupComponent implements OnInit {
 toggled=false;
 isMobile=false;
 leftColumnIsHidden=false;
-constructor(private router: Router) {
+details$: Observable<Details>;
+constructor(private detailsService: DetailsService) {
 }
 
   ngOnInit() {
+    this.details$ = this.detailsService.details$;
   }
 
- 
+
 }

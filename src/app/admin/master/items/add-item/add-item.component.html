@@ -382,8 +382,10 @@
             </div>
 
       <mat-card-actions class="col-12 card-actions float-right m-2">
-          <button mat-raised-button (click)="saveComplete()"  class="m-4 float-right button-success" [disabled]="(loading | async)">Save
-              & Complete</button>
+          <button mat-raised-button (click)="saveComplete(true)"  class="m-4 float-right button-success" [disabled]="(loading | async)">Save
+              & Close</button>
+          <button mat-raised-button (click)="saveComplete()"  class="m-4 float-right button-success" [disabled]="(loading | async)">Save</button>
+
         <button mat-button mat-raised-button class="m-4 button-cancel float-right" matStepperPrevious [disabled]="(loading | async)">Back</button>
       </mat-card-actions>
 

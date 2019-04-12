@@ -16,7 +16,7 @@
               </mat-error>
           </mat-form-field><br />
 
-          <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
               <mat-label>Enter SKU</mat-label>
             <input class="text-secondary" [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit" matInput placeholder="Sku (auto generated if blank)" formControlName="sku" required>
             <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
@@ -29,9 +29,9 @@
                   Item sku is <strong>required</strong>
               </mat-error>
             </mat-error>
-          </mat-form-field><br />
+          </mat-form-field>
 
-          <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
               <mat-label>Enter barcode</mat-label>
             <input class="text-secondary"[matTooltip]="barcode_tool_tips" aria-label="Barcode" matInput placeholder="Barcode (if available)" formControlName="barcode" required>
             <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info</mat-icon>
@@ -45,19 +45,20 @@
               </mat-error>
             </mat-error>
           </mat-form-field><br />
-
-
           <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
             <mat-label>Enter category</mat-label>
             <mat-select formControlName="category_id">
-              <mat-option *ngFor="let category of categories" [value]="category.category_id">
+              <!-- <mat-option *ngFor="let category of categories" [value]="category.category_id">
                 {{category.name}}
-              </mat-option>
+              </mat-option> -->
             </mat-select>
             <mat-error *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)">
               <strong *ngIf="category_id.errors.required">Category is required.</strong>
             </mat-error>
           </mat-form-field>
+
+
+
           <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
               <mat-label>Enter color</mat-label>
               <mat-select formControlName="color">
@@ -69,13 +70,27 @@
                 <strong *ngIf="color.errors.required">Color is required.</strong>
               </mat-error>
             </mat-form-field>
+<br />
+            <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+                <mat-label>Enter brand</mat-label>
+                <mat-select placeholder="Brand" class="w-100" formControlName="brand_id">
+                  <mat-option>None</mat-option>
+                  <!-- <mat-option *ngFor="let brand of brands" [value]="brand.brand_id">
+                    {{brand.name}}
+                  </mat-option> -->
+                </mat-select>
 
+                <mat-error *ngIf="brand_id.invalid && (brand_id.dirty || brand_id.touched)">
+                  <strong *ngIf="brand_id.errors.required">brand is required.</strong>
+                </mat-error>
+
+              </mat-form-field>
           <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
             <mat-label>Enter tax rate</mat-label>
             <mat-select class="w-100" formControlName="tax_rate_id">
-              <mat-option *ngFor="let taxrate of taxrates" [value]="taxrate.tax_rate_id">
+              <!-- <mat-option *ngFor="let taxrate of taxrates" [value]="taxrate.tax_rate_id">
                 {{taxrate.name}}
-              </mat-option>
+              </mat-option> -->
             </mat-select>
             <mat-error *ngIf="tax_rate_id.invalid && (tax_rate_id.dirty || tax_rate_id.touched)">
               <strong *ngIf="tax_rate_id.errors.required">Tax rate is required.</strong>
@@ -83,20 +98,8 @@
 
           </mat-form-field>
 
-          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
-              <mat-label>Enter brand</mat-label>
-              <mat-select placeholder="Brand" class="w-100" formControlName="brand_id">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let brand of brands" [value]="brand.brand_id">
-                  {{brand.name}}
-                </mat-option>
-              </mat-select>
 
-              <mat-error *ngIf="brand_id.invalid && (brand_id.dirty || brand_id.touched)">
-                <strong *ngIf="brand_id.errors.required">brand is required.</strong>
-              </mat-error>
-
-            </mat-form-field>
+            <br />
                   <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
                     <mat-label>Enter Order code</mat-label>
                     <input class="text-secondary" matInput placeholder="Order code (if available)" formControlName="product_order_code">
@@ -111,7 +114,7 @@
 
                   </mat-form-field>
 
-
+<br />
             <mat-form-field class="mt-3 ybx-mat mat-full-wdth" appearance="outline">
               <mat-label>Enter summary</mat-label>
                 <textarea class="text-secondary" matInput placeholder="Leave a summary" formControlName="summary"></textarea>

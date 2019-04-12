@@ -95,8 +95,8 @@ export class DataTableSource<T> implements DataSource<T> {
     public getData(): T[] {
         return this.data.value || [];
     }
-    public get _data(): T[] {
-      return this.data.value || [];
+    public get _data() {
+      return this.data;
   }
 
     protected setFilteredData(data: T[]) {

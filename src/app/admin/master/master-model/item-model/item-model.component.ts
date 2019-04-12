@@ -242,8 +242,7 @@ export class ItemModelComponent implements OnInit {
     value:'#b541a6',valueName:'Violet',
 
   }];
-  master$: Observable<Master>;
-  setup$: Observable<SetUp>;
+
   itemForm: FormGroup;
   categories: Category[] = [];
   brands: Brand[] = [];
@@ -259,17 +258,12 @@ export class ItemModelComponent implements OnInit {
   barcode_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   data: Item=null;
-constructor(public shared:SharedModelService,public dialog: MatDialog,private setupModelService: SetUpModelService,public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
+constructor(public shared:SharedModelService,public dialog: MatDialog,public currentUser: CurrentUser, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) { }
 
 
   ngOnInit() {
     this.business = this.currentUser.get('business')[0];
     this.currencies = [this.business.currency_code];
-    this.master$ = this.msterModelService.master$;
-    this.setup$ = this.setupModelService.setup$;
-    this.getActiveCategories();
-    this.getActiveBrands();
-    this.getActiveTaxRates();
     this.details$ = this.detailsService.details$;
     this.loadingFormGroup();
   }
@@ -310,31 +304,7 @@ constructor(public shared:SharedModelService,public dialog: MatDialog,private se
       });
     });
   }
-  getActiveBrands() {
-    this.master$.subscribe(res => {
-      if (res.brands.length > 0) {
-        this.brands = res.brands;
-      }
-    });
 
-  }
-  getActiveTaxRates() {
-    this.setup$.subscribe(res => {
-      if (res.taxRates.length > 0) {
-        this.taxrates = res.taxRates;
-      }
-    });
-
-  }
-
-  getActiveCategories() {
-    this.master$.subscribe(res => {
-      if (res.categories.length > 0) {
-        this.categories = res.categories;
-      }
-    });
-
-  }
 
 
   ///////////////////////////// Item

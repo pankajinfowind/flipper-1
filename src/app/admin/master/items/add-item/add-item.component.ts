@@ -15,7 +15,7 @@ import { SetUp } from '../../../../setup/setup';
 import { TAXRATE } from '../../../../setup/tax-rates/api/tax-rate';
 import { Details } from '../../../../details/details';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatStepper } from '@angular/material';
 import { Branch } from '../../branch/api/branch';
 import { Reason } from '../../../../setup/reasons/api/reason';
 import { finalize } from 'rxjs/operators';
@@ -56,22 +56,20 @@ export class AddItemComponent implements OnInit {
   barcode_tool_tips = "The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol";
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   public loading = new BehaviorSubject(false);
-  constructor(public paginator: UrlAwarePaginator,private bapi:ApiBranchService,private modal: Modal,private router: Router, private _formBuilder: FormBuilder, public currentUser: CurrentUser, private setupModelService: SetUpModelService, private msterModelService: MasterModelService, private toast: Toast, private apiItem: ApiItemService, private detailsService: DetailsService) {
+  errors: object;
+  constructor(public paginator: UrlAwarePaginator,private bapi:ApiBranchService,private modal: Modal,private router: Router, private _formBuilder: FormBuilder, public currentUser: CurrentUser,  private toast: Toast, private apiItem: ApiItemService) {
     this.loadingFormGroup();
    }
   rows: FormArray = this._formBuilder.array([]);
-  selection = new SelectionModel<any>(true, []);
-  displayedColumns: string[] = ['name', 'sale_price_including_tax'];
 
   panelOpenState = false;
   @ViewChild(MatSort) matSort: MatSort;
-
+  @ViewChild('stepper') stepper:MatStepper;
   public dataSource: PaginatedDataTableSource<CustomerType>;
 
   branchList: Branch[] = [];
   branchs = new FormControl();
   ngOnInit() {
-
     this.getActiveCustomerTypes();
     this.getBranches();
     this.loadingFormGroup();
@@ -150,7 +148,17 @@ export class AddItemComponent implements OnInit {
       dataPaginator: this.paginator,
       matSort: this.matSort
   });
-  console.log(this.dataSource._data);
+
+      this.dataSource._data.subscribe(row=> this.getRows(row));
+
+
+  }
+  getRows(d?:CustomerType[]){
+    if(d && d.length > 0){
+        d.forEach(e=>{
+          this.addRow(e);
+        });
+    }
   }
   getBranches() {
     this.bapi.get().subscribe(res => {
@@ -259,7 +267,7 @@ export class AddItemComponent implements OnInit {
 
 
   close() {
-    this.router.navigate(["/admin/setup/item"]);
+    this.router.navigate(["/admin/setup"]);
     //localStorage.setItem('add-item', 'No');
   }
 
@@ -311,7 +319,7 @@ calculateSaleExcludingTax(event){
     return this.tax_rate_percentage ;
   }
 
-  saveComplete() {
+  saveComplete(close:boolean=false) {
 
     if (this.branchs.valid && this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid) {
       this.firstFormGroup.value.summary = this.firstFormGroup.value.summary ? this.firstFormGroup.value.summary : 'None';
@@ -321,7 +329,6 @@ calculateSaleExcludingTax(event){
       this.firstFormGroup.value.cost_price_excluding_tax = this.secondFormGroup.value.cost_price_excluding_tax;
       this.firstFormGroup.value.cost_price_including_tax = this.secondFormGroup.value.cost_price_including_tax;
       const active_branch = parseInt(localStorage.getItem('active_branch'));
-      console.log(this.secondFormGroup.value.price_setting);
       const data = {
         item: this.firstFormGroup.value,
         sale_price_excluding_tax:this.secondFormGroup.value.sale_price_excluding_tax,
@@ -332,7 +339,7 @@ calculateSaleExcludingTax(event){
         main_branch: active_branch
       }
       this.loading.next(true);
-      return this.create(data);
+      return this.create(data,close);
     } else {
       alert('Invalid input!');
     }
@@ -340,21 +347,23 @@ calculateSaleExcludingTax(event){
   }
 
 
-  create(data) {
-    this.apiItem.create(data).pipe(finalize(() => this.loading.next(false))).subscribe(
-      res => {
-        if (res.status == 'success') {
-          this.toast.open('Item added Successfully!');
-          this.thirdFormGroup.reset();
-          this.loadingFormGroup();
-          this.msterModelService.update({ loading: false, items: res["items"]["data"] ? res["items"]["data"] : [] });
-        }
-      },
-      _error => {
-        console.error(_error);
-      }
-    );
+  create(data,close?:boolean) {
+    this.apiItem.create(data).pipe(finalize(() => this.loading.next(false)))
+    .subscribe(response => {
+        if(response)
+            this.loadingFormGroup();
+            this.stepper.selectedIndex = 0;
+            this.toast.open('Customer type has been created');
+            if(close){
+              setTimeout(()=>{ this.loading.next(true);this.close() }, 3000);
+            }
+    }, error => {
+        this.handleErrors(error);
+    });
   }
+  public handleErrors(response: {messages: object} = {messages: {}}) {
+    this.errors = response.messages || {};
+}
 
   uniqueArray(arr) {
     let obj = {};

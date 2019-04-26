@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { API_ROUTES } from './api-routes.enum';
 import { BackendResponse } from '../../common/core/types/backend-response';
 import { AppHttpClient } from '../../common/core/http/app-http-client.service';
+import { Observable } from 'rxjs';
+import { Stock } from './stock';
 
 @Injectable({
     providedIn: 'root'
@@ -10,16 +12,16 @@ export class ApiStockService {
     constructor(private http: AppHttpClient) {}
 
 
-    public create(params: any): BackendResponse<{ data: any }> {
+    public create(params: any): Observable<Stock> {
         return this.http.post(API_ROUTES.STOCK, params);
     }
     public addOrRemoveExistingItem(params: any): BackendResponse<{ data: any }> {
       return this.http.post(API_ROUTES.ADD_OR_REMOVE_EXISTING_ITEM, params);
   }
-  public update(params: any,id:number): BackendResponse<{ data: any }> {
+  public update(params: any,id:number):  Observable<Stock> {
     return this.http.put(API_ROUTES.STOCK+'/'+id, params);
  }
- public delete(id:number): BackendResponse<{ data: any }> {
+ public delete(id:number):  Observable<Stock> {
   return this.http.delete(API_ROUTES.STOCK+'/'+id);
 }
 

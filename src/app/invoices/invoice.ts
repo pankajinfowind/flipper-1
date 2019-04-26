@@ -25,6 +25,7 @@ export class Invoice {
   business_id?:number;
   customer_id?:number;
   customer_type_id?:number;
+  currency?:string;
   created_at?:Date;
   updated_at?:Date;
   order?:Orders;
@@ -33,6 +34,9 @@ export class Invoice {
   branch?:Branch;
   customer?:Customer;
   customer_type?:CustomerType;
+  company_total_amount_discount?:any;
+  company_discount_value?:any;
+  customer_type_discount_value?:any;
 
   constructor(params: Object = {}) {
     for (let name in params) {

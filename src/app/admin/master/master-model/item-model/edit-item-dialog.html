@@ -6,7 +6,7 @@
 </div>
 
     <mat-dialog-content class="many-inputs">
-        <div class="input-container">
+        <div>
 
             <b>Currently Selected Product: {{data?data.item:'---'}}</b>
             <hr />
@@ -76,7 +76,7 @@
 
                 <mat-step [stepControl]="secondFormGroup">
                     <ng-template matStepLabel>Stock Adjustment </ng-template>
-                    <app-stock-advanced-options  [canAddNew]="'true'"></app-stock-advanced-options>
+                    <app-stock-advanced-options  [canAddNew]="'true'" (valueChange)="checkChanges($event)"></app-stock-advanced-options>
                 </mat-step>
 
                 <mat-step>

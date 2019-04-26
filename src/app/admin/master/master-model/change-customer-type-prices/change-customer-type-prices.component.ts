@@ -216,13 +216,13 @@ export class ChangeCustomerTypePricesComponent implements OnInit,OnChanges {
         this.loading.next(true);
         this.capi.updateItemPricesByCustomerType(data,element.id).pipe(finalize(() => this.loading.next(false))).subscribe(
             res => {
-              if (res.status == 'success') {
-                  this.toast.open('Customer Specific Prices updated Successfully!');
-                  const el=this.dataSource.data.find(c=>c.id==element.id);
-                  el.sale_price_including_tax=this.customertypeFormGroup.value.sale_price_including_tax;
-                  this.updateItemModelService(res["items"]["data"]);
-                  this.loadItemModelDetails();
-              }
+              // if (res.status == 'success') {
+              //     this.toast.open('Customer Specific Prices updated Successfully!');
+              //     const el=this.dataSource.data.find(c=>c.id==element.id);
+              //     el.sale_price_including_tax=this.customertypeFormGroup.value.sale_price_including_tax;
+              //     this.updateItemModelService(res["items"]["data"]);
+              //     this.loadItemModelDetails();
+              // }
             },
             _error => {
               console.error(_error);

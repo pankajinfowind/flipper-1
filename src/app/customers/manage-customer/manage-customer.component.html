@@ -10,18 +10,14 @@
 
       <div class="item row">
         <div class="col-12">
-            <mat-form-field appearance="outline" class="col-6">
-                <mat-label>Choose Customer Type</mat-label>
-                <mat-select placeholder="Customer Type" formControlName="customer_type_id">
-                  <!-- <mat-option *ngFor="let ct of (setup$ | async).customertypes" [value]="ct.customer_type_id">
-                    {{ct.name}}
-                  </mat-option> -->
-                </mat-select>
-                <mat-error *ngIf="customer_type_id.invalid && (customer_type_id.dirty || customer_type_id.touched)">
-                    customer type is required.
-                </mat-error>
 
-              </mat-form-field>
+            <mat-form-field class="col-6" appearance="outline">
+              <mat-label>Choose Customer Type</mat-label>
+              <input  matInput placeholder="Choose Customer Type"  (input)="showChooseCustomerTypeModal()" (click)="showChooseCustomerTypeModal()" formControlName="customer_type">
+              <mat-error *ngIf="customer_type.invalid && (customer_type.dirty || customer_type.touched)">
+                  <strong *ngIf="customer_type.errors.required">Choose Customer Type is required.</strong>
+                </mat-error>
+            </mat-form-field>
 
           <mat-form-field appearance="outline" class="col-6">
             <mat-label>Title</mat-label>

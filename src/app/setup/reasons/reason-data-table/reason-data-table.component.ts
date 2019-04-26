@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
 import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
@@ -24,6 +24,11 @@ export class ReasonDataTableComponent  implements OnInit, OnDestroy {
   @Input() public reasonType: string='stock_movements';
   @Input() public url: string='reason';
   public loading = new BehaviorSubject(false);
+  @Input() public enableSelectButton:boolean=false;
+  @Input() public selectedId:number=0;
+
+  @Output() valueChange = new EventEmitter<Reason>();
+
    constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiReasonService) {
 
   }
@@ -81,5 +86,7 @@ ngOnDestroy() {
       });
   }
 
-
+  selectReason(reason:Reason){
+    return this.valueChange.emit(reason);
+  }
 }

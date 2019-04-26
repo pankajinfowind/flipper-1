@@ -5,3 +5,6 @@
 @import "../common/scss/flex-table-panel.scss";
 @import "../common/scss/input.scss";
 @import '~@angular/material/theming';
+.detail-row{
+  height: 0%!important;
+}

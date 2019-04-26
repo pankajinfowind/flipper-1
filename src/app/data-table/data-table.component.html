@@ -33,8 +33,16 @@
         </ng-container>
         <ng-content></ng-content>
 
+
         <mat-header-row *matHeaderRowDef="columns" [class.hidden]="dataSource.isEmpty()"></mat-header-row>
-        <mat-row  *matRowDef="let myRowData; columns: columns, let index = index" class="data-row" [class.highlighted_gray]="!dataSource.selectedRows.isSelected(myRowData) && (enableRowSelected && enableRowSelected.id==myRowData.id)" [class.highlighted]="dataSource.selectedRows.isSelected(myRowData)"></mat-row>
+        <mat-row  *matRowDef="let myRowData; columns: columns, let index = index" class="element-row" [class.highlighted_gray]="!dataSource.selectedRows.isSelected(myRowData) && (enableRowSelected && enableRowSelected.id==myRowData.id)" [class.highlighted]="dataSource.selectedRows.isSelected(myRowData)"  matRipple
+        [matRippleCentered]="centered"
+        [matRippleDisabled]="disabled"
+        [matRippleUnbounded]="unbounded"
+        [matRippleRadius]="radius"
+        [matRippleColor]="color">
+        </mat-row>
+
     </mat-table>
 
     <div #noResults><ng-content *ngIf="dataSource.isEmpty()" select="no-results-message"></ng-content></div>

@@ -8,7 +8,7 @@
 
 <form [formGroup]="stockForm" (ngSubmit)="updateStock()">
   <mat-dialog-content class="many-inputs">
-    <div class="input-container">
+    <div>
 
       <div class="item row">
         <div class="name col-5" trans><b>{{stock.item.item}}</b></div>
@@ -52,20 +52,17 @@
         <div class="name col-3" trans><b>Reason:</b></div>
         <div class="value col-9">
           <mat-form-field appearance="outline" class="col-12">
-            <mat-label>Enter stock movement reason</mat-label>
-            <mat-select  placeholder="Stock movement reason" formControlName="reason_id" required>
-              <mat-option>None</mat-option>
-              <mat-option *ngFor="let reason of reasons" [value]="reason.reason_id">
-                {{reason.name}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="reason_id.invalid && (reason_id.dirty || reason_id.touched)">
-              <strong *ngIf="reason_id.errors.required">Stock Movement Reason is required.</strong>
+            <mat-label>Choose stock movement reason</mat-label>
+            <input  matInput placeholder="Choose Customer Type"  (input)="showChooseReasonModal()" (click)="showChooseReasonModal()" formControlName="reason">
+
+            <mat-error *ngIf="reason.invalid && (reason.dirty || reason.touched)">
+              <strong *ngIf="reason.errors.required">Stock Movement Reason is required.</strong>
             </mat-error>
 
           </mat-form-field>
         </div>
       </div>
+
 
       <div class="item row">
         <div class="name col-3" trans><b>Transction date:</b></div>

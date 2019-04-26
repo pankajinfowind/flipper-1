@@ -268,7 +268,7 @@ no-animations .can-disable-animation {
     font-size: 1rem
   }
 
-.transaction-payment-buttons__delete-button, .transaction-payment-buttons__order-button {
+.transaction-payment-buttons__delete-button, .transaction-payment-buttons__order-button, .transaction-payment-buttons__pay-button {
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;

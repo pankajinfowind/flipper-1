@@ -20,7 +20,12 @@
             </div>
             <div class="flipper-pay-panel__numeric-selector-display-container">
               <div class="flipper-pay-panel__numeric-selector-display">
-               <span class="currency">{{business.currency_code}} {{numeric_selector}}</span>
+               <span class="currency">{{business.currency_code}}
+                  <mat-form-field   appearance="outline">
+                      <mat-label>Amount Paid</mat-label>
+                      <input  matInput placeholder="Amount Paid" (input)="displayBalanceChangesDue()" (onEnter)="displayBalanceChangesDue()" (click)="setInputToNull()" (mouseleave)="setInputToValueble()" (blur)="setInputToValueble()" autofocus  type="number" [(ngModel)]="numeric_selector" #ctrl="ngModel"  required>
+                      </mat-form-field>
+                    </span>
               </div>
               <div class="flipper-pay-panel__num-pad num-pad--dark num-pad">
                 <div class="num-pad__inner">
@@ -85,7 +90,7 @@
                 <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}"><span class="currency">{{business.currency_code}} </span>
                   {{amount_return}}</li>
 
-                  <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}">Discount Change Due</li>
+                  <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '500'}">Discount Change Due</li>
                   <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '400'}"><span class="currency">{{business.currency_code}} </span>
                     {{d_amount_return}}</li>
 
@@ -112,5 +117,4 @@
     </div>
   </div>
 </div>
-<!-- <button type="button" class="btn btn-success btn-md" (click)="print()"><i class="mdi mdi-printer"></i>print </button>
-<div id="print-section" style="height:auto;overflow-y: auto; display:none">  </div> -->
+<app-print-invoice [canPrintOut]="canPrintOut" *ngIf="(invoice$ | async) && canPrintOut" [invoice]="invoice$ | async"></app-print-invoice>

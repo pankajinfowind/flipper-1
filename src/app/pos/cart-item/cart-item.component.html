@@ -1,28 +1,29 @@
+<loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
 <div class="card text-center w-100">
   <div class="card-header">
-    <button (click)="updatePosLayout('customers')" type="button" mat-button class="cancel-button" trans>
+    <button (click)="chooseCustomer()" type="button" mat-button class="cancel-button" trans>
       <mat-icon>assignment_ind</mat-icon> CUSTOMERS
     </button>
 
-    <button (click)="updatePosLayout('orders')" type="button" mat-button class="cancel-button" trans>
+    <button (click)="goto('till-orders')" type="button" mat-button class="cancel-button" trans>
       <mat-icon>assignment</mat-icon> ORDERS
     </button>
   </div>
   <div>
-    <!-- retrive customer from our ngx db as an item -->
-    <mat-toolbar *ngIf="(pos$ | async).choose_customer" style="background: #000;color:#fff; font-size: 15px;font-family: 'Times New Roman', Times, serif ">
-    <mat-toolbar-row>
-      <span>{{(pos$ | async).choose_customer.title}} {{(pos$ | async).choose_customer.full_name}} <span *ngIf="(pos$ | async).choose_customer.address">,{{(pos$ | async).choose_customer.address}}</span></span>
-      <span class="example-spacer"></span>
-      <span class="example-icon">{{(pos$ | async).choose_customer.customer_type.name}}({{(pos$ | async).choose_customer.customer_type.discount_value}} %)</span>
-      <span class="example-icon" *ngIf="(pos$ | async).choose_customer.customer_no">No:#{{(pos$ | async).choose_customer.customer_no}}</span>
-    </mat-toolbar-row>
-  </mat-toolbar>
+
+    <mat-toolbar *ngIf="(customer$| async)" style="background: #000;color:#fff; font-size: 15px;font-family: 'Times New Roman', Times, serif ">
+      <mat-toolbar-row>
+        <span>{{(customer$| async).title}} {{(customer$| async).full_name}} <span *ngIf="(customer$| async).address">,{{(customer$| async).address}}</span></span>
+        <span class="example-spacer"></span>
+        <span class="example-icon" *ngIf="(customer$| async).customer_type">{{(customer$| async).customer_type.name}}({{(customer$| async).customer_type.discount_value}} %)</span>
+        <span class="example-icon" *ngIf="(customer$| async).customer_no">No:#{{(customer$| async).customer_no}}</span>
+      </mat-toolbar-row>
+    </mat-toolbar>
 
   </div>
 
   <div class="card-body">
-    <table *ngIf="data.length > 0" mat-table [dataSource]="dataSource" multiTemplateDataRows>
+    <table *ngIf="(current_order$| async) && (current_order$| async).order_items.length > 0" mat-table [dataSource]="(current_order$| async).order_items" multiTemplateDataRows>
         <ng-container matColumnDef="item">
             <th mat-header-cell *matHeaderCellDef class="col-3 text-left"  style="width:20%">Item
             </th>
@@ -57,23 +58,16 @@
           <div class="element-detail row" [class.row-highlighted]="expandedElement === element" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
             <div class="col-4">
-              <div class="button-row">
-                <button mat-icon-button class="col-12 float-left" (click)="cartDialog(element,'Note')">
-                  <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
-                </button>
-
-                <!-- <button mat-icon-button class="col-6 float-left" (click)="cartDialog(element,'Discount')">
-                  <mat-icon aria-label="Example icon-button with a heart icon">local_offer</mat-icon>
-
-                </button> -->
-              </div>
-              <div class="button-row">
-                <span class="col-12 text-left text-smaller">Note</span>
-                <!-- <span class="col-8 text-left text-smaller">Discount</span> -->
-              </div>
+                <div class="button-row float-left col-12">
+                    <button mat-icon-button class="text-center" (click)="cartDialog(element,'Note')">
+                      <mat-icon aria-label="">edit</mat-icon>
+                    </button>
+                  </div>
+                  <div class="button-row float-left col-12"><span class="text-center text-smaller">&nbsp;&nbsp;&nbsp;&nbsp;Note</span>
+                  </div>
 
 
-            </div>
+          </div>
             <div class="col-5">
               <div class="button-row">
                 <button mat-icon-button (click)="updateQty(element,'remove')" class="btn-border col-3">
@@ -125,7 +119,7 @@
       [matRippleColor]="color"></tr>
     </table>
 
-    <div class="_no-results-message" *ngIf="data.length == 0">
+    <div class="_no-results-message" *ngIf="data && data.length == 0">
       <img class="_icon" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OTIuMiA0OTIuMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDkyLjIgNDkyLjI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4Ij4KPGc+Cgk8Zz4KCQk8Zz4KCQkJPGc+CgkJCQk8cGF0aCBkPSJNMzcyLjIsMzU4Ljc1SDIwLjljLTExLjUsMC0yMC45LTkuNC0yMC45LTIwLjlzOS40LTIwLjksMjAuOS0yMC45aDMzMS41di0yOTVjMC0xMS41LDkuNC0yMC45LDIwLjktMjAuOWg5OCAgICAgIGMxMS41LDAsMjAuOSw5LjQsMjAuOSwyMC45cy05LjQsMjAuOS0yMC45LDIwLjloLTc3LjJ2Mjk3LjFDMzkyLjEsMzUwLjQ1LDM4My43LDM1OC43NSwzNzIuMiwzNTguNzV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTwvZz4KCQkJPGc+CgkJCQk8cGF0aCBkPSJNODQuNSw0OTEuMTVjLTMyLjMsMC01OC40LTI2LjEtNTguNC01OC40czI2LjEtNTguNCw1OC40LTU4LjRzNTguNCwyNi4xLDU4LjQsNTguNCAgICAgIEMxNDMuOSw0NjUuMDUsMTE2LjgsNDkxLjE1LDg0LjUsNDkxLjE1eiBNODQuNSw0MTUuMDVjLTEwLjQsMC0xNy43LDguMy0xNy43LDE3LjdzOC4zLDE3LjcsMTcuNywxNy43czE3LjctOC4zLDE3LjctMTcuNyAgICAgIFM5NC45LDQxNS4wNSw4NC41LDQxNS4wNXoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPC9nPgoJCQk8Zz4KCQkJCTxwYXRoIGQ9Ik0yOTguMiw0OTEuMTVjLTMyLjMsMC01OC40LTI2LjEtNTguNC01OC40czI2LjEtNTguNCw1OC40LTU4LjRzNTkuNCwyNi4xLDU5LjQsNTguNFMzMzEuNiw0OTEuMTUsMjk4LjIsNDkxLjE1eiAgICAgICBNMjk4LjIsNDE1LjA1Yy0xMC40LDAtMTcuNyw4LjMtMTcuNywxNy43czguMywxNy43LDE3LjcsMTcuN2MxMC40LDAsMTcuNy04LjMsMTcuNy0xNy43UzMwOC43LDQxNS4wNSwyOTguMiw0MTUuMDV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTwvZz4KCQkJPGc+CgkJCQk8cGF0aCBkPSJNMjk3LjIsMjg2Ljg1SDY0LjdjLTExLjUsMC0yMC45LTkuNC0yMC45LTIwLjlWNDcuMDVjMC0xMS41LDkuNC0yMC45LDIwLjktMjAuOWgyMzIuNWMxMS41LDAsMjAuOSw5LjQsMjAuOSwyMC45djIyMCAgICAgIEMzMTgsMjc4LjQ1LDMwOC43LDI4Ni44NSwyOTcuMiwyODYuODV6IE04NS41LDI0Ni4xNWgxOTAuOFY2Ny44NUg4NS41VjI0Ni4xNXoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPC9nPgoJCQk8Zz4KCQkJCTxnPgoJCQkJCTxwYXRoIGQ9Ik0xNjksMjE4LjA1di00OWgtNDl2LTI0aDUwdi00OWgyMi45djQ5aDUwdjI0aC01MHY0OUgxNjl6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCQk8L2c+CgkJCTwvZz4KCQk8L2c+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
       <div class="_main" trans>Add an item</div>
       <br />
@@ -178,11 +172,10 @@
 
 
     <div class="buttonwrapper buttonwrapper--margin">
-      <li (click)="deleteOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__delete-button m-1">Delete</li>
-      <li (click)="holdOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__order-button m-1">Hold</li>
-      <li (click)="payOrdered()" [ngClass]="{'disabled': !currently_ordered}" class="transaction-payment-buttons__button transaction-payment-buttons__pay-button m-1">Pay</li>
+      <li (click)="deleteOrdered()" [ngClass]="{'disabled': !current_order}" class="transaction-payment-buttons__button transaction-payment-buttons__delete-button m-1">Delete</li>
+      <li (click)="holdOrdered()" [ngClass]="{'disabled': !current_order}" class="transaction-payment-buttons__button transaction-payment-buttons__order-button m-1">Hold</li>
+      <li (click)="goto('till-pay')" [ngClass]="{'disabled': !current_order}" class="transaction-payment-buttons__button transaction-payment-buttons__pay-button m-1">Pay</li>
     </div>
 
   </div>
-
 </div>

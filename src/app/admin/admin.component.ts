@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit,AfterViewInit {
 public appearance;
+activeLinkIndex = -1;
   /**
      * Controls left column visibility.
      */

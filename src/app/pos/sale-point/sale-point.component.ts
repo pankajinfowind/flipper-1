@@ -18,33 +18,7 @@ import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angul
 import { SetUpModelService } from '../../setup/setup-model.service';
 import { CustomerType } from '../../setup/customerType/api/CustomerType';
 import { SetUp } from '../../setup/setup';
-@Component({
-  selector: 'bottom-sheet-of-stock',
-  templateUrl: 'bottom-sheet-of-stock.componet.html',
-  styleUrls: ['sale-point.component.scss'],
-})
-export class BottomSheetOverviewStock {
-stocks:any[]=[];
-stock_name:string='';
-centered = false;
-  disabled = false;
-  unbounded = false;
 
-  radius: number;
-  color: string;
-  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewStock>,@Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
-    this.stocks=data['stock_movemts'].filter(d=>!d['is_expired']);
-    this.stock_name=data['stock_name'];
-  }
-  applyFilter(filterValue: string) {
-    this.stocks.filter(s=>s.total_qty===filterValue.trim().toLowerCase() || s.out_qty===filterValue.trim().toLowerCase() || s.in_qty===filterValue.trim().toLowerCase() || s.batch_no===filterValue.trim().toLowerCase() || s.expired_date===filterValue.trim().toLowerCase());
-  }
-
-  openLink(data,event: MouseEvent): void {
-    this.bottomSheetRef.dismiss(data);
-    event.preventDefault();
-  }
-}
 @Component({
   selector: 'app-sale-point',
   templateUrl: './sale-point.component.html',
@@ -226,23 +200,8 @@ if(stocks.length > 0){
   }
 
 
-  openBottomSheet(stock_movemts,stock_name): any {
-    return this.bottomSheet.open(BottomSheetOverviewStock,{
-        data:{stock_movemts:stock_movemts,stock_name:stock_name}
-    });
-  }
-
-  addItemToCart(stock: Stock) {
-    if(stock['stockMovmentsTransformable'].length > 1){
-        this.openBottomSheet(stock['stockMovmentsTransformable'],stock.item.item).afterDismissed().subscribe(cart_data => {
-          this.saveToCartWithOrder(cart_data,stock);
-        });
-    }else{
-      this.saveToCartWithOrder(stock['stockMovmentsTransformable'][0],stock);
-    }
 
 
-  }
 saveToCartWithOrder(cart,stock:Stock){
       if (!this.business) return;
     this.getCurrentOrder();
@@ -284,7 +243,6 @@ saveToCartWithOrder(cart,stock:Stock){
 }
 
   updateOrderItem(params) {
-    this.posModelService.update(this.posModelService.get().loading=true);
 
     this.api.updateOrderItem(params).pipe(finalize(() =>
     this.posModelService.update(this.posModelService.get().loading=false))).subscribe(

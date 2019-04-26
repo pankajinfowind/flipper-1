@@ -13,8 +13,6 @@ import {HttpModule} from './http/http.module';
 import {TranslationsModule} from './translations/translations.module';
 import {APP_CONFIG, DEFAULT_FLIPPER_CONFIG} from './config/flipper-config';
 import { CurrentUser } from '../auth/current-user';
-import { PosModule } from '../../pos/pos.module';
-import { SetupModule } from '../../setup/setup.module';
 
 @NgModule({
     imports: [
@@ -25,9 +23,7 @@ import { SetupModule } from '../../setup/setup.module';
         HttpClientModule,
         UiModule,
         HttpModule,
-        TranslationsModule,
-        PosModule.forRoot(),
-        SetupModule.forRoot(),
+        TranslationsModule
     ],
     exports: [
         CommonModule,

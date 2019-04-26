@@ -7,10 +7,10 @@ import { Pos } from '../../pos/pos';
 import { OrderItemsModelService } from '../../pos/cart/order-item-model.service';
 import { OrderItems } from '../../pos/cart/order_items';
 import { ApiPosService } from '../../pos/api/api.service';
-import { takeUntil } from 'rxjs/operators';
 import { NgxService } from '../../common/ngx-db/ngx-service';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -28,46 +28,37 @@ export class OrdersComponent implements OnInit, OnDestroy {
   panelOpenState = false;
   order_items$: Observable<OrderItems[]>;
   business: Business;
-  constructor(public currentUser: CurrentUser,private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private posModelService: PosModelService, private db: NgxService) { }
-
-  private unsubscribe$: Subject<void> = new Subject<void>();
+  routeLinks: any[];
+  activeLinkIndex = -1;
+  constructor(public currentUser: CurrentUser,private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private posModelService: PosModelService, private db: NgxService,private router: Router) {
+    this.routeLinks = [
+        {
+            label: 'PENDING',
+            link: './order-pending',
+            index: 0
+        },
+        {
+          label: 'HELD',
+          link: './order-held',
+          index: 1
+      },
+         {
+            label: 'COMPLETE',
+            link: './order-complete',
+            index: 1
+        }
+    ];
+}
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
   ngOnInit() {
-    if (this.currentUser.user) {
-      this.business = this.currentUser.get('business')[0];
-    }
-    this.pos$ = this.posModelService.pos$;
-    this.getOrders();
-  }
-  getOrders(){
-    if (!this.pos$) return;
-    this.pos$.subscribe(res => {
-        if (res.orders && res.orders.length > 0) {
-          this.held_orders = res.orders.filter(order => order.status == 'hold');
-          this.pending_orders = res.orders.filter(order => order.status == 'pending');
-          this.ordered_orders = res.orders.filter(order => order.status == 'ordered');
-          this.complete_orders = res.orders.filter(order => order.status == 'complete');
-
-        }
+    this.router.events.subscribe((res) => {
+      this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
       });
-  }
-  updatePosLayout(panel = 'home') {
-    this.posModelService.update({ panel_content: panel });
-  }
-  total(data, arg) {
-    var total = 0;
-    if (data.length > 0) {
-      for (var i = 0, _len = data.length; i < _len; i++) {
-        total += data[i][arg];
-      }
-    }
-
-    return total;
 
   }
+
+
   orderedItem(order_id) {
     const ordered_item = [];
     this.order_items$.forEach(orders => {
@@ -105,7 +96,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
           this.orderItemModelService.update([], 'all');
           this.orderItemModelService.update(currently_ordered['order_items'], 'all');
 
-          this.updatePosLayout('home');
         }
 
 
@@ -147,14 +137,4 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
 
-  // callGetFormData(event:Event){
-  //   event.preventDefault();
-  //   let form=event.target as HTMLFormElement;
-  //   let d=this.getFormData(form);
-  //     console.log(d);
-  // }
-
-  // getFormData(ele:HTMLFormElement){
-  //     return ele.elements;
-  // }
 }

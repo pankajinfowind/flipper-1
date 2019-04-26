@@ -140,7 +140,7 @@ $table-row-height: 70px !default;
 $table-header-height: $table-row-height !default;
 $table-text-less-emphasis-color: #999 !default;
 $table-selected-row-bg-color: $table-row-hover-background-color !default;
-
+$order-nav-height:30px !default;
 //Navbar
 $material-navbar-height: 70px;
 
@@ -198,7 +198,6 @@ html{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding:2px;
 }
 .section-container {
   height: 400px;
@@ -269,4 +268,17 @@ html{
 }
 .badge--muted {
   background-color: #849194;
+}
+.row-highlighted {
+  background: #03a9f4;
+  color: #fff!important;
+  font-weight: 500!important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0;
+
+}
+
+.row-highlighted span.text{
+color: #fff!important;
 }

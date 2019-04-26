@@ -6,10 +6,27 @@ customer-list{
   height: 100%;
   background-color: #0175a8;
 
+  .loading-overlay-container {
+    position: relative;
+    height: calc(100% - #{$admin-nav-height - 4});
+  }
+
+  .has-ad {
+    ad-host {
+        margin-top: 25px;
+    }
+
+    .loading-overlay-container {
+        height: calc(
+            100% - #{$admin-nav-height +  175 - 4}
+        );
+    }
+  }
+
   .mat-sidenav-container {
     width: 100%;
-    height: calc(100% - #{$admin-nav-height+1});
-
+    //height: calc(100% - #{$admin-nav-height+1});
+    overflow: hidden;
 
     .right-sidebar {
       width: 460px;

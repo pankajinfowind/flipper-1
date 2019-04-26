@@ -13,15 +13,25 @@
 
   <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
-      <mat-cell *matCellDef="let customertype"> {{customertype.name}} </mat-cell>
+      <mat-cell *matCellDef="let customertype"> {{customertype.name}} <span *ngIf="enableSelectButton">({{customertype.discount_value}}%)</span></mat-cell>
   </ng-container>
-  <ng-container matColumnDef="discount_value">
+  <ng-container matColumnDef="discount_value" *ngIf="!enableSelectButton">
     <mat-header-cell *matHeaderCellDef mat-sort-header trans>Percentage(%)</mat-header-cell>
     <mat-cell *matCellDef="let customertype"> {{customertype.discount_value}}% </mat-cell>
 </ng-container>
-<ng-container matColumnDef="description">
+<ng-container matColumnDef="description" *ngIf="!enableSelectButton">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Description</mat-header-cell>
   <mat-cell *matCellDef="let customertype"> {{customertype.description}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+  <mat-cell *matCellDef="let customertype">
+      <button (click)="selectCustomerType(customertype)" class="button-success" *ngIf="customertype.id!=selectedId" [disabled]="customertype.id==selectedId?true:false"  [matTooltip]="'Select Customer Type' | trans">Select
+      </button>
+      <button  class="button-cancel" *ngIf="customertype.id==selectedId"  [matTooltip]="'Selected Customer Type' | trans">Selected
+      </button>
+  </mat-cell>
 </ng-container>
 
   <ng-container matColumnDef="edit">

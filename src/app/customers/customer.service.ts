@@ -2,7 +2,6 @@ import { Injectable, Injector, EventEmitter } from "@angular/core";
 import { Customer } from "./customer";
 import { ModelFactory, Model } from "ngx-model";
 import { Observable } from "rxjs";
-import { AppHttpClient } from '../common/core/http/app-http-client.service';
 import { Sqlite3Service } from '../common/sqlit3/sqlite3.service';
 import { ElectronService } from 'ngx-electron';
 import { Orders } from '../orders/orders';

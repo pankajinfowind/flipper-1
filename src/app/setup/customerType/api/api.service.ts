@@ -30,7 +30,7 @@ export class ApiCustomerTypeService {
   return this.http.post(API_ROUTES_CUSTOMER_TYPE.ATTACH_ITEM_CUSTOMER_TYPE_PRICE, params);
 }
 
- public updateItemPricesByCustomerType(params: CustomerTypePrices,id:number): BackendResponse<{ data: any }> {
+ public updateItemPricesByCustomerType(params: CustomerTypePrices,id:number): Observable<CustomerType> {
   return this.http.put(API_ROUTES_CUSTOMER_TYPE.ITEM_CUSTOMER_TYPE_PRICES+'/'+id, params);
 }
  //update-item-customertype-prices

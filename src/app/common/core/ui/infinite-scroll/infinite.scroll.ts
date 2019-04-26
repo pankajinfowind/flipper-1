@@ -3,7 +3,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export abstract class InfiniteScroll implements OnInit {
-    @Input() threshold: number | string = 50;
+    @Input() threshold: number | string = 30;
 
     protected abstract el: ElementRef;
 

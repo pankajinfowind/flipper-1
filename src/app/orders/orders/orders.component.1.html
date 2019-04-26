@@ -1,0 +1,266 @@
+<div class="modal-header">
+  <h2 mat-dialog-title trans>Orders</h2>
+  <button type="button" mat-icon-button (click)="updatePosLayout('home')" class="close-button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content class="many-inputs">
+  <mat-tab-group>
+    <mat-tab *ngIf="held_orders.length > 0">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">pause</mat-icon>
+        HELD
+      </ng-template>
+
+      <br />
+      <mat-accordion class="m-2 row">
+        <div class="col-3">
+          Operator
+        </div>
+        <div class="col-3">
+          Time
+        </div>
+        <div class="col-2 text-center">
+          Customer
+        </div>
+        <div class="col-2 text-center">
+          Items
+        </div>
+        <div class="col-2 text-center">
+          Total
+        </div>
+        <mat-expansion-panel class="w-100" *ngFor="let ordered of held_orders" (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="col-3">
+              {{ordered.employee.first_name}} {{ordered.employee.last_name}}
+            </mat-panel-title>
+            <mat-panel-title class="col-3">
+              {{ordered.created_at | date:'fullDate'}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+                {{ordered.customer?ordered.customer.full_name:''}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              {{total(ordered.order_items,'qty')}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              <b>{{business.currency_code}}  {{total(ordered.order_items,'total_amount')}}</b>
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+          <div *ngIf="ordered.order_items.length > 0">
+            <div class="w-100 float-right m-2">
+              <button mat-raised-button color="accent" (click)="updateOrdered(ordered)" class="m-1">UNHOLD</button>
+              <button mat-raised-button color="warn" (click)="deleteOrdered(ordered.id)" class="m-1 text-white">DELETE</button></div>
+            <table class="w-100">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Each</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let ord_items of ordered.order_items">
+                  <tr>
+                    <th>{{ord_items.item}}</th>
+                    <th>{{ord_items.qty}}</th>
+                    <th>{{ord_items.each}}</th>
+                    <th>{{business.currency_code}} {{ord_items.total_amount}}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </table>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-tab>
+
+    <mat-tab *ngIf="ordered_orders.length > 0">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">list_alt</mat-icon>
+        ORDERED
+      </ng-template>
+      <br />
+      <mat-accordion class="m-2 row">
+        <div class="col-3">
+          Operator
+        </div>
+        <div class="col-3">
+          Time
+        </div>
+        <div class="col-2 text-center">
+          Customer
+        </div>
+        <div class="col-2 text-center">
+          Items
+        </div>
+        <div class="col-2 text-center">
+          Total
+        </div>
+        <mat-expansion-panel class="w-100" *ngFor="let ordered of ordered_orders" (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title class="col-3">
+              {{ordered.employee.first_name}} {{ordered.employee.last_name}}
+            </mat-panel-title>
+            <mat-panel-title class="col-3">
+              {{ordered.created_at | date:'fullDate'}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              {{ordered.customer?ordered.customer.full_name:'--no customer--'}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              {{total(ordered.order_items,'qty')}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              <b>{{business.currency_code}}  {{total(ordered.order_items,'total_amount')}}</b>
+            </mat-panel-title>
+
+
+
+          </mat-expansion-panel-header>
+
+          <mat-chip-list>
+              <mat-chip *ngIf="ordered.is_currently_processing=='1'" color="'primary'">Current ordered</mat-chip>
+              <mat-chip *ngIf="ordered.is_currently_processing=='0'">Recent ordered</mat-chip>
+            </mat-chip-list>
+
+
+          <div *ngIf="ordered.order_items.length > 0">
+            <div class="w-100 float-right m-2">
+              <button mat-raised-button color="primary" (click)="updateOrdered(ordered)" [disabled]="ordered.is_currently_processing=='1'" class="m-1">RESUME</button>
+              <button mat-raised-button color="warn" (click)="deleteOrdered(ordered)" [disabled]="ordered.is_currently_processing=='1'" class="m-1 text-white">DELETE</button>
+            </div>
+            <table class="w-100">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Each</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let ord_items of ordered.order_items">
+                  <tr>
+                    <th>{{ord_items.item}}</th>
+                    <th>{{ord_items.qty}}</th>
+                    <th>{{ord_items.each}}</th>
+                    <th>{{business.currency_code}} {{ord_items.total_amount}}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </table>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </mat-tab>
+
+    <mat-tab *ngIf="pending_orders.length > 0">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">access_time</mat-icon>
+        PENDING
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab *ngIf="complete_orders.length > 0">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">done</mat-icon>
+        COMPLETE
+      </ng-template>
+      <br />
+      <mat-accordion class="m-2 row">
+        <div class="col-3">
+          Operator
+        </div>
+        <div class="col-3">
+          Time
+        </div>
+        <div class="col-2 text-center">
+          Customer
+        </div>
+        <div class="col-2 text-center">
+          Items
+        </div>
+        <div class="col-2 text-center">
+          Total
+        </div>
+        <mat-expansion-panel class="w-100" *ngFor="let ordered of complete_orders" (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title class="col-3">
+              {{ordered.employee.first_name}} {{ordered.employee.last_name}}
+            </mat-panel-title>
+            <mat-panel-title class="col-3">
+              {{ordered.created_at | date:'fullDate'}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              {{ordered.customer?ordered.customer.full_name:'--no customer--'}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              {{total(ordered.order_items,'qty')}}
+            </mat-panel-title>
+
+            <mat-panel-title class="col-2 text-center">
+              <b>{{business.currency_code}}  {{total(ordered.order_items,'total_amount')}}</b>
+            </mat-panel-title>
+
+
+
+          </mat-expansion-panel-header>
+
+          <mat-chip-list>
+              <mat-chip *ngIf="ordered.is_currently_processing=='0'">Completed order</mat-chip>
+            </mat-chip-list>
+
+
+          <div *ngIf="ordered.order_items.length > 0">
+            <div class="w-100 float-right m-2">
+              <!-- <button mat-raised-button color="primary" (click)="updateOrdered(ordered)" [disabled]="ordered.is_currently_processing=='1'" class="m-1">RESUME</button>
+              <button mat-raised-button color="warn" (click)="deleteOrdered(ordered)" [disabled]="ordered.is_currently_processing=='1'" class="m-1 text-white">DELETE</button> -->
+            </div>
+            <table class="w-100">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Each</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let ord_items of ordered.order_items">
+                  <tr>
+                    <th>{{ord_items.item}}</th>
+                    <th>{{ord_items.qty}}</th>
+                    <th>{{ord_items.each}}</th>
+                    <th>{{business.currency_code}} {{ord_items.total_amount}}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </table>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>

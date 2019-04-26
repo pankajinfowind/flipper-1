@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Stock } from '../../api/stock';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -18,6 +18,7 @@ import { Reason } from '../../../setup/reasons/api/reason';
 import { DetailsService } from '../../../details/details.service';
 import { Details } from '../../../details/details';
 import { Item } from '../../../admin/master/items/api/item';
+import { ApiBranchService } from '../../../admin/master/branch/api/api.service';
 
 @Component({
   selector: 'app-stock-advanced-options',
@@ -43,7 +44,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
   newStockForm: FormGroup;
   dataSource_new_stock = new MatTableDataSource < Branch > ([]);
 
-
+  @Output() valueChange = new EventEmitter<boolean>();
   @Input()
   set canAddNew(data: any) {
     this._canAddNew = data;
@@ -101,14 +102,13 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
     this.step--;
   }
 
-  constructor(private detailsService: DetailsService,private setupModelService: SetUpModelService,protected settings: Settings,public currentUser: CurrentUser, private _fb: FormBuilder, private toast: Toast, private api: ApiStockService, private msterModelService: MasterModelService) {}
+  constructor(private bapi:ApiBranchService,private detailsService: DetailsService,private setupModelService: SetUpModelService,protected settings: Settings,public currentUser: CurrentUser, private _fb: FormBuilder, private toast: Toast, private api: ApiStockService, private msterModelService: MasterModelService) {}
   rows: FormArray = this._fb.array([]);
   ngOnInit() {
     this.master$ = this.msterModelService.master$;
     this.setup$ = this.setupModelService.setup$;
     this.subscription = this.details$ = this.detailsService.details$;
     this.getBranches();
-    this.getReasons();
     this.loadingFormGroup(null);
     this.loadItemModelDetails();
   }
@@ -118,14 +118,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
 
 
   }
-  getReasons() {
-    this.setup$.subscribe(res => {
-      if (res.reasons.length > 0) {
-        this.reasons = res.reasons.filter(res => res.reason_type == 'stock_movements' && res.stock_movements_status == 'add');
-      }
-    });
 
-  }
   delete(element) {
     var r = confirm("Are you sure, you want to delete permantly this stock.");
     if (r == true) {
@@ -158,9 +151,9 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
     const arr:Branch[]=[];
 
     if(data.length == 0){
-          this.master$.subscribe(res => {
-                if (res.branchs.length > 0) {
-                      res.branchs.forEach(branch => {
+      this.bapi.get().subscribe(res => {
+                if (res.branches.length > 0) {
+                      res.branches.forEach(branch => {
                         if(!this.dataSource.data.find(b=>b.branch_id==branch.branch_id)){
                           if(!arr.find(b=>b.branch_id==branch.branch_id)){
                             this.addRow(branch, false);
@@ -173,12 +166,16 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
 
     }else{
       for (var i = 0; i <  data.length; i++) {
-        this.master$.subscribe(res => {
-          if (res.branchs.length > 0) {
-            res.branchs.forEach(branch => {
+        this.bapi.get().subscribe(res => {
+          if (res.branches.length > 0) {
+
+            res.branches.forEach(branch => {
               if (branch && branch.branch_id !==  data[i].branch_id) {
+                console.log('zimu1',branch);
                 if(!this.dataSource.data.find(b=>b.branch_id==branch.branch_id)){
+                  console.log('zimu2',branch);
                   if(!arr.find(b=>b.branch_id==branch.branch_id)){
+
                     this.addRow(branch, false);
                     arr.push(branch);
                   }
@@ -283,9 +280,9 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
   }
 
   getBranches() {
-    this.master$.subscribe(res => {
-      if (res.branchs.length > 0) {
-        this.branchList = res.branchs;
+    this.bapi.get().subscribe(res => {
+      if (res.branches.length > 0) {
+        this.branchList = res.branches;
       }
     });
 
@@ -298,9 +295,13 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
       this.loading.next(true);
       this.api.update(this.stockFormGroup.value, stock.id).pipe(finalize(() => this.loading.next(false))).subscribe(
         res => {
-          this.detailsService.receiverData(res,true);
-          this.loadItemModelDetails();
-          this.toast.open('Stock updated Successfully!');
+          if(res){
+
+            this.detailsService.receiverData(res,true);
+            this.loadItemModelDetails();
+            this.toast.open('Stock updated Successfully!');
+            this.valueChange.next(true);
+          }
 
         },
         _error => {
@@ -333,6 +334,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
         this.detailsService.receiverData(res,true);
         this.loadItemModelDetails();
         this.toast.open('Stock created Successfully!');
+        this.valueChange.next(true);
       },
       _error => {
       console.error(_error);

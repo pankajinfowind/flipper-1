@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ApiCustomerTypeService } from './api/api.service';
 import { CustomerType } from './api/CustomerType';
 import { UrlAwarePaginator } from '../../common/pagination/url-aware-paginator.service';
@@ -18,7 +18,11 @@ import { finalize } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None,
 })
 export class CustomerTypeComponent implements  OnInit, OnDestroy {
-  @ViewChild(MatSort) matSort: MatSort;
+  @ViewChild(MatSort) matSort: MatSort
+  @Input() public enableSelectButton:boolean=false;
+  @Input() public selectedId:number=0;
+  @Output() valueChange = new EventEmitter<CustomerType>();
+
   public dataSource: PaginatedDataTableSource<CustomerType>;
   public loading = new BehaviorSubject(false);
   constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCustomerTypeService) {
@@ -80,5 +84,7 @@ ngOnDestroy() {
       });
   }
 
-
+  selectCustomerType(customertype:CustomerType){
+    return this.valueChange.emit(customertype);
+  }
 }

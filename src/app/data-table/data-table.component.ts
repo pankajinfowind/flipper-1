@@ -11,14 +11,34 @@ import {MatColumnDef, MatPaginator, MatTable} from '@angular/material';
 import {PaginatedDataTableSource} from './data/paginated-data-table-source';
 import { SharedModel, SharedModelService } from '../shared-model/shared-model-service';
 import { Observable } from 'rxjs/internal/Observable';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
     selector: 'data-table',
     templateUrl: './data-table.component.html',
     styleUrls: ['./data-table.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    animations: [
+      trigger("detailExpand", [
+        state(
+          "collapsed",
+          style({ height: "0px", minHeight: "0", display: "none" })
+        ),
+        state("expanded", style({ height: "*" })),
+        transition(
+          "expanded <=> collapsed",
+          animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
+        )
+      ])
+    ]
 })
 export class DataTableComponent<T> implements OnInit, AfterContentInit {
+
+  centered = false;
+  disabled = false;
+  unbounded = false;
+  radius: number=100;
+  color: string='#e8f0fe';
 
     /**
      * Instance of material table.
@@ -47,6 +67,7 @@ export class DataTableComponent<T> implements OnInit, AfterContentInit {
 
     @Input() public hiddenCheckBox: boolean=false;
     @Input() public isLoading: boolean=false;
+    @Input() public canExpandedDetail:boolean=false;
     /**
      * Columns that should be displayed in data table.
      */

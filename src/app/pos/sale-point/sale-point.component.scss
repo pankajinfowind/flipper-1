@@ -1,6 +1,24 @@
 @import "../../app_sass/variables";
 @import "../../app_sass/modal.scss";
 
+.isactive {
+  color: $site-primary-color-100;
+  background-color: $site-selected-item-bg-color;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  .text {
+    font-weight: 500!important;
+  }
+
+  &:not(.isactive):not(.drag-over):hover {
+    background-color: $site-bg-color-200;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
+}
 .mat-card {
   cursor: pointer;
 }
@@ -35,9 +53,10 @@ small {
     align-items: center;
     background: #00B5FA;
     -webkit-tap-highlight-color: rgba(255,255,255,0);
-    padding: .125rem 0;
+    padding: .15rem 0;
     width: 100%;
 }
+
 .generic-tile--MEDIUM, .generic-tile--SMALL {
     font-size: 1.1rem;
 }

@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders, APP_INITIALIZER, ErrorHandler } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SetupComponent } from './setup.component';
 import { TaxRatesComponent } from './tax-rates/tax-rates.component';
@@ -9,12 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UiModule } from '../common/core/ui/ui.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '../common/core/http/http.module';
-import { CurrentUser } from '../common/auth/current-user';
-import { HttpErrorHandler } from '../common/core/http/errors/http-error-handler.service';
-import { BackendHttpErrorHandler } from '../common/core/http/errors/backend-http-error-handler.service';
-import { ravenErrorHandlerFactory } from '../common/core/errors/raven-error-handler';
-import { BootstrapperSetUp, init_app } from './bootstrapper.service';
-import { SetUpModelService } from './setup-model.service';
 import { ApiTaxRateService } from './tax-rates/api/api.service';
 import { NoEntryFoundSetUpComponent } from './messages/no-entry-found/no-entry-found.component';
 import { ReasonComponent } from './reasons/reason.component';
@@ -33,10 +27,12 @@ import { CrupdateReasonModalComponent } from './reasons/crupdate-reason-modal/cr
 import { ReasonDataTableComponent } from './reasons/reason-data-table/reason-data-table.component';
 import { CrupdatePeriodModalComponent } from './expiration_setting/crupdate-period-modal/crupdate-period-modal.component';
 import { SelectTaxrateModalComponent } from './tax-rates/select-taxrate-modal/select-taxrate-modal.component';
+import { SelectCustomerTypeModalComponent } from './select-customer-type-modal/select-customer-type-modal.component';
+import { SelectReasonModalComponent } from './reasons/select-reason-modal/select-reason-modal.component';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent, CrupdatePeriodModalComponent, SelectTaxrateModalComponent],
-  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent,SelectTaxrateModalComponent],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent, CrupdatePeriodModalComponent, SelectTaxrateModalComponent, SelectCustomerTypeModalComponent, SelectReasonModalComponent],
+  exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent,SelectTaxrateModalComponent,SelectCustomerTypeModalComponent,SelectReasonModalComponent],
   imports: [
     CommonModule,
     SetupRoutingModule,
@@ -62,38 +58,11 @@ import { SelectTaxrateModalComponent } from './tax-rates/select-taxrate-modal/se
     CrupdateTaxRateModalComponent,
     CrupdateReasonModalComponent,
     CrupdatePeriodModalComponent,
-    SelectTaxrateModalComponent
+    SelectTaxrateModalComponent,
+    SelectCustomerTypeModalComponent,
+    SelectReasonModalComponent
   ]
 })
 export class SetupModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-        ngModule: SetupModule,
-        providers: [
-            CurrentUser,
-            BootstrapperSetUp,
-            {
-                provide: HttpErrorHandler,
-                useClass: BackendHttpErrorHandler,
-            },
-            {
-                provide: APP_INITIALIZER,
-                useFactory: init_app,
-                deps: [BootstrapperSetUp,CurrentUser],
-                multi: true,
-            },
-            {
-                provide: ErrorHandler,
-                useFactory: ravenErrorHandlerFactory,
-                deps: [
-                  SetUpModelService,
-                  ApiTaxRateService,
-                  ApiReasonService,
-                  ApiCustomerTypeService,
-                  ApiExpirationSettingService,
-                  CurrentUser],
-            },
-        ]
-    };
-}
+
 }

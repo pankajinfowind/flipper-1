@@ -13,6 +13,8 @@ import { Reason } from '../../../setup/reasons/api/reason';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast } from '../../../common/core/ui/toast.service';
 import { SharedModelService } from '../../../shared-model/shared-model-service';
+import { Modal } from '../../../common/core/ui/dialogs/modal.service';
+import { SelectReasonModalComponent } from '../../../setup/reasons/select-reason-modal/select-reason-modal.component';
 
 @Component({
   selector: 'app-update-stock-model',
@@ -31,7 +33,7 @@ export class UpdateStockModelComponent implements OnInit {
   current_stock:number=0;
   found_stock:boolean=false;
   // action:any;
-  constructor(public shared:SharedModelService,private toast: Toast,private setupModelService: SetUpModelService,private msterModelService:MasterModelService,private detailsService:DetailsService,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
+  constructor(public shared:SharedModelService,private toast: Toast,private setupModelService: SetUpModelService,private modal: Modal,private detailsService:DetailsService,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
     @Inject(MAT_DIALOG_DATA) public action: any) {
    }
    close(): void {
@@ -46,7 +48,6 @@ export class UpdateStockModelComponent implements OnInit {
         if(res){
         const numberPatern = '^[0-9.,]+$';
         this.stock=res.sender_data;
-        this.getReasons(this.action);
         this.stockForm = new FormGroup({
             qty:this.action && this.action==='add'?new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])):
             new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])),
@@ -59,20 +60,14 @@ export class UpdateStockModelComponent implements OnInit {
             in_stock_qty: new FormControl(0),
             total_qty: new FormControl(0),
             stock_id: new FormControl(res.sender_data && res.sender_data.stock_id),
-            reason_id:new FormControl('', [Validators.required]),
+            reason_id:new FormControl(null),
+            reason:new FormControl('', [Validators.required]),
           });
         }
        });
        this.checkEmpty(0);
     }
-    getReasons(action) {
-      this.setup$.subscribe(res => {
-        if (res.reasons.length > 0) {
-          this.reasons = res.reasons.filter(res=>res.reason_type=='stock_movements' && res.stock_movements_status==action);
-        }
-      });
 
-    }
     empty(){
       this.stockForm.get('batch_no').setValue('');
     }
@@ -131,6 +126,9 @@ arrayGetColumn(array,column){
   get reason_id() {
     return this.stockForm.get("reason_id");
   }
+  get reason() {
+    return this.stockForm.get("reason");
+  }
 
   updateStock(){
 
@@ -155,6 +153,21 @@ arrayGetColumn(array,column){
   calculateTQty(action){
     return action=='add'?this.stock.available_stock_qty+parseInt(this.qty.value):this.stock.available_stock_qty-parseInt(this.qty.value);
   }
-
+  showChooseReasonModal() {
+    this.modal.open(
+      SelectReasonModalComponent,
+        {enabled:true,
+          reason_id:this.stockForm.value.reason_id?this.stockForm.value.reason_id:null,
+          reason_type:'stock_movements',
+          url:'reasons/stock_movements',
+         reason_name:'Stock Movements Reason'
+      },
+        'select-reason-modal'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.stockForm.get('reason_id').setValue(data.id);
+        this.stockForm.get('reason').setValue(data.name);
+    });
+  }
 }
 

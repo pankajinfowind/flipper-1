@@ -1,0 +1,74 @@
+<mat-dialog-content class="many-inputs">
+<mat-accordion class="m-2 row" *ngIf="(entries$| async).length > 0">
+  <div class="col-3">
+    Operator
+  </div>
+  <div class="col-3">
+    Time
+  </div>
+  <div class="col-2 text-center">
+    Customer
+  </div>
+  <div class="col-2 text-center">
+    Items
+  </div>
+  <div class="col-2 text-center">
+    Total
+  </div>
+  <mat-expansion-panel class="w-100" *ngFor="let ordered of (entries$| async)" (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="col-3">
+        {{ordered.employee.first_name}} {{ordered.employee.last_name}}
+      </mat-panel-title>
+      <mat-panel-title class="col-3">
+        {{ordered.created_at | date:'fullDate'}}
+      </mat-panel-title>
+
+      <mat-panel-title class="col-2 text-center">
+          {{ordered.customer?ordered.customer.full_name:''}}
+      </mat-panel-title>
+
+      <mat-panel-title class="col-2 text-center">
+        {{total(ordered.order_items,'qty')}}
+      </mat-panel-title>
+      <mat-chip-list>
+          <mat-chip *ngIf="ordered.is_currently_processing==1" color="'primary'">Current ordered</mat-chip>
+          <mat-chip *ngIf="ordered.is_currently_processing==0">Recent ordered</mat-chip>
+        </mat-chip-list>
+      <mat-panel-title class="col-2 text-center">
+        <b>{{business.currency_code}}  {{total(ordered.order_items,'total_amount')}}</b>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="w-100 float-right m-2">
+    <button mat-raised-button color="primary"  *ngIf="status=='pending'" (click)="updateResumedOrder(ordered)" [disabled]="ordered.is_currently_processing==1?true:false" class="m-1">RESUME</button>
+    <button mat-raised-button color="accent" *ngIf="status=='held'" (click)="updateHeldOrder(ordered)" class="m-1">UNHOLD</button>
+    <button mat-raised-button color="warn" (click)="deleteOrdered(ordered)" class="m-1 text-white">DELETE</button></div>
+    <div *ngIf="ordered.order_items.length > 0">
+
+      <table class="w-100">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Each</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let ord_items of ordered.order_items">
+            <tr>
+              <th>{{ord_items.item}}</th>
+              <th>{{ord_items.qty}}</th>
+              <th>{{ord_items.each}}</th>
+              <th>{{business.currency_code}} {{ord_items.total_amount}}</th>
+            </tr>
+          </tbody>
+        </table>
+      </table>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>
+</mat-dialog-content>

@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../common/guards/auth-guard.service';
-import { ListComponent } from './list/list.component';
+import { CustomersComponent } from './customer/customer.component';
 
 const customerRoutes: Routes = [
     {
         path: '',
-        component: ListComponent, canActivate: [AuthGuard],
-
+        component: CustomersComponent, canActivate: [AuthGuard],
         children: [
             {
                 path: '',
-                redirectTo: 'lists',
+                redirectTo: 'cust-lists',
                 pathMatch: 'full',
             },
-            { path: 'lists', component: ListComponent },
+            { path: 'cust-lists', component: CustomersComponent },
       ]
 
     }

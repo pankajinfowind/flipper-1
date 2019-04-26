@@ -1,15 +1,13 @@
-import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Customer } from '../customer';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SetUpModelService } from '../../setup/setup-model.service';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { SetUp } from '../../setup/setup';
-import { Store } from '@ngrx/store';
-import * as fromStore from '../../store';
+import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { CustomerService } from '../customer.service';
 import { Toast } from '../../common/core/ui/toast.service';
+import { Modal } from '../../common/core/ui/dialogs/modal.service';
+import { SelectCustomerTypeModalComponent } from '../../setup/select-customer-type-modal/select-customer-type-modal.component';
 export interface CrupdatCustomerModalData {
   customer?: Customer;
 }
@@ -35,7 +33,7 @@ export class CrupdateCustomerModelComponent implements OnInit {
     private api:CustomerService,
     private dialogRef: MatDialogRef<CrupdateCustomerModelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CrupdatCustomerModalData,
-    private toast: Toast) {
+    private toast: Toast,private modal: Modal) {
     this.resetState();
   }
 
@@ -93,6 +91,7 @@ export class CrupdateCustomerModelComponent implements OnInit {
       gender: new FormControl(customer?customer.gender:"", [Validators.required]),
       status: new FormControl(customer?customer.status:"", [Validators.required]),
       customer_type_id: new FormControl(customer?customer.customer_type_id:null),
+      customer_type: new FormControl(customer?customer.customer_type?customer.customer_type.name:null:null),
       customer_no: new FormControl(customer?customer.customer_no:""),
       city: new FormControl(customer?customer.city:""),
       state: new FormControl(customer?customer.state:""),
@@ -143,6 +142,9 @@ export class CrupdateCustomerModelComponent implements OnInit {
   get customer_type_id(){
     return this.dataForm.get("customer_type_id");
   }
+  get customer_type(){
+    return this.dataForm.get("customer_type");
+  }
   get address(){
     return this.dataForm.get("address");
   }
@@ -167,5 +169,17 @@ export class CrupdateCustomerModelComponent implements OnInit {
         }, error => {
             this.handleErrors(error);
         });
+}
+showChooseCustomerTypeModal() {
+  this.modal.open(
+    SelectCustomerTypeModalComponent,
+      {enabled:true,
+        customer_type_id:this.dataForm.value.customer_type_id?this.dataForm.value.customer_type_id:null},
+      'select-customer-type-modal'
+  ).beforeClose().subscribe(data => {
+      if ( ! data) return;
+      this.dataForm.get('customer_type_id').setValue(data.id);
+      this.dataForm.get('customer_type').setValue(data.name+'('+data.discount_value+'%)');
+  });
 }
 }

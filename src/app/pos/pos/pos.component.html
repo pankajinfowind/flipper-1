@@ -1,11 +1,14 @@
 <div class="pos">
   <mat-sidenav-container>
-    <mat-sidenav [opened]="true" [mode]="(isMobile) ? 'over' : 'side'" position="end" class="right-sidebar">
+    <mat-sidenav [opened]="true" [mode]="isMobile ? 'over' : 'side'" position="end" class="right-sidebar">
       <app-cart-item class="app-cart-item"></app-cart-item>
     </mat-sidenav>
-    <mat-sidenav-content class="content-inner">
-      <loading-indicator [isVisible]="(pos$ | async).loading" class="overlay"></loading-indicator>
-      <router-outlet></router-outlet>
+    <mat-sidenav-content>
+    <pos-list-item-header></pos-list-item-header>
+      <div class="content-inner loading-overlay-container" posInfiniteScroll>
+           <router-outlet></router-outlet>
+      </div>
     </mat-sidenav-content>
+
   </mat-sidenav-container>
 </div>

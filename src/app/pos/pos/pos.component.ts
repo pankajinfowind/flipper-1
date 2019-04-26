@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Pos } from '../pos';
-import { PosModelService } from '../pos-model.service';
-
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 @Component({
   selector: "app-pos",
   templateUrl: "./pos.component.html",
-  styleUrls: ["./pos.component.scss"]
+  styleUrls: ["./pos.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PosComponent implements OnInit {
   public appearance;
@@ -15,14 +13,14 @@ export class PosComponent implements OnInit {
      */
   public leftColumnIsHidden = false;
   isMobile = false;
-  pos$: Observable<Pos>;
-  constructor(private posModelService: PosModelService) { }
+  @ViewChild('scrollContainer', { read: ElementRef }) scrollContainer: ElementRef;
+  constructor() {}
 
 
   ngOnInit() {
-    this.pos$ = this.posModelService.pos$;
+
   }
-  listenOnCustomer(e: any) {
-    // console.log(e);
-  }
+
+
+
 }

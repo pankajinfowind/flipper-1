@@ -10,20 +10,20 @@ import {
   animate
 } from "@angular/animations";
 import { OrderItems } from "../cart/order_items";
-import { OrderItemsModelService } from "../cart/order-item-model.service";
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 import { Customer } from "../../customers/customer";
-import { Toast } from '../../common/core/ui/toast.service';
 import { ApiPosService } from '../api/api.service';
 import { Orders } from '../../orders/orders';
-import { MasterModelService } from '../../admin/master/master-model.service';
-import { Master } from '../../admin/master/master';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { finalize, takeUntil } from 'rxjs/operators';
-import { OrderModelService } from '../../orders/order-model.service';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
 import { NgxService } from '../../common/ngx-db/ngx-service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { PosOrderState } from '../../store/states/PosOrderStates';
+import { Select, Store } from '@ngxs/store';
+import { CurrentOrder } from '../../store/actions/pos-Order.action';
+import { SelectCustomerModelComponent } from '../../customers/manage-customer/select-customer-model/select-customer-model.component';
+import { OpenPosCategory } from '../../store/actions/pos-categories.action';
+import { LocalStorage } from '../../common/core/services/local-storage.service';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',
@@ -35,9 +35,6 @@ export class CartDialog implements OnInit {
   cart_item: OrderItems;
   status: string;
   order_items$: Observable<OrderItems[]>;
-  master$: Observable<Master>;
-  insuranceForm: FormGroup;
-  pos$: Observable<Pos>;
 
   centered = true;
   disabled = false;
@@ -45,26 +42,16 @@ export class CartDialog implements OnInit {
   radius: number=50;
   color: string='green';
 default_qty:number=0;
-  constructor(private posModelService: PosModelService,
-    private msterModelService: MasterModelService,
-    private api: ApiPosService,
-    private orderItemModelService: OrderItemsModelService,
-    private toast: Toast,
+  constructor(
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
       const _data=this.data;
     this.default_qty=_data.data.qty as number;
     this.cart_item = _data.data as OrderItems;
     this.status = this.data.status;
-    this.order_items$ = this.orderItemModelService.order_items$;
-    this.master$ = this.msterModelService.master$;
-    this.pos$ = this.posModelService.pos$;
   }
   ngOnInit() {
 
-    this.insuranceForm = new FormGroup({
-      insurance_id: new FormControl(null, [Validators.required])
-    });
   }
 
   keysClicked(nums) {
@@ -118,13 +105,12 @@ default_qty:number=0;
         alert("Nothing Updated. Quantity didn't changed");
     }
     const params:OrderItems=this.cart_item;
-    this.cart_item
     const cart_data: OrderItems = {
       batch_no:params.batch_no,
       note: params.note,
       reason_id: params.reason_id,
       discount_value:params.customer_type_discount_value || 0.00,
-      tax_rate_id:params.tax_rate.id || null,
+      tax_rate_id:params.tax_rate?params.tax_rate.id:null || null,
       sale_price_id: params.sale_price_id || null,
       order_id: params.order_id || null,
       stock_id: params.stock_id || null,
@@ -136,45 +122,8 @@ default_qty:number=0;
 if(this.status=='Note'){
   cart_data.action="note";
 }
-
-//console.log(cart_data);
-    this.posModelService.update(this.posModelService.get().loading=true);
-
-    this.api.updateOrderItem(cart_data).pipe(finalize(() =>
-    this.posModelService.update(this.posModelService.get().loading=false))).subscribe(
-      res => {
-      const order_item=res['order_item'] as OrderItems || null ;
-
-        if(order_item){
-          const ordered_items:OrderItems[]=this.orderItemModelService.get();
-
-              if(ordered_items && ordered_items.length > 0){
-
-                    ordered_items.forEach((item, i)=> {
-
-                          if (item.id===order_item.id){
-                               ordered_items[i] = order_item;
-                          }else{
-                            if (!ordered_items.includes(order_item)) {
-                                    ordered_items.push(order_item);
-                            }
-                          }
-                    });
-
-              }else{
-                ordered_items.push(order_item);
-              }
-              let _ordered_items: OrderItems[] = this.removeDuplicate(ordered_items,'id');
-              this.orderItemModelService.update(_ordered_items,"all");
-
-            }
-
-      },
-      _error => {
-        console.error(_error);
-      }
-    );
-  }
+return this.dialogRef.close(cart_data);
+}
 
   removeDuplicate(ordered_items:OrderItems[]= [],id){
     let obj = {};
@@ -210,19 +159,27 @@ if(this.status=='Note'){
   ]
 })
 export class CartItemComponent implements OnInit, OnDestroy {
-
-  pos$: Observable<Pos>;
   order_items$: Observable<OrderItems[]>;
   data: OrderItems[] = [];
   all_total = { num_item: 0, total_tax: 0, total_amount: 0, total_due: 0, total_discount: 0 };
   dataSource = new MatTableDataSource<OrderItems>([]);
-  currently_ordered: Orders;
   business: Business;
+  @Select(PosOrderState.selectedOrders) current_order$: Observable<Orders>;
+  @Select(PosOrderState.loading) loading$: Observable<boolean>;
+  current_order:Orders=null;
+
+@Select(PosOrderState.customerOrder) customer$: Observable<Customer>;
+customer:Customer=null;
+  sub: any;
+  id: any;
+
   constructor(
+    private localStorage: LocalStorage,
+    private route:ActivatedRoute,
+    private store:Store,
+    private router: Router,
     public currentUser: CurrentUser,
-    private orderModelService: OrderModelService,
     private api: ApiPosService,
-    private orderItemModelService: OrderItemsModelService,
     private posModelService: PosModelService,
     public dialog: MatDialog,
     public db: NgxService //TODO: this line no unit test for it
@@ -230,22 +187,6 @@ export class CartItemComponent implements OnInit, OnDestroy {
   columnsToDisplay = ["item", "qty", "each", "total"];
   expandedElement: OrderItems | null;
 
-  getCartItem() {
-    if (this.order_items$) {
-      this.order_items$.subscribe(res => {
-        if (res) {
-          this.data = res;
-          this.dataSource.data = this.data;
-          this.expandedElement = this.data
-            ? this.data[this.data.length - 1]
-            : null;
-        }
-
-      });
-
-    }
-  }
-  customers: Customer=null;
   private unsubscribe$: Subject<void> = new Subject<void>();
   //TODO:use this strategy of unsubscribing to orders.components
   ngOnDestroy(): void {
@@ -254,25 +195,45 @@ export class CartItemComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      this.id = params['categoryId'];
+ });
+    this.store.dispatch(new CurrentOrder());
 
     if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
     }
-    this.pos$ = this.posModelService.pos$;
-    this.order_items$ = this.orderItemModelService.order_items$;
-    this.getCartItem();
-    if (!this.pos$) {
-      return;
-    } else {
-      this.pos$.subscribe(p => {
-        if (p) {
-          this.currently_ordered = p.currently_ordered;
-          this.customers=p.choose_customer;
-        }
-      });
+    if (this.current_order$) {
+      this.loadCartItem();
     }
-
+    this.customer$.subscribe(customer=>{
+      if(customer){
+        this.customer= customer as Customer;
+      }else{
+        this.customer=null;
+      }
+});
   }
+  loadCartItem(){
+    this.current_order$.subscribe(res => {
+      if (res) {
+        this.current_order=res?res:null;
+        this.data = res.order_items.length > 0?res.order_items:[];
+        this.expandedElement = this.data
+          ? this.data[this.data.length - 1]
+          : null;
+      }else{
+        this.data=[];
+        this.current_order=null;
+        this.total('qty');
+        this.total('total_amount_discount');
+        this.total('total_amount');
+        this.total('taxable_vat');
+      }
+
+    });
+  }
+
   updatePosLayout(panel = 'home') {
     this.posModelService.update({ panel_content: panel });
   }
@@ -287,24 +248,18 @@ export class CartItemComponent implements OnInit, OnDestroy {
   deleteOrdered() {
     let result = confirm("Are you sure,you want to delete this current transction?");
     if (result) {
-      this.api.deleteOrder(this.currently_ordered.id).subscribe(
+      this.api.deleteOrder(this.current_order.id).subscribe(
         res => {
           if (res.status == 'success') {
             if(res['deleted']){
-              const pos= this.posModelService.get();
-              const orders = pos.orders.filter(obj => {
-                    return obj.id !== this.currently_ordered.id;
-              });
-
-                pos.currently_ordered=null;
-                pos.choose_customer=null;
-                pos.customer_type_price=null;
-                pos.loading=false;
-                pos.panel_content='home';
-                pos.orders=orders;
-                this.posModelService.update(pos);
-                this.orderItemModelService.update([], 'all');
-                this.currently_ordered=null;
+              this.store.dispatch(new CurrentOrder());
+              this.current_order=null;
+              this.loadCartItem();
+              this.data=[];
+              this.total('qty');
+              this.total('total_amount_discount');
+              this.total('total_amount');
+              this.total('taxable_vat');
             }
           }
         },
@@ -315,43 +270,54 @@ export class CartItemComponent implements OnInit, OnDestroy {
     }
   }
   holdOrdered() {
-    this.db.addItem([]); //reset our customer object.
-    this.currently_ordered.status = "hold";
-    this.currently_ordered.is_currently_processing = '0';
-    //TODO: when order is unholded remember to get associated customer re-add him on our ngx db again
-    //TODO: do this on pay action
-    if (this.customers) {
-      this.currently_ordered.customer_id = this.customers.customer_id;
-    }
-    this.api.updateOrder(this.currently_ordered, this.currently_ordered.id).subscribe(
+    this.current_order.status = "hold";
+    this.current_order.is_currently_processing = 0;
+    this.updateOrder(this.current_order);
+    this.loadCartItem();
+    this.data=[];
+    this.total('qty');
+    this.total('total_amount_discount');
+    this.total('total_amount');
+    this.total('taxable_vat');
+    this.current_order=null;
+  }
+
+  updateOrder(params:Orders) {
+    this.api.updateOrder(params, params.id).subscribe(
       res => {
-        if (res.status == 'success') {
 
-          const pos=this.posModelService.get();
-
-            pos.currently_ordered=null;
-            pos.orders=res["orders"].length > 0 ? res['orders'] as Orders[]:[];
-            pos.choose_customer=null;
-            pos.customer_type_price=null;
-            pos.panel_content='home';
-          this.posModelService.update(pos);
-
-          this.orderItemModelService.update([], 'all');
-
-        }
+          this.store.dispatch(new CurrentOrder());
       },
       _error => {
         console.error(_error);
       }
     );
   }
-  update(element, status) {
-    if (status == 'delete') {
-      this.deleteOrderedItem(element.id);
-    }
-    return this.orderItemModelService.update(element, status);
+  createNewOrder(params) {
+    this.api.createOrder(params).subscribe(
+      res => {
+        if(res['order']){
+          this.store.dispatch(new CurrentOrder());
+         }
+      },
+      _error => {
+        console.error(_error);
+      }
+    );
+  }
 
-    //return this.expandedElement = element;
+
+  updateOrderItems(params) {
+    this.api.updateOrderItem(params).subscribe(
+      res => {
+          if(res['status']){
+             this.store.dispatch(new CurrentOrder());
+          }
+      },
+      _error => {
+        console.error(_error);
+      }
+    );
   }
 
   updateQty(params:OrderItems,action) {
@@ -359,9 +325,9 @@ export class CartItemComponent implements OnInit, OnDestroy {
       batch_no:params.batch_no,
       note: params.note,
       reason_id: params.reason_id,
-      discount_value:params.customer_type_discount_value || 0.00,
-      tax_rate_id:params.tax_rate.id || null,
-      sale_price_id: params.sale_price_id || null,
+      discount_value:params.customer_type_discount_value,
+      tax_rate_id:params.tax_rate?params.tax_rate.id:null,
+      sale_price_id: params.sale_price_id?params.sale_price_id:null,
       order_id: params.order_id || null,
       stock_id: params.stock_id || null,
       discount_reason_id: params.discount_reason_id || null,
@@ -369,65 +335,16 @@ export class CartItemComponent implements OnInit, OnDestroy {
       qty: 1,
       action:action
     };
-
-    this.posModelService.update(this.posModelService.get().loading=true);
-
-    this.api.updateOrderItem(cart_data).pipe(finalize(() =>
-    this.posModelService.update(this.posModelService.get().loading=false))).subscribe(
-      res => {
-      const order_item=res['order_item'] as OrderItems || null ;
-
-        if(order_item){
-          const ordered_items:OrderItems[]=this.orderItemModelService.get();
-
-              if(ordered_items && ordered_items.length > 0){
-
-                    ordered_items.forEach((item, i)=> {
-
-                          if (item.id===order_item.id){
-                               ordered_items[i] = order_item;
-                          }else{
-                            if (!ordered_items.includes(order_item)) {
-                                    ordered_items.push(order_item);
-                            }
-                          }
-                    });
-
-              }else{
-                ordered_items.push(order_item);
-              }
-              let _ordered_items: OrderItems[] = this.removeDuplicate(ordered_items,'id');
-              this.orderItemModelService.update(_ordered_items,"all");
-
-            }
-
-      },
-      _error => {
-        console.error(_error);
-      }
-    );
+    return this.updateOrderItems(cart_data);
   }
 
-  removeDuplicate(ordered_items:OrderItems[]= [],id){
-    let obj = {};
-    let _ordered_items: OrderItems[] = [];
-    _ordered_items = Object.keys(ordered_items.reduce((prev, next) => {
-      if (!obj[next[id]]) obj[next[id]] = next;
-      return obj;
-    }, obj)).map((i) => obj[i]);
-    return _ordered_items;
-  }
+
 
   deleteOrderedItem(element) {
     this.api.deleteOrderedItem(element.id).subscribe(res => {
-
         if(res['deleted']){
-            const data=this.dataSource.data;
-          const index: number = this.dataSource.data.indexOf(element);
-            if (index !== -1) {
-              data.splice(index, 1);
-            }
-            this.dataSource.data=data;
+          this.store.dispatch(new CurrentOrder());
+
         }
     });
   }
@@ -439,7 +356,10 @@ export class CartItemComponent implements OnInit, OnDestroy {
         data: { status: status, data: element }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(cart_data => {
+        if ( ! cart_data) return;
+        return this.updateOrderItems(cart_data);
+
       });
 
     }
@@ -473,6 +393,38 @@ convertToDecimal(total:number){
   }
   return str;
 }
+//till-pay
+goto(r){
+  return this.router.navigate(["/admin/pos/"+r]);
+}
+  chooseCustomer() {
+    this.dialog.open(SelectCustomerModelComponent, {
+      width: '1200px',
+      data: {enabled:true,customer_id:this.customer?this.customer.id:null}
+    }).afterClosed().subscribe(customer  => {
+      if ( ! customer) return;
+           const _customer=customer as Customer;
+              if(this.current_order){
+                const order:Orders=this.current_order;
+                order.customer_id=customer.id;
+                order.is_currently_processing=1;
+                order.status = "pending";
+                this.updateOrder(order);
+              }else{
+                this.createNewOrder({ status: 'pending',
+                branch_id: parseInt(localStorage.getItem('active_branch')),
+                user_id: this.currentUser.get('id'),
+                business_id: this.currentUser.get('business')[0].id,
+                customer_id:_customer?_customer.id:null,
+                cart_data: [] });
+              }
+              const customer_type_id=_customer.customer_type?_customer.customer_type.id:null;
+              this.localStorage.set('pos-customerTypeId', customer_type_id);
+              this.store.dispatch(new OpenPosCategory(this.localStorage.get('pos-categoryId'),null));
 
+
+
+    });
+  }
 
 }

@@ -7,17 +7,22 @@ import { MaterialModule } from '../../material/material.module';
 import { InfoStockModelComponent, AdvancedOptionDialog } from './info-stock-model/info-stock-model.component';
 import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { StockAdvancedOptionsComponent } from './stock-advanced-options/stock-advanced-options.component';
+import { SelectReasonModelComponent } from './update-stock-model/select-reason-model/select-reason-model.component';
+import { DataTableModule } from '../../data-table/data-table/data-table.module';
+import { UiModule } from '../../common/core/ui/ui.module';
 
 @NgModule({
-  declarations: [UpdateStockModelComponent, StockModelComponent, InfoStockModelComponent, StockAdvancedOptionsComponent,AdvancedOptionDialog],
+  declarations: [UpdateStockModelComponent, StockModelComponent, InfoStockModelComponent, StockAdvancedOptionsComponent,AdvancedOptionDialog, SelectReasonModelComponent],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UiModule,
+    DataTableModule
   ],
-  exports:[UpdateStockModelComponent, StockModelComponent,StockAdvancedOptionsComponent,AdvancedOptionDialog],
-  entryComponents:[AdvancedOptionDialog,UpdateStockModelComponent],
+  exports:[UpdateStockModelComponent, StockModelComponent,StockAdvancedOptionsComponent,AdvancedOptionDialog,SelectReasonModelComponent],
+  entryComponents:[AdvancedOptionDialog,UpdateStockModelComponent,SelectReasonModelComponent],
   providers: [
     {
       provide: MAT_STEPPER_GLOBAL_OPTIONS,

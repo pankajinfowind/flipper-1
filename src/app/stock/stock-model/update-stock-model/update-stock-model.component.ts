@@ -15,6 +15,7 @@ import { Toast } from '../../../common/core/ui/toast.service';
 import { SharedModelService } from '../../../shared-model/shared-model-service';
 import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { SelectReasonModalComponent } from '../../../setup/reasons/select-reason-modal/select-reason-modal.component';
+import { SelectReasonModelComponent } from './select-reason-model/select-reason-model.component';
 
 @Component({
   selector: 'app-update-stock-model',
@@ -155,7 +156,7 @@ arrayGetColumn(array,column){
   }
   showChooseReasonModal() {
     this.modal.open(
-      SelectReasonModalComponent,
+      SelectReasonModelComponent,
         {enabled:true,
           reason_id:this.stockForm.value.reason_id?this.stockForm.value.reason_id:null,
           reason_type:'stock_movements',

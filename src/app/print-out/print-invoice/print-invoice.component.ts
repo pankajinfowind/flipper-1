@@ -68,7 +68,7 @@ export class PrintInvoiceComponent implements OnInit {
     this.orderItems.forEach((element,i) => {
 
       html+=`<tr>
-      <td>${i}</td>
+      <td>${i+1}</td>
       <td>${element['item_code']}</td>
       <td>${element['item']}</td>
       <td>---</td>

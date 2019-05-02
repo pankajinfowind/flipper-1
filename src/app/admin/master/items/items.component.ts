@@ -47,7 +47,6 @@ ngOnDestroy() {
 }
   openDetails(title='New Items',action='new',obj){
     this.shared.update(obj);
-    console.log(obj);
      this.detailsService.update({title:title,sender_data:obj,module:'app-master',component:'app-items',action:action,detailsVisible:true});
   }
 viewUpCommingData(){

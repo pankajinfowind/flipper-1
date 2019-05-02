@@ -8,3 +8,7 @@
 .detail-row{
   height: 0%!important;
 }
+.mat-table {
+  overflow: auto;
+  max-height: 450px;
+}

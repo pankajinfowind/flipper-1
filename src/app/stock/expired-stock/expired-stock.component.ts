@@ -4,8 +4,11 @@ import { SetUp } from '../../setup/setup';
 import { SetUpModelService } from '../../setup/setup-model.service';
 import { ExpirationSetting } from '../../setup/expiration_setting/api/expiration_setting';
 import { ApiExpiredItemService } from './api/api.service';
-import { finalize } from 'rxjs/operators';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Select, Store } from '@ngxs/store';
+import { PosStockExpiredStates } from '../../store/states/PosStockExpiredStates';
+import { StockExpired } from './api/expired-stock';
+import { LocalStorage } from '../../common/core/services/local-storage.service';
+import { LoadStockExpiredEntries } from '../../store/actions/pos-Stock-Expired.action';
 
 @Component({
   selector: 'app-expired-stock',
@@ -15,91 +18,47 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 export class ExpiredStockComponent implements OnInit {
   panelOpenState = false;
-triggerState=false;
+  triggerState=false;
   setup$: Observable<SetUp>;
   expirationSetting:ExpirationSetting[];
   entries:any[]=[];
   public loading = new BehaviorSubject(false);
-  searchForm: FormGroup;
+  expandedId=null;
+@Select(PosStockExpiredStates.entries) entries$: Observable<StockExpired>;
+  all_url='';
+  branch_id=0;
 
-  constructor(private api:ApiExpiredItemService,private setupModelService:SetUpModelService) { }
+  constructor(private localStorage: LocalStorage,private store:Store,private api:ApiExpiredItemService) {
+    this.branch_id=parseInt(this.localStorage.get('active_branch'));
+    this.all_url="expired_item/all/"+parseInt(this.localStorage.get('active_branch'));
+   }
 
   ngOnInit() {
-    this.setup$ = this.setupModelService.setup$;
     this.viewExpiredByPeriod();
-    this.loadingSearchForm();
-   // this. viewAllExpired();
-  }
-  loadingSearchForm(){
-    this.searchForm = new FormGroup({
-      from: new FormControl(new Date(), [Validators.required]),
-      to:new FormControl(new Date(), [Validators.required])
-    });
-  }
-  get from() {
-    return this.searchForm.get("from");
-  }
-  get to() {
-    return this.searchForm.get("to");
-  }
-
-  viewExpiredByperiodical(element:ExpirationSetting){
-
-// TODO: when close expanded list do not request again from api.
-
-    if(element){
-    this.loading.next(true);
-      this.api.getByPeriodExpiredItems(parseInt(localStorage.getItem('active_branch')),element.period_value,element.period).pipe(finalize(() =>this.loading.next(false))).subscribe(
-        res => {
-            //this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
-        },
-        _error => {
-        console.error(_error);
-        }
-      );
-    }
-  }
-
-  viewAllExpired(){
-    this.loading.next(true);
-
-      this.api.getAllExpiredItems(parseInt(localStorage.getItem('active_branch'))).pipe(finalize(() =>this.loading.next(false))).subscribe(
-        res => {
-            //this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
-        },
-        _error => {
-        console.error(_error);
-        }
-      );
-
-  }
-
-  viewExpiredBySearch(){
-    this.loading.next(true);
-    if (this.searchForm.valid) {
-    this.api.getBySearchExpiredItems(parseInt(localStorage.getItem('active_branch')),this.searchForm.value.from,this.searchForm.value.to).pipe(finalize(() =>this.loading.next(false))).subscribe(
-      res => {
-         // this.modelStockService.update({ loading: false, expiredStock:res["expired_items"]['data'].length > 0?res["expired_items"]['data']:[]});
-      },
-      _error => {
-      console.error(_error);
-      }
-    );
-    }else{
-      this.loading.next(false);
-    }
   }
 
   viewExpiredByPeriod(){
-    this.entries=[];
     this.loading.next(true);
-        this.setup$.subscribe(res=>{
-          if(res.expirationSetting.length  > 0){
+        this.api.getExpPeriod().subscribe(res=>{
+          if(res.data){
             this.loading.next(false);
-            this.expirationSetting=res.expirationSetting;
+            this.expirationSetting=res.data;
           }else{
-            //this.canUserAddExpirationSettings();
+            this.expirationSetting=[];
           }
       });
+  }
+
+  expandingOpened(element){
+    const url="expired_item/period/"+this.branch_id+"/"+element.period_value+"/"+element.period;
+    this.localStorage.set('stockExpiredUrl',url);
+    //if(url!=this.localStorage.get('stockExpiredUrl')){
+        this.expandedId=element.id;
+        this.store.dispatch(new LoadStockExpiredEntries());
+   // }
+
+  }
+  expandingClosed(){
+  //  alert('closed');
   }
 }

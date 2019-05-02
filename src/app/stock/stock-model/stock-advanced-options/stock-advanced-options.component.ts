@@ -171,9 +171,7 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
 
             res.branches.forEach(branch => {
               if (branch && branch.branch_id !==  data[i].branch_id) {
-                console.log('zimu1',branch);
                 if(!this.dataSource.data.find(b=>b.branch_id==branch.branch_id)){
-                  console.log('zimu2',branch);
                   if(!arr.find(b=>b.branch_id==branch.branch_id)){
 
                     this.addRow(branch, false);

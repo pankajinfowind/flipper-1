@@ -81,7 +81,7 @@
 
                 <mat-step>
                   <ng-template matStepLabel>Customer Specific Prices</ng-template>
-                  <app-change-customer-type-prices></app-change-customer-type-prices>
+                  <app-change-customer-type-prices (valueChange)="checkChanges($event)"></app-change-customer-type-prices>
                 </mat-step>
               </mat-vertical-stepper>
 

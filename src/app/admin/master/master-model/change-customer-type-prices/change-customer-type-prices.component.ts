@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Master } from '../../master';
 import { SetUp } from '../../../../setup/setup';
@@ -68,6 +68,7 @@ export class ChangeCustomerTypePricesComponent implements OnInit,OnChanges {
    'action'
   ];
   currency_code:string='';
+  @Output() valueChange = new EventEmitter<boolean>();
   constructor(protected settings: Settings,private detailsService: DetailsService,private toast: Toast,private capi:ApiCustomerTypeService,public currentUser: CurrentUser,private _fb: FormBuilder,private setupModelService: SetUpModelService,private msterModelService: MasterModelService) { }
   rows: FormArray = this._fb.array([]);
   ngOnInit() {
@@ -130,11 +131,11 @@ export class ChangeCustomerTypePricesComponent implements OnInit,OnChanges {
 
     if(data.length == 0){
 
-          this.setup$.subscribe(res => {
-            if (res.customertypes.length > 0) {
-                  res.customertypes.filter(c=>c.is_active==1).forEach(ctype => {
-                    if(!this.dataSource.data.find(c=>c.customer_type_id==ctype.customer_type_id)){
-                      if(!arr.find(c=>c.customer_type_id==ctype.customer_type_id)){
+          this.capi.get().subscribe(res => {
+            if (res.data.length > 0) {
+                  res.data.filter(c=>c.is_active==1).forEach(ctype => {
+                    if(!this.dataSource.data.find(c=>c.customer_type_id==ctype.id)){
+                      if(!arr.find(c=>c.id==ctype.id)){
                         this.addRow(ctype, false);
                         arr.push(ctype);
                       }
@@ -148,18 +149,17 @@ export class ChangeCustomerTypePricesComponent implements OnInit,OnChanges {
 
     }else{
       for (var i = 0; i <  data.length; i++) {
-        this.setup$.subscribe(res => {
-          if (res.customertypes.length > 0) {
-            res.customertypes.filter(c=>c.is_active==1).forEach(ctype => {
-              if (ctype && ctype.customer_type_id !==  data[i].customer_type_id) {
-                if(!this.dataSource.data.find(c=>c.customer_type_id==ctype.customer_type_id)){
-                  if(!arr.find(c=>c.customer_type_id==ctype.customer_type_id)){
+        this.capi.get().subscribe(res => {
+          if (res.data.length > 0) {
+            res.data.filter(c=>c.is_active==1).forEach(ctype => {
+                if(!this.dataSource.data.find(c=>c.customer_type_id==ctype.id)){
+                  if(!arr.find(c=>c.id==ctype.id)){
                     this.addRow(ctype, false);
                     arr.push(ctype);
                   }
 
                 }
-              }
+
             });
 
           }
@@ -189,11 +189,8 @@ export class ChangeCustomerTypePricesComponent implements OnInit,OnChanges {
       this.loading.next(true);
       this.capi.detachItemCustomerTypePrice(element.id).pipe(finalize(() => this.loading.next(false))).subscribe(
         res => {
-          if (res.status == 'success') {
-            this.toast.open('Deleted Successfully!');
-            this.updateItemModelService(res["items"]["data"]);
-            this.loadItemModelDetails();
-          }
+          this.detailsService.receiverData(res,true);
+          this.valueChange.next(true);
         },
         _error => {
           console.error(_error);
@@ -216,13 +213,9 @@ export class ChangeCustomerTypePricesComponent implements OnInit,OnChanges {
         this.loading.next(true);
         this.capi.updateItemPricesByCustomerType(data,element.id).pipe(finalize(() => this.loading.next(false))).subscribe(
             res => {
-              // if (res.status == 'success') {
-              //     this.toast.open('Customer Specific Prices updated Successfully!');
-              //     const el=this.dataSource.data.find(c=>c.id==element.id);
-              //     el.sale_price_including_tax=this.customertypeFormGroup.value.sale_price_including_tax;
-              //     this.updateItemModelService(res["items"]["data"]);
-              //     this.loadItemModelDetails();
-              // }
+                  this.toast.open('Customer Specific Prices updated Successfully!');
+                  this.detailsService.receiverData(res,true);
+                  this.valueChange.next(true);
             },
             _error => {
               console.error(_error);
@@ -250,11 +243,10 @@ if (this.newCustomerTypeForm.valid) {
       const data= this.uniqueObjectInArray(form_data);
       this.capi.createItemPricesByCustomerType({data:data}).pipe(finalize(() => this.loading.next(false))).subscribe(
           res => {
-            if (res.status == 'success') {
+
                 this.toast.open('Customer Specific Prices created Successfully!');
-                this.updateItemModelService(res["items"]["data"]);
-                this.loadItemModelDetails();
-            }
+                this.detailsService.receiverData(res,true);
+                this.valueChange.next(true);
           },
           _error => {
             console.error(_error);

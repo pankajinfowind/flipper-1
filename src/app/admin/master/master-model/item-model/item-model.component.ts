@@ -239,7 +239,7 @@ get updatesale():boolean{
     }
     checkChanges($event) {
       if($event){
-       // return this.close();
+         return this.close();
       }
 
     }
@@ -433,7 +433,7 @@ constructor(private modal: Modal,public shared:SharedModelService,public dialog:
           this.toast.open('Item updated Successfully!');
           this.loadingFormGroup();
           this.detailsService.receiverData(res,true);
-          this.shared.remove();
+         // this.shared.remove();
       },
       _error => {
         console.error(_error);

@@ -6,8 +6,9 @@ import { BackendResponse } from '../../../common/core/types/backend-response';
 import { CustomerType } from './CustomerType';
 import { CustomerTypePrices } from './CustomerTypePrices';
 import { Observable } from 'rxjs';
-export interface CUSTOMER_TYPEEntriesPaginationResponse extends PaginationResponse<CustomerType> {
-  customer_type?: CustomerType;
+
+export interface CustomerTypeEntriesPaginationResponse extends PaginationResponse<CustomerType> {
+  customer_types?: CustomerType[];
 }
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,7 @@ export class ApiCustomerTypeService {
   public create(params: CustomerType): Observable<CustomerType> {
         return this.http.post(API_ROUTES_CUSTOMER_TYPE.CUSTOMER_TYPE, params);
     }
-  public get(): BackendResponse<{ customer_type: CustomerType[] }> {
+  public get(): Observable<CustomerTypeEntriesPaginationResponse> {
       return this.http.get(API_ROUTES_CUSTOMER_TYPE.CUSTOMER_TYPE);
   }
 

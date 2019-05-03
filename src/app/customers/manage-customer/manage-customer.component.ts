@@ -69,7 +69,8 @@ export class CrupdateCustomerModelComponent implements OnInit {
       country: this.dataForm.value.country,
       phone: this.dataForm.value.phone,
       email: this.dataForm.value.email,
-      address: this.dataForm.value.address
+      address: this.dataForm.value.address,
+      dob:this.dataForm.value.dob
     }
     return payload;
 }
@@ -98,7 +99,8 @@ export class CrupdateCustomerModelComponent implements OnInit {
       country: new FormControl(customer?customer.country:""),
       phone: new FormControl(customer?customer.phone:""),
       email: new FormControl(customer?customer.email:""),
-      address: new FormControl(customer?customer.address:"")
+      address: new FormControl(customer?customer.address:""),
+      dob:new FormControl(customer?customer.dob:""),
     });
   }
 
@@ -147,6 +149,9 @@ export class CrupdateCustomerModelComponent implements OnInit {
   }
   get address(){
     return this.dataForm.get("address");
+  }
+  get dob(){
+    return this.dataForm.get("dob");
   }
 
   public confirm() {

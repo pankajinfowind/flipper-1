@@ -40,9 +40,15 @@
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Phone</mat-header-cell>
     <mat-cell *matCellDef="let customer"> {{customer.phone}} </mat-cell>
 </ng-container>
+
 <ng-container matColumnDef="address">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Address</mat-header-cell>
     <mat-cell *matCellDef="let customer"> {{customer.address}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="dob">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>D.O.B</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.dob | date}} </mat-cell>
 </ng-container>
 
 <ng-container matColumnDef="selected" *ngIf="enableSelectButton">

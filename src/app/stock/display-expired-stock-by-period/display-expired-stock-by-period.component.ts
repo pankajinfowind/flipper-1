@@ -33,7 +33,7 @@ public loading = new BehaviorSubject(false);
 @Select(PosStockExpiredStates.entriesEmpty) entriesEmpty$: Observable<boolean>;
 @Select(PosStockExpiredStates.entries) entries$: Observable<StockExpired>;
 
-displayedColumns = ['sku', 'item', 'in_qty', 'out_qty','total_qty','expired_date','manufacture_date'];
+displayedColumns = ['batch_no','sku','item', 'in_qty', 'out_qty','total_qty','expired_date','manufacture_date'];
 
 selection = new SelectionModel<StockExpired>(true, []);
 constructor(private api:ApiStockService,private modal: Modal) {}

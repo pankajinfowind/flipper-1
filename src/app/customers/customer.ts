@@ -36,6 +36,7 @@ export interface Customer {
   business_id?:number;
   branch_id?:number;
   customer_type_id?:number;
+  dob?:Date;
   customer_created?: {
     cstomer_no: string;
     full_name: string;

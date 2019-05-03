@@ -33,7 +33,7 @@ searchForm: FormGroup;
 @Select(PosStockExpiredStates.meta) meta$: Observable<any>;
 @Select(PosStockExpiredStates.entriesEmpty) entriesEmpty$: Observable<boolean>;
 
-displayedColumns = ['sku', 'item', 'in_qty', 'out_qty','total_qty','expired_date','manufacture_date'];
+displayedColumns = ['batch_no','sku', 'item', 'in_qty', 'out_qty','total_qty','expired_date','manufacture_date'];
 
 selection = new SelectionModel<StockExpired>(true, []);
 constructor(private localStorage: LocalStorage,private store:Store,private api:ApiStockService,private modal: Modal) {}

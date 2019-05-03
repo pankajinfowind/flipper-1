@@ -122,13 +122,13 @@ export class PrintInvoiceComponent implements OnInit {
                     N° AFFILIATION:${this.invoice?this.invoice.customer?this.invoice.customer.customer_no:'.......':'.......'}
                   </th>
                   <th class="th-border">
-                    NOM ET PRENOM ${this.invoice?this.invoice.customer?this.invoice.customer.full_name:'.......':'.......'}
+                    NOM ET PRENOM: ${this.invoice?this.invoice.customer?this.invoice.customer.full_name:'.......':'.......'}
                   </th>
                   <th class="th-border">
-                    SEX ${this.invoice?this.invoice.customer?this.invoice.customer.gender:'.......':'.......'}
+                    SEX: ${this.invoice?this.invoice.customer?this.invoice.customer.gender:'.......':'.......'}
                   </th>
                   <th class="th-border">
-                    AGE .......
+                    AGE: ${this.invoice?this.invoice.customer?this.invoice.customer.dob?this.getAge(this.invoice.customer.dob):'.......':'.......':'.......'}
                   </th>
                 </tr>
 
@@ -232,7 +232,7 @@ export class PrintInvoiceComponent implements OnInit {
           </div>
         </div>
         <br />
-        <div style="text-align:center;margin-top:30%">
+        <div style="text-align:center;margin-top:22%">
           <b>&copy; Flipper Ltd</b>
         </div>
       </div>
@@ -243,4 +243,14 @@ export class PrintInvoiceComponent implements OnInit {
     return  document.getElementById("print-section").innerHTML=template;
 };
 
+  getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+  }
 }

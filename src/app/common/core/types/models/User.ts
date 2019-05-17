@@ -86,6 +86,9 @@ export class User {
     available_space?: number|null;
     settings?:Settings
     current:any;
+    currencies?:any[];
+    business_types?:any[];
+    business_categories?:any[]
     constructor(params: Object = {}) {
         for (let name in params) {
             this[name] = params[name];

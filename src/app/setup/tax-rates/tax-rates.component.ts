@@ -9,6 +9,7 @@ import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confir
 import { CrupdateTaxRateModalComponent } from './crupdate-tax-rate-modal/crupdate-tax-rate-modal.component';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { GlobalVariables } from '../../common/core/global-variables';
 
 @Component({
   selector: 'app-tax-rate',
@@ -25,11 +26,13 @@ export class TaxRatesComponent implements  OnInit, OnDestroy {
 
   @Output() valueChange = new EventEmitter<TAXRATE>();
   public loading = new BehaviorSubject(false);
-  constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiTaxRateService) { }
+  constructor(public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiTaxRateService) { }
 
 
   ngOnInit() {
-
+    if(!this.enableSelectButton){
+    this.v.webTitle('Manage Tax Rates');
+    }
     this.dataSource = new PaginatedDataTableSource<TAXRATE>({
         uri: 'taxrate',
         dataPaginator: this.paginator,

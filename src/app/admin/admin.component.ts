@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { Settings } from '../common/core/config/settings.service';
 import { Router } from '@angular/router';
+import { LocalStorage } from '../common/core/services/local-storage.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,37 +9,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AdminComponent implements OnInit,AfterViewInit {
+export class AdminComponent implements OnInit {
 public appearance;
 activeLinkIndex = -1;
-  /**
-     * Controls left column visibility.
-     */
+  
     public leftColumnIsHidden = false;
-    private rlaSafe: boolean = false;
     isOpened:boolean=true;
-    active_menu='dashboard';
-  constructor(private router: Router,public setting:Settings,private changeDetectionRef: ChangeDetectorRef) {
-      //this.router.navigate(["/admin/dashboard/analytics"]);
+
+  constructor(private localStorage: LocalStorage,private router: Router,public setting:Settings,private changeDetectionRef: ChangeDetectorRef) {
+    
   }
 
 
   ngOnInit() {
     this.appearance=this.setting.getAll().appearance;
-    this.active_menu=localStorage.getItem('active_menu');
+    console.log(this.localStorage.get('active_menu'));
   }
   public toggleLeftSidebar() {
     this.isOpened = !this.isOpened;
 }
-ngAfterViewInit() {
-  this.rlaSafe = true;
-  this.active_menu=localStorage.getItem('active_menu');
-  this.changeDetectionRef.detectChanges();
-}
+
   navigation(path){
-    localStorage.setItem('active_menu',path);
-    this.active_menu=path;
+    this.localStorage.set('active_menu', path);
     this.router.navigate(["/admin/"+path]);
-    
+
   }
 }

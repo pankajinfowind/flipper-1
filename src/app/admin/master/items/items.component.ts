@@ -17,6 +17,7 @@ import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/con
 import { SharedModelService } from '../../../shared-model/shared-model-service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { GlobalVariables } from '../../../common/core/global-variables';
 
 @Component({
   selector: "app-items",
@@ -30,10 +31,11 @@ export class ItemsComponent implements  OnInit,OnDestroy {
 
   public dataSource: PaginatedDataTableSource<Item>;
   public loading = new BehaviorSubject(false);
-  constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private router: Router,private detailsService:DetailsService,private api: ApiItemService) {
+  constructor(public v: GlobalVariables,public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private router: Router,private detailsService:DetailsService,private api: ApiItemService) {
   }
 
   ngOnInit() {
+    this.v.webTitle('Manage Products');
     this.dataSource = new PaginatedDataTableSource<Item>({
       uri: 'item',
       dataPaginator: this.paginator,

@@ -19,14 +19,14 @@
       <mat-cell *matCellDef="let stock"> {{stock.item.sku}} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="barcode">
+  <!-- <ng-container matColumnDef="barcode">
     <mat-header-cell *matHeaderCellDef trans>Barcode</mat-header-cell>
     <mat-cell *matCellDef="let stock"> {{stock.item.barcode}} </mat-cell>
-</ng-container>
+</ng-container> -->
 
 <ng-container matColumnDef="item">
   <mat-header-cell *matHeaderCellDef trans>Stock</mat-header-cell>
-  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.item.item}}</span> </mat-cell>
+  <mat-cell *matCellDef="let stock"> <span class="ellipsis" [matTooltip]="stock.item.item">{{stock.item.item}}</span> </mat-cell>
 </ng-container>
 
 <ng-container matColumnDef="category">

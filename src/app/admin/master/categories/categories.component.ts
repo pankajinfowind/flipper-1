@@ -10,6 +10,7 @@ import { CrupdateCategoryModalComponent } from './crupdate-category-modal/crupda
 import { SharedModelService } from '../../../shared-model/shared-model-service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { GlobalVariables } from '../../../common/core/global-variables';
 
 @Component({
   selector: 'app-categories',
@@ -26,9 +27,12 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   @Output() valueChange = new EventEmitter<Category>();
   public dataSource: PaginatedDataTableSource<Category>;
   public loading = new BehaviorSubject(false);
-  constructor(public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCategoryService) { }
+  constructor(public v: GlobalVariables,public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCategoryService) { }
 
   ngOnInit() {
+    if(!this.enableSelectButton){
+      this.v.webTitle('Manage Categories');
+    }
     this.dataSource = new PaginatedDataTableSource<Category>({
       uri: 'category',
       dataPaginator: this.paginator,

@@ -11,6 +11,7 @@ import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confir
 import{SharedModelService} from "../../shared-model/shared-model-service";
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { GlobalVariables } from '../../common/core/global-variables';
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
@@ -23,7 +24,9 @@ export class StockTableComponent implements OnInit,OnDestroy {
   public dataSource: PaginatedDataTableSource<Stock>;
   public loading = new BehaviorSubject(false);
   cart: EventEmitter<Stock> = new EventEmitter();
-  constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {}
+  constructor(public v: GlobalVariables,public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {
+
+  }
   upc_tool_tips="The Universal Product Code is a unique and standard identifier typically shown under the bar code symbol on retail packaging in the United States.";
   sku_tool_tips="The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC";
 
@@ -32,6 +35,7 @@ export class StockTableComponent implements OnInit,OnDestroy {
   warn = 'warn';accent='accent';primary='primary';mode = 'determinate';
 
   ngOnInit() {
+    this.v.webTitle(this.title);
       this.dataSource = new PaginatedDataTableSource<Stock>({
         uri: this.url,
         dataPaginator: this.paginator,

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { GlobalVariables } from '../../common/core/global-variables';
 @Component({
   selector: "app-pos",
   templateUrl: "./pos.component.html",
@@ -14,7 +15,9 @@ export class PosComponent implements OnInit {
   public leftColumnIsHidden = false;
   isMobile = false;
   @ViewChild('scrollContainer', { read: ElementRef }) scrollContainer: ElementRef;
-  constructor() {}
+  constructor(public v: GlobalVariables,) {
+    this.v.webTitle("Point Of Sales");
+  }
 
 
   ngOnInit() {

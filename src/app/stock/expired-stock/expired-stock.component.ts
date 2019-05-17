@@ -9,6 +9,7 @@ import { PosStockExpiredStates } from '../../store/states/PosStockExpiredStates'
 import { StockExpired } from './api/expired-stock';
 import { LocalStorage } from '../../common/core/services/local-storage.service';
 import { LoadStockExpiredEntries } from '../../store/actions/pos-Stock-Expired.action';
+import { GlobalVariables } from '../../common/core/global-variables';
 
 @Component({
   selector: 'app-expired-stock',
@@ -28,12 +29,13 @@ export class ExpiredStockComponent implements OnInit {
   all_url='';
   branch_id=0;
 
-  constructor(private localStorage: LocalStorage,private store:Store,private api:ApiExpiredItemService) {
+  constructor(public v: GlobalVariables,private localStorage: LocalStorage,private store:Store,private api:ApiExpiredItemService) {
     this.branch_id=parseInt(this.localStorage.get('active_branch'));
     this.all_url="expired_item/all/"+parseInt(this.localStorage.get('active_branch'));
    }
 
   ngOnInit() {
+    this.v.webTitle('Stock Expired');
     this.viewExpiredByPeriod();
   }
 

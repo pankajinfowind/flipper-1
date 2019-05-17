@@ -9,6 +9,7 @@ import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { finalize } from 'rxjs/operators';
 import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import { CrupdatePeriodModalComponent } from './crupdate-period-modal/crupdate-period-modal.component';
+import { GlobalVariables } from '../../common/core/global-variables';
 
 @Component({
   selector: 'app-expiration_setting',
@@ -22,9 +23,10 @@ export class ExpirationSettingComponent implements OnInit, OnDestroy {
 
   public dataSource: PaginatedDataTableSource<ExpirationSetting>;
   public loading = new BehaviorSubject(false);
-  constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiExpirationSettingService) { }
+  constructor(public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiExpirationSettingService) { }
 
   ngOnInit() {
+    this.v.webTitle('Manage Periods');
     this.dataSource = new PaginatedDataTableSource<ExpirationSetting>({
       uri: 'expiration_setting',
       dataPaginator: this.paginator,

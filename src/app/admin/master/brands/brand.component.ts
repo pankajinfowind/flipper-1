@@ -10,6 +10,7 @@ import { CrupdateBrandModalComponent } from './crupdate-brand-modal/crupdate-bra
 import { SharedModelService } from '../../../shared-model/shared-model-service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { GlobalVariables } from '../../../common/core/global-variables';
 
 @Component({
   selector: 'app-brand',
@@ -26,9 +27,13 @@ export class BrandComponent implements   OnInit,OnDestroy {
   @Output() valueChange = new EventEmitter<Brand>();
   public dataSource: PaginatedDataTableSource<Brand>;
   public loading = new BehaviorSubject(false);
-  constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBrandService) { }
+  constructor(public v: GlobalVariables,public shared:SharedModelService,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBrandService) { }
 
   ngOnInit() {
+    if(!this.enableSelectButton){
+      this.v.webTitle('Manage Brands');
+    }
+
     this.dataSource = new PaginatedDataTableSource<Brand>({
       uri: 'brand',
       dataPaginator: this.paginator,

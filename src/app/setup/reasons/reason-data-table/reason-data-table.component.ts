@@ -9,6 +9,7 @@ import { Reason } from '../api/reason';
 import { CrupdateReasonModalComponent } from '../crupdate-reason-modal/crupdate-reason-modal.component';
 import { finalize } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { GlobalVariables } from '../../../common/core/global-variables';
 
 @Component({
   selector: 'reason-data-table',
@@ -29,11 +30,13 @@ export class ReasonDataTableComponent  implements OnInit, OnDestroy {
 
   @Output() valueChange = new EventEmitter<Reason>();
 
-   constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiReasonService) {
+   constructor(public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiReasonService) {
 
   }
    ngOnInit() {
-
+    if(!this.enableSelectButton){
+    this.v.webTitle('Manage Reasons');
+    }
     this.dataSource = new PaginatedDataTableSource<Reason>({
         uri: this.url,
         dataPaginator: this.paginator,

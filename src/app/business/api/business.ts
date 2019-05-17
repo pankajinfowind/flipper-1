@@ -18,6 +18,15 @@ export class Business {
   user_logged_role?: any;
   branchies?: any;
   users_belongs?: any;
+  category?:string;
+  phone?:string;
+  email?:string;
+  city?:string;
+  country?:string;
+  street1?:string;
+  street2?:string;
+  street3?:string;
+  logo?:string;
 
     constructor(params: Object = {}) {
       for (let name in params) {

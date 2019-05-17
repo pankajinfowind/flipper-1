@@ -11,6 +11,7 @@ import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confir
 import{SharedModelService} from "../../shared-model/shared-model-service";
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { GlobalVariables } from '../../common/core/global-variables';
 @Component({
   selector: 'app-stock-movement',
   templateUrl: './stock-movement.component.html',
@@ -22,10 +23,11 @@ export class StockMovementComponent implements OnInit,OnDestroy {
   @ViewChild(MatSort) matSort: MatSort;
   public dataSource: PaginatedDataTableSource<StockMovements>;
   public loading = new BehaviorSubject(false);
-  constructor(public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {}
+  constructor(public v: GlobalVariables,public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {}
 
 
   ngOnInit() {
+    this.v.webTitle('Stock Movements');
       this.dataSource = new PaginatedDataTableSource<StockMovements>({
         uri: "stock-movement/"+parseInt(localStorage.getItem('active_branch')),
         dataPaginator: this.paginator,

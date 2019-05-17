@@ -177,6 +177,9 @@ loadCustomer(){
         this.data=[];
       }
     }
+
+    }
+    PrintInvoice(){
       this.invoice$.subscribe(invoice=>{
         if(invoice){
           this.canPrintOut=true;
@@ -184,7 +187,9 @@ loadCustomer(){
       });
     }
 
-
+    checkChanges(event:boolean){
+        this.canPrintOut=event;
+    }
 
 
 

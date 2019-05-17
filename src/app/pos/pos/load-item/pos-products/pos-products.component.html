@@ -32,12 +32,12 @@
                     <small class="row row-divided ellipsis">
                       <div class="text-left col-6 column-one">
                         <span class="ellipsis">
-                        Level:{{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %
+                            {{stock.available_stock_qty}} Qty
                         </span>
                       </div>
                       <div class="vertical-divider"></div>
                       <div class="text-right col-6 column-two">
-                        <span class="ellipsis">{{stock.available_stock_qty}} Qty</span>
+                        <span class="ellipsis"> {{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %</span>
                       </div>
                     </small>
 

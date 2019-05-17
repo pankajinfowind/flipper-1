@@ -9,6 +9,8 @@ import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { finalize } from 'rxjs/operators';
 import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import { CrupdateCustomerModelComponent } from '../manage-customer/manage-customer.component';
+import { GlobalVariables } from '../../common/core/global-variables';
+import { LocalStorage } from '../../common/core/services/local-storage.service';
 @Component({
   selector: 'app-customers',
   templateUrl: './customer.component.html',
@@ -29,9 +31,13 @@ export class CustomersComponent implements OnInit {
 
   public dataSource: PaginatedDataTableSource<Customer>;
   public loading$ = new BehaviorSubject(false);
-  constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:CustomerService) { }
+  constructor(private localStorage: LocalStorage,public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:CustomerService) { }
 
   ngOnInit() {
+    if(!this.enableSelectButton){
+      this.v.webTitle('Manage Customers');
+      this.localStorage.set('sales-path', 'customers');
+    }
     this.dataSource = new PaginatedDataTableSource<Customer>({
       uri: 'customer',
       dataPaginator: this.paginator,

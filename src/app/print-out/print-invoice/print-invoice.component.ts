@@ -1,18 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Invoice } from '../../invoices/invoice';
 import { OrderItems } from '../../pos/cart/order_items';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-print-invoice',
-  templateUrl: './print-invoice.component.html',
-  styleUrls: ['./print-invoice.component.scss']
+  template: `<div id="print-section" style="height:auto;overflow-y: auto; display:none"></div>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrintInvoiceComponent implements OnInit {
   @Input() public canPrintOut: boolean=false;
-  @Output() valueChange = new EventEmitter<any>();
+  @Output() valueChange = new EventEmitter<boolean>(false);
   @Input() public invoice:Invoice;
   orderItems: OrderItems[] = [];
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
 
    }
 
@@ -23,8 +24,9 @@ export class PrintInvoiceComponent implements OnInit {
     if(this.canPrintOut){
       this.print();
       this.canPrintOut=false;
+      this.valueChange.next(this.canPrintOut);
     }
-
+    this.cdr.markForCheck();
   }
 
   total(prop) {
@@ -55,10 +57,11 @@ export class PrintInvoiceComponent implements OnInit {
     frameDoc.document.write(contents);
     frameDoc.document.write('</body></html>');
     frameDoc.document.close();
-    setTimeout(function () {
+    setTimeout( () =>{
         window.frames["frame3"].focus();
         window.frames["frame3"].print();
         document.body.removeChild(frame1);
+        this.cdr.detectChanges();
     }, 500);
     return false;
   }

@@ -9,6 +9,8 @@ import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confir
 import { BehaviorSubject } from 'rxjs';
 import { Invoice } from '../invoice';
 import { InvoiceService } from '../invoice.service';
+import { GlobalVariables } from '../../common/core/global-variables';
+import { LocalStorage } from '../../common/core/services/local-storage.service';
 
 @Component({
   selector: 'app-invoice',
@@ -22,9 +24,13 @@ export class InvoiceComponent implements OnInit, OnDestroy{
 
   public dataSource: PaginatedDataTableSource<Invoice>;
   public loading = new BehaviorSubject(false);
-  constructor(public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:InvoiceService) { }
+  constructor(public v: GlobalVariables,public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:InvoiceService,private localStorage: LocalStorage) {
+    this.localStorage.set('sales-path', 'invoices');
+  }
 
       ngOnInit() {
+          this.v.webTitle('Manage Invoices');
+
         this.dataSource = new PaginatedDataTableSource<Invoice>({
           uri: 'invoices/'+parseInt(localStorage.getItem('active_branch')),
           dataPaginator: this.paginator,

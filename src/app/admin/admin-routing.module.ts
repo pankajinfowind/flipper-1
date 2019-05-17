@@ -45,6 +45,11 @@ const routes: Routes = [
               path: 'setup',
               loadChildren: 'app/setup/setup.module#SetupModule',
               canActivate: [AuthGuard]
+            },
+            {
+              path: 'settings',
+              loadChildren: 'app/settings/settings.module#SettingsModule',
+              canActivate: [AuthGuard]
             }
 
         ]

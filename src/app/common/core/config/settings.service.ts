@@ -3,6 +3,7 @@ import {FlipperConfig} from './flipper-config';
 import * as Dot from 'dot-object';
 import merge from 'deepmerge';
 import { AppHttpClient } from '../http/app-http-client.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -47,7 +48,16 @@ export class Settings {
     public merge(config: object) {
         this.all = merge(this.all, config);
     }
+    public getAssetJson(filename) :Observable<any>{
 
+      return this.http.get('assets/lists/'+filename+'.json');
+  }
+  httpGet(theUrl) {
+    const xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( 'GET', theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return JSON.parse(xmlHttp.responseText);
+}
     /**
      * Set single setting.
      */

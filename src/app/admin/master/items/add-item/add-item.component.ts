@@ -22,6 +22,7 @@ import { ApiBranchService } from '../../branch/api/api.service';
 import { PaginatedDataTableSource } from '../../../../data-table/data/paginated-data-table-source';
 import { UrlAwarePaginator } from '../../../../common/pagination/url-aware-paginator.service';
 import { CrupdateCustomerTypeModalComponent } from '../../../../setup/customerType/crupdate-customet-type-modal/crupdate-customer-type-modal.component';
+import { GlobalVariables } from '../../../../common/core/global-variables';
 
 @Component({
   selector: 'app-add-item',
@@ -50,7 +51,7 @@ export class AddItemComponent implements OnInit {
   sku_tool_tips = "The Stock Keeping Unit  is a unique identifier defined by your company. For example, your company may assign a gallon of Tropicana orange juice a SKU of TROPOJ100. Most times, the SKU is represented by the manufacturer’s UPC. Leave blank to auto generate SKU.";
   public loading = new BehaviorSubject(false);
   errors: object;
-  constructor(public paginator: UrlAwarePaginator,private bapi:ApiBranchService,private modal: Modal,private router: Router, private _formBuilder: FormBuilder, public currentUser: CurrentUser,  private toast: Toast, private apiItem: ApiItemService) {
+  constructor(public v: GlobalVariables,public paginator: UrlAwarePaginator,private bapi:ApiBranchService,private modal: Modal,private router: Router, private _formBuilder: FormBuilder, public currentUser: CurrentUser,  private toast: Toast, private apiItem: ApiItemService) {
     this.loadingFormGroup();
    }
   rows: FormArray = this._formBuilder.array([]);
@@ -63,6 +64,7 @@ export class AddItemComponent implements OnInit {
   branchList: Branch[] = [];
   branchs = new FormControl();
   ngOnInit() {
+    this.v.webTitle('Add a Product');
     this.getActiveCustomerTypes();
     this.getBranches();
     this.loadingFormGroup();
@@ -346,7 +348,7 @@ calculateSaleExcludingTax(event){
         if(response)
             this.loadingFormGroup();
             this.stepper.selectedIndex = 0;
-            this.toast.open('Customer type has been created');
+            this.toast.open('Product has been created');
             if(close){
               setTimeout(()=>{ this.loading.next(true);this.close() }, 3000);
             }

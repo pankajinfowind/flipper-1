@@ -16,30 +16,30 @@
       <mat-cell *matCellDef="let product"> {{product.sku}} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="barcode">
+  <!-- <ng-container matColumnDef="barcode">
     <mat-header-cell *matHeaderCellDef mat-sort-header trans>Barcode</mat-header-cell>
     <mat-cell *matCellDef="let product"> {{product.barcode}} </mat-cell>
-</ng-container>
+</ng-container> -->
 
 <ng-container matColumnDef="item">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
-  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.item}}</span> </mat-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis" [matTooltip]="product.item">{{product.item}}</span> </mat-cell>
 </ng-container>
 
 <ng-container matColumnDef="category">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Category</mat-header-cell>
   <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.category?product.category.name:'----'}} </span></mat-cell>
 </ng-container>
-<ng-container matColumnDef="brand">
+<!-- <ng-container matColumnDef="brand">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Brand</mat-header-cell>
   <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.brand?product.brand.name:'----'}}</span> </mat-cell>
-</ng-container>
+</ng-container> -->
 <ng-container matColumnDef="tax_rate">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Tax rate</mat-header-cell>
   <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.tax_rate?product.tax_rate.name+'('+product.tax_rate.percentage+')':'---'}}</span> </mat-cell>
 </ng-container>
 
-<ng-container matColumnDef="manufacturer">
+<!-- <ng-container matColumnDef="manufacturer">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Manufacturer</mat-header-cell>
   <mat-cell *matCellDef="let product"><span class="ellipsis"> {{product.manufacturer}}</span> </mat-cell>
 </ng-container>
@@ -55,7 +55,7 @@
 <ng-container matColumnDef="article_code">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Article code</mat-header-cell>
   <mat-cell *matCellDef="let product"> {{product.article_code}} </mat-cell>
-</ng-container>
+</ng-container> -->
 <ng-container matColumnDef="created_at">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Created at</mat-header-cell>
   <mat-cell *matCellDef="let product"> {{product.created_at | date}} </mat-cell>

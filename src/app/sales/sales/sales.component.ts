@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStorage } from '../../common/core/services/local-storage.service';
 
 @Component({
   selector: 'app-sale',
@@ -22,10 +23,12 @@ export class SalesComponent implements OnInit {
   toggled=false;
   isMobile=false;
   leftColumnIsHidden=false;
-  constructor(private router: Router) {
+  constructor(private localStorage: LocalStorage) {
+        this.localStorage.set('sales-path', 'invoices');
   }
 
     ngOnInit() {
+
     }
 
 

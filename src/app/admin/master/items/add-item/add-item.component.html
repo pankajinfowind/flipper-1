@@ -1,22 +1,8 @@
-<div class="row m-4">
-      <div class="col-8">
-        <button mat-button>
-          Add a Product
-        </button>
-        <span class="spacer"></span>
-        <span class="spacer"></span>
-      </div>
-      <div class="col-4">
-        <button mat-icon-button class="button-cancel float-right" (click)="close()">
-          <mat-icon>close</mat-icon>
-        </button>
-
-      </div>
+  <div class="modal-header">
+      <h2 class="modal-title" mat-dialog-title trans>Add a Product</h2>
+      <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
   </div>
 
-<!-- <button mat-raised-button (click)="isOptional = !isOptional">
-  {{!isOptional ? 'Enable optional steps' : 'Disable optional steps'}}
-</button> -->
 <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
 <mat-horizontal-stepper linear #stepper class="details-list scroll">
   <mat-step [stepControl]="firstFormGroup">

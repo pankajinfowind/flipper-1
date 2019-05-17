@@ -9,6 +9,7 @@ import { CrupdateCustomerTypeModalComponent } from './crupdate-customet-type-mod
 import { MatSort } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { GlobalVariables } from '../../common/core/global-variables';
 
 @Component({
   selector: 'app-customertype',
@@ -25,13 +26,15 @@ export class CustomerTypeComponent implements  OnInit, OnDestroy {
 
   public dataSource: PaginatedDataTableSource<CustomerType>;
   public loading = new BehaviorSubject(false);
-  constructor(public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCustomerTypeService) {
+  constructor(public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiCustomerTypeService) {
 
    }
 
 
   ngOnInit() {
-
+    if(!this.enableSelectButton){
+    this.v.webTitle('Manage Customer Types');
+    }
     this.dataSource = new PaginatedDataTableSource<CustomerType>({
         uri: 'customertype',
         dataPaginator: this.paginator,

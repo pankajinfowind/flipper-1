@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h2 class="modal-title" mat-dialog-title trans>Invoice Customization</h2>
+  <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button">
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</div>
+<div class="row" style="overflow: auto; max-height:500px;">
+          <div class="col-3">
+            <h2 class="modal-title m-3" mat-dialog-title trans>Edit Invoice</h2>
+            <mat-divider></mat-divider>
+                <form autocomplete="off" [formGroup]="customizeForm" class="mt-3" (ngSubmit)="confirm()">
+                  <mat-card-content class="mat-dialog-content row">
+                    <h3 class="modal-title m-4" mat-dialog-title trans>Invoice contact info settings</h3>
+
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Enter company name</mat-label>
+                      <input matInput placeholder="Company Name" formControlName="company_name" required>
+
+                      <mat-error *ngIf="company_name.invalid && (company_name.dirty || company_name.touched)">
+                        <mat-error *ngIf="company_name.errors.required">
+                          Business/Company name is <strong>required</strong>
+                        </mat-error>
+                      </mat-error>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Enter company address</mat-label>
+                      <input matInput placeholder="Company address" formControlName="address" required>
+
+                      <mat-error *ngIf="address.invalid && (address.dirty || address.touched)">
+                        <mat-error *ngIf="address.errors.required">
+                          Business/Company address is <strong>required</strong>
+                        </mat-error>
+                      </mat-error>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Enter company contact</mat-label>
+                      <input matInput placeholder="Company contact" formControlName="contact" required>
+
+                      <mat-error *ngIf="contact.invalid && (contact.dirty || contact.touched)">
+                        <mat-error *ngIf="contact.errors.required">
+                          Business/Company contact is <strong>required</strong>
+                        </mat-error>
+                      </mat-error>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Enter company tax number</mat-label>
+                      <input matInput placeholder="Company tax number" formControlName="tax_number" required>
+
+                      <mat-error *ngIf="tax_number.invalid && (tax_number.dirty || tax_number.touched)">
+                        <mat-error *ngIf="tax_number.errors.required">
+                          Business/Company tax number is <strong>required</strong>
+                        </mat-error>
+                      </mat-error>
+
+                    </mat-form-field>
+
+
+                    <h3 class="modal-title m-4" mat-dialog-title trans>Invoice settings</h3>
+
+
+                    <h3 class="modal-title m-4" mat-dialog-title trans>Invoice column settings</h3>
+                  </mat-card-content>
+            </form>
+            <mat-divider [vertical]="true"></mat-divider>
+          </div>
+
+      <div class="col-9">
+        <h2 class="modal-title m-3" mat-dialog-title trans>Preview Invoice</h2>
+        <mat-divider></mat-divider>
+      </div>
+
+</div>

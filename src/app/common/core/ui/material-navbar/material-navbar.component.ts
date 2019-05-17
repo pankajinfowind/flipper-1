@@ -17,7 +17,7 @@ export class MaterialNavbar {
     @Output() toggleButtonClick = new EventEmitter();
     version:string;
     business:any;
-    branch: any;;
+    branch: any;
     constructor(
         public config: Settings,
         public currentUser: CurrentUser,
@@ -25,6 +25,5 @@ export class MaterialNavbar {
       this.business=this.currentUser.get('business')[0];
       this.branch=this.currentUser.get('branches').find(b=>b.id==parseInt(localStorage.getItem('active_branch')));
       this.version=localStorage.getItem("version");
-
     }
 }

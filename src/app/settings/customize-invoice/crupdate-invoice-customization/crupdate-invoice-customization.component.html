@@ -7,10 +7,16 @@
 <div class="row" style="overflow: auto; max-height:500px;">
           <div class="col-3">
             <h2 class="modal-title m-3" mat-dialog-title trans>Edit Invoice</h2>
+
             <mat-divider></mat-divider>
                 <form autocomplete="off" [formGroup]="customizeForm" class="mt-3" (ngSubmit)="confirm()">
                   <mat-card-content class="mat-dialog-content row">
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice contact info settings</h3>
+
+                    <div class="w-100 col-12"  (click)="uploadLogoModel()" style="cursor: pointer;">
+                      <img [src]="customizeForm.value.logo" class="img-responsive" style="width:128px" *ngIf="customizeForm.value.logo" />
+                      <div class="caption">Upload Logo</div>
+                    </div>
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company name</mat-label>
@@ -22,7 +28,7 @@
                         </mat-error>
                       </mat-error>
 
-                    </mat-form-field>
+                    </mat-form-field><br />
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company address</mat-label>
@@ -34,7 +40,7 @@
                         </mat-error>
                       </mat-error>
 
-                    </mat-form-field>
+                    </mat-form-field><br />
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company contact</mat-label>
@@ -46,7 +52,7 @@
                         </mat-error>
                       </mat-error>
 
-                    </mat-form-field>
+                    </mat-form-field><br />
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company tax number</mat-label>
@@ -58,13 +64,114 @@
                         </mat-error>
                       </mat-error>
 
-                    </mat-form-field>
-
+                    </mat-form-field><br />
 
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice settings</h3>
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Default title</mat-label>
+                      <input matInput placeholder="Default title" formControlName="default_title" required>
+
+                      <mat-error *ngIf="default_title.invalid && (default_title.dirty || default_title.touched)">
+                        <mat-error *ngIf="default_title.errors.required">
+                          Default title is <strong>required</strong>
+                        </mat-error>
+                      </mat-error>
+                      <mat-hint ><i>The default title for all invoices. You can change this on each invoice.</i></mat-hint>
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Default subheading</mat-label>
+                      <input matInput placeholder="Default subheading" formControlName="default_sub_title" >
+                      <mat-hint ><i>This will be displayed below the title of each invoice.</i></mat-hint>
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Default footer</mat-label>
+                      <input matInput placeholder="Default footer" formControlName="default_footer" >
+                      <mat-hint ><i>This will be displayed at the bottom of each invoice.</i></mat-hint>
+                    </mat-form-field><br />
+
+                    <mat-form-field  appearance="outline" class="w-100 col-12">
+                      <mat-label>Choose Font Size</mat-label>
+                    <mat-select placeholder="Choose Font Size" formControlName="font_size">
+                      <mat-option>None</mat-option>
+                      <mat-option *ngFor="let font_size of font_sizes" [value]="font_size.value">{{font_size.valueName}}</mat-option>
+                    </mat-select>
+                  </mat-form-field><br />
+                  <mat-form-field  appearance="outline" class="w-100 col-12">
+                    <mat-label>Choose Color</mat-label>
+                  <mat-select placeholder="Choose Color" formControlName="color">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">{{color.valueName}}</mat-option>
+                  </mat-select>
+                </mat-form-field><br />
 
 
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice column settings</h3>
+                    <label class="modal-title m-4" id="radio-group-label">Edit the titles of the columns on your invoices:</label>
+                    <table class="ml-4 w-100 col-12">
+                        <tr>
+                            <th>Code</th><td>
+                                <mat-radio-group
+                                  aria-labelledby="radio-group-label"
+                                  class="radio-group"
+                                  [(ngModel)]="favoriteCode">
+                                  <mat-radio-button class="radio-button" *ngFor="let code of codes" [value]="code" [checked]="code === 'Code'" >
+                                    {{code}}
+                                  </mat-radio-button>
+                                </mat-radio-group>
+                            </td>
+                          </tr>
+                      <tr>
+                        <th>Items</th><td>
+
+                            <mat-radio-group
+                                  aria-labelledby="radio-group-label"
+                                  class="radio-group"
+                                  [(ngModel)]="favoriteItem">
+                                  <mat-radio-button class="radio-button" *ngFor="let item of _items" [value]="item" [checked]="item === 'Items'" >
+                                    {{item}}
+                                  </mat-radio-button>
+                                </mat-radio-group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Units</th><td>
+
+                            <mat-radio-group
+                                  aria-labelledby="radio-group-label"
+                                  class="radio-group"
+                                  [(ngModel)]="favoriteUnit">
+                                  <mat-radio-button class="radio-button" *ngFor="let unit of _units" [value]="unit" [checked]="unit === 'Quantity'" >
+                                    {{unit}}
+                                  </mat-radio-button>
+                                </mat-radio-group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Price</th><td>
+
+                            <mat-radio-group
+                            aria-labelledby="radio-group-label"
+                            class="radio-group"
+                            [(ngModel)]="favoritePrice">
+                            <mat-radio-button class="radio-button" *ngFor="let price of prices" [value]="price" [checked]="price === 'Price'" >
+                              {{price}}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Amount</th><td>
+                            <mat-radio-group
+                            aria-labelledby="radio-group-label"
+                            class="radio-group"
+                            [(ngModel)]="favoriteAmount">
+                            <mat-radio-button class="radio-button" *ngFor="let amount of amounts" [value]="amount" [checked]="amount === 'Amount'" >
+                              {{amount}}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </td>
+                      </tr>
+                    </table>
                   </mat-card-content>
             </form>
             <mat-divider [vertical]="true"></mat-divider>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomizeInvoice } from '../customize-invoice';
+import { PopupImageCropperModelComponent } from '../../../image-cropper/popup-image-cropper-model/popup-image-cropper-model.component';
+import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 @Component({
   selector: 'app-crupdate-invoice-customization',
   templateUrl: './crupdate-invoice-customization.component.html',
@@ -9,7 +11,50 @@ import { CustomizeInvoice } from '../customize-invoice';
 })
 export class CrupdateInvoiceCustomizationComponent implements OnInit {
   customizeForm: FormGroup;
-  constructor(private router: Router) { }
+  font_sizes:any[]=[{
+    value:12,valueName:'Smaller',
+  },{
+    value:16,valueName:'Medium',
+  },{
+    value:18,valueName:'Large',
+
+  }];
+  colors:any[]=[{
+    value:'#0e0d0d',valueName:'Black',
+  },{
+    value:'#f44336',valueName:'Red',
+
+  },{
+    value:'#490f0f',valueName:'Red - Dark',
+
+  },{
+    value:'#4caf50',valueName:'Green',
+
+  },{
+    value:'#1da1f2',valueName:'Blue Sky',
+
+  },{
+    value:'#3b5998',valueName:'Blue',
+
+  },{
+    value:'#b57541',valueName:'Coffee',
+
+  },{
+    value:'#b541a6',valueName:'Violet',
+
+  }];
+
+  favoriteCode: string;
+  codes: string[] = ['Code', 'Items No', 'Other'];
+  favoriteItem:string;
+  _items: string[] = ['Items', 'Products', 'Other'];
+  favoriteUnit:string;
+  _units: string[] = ['Quantity', 'Qty', 'Other'];
+  favoritePrice:string;
+  prices: string[] = ['Price', 'Unit Price', 'Other'];
+  favoriteAmount:string;
+  amounts: string[] = ['Amounts', 'Total', 'Other'];
+  constructor(private router: Router,private modal: Modal) { }
 
   ngOnInit() {
     this.hydrateModel();
@@ -168,4 +213,16 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
   confirm(){
 
   }
+
+  uploadLogoModel() {
+    this.modal.open(
+      PopupImageCropperModelComponent,
+        {title:'Logo'},
+        'app-popup-image-cropper-model-container'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.customizeForm.get('logo').setValue(data);
+    });
+  }
+
 }

@@ -5,12 +5,30 @@
   </button>
 </div>
 <div class="row" style="overflow: auto; max-height:500px;">
-          <div class="col-3">
+          <div class="col-4">
             <h2 class="modal-title m-3" mat-dialog-title trans>Edit Invoice</h2>
 
-            <mat-divider></mat-divider>
                 <form autocomplete="off" [formGroup]="customizeForm" class="mt-3" (ngSubmit)="confirm()">
                   <mat-card-content class="mat-dialog-content row">
+                      <mat-form-field class="col-12 m-2" appearance="outline">
+                          <mat-label>Choose Invoice Type(s)</mat-label>
+                          <mat-select placeholder="Invoice Type(s)" [formControl]="invoiceTypes" multiple (selectionChange)="updatedInvoiceTypes()">
+                            <mat-option *ngFor="let customer_type of customerTypes" [value]="customer_type">{{customer_type.name}}</mat-option>
+                          </mat-select>
+                          <mat-hint>Means that invoice will be belongs to choosen invoice types</mat-hint>
+
+                        </mat-form-field><br />
+                        <mat-form-field appearance="outline" class="w-100 col-12" *ngIf="customizeForm.value.invoiceTypes!=null">
+                            <mat-label>Customer Type Name</mat-label>
+                            <input matInput placeholder="Customer Type Name" formControlName="customer_type_name" (input)="updateModel()" required>
+                            <mat-hint ><i>It should be insurance name(Rssb) or the customer type name(Bronzen customer)</i></mat-hint>
+                            <mat-error *ngIf="customer_type_name.invalid && (customer_type_name.dirty || customer_type_name.touched)">
+                                <mat-error *ngIf="customer_type_name.errors.required">
+                                    customer type name is <strong>required</strong>
+                                </mat-error>
+                              </mat-error>
+                          </mat-form-field><br />
+                      <mat-divider></mat-divider>
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice contact info settings</h3>
 
                     <div class="w-100 col-12"  (click)="uploadLogoModel()" style="cursor: pointer;">
@@ -20,7 +38,7 @@
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company name</mat-label>
-                      <input matInput placeholder="Company Name" formControlName="company_name" required>
+                      <input matInput placeholder="Company Name" formControlName="company_name" (input)="updateModel()" required>
 
                       <mat-error *ngIf="company_name.invalid && (company_name.dirty || company_name.touched)">
                         <mat-error *ngIf="company_name.errors.required">
@@ -32,7 +50,7 @@
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company address</mat-label>
-                      <input matInput placeholder="Company address" formControlName="address" required>
+                      <input matInput placeholder="Company address" formControlName="address" (input)="updateModel()" required>
 
                       <mat-error *ngIf="address.invalid && (address.dirty || address.touched)">
                         <mat-error *ngIf="address.errors.required">
@@ -44,7 +62,7 @@
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company contact</mat-label>
-                      <input matInput placeholder="Company contact" formControlName="contact" required>
+                      <input matInput placeholder="Company contact" formControlName="contact" (input)="updateModel()" required>
 
                       <mat-error *ngIf="contact.invalid && (contact.dirty || contact.touched)">
                         <mat-error *ngIf="contact.errors.required">
@@ -56,15 +74,32 @@
 
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Enter company tax number</mat-label>
-                      <input matInput placeholder="Company tax number" formControlName="tax_number" required>
-
-                      <mat-error *ngIf="tax_number.invalid && (tax_number.dirty || tax_number.touched)">
-                        <mat-error *ngIf="tax_number.errors.required">
-                          Business/Company tax number is <strong>required</strong>
-                        </mat-error>
-                      </mat-error>
+                      <input matInput placeholder="Company tax number" formControlName="tax_number" (input)="updateModel()">
 
                     </mat-form-field><br />
+                    <h3 class="modal-title m-4" mat-dialog-title trans>Invoice Customer settings</h3>
+
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Customer No</mat-label>
+                      <input matInput placeholder="Rename Customer No" formControlName="customer_number" (input)="updateModel()">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Customer Name</mat-label>
+                      <input matInput placeholder="Rename Customer Name" formControlName="customer_name" (input)="updateModel()">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Customer Birth Date</mat-label>
+                      <input matInput placeholder="Rename Customer Birth Date" formControlName="customer_dob">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Customer Beneficiary</mat-label>
+                      <input matInput placeholder="Rename Customer Beneficiary" formControlName="beneficiary">
+
+                    </mat-form-field><br />
+
 
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice settings</h3>
                     <mat-form-field appearance="outline" class="w-100 col-12">
@@ -122,7 +157,6 @@
                           </tr>
                       <tr>
                         <th>Items</th><td>
-
                             <mat-radio-group
                                   aria-labelledby="radio-group-label"
                                   class="radio-group"
@@ -135,7 +169,6 @@
                       </tr>
                       <tr>
                         <th>Units</th><td>
-
                             <mat-radio-group
                                   aria-labelledby="radio-group-label"
                                   class="radio-group"
@@ -172,14 +205,87 @@
                         </td>
                       </tr>
                     </table>
+
+                    <h3 class="modal-title m-4" mat-dialog-title trans>Invoice receiption settings</h3>
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Receiption Title</mat-label>
+                      <input matInput placeholder="Rename Receiption Title" formControlName="reception_title">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Receiption Name</mat-label>
+                      <input matInput placeholder="Rename Receiption Name" formControlName="reception_name">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Receiption Phone</mat-label>
+                      <input matInput placeholder="Rename Receiption Phone" formControlName="reception_tel">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Receiption Date</mat-label>
+                      <input matInput placeholder="Rename Receiption Date" formControlName="reception_date">
+
+                    </mat-form-field><br />
+                    <h3 class="modal-title m-4" mat-dialog-title trans>More details settings</h3>
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Done Message</mat-label>
+                      <input matInput placeholder="Done Message" formControlName="done_title">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Done at</mat-label>
+                      <input matInput placeholder="Rename Done at or Fait le" formControlName="done_at">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Done where</mat-label>
+                      <input matInput placeholder="Rename Done where or Fait a" formControlName="done_where">
+
+                    </mat-form-field><br />
+                    <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Nome , Cashet and Signature</mat-label>
+                      <input matInput placeholder="Rename Nome , Cashet and Signature" formControlName="nom_signature_cachet">
+
+                    </mat-form-field><br />
+
+                    <label class="modal-title m-4" id="radio-group-label">Hide info on your invoices:</label>
+                    <table class="ml-4 w-100 col-12">
+                      <tr>
+                     <td>
+                    <mat-checkbox formControlName="hide_logo">Hide Logo</mat-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <mat-checkbox formControlName="hide_visa">Hide Visa</mat-checkbox>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <mat-checkbox formControlName="hide_discount_table">Hide Adherent Discount Table</mat-checkbox>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <mat-checkbox formControlName="hide_taxable_table">Hide Taxable Table</mat-checkbox>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <mat-checkbox formControlName="hide_reception_table">Hide Receiption Table</mat-checkbox>
+                  </td>
+                </tr>
+                </table>
                   </mat-card-content>
             </form>
             <mat-divider [vertical]="true"></mat-divider>
           </div>
 
-      <div class="col-9">
+      <div class="col-8">
         <h2 class="modal-title m-3" mat-dialog-title trans>Preview Invoice</h2>
         <mat-divider></mat-divider>
+        <app-preview-invoice-customized></app-preview-invoice-customized>
       </div>
 
 </div>

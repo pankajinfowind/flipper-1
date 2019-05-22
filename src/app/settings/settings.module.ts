@@ -10,9 +10,11 @@ import { UiModule } from '../common/core/ui/ui.module';
 import { DataTableModule } from '../data-table/data-table/data-table.module';
 import { BusinessModule } from '../business/business.module';
 import { CrupdateInvoiceCustomizationComponent } from './customize-invoice/crupdate-invoice-customization/crupdate-invoice-customization.component';
+import { NgxModelModule } from 'ngx-model';
+import { PreviewInvoiceCustomizedComponent } from './customize-invoice/preview-invoice-customized/preview-invoice-customized.component';
 
 @NgModule({
-  declarations: [SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent],
+  declarations: [SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent,PreviewInvoiceCustomizedComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
@@ -21,9 +23,10 @@ import { CrupdateInvoiceCustomizationComponent } from './customize-invoice/crupd
     ReactiveFormsModule,
     UiModule,
     DataTableModule,
-    BusinessModule
+    BusinessModule,
+    NgxModelModule
   ],
   exports:
-  [SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent]
+  [SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent,PreviewInvoiceCustomizedComponent]
 })
 export class SettingsModule { }

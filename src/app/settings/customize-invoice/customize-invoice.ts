@@ -1,3 +1,5 @@
+import { CustomerType } from '../../setup/customerType/api/CustomerType';
+
 export class CustomizeInvoice {
 id?:number;
 company_name?: string;
@@ -39,6 +41,7 @@ hide_visa?: boolean;
 hide_logo?: boolean;
 is_default?: boolean;
 business_id?:number;
+invoiceTypes?:Array<CustomerType>;
 
   constructor(params: Object = {}) {
     for (let name in params) {

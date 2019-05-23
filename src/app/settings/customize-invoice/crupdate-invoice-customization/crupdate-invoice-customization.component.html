@@ -4,11 +4,11 @@
     <mat-icon svgIcon="close"></mat-icon>
   </button>
 </div>
-<div class="row" style="overflow: auto; max-height:500px;">
+<div class="row" style="overflow: auto; max-height:90%;">
           <div class="col-4">
             <h2 class="modal-title m-3" mat-dialog-title trans>Edit Invoice</h2>
 
-                <form autocomplete="off" [formGroup]="customizeForm" class="mt-3" (ngSubmit)="confirm()">
+                <form autocomplete="off" [formGroup]="customizeForm" class="mt-3" (ngSubmit)="confirm()" style="min-height:400px;">
                   <mat-card-content class="mat-dialog-content row">
                       <mat-form-field class="col-12 m-2" appearance="outline">
                           <mat-label>Choose Invoice Type(s)</mat-label>
@@ -91,12 +91,12 @@
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Rename Customer Birth Date</mat-label>
-                      <input matInput placeholder="Rename Customer Birth Date" formControlName="customer_dob">
+                      <input matInput placeholder="Rename Customer Birth Date" formControlName="customer_dob" (input)="updateModel()">
 
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Rename Customer Beneficiary</mat-label>
-                      <input matInput placeholder="Rename Customer Beneficiary" formControlName="beneficiary">
+                      <input matInput placeholder="Rename Customer Beneficiary" formControlName="beneficiary" (input)="updateModel()">
 
                     </mat-form-field><br />
 
@@ -104,7 +104,7 @@
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice settings</h3>
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Default title</mat-label>
-                      <input matInput placeholder="Default title" formControlName="default_title" required>
+                      <input matInput placeholder="Default title" formControlName="default_title" required (input)="updateModel()">
 
                       <mat-error *ngIf="default_title.invalid && (default_title.dirty || default_title.touched)">
                         <mat-error *ngIf="default_title.errors.required">
@@ -115,25 +115,25 @@
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Default subheading</mat-label>
-                      <input matInput placeholder="Default subheading" formControlName="default_sub_title" >
+                      <input matInput placeholder="Default subheading" formControlName="default_sub_title" (input)="updateModel()">
                       <mat-hint ><i>This will be displayed below the title of each invoice.</i></mat-hint>
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Default footer</mat-label>
-                      <input matInput placeholder="Default footer" formControlName="default_footer" >
+                      <input matInput placeholder="Default footer" formControlName="default_footer" (input)="updateModel()">
                       <mat-hint ><i>This will be displayed at the bottom of each invoice.</i></mat-hint>
                     </mat-form-field><br />
 
                     <mat-form-field  appearance="outline" class="w-100 col-12">
                       <mat-label>Choose Font Size</mat-label>
-                    <mat-select placeholder="Choose Font Size" formControlName="font_size">
+                    <mat-select placeholder="Choose Font Size" formControlName="font_size" (input)="updateModel()">
                       <mat-option>None</mat-option>
                       <mat-option *ngFor="let font_size of font_sizes" [value]="font_size.value">{{font_size.valueName}}</mat-option>
                     </mat-select>
                   </mat-form-field><br />
                   <mat-form-field  appearance="outline" class="w-100 col-12">
                     <mat-label>Choose Color</mat-label>
-                  <mat-select placeholder="Choose Color" formControlName="color">
+                  <mat-select placeholder="Choose Color" formControlName="color" (input)="updateModel()">
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">{{color.valueName}}</mat-option>
                   </mat-select>
@@ -149,7 +149,7 @@
                                   aria-labelledby="radio-group-label"
                                   class="radio-group"
                                   [(ngModel)]="favoriteCode">
-                                  <mat-radio-button class="radio-button" *ngFor="let code of codes" [value]="code" [checked]="code === 'Code'" >
+                                  <mat-radio-button class="radio-button" *ngFor="let code of codes" [value]="code" [checked]="code === 'Code'" (change)="updatedCode(code)">
                                     {{code}}
                                   </mat-radio-button>
                                 </mat-radio-group>
@@ -161,7 +161,7 @@
                                   aria-labelledby="radio-group-label"
                                   class="radio-group"
                                   [(ngModel)]="favoriteItem">
-                                  <mat-radio-button class="radio-button" *ngFor="let item of _items" [value]="item" [checked]="item === 'Items'" >
+                                  <mat-radio-button class="radio-button" *ngFor="let item of _items" [value]="item" [checked]="item === 'Items'"  (change)="updatedItem(item)">
                                     {{item}}
                                   </mat-radio-button>
                                 </mat-radio-group>
@@ -173,7 +173,7 @@
                                   aria-labelledby="radio-group-label"
                                   class="radio-group"
                                   [(ngModel)]="favoriteUnit">
-                                  <mat-radio-button class="radio-button" *ngFor="let unit of _units" [value]="unit" [checked]="unit === 'Quantity'" >
+                                  <mat-radio-button class="radio-button" *ngFor="let unit of _units" [value]="unit" [checked]="unit === 'Quantity'" (change)="updatedUnit(unit)">
                                     {{unit}}
                                   </mat-radio-button>
                                 </mat-radio-group>
@@ -186,7 +186,7 @@
                             aria-labelledby="radio-group-label"
                             class="radio-group"
                             [(ngModel)]="favoritePrice">
-                            <mat-radio-button class="radio-button" *ngFor="let price of prices" [value]="price" [checked]="price === 'Price'" >
+                            <mat-radio-button class="radio-button" *ngFor="let price of prices" [value]="price" [checked]="price === 'Price'" (change)="updatedPrice(price)">
                               {{price}}
                             </mat-radio-button>
                           </mat-radio-group>
@@ -198,7 +198,7 @@
                             aria-labelledby="radio-group-label"
                             class="radio-group"
                             [(ngModel)]="favoriteAmount">
-                            <mat-radio-button class="radio-button" *ngFor="let amount of amounts" [value]="amount" [checked]="amount === 'Amount'" >
+                            <mat-radio-button class="radio-button" *ngFor="let amount of amounts" [value]="amount" [checked]="amount === 'Amount'" (change)="updatedAmount(amount)">
                               {{amount}}
                             </mat-radio-button>
                           </mat-radio-group>

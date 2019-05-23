@@ -63,6 +63,7 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
   ngOnInit() {
     this.getCustomerType();
     this.hydrateModel();
+    this.updateModel();
   }
 
   private hydrateModel(customize?:CustomizeInvoice) {
@@ -119,6 +120,27 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
     this.updateModel();
     }
 
+  }
+  updatedCode(s){
+    this.customizeForm.value.number=s;
+    return  this.serviceModel.update(this.customizeForm.value);
+  }
+  updatedItem(s){
+    this.customizeForm.value.items=s;
+    return  this.serviceModel.update(this.customizeForm.value);
+  }
+  updatedUnit(s){
+    this.customizeForm.value.units=s;
+    return  this.serviceModel.update(this.customizeForm.value);
+  }
+  updatedPrice(s){
+    this.customizeForm.value.price=s;
+    return  this.serviceModel.update(this.customizeForm.value);
+  }
+
+  updatedAmount(s){
+    this.customizeForm.value.amount=s;
+    return  this.serviceModel.update(this.customizeForm.value);
   }
   updateModel(){
    return  this.serviceModel.update(this.customizeForm.value);

@@ -1,5 +1,6 @@
 import { Injectable, Input, ViewChild, ElementRef } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { LocalStorage } from '../core/services/local-storage.service';
 // import { YFContract } from '@app/contracts/YFContract';
 // import { environment } from '@environments/environment';
 // import { FileUploader } from 'nupload';
@@ -11,6 +12,7 @@ export class GlobalVariables {
     public model: { email?: string; password?: string; remember?: boolean } = {
         remember: true
     };
+    constructor(private localStorage: LocalStorage){}
     public countries: String[] = [
         'Afghanistan',
         'Albania',
@@ -434,8 +436,8 @@ export class GlobalVariables {
     get redirectUrl(): string {
         return this.redirect_url;
     }
-    webTitle(title = 'YegoBox') {
-        return (document.title = title.charAt(0).toUpperCase() + title.slice(1));
+    webTitle(title = 'Flipper') {
+        return this.localStorage.set('flipper-title',title);
     }
 
     // set user(user: any) {

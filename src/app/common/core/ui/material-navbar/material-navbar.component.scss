@@ -8,7 +8,13 @@ material-navbar {
     position: relative;
     z-index: 2;
     height: $material-navbar-height;
+.title-bar-btns{
+    -webkit-app-region: no-drag;
+    position: fixed;
+    top: 0px;
+    right: 6px;
 
+}
     .navbar-container {
         display: flex;
         align-items: center;

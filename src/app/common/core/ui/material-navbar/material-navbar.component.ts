@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit} from '@angular/core';
 import { Settings } from '../../config/settings.service';
 import {CurrentUser} from '../../../auth/current-user';
 
@@ -8,7 +8,7 @@ import {CurrentUser} from '../../../auth/current-user';
     styleUrls: ['./material-navbar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class MaterialNavbar {
+export class MaterialNavbar implements OnInit {
     @Input() menuPosition: string;
     @Input() showToggleButton = false;
     @Input() container = false;
@@ -26,4 +26,16 @@ export class MaterialNavbar {
       this.branch=this.currentUser.get('branches').find(b=>b.id==parseInt(localStorage.getItem('active_branch')));
       this.version=localStorage.getItem("version");
     }
+    
+  ngOnInit() {
+
+    document.onreadystatechange =  () => {
+        if (document.readyState == "complete") {
+           // this.init();
+        }
+    };
+}  
+
+  
+
 }

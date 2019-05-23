@@ -22,32 +22,42 @@
                 </th>
               </tr>
               <tr>
-                <th colspan="3" class="tr-border" style="text-align:center; text-decoration:underline">FEUILLE DE
-                  PRISE EN CHARGE</th>
+                <th colspan="3"  class="th-border" style="text-align:center; text-decoration:underline;border:none">
+                {{(invoice$ | async).default_title?(invoice$ | async).default_title:'Invoice'}}
+                </th>
               </tr>
+            
             </table>
 
             <table cellpadding="0" cellspacing="0" style="margin-top:8%">
-              <tr class="tr-border">
-                <th class="th-border" colspan="4">
-                  <h3>AFFILIE</h3>
-                </th>
-              </tr>
-
+        
               <tr>
                 <th class="th-border">
-                  N° AFFILIATION:
-                </th>
-                <th class="th-border">
-                  NOM ET PRENOM:
-                </th>
-                <th class="th-border">
-                  SEX: .......
-                </th>
-                <th class="th-border">
-                  AGE: .......
+                   {{(invoice$ | async).customer_number?(invoice$ | async).customer_number:' N° Customer'}}:.....
                 </th>
               </tr>
+                <tr>
+                <th class="th-border">
+                   {{(invoice$ | async).customer_name?(invoice$ | async).customer_name:'Name'}}:.....
+                </th>
+                </tr>
+
+                 <tr>
+                <th class="th-border">
+                   {{(invoice$ | async).customer_dob?(invoice$ | async).customer_dob:'Birth date'}}:.....
+                </th>
+                </tr>
+
+                 <tr>
+                <th class="th-border">
+                   {{(invoice$ | async).customer_address?(invoice$ | async).customer_address:'Address'}}:.....
+                </th>
+                </tr>
+                 <tr>
+                <th class="th-border">
+                   {{(invoice$ | async).beneficiary?(invoice$ | async).beneficiary:'Beneficiary'}}:.....
+                </th>
+                </tr>
 
 
             </table>
@@ -57,26 +67,29 @@
               style="margin-top:8%">
 
               <thead>
-                <tr valign="top" style="border:none!important">
-                  <th style="border:none!important" colspan="8">MEDICAMENTS FOURNIS</th>
+                <tr valign="top" style="border:none!important" *ngIf="(invoice$ | async).default_sub_title">
+                  <th style="border:none!important" colspan="5">{{(invoice$ | async).default_sub_title?(invoice$ | async).default_sub_title:''}}</th>
                 </tr>
                 <tr valign="top" class="heading">
-                  <th>No</th>
-                  <th>Code</th>
-                  <th>No Produits Fournis</th>
-                  <th>Forme</th>
-                  <th>Dosage</th>
-                  <th>QTE</th>
-                  <th>Prix Unitaire</th>
-                  <th>Prix Total</th>
+                  <th>{{(invoice$ | async).number?(invoice$ | async).number:'Code'}}</th>
+                  <th>{{(invoice$ | async).items?(invoice$ | async).items:'Items'}}</th>
+                   <th>{{(invoice$ | async).units?(invoice$ | async).units:'Qty'}}</th>
+                  <th>{{(invoice$ | async).price?(invoice$ | async).price:'Price'}}</th>
+                   <th>{{(invoice$ | async).amount?(invoice$ | async).amount:'Amount'}}</th>
                 </tr>
               </thead>
               <tbody id="list_items">
-
+                  <tr>
+                  <td>001</td>
+                  <th>item</th>
+                   <th>1</th>
+                  <th>100</th>
+                   <th>Rwf 100</th>
+                </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="7" class="no-bottom-border" style="text-align:right;font-weight: bold">TOTAL: </td>
+                  <td colspan="4" class="no-bottom-border" style="text-align:right;font-weight: bold">TOTAL: </td>
                   <td style="border:1px solid #000;text-align:left;font-weight: bold">
                   0.00 </td>
                 </tr>
@@ -120,7 +133,7 @@
 
 
             </div>
-
+<br />
             <div class="percentage_total" style="margin-top:10%">
               <div class="signature">
                 <b>Fait à ...........................le ...........................</b>

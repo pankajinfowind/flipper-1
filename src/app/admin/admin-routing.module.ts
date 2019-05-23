@@ -5,7 +5,7 @@ import { AuthGuard } from '../common/guards/auth-guard.service';
 import { RedirectComponent } from '../redirect/redirect.component';
 
 const routes: Routes = [
-
+  
     {path: '',
     component: AdminComponent,
     canActivate: [AuthGuard],

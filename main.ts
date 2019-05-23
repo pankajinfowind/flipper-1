@@ -3,8 +3,8 @@ import * as path from "path";
 import * as url from "url";
 //update
 import { windowStateKeeper } from "./win-state-keeper";
-import { DB } from './db/db';
-import { Sync } from './sync/sync'
+// import { DB } from './db/db';
+// import { Sync } from './sync/sync'
 
 //TODO: make sure to fix icon thing it is not building
 
@@ -20,7 +20,7 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 
 //init a sync...
-new Sync();
+//new Sync();
 const isDev = require("electron-is-dev");
 function sendStatusToWindow(text) {
   log.info(app.getVersion() + "::" + text);
@@ -31,16 +31,16 @@ function sendStatusToWindow(text) {
 //Events listerns
 ipcMain.on("iWantDataWith", (event, dataType) => {
   if (dataType == "customers") {
-    DB.select('users').subscribe(users => {
-      event.sender.send("hereIsYourData", users);
-    });
+    // DB.select('users').subscribe(users => {
+    //   event.sender.send("hereIsYourData", users);
+    // });
   }
 });
 ipcMain.on("iWantToSaveDataOf", (event, args) => {
 
-  DB.insert(args.table, args.data).subscribe(users => {
-    event.sender.send("hereIsYourData", users);
-  });
+  // DB.insert(args.table, args.data).subscribe(users => {
+  //   event.sender.send("hereIsYourData", users);
+  // });
 
 });
 
@@ -100,6 +100,7 @@ function createWindow() {
     y: mainWindowStateKeeper.y,
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
+    frame: false,
     title: app.getName() + "Version:" + app.getVersion(),
     icon: path.join(__dirname, "src/assets/app-icon/png/icon.png")
   };

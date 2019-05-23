@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, AfterViewInit 
 import { Settings } from '../common/core/config/settings.service';
 import { Router } from '@angular/router';
 import { LocalStorage } from '../common/core/services/local-storage.service';
-
+import { Observable, BehaviorSubject } from 'rxjs';
+const {BrowserWindow} = require('electron').remote;
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -16,15 +17,30 @@ activeLinkIndex = -1;
     public leftColumnIsHidden = false;
     isOpened:boolean=true;
 
-  constructor(private localStorage: LocalStorage,private router: Router,public setting:Settings,private changeDetectionRef: ChangeDetectorRef) {
+  constructor(public localStorage: LocalStorage,private router: Router,public setting:Settings,private changeDetectionRef: ChangeDetectorRef) {
     
   }
 
 
   ngOnInit() {
     this.appearance=this.setting.getAll().appearance;
-    console.log(this.localStorage.get('active_menu'));
   }
+  onWinMin(){
+    var window = BrowserWindow.getFocusedWindow();
+           return window.minimize();  
+}
+onWinMax(){
+    var window = BrowserWindow.getFocusedWindow();
+    if(window.isMaximized()){
+        window.unmaximize();
+    }else{
+        window.maximize();
+    } 
+}
+onWinClose(){
+    var window = BrowserWindow.getFocusedWindow();
+    window.close();
+}
   public toggleLeftSidebar() {
     this.isOpened = !this.isOpened;
 }

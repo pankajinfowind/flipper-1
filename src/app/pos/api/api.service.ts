@@ -32,11 +32,19 @@ export class ApiPosService {
       return this.http.get('category', params);
     }
 
+    public getMostSoldStockEntries(params: StockApiIndexParams = {}): Observable<StockEntriesPaginationResponse> {
+      params.categoryId= this.localStorage.get('pos-categoryId');
+      return this.http.get("most-sold-stock/"+parseInt(this.localStorage.get('active_branch'))+'/available', params);
+    }
+    public searchStockEntries(params: StockApiIndexParams = {}): Observable<StockEntriesPaginationResponse> {
+      params.categoryId= this.localStorage.get('pos-categoryId');
+      return this.http.get("search-stock/"+parseInt(this.localStorage.get('active_branch'))+'/available', params);
+    }
+
     public getStockEntries(params: StockApiIndexParams = {}): Observable<StockEntriesPaginationResponse> {
       params.categoryId= this.localStorage.get('pos-categoryId');
       return this.http.get("stock/"+parseInt(this.localStorage.get('active_branch'))+'/available', params);
     }
-
     public showCategoriesEntries(id:number): Observable<Category> {
       return this.http.get('category/'+id);
     }

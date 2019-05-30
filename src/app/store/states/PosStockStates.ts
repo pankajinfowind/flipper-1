@@ -5,6 +5,7 @@ import { tap } from 'rxjs/internal/operators/tap';
 import { POS_STOCK_STATE_MODEL_DEFAULTS } from '../model/pos-stock-state';
 import { LoadStockEntries, LoadMoreStockEntries, LoadStockEntriesAction } from '../actions/pos-Stock.action';
 import { PosStockState, StockApiIndexParams } from '../model/pos-stock-state-model';
+import { Stock } from '../../stock/api/stock';
 
 @State<PosStockState>({
   name: 'STOCK',
@@ -18,6 +19,7 @@ export class PosStockStates {
     return state.data;
   }
 
+  
   @Selector()
   static selectedStock(state: PosStockState) {
     return state.stock;
@@ -84,7 +86,7 @@ export class PosStockStates {
     return this.api.getStockEntries(params).pipe(tap(response => {
       const entries = action.loadMore ? oldState.data : [];
       const state = {
-        data: entries.concat(response.data),
+        data: this.removeDups(entries.concat(response.data)),
         meta: {
           ...newState.meta,
           last_page: response.last_page,
@@ -105,6 +107,13 @@ export class PosStockStates {
       return ctx.patchState({ loading: false });
     }));
   }
-
-
+  removeDups(data: Array<any>) {
+      let obj = {};
+      data = Object.keys(data.reduce((prev, next) => {
+        if (!obj[next.id]) obj[next.id] = next;
+        return obj;
+      }, obj)).map((i) => obj[i]);
+      return data.reverse();
+    };
+  
  }

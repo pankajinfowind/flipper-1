@@ -6,7 +6,12 @@ import { PopupImageCropperModelComponent } from '../../../image-cropper/popup-im
 import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { ApiCustomerTypeService } from '../../../setup/customerType/api/api.service';
 import { CustomerType } from '../../../setup/customerType/api/CustomerType';
-import { CustomizeInvoiceService } from '../customize-invoice.service';
+import { CustomizeInvoicePreviewDataService } from '../customize-invoice-preview-data.service';
+import { ApiCustomizeInvoiceService } from '../api-customize-invoice.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { Toast } from '../../../common/core/ui/toast.service';
+import { SharedModelService } from '../../../shared-model/shared-model-service';
 @Component({
   selector: 'app-crupdate-invoice-customization',
   templateUrl: './crupdate-invoice-customization.component.html',
@@ -58,14 +63,35 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
   favoriteAmount:string;
   amounts: string[] = ['Amounts', 'Total', 'Other'];
   customerTypes: CustomerType[];
-  constructor(private router: Router,private modal: Modal,private capi:ApiCustomerTypeService,private serviceModel:CustomizeInvoiceService) { }
+
+  public errors: any = {};
+  public loading = new BehaviorSubject(false);
+  /**
+   * If we are updating existing ExpirationSetting or creating a new one.
+   */
+  public updating = false;
+  invoiceSharedData$: Observable<any>;
+  data:CustomizeInvoice=null;
+  constructor(public shared:SharedModelService,private toast: Toast,private router: Router,private modal: Modal,private capi:ApiCustomerTypeService,private serviceModel:CustomizeInvoicePreviewDataService,private api:ApiCustomizeInvoiceService) { }
 
   ngOnInit() {
+    this.invoiceSharedData$ = this.shared.shared$;
     this.getCustomerType();
-    this.hydrateModel();
+    this.invoiceSharedData$.subscribe(data=>{
+      this.data=data?data.data as CustomizeInvoice :null;
+      this.updating=this.data?true:false;
+      this.hydrateModel(this.data);
+    });
+   
     this.updateModel();
   }
-
+    getCustomerTypeIds(array:Array<CustomerType>){
+      var lookup = [];
+    for (var i = 0, len = array.length; i < len; i++) {
+        lookup.push(array[i].id);
+    }
+    return lookup;
+    }
   private hydrateModel(customize?:CustomizeInvoice) {
     this.customizeForm = new FormGroup({
       company_name: new FormControl(customize?customize.company_name:"", [Validators.required]),
@@ -81,88 +107,133 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
       memo: new FormControl(customize?customize.memo:""),
       items: new FormControl(customize?customize.items:"Items"),
       logo: new FormControl(customize?customize.logo?customize.logo:"assets/logo/avatar.png":"assets/logo/avatar.png"),
-      units: new FormControl(customize?customize.units:"Qty"),
+      units: new FormControl(customize?customize.units:"Quantity"),
       price: new FormControl(customize?customize.price:"Price"),
       amount: new FormControl(customize?customize.amount:"Amount"),
-      number: new FormControl(customize?customize.number:"N°"),
+      number: new FormControl(customize?customize.number:"Code"),
       adherent: new FormControl(customize?customize.adherent:""),
-      customer_name: new FormControl(customize?customize.customer_name:"Customer Name"),
-      customer_number: new FormControl(customize?customize.customer_number:"Customer N°"),
-      customer_dob: new FormControl(customize?customize.customer_dob:"Customer Birth Date"),
+      customer_name: new FormControl(customize?customize.customer_name:"Name"),
+      customer_number: new FormControl(customize?customize.customer_number:"Cust . N°"),
+      customer_dob: new FormControl(customize?customize.customer_dob:"Birth Date"),
       beneficiary: new FormControl(customize?customize.beneficiary:"Beneficiary"),
-      customer_type_name: new FormControl(customize?customize.customer_type_name:"Bronze customer"),
+      customer_address: new FormControl(customize?customize.customer_address:"Address"),
+      customer_type_name: new FormControl(customize?customize.customer_type_name:null),
       hide_discount_table: new FormControl(customize?customize.hide_discount_table:false),
       hide_taxable_table: new FormControl(customize?customize.hide_taxable_table:false),
       hide_total_summary_table: new FormControl(customize?customize.hide_total_summary_table:false),
       hide_reception_table: new FormControl(customize?customize.hide_reception_table:false),
-      hide_visa: new FormControl(customize?customize.hide_visa:false),
+      hide_visa: new FormControl(customize?customize.hide_visa:true),
       hide_logo: new FormControl(customize?customize.hide_logo:false),
-      is_default: new FormControl(customize?customize.hide_logo:false),
+      is_default: new FormControl(customize?customize.is_default:false),
+      has_customer_type: new FormControl(customize?customize.customerTypes?true:false:false),
       nom_signature_cachet: new FormControl(customize?customize.nom_signature_cachet:'Nom, Cashet et Signature'),
       done_title: new FormControl(customize?customize.done_title:null),
-      done_where: new FormControl(customize?customize.done_title:'Fait à ... '),
-      done_at: new FormControl(customize?customize.done_at:'le ...'),
+      done_on: new FormControl(customize?customize.done_on:'on '),
+      done_at: new FormControl(customize?customize.done_at:'Done at '),
       business_id: new FormControl(customize?customize.business_id:null),
-      invoiceTypes: new FormControl(customize?customize.invoiceTypes:null),
-      reception_name:new FormControl(customize?customize.reception_name:'Receiption Name'),
+      customerTypeIds: new FormControl(customize?customize.customerTypes?this.getCustomerTypeIds(customize.customerTypes):null:null),
+      customerTypes: new FormControl(customize?customize.customerTypes?customize.customerTypes:null:null),
+      reception_field_a:new FormControl(customize?customize.reception_field_a:''),
       reception_title:new FormControl(customize?customize.reception_title:'By Receiption'),
-      reception_tel:new FormControl(customize?customize.reception_tel:'Receiption Tel'),
-      reception_date:new FormControl(customize?customize.reception_date:'Receiption Date')
+      reception_field_b:new FormControl(customize?customize.reception_field_b:''),
+      reception_field_c:new FormControl(customize?customize.reception_field_c:''),
+      reception_field_d:new FormControl(customize?customize.reception_field_d:''),
+      reception_field_e:new FormControl(customize?customize.reception_field_e:'')
     });
   }
-  updatedInvoiceTypes(){
-    if(this.customizeForm.value.invoiceTypes){
-      if(this.customizeForm.value.invoiceTypes.length == 1){
-        this.customizeForm.get('customer_type_name').setValue(this.customizeForm.value.invoiceTypes[0]['name']);
-      }else{
+  updatedcustomerTypeIds(){
+    if(this.customizeForm.value.customerTypeIds && this.customizeForm.value.customerTypeIds.length > 0){
+      if(this.customizeForm.value.customerTypeIds.length == 1){
+        const name=this.customerTypes.find(c=>c.id==this.customizeForm.value.customerTypeIds[0]).name;
+        this.customizeForm.get('customer_type_name').setValue(name);
+        this.customizeForm.value.has_customer_type=true;
+      }else if(this.customizeForm.value.customerTypeIds.length > 1){
+        this.customizeForm.value.has_customer_type=true;
         this.customizeForm.get('customer_type_name').setValue(null);
+        
       }
-    this.updateModel();
+   
+    }else{
+      this.customizeForm.value.has_customer_type=false;
     }
-
+    this.updateModel();
   }
+
+  hideVisa(){
+  this.customizeForm.value.hide_visa=!this.customizeForm.value.hide_visa;
+    return this.updateModel();
+  }
+  hideLogo(){
+    this.customizeForm.value.hide_logo=!this.customizeForm.value.hide_logo;
+      return this.updateModel();
+    }
+    hideDiscountTable(){
+      this.customizeForm.value.hide_discount_table=!this.customizeForm.value.hide_discount_table;
+        return this.updateModel();
+      }
+      hideReceptionTable(){
+        this.customizeForm.value.hide_reception_table=!this.customizeForm.value.hide_reception_table;
+          return this.updateModel();
+        }
+        hideTaxableTable(){
+          this.customizeForm.value.hide_taxable_table=!this.customizeForm.value.hide_taxable_table;
+            return this.updateModel();
+          }
   updatedCode(s){
+    this.favoriteCode=s;
     this.customizeForm.value.number=s;
     return  this.serviceModel.update(this.customizeForm.value);
   }
   updatedItem(s){
+    this.favoriteItem=s;
     this.customizeForm.value.items=s;
     return  this.serviceModel.update(this.customizeForm.value);
   }
   updatedUnit(s){
+    this.favoriteUnit=s;
     this.customizeForm.value.units=s;
     return  this.serviceModel.update(this.customizeForm.value);
   }
   updatedPrice(s){
+    this.favoritePrice=s;
     this.customizeForm.value.price=s;
     return  this.serviceModel.update(this.customizeForm.value);
   }
 
   updatedAmount(s){
+    this.favoriteAmount=s;
     this.customizeForm.value.amount=s;
     return  this.serviceModel.update(this.customizeForm.value);
   }
   updateModel(){
+    this.customizeForm.value.adherent=this.customizeForm.value.customer_name;
    return  this.serviceModel.update(this.customizeForm.value);
   }
 
   get reception_title() {
     return this.customizeForm.get("reception_title");
   }
-  get reception_name() {
-    return this.customizeForm.get("reception_name");
+
+  get reception_field_a() {
+    return this.customizeForm.get("reception_field_a");
   }
-  get reception_tel() {
-    return this.customizeForm.get("reception_tel");
+  get reception_field_b() {
+    return this.customizeForm.get("reception_field_b");
   }
-  get reception_date() {
-    return this.customizeForm.get("reception_date");
+  get reception_field_c() {
+    return this.customizeForm.get("reception_field_c");
+  }
+  get reception_field_d() {
+    return this.customizeForm.get("reception_field_d");
+  }
+  get reception_field_e() {
+    return this.customizeForm.get("reception_field_e");
   }
   get company_name() {
     return this.customizeForm.get("company_name");
   }
-  get invoiceTypes(){
-    return this.customizeForm.get("invoiceTypes");
+  get customerTypeIds(){
+    return this.customizeForm.get("customerTypeIds");
   }
    get address() {
     return this.customizeForm.get("address");
@@ -225,6 +296,9 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
   get beneficiary() {
     return this.customizeForm.get("beneficiary");
   }
+  get customer_address(){
+    return this.customizeForm.get("customer_address");
+  }
   get customer_type_name() {
     return this.customizeForm.get("customer_type_name");
   }
@@ -249,14 +323,17 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
   get is_default() {
     return this.customizeForm.get("is_default");
   }
+  get has_customer_type() {
+    return this.customizeForm.get("has_customer_type");
+  }
   get nom_signature_cachet() {
     return this.customizeForm.get("nom_signature_cachet");
   }
   get done_title() {
     return this.customizeForm.get("done_title");
   }
-  get done_where() {
-    return this.customizeForm.get("done_where");
+  get done_on() {
+    return this.customizeForm.get("done_on");
   }
   get done_at() {
     return this.customizeForm.get("done_at");
@@ -272,9 +349,31 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
   close() {
     this.router.navigate(["/admin/settings/customize-invoice"]);
   }
-  confirm(){
+  public confirm() {
+    if (!this.customizeForm.valid) return;
+    let request, payload:CustomizeInvoice = this.customizeForm.value;
 
-  }
+    this.loading.next(true);
+    payload.logo=="assets/logo/avatar.png"?null:payload.logo;
+    if (this.updating) {
+      request = this.api.update(this.data.id, payload);
+    } else {
+        request = this.api.create(payload);
+    }
+
+    request.pipe(finalize(() => this.loading.next(false)))
+        .subscribe(response => {
+            const action = this.updating ? 'updated' : 'created';
+            this.toast.open('Invoice customization has been ' + action);
+            this.shared.update(response);
+        }, error => {
+            this.handleErrors(error);
+        });
+}
+
+public handleErrors(response: {messages: object} = {messages: {}}) {
+  this.errors = response.messages || {};
+}
 
   uploadLogoModel() {
     this.modal.open(
@@ -284,6 +383,8 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
     ).beforeClose().subscribe(data => {
         if ( ! data) return;
         this.customizeForm.get('logo').setValue(data);
+        this.customizeForm.value.hide_logo=false;
+        this.updateModel();
     });
   }
   getCustomerType() {

@@ -13,8 +13,6 @@ import { CartItemComponent, CartDialog } from "./cart-item/cart-item.component";
 import { ApiPosService } from "./api/api.service";
 
 import {  HttpClientModule } from "@angular/common/http";
-import { ModelFactory } from "ngx-model";
-import { PayModule } from '../pay/pay.module';
 import { CustomersModule } from '../customers/customers.module';
 import { InvoicesModule } from '../invoices/invoices.module';
 import { PosInfiniteScrollDirective } from './pos/pos-infinite-scroll.directive';
@@ -28,6 +26,9 @@ import { ListItemHeaderComponent } from './pos/list-item-header/list-item-header
 import { PosOrderState } from '../store/states/PosOrderStates';
 import { BottomSheetOverviewStock } from './pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
 import { SelectCustomerModelComponent } from './select-customer-model/select-customer-model.component';
+import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
+import { PosSearchBarComponent } from './pos-search-bar/pos-search-bar.component';
+import { PosSearchStockStates } from '../store/states/PosSearchStockStates';
 @NgModule({
   declarations: [
     SalePointComponent,
@@ -40,7 +41,8 @@ import { SelectCustomerModelComponent } from './select-customer-model/select-cus
     PosInfiniteScrollDirective,
     PosProductsComponent,
     ListItemHeaderComponent,
-    SelectCustomerModelComponent
+    SelectCustomerModelComponent,
+    PosSearchBarComponent
   ],
   imports: [
     CommonModule,
@@ -51,8 +53,8 @@ import { SelectCustomerModelComponent } from './select-customer-model/select-cus
       CustomersModule,
       HttpClientModule,
       HttpModule,
-
-      NgxsModule.forFeature([PosCateoriesState,PosStockStates,PosOrderState]),
+      PipeModuleModule,
+      NgxsModule.forFeature([PosCateoriesState,PosStockStates,PosSearchStockStates,PosOrderState]),
     ],
   exports: [
     SessionsComponent,

@@ -42,9 +42,20 @@
 
     </mat-expansion-panel-header>
     <div class="w-100 float-right m-2">
-    <button mat-raised-button color="primary"  *ngIf="status=='pending'" (click)="updateResumedOrder(ordered)" [disabled]="ordered.is_currently_processing==1?true:false" class="m-1">RESUME</button>
-    <button mat-raised-button color="accent" *ngIf="status=='held'" (click)="updateHeldOrder(ordered)" class="m-1">UNHOLD</button>
-    <button mat-raised-button color="warn" (click)="deleteOrdered(ordered)" class="m-1 text-white">DELETE</button></div>
+    <table>
+    <tr>
+        <td>
+        <button mat-raised-button color="primary"  *ngIf="status=='pending'" (click)="updateResumedOrder(ordered)" [disabled]="ordered.is_currently_processing==1?true:false" class="m-1">RESUME</button>
+        <button mat-raised-button color="accent" *ngIf="status=='held'" (click)="updateHeldOrder(ordered)" class="m-1">UNHOLD</button>
+        <button mat-raised-button color="warn" (click)="deleteOrdered(ordered)" class="m-1 text-white">DELETE</button>
+        </td>
+        <td *ngIf="ordered.invoice">
+        <button mat-raised-button  class="button"  *ngIf="!ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"   trans>Print Preview Invoice</button>
+        <button mat-raised-button  class="button"  *ngIf="ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"  trans>Print Preview {{ordered.invoice.printFormat[0].customer_type_name}} Invoice</button>
+        </td>
+      </tr>
+      </table>
+    </div>
     <div *ngIf="ordered.order_items.length > 0">
 
       <table class="w-100">

@@ -13,6 +13,8 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
 import { NgxsModule } from '@ngxs/store';
 import { PosOrderState } from '../store/states/PosOrderStates';
 import { OrderHeldComponent } from './order-held/order-held.component';
+import { PreviewOrderInvoiceComponent } from './orders/preview-order-invoice/preview-order-invoice.component';
+import { PrintOutModule } from '../print-out/print-out.module';
 
 @NgModule({
   declarations:
@@ -21,7 +23,8 @@ import { OrderHeldComponent } from './order-held/order-held.component';
   OrderListComponent,
   OrderOrderedComponent,
   OrderCompleteComponent,
-  OrderHeldComponent
+  OrderHeldComponent,
+  PreviewOrderInvoiceComponent
   ],
   exports:
   [
@@ -31,6 +34,7 @@ import { OrderHeldComponent } from './order-held/order-held.component';
   OrderCompleteComponent,
   OrderHeldComponent
   ],
+  entryComponents: [PreviewOrderInvoiceComponent],
   imports:
   [
     CommonModule,
@@ -41,6 +45,7 @@ import { OrderHeldComponent } from './order-held/order-held.component';
     FormsModule,
     OrderRoutingModule,
     DataTableModule,
+    PrintOutModule,
     NgxsModule.forFeature([PosOrderState]),
   ]
 })

@@ -20,6 +20,8 @@ export interface Customer {
   insurance_expiration_date?: string;
   organization?: string;
   cstomer_no?: string;
+  department?:string;
+  beneficiary?:string;
   customer_insurance_number?: string;
   create_by?: string;
   misc?: string;

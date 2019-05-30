@@ -8,7 +8,7 @@ import { Invoice, Status, PaymentMethod } from '../../invoices/invoice';
 import { randomString } from '../../common/core/utils/random-string';
 import { Select, Store } from '@ngxs/store';
 import { PosOrderState } from '../../store/states/PosOrderStates';
-import { CurrentOrder, CreateInvoice } from '../../store/actions/pos-Order.action';
+import { CurrentOrder, CreateInvoice, InvoiceDetails } from '../../store/actions/pos-Order.action';
 import { Customer } from '../../customers/customer';
 @Component({
   selector: 'app-pay',
@@ -25,7 +25,7 @@ export class PayComponent implements OnInit {
   amount_return_color:string='black';
   d_amount_return_color:string='black';
   currently_ordered:Orders=null;
-
+  preview:boolean=false;
   @Select(PosOrderState.selectedOrders) current_order$: Observable<Orders>;
   @Select(PosOrderState.loading) loading$: Observable<boolean>;
   @Select(PosOrderState.customerOrder) customer$: Observable<Customer>;
@@ -40,7 +40,7 @@ export class PayComponent implements OnInit {
   ){ }
 
   ngOnInit() {
-
+    this.store.dispatch(new InvoiceDetails(null));
     if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
     }
@@ -154,6 +154,7 @@ loadCustomer(){
       if(this.amount_return_color =='red'){
           alert('Amount paid is less than amount due.');
       }else{
+        this.store.dispatch(new InvoiceDetails(null));
         const forming_invoice:Invoice={
           invoice_no:randomString(6),
           invoice_date:new Date(),
@@ -179,17 +180,8 @@ loadCustomer(){
     }
 
     }
-    PrintInvoice(){
-      this.invoice$.subscribe(invoice=>{
-        if(invoice){
-          this.canPrintOut=true;
-        }
-      });
-    }
+   
 
-    checkChanges(event:boolean){
-        this.canPrintOut=event;
-    }
 
 
 

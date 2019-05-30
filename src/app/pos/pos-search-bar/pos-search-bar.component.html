@@ -1,0 +1,30 @@
+<form class="search-container" [class.autoHover]="'true'">
+    <input type="text" autofocus="" [matAutocomplete]="auto" [class.autoHover]="'true'"  [formControl]="formControl" placeholder="Search Box" #trigger trans-placeholder>
+    <button type="button" mat-icon-button class="search-icon">
+        <mat-icon svgIcon="search"></mat-icon>
+    </button>
+    <button type="button" mat-icon-button class="cancel-icon" *ngIf="formControl.value" (click)="resetForm()">
+        <mat-icon svgIcon="close"></mat-icon>
+    </button>
+</form>
+ <mat-autocomplete #auto="matAutocomplete" class="file-types-autocomplete mat-elevation-z1" >
+ <loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
+      <mat-option *ngFor="let stock of results | async" [value]="stock.name">
+                    <span class="ellipsis">{{stock.name}} </span>
+                    <div *ngIf="stock.customer_price" class="text-info text-center ellipsis">
+                      <small class="small">{{stock.customer_type.name}}</small>
+                     
+                      <small class="ellipsis">
+                       <span class="small">{{business.currency_code}} {{stock.customer_price.sale_price_including_tax}}</span>
+                     
+                        <span class="ellipsis small">
+                            {{stock.available_stock_qty}} Qty
+                        </span>
+                        <span class="ellipsis small"> {{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %</span>
+                  
+                    </small>
+                </div>
+
+                       
+      </mat-option>
+    </mat-autocomplete>

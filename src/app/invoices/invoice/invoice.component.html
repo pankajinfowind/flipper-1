@@ -76,12 +76,15 @@
 
 
 
-  <!-- <ng-container matColumnDef="edit">
+  <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let invoice">
-          <button mat-icon-button (click)="showCrupdateInvoiceModal(invoice)"  [matTooltip]="'Edit invoice' | trans">
-              <mat-icon svgIcon="edit"></mat-icon>
+          <button mat-icon-button  [matTooltip]="'More action...' | trans" [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
           </button>
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="showPreviewInvoiceModal(invoice)" [matTooltip]="'Preview Invoice' | trans"><mat-icon>print</mat-icon> Preview Invoice</button>
+          </mat-menu>
       </mat-cell>
-  </ng-container> -->
+  </ng-container>
 </data-table>

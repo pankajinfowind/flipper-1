@@ -22,11 +22,14 @@ number?: string;
 adherent?: string;
 done_at?: string;
 done_title?:string;
+done_on?:string;
 nom_signature_cachet?: string;
 reception_title?: string;
-reception_name?: string;
-reception_tel?: string;
-reception_date?: string;
+reception_field_a?: string;
+reception_field_b?: string;
+reception_field_c?: string;
+reception_field_d?: string;
+reception_field_e?: string;
 customer_name?: string;
 customer_number?: string;
 customer_dob?: string;
@@ -40,8 +43,10 @@ hide_reception_table?: boolean;
 hide_visa?: boolean;
 hide_logo?: boolean;
 is_default?: boolean;
+has_customer_type?:boolean;
 business_id?:number;
-invoiceTypes?:Array<CustomerType>;
+customerTypeIds?:Array<number>;
+customerTypes?:Array<CustomerType>;
 
   constructor(params: Object = {}) {
     for (let name in params) {

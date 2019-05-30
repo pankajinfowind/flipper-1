@@ -436,7 +436,7 @@ export class GlobalVariables {
     get redirectUrl(): string {
         return this.redirect_url;
     }
-    webTitle(title = 'Flipper') {
+    webTitle(title = 'Flipper-') {
         return this.localStorage.set('flipper-title',title);
     }
 

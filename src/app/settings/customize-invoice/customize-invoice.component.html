@@ -30,7 +30,7 @@
     <ng-container matColumnDef="edit">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let customize">
-            <button mat-icon-button (click)="showCrupdateCustomizeInvoiceModal(customize)"  [matTooltip]="'Edit Customize Invoice' | trans">
+            <button mat-icon-button (click)="updateInvoiceCustomization(customize)"  [matTooltip]="'Edit Customize Invoice' | trans">
                 <mat-icon svgIcon="edit"></mat-icon>
             </button>
         </mat-cell>

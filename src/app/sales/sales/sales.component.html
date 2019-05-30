@@ -2,7 +2,7 @@
 <mat-sidenav-container class="content">
   <mat-sidenav [opened]="!leftColumnIsHidden" mode="side" class="left-column">
     <mat-list class="menu-items"  *ngFor="let link of links">
-        <a class="menu-item" [routerLink]="link.path" [class.active]="localStorage.get('sales-path')==link.path">
+        <a class="menu-item" [routerLink]="link.path" [class.active]="localStorage.get('sales-path')==link.path" (click)="updateTitle(link.menu)">
             <mat-icon >{{link.icon}}</mat-icon>
             <span class="text" trans>{{link.menu}}</span>
         </a>

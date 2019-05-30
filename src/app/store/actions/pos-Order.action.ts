@@ -42,6 +42,13 @@ export class CreateInvoice implements InvoiceAction{
 
 }
 
+export class InvoiceDetails implements InvoiceAction{
+  static readonly type = '[ORDER] Invoice Details';
+  constructor(public invoice:Invoice ){
+   }
+
+}
+
 
 export interface LoadOrderEntriesAction {
   queryParams?: OrdersApiIndexParams;

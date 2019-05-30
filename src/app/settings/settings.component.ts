@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalVariables } from '../common/core/global-variables';
 
 @Component({
   selector: 'app-settings',
@@ -16,9 +17,11 @@ export class SettingsComponent implements OnInit {
       menu:'Invoices Customization',icon:'assignment',path:'customize-invoice',
     }
   ];
-  constructor() { }
+  constructor(public v: GlobalVariables) { }
 
   ngOnInit() {
   }
-
+  updateTitle(title){
+    this.v.webTitle(title);
+  }
 }

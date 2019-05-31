@@ -79,7 +79,7 @@
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let invoice">
-          <button mat-icon-button  [matTooltip]="'More action...' | trans" [matMenuTriggerFor]="appMenu">
+          <button mat-icon-button  [matTooltip]="'More action...' | trans" [matMenuTriggerFor]="appMenu"  *ngIf="invoice && invoice.printFormat">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #appMenu="matMenu">

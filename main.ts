@@ -8,7 +8,6 @@ import { windowStateKeeper } from "./win-state-keeper";
 
 //TODO: make sure to fix icon thing it is not building
 
-
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === "--serve");

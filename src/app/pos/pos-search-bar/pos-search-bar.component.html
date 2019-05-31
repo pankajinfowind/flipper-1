@@ -1,5 +1,5 @@
-<form class="search-container" [class.autoHover]="'true'">
-    <input type="text" autofocus="" [matAutocomplete]="auto" [class.autoHover]="'true'"  [formControl]="formControl" placeholder="Search product" #trigger trans-placeholder>
+<form class="search-container" [class.autoHover]="'true'" (ngSubmit)="openSearchPage({query: formControl.value})">
+    <input type="text" autofocus="" [matAutocomplete]="auto" [class.autoHover]="'true'" (input)="openSearchPage({query: formControl.value})"   [formControl]="formControl" placeholder="Search product" #trigger trans-placeholder>
     <button type="button" mat-icon-button class="search-icon">
         <mat-icon svgIcon="search"></mat-icon>
     </button>
@@ -7,13 +7,14 @@
         <mat-icon svgIcon="close"></mat-icon>
     </button>
 </form>
- <mat-autocomplete #auto="matAutocomplete" class="file-types-autocomplete mat-elevation-z1">
+ <mat-autocomplete #auto="matAutocomplete" class="file-types-autocomplete mat-elevation-z1" (optionSelected)="executeAction($event)">
  <loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
- <div  *ngIf="(results | async).length > 0">
-      <mat-option *ngFor="let stock of removeDups(results | async)" [value]="stock.name" 
+ <div  *ngIf="(entries$ | async).length > 0">
+      <mat-option *ngFor="let stock of removeDups(entries$ | async)" [value]="stock.name" 
        matTooltip="{{stock.name}}"
                     [matTooltipPosition]="'left'"
-                    aria-label="stock.name"   matRipple
+                    aria-label="stock.name"   
+                    matRipple
                     [matRippleCentered]="centered"
                     [matRippleDisabled]="disabled"
                     [matRippleUnbounded]="unbounded"

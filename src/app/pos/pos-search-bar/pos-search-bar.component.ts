@@ -10,7 +10,7 @@ import { PosSearchStockStates } from '../../store/states/PosSearchStockStates';
 import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
 import { ApiPosService } from '../api/api.service';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet, MatAutocompleteSelectedEvent } from '@angular/material';
 import { CurrentOrder } from '../../store/actions/pos-Order.action';
 import { Orders } from '../../orders/orders';
 import { BottomSheetOverviewStock } from '../pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
@@ -30,7 +30,7 @@ export class PosSearchBarComponent implements OnInit
   @ViewChild('trigger', {read: ElementRef}) trigger: ElementRef;
   formControl = new FormControl();
   //public results: BehaviorSubject<State[]> = new BehaviorSubject([]);
-  public results: Observable<Stock[]>;
+  public results: Observable<any>;
   private lastQuery: string;
   public dispaly_autocomplete:boolean=false;
   states: Stock[] = [
@@ -59,7 +59,8 @@ states2: Stock[] = [
   selectedItem=null;
   customer:Customer=null;
   constructor(private api: ApiPosService,private bottomSheet: MatBottomSheet,private store:Store,public currentUser: CurrentUser) {
-
+    this.searchableResults();
+    this.allItems();
    }
 
 
@@ -76,42 +77,30 @@ states2: Stock[] = [
         }
       });
     }
-
-    this.searchableResults();
-    this.allItems();
-    this.results = this.formControl.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        startWith(''),
-        map(state => state ? this._filterStates(state): this.states.slice())
-      );
+    this.formControl.valueChanges
+    .pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      startWith(''),
+      map(state => state ? this.openSearchPage(state): this.searchableResults())
+    );
   }
+  public executeAction(e: MatAutocompleteSelectedEvent) {
+    this.trigger.nativeElement.blur();
+  }
+
   percentage(num,num1) {
     let sum=Math.round(parseInt(num) *100)/parseInt(num1);
   return isNaN(sum)?0:sum.toFixed(1);
 }
   private searchableResults(){
     this.store.dispatch(new LoadSearchableStockEntries());
-    this.entries$.subscribe(res=>this.states.push(...res));
   }
   private allItems(){
     this.items_entries$.subscribe(res=>this.states2.push(...res));
   }
-  private _filterStates(value: string): Stock[] {
-    const filterValue = value.toLowerCase();
-    if(this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0).length > 0){
-      return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
-    }else if (this.states2.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0).length > 0){
-      return this.states2.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
-    }else{
-      this.store.dispatch(new LoadSearchableStockEntries({query:filterValue}));
-      this.searchableResults();
-      if(this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0).length > 0){
-        return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
-      }
-    }
-
+  public openSearchPage(params){
+    this.store.dispatch(new LoadSearchableStockEntries(params));
   }
 
   removeDups(data: Stock[]=[]) {

@@ -18,9 +18,7 @@ centered = false;
     this.stocks=data['stock_movemts'].filter(d=>!d['is_expired']);
     this.stock_name=data['stock_name'];
   }
-  applyFilter(filterValue: string) {
-    this.stocks.filter(s=>s.total_qty===filterValue.trim().toLowerCase() || s.out_qty===filterValue.trim().toLowerCase() || s.in_qty===filterValue.trim().toLowerCase() || s.batch_no===filterValue.trim().toLowerCase() || s.expired_date===filterValue.trim().toLowerCase());
-  }
+
 
   openLink(data,event: MouseEvent): void {
     this.bottomSheetRef.dismiss(data);

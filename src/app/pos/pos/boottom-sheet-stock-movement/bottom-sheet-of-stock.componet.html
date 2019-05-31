@@ -1,10 +1,6 @@
-<!-- <mat-form-field class="w-100 px-2">
-  <input
-    matInput
-    (keyup)="applyFilter($event.target.value)"
-    placeholder="Search by batch no, in qty, out_qty, total qty or expired date"
-    />
-</mat-form-field> -->
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title  trans> {{stock_name}} product</h2>
+</div>
 <mat-divider></mat-divider>
 <mat-nav-list *ngFor="let stock of stocks">
   <a mat-list-item (click)="openLink(stock,$event)"  matRipple
@@ -21,7 +17,13 @@
         <mat-chip color="primary" selected>total({{stock.total_qty}})</mat-chip>
       </mat-chip-list>
     </span>
-    <span  mat-line class="col-12"><div style="float:right"><label *ngIf="stock.expired_date">expired at:{{stock.expired_date | date: 'mediumDate'}}, </label><label>created at:{{stock.created_at | date: 'mediumDate'}}</label></div></span>
+    <span  mat-line class="col-12"><div style="float:right"><label *ngIf="stock.expired_date!='1970-01-01 00:00:00'">expired at:{{stock.expired_date | date: 'mediumDate'}}, </label><label>created at:{{stock.created_at | date: 'mediumDate'}}</label></div></span>
   </a>
   <mat-divider></mat-divider>
 </mat-nav-list>
+
+<div class="text" *ngIf="stocks.length == 0">
+    <div class="main">
+      {{stock_name}} item was Expired.
+    </div>
+</div>

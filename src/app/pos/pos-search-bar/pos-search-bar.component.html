@@ -1,5 +1,5 @@
 <form class="search-container" [class.autoHover]="'true'">
-    <input type="text" autofocus="" [matAutocomplete]="auto" [class.autoHover]="'true'"  [formControl]="formControl" placeholder="Search Box" #trigger trans-placeholder>
+    <input type="text" autofocus="" [matAutocomplete]="auto" [class.autoHover]="'true'"  [formControl]="formControl" placeholder="Search product" #trigger trans-placeholder>
     <button type="button" mat-icon-button class="search-icon">
         <mat-icon svgIcon="search"></mat-icon>
     </button>
@@ -9,7 +9,15 @@
 </form>
  <mat-autocomplete #auto="matAutocomplete" class="file-types-autocomplete mat-elevation-z1" >
  <loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
-      <mat-option *ngFor="let stock of results | async" [value]="stock.name">
+      <mat-option *ngFor="let stock of removeDups(results | async)" [value]="stock.name" 
+       matTooltip="{{stock.name}}"
+                    [matTooltipPosition]="'left'"
+                    aria-label="stock.name"   matRipple
+                    [matRippleCentered]="centered"
+                    [matRippleDisabled]="disabled"
+                    [matRippleUnbounded]="unbounded"
+                    [matRippleRadius]="radius"
+                    [matRippleColor]="color" (click)="addItemToCart(stock)" [class.isactive]="selectedItem && selectedItem.id==stock.id">
                     <span class="ellipsis">{{stock.name}} </span>
                     <div *ngIf="stock.customer_price" class="text-info text-center ellipsis">
                       <small class="small">{{stock.customer_type.name}}</small>

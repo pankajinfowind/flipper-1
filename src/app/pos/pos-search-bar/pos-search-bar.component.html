@@ -7,8 +7,9 @@
         <mat-icon svgIcon="close"></mat-icon>
     </button>
 </form>
- <mat-autocomplete #auto="matAutocomplete" class="file-types-autocomplete mat-elevation-z1" >
+ <mat-autocomplete #auto="matAutocomplete" class="file-types-autocomplete mat-elevation-z1">
  <loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
+ <div  *ngIf="(results | async).length > 0">
       <mat-option *ngFor="let stock of removeDups(results | async)" [value]="stock.name" 
        matTooltip="{{stock.name}}"
                     [matTooltipPosition]="'left'"
@@ -35,4 +36,5 @@
 
                        
       </mat-option>
+      </div>
     </mat-autocomplete>

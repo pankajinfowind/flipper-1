@@ -81,6 +81,8 @@ states2: Stock[] = [
     this.allItems();
     this.results = this.formControl.valueChanges
       .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
         startWith(''),
         map(state => state ? this._filterStates(state): this.states.slice())
       );
@@ -112,9 +114,9 @@ states2: Stock[] = [
   
   }
   
-  removeDups(data: Array<any>) {
+  removeDups(data: Array<any>=[]) {
     let obj = {};
-    if(data.length==0) return [];
+    if(data && data.length==0) return [];
     data = Object.keys(data.reduce((prev, next) => {
       if (!obj[next.id]) obj[next.id] = next;
       return obj;

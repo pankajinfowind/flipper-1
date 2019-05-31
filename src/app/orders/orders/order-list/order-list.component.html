@@ -50,8 +50,8 @@
         <button mat-raised-button color="warn" (click)="deleteOrdered(ordered)" class="m-1 text-white">DELETE</button>
         </td>
         <td *ngIf="ordered.invoice">
-        <button mat-raised-button  class="button"  *ngIf="!ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"   trans>Print Preview Invoice</button>
-        <button mat-raised-button  class="button"  *ngIf="ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"  trans>Print Preview {{ordered.invoice.printFormat[0].customer_type_name}} Invoice</button>
+        <button mat-raised-button  class="button"  *ngIf="ordered.invoice && ordered.invoice.printFormat && !ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"   trans>Print Preview Invoice</button>
+        <button mat-raised-button  class="button"  *ngIf="ordered.invoice && ordered.invoice.printFormat && ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"  trans>Print Preview {{ordered.invoice.printFormat[0].customer_type_name}} Invoice</button>
         </td>
       </tr>
       </table>

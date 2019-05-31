@@ -155,8 +155,7 @@
                         <th>Items</th><td>
                             <mat-radio-group
                                   aria-labelledby="radio-group-label"
-                                  class="radio-group"
-                                  [(ngModel)]="favoriteItem">
+                                  class="radio-group">
                                   <mat-radio-button class="radio-button" *ngFor="let item of _items" [value]="item" [checked]="item === 'Items'"  (change)="updatedItem(item)">
                                     {{item}}
                                   </mat-radio-button>
@@ -171,8 +170,7 @@
                         <th>Units</th><td>
                             <mat-radio-group
                                   aria-labelledby="radio-group-label"
-                                  class="radio-group"
-                                  [(ngModel)]="favoriteUnit">
+                                  class="radio-group">
                                   <mat-radio-button class="radio-button" *ngFor="let unit of _units" [value]="unit" [checked]="unit === 'Quantity'" (change)="updatedUnit(unit)">
                                     {{unit}}
                                   </mat-radio-button>
@@ -189,8 +187,7 @@
 
                             <mat-radio-group
                             aria-labelledby="radio-group-label"
-                            class="radio-group"
-                            [(ngModel)]="favoritePrice">
+                            class="radio-group">
                             <mat-radio-button class="radio-button" *ngFor="let price of prices" [value]="price" [checked]="price === 'Price'" (change)="updatedPrice(price)">
                               {{price}}
                             </mat-radio-button>
@@ -206,8 +203,7 @@
                         <th>Amount</th><td>
                             <mat-radio-group
                             aria-labelledby="radio-group-label"
-                            class="radio-group"
-                            [(ngModel)]="favoriteAmount">
+                            class="radio-group">
                             <mat-radio-button class="radio-button" *ngFor="let amount of amounts" [value]="amount" [checked]="amount === 'Amount'" (change)="updatedAmount(amount)">
                               {{amount}}
                             </mat-radio-button>

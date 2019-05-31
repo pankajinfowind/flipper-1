@@ -1,5 +1,5 @@
 <button mat-raised-button  class="button" style="float:right;margin-right:20px" (click)="printInvoice('invoice')"  trans>Print Preview</button>
-<div style="min-width:600px;" id="invoice">
+<div style="min-width:600px;" id="invoice" *ngIf="(invoice$ | async)">
   <div class="invoice-box">
     <div class="printSection">
       <div style="min-width:600px;">

@@ -107,7 +107,7 @@ export class PosStockStates {
       return ctx.patchState({ loading: false });
     }));
   }
-  removeDups(data: Array<any>) {
+  removeDups(data: Stock[]=[]) {
       let obj = {};
       data = Object.keys(data.reduce((prev, next) => {
         if (!obj[next.id]) obj[next.id] = next;

@@ -25,7 +25,7 @@ import { Customer } from '../../customers/customer';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PosSearchBarComponent implements OnInit 
+export class PosSearchBarComponent implements OnInit
 {
   @ViewChild('trigger', {read: ElementRef}) trigger: ElementRef;
   formControl = new FormControl();
@@ -43,7 +43,7 @@ states2: Stock[] = [
 
   @Select(PosOrderState.selectedOrders) current_order$: Observable<Orders>;
   @Select(PosOrderState.customerOrder) customer$: Observable<Customer>;
-  
+
   business: Business;
   centered = false;
   disabled = false;
@@ -59,10 +59,10 @@ states2: Stock[] = [
   selectedItem=null;
   customer:Customer=null;
   constructor(private api: ApiPosService,private bottomSheet: MatBottomSheet,private store:Store,public currentUser: CurrentUser) {
-    
+
    }
 
-   
+
   ngOnInit() {
     if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
@@ -76,7 +76,7 @@ states2: Stock[] = [
         }
       });
     }
-    
+
     this.searchableResults();
     this.allItems();
     this.results = this.formControl.valueChanges
@@ -103,7 +103,7 @@ states2: Stock[] = [
     if(this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0).length > 0){
       return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
     }else if (this.states2.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0).length > 0){
-      return this.states2.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0); 
+      return this.states2.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
     }else{
       this.store.dispatch(new LoadSearchableStockEntries({query:filterValue}));
       this.searchableResults();
@@ -111,10 +111,10 @@ states2: Stock[] = [
         return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
       }
     }
-  
+
   }
-  
-  removeDups(data: Array<any>=[]) {
+
+  removeDups(data: Stock[]=[]) {
     let obj = {};
     if(data && data.length==0) return [];
     data = Object.keys(data.reduce((prev, next) => {
@@ -123,7 +123,7 @@ states2: Stock[] = [
     }, obj)).map((i) => obj[i]);
     return data.reverse();
   };
- 
+
   public resetForm() {
     this.formControl.reset();
     this.searchableResults();

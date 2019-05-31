@@ -19,7 +19,7 @@ export class PosStockStates {
     return state.data;
   }
 
-  
+
   @Selector()
   static selectedStock(state: PosStockState) {
     return state.stock;
@@ -107,7 +107,7 @@ export class PosStockStates {
       return ctx.patchState({ loading: false });
     }));
   }
-  removeDups(data: Array<any>) {
+  removeDups(data: Stock[]=[]) {
       let obj = {};
       data = Object.keys(data.reduce((prev, next) => {
         if (!obj[next.id]) obj[next.id] = next;
@@ -115,5 +115,5 @@ export class PosStockStates {
       }, obj)).map((i) => obj[i]);
       return data.reverse();
     };
-  
+
  }

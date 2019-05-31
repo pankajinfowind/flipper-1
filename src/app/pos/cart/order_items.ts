@@ -22,6 +22,7 @@ export class OrderItems {
   refund_reason_id?:number;
   item?: string;
   tax?: number;
+  item_code?:string;
   note?: string;
   batch_no?:string;
   reason_id?:number;

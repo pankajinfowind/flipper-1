@@ -39,6 +39,10 @@ ngOnDestroy() {
 newInvoiceCustomization(){
   this.router.navigate(["/admin/settings/new-customize-invoice"]);
 }
+updateInvoiceCustomization(data){
+this.shared.update(data);
+this.router.navigate(["/admin/settings/new-customize-invoice"]);
+}
 /**
      * Delete currently selected users.
      */

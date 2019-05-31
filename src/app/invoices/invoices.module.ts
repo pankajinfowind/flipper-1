@@ -9,9 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { UiModule } from '../common/core/ui/ui.module';
 import { NoEntryFoundMasterComponent } from './messages/no-entry-found/no-entry-found.component';
 import { DataTableModule } from '../data-table/data-table/data-table.module';
+import { InvoicePreviewComponent } from './invoice-preview/invoice-preview.component';
+import { PrintOutModule } from '../print-out/print-out.module';
 
 @NgModule({
-  declarations: [InvoiceComponent,NoEntryFoundMasterComponent],
+  declarations: [InvoiceComponent,NoEntryFoundMasterComponent, InvoicePreviewComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -19,8 +21,10 @@ import { DataTableModule } from '../data-table/data-table/data-table.module';
     MaterialModule,
     FormsModule,
     UiModule,
+    PrintOutModule,
     InvoiceRoutingModule,DataTableModule
   ],
+  entryComponents: [InvoicePreviewComponent],
   bootstrap: [InvoiceComponent]
 })
 export class InvoicesModule { }

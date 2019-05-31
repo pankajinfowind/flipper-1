@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { MatSort } from '@angular/material';
+import { MatSort, MatDialog } from '@angular/material';
 import {finalize } from 'rxjs/operators';
 import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-table-source';
 import { SharedModelService } from '../../shared-model/shared-model-service';
@@ -11,6 +11,7 @@ import { Invoice } from '../invoice';
 import { InvoiceService } from '../invoice.service';
 import { GlobalVariables } from '../../common/core/global-variables';
 import { LocalStorage } from '../../common/core/services/local-storage.service';
+import { InvoicePreviewComponent } from '../invoice-preview/invoice-preview.component';
 
 @Component({
   selector: 'app-invoice',
@@ -24,7 +25,8 @@ export class InvoiceComponent implements OnInit, OnDestroy{
 
   public dataSource: PaginatedDataTableSource<Invoice>;
   public loading = new BehaviorSubject(false);
-  constructor(public v: GlobalVariables,public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:InvoiceService,private localStorage: LocalStorage) {
+  constructor(public v: GlobalVariables,public shared:SharedModelService, public paginator: UrlAwarePaginator,private modal: Modal,private api:InvoiceService,private localStorage: LocalStorage,
+    public dialog: MatDialog) {
     this.localStorage.set('sales-path', 'invoices');
   }
 
@@ -73,17 +75,11 @@ export class InvoiceComponent implements OnInit, OnDestroy{
      * Show modal for editing user if user is specified
      * or for creating a new user otherwise.
      */
-    public showCrupdateInvoiceModal(invoice?: Invoice) {
-      // this.shared.update(invoice);
-      // this.modal.open(
-      //   CrupdateInvoiceModalComponent,
-      //     {invoice},
-      //     'crupdate-Invoice-modal-container'
-      // ).beforeClose().subscribe(data => {
-      //   this.shared.remove();
-      //     if ( ! data) return;
-      //     this.paginator.refresh();
-      // });
+    public showPreviewInvoiceModal(invoice?: Invoice) {
+    this.dialog.open(InvoicePreviewComponent, {
+      width: '1200px',
+      data: invoice?invoice:null
+    });
   }
 
 

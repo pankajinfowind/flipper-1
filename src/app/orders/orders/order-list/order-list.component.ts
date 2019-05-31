@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
 import { Orders } from '../../orders';
-import { MatSort } from '@angular/material';
+import { MatSort, MatDialog } from '@angular/material';
 import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Business } from '../../../business/api/business';
@@ -15,6 +15,8 @@ import { Store, Select } from '@ngxs/store';
 import { LoadOrderEntries, CurrentOrder } from '../../../store/actions/pos-Order.action';
 import { PosOrderState } from '../../../store/states/PosOrderStates';
 import { ApiPosService } from '../../../pos/api/api.service';
+import { Invoice } from '../../../invoices/invoice';
+import { PreviewOrderInvoiceComponent } from '../preview-order-invoice/preview-order-invoice.component';
 @Component({
   selector: 'order-list',
   templateUrl: './order-list.component.html',
@@ -52,17 +54,12 @@ export class OrderListComponent implements OnInit, OnDestroy {
 
   @Select(PosOrderState.loading) loading$: Observable<boolean>;
   panelOpenState:boolean=false;
-  constructor(private router: Router,private api: ApiPosService,private store:Store,public currentUser: CurrentUser,public paginator: UrlAwarePaginator) { }
+  constructor(public dialog: MatDialog,private router: Router,private api: ApiPosService,private store:Store,public currentUser: CurrentUser,public paginator: UrlAwarePaginator) { }
 
   ngOnInit() {
     if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
     }
-  //   this.dataSource = new PaginatedDataTableSource<Orders>({
-  //     uri: this.url,
-  //     dataPaginator: this.paginator,
-  //     matSort: this.matSort
-  // });
     this.loadOrder();
   }
 
@@ -139,5 +136,10 @@ export class OrderListComponent implements OnInit, OnDestroy {
       );
     }
   }
-
+  public showPreviewInvoiceModal(invoice?: Invoice) {
+    this.dialog.open(PreviewOrderInvoiceComponent, {
+      width: '1200px',
+      data: invoice?invoice:null
+    });
+  }
 }

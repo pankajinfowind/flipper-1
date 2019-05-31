@@ -1,6 +1,7 @@
 import { OrderItems } from '../pos/cart/order_items';
 import { Customer } from '../customers/customer';
 import { CustomerType } from '../setup/customerType/api/CustomerType';
+import { Invoice } from '../invoices/invoice';
 
 export class Orders {
 
@@ -17,6 +18,7 @@ export class Orders {
   order_items?: OrderItems[] = [];
   branch_id?: number;
   business_id?: number;
+  invoice?:Invoice;
 
   constructor(params: Object = {}) {
     for (let name in params) {

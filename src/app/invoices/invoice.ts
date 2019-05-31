@@ -4,6 +4,8 @@ import { TAXRATE } from '../setup/tax-rates/api/tax-rate';
 import { Branch } from '../admin/master/branch/api/branch';
 import { Customer } from '../customers/customer';
 import { CustomerType } from '../setup/customerType/api/CustomerType';
+import { CustomizeInvoice } from '../settings/customize-invoice/customize-invoice';
+import { Business } from '../business/api/business';
 
 
 export class Invoice {
@@ -37,7 +39,8 @@ export class Invoice {
   company_total_amount_discount?:any;
   company_discount_value?:any;
   customer_type_discount_value?:any;
-
+  printFormat?:Array<CustomizeInvoice>;
+  business?:Business;
   constructor(params: Object = {}) {
     for (let name in params) {
       this[name] = params[name];

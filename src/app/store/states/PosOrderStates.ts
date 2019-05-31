@@ -3,7 +3,7 @@
 import { tap } from 'rxjs/internal/operators/tap';
 import { PosOrdersState, OrdersApiIndexParams } from '../model/pos-order-state-model';
 import { POS_ORDER_STATE_MODEL_DEFAULTS } from '../model/pos-order-state';
-import { LoadOrderEntriesAction, LoadMoreOrderEntries, LoadOrderEntries, OrderAction, CurrentOrder, LoadCurrentOrder, CustomerOrder, CustomerAction, CreateInvoice, InvoiceAction } from '../actions/pos-Order.action';
+import { LoadOrderEntriesAction, LoadMoreOrderEntries, LoadOrderEntries, OrderAction, CurrentOrder, LoadCurrentOrder, CustomerOrder, CustomerAction, CreateInvoice, InvoiceAction, InvoiceDetails } from '../actions/pos-Order.action';
 import { ApiOrderService } from '../../orders/orders/api/api.service';
 import { Orders } from '../../orders/orders';
 import { finalize } from 'rxjs/operators';
@@ -89,16 +89,23 @@ export class PosOrderState {
   }
   @Action(CreateInvoice)
   createInvoices(ctx: StateContext<PosOrdersState>, action: InvoiceAction){
-    const currentState= ctx.getState();
     ctx.patchState({ loading: true });
 
    return this.api.createInvoice(action.invoice).pipe(tap(response => {
-      currentState.invoice=response as Invoice;
-      currentState.loading=false;
-        ctx.patchState(currentState as Partial<PosOrdersState>);
-        return  this.store.dispatch(new CurrentOrder());
+        this.store.dispatch(new InvoiceDetails(response as Invoice));
+         this.store.dispatch(new CurrentOrder());
+        return this;
     }));
   }
+
+  @Action(InvoiceDetails)
+  invoicesDetails(ctx: StateContext<PosOrdersState>, action: InvoiceAction){
+    const oldState = ctx.getState();
+    oldState.invoice=action.invoice;
+    oldState.loading=false;
+ return ctx.patchState(oldState);
+  }
+  
 
   @Action(LoadOrderEntries)
   @Action(LoadMoreOrderEntries)

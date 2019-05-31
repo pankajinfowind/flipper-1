@@ -6,7 +6,7 @@ import { CustomizeInvoice } from './customize-invoice';
 @Injectable({
   providedIn: 'root'
 })
-export class CustomizeInvoiceService {
+export class CustomizeInvoicePreviewDataService {
   private model: Model<CustomizeInvoice>;
   invoice$: Observable<CustomizeInvoice>;
 

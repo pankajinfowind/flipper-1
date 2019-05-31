@@ -104,17 +104,16 @@
           <li class="button-group__button flipper-pay-panel__list-button">
             <div (click)="payingInvoice()" class="flipper-pay-panel__list-button-label">Cash</div>
           </li>
-          <li class="button-group__button flipper-pay-panel__list-button">
-            <div (click)="PrintInvoice()" class="flipper-pay-panel__list-button-label">MMI Print</div>
-          </li>
-
           <!-- <li (click)="payingInvoice('Other')" class="button-group__button flipper-pay-panel__list-button">
             <div class="flipper-pay-panel__list-button-label">Gift Voucher</div>
           </li> -->
         </ul>
-        <ul class="button-group button-group--inline flipper-pay-buttons"></ul>
+        <ul class="button-group button-group--inline flipper-pay-buttons">
+        
+        </ul>
       </div>
+      <app-print-invoice [preview]="preview"></app-print-invoice>
     </div>
   </div>
 </div>
-<app-print-invoice [canPrintOut]="canPrintOut" *ngIf="(invoice$ | async) && canPrintOut" [invoice]="invoice$ | async" (valueChange)="checkChanges($event)"></app-print-invoice>
+

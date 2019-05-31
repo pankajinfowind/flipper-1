@@ -14,6 +14,13 @@ export class LoadMoreStockEntries implements LoadStockEntriesAction{
 
     }
 }
+export class LoadSearchableStockEntries implements LoadStockEntriesAction{
+  static readonly type = '[STOCK] Load Searchable Stock Entries';
+
+  constructor(public queryParams: StockApiIndexParams = {}){
+
+    }
+}
 
 export class OpenPosStock implements StockIdAction{
   static readonly type = '[STOCK] Open Stock Entries';

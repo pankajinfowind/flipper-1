@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BootstrapperSetUp } from './bootstrapper.service';
 import { Details } from '../details/details';
 import { DetailsService } from '../details/details.service';
+import { GlobalVariables } from '../common/core/global-variables';
 
 @Component({
   selector: 'app-setup',
@@ -44,12 +45,14 @@ toggled=false;
 isMobile=false;
 leftColumnIsHidden=false;
 details$: Observable<Details>;
-constructor(private detailsService: DetailsService) {
+constructor(private detailsService: DetailsService,public v: GlobalVariables) {
 }
 
   ngOnInit() {
     this.details$ = this.detailsService.details$;
   }
 
-
+  updateTitle(title){
+    this.v.webTitle(title);
+  }
 }

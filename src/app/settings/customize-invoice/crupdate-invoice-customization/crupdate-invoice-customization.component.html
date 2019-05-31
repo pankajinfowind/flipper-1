@@ -4,21 +4,22 @@
     <mat-icon svgIcon="close"></mat-icon>
   </button>
 </div>
-<div class="row" style="overflow: auto; max-height:90%;">
+<div class="row">
           <div class="col-4">
-            <h2 class="modal-title m-3" mat-dialog-title trans>Edit Invoice</h2>
+            <h2 class="modal-title ml-4" mat-dialog-title *ngIf="updating" trans>Update Invoice Details</h2>
+            <h2 class="modal-title ml-4" mat-dialog-title *ngIf="!updating" trans>Create Invoice</h2>
 
-                <form autocomplete="off" [formGroup]="customizeForm" class="mt-3" (ngSubmit)="confirm()" style="min-height:400px;">
-                  <mat-card-content class="mat-dialog-content row">
-                      <mat-form-field class="col-12 m-2" appearance="outline">
+                <form autocomplete="off" [formGroup]="customizeForm" class="m-3" (ngSubmit)="confirm()" style="overflow-x: auto;max-height:760px;">
+                  <mat-card-content class="mat-dialog-content row m-4">
+                      <mat-form-field class="w-100 col-12" appearance="outline">
                           <mat-label>Choose Invoice Type(s)</mat-label>
-                          <mat-select placeholder="Invoice Type(s)" [formControl]="invoiceTypes" multiple (selectionChange)="updatedInvoiceTypes()">
-                            <mat-option *ngFor="let customer_type of customerTypes" [value]="customer_type">{{customer_type.name}}</mat-option>
+                          <mat-select placeholder="Invoice Type(s)" [formControl]="customerTypeIds" multiple (selectionChange)="updatedcustomerTypeIds()">
+                            <mat-option *ngFor="let customer_type of customerTypes" [value]="customer_type.id">{{customer_type.name}}</mat-option>
                           </mat-select>
                           <mat-hint>Means that invoice will be belongs to choosen invoice types</mat-hint>
 
                         </mat-form-field><br />
-                        <mat-form-field appearance="outline" class="w-100 col-12" *ngIf="customizeForm.value.invoiceTypes!=null">
+                        <mat-form-field appearance="outline" class="w-100 col-12" *ngIf="customizeForm.value.customerTypeIds!=null">
                             <mat-label>Customer Type Name</mat-label>
                             <input matInput placeholder="Customer Type Name" formControlName="customer_type_name" (input)="updateModel()" required>
                             <mat-hint ><i>It should be insurance name(Rssb) or the customer type name(Bronzen customer)</i></mat-hint>
@@ -89,6 +90,11 @@
                       <input matInput placeholder="Rename Customer Name" formControlName="customer_name" (input)="updateModel()">
 
                     </mat-form-field><br />
+                       <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Rename Customer Address</mat-label>
+                      <input matInput placeholder="Rename Customer Address" formControlName="customer_address" (input)="updateModel()">
+
+                    </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Rename Customer Birth Date</mat-label>
                       <input matInput placeholder="Rename Customer Birth Date" formControlName="customer_dob" (input)="updateModel()">
@@ -124,21 +130,7 @@
                       <mat-hint ><i>This will be displayed at the bottom of each invoice.</i></mat-hint>
                     </mat-form-field><br />
 
-                    <mat-form-field  appearance="outline" class="w-100 col-12">
-                      <mat-label>Choose Font Size</mat-label>
-                    <mat-select placeholder="Choose Font Size" formControlName="font_size" (input)="updateModel()">
-                      <mat-option>None</mat-option>
-                      <mat-option *ngFor="let font_size of font_sizes" [value]="font_size.value">{{font_size.valueName}}</mat-option>
-                    </mat-select>
-                  </mat-form-field><br />
-                  <mat-form-field  appearance="outline" class="w-100 col-12">
-                    <mat-label>Choose Color</mat-label>
-                  <mat-select placeholder="Choose Color" formControlName="color" (input)="updateModel()">
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">{{color.valueName}}</mat-option>
-                  </mat-select>
-                </mat-form-field><br />
-
+       
 
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice column settings</h3>
                     <label class="modal-title m-4" id="radio-group-label">Edit the titles of the columns on your invoices:</label>
@@ -147,12 +139,16 @@
                             <th>Code</th><td>
                                 <mat-radio-group
                                   aria-labelledby="radio-group-label"
-                                  class="radio-group"
-                                  [(ngModel)]="favoriteCode">
+                                  class="radio-group">
                                   <mat-radio-button class="radio-button" *ngFor="let code of codes" [value]="code" [checked]="code === 'Code'" (change)="updatedCode(code)">
                                     {{code}}
                                   </mat-radio-button>
+                                   <mat-form-field appearance="outline" *ngIf="favoriteCode=='Other'">
+                                    <mat-label>Other</mat-label>
+                                    <input matInput placeholder="Other" formControlName="number" (input)="updateModel()">
+                                  </mat-form-field>
                                 </mat-radio-group>
+                                 
                             </td>
                           </tr>
                       <tr>
@@ -164,6 +160,10 @@
                                   <mat-radio-button class="radio-button" *ngFor="let item of _items" [value]="item" [checked]="item === 'Items'"  (change)="updatedItem(item)">
                                     {{item}}
                                   </mat-radio-button>
+                                   <mat-form-field appearance="outline" *ngIf="favoriteItem=='Other'">
+                                    <mat-label>Other</mat-label>
+                                    <input matInput placeholder="Other" formControlName="items" (input)="updateModel()">
+                                  </mat-form-field>
                                 </mat-radio-group>
                         </td>
                       </tr>
@@ -176,6 +176,11 @@
                                   <mat-radio-button class="radio-button" *ngFor="let unit of _units" [value]="unit" [checked]="unit === 'Quantity'" (change)="updatedUnit(unit)">
                                     {{unit}}
                                   </mat-radio-button>
+                                   <mat-form-field appearance="outline" *ngIf="favoriteUnit=='Other'">
+                                    <mat-label>Other</mat-label>
+                                    <input matInput placeholder="Other" formControlName="units" (input)="updateModel()">
+                                  </mat-form-field>
+
                                 </mat-radio-group>
                         </td>
                       </tr>
@@ -189,6 +194,11 @@
                             <mat-radio-button class="radio-button" *ngFor="let price of prices" [value]="price" [checked]="price === 'Price'" (change)="updatedPrice(price)">
                               {{price}}
                             </mat-radio-button>
+                             <mat-form-field appearance="outline" *ngIf="favoritePrice=='Other'">
+                                    <mat-label>Other</mat-label>
+                                    <input matInput placeholder="Other" formControlName="price" (input)="updateModel()">
+                                  </mat-form-field>
+
                           </mat-radio-group>
                         </td>
                       </tr>
@@ -201,6 +211,11 @@
                             <mat-radio-button class="radio-button" *ngFor="let amount of amounts" [value]="amount" [checked]="amount === 'Amount'" (change)="updatedAmount(amount)">
                               {{amount}}
                             </mat-radio-button>
+                             <mat-form-field appearance="outline" *ngIf="favoriteAmount=='Other'">
+                                    <mat-label>Other</mat-label>
+                                    <input matInput placeholder="Other" formControlName="amount" (input)="updateModel()">
+                                  </mat-form-field>
+
                           </mat-radio-group>
                         </td>
                       </tr>
@@ -209,43 +224,50 @@
                     <h3 class="modal-title m-4" mat-dialog-title trans>Invoice receiption settings</h3>
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Rename Receiption Title</mat-label>
-                      <input matInput placeholder="Rename Receiption Title" formControlName="reception_title">
+                      <input matInput placeholder="Rename Receiption Title" formControlName="reception_title" (input)="updateModel()">
 
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
-                      <mat-label>Rename Receiption Name</mat-label>
-                      <input matInput placeholder="Rename Receiption Name" formControlName="reception_name">
+                      <mat-label>Receiption Field 1</mat-label>
+                      <input matInput placeholder="Receiption Field 1" formControlName="reception_field_a" (input)="updateModel()">
 
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
-                      <mat-label>Rename Receiption Phone</mat-label>
-                      <input matInput placeholder="Rename Receiption Phone" formControlName="reception_tel">
+                      <mat-label>Receiption Field 2</mat-label>
+                      <input matInput placeholder="Receiption Field 2" formControlName="reception_field_b" (input)="updateModel()">
 
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
-                      <mat-label>Rename Receiption Date</mat-label>
-                      <input matInput placeholder="Rename Receiption Date" formControlName="reception_date">
-
+                      <mat-label>Receiption Field 3</mat-label>
+                      <input matInput placeholder="Receiption Field 3" formControlName="reception_field_c" (input)="updateModel()">
+                    </mat-form-field><br />
+                      <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Receiption Field 4</mat-label>
+                      <input matInput placeholder="Receiption Field 4" formControlName="reception_field_d" (input)="updateModel()">
+                    </mat-form-field><br />
+                      <mat-form-field appearance="outline" class="w-100 col-12">
+                      <mat-label>Receiption Field 5</mat-label>
+                      <input matInput placeholder="Receiption Field 5" formControlName="reception_field_e" (input)="updateModel()">
                     </mat-form-field><br />
                     <h3 class="modal-title m-4" mat-dialog-title trans>More details settings</h3>
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Done Message</mat-label>
-                      <input matInput placeholder="Done Message" formControlName="done_title">
+                      <input matInput placeholder="Done Message" formControlName="done_title" (input)="updateModel()">
 
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Rename Done at</mat-label>
-                      <input matInput placeholder="Rename Done at or Fait le" formControlName="done_at">
+                      <input matInput placeholder="Rename Done at or Fait a" formControlName="done_at" (input)="updateModel()">
 
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
-                      <mat-label>Rename Done where</mat-label>
-                      <input matInput placeholder="Rename Done where or Fait a" formControlName="done_where">
+                      <mat-label>Rename Done on</mat-label>
+                      <input matInput placeholder="Rename Done on or Fait le" formControlName="done_on" (input)="updateModel()">
 
                     </mat-form-field><br />
                     <mat-form-field appearance="outline" class="w-100 col-12">
                       <mat-label>Rename Nome , Cashet and Signature</mat-label>
-                      <input matInput placeholder="Rename Nome , Cashet and Signature" formControlName="nom_signature_cachet">
+                      <input matInput placeholder="Rename Nome , Cashet and Signature" formControlName="nom_signature_cachet" (input)="updateModel()">
 
                     </mat-form-field><br />
 
@@ -253,39 +275,50 @@
                     <table class="ml-4 w-100 col-12">
                       <tr>
                      <td>
-                    <mat-checkbox formControlName="hide_logo">Hide Logo</mat-checkbox>
+                    <mat-checkbox formControlName="hide_logo" (click)="hideLogo()">Hide Logo</mat-checkbox>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                    <mat-checkbox formControlName="hide_visa">Hide Visa</mat-checkbox>
+                    <mat-checkbox formControlName="hide_visa" (click)="hideVisa()">Hide Visa</mat-checkbox>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <mat-checkbox formControlName="hide_discount_table">Hide Adherent Discount Table</mat-checkbox>
+                    <mat-checkbox formControlName="hide_discount_table" (click)="hideDiscountTable()">Hide Discount Table</mat-checkbox>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <mat-checkbox formControlName="hide_taxable_table">Hide Taxable Table</mat-checkbox>
+                    <mat-checkbox formControlName="hide_taxable_table" (click)="hideTaxableTable()">Hide Taxable Table</mat-checkbox>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <mat-checkbox formControlName="hide_reception_table">Hide Receiption Table</mat-checkbox>
+                    <mat-checkbox formControlName="hide_reception_table" (click)="hideReceptionTable()">Hide Receiption Table</mat-checkbox>
                   </td>
                 </tr>
                 </table>
                   </mat-card-content>
+<mat-divider></mat-divider>
+                    <mat-card-actions>
+                  <div class="buttons float-right mat-dialog-actions" mat-dialog-actions>
+                    <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
+                    <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !customizeForm.valid">
+                        <span *ngIf="updating" trans>Update</span>
+                        <span *ngIf="!updating" trans>Create</span>
+                    </button>
+                </div>
+     </mat-card-actions>
             </form>
             <mat-divider [vertical]="true"></mat-divider>
           </div>
 
       <div class="col-8">
         <h2 class="modal-title m-3" mat-dialog-title trans>Preview Invoice</h2>
-        <mat-divider></mat-divider>
+        <div style="overflow-y: auto;max-height:760px;">
         <app-preview-invoice-customized></app-preview-invoice-customized>
+        </div>
       </div>
 
 </div>

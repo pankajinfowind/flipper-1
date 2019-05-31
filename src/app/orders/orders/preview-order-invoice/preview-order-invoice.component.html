@@ -1,0 +1,8 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title trans>Print Preview</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+<br />
+<div *ngIf="data" style="overflow:auto;">
+    <app-print-invoice></app-print-invoice>
+</div>

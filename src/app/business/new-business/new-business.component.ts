@@ -38,9 +38,8 @@ export class NewBusinessComponent implements OnInit {
   @Input() columns="col-6 col-xs-offset-3 col-lg-offset-3 col-md-offset-3";
 _currencies:any[]=[];
 _countries:any[]=[];
-  business: Business;
 
-  constructor(private current:CurrentUser,
+  constructor(public current:CurrentUser,
     private bootstrapper: Bootstrapper,
     public dialog: MatDialog,
     private api: ApiService,
@@ -62,8 +61,8 @@ currencies(){
   return Object.values(this.setting.httpGet('assets/lists/currencies.json'));
   }
   ngOnInit() {
-    this.business=this.current.get('business')[0];
-    if (this.business) {
+    console.log(this.current.getBusiness('id'));
+    if (this.current.getBusiness('id') > 0) {
       this.updating = true;
   } else {
       this.updating = false;
@@ -71,27 +70,27 @@ currencies(){
   this.v.webTitle(this.updating?"Update - Business":"Create - Business");
     this._countries=this.countries();
     this._currencies=this.currencies();
-    this.hydrateModel(this.business);
+    this.hydrateModel();
 
   }
-  private hydrateModel(business) {
+  private hydrateModel() {
     this.businessForm = new FormGroup({
-      name: new FormControl(business?business.name:"", [Validators.required]),
-      type: new FormControl(business?business.type:"", [Validators.required]),
-      address: new FormControl(business?business.address:"",[Validators.required]),
-      category: new FormControl(business?business.category:"",[Validators.required]),
-      description: new FormControl(business?business.description:""),
-      tin: new FormControl(business?business.tin:""),
-      phone: new FormControl(business?business.phone:""),
-      email: new FormControl(business?business.email:"",[Validators.required, Validators.email]),
-      city: new FormControl(business?business.city:""),
-      country: new FormControl(business?business.country:"",[Validators.required]),
-      street1: new FormControl(business?business.street1:""),
-      street2: new FormControl(business?business.street2:""),
-      street3: new FormControl(business?business.street3:""),
-      logo: new FormControl(business?business.logo?business.logo:"assets/logo/avatar.png":"assets/logo/avatar.png"),
-      tax_charge: new FormControl(business?business.tax_charge:"0.00"),
-      currency_code: new FormControl(business?business.currency_code:"Rwf")
+      name: new FormControl(this.current.getBusiness('name')?this.current.getBusiness('name'):"", [Validators.required]),
+      type: new FormControl(this.current.getBusiness('type')?this.current.getBusiness('type'):"", [Validators.required]),
+      address: new FormControl(this.current.getBusiness('address')?this.current.getBusiness('address'):"",[Validators.required]),
+      category: new FormControl(this.current.getBusiness('category')?this.current.getBusiness('category'):"",[Validators.required]),
+      description: new FormControl(this.current.getBusiness('description')?this.current.getBusiness('description'):""),
+      tin: new FormControl(this.current.getBusiness('tin')?this.current.getBusiness('tin'):""),
+      phone: new FormControl(this.current.getBusiness('phone')?this.current.getBusiness('phone'):""),
+      email: new FormControl(this.current.getBusiness('email')?this.current.getBusiness('email'):"",[Validators.required, Validators.email]),
+      city: new FormControl(this.current.getBusiness('city')?this.current.getBusiness('city'):""),
+      country: new FormControl(this.current.getBusiness('country')?this.current.getBusiness('country'):"",[Validators.required]),
+      street1: new FormControl(this.current.getBusiness('street1')?this.current.getBusiness('street1'):""),
+      street2: new FormControl(this.current.getBusiness('street2')?this.current.getBusiness('street2'):""),
+      street3: new FormControl(this.current.getBusiness('street3')?this.current.getBusiness('street3'):""),
+      logo: new FormControl(this.current.getBusiness('logo')?this.current.getBusiness('logo'):"assets/logo/avatar.png"),
+      tax_charge: new FormControl(this.current.getBusiness('tax_charge')?this.current.getBusiness('tax_charge'):"0.00"),
+      currency_code: new FormControl(this.current.getBusiness('currency_code')?this.current.getBusiness('currency_code'):"Rwf")
     });
   }
 
@@ -180,7 +179,7 @@ currencies(){
 
   }
   updateBusiness() {
-   this.api.update(this.businessForm.value, this.business.id) .pipe(finalize(() =>  this.loading.next(false)))
+   this.api.update(this.businessForm.value,this.current.getBusiness('id')) .pipe(finalize(() =>  this.loading.next(false)))
      .subscribe(res=>{
       this.bootstrapper.bootstrap(res.data);
       this.toast.open('Thank you for updating your bussiness!');

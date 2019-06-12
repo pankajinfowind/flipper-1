@@ -59,6 +59,7 @@ export class Appearance{
   tabLayout ={color:'primary',backgroundColor:'primary',size:12};
   navLayout={color:'accent',backgroundColor:'primary',size:12};
 }
+
 export class User {
     id: number;
     display_name?: string;
@@ -94,4 +95,21 @@ export class User {
             this[name] = params[name];
         }
     }
+}
+    export class UserData {
+        business?:Business;
+        roles?: Role[]=[];
+        user_logged_in?:User;
+        user_logged_role?:Role;
+        switched_branch?:Branch;
+        permissions?:any;
+        has_business_belongs?: boolean;
+
+        social_profiles?: SocialProfile[];
+      
+        constructor(params: Object = {}) {
+            for (let name in params) {
+                this[name] = params[name];
+            }
+        }
 }

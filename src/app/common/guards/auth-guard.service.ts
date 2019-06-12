@@ -14,7 +14,9 @@ import { CurrentUser } from "../auth/current-user";
   providedIn: "root"
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private currentUser: CurrentUser, private router: Router) {}
+  constructor(private currentUser: CurrentUser, private router: Router) {
+   
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.handle(state.url);
@@ -28,6 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private handle(url: string) {
+    
     if (this.currentUser.isLoggedIn()) {
       return true;
     }

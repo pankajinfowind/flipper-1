@@ -5,16 +5,10 @@ material-navbar {
     background-color:$site-bg-color-100;
     color:  $admin-left-col-text-color;
     box-shadow: $box-shadow-3;
-    position: relative;
+    position: fixed;
     z-index: 2;
     height: $material-navbar-height;
-.title-bar-btns{
-    -webkit-app-region: no-drag;
-    position: fixed;
-    top: 0px;
-    right: 6px;
 
-}
     .navbar-container {
         display: flex;
         align-items: center;

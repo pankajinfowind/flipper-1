@@ -3,7 +3,7 @@ import { Settings } from "./config/settings.service";
 import { Translations } from "./translations/translations.service";
 import { APP_CONFIG, FlipperConfig } from "./config/flipper-config";
 import { Role } from "./types/models/Role";
-import { User } from "./types/models/User";
+import { User, UserData } from "./types/models/User";
 import { LocalizationWithLines } from "./types/localization-with-lines";
 import { CurrentUser } from "../auth/current-user";
 import { HttpClient } from "@angular/common/http";
@@ -17,7 +17,7 @@ export interface BootstrapData {
   csrf_token: string;
   settings: FlipperConfig;
   guests_role: Role | null;
-  user: User | null;
+  user_data: UserData | null;
   i18n?: LocalizationWithLines;
 }
 
@@ -93,9 +93,10 @@ export class Bootstrapper {
     }
 
     // set current user and default role for guests
+    
     this.currentUser.init({
+      user_data: data.user_data,
       guestsRole: data.guests_role,
-      user: data.user
     });
 
     // init appearance editor mode if needed

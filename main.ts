@@ -3,6 +3,8 @@ import * as path from "path";
 import * as url from "url";
 //update
 import { windowStateKeeper } from "./win-state-keeper";
+
+//customTitlebar.updateTitle('Flipper - version:' +app.getVersion());
 // import { DB } from './db/db';
 // import { Sync } from './sync/sync'
 
@@ -99,55 +101,21 @@ function createWindow() {
     y: mainWindowStateKeeper.y,
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
-    frame: false,
-    title: app.getName() + "Version:" + app.getVersion(),
-    icon: path.join(__dirname, "src/assets/app-icon/png/icon.png")
+    frame: false
   };
 
-  if (serve) {
-    if (process.platform === "linux") {
-      windowOptions.icon = path.join(
-        __dirname,
-        "src/assets/app-icon/png/icon.png"
-      );
-    } else if (process.platform === "win32") {
-      windowOptions.icon = path.join(
-        __dirname,
-        "src/assets/app-icon/win/ico.ico"
-      );
-    } else {
-      windowOptions.icon = path.join(
-        __dirname,
-        "src/assets/app-icon/png/icon.png"
-      );
-    }
-  } else {
-    if (process.platform === "linux") {
-      windowOptions.icon = path.join(
-        __dirname,
-        "dist/assets/app-icon/png/icon.png"
-      );
-    } else if (process.platform === "win32") {
-      windowOptions.icon = path.join(
-        __dirname,
-        "dist/assets/app-icon/win/ico.ico"
-      );
-    } else {
-      //TODO: check if the icon work on the platforms
-      windowOptions.icon = path.join(
-        __dirname,
-        "assets/app-icon/png/icon.png"
-      );
-    }
-  }
+
+
   win = new BrowserWindow(windowOptions);
 
   if (serve) {
+    //customTitlebar.updateIcon('src/assets/logo/icon.ico');
     require("electron-reload")(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
     win.loadURL("http://localhost:4200");
   } else {
+   // customTitlebar.updateIcon('dist/src/assets/logo/icon.ico');
     win.loadURL(
       url.format({
         pathname: path.join(__dirname, "dist/index.html"),
@@ -245,14 +213,22 @@ try {
   });
 } catch (e) { }
 
+
 /////////////////////////////////////////  MENU
 
 const menu = Menu.buildFromTemplate([
   {
-    label: app.getName(),
+    label: 'File',
     submenu: [
-      { role: "about" },
-      { type: "separator" }
+      { 
+        role: "Quit",
+        click: () => {
+            if (process.platform !== "darwin") {
+              app.quit();
+              win = null;
+            }
+          }
+       }
     ]
   },
 
@@ -270,10 +246,7 @@ const menu = Menu.buildFromTemplate([
       { role: "togglefullscreen" }
     ]
   },
-  {
-    role: "window",
-    submenu: [{ role: "minimize" }, { role: "maximize" }, { role: "close" }]
-  },
+
   {
     role: "help",
     submenu: [
@@ -281,6 +254,17 @@ const menu = Menu.buildFromTemplate([
         label: "Report issue",
         click() {
           require("electron").shell.openExternal("https://flipper.yegobox.rw");
+        }
+      },
+      {
+        label: "About",
+        click() {
+          const modalPath = path.join('file://', __dirname, 'about.html')
+          let wins = new BrowserWindow({frame: false, alwaysOnTop: true,transparent: true, width: 400, height: 200 })
+          wins.on('close', function () { wins = null })
+          wins.loadURL(modalPath)
+          wins.setMenu(null)
+          wins.show();
         }
       }
     ]

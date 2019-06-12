@@ -15,17 +15,23 @@ export class ApiBranchService {
     constructor(private http: AppHttpClient) {}
 
 
-  public create(params: Branch): BackendResponse<{ data: any }> {
-        return this.http.post(API_ROUTES_BRANCH.BRANCH, params);
-    }
+
+    public create(params: Branch): Observable<Branch> {
+      return this.http.post(API_ROUTES_BRANCH.BRANCH, params);
+  }
   public get(): BackendResponse<{ branches: Branch[] }> {
       return this.http.get(API_ROUTES_BRANCH.BRANCH);
   }
 
-  public update(params: Branch,id:number): BackendResponse<{ data: Branch }> {
-    return this.http.put(API_ROUTES_BRANCH.BRANCH+'/'+id, params);
- }
+ 
+ public update(id:number,params: Branch): Observable<Branch> {
+  return this.http.put(API_ROUTES_BRANCH.BRANCH+'/'+id, params);
+}
  public delete(id:number): BackendResponse<{ data: Branch }> {
   return this.http.delete(API_ROUTES_BRANCH.BRANCH+'/'+id);
+}
+
+public deleteMultiple(ids: number[]) {
+  return this.http.delete(API_ROUTES_BRANCH.DELETE_MULTIPLE, {ids});
 }
 }

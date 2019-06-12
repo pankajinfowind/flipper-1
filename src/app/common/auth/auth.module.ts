@@ -11,6 +11,7 @@ import { MaterialModule } from "../../material/material.module";
 import { ChangePasswordComponent } from "./reset-password/change-password/change-password.component";
 import { EmailVerifyComponent } from "./login/email-verify/email-verify.component";
 import { PasswordVerifyComponent } from "./login/password-verify/password-verify.component";
+import { TitleBarModule } from '../../title-bar/title-bar.module';
 
 @NgModule({
   imports: [

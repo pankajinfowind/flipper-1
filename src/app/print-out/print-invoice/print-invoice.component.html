@@ -45,9 +45,9 @@
             </table>
 
             <table cellpadding="0" cellspacing="0" style="margin-top:4%" *ngIf="(invoice$ |  async).customer">
-              <tr class="border-none"  *ngIf="(invoice$ |  async).customer.cstomer_no">
+              <tr class="border-none"  *ngIf="(invoice$ |  async).customer.customer_no">
                 <th class="th-border" colspan="2">
-                  {{(invoice$ | async).printFormat[0].customer_number?(invoice$ | async).printFormat[0].customer_number:'Cust . N°'}}:{{(invoice$ |  async).customer.cstomer_no}}
+                  {{(invoice$ | async).printFormat[0].customer_number?(invoice$ | async).printFormat[0].customer_number:'Cust . N°'}}:{{(invoice$ |  async).customer.customer_no}}
                 </th>
               </tr>
               <tr class="border-none">
@@ -64,8 +64,9 @@
 
               <tr class="border-none">
              
-                   <th class="th-border" *ngIf="(invoice$ | async).customer.address">
-                  {{(invoice$ | async).printFormat[0].customer_address?(invoice$ | async).printFormat[0].customer_address:'Address'}}:{{(invoice$ | async).customer.address}}
+                
+                 <th class="th-border" *ngIf="(invoice$ | async).customer.dob">
+                  {{(invoice$ | async).printFormat[0].customer_dob?(invoice$ | async).printFormat[0].customer_dob:'Birth date'}}: {{(invoice$ | async).customer.dob | date :'fullDate'}}
                 </th>
                 <th class="th-border" *ngIf="(invoice$ | async).customer.department">
                   Department:{{(invoice$ | async).customer.department}}
@@ -77,8 +78,8 @@
                   Sex:{{(invoice$ | async).customer.gender}}
                 </th>
 
-                  <th class="th-border" *ngIf="(invoice$ | async).customer.dob">
-                  {{(invoice$ | async).printFormat[0].customer_dob?(invoice$ | async).printFormat[0].customer_dob:'Birth date'}}: {{(invoice$ | async).customer.dob | date :'fullDate'}}
+                  <th class="th-border" *ngIf="(invoice$ | async).customer.address">
+                  {{(invoice$ | async).printFormat[0].customer_address?(invoice$ | async).printFormat[0].customer_address:'Address'}}:{{(invoice$ | async).customer.address}}
                 </th>
               </tr>
             </table>

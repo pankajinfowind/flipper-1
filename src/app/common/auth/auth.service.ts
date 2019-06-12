@@ -9,6 +9,7 @@ import { AppHttpClient } from "../core/http/app-http-client.service";
 import { ApiService } from "../../api/api.service";
 import { YLocalStorage } from "../classes/local-storage";
 import { GlobalVariables } from "../core/global-variables";
+import { BootstrapData } from '../core/bootstrapper.service';
 
 @Injectable({
   providedIn: "root"
@@ -88,7 +89,7 @@ export class AuthService {
   /**
    * Reset user password.
    */
-  public resetPassword(credentials: Object): Observable<{ data: User }> {
+  public resetPassword(credentials: Object): Observable<{data:any}> {
     return this.httpClient.post("auth/password/reset", credentials);
   }
 

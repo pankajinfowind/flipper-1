@@ -1,0 +1,93 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>About Flipper</title>
+  <base href="">
+
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    var global = global || window;
+    var Buffer = Buffer || [];
+    var process = process || {
+      env: { DEBUG: undefined },
+      version: []
+    };
+
+  </script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,600');
+
+body {
+    background: #262626;
+    color:#fff;
+    font-family: 'Montserrat';
+    margin:0;
+}
+
+.row {
+    width:100%;
+    margin-top:50px;
+    background:#1A1A1A;
+    border-bottom: 3px solid #FF0057;
+    display: grid;
+    grid-template-columns: 35% auto 35%;
+    align-items: center;
+}
+
+.subtext {
+    font-size:.8em;
+    text-transform:uppercase;
+    margin-bottom: 10px;
+}
+img {
+    width: 20px;
+}
+
+h1 {
+    margin: 0 0 10px 0;
+}
+
+button {
+    float:right;
+    background:#FF0057;
+    border:none;
+    color:#fff;
+    text-transform:uppercase;
+    padding:10px;
+    margin-right: 30px;
+    cursor:pointer;
+}
+
+</style>
+</head>
+<body style="overflow:hidden!important;position:fixed;top:0;left:0;right:0;bottom:0;">
+ <script>
+const custom_electron_titlebar_1 = require("custom-electron-titlebar");
+const app = require("electron");
+new custom_electron_titlebar_1.Titlebar({
+    backgroundColor: custom_electron_titlebar_1.Color.BLACK,
+    icon: './assets/logo/icon.ico',
+    shadow: false
+});
+
+ </script>
+  <div class="row">
+
+        <div id="price-container">
+            <p class="h1">Version</p>
+            <h1 id="price"></h1>
+        </div>
+        <div id="goal-container">
+            <p id="version">:30033030</p>
+        </div>
+        <div id="right-container">
+           
+        </div>
+    </div>
+</body>
+</html>

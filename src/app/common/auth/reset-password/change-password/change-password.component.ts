@@ -6,6 +6,7 @@ import { Settings } from "../../../core/config/settings.service";
 import { CurrentUser } from "../../current-user";
 import { Toast } from "../../../core/ui/toast.service";
 import { GlobalVariables } from "../../global-variables";
+import { BootstrapData, Bootstrapper } from '../../../core/bootstrapper.service';
 
 @Component({
   selector: "app-change-password",
@@ -32,7 +33,8 @@ export class ChangePasswordComponent implements OnInit {
     public v: GlobalVariables,
     private auth: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private bootstrapper: Bootstrapper,
   ) {}
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -69,10 +71,10 @@ export class ChangePasswordComponent implements OnInit {
         password_confirmation: this.form.value.password_confirmation
       };
       this.auth.resetPassword(data).subscribe(
-        response => {
+        response  => {
           this.loading = false;
           this.toast.open("Your password has been reset.");
-          this.user.assignCurrent(response.data);
+          this.bootstrapper.bootstrap(response.data);
           this.router.navigate([this.auth.getRedirectUri()]);
 
           return window.location.reload();

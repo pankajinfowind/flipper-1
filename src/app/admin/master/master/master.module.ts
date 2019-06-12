@@ -14,13 +14,14 @@ import { HttpModule } from '../../../common/core/http/http.module';
 import {HttpClientModule} from '@angular/common/http';
 import { BrandComponent } from '../brands/brand.component';
 import { AddItemComponent } from '../items/add-item/add-item.component';
-import { BranchComponent, RemoveBranchDialog } from '../branch/branch.component';
+import { BranchComponent } from '../branch/branch.component';
 import { ApiBranchService } from '../branch/api/api.service';
 import { DataTableModule } from '../../../data-table/data-table/data-table.module';
 import { CrupdateCategoryModalComponent } from '../categories/crupdate-category-modal/crupdate-category-modal.component';
 import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crupdate-brand-modal.component';
 import { SelectCategoryModelComponent } from '../categories/select-category-model/select-category-model.component';
 import { SelectBrandModalComponent } from '../brands/select-brand-modal/select-brand-modal.component';
+import { CrupdateBranchModalComponent } from '../branch/crupdate-branch-modal/crupdate-branch-modal.component';
 
 @NgModule({
   imports: [
@@ -42,11 +43,11 @@ import { SelectBrandModalComponent } from '../brands/select-brand-modal/select-b
     BrandComponent,
     BranchComponent,
     MasterComponent,
-    RemoveBranchDialog,
     CrupdateCategoryModalComponent,
     CrupdateBrandModalComponent,
     SelectCategoryModelComponent,
-    SelectBrandModalComponent
+    SelectBrandModalComponent,
+    CrupdateBranchModalComponent
     ],
   declarations: [
     ItemsComponent,
@@ -55,11 +56,11 @@ import { SelectBrandModalComponent } from '../brands/select-brand-modal/select-b
     BrandComponent,
     BranchComponent,
     MasterComponent,
-    RemoveBranchDialog,
     CrupdateCategoryModalComponent,
     CrupdateBrandModalComponent,
     SelectCategoryModelComponent,
-    SelectBrandModalComponent
+    SelectBrandModalComponent,
+    CrupdateBranchModalComponent
   ],
   providers: [
     ApiItemService,
@@ -68,9 +69,8 @@ import { SelectBrandModalComponent } from '../brands/select-brand-modal/select-b
   ],
 entryComponents: [CrupdateCategoryModalComponent,
   CrupdateBrandModalComponent,
-  RemoveBranchDialog,
   SelectCategoryModelComponent,
-  SelectBrandModalComponent]
+  SelectBrandModalComponent,CrupdateBranchModalComponent]
 })
 export class MasterModule {
 

@@ -1,18 +1,7 @@
 
      
 <div class="app-admin" style="overflow:none">
- <div id="title-bar">
-             <div id="title">
-                 <span style="vertical-align: middle;"><img src="https://raw.githubusercontent.com/zeke/atom-icon/master/old-icon/2.png" style="width:20px;height:20px;"/></span>
-                  <span style="vertical-align: middle; align:center">{{localStorage.get('flipper-title')}} ({{localStorage.get('active_menu')}})- Flipper</span>
-             </div>
-           
-             <div id="title-bar-btns">
-              <button mat-button (click)="onWinMin()">-</button>
-              <button mat-button color="primary" (click)="onWinMax()">+</button>
-              <button mat-button color="warn" (click)="onWinClose()">x</button>
-             </div>
-        </div>
+
 <mat-sidenav-container class="content" style="margin-top:40px">
   
 <mat-sidenav [opened]="isOpened" mode="side" class="main-left-column" style="width: 90px;">

@@ -13,7 +13,9 @@ export class GuestGuard implements CanActivate {
         private auth: AuthService,
         private router: Router,
         private settings: Settings,
-    ) {}
+    ) {
+       
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         // allow to view guest pages in appearance editor

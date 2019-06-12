@@ -1,16 +1,17 @@
 import { Injectable, Input, ViewChild, ElementRef } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
 import { LocalStorage } from './services/local-storage.service';
-// import { YFContract } from '@app/contracts/YFContract';
-// import { environment } from '@environments/environment';
-// import { FileUploader } from 'nupload';
-// import { FileType } from '@app/classes/File-type';
-// import { User } from '@app/classes/User';
-// import { YFile } from '@app/classes/files';
+import { Titlebar, Color } from 'custom-electron-titlebar';
 @Injectable({ providedIn: "root" })
 export class GlobalVariables {
-  
-  constructor(public localStorage: LocalStorage) { }
+  titlebar:any=null;
+  constructor(public localStorage: LocalStorage) {
+     this.titlebar=new Titlebar({
+      backgroundColor: Color.WHITE,
+      icon: './assets/logo/icon.ico',
+      shadow: false
+  });
+   }
   public model: { email?: string; password?: string; remember?: boolean } = {
     remember: true
   };
@@ -445,20 +446,13 @@ export class GlobalVariables {
   get redirectUrl(): string {
     return this.redirect_url;
   }
-  webTitle(title = "Flipper") {
-    return this.localStorage.set('flipper-title',title);
-  }
 
-  // set user(user: any) {
-  //   this._user.next(user);
-  // }
-  // get user(): any {
-  //   return this._user$;
-  // }
-  // set currentUser(user: User) {
-  //   this.current_user = user;
-  // }
-  // get currentUser(): User {
-  //   return this.current_user;
-  // }
+  webTitle(title = "Flipper") {
+
+    this.titlebar.updateTitle(title + ' - Flipper');
+    return this.localStorage.set('flipper-title',title);
+
+  }
+ 
+
 }

@@ -1,66 +1,38 @@
 
-<mat-toolbar>
-  <mat-toolbar-row>
-    <div class="col-8">
-        <button mat-button><mat-icon class="">menu</mat-icon>Brands </button>
-      <span class="spacer"></span>
-      <span class="spacer"></span>
-      </div>
+<data-table [dataSource]="dataSource" itemsName="branchs" [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateBranchModal()"  trans>Create a branch</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search branchs ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
 
-      <div class="col-4">
-          <button color='accent' class="float-right" mat-raised-button   *ngIf="!(details$ | async).detailsVisible" (click)="openDetails('New Brand','new',null)">
-              <mat-icon class="">add</mat-icon>New Brand</button>
-              <button mat-button color='warn' class="float-right" *ngIf="selection.selected.length > 0 && can_delete" (click)="removeDialog()"><mat-icon class="">delete</mat-icon>Delete ({{selection.selected.length}}) selected</button>
-       </div>
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedBranchs()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
 
-      </mat-toolbar-row>
-</mat-toolbar>
-<div class="col-12" *ngIf="data && data.length > 0">
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+      <mat-cell *matCellDef="let branch"> {{branch.name}} </mat-cell>
+  </ng-container>
 
-<mat-form-field class="w-100 px-2">
-  <input
-    matInput
-    (keyup)="applyFilter($event.target.value)"
-    placeholder="Search"
-  />
-</mat-form-field>
-<div class="section-container">
-<table mat-table [dataSource]="dataSource" matSort class="w-100">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null"
-                      [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row" (click)="openDetails('Edit Brand','edit',row)">
-        <mat-checkbox (click)="$event.stopPropagation();openDetails('Edit Brand','edit',row)"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let branch">
+        <button (click)="selectbranch(branch)" class="button-success" *ngIf="branch.id!=selectedId" [disabled]="branch.id==selectedId?true:false"  [matTooltip]="'Select branch' | trans">Select
+        </button>
+        <button  class="button-cancel" *ngIf="branch.id==selectedId"  [matTooltip]="'Selected branch' | trans">Selected
+        </button>
+    </mat-cell>
+</ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Brand','edit',element)">
-          <span class="text">{{element.name}}</span> </td>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td mat-cell *matCellDef="let element" (click)="openDetails('Edit Brand','edit',element)">
-            <span class="text">{{element.description}}</span> </td>
-      </ng-container>
-
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr [class.highlighted]="((details$ | async).sender_data?(details$ | async).sender_data.brand_id==row.brand_id:false)" mat-row *matRowDef="let row; columns: displayedColumns;"
-          (click)="selection.toggle(row)">
-      </tr>
-  </table>
-</div>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let branch">
+          <button mat-icon-button (click)="showCrupdateBranchModal(branch)"  [matTooltip]="'Edit branch' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

@@ -1,15 +1,15 @@
 import { User } from './User';
 
 export class Role {
-    id: number;
-    name: string;
-    display_name: string;
+    id?: number;
+    name?: string;
+    display_name?: string;
     permissions?: string;
-    default: boolean;
-    guests: boolean;
+    default?: boolean;
+    guests?: boolean;
     created_at?: string;
     updated_at?: string;
-    users?: User[];
+    // users?: User[];
 
     constructor(params: Object = {}) {
         for (let name in params) {

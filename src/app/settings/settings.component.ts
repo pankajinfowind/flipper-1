@@ -15,10 +15,13 @@ export class SettingsComponent implements OnInit {
     },
     {
       menu:'Invoices Customization',icon:'assignment',path:'customize-invoice',
+    },
+    {
+      menu:'Branch',icon:'assignment',path:'branch',
     }
   ];
   constructor(public v: GlobalVariables) { }
-
+//BranchComponent
   ngOnInit() {
   }
   updateTitle(title){

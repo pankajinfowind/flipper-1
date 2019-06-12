@@ -60,10 +60,10 @@ export class PasswordVerifyComponent implements OnInit {
       this.ipcRenderer = this._electronService.ipcRenderer;
       this.ipcRenderer.send("version-ping", "ping");
       this.ipcRenderer.on("version-pong", (event, version) => {
-        this.v.webTitle("Sign in - eNexus Accounts" + "v" + version);
+        this.v.webTitle("Sign in" + "- version:" + version);
       });
     } else {
-      this.v.webTitle("Sign in - eNexus Accounts");
+      this.v.webTitle("Sign in");
     }
 
   }

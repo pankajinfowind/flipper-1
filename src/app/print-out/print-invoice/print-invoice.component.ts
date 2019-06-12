@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input,  ChangeDetectorRef } from '@angular/core';
 import { Invoice } from '../../invoices/invoice';
 import { OrderItems } from '../../pos/cart/order_items';
 import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
@@ -29,13 +29,11 @@ export class PrintInvoiceComponent implements OnInit {
   today=new Date();
   @Input() preview:boolean=true;
   constructor(private cdr: ChangeDetectorRef) {
-
    }
 
   ngOnInit() {
     if(this.invoice$){
       this.invoice$.subscribe(invoice=>{
-        console.log('invooce',invoice);
         if(invoice){
           const inv=invoice['invoice'] as Invoice;
           this.invoice=inv;

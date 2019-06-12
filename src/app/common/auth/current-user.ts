@@ -1,6 +1,9 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import { User } from "../core/types/models/User";
-import { Role } from "../core/types/models/Role";
+import { User, UserData } from "../core/types/models/User";
+import { Branch } from '../../admin/master/branch/api/branch';
+import { Role } from '../core/types/models/Role';
+import { Business } from '../../business/api/business';
+import { LocalStorage } from '../core/services/local-storage.service';
 
 @Injectable({
   providedIn: "root"
@@ -10,6 +13,12 @@ export class CurrentUser {
    * Current user model.
    */
   private current: User;
+
+  private currentBranch: Branch;
+  private currentBusiness:Business;
+  private userRole: Role;
+  private allRoles:Role[];
+  private currentPermissions:any;
 
   /**
    * Role that should be assigned to guests.
@@ -29,6 +38,11 @@ export class CurrentUser {
   public redirectUri?: string;
 
   public userChanged: EventEmitter<User> = new EventEmitter();
+  public currentBranchChanged: EventEmitter<Branch> = new EventEmitter();
+  public currentBusinessChanged: EventEmitter<Business> = new EventEmitter();
+  public currentRoleChanged: EventEmitter<Role> = new EventEmitter();
+  public currentPermissionChanged: EventEmitter<any> = new EventEmitter();
+  public currentRolesChanged: EventEmitter<Role[]> = new EventEmitter();
 
   public userSetting() {
     return this.current.settings;
@@ -36,11 +50,18 @@ export class CurrentUser {
   /**
    * Get property of currently logged in user model.
    */
-  user: any[];
+  user: User;
+  branch:Branch;
+  user_role:Role[];
+  business:Business;
+  roles:Role[];
+  permissions:any;
+  has_business_belongs:boolean;
   public get<K extends keyof User>(prop: K): User[K] {
     this.user = this.current && this.current[prop];
     return this.user;
   }
+
 
   /**
    * Get model of currently logged in user.
@@ -56,23 +77,84 @@ export class CurrentUser {
     this.current[key] = value;
   }
 
+  public getCurrentBranch<K extends keyof Branch>(prop: K): Branch[K] {
+    this.branch = this.currentBranch && this.currentBranch[prop];
+    return this.branch;
+  }
+
+  public setRole(key: string, value: any): void {
+    this.userRole[key] = value;
+  }
+
+   set hasBusiness(value:boolean){
+      this.has_business_belongs=value;
+  }
+   get hasBusiness():boolean{
+    return this.has_business_belongs;
+  }
+
+
+  public getRole<K extends keyof Role>(prop: K): Role[K] {
+    return this.userRole && this.userRole[prop];
+    //return this.user_role;
+  }
+
+  public getBusiness<K extends keyof Business>(prop: K): Business[K] {
+    this.business = this.currentBusiness && this.currentBusiness[prop];
+    return this.business;
+  }
+
+  public setCurrentBranch(key: string, value: any): void {
+    this.currentBranch[key] = value;
+  }
+
+  public setBusiness(key: string, value: any): void {
+    this.currentBusiness[key] = value;
+  }
+
+  public getRoles(): Array<Role> {
+    return this.allRoles;
+  }
+//currentPermissions
+
+public getPermissions<K extends keyof any>(prop: K): any[K] {
+  this.permissions = this.currentPermissions && this.currentPermissions[prop];
+  return this.permissions;
+}
+
+public setPermissions(key: string, value: any): void {
+  this.currentPermissions[key] = value;
+}
   /**
    * Set a new current user.
    */
-  public assignCurrent(model?: User) {
+  public assignCurrent(model?: UserData) {
     this.clear();
 
     if (model) {
-      this.current = model;
+      this.current = model.user_logged_in;
+      this.currentBranch=model.switched_branch;
+      this.userRole=model.user_logged_role;
+      this.currentBusiness=model.business;
+      this.allRoles=model.roles;
+      this.currentPermissions=model.permissions;
+      this.hasBusiness=model.has_business_belongs;
 
-      if(model.branches){
-        const active_branch=model.branches.find(branch=>branch.active==1);
-        localStorage.setItem('active_branch',active_branch.id.toString());
+      if(model.switched_branch){
+        const active_branch=model.switched_branch;
+        const b_id:number=active_branch.id;
+        localStorage.setItem('active_branch',b_id.toString());
       }
+
     }
 
 
     this.userChanged.emit(this.current);
+    this.currentBranchChanged.emit(this.currentBranch);
+    this.currentBusinessChanged.emit(this.currentBusiness);
+    this.currentRoleChanged.emit(this.userRole);
+    this.currentRolesChanged.emit(this.allRoles);
+    this.currentPermissionChanged.emit(this.currentPermissions);
   }
 
   /**
@@ -90,8 +172,7 @@ export class CurrentUser {
    * Check if user has given permission.
    */
   public hasPermission(permission: string): boolean {
-    const permissions = this.getAllPermissions();
-    return (permissions["admin"] || permissions[permission]) > 0;
+     return this.getRole('name')==permission;
   }
 
   public hasRole(role: string): boolean {
@@ -104,6 +185,7 @@ export class CurrentUser {
    * Check if current user is logged in.
    */
   public isLoggedIn(): boolean {
+    
     return this.get("id") > 0;
   }
 
@@ -116,52 +198,7 @@ export class CurrentUser {
     return false;
   }
 
-  /**
-   * Check if user subscription is active
-   */
-  public subscriptionIsActive(): boolean {
-    return false; //this.isSubscribed() && !this.onTrial();
-  }
 
-  public onTrial() {
-    // const sub = this.getSubscription();
-    // return sub && sub.on_trial;
-  }
-
-  public onGracePeriod(): boolean {
-    // const sub = this.getSubscription();
-    // return sub && sub.on_grace_period;
-    return false;
-  }
-
-  // public getSubscription(filters: { gateway?: string, planId?: number } = {}): Subscription {
-  //     if (!this.isSubscribed()) return null;
-
-  //     let subs = this.current.subscriptions.slice();
-
-  //     if (filters.gateway) {
-  //         subs = subs.filter(sub => sub.gateway === filters.gateway);
-  //     }
-
-  //     if (filters.planId) {
-  //         subs = subs.filter(sub => sub.plan_id === filters.planId);
-  //     }
-
-  //     return subs[0];
-  // }
-
-  /**
-   * Set specified subscription on current user model.
-   */
-  // public setSubscription(subscription: Subscription) {
-  //     const i = this.current.subscriptions.findIndex(sub => sub.id === subscription.id);
-
-  //     if (i > -1) {
-  //         this.current.subscriptions[i] = subscription;
-  //     } else {
-  //         this.current.subscriptions.push(subscription);
-  //     }
-  // }
 
   /**
    * Check if current user is an admin.
@@ -169,22 +206,38 @@ export class CurrentUser {
   public isAdmin(): boolean {
     return this.hasPermission("admin");
   }
-
+  public isManager(): boolean {
+    return this.hasPermission("manager");
+  }
+  public isCashier(): boolean {
+    return this.hasPermission("cashier");
+  }
   /**
    * Clear current user information.
    */
   public clear() {
-    this.current = new User({ roles: [this.guestsRole] });
+    this.current = null;
     this.cachedPermissions = null;
+    this.currentBranch=null;
+    this.userRole=null;
+    this.currentBusiness=null;
+    this.allRoles=[];
+    this.currentPermissions=null;
+
     this.userChanged.emit(this.current);
+    this.currentBranchChanged.emit(this.currentBranch);
+    this.currentBusinessChanged.emit(this.currentBusiness);
+    this.currentRoleChanged.emit(this.userRole);
+    this.currentRolesChanged.emit(this.allRoles);
+    this.currentPermissionChanged.emit(this.currentPermissions);
   }
 
   /**
    * Init CurrentUser service.
    */
-  public init(params: { user?: User; guestsRole: Role }) {
+  public init(params: { user_data?: UserData, guestsRole: Role }) {
     this.guestsRole = params.guestsRole;
-    this.assignCurrent(params.user);
+    this.assignCurrent(params.user_data);
   }
 
   /**

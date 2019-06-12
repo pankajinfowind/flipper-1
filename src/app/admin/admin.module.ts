@@ -4,6 +4,7 @@ import { AdminComponent } from "./admin.component";
 import { MaterialModule } from "../material/material.module";
 import { AdminRoutingModule } from "./admin-routing.module";
 import { UiModule } from "../common/core/ui/ui.module";
+import { TitleBarModule } from '../title-bar/title-bar.module';
 
 @NgModule({
   imports: [

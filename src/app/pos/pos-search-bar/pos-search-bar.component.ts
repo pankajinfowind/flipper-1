@@ -25,7 +25,7 @@ import { Customer } from '../../customers/customer';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PosSearchBarComponent implements OnInit 
+export class PosSearchBarComponent implements OnInit
 {
   @ViewChild('trigger', {read: ElementRef}) trigger: ElementRef;
   formControl = new FormControl();
@@ -43,7 +43,7 @@ states2: Stock[] = [
 
   @Select(PosOrderState.selectedOrders) current_order$: Observable<Orders>;
   @Select(PosOrderState.customerOrder) customer$: Observable<Customer>;
-  
+
   business: Business;
   centered = false;
   disabled = false;
@@ -63,7 +63,7 @@ states2: Stock[] = [
     this.allItems();
    }
 
-   
+
   ngOnInit() {
     if (this.currentUser.user) {
       this.business = this.currentUser.get('business')[0];
@@ -102,7 +102,7 @@ states2: Stock[] = [
   public openSearchPage(params){
     this.store.dispatch(new LoadSearchableStockEntries(params));
   }
-  
+
   removeDups(data: Stock[]=[]) {
     let obj = {};
     if(data && data.length==0) return [];
@@ -112,7 +112,7 @@ states2: Stock[] = [
     }, obj)).map((i) => obj[i]);
     return data.reverse();
   };
- 
+
   public resetForm() {
     this.formControl.reset();
     this.searchableResults();

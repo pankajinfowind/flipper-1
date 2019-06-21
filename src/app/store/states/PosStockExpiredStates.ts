@@ -7,6 +7,7 @@ import { PosStockStates } from './PosStockStates';
 import { POS_STOCK_EXPIRED_STATE_MODEL_DEFAULTS } from '../model/pos-stock-expired-state';
 import { LoadStockExpiredEntries, LoadMoreStockExpiredEntries, LoadStockEntriesAction } from '../actions/pos-Stock-Expired.action';
 import { ApiExpiredItemService } from '../../stock/expired-stock/api/api.service';
+import { StockExpired } from '../../stock/expired-stock/api/expired-stock';
 
 @State<PosStockExpiredState>({
   name: 'STOCKEXPIRED',
@@ -89,7 +90,7 @@ export class PosStockExpiredStates {
     return this.api.get(params).pipe(tap(response => {
       const entries = action.loadMore ? oldState.data : [];
       const state = {
-        data: entries.concat(response.data),
+        data: this.removeDups(entries.concat(response.data)),
         meta: {
           ...newState.meta,
           last_page: response.last_page,
@@ -110,6 +111,13 @@ export class PosStockExpiredStates {
       return ctx.patchState({ loading: false });
     }));
   }
-
+  removeDups(data: StockExpired[]=[]) {
+    let obj = {};
+    data = Object.keys(data.reduce((prev, next) => {
+      if (!obj[next.id]) obj[next.id] = next;
+      return obj;
+    }, obj)).map((i) => obj[i]);
+    return data.reverse();
+  };
 
  }

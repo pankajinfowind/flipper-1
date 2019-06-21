@@ -105,7 +105,7 @@ export class PosOrderState {
     oldState.loading=false;
  return ctx.patchState(oldState);
   }
-  
+
 
   @Action(LoadOrderEntries)
   @Action(LoadMoreOrderEntries)
@@ -123,7 +123,7 @@ export class PosOrderState {
     return this.api.getEntries(params).pipe(tap(response => {
       const entries = action.loadMore ? oldState.data : [];
       const state = {
-        data: entries.concat(response.data),
+        data: this.removeDups(entries.concat(response.data)),
         meta: {
           ...newState.meta,
           last_page: response.last_page,
@@ -170,5 +170,14 @@ export class PosOrderState {
 
 
   }
+
+  removeDups(data: Orders[]=[]) {
+    let obj = {};
+    data = Object.keys(data.reduce((prev, next) => {
+      if (!obj[next.id]) obj[next.id] = next;
+      return obj;
+    }, obj)).map((i) => obj[i]);
+    return data.reverse();
+  };
 
  }

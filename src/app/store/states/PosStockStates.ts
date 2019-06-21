@@ -19,7 +19,7 @@ export class PosStockStates {
     return state.data;
   }
 
-  
+
   @Selector()
   static selectedStock(state: PosStockState) {
     return state.stock;
@@ -115,5 +115,5 @@ export class PosStockStates {
       }, obj)).map((i) => obj[i]);
       return data.reverse();
     };
-  
+
  }

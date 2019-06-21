@@ -2,16 +2,32 @@ import { Injectable, Input, ViewChild, ElementRef } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
 import { LocalStorage } from './services/local-storage.service';
 import { Titlebar, Color } from 'custom-electron-titlebar';
+import { Router } from '@angular/router';
 @Injectable({ providedIn: "root" })
 export class GlobalVariables {
   titlebar:any=null;
-  constructor(public localStorage: LocalStorage) {
+  constructor(public localStorage: LocalStorage,public router: Router) {
      this.titlebar=new Titlebar({
       backgroundColor: Color.WHITE,
       icon: './assets/logo/icon.ico',
       shadow: false
   });
    }
+   checkInternet(){
+    if(!this.isInternetConnection()){
+        this.router.navigate(["no-internet"]);
+      }
+    }
+
+   
+    isInternetConnection() {
+      var isOnLine = window.navigator.onLine;
+       if (isOnLine) {
+          return true;
+       } else {
+         return false;
+       }
+    }
   public model: { email?: string; password?: string; remember?: boolean } = {
     remember: true
   };

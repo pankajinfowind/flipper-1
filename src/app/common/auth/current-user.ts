@@ -43,7 +43,6 @@ export class CurrentUser {
   public currentRoleChanged: EventEmitter<Role> = new EventEmitter();
   public currentPermissionChanged: EventEmitter<any> = new EventEmitter();
   public currentRolesChanged: EventEmitter<Role[]> = new EventEmitter();
-
   public userSetting() {
     return this.current.settings;
   }

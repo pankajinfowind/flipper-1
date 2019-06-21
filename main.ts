@@ -4,7 +4,6 @@ import * as url from "url";
 //update
 import { windowStateKeeper } from "./win-state-keeper";
 
-//customTitlebar.updateTitle('Flipper - version:' +app.getVersion());
 // import { DB } from './db/db';
 // import { Sync } from './sync/sync'
 

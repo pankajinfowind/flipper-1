@@ -367,11 +367,11 @@ customer:Customer=null;
 
   }
 
-  total(prop) {
+  total(data,prop="total") {
     var total = 0;
-    if (this.data.length > 0) {
+    if (data.length > 0) {
       for (var i = 0, _len = this.data.length; i < _len; i++) {
-        total += this.data[i][prop]
+        total += data.data[i][prop]
       }
     }
     return total;

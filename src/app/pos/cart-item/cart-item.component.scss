@@ -13,6 +13,7 @@ li{
 .card{
   padding: 0;
   margin: 0;
+  height: 100%;
   .card-footer{
     height: 42%;
     background: #fff;
@@ -22,7 +23,7 @@ li{
     padding: 0;
     margin: 0;
     width: 100%;
-    height: 400px;
+    height: 100%;
     overflow: auto;
   }
 }

@@ -37,17 +37,30 @@ export class StockTableComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.v.webTitle(this.title);
       this.dataSource = new PaginatedDataTableSource<Stock>({
-        uri: this.url,
+        uri: "stock/"+parseInt(localStorage.getItem('active_branch'))+this.url,
         dataPaginator: this.paginator,
         matSort: this.matSort
     });
     this.viewUpCommingData();
+    this.reloadPage();
   }
 
   ngOnDestroy() {
     this.paginator.destroy();
   }
-
+reloadPage(){
+  this.shared.shared$.subscribe(shared=>{
+    if(shared.data && shared.data.reload){
+      this.dataSource = new PaginatedDataTableSource<Stock>({
+        uri: "stock/"+parseInt(localStorage.getItem('active_branch'))+this.url,
+        dataPaginator: this.paginator,
+        matSort: this.matSort
+    });
+      this.detailsService.update({reload:false});
+    }
+  });
+  
+}
   viewUpCommingData(){
     this.detailsService.details$.subscribe(response=>{
       if(response.receriver_data){

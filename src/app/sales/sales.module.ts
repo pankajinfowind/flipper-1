@@ -5,6 +5,7 @@ import { SalesRoutingModule } from './sales-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { UiModule } from '../common/core/ui/ui.module';
 import { FormsModule } from '@angular/forms';
+import { GlobalVariables } from '../common/core/global-variables';
 
 @NgModule({
   declarations: [SalesComponent],
@@ -18,4 +19,8 @@ import { FormsModule } from '@angular/forms';
   ],
   bootstrap: [SalesComponent]
 })
-export class SalesModule { }
+export class SalesModule { 
+  constructor(public g: GlobalVariables) {
+    this.g.checkInternet();
+   }
+}

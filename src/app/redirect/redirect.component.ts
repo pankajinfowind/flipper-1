@@ -20,14 +20,15 @@ export class RedirectComponent implements OnInit {
   }
 
   goTo(){
+   
     if (this.auth.hasBusiness) {
         if(this.auth.isAdmin()){
-          this.v.webTitle('Admin -Flipper');
+          this.v.webTitle('Admin');
           localStorage.setItem('active_menu','dashboard');
-          return this.router.navigate(["/admin"]);
+          return this.router.navigate(["/admin/analytics"]);
         }
     }else{
-      this.v.webTitle('Create Business/Company -Flipper');
+      this.v.webTitle('Create Business/Company');
       return this.router.navigate(["/customer"]);
     }
 

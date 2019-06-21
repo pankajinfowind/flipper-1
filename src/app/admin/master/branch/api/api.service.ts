@@ -34,4 +34,7 @@ export class ApiBranchService {
 public deleteMultiple(ids: number[]) {
   return this.http.delete(API_ROUTES_BRANCH.DELETE_MULTIPLE, {ids});
 }
+public switchBranch(params: any): Observable<any> {
+  return this.http.post(API_ROUTES_BRANCH.BRANCH_SWITCH, params);
+}
 }

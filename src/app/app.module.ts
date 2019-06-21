@@ -21,7 +21,7 @@ import { MaterialModule } from "./material/material.module";
 import { BusinessModule } from "./business/business.module";
 import { AuthModule } from "./common/auth/auth.module";
 import { AdminModule } from "./admin/admin.module";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Router } from "@angular/router";
 import { CoreModule } from "./common/core/core.module";
 import { APP_CONFIG } from "./common/core/config/flipper-config";
 import { FLIPPER_CONFIG } from "./flipper-config";
@@ -31,6 +31,8 @@ import { NgxsModule } from "@ngxs/store";
 import { NgxModelModule } from "ngx-model";
 import { NgxElectronModule } from "ngx-electron";
 import { AppConfig } from '../environments/environment';
+import { CheckInternetComponent } from './check-internet/check-internet.component';
+import { GlobalVariables } from './common/core/global-variables';
 Sentry.init({
   dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 });
@@ -55,7 +57,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HomeComponent,
     WebviewDirective,
-    RedirectComponent
+    RedirectComponent,
+    CheckInternetComponent,
   ],
   imports: [
     NgxElectronModule,
@@ -92,4 +95,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(public g: GlobalVariables) {
+    this.g.checkInternet();
+   }
+ }
+

@@ -9,6 +9,7 @@ import { CurrentUser } from "../auth/current-user";
 import { HttpClient } from "@angular/common/http";
 import { AppConfig } from "../../../environments/environment";
 import { URL } from "./utils/URL";
+import { Router } from '@angular/router';
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
 }
@@ -28,12 +29,13 @@ export class Bootstrapper {
   protected currentUser: CurrentUser;
   protected i18n: Translations;
   public data: BootstrapData;
-
+  
   constructor(protected injector: Injector, protected URL: URL) {
     this.http = this.injector.get(HttpClient);
     this.settings = this.injector.get(Settings);
     this.currentUser = this.injector.get(CurrentUser);
     this.i18n = this.injector.get(Translations);
+   // this.router = this.injector.get(Router);
     // merge all config provided by modules into single object
     this.injector.get(APP_CONFIG).forEach(providedConfig => {
       return this.settings.merge({ vebto: providedConfig });
@@ -53,6 +55,7 @@ export class Bootstrapper {
       return new Promise(resolve => resolve());
     }
     // this.URL.defineAppUrl();
+  
     if (this.settings.getBaseUrl() != "http://localhost:4200/") {
       url = AppConfig.url + "secure/bootstrap-data";
     } else {
@@ -67,7 +70,7 @@ export class Bootstrapper {
           resolve();
         },
         error => {
-          console.log("bootstrap error", error);
+         // console.log("bootstrap error", error);
           reject();
         }
       );
@@ -106,4 +109,6 @@ export class Bootstrapper {
 
     return data;
   }
+
+  
 }

@@ -67,13 +67,21 @@ button {
 </head>
 <body style="overflow:hidden!important;position:fixed;top:0;left:0;right:0;bottom:0;">
  <script>
+const ipcRenderer = require('electron').ipcRenderer;
+ ipcRenderer.send("version-ping", "ping");
+  ipcRenderer.on("version-pong", (event, version) => {
+          document.getElementById('version').innerHTML=version;
+      });
 const custom_electron_titlebar_1 = require("custom-electron-titlebar");
-const app = require("electron");
-new custom_electron_titlebar_1.Titlebar({
+var titlebar =new custom_electron_titlebar_1.Titlebar({
     backgroundColor: custom_electron_titlebar_1.Color.BLACK,
-    icon: './assets/logo/icon.ico',
+    icon: '',
     shadow: false
 });
+titlebar.updateMenu(null);
+
+ 
+
 
  </script>
   <div class="row">
@@ -83,7 +91,7 @@ new custom_electron_titlebar_1.Titlebar({
             <h1 id="price"></h1>
         </div>
         <div id="goal-container">
-            <p id="version">:30033030</p>
+            <p id="version"></p>
         </div>
         <div id="right-container">
            

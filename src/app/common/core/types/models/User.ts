@@ -61,22 +61,24 @@ export class Appearance{
 }
 
 export class User {
-    id: number;
+    id?: number;
     display_name?: string;
     username?: string;
     first_name?: string;
     last_name?: string;
     avatar?: string;
     permissions?: string;
-    email: string;
-    password: string;
-    language: string;
-    timezone: string;
-    country: string;
-    created_at: string;
-    updated_at: string;
+    email?: string;
+    phone?:string;
+    role_id?:number;
+    password?: string;
+    language?: string;
+    timezone?: string;
+    country?: string;
+    created_at?: string;
+    updated_at?: string;
     is_subscribed?: boolean;
-    confirmed: true;
+    confirmed?: true;
     roles?: Role[]=[];
     business?: Business[]=[];
     branches?: Branch[]=[];
@@ -84,9 +86,8 @@ export class User {
     social_profiles?: SocialProfile[];
     has_password?: boolean;
     oauth?: Social[];
-    available_space?: number|null;
     settings?:Settings
-    current:any;
+    current?:any;
     currencies?:any[];
     business_types?:any[];
     business_categories?:any[]
@@ -106,7 +107,7 @@ export class User {
         has_business_belongs?: boolean;
 
         social_profiles?: SocialProfile[];
-      
+        user_branches?:Branch[];
         constructor(params: Object = {}) {
             for (let name in params) {
                 this[name] = params[name];

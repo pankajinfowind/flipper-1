@@ -1,54 +1,86 @@
-
-     
 <div class="app-admin" style="overflow:none">
+ <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+  <mat-sidenav-container class="content">
+    <mat-sidenav [opened]="(navService.isOpenedLeftSide | async)" mode="side" class="main-left-column">
+      <div class="wv-business-switcher">
+        <div class="wv-business-switcher__toggle">
+          <div class="logo">
+            <a routerLink="/settings/set-company" class="simple-text logo-mini">
+              <img class="logo-img"
+                [src]="current.getBusiness('logo')?current.getBusiness('logo'):'/assets/logo/icon.ico'"
+                alt="react-logo">
 
-<mat-sidenav-container class="content" style="margin-top:40px">
-  
-<mat-sidenav [opened]="isOpened" mode="side" class="main-left-column" style="width: 90px;">
-  <div class="nH bAw nn" style="width: 83px; height: 100%; overflow:hidden;">
-    <div class="brC-aT5-aOt-Jw">
-      <div class="brC-aT5-aOt-bsf-Jw">
-        <nav class="brC-bsf-aT5-aOt list-horizontal">
-            <mat-list class="main-menu-items" *ngFor="let link of appearance.navLinks" class="aT5-aOt-I bse-bvF-aLp" (click)="navigation(link.path)" [class.active]="localStorage.get('active_menu')==link.path" style="
-            padding-top: 13px;padding-bottom: 13px;cursor:pointer;">
-            <a  class="main-menu-item">
-                <mat-icon class="aT5-aOt-I-JX-Jw" style="margin-top: 8.5px;margin-left: 5px; cursor:pointer;">{{link.icon}}</mat-icon>
-            <label class="titles">{{link.label}}</label>
-          </a>
-          </mat-list>
+            </a>
 
-          <div class="brC-aT5-aOt-axR" role="separator" style="margin-top: 12px" aria-hidden="false"
-            aria-disabled="true" id=":nv"></div>
-
-        </nav>
-
-      </div>
-
-    </div>
-
-
-  </div>
-
-</mat-sidenav>
-
-  <mat-sidenav-content class="main-content-inner" [class.isLeftSideClosed]="!isOpened">
-      <div class="brC-dA-I-Jw" aria-label="Side panel">
-         <div class="aT5-aOt-I brC-dA-I" aria-pressed="false" role="button" aria-label="Hide side panel" tabindex="0"
-            style="user-select: none;">
-            <div class="aT5-aOt-I-JX-Jw" (click)="toggleLeftSidebar()"><svg class="aT5-aOt-I-JX" version="1.1" id="Layer_1" x="0px" y="0px" width="20px"
-                height="20px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve" fill="#5F6368">
-                <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z"></path>
-                <path fill="none" d="M0,0h24v24H0V0z"></path>
-              </svg>
+            <a routerLink="/settings/set-company" class="simple-text logo-normal">
+              {{current.getBusiness('name')}}<br />
+              <table><tr><td><mat-icon style="color:green">check_circle_outline</mat-icon></td>
+              <td><small>  {{current.getCurrentBranch('name')}} branch</small></td>
+              </tr></table>
+            </a>
+            <div class="navbar-minimize">
+              <button type="button" [matMenuTriggerFor]="aboveMenu" mat-icon-button
+                class="expand-button no-style icon-button" style="margin-left: 57px; margin-top: 16px;">
+                <mat-icon>expand_more</mat-icon>
+              </button>
+              <mat-menu #aboveMenu="matMenu" yPosition="above">
+              <div style="margin:6px;"  *ngFor="let branch of  current.getBusiness('branches')">
+                 <a  mat-menu-item class="button-cancel" [class.isSwitched]="branch.pivot.switched==1" [disabled]="branch.pivot.switched==1" (click)="branch.pivot.switched==0?maySwitchBranch(branch):isSwitchedMessage()" style="margin-bottom:5px;padding-left: 40px;padding-right: 40px;">
+                    <mat-icon style="color:green" *ngIf="branch.pivot.switched">toggle_on</mat-icon>
+                    <mat-icon style="color:gray" *ngIf="!(branch.pivot.switched)">toggle_off</mat-icon>
+                  {{branch.name}} branch
+                  </a>
+                <mat-divider></mat-divider>
+              </div>
+                <a  mat-menu-item class="button" style="margin:6px;padding-left: 40px;padding-right: 40px;" routerLink="/settings/branches">
+                <mat-icon style="color:white">device_hub</mat-icon> Manage branch
+                </a>
+                
+              </mat-menu>
             </div>
           </div>
         </div>
-          
-       
-        <material-navbar [class.fullmaterialnavbar]="!isOpened" style="margin-top:40px"> </material-navbar>
+      </div>
 
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+      <div class="sidebar-wrapper ps">
+        <div class="user" *ngIf="current.isLoggedIn()">
+          <div class="photo">
+            <img [src]="current.get('avatar')" alt="Avatar"></div>
+          <div class="info">
+            <a [matMenuTriggerFor]="menu">
+              <span>{{current.get('email').substring(0,20)}}..<b class="caret"></b></span>
+              <br /><b style="margin-top:-1%;fon-size:12px!important">System Admin</b>
+            </a>
+            <mat-menu #menu="matMenu" yPosition="above">
 
-</mat-sidenav-container>
+              <a class="account-settings-link" mat-menu-item (click)="openAccountSettings()">
+                <mat-icon class="mat-icon" svgIcon="settings"></mat-icon>
+                <span trans>Account Settings</span>
+              </a>
+
+              <div class="logout-item" mat-menu-item (click)="logOut()">
+                <mat-icon class="mat-icon" svgIcon="exit-to-app"></mat-icon>
+                <span trans>Log Out</span>
+              </div>
+             
+            </mat-menu>
+
+          </div>
+        </div>
+
+
+
+
+        <mat-nav-list class="main-menu-items">
+          <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-content-inner" [class.isLeftSideClosed]="!(navService.isOpenedLeftSide | async)">
+
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
 </div>

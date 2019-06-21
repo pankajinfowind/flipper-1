@@ -9,6 +9,7 @@ import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { ApiBranchService } from './api/api.service';
 import { finalize } from 'rxjs/operators';
 import { CrupdateBranchModalComponent } from './crupdate-branch-modal/crupdate-branch-modal.component';
+import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
 @Component({
   selector: 'app-branch',
   templateUrl: './branch.component.html',
@@ -48,7 +49,7 @@ ngOnDestroy() {
      * Delete currently selected users.
      */
     public deleteSelectedBranchs() {
-      const ids = this.dataSource.selectedRows.selected.map(branch => branch.id);
+      const ids = this.dataSource.selectedRows.selected.map(branch => branch.branch_id);
       this.loading.next(true);
       this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
           this.paginator.refresh();
@@ -60,15 +61,16 @@ ngOnDestroy() {
      * and delete selected tags if user confirms.
      */
     public maybeDeleteSelectedBranchs() {
-      // this.modal.show(ConfirmModalComponent, {
-      //     title: 'Delete Branch(s)',
-      //     body:  'Are you sure you want to delete selected Branch(s)?',
-      //     ok:    'Delete'
-      // }).afterClosed().subscribe(confirmed => {
-      //     if ( ! confirmed) return;
-      //     this.deleteSelectedBranchs();
-      // });
+      this.modal.show(ConfirmModalComponent, {
+          title: 'Delete Branch(s)',
+          body:  'Are you sure you want to delete selected Branch(s)?',
+          ok:    'Delete'
+      }).afterClosed().subscribe(confirmed => {
+          if ( ! confirmed) return;
+          this.deleteSelectedBranchs();
+      });
   }
+  
 
     /**
      * Show modal for editing user if user is specified

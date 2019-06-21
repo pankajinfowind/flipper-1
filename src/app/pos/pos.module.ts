@@ -29,6 +29,7 @@ import { SelectCustomerModelComponent } from './select-customer-model/select-cus
 import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
 import { PosSearchBarComponent } from './pos-search-bar/pos-search-bar.component';
 import { PosSearchStockStates } from '../store/states/PosSearchStockStates';
+import { GlobalVariables } from '../common/core/global-variables';
 @NgModule({
   declarations: [
     SalePointComponent,
@@ -69,5 +70,7 @@ import { PosSearchStockStates } from '../store/states/PosSearchStockStates';
   providers: [ApiPosService]
 })
 export class PosModule {
-
+  constructor(public g: GlobalVariables) {
+    this.g.checkInternet();
+   }
 }

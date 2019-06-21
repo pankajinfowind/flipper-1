@@ -1,4 +1,5 @@
 export enum API_ROUTES_BRANCH {
   BRANCH = 'branch',
-  DELETE_MULTIPLE = 'delete-multiple'
+  BRANCH_SWITCH = 'switching-branch',
+  DELETE_MULTIPLE = 'branchs/delete-multiple'
 }

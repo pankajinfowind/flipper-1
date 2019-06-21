@@ -1,6 +1,7 @@
 import { Injectable, Input, ViewChild, ElementRef } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocalStorage } from '../core/services/local-storage.service';
+import { Router } from '@angular/router';
 // import { YFContract } from '@app/contracts/YFContract';
 // import { environment } from '@environments/environment';
 // import { FileUploader } from 'nupload';
@@ -12,7 +13,8 @@ export class GlobalVariables {
     public model: { email?: string; password?: string; remember?: boolean } = {
         remember: true
     };
-    constructor(private localStorage: LocalStorage){}
+    constructor(private localStorage: LocalStorage,public router: Router){}
+ 
     public countries: String[] = [
         'Afghanistan',
         'Albania',

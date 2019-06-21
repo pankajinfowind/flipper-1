@@ -13,9 +13,11 @@ import { CrupdateInvoiceCustomizationComponent } from './customize-invoice/crupd
 import { NgxModelModule } from 'ngx-model';
 import { PreviewInvoiceCustomizedComponent } from './customize-invoice/preview-invoice-customized/preview-invoice-customized.component';
 import { MasterModule } from '../admin/master/master/master.module';
+import { UsersComponent } from './users/users.component';
+import { CrupdateUserModalComponent } from './users/crupdate-user-modal/crupdate-user-modal.component';
 
 @NgModule({
-  declarations: [SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent,PreviewInvoiceCustomizedComponent],
+  declarations: [CrupdateUserModalComponent,SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent,PreviewInvoiceCustomizedComponent, UsersComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
@@ -28,7 +30,8 @@ import { MasterModule } from '../admin/master/master/master.module';
     NgxModelModule,
     MasterModule
   ],
-  exports:
-  [SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent,PreviewInvoiceCustomizedComponent]
+  entryComponents: [CrupdateUserModalComponent],
+  exports:[SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent,PreviewInvoiceCustomizedComponent,UsersComponent]
 })
+
 export class SettingsModule { }

@@ -12,10 +12,11 @@
                 </g>
               </svg><a class="breadcrumb-menu__link">{{(category$ | async).name}}</a>
             </span>
-            <span class="breadcrumb-menu__item"><a class="breadcrumb-menu__link" (click)="goBackToCategory()">Home</a>
+            <span class="breadcrumb-menu__item">
+             <a routerLink="/admin/analytics" style="margin-top:6px" mat-icon-button class="close-button no-style icon-button"><mat-icon>menu</mat-icon></a> &nbsp; &nbsp;
+              <a class="breadcrumb-menu__link" (click)="goBackToCategory()">Home</a>
             </span>
             
-        
           </div>
          
         </div>

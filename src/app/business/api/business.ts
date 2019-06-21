@@ -1,3 +1,5 @@
+import { Branch } from '../../admin/master/branch/api/branch';
+
 export class Business {
   name:string;
   type:string;
@@ -27,6 +29,7 @@ export class Business {
   street2?:string;
   street3?:string;
   logo?:string;
+  branches?:Branch[]
 
     constructor(params: Object = {}) {
       for (let name in params) {

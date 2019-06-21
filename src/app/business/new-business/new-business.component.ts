@@ -61,7 +61,7 @@ currencies(){
   return Object.values(this.setting.httpGet('assets/lists/currencies.json'));
   }
   ngOnInit() {
-    console.log(this.current.getBusiness('id'));
+   
     if (this.current.getBusiness('id') > 0) {
       this.updating = true;
   } else {

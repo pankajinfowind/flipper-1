@@ -20,6 +20,7 @@ import { NgxsModule } from '@ngxs/store';
 import { PosStockExpiredStates } from '../store/states/PosStockExpiredStates';
 import { StockInfiniteScrollDirective } from './display-expired-stock-by-custom/stock-infinite-scroll.directive';
 import { DisplayExpiredStockByPeriodComponent } from './display-expired-stock-by-period/display-expired-stock-by-period.component';
+import { GlobalVariables } from '../common/core/global-variables';
 
 @NgModule({
   declarations:
@@ -54,6 +55,8 @@ import { DisplayExpiredStockByPeriodComponent } from './display-expired-stock-by
      StockInfiniteScrollDirective]
 })
 export class StockModule {
-
+  constructor(public g: GlobalVariables) {
+    this.g.checkInternet();
+   }
 
  }

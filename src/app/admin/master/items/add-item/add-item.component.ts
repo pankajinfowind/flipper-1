@@ -262,7 +262,7 @@ export class AddItemComponent implements OnInit {
 
 
   close() {
-    this.router.navigate(["/admin/setup"]);
+    this.router.navigate(["/admin/setup/item"]);
     //localStorage.setItem('add-item', 'No');
   }
 

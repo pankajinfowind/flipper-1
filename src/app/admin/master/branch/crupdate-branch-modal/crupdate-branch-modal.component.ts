@@ -63,7 +63,7 @@ export class CrupdateBranchModalComponent implements OnInit {
         this.loading.next(true);
 
         if (this.updating) {
-            request = this.api.update(this.data.branch.id, payload);
+            request = this.api.update(this.data.branch.branch_id, payload);
         } else {
             request = this.api.create(payload);
         }

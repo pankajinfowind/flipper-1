@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation, Input} from '@angular/core';
 import {Settings} from '../../config/settings.service';
 
 @Component({
@@ -9,5 +9,6 @@ import {Settings} from '../../config/settings.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class NoResultsMessageComponent {
+    @Input() public hideImg: boolean=false;
     constructor(public settings: Settings) {}
 }

@@ -33,6 +33,7 @@ import { NgxElectronModule } from "ngx-electron";
 import { AppConfig } from '../environments/environment';
 import { CheckInternetComponent } from './check-internet/check-internet.component';
 import { GlobalVariables } from './common/core/global-variables';
+import { UiModule } from './common/core/ui/ui.module';
 Sentry.init({
   dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 });
@@ -82,6 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     AdminModule,
+    UiModule,
     BrowserAnimationsModule
   ],
   providers: [

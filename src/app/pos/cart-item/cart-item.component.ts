@@ -218,7 +218,7 @@ customer:Customer=null;
     this.current_order$.subscribe(res => {
       if (res) {
         this.current_order=res?res:null;
-        console.log(this.current_order);
+        //console.log(this.current_order);
         this.data = res.order_items.length > 0?res.order_items:[];
         this.expandedElement = this.data
           ? this.data[this.data.length - 1]

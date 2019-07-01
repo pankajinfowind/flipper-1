@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { User } from '../../common/core/types/models/User';
 import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-table-source';
@@ -14,9 +14,11 @@ import { ApiUserService } from './api/api.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  providers: [UrlAwarePaginator],
+  encapsulation: ViewEncapsulation.None,
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit,OnDestroy {
 
  
   @ViewChild(MatSort) matSort: MatSort;
@@ -26,6 +28,7 @@ export class UsersComponent implements OnInit {
   @Output() valueChange = new EventEmitter<User>();
   public dataSource: PaginatedDataTableSource<User>;
   public loading = new BehaviorSubject(false);
+   @Input() public hiddenCheckBox:boolean=false;
   constructor(public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiUserService) { }
 
   ngOnInit() {

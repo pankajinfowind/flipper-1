@@ -19,7 +19,6 @@ import { OrderItems } from '../../../cart/order_items';
 import { finalize } from 'rxjs/operators';
 import { ApiPosService } from '../../../api/api.service';
 import { Customer } from '../../../../customers/customer';
-import { SelectCustomerModelComponent } from '../../../../customers/manage-customer/select-customer-model/select-customer-model.component';
 
 @Component({
   selector: 'app-pos-products',

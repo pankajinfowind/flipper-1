@@ -41,5 +41,8 @@ export class ApiStockService {
   public deleteMultipleStockMovement(ids: number[]) {
     return this.http.delete(API_ROUTES.DELETE_MULTIPLE_STOCKMOVEMENT, {ids});
   }
+  public createStockOnBranch(params: Array<{item_id:number,branch_id:number,category_id:number}>): BackendResponse<{ data: any }> {
+    return this.http.post(API_ROUTES.NEW_BRANCH_STOCKS, params);
+}
     //new-item
 }

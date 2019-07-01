@@ -1,7 +1,7 @@
 
-<data-table [dataSource]="dataSource" itemsName="branchs" [isLoading]="(loading | async)" matSort>
+<data-table [dataSource]="dataSource" itemsName="branches" [isLoading]="(loading | async)" matSort>
   <div headerLeftActions>
-      <button mat-raised-button  class="button" (click)="showCrupdateBranchModal()"  trans>Create a branch</button>
+      <button mat-raised-button  class="button" (click)="showCrupdateBranchModal()"  trans>Create a new branch</button>
     </div>
   <div class="input-container" headerRightActions>
       <input type="text" class="search" placeholder="Search branchs ..." trans-placeholder [formControl]="dataSource.searchQuery">
@@ -27,6 +27,23 @@
     </mat-cell>
 </ng-container>
 
+ <ng-container matColumnDef="users">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let branch">
+          <button class="button" (click)="showUsersModal(branch)"  [matTooltip]="'View Users' | trans">
+              View users assigned
+          </button>
+      </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="stock">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let branch">
+          <button class="button-success" (click)="openStockUnassigned(branch)"  [matTooltip]="'View Users' | trans">
+              Assign Stock
+          </button>
+      </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let branch">
@@ -35,4 +52,5 @@
           </button>
       </mat-cell>
   </ng-container>
+
 </data-table>

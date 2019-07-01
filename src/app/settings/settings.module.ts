@@ -15,9 +15,12 @@ import { PreviewInvoiceCustomizedComponent } from './customize-invoice/preview-i
 import { MasterModule } from '../admin/master/master/master.module';
 import { UsersComponent } from './users/users.component';
 import { CrupdateUserModalComponent } from './users/crupdate-user-modal/crupdate-user-modal.component';
+import { UserBranchesComponent } from './user-branches/user-branches.component';
+import { BranchUsersComponent } from './branch-users/branch-users.component';
+import { SelectUserModelComponent } from './branch-users/select-user-model/select-user-model.component';
 
 @NgModule({
-  declarations: [CrupdateUserModalComponent,SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent,PreviewInvoiceCustomizedComponent, UsersComponent],
+  declarations: [CrupdateUserModalComponent,SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent,PreviewInvoiceCustomizedComponent, UsersComponent, UserBranchesComponent, BranchUsersComponent, SelectUserModelComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
@@ -30,8 +33,8 @@ import { CrupdateUserModalComponent } from './users/crupdate-user-modal/crupdate
     NgxModelModule,
     MasterModule
   ],
-  entryComponents: [CrupdateUserModalComponent],
-  exports:[SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent,PreviewInvoiceCustomizedComponent,UsersComponent]
+  entryComponents: [CrupdateUserModalComponent,BranchUsersComponent,SelectUserModelComponent],
+  exports:[SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent,PreviewInvoiceCustomizedComponent,UsersComponent,UserBranchesComponent]
 })
 
 export class SettingsModule { }

@@ -132,6 +132,7 @@ public setPermissions(key: string, value: any): void {
 
     if (model) {
       this.current = model.user_logged_in;
+      console.log(model);
       this.currentBranch=model.switched_branch;
       this.userRole=model.user_logged_role;
       this.currentBusiness=model.business;
@@ -187,7 +188,10 @@ public setPermissions(key: string, value: any): void {
     
     return this.get("id") > 0;
   }
+  public hasCurrentBranch(): boolean {
 
+        return this.getCurrentBranch("id") > 0;
+  }
   /**
    * Check if user subscription is active, on trial, or on grace period.
    */

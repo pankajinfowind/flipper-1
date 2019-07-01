@@ -9,7 +9,6 @@ import { DashbordModule } from './dashboard/dashboard.module';
 import { MasterModule } from './master/master/master.module';
 import { StockModule } from '../stock/stock.module';
 import { SalesModule } from '../sales/sales.module';
-import { SetupModule } from '../setup/setup.module';
 import { SettingsModule } from '../settings/settings.module';
 import { MenuListItemComponent } from '../nav-menu-bar/menu-list-item/menu-list-item.component';
 import { FlexLayoutModule } from '@angular/flex-layout';

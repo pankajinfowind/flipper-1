@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, OnDestroy} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Branch } from './api/branch';
-import { MatSort } from '@angular/material';
+import { MatSort, MatDialog } from '@angular/material';
 import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
 import { GlobalVariables } from '../../../common/core/global-variables';
 import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
@@ -10,13 +10,16 @@ import { ApiBranchService } from './api/api.service';
 import { finalize } from 'rxjs/operators';
 import { CrupdateBranchModalComponent } from './crupdate-branch-modal/crupdate-branch-modal.component';
 import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
+import { BranchUsersComponent } from '../../../settings/branch-users/branch-users.component';
+import { AssignStockToBranchComponent } from './assign-stock-to-branch/assign-stock-to-branch.component';
 @Component({
   selector: 'app-branch',
   templateUrl: './branch.component.html',
   styleUrls: ['./branch.component.scss'],
+  providers: [UrlAwarePaginator],
   encapsulation: ViewEncapsulation.None,
 })
-export class BranchComponent implements OnInit {
+export class BranchComponent implements OnInit,OnDestroy {
 
   @ViewChild(MatSort) matSort: MatSort;
   @Input() public enableSelectButton:boolean=false;
@@ -77,18 +80,35 @@ ngOnDestroy() {
      * or for creating a new user otherwise.
      */
     public showCrupdateBranchModal(branch?: Branch) {
-      // this.shared.update(Branch);
       this.modal.open(
         CrupdateBranchModalComponent,
           {branch},
           'crupdate-branch-modal-container'
       ).beforeClose().subscribe(data => {
-      //  this.shared.remove();
           if ( ! data) return;
           this.paginator.refresh();
       });
   }
+  // showUsersModal
+  public showUsersModal(branch?: Branch) {
+    this.modal.open(
+      BranchUsersComponent,
+        {branch},
+        {panelClass:'be-modal',width:'600px'}
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.paginator.refresh();
+    });
+}
   selectBranch(branch:Branch){
     return this.valueChange.emit(branch);
   }
+
+  openStockUnassigned(branch): void {
+      this.modal.open(AssignStockToBranchComponent,{branch},
+      {panelClass:'be-modal',width:'800px'}).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.paginator.refresh();
+    });;
+      }
 }

@@ -96,7 +96,7 @@ export class Bootstrapper {
     }
 
     // set current user and default role for guests
-    
+    localStorage.setItem('active_branch','0');
     this.currentUser.init({
       user_data: data.user_data,
       guestsRole: data.guests_role,

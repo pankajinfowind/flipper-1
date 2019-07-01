@@ -14,6 +14,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
     {path: 'customer', component: NewBusinessComponent, canActivate: [AuthGuard]},
     {path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule', canLoad: [AuthGuard]},
+    {path: 'cashier', loadChildren: 'app/cashier/cashier.module#CashierModule', canLoad: [AuthGuard]},
 ];
 
 @NgModule({

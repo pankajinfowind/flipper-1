@@ -18,6 +18,7 @@ import { CustomizeInvoiceComponent } from '../settings/customize-invoice/customi
 import { CrupdateInvoiceCustomizationComponent } from '../settings/customize-invoice/crupdate-invoice-customization/crupdate-invoice-customization.component';
 import { BranchComponent } from './master/branch/branch.component';
 import { UsersComponent } from '../settings/users/users.component';
+import { UserBranchesComponent } from '../settings/user-branches/user-branches.component';
 
 
 const routes: Routes = [
@@ -71,7 +72,8 @@ const routes: Routes = [
               { path: 'new-customize-invoice', component: CrupdateInvoiceCustomizationComponent },
               { path: 'branches', component: BranchComponent },
               { path: 'users', component: UsersComponent },
-              
+              { path: 'user-branches', component: UserBranchesComponent },
+                
             ]
           
           }

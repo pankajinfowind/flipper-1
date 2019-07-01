@@ -118,7 +118,7 @@ export class CrupdateUserModalComponent implements OnInit {
         last_name: new FormControl(user?user.last_name:"", [Validators.required]),
         email: new FormControl(user?user.email:"", [Validators.required,Validators.email]),
         phone: new FormControl(user?user.phone:"", [Validators.required]),
-        role_id: new FormControl(user?user.user.role.id:"", [Validators.required])
+        role_id: new FormControl(user?user.role.id:"", [Validators.required])
       });
     }
 

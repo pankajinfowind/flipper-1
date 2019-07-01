@@ -12,11 +12,8 @@ import { AuthService } from "../../auth.service";
 import { SocialAuthService } from "../../social-auth.service";
 import { Bootstrapper } from "../../../core/bootstrapper.service";
 import { Settings } from "../../../core/config/settings.service";
-import { Toast } from "../../../core/ui/toast.service";
 
 import { GlobalVariables } from "../../global-variables";
-import { YLocalStorage } from "../../../classes/local-storage";
-import { ApiService } from "../../../../api/api.service";
 import { ElectronService } from 'ngx-electron';
 
 @Component({
@@ -41,16 +38,11 @@ export class PasswordVerifyComponent implements OnInit {
   password_hide = true;
   ipcRenderer: any;
   constructor(
-    private toast: Toast,
     public socialAuth: SocialAuthService,
     public settings: Settings,
     private bootstrapper: Bootstrapper,
     public v: GlobalVariables,
-    private localstorage: YLocalStorage,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
     public dialog: MatDialog,
-    private api: ApiService,
     private router: Router,
     private auth: AuthService,
     private _electronService: ElectronService

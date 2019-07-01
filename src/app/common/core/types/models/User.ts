@@ -90,7 +90,18 @@ export class User {
     current?:any;
     currencies?:any[];
     business_types?:any[];
-    business_categories?:any[]
+    business_categories?:any[];
+    role?:Role;
+    pivot?:Object= {
+        branch_id: 0,
+        user_id: 0,
+        id: 0,
+        role_id: 0,
+        switched: 0,
+        activated: 1,
+        activation_code: 0,
+        active: 0
+    }
     constructor(params: Object = {}) {
         for (let name in params) {
             this[name] = params[name];

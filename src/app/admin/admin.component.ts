@@ -138,7 +138,7 @@ public loading = new BehaviorSubject(false);
         route: 'settings/customize-invoice',
         isSubmenu:true,
       },{
-        displayName: 'Branch',
+        displayName: 'Branches',
         iconName: 'group',
         route: 'settings/branches',
         isSubmenu:true,
@@ -152,9 +152,9 @@ public loading = new BehaviorSubject(false);
     }
     ];
 
-  
+
     business:Business;
-  constructor(public shared:SharedModelService,private bootstrapper: Bootstrapper,private api_pranch:ApiBranchService,private toast: Toast,private _electronService: ElectronService,public auth: AuthService,public current: CurrentUser,public navService: NavService,public localStorage: LocalStorage,private router: Router,public setting:Settings) {
+  constructor(public shared:SharedModelService,private bootstrapper: Bootstrapper,private api_pranch:ApiBranchService,private toast: Toast,public auth: AuthService,public current: CurrentUser,public navService: NavService,public localStorage: LocalStorage,private router: Router,public setting:Settings) {
   
   }
 
@@ -169,47 +169,5 @@ public loading = new BehaviorSubject(false);
     this.isOpened = !this.isOpened;
 }
 
-  navigation(path){
-    this.localStorage.set('active_menu', path);
-    this.router.navigate(["/admin/"+path]);
-
-  }
-  logOut(){
-    this.loading.next(true);
-    this.auth.logOut().subscribe(() => {
-      this.loading.next(false);
-      this.current.clear();
-      this.router.navigate(["/login"]);
-    });
-  }
-  isElectron = () => {
-    return window && window.process && window.process.type;
-  };
-  public openAccountSettings() {
-    if (this.isElectron()) {
-      this._electronService.shell.openExternal("https://yegobox.com/account/settings");
-    }
-  }
-  maySwitchBranch(branch:Branch){
-    if (!branch) return;
-  const branchForm={
-    old_switch_branch_id:this.current.getCurrentBranch('id'),
-    new_switch_branch_id:branch.id
-  };
-this.loading.next(true);
-    this.api_pranch.switchBranch(branchForm).pipe(finalize(() => this.loading.next(false)))
-        .subscribe(response => {
-          this.bootstrapper.bootstrap(response.data);
-          this.shared.update({reload:true});
-            this.toast.open('Thank you for switching branch');
-        }, error => {
-            this.handleErrors(error);
-        });
-  }
-  isSwitchedMessage(){
-    this.toast.open('The branch is already switched!');
-  }
-  public handleErrors(response: {messages: object} = {messages: {}}) {
-    console.log(response.messages || {});
-}
+ 
 }

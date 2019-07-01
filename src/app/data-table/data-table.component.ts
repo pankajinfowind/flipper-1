@@ -68,6 +68,7 @@ export class DataTableComponent<T> implements OnInit, AfterContentInit {
     @Input() public hiddenCheckBox: boolean=false;
     @Input() public isLoading: boolean=false;
     @Input() public canExpandedDetail:boolean=false;
+    @Input() public notFoundMessage: string=null;
     /**
      * Columns that should be displayed in data table.
      */

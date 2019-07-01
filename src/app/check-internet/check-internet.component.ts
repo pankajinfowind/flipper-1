@@ -16,9 +16,7 @@ export class CheckInternetComponent implements OnInit {
   }
 
   ngOnInit() {
-    setInterval(()=>{
-      return this.retry();
-    },500);
+   
   }
   retry(){
     if(this.isInternetConnection()){

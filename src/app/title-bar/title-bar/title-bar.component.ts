@@ -11,16 +11,6 @@ export class TitleBarComponent implements OnInit {
   constructor(public localStorage: LocalStorage) { }
 
   ngOnInit() {
-   // console.log(this.component);
-    // const windowOptions = {
-    //   x: 300,
-    //   y: 350,
-    //   width: 300,
-    //   height: 350,
-    //   frame: false,
-    //   icon: "src/assets/app-icon/png/icon.png"
-    // };
-    // const win=new BrowserWindow(windowOptions);
    
   }
 

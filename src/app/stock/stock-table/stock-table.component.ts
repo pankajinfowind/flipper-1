@@ -51,16 +51,18 @@ export class StockTableComponent implements OnInit,OnDestroy {
 reloadPage(){
   this.shared.shared$.subscribe(shared=>{
     if(shared.data && shared.data.reload){
-      this.dataSource = new PaginatedDataTableSource<Stock>({
-        uri: "stock/"+parseInt(localStorage.getItem('active_branch'))+this.url,
-        dataPaginator: this.paginator,
-        matSort: this.matSort
-    });
+     
+    this.dataSource.config.uri= "stock/"+parseInt(localStorage.getItem('active_branch'))+this.url;
+    this.dataSource.config.dataPaginator= this.paginator;
+    this.dataSource.config.matSort= this.matSort;
+    if ( ! this.dataSource.config.delayInit) this.dataSource.init();
       this.detailsService.update({reload:false});
+      this.paginator.refresh();
     }
   });
   
 }
+
   viewUpCommingData(){
     this.detailsService.details$.subscribe(response=>{
       if(response.receriver_data){

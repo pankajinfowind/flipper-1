@@ -1,76 +1,15 @@
 <div class="app-admin" style="overflow:none">
- <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+  <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
   <mat-sidenav-container class="content">
     <mat-sidenav [opened]="(navService.isOpenedLeftSide | async)" mode="side" class="main-left-column">
-      <div class="wv-business-switcher">
-        <div class="wv-business-switcher__toggle">
-          <div class="logo">
-            <a routerLink="/settings/set-company" class="simple-text logo-mini">
-              <img class="logo-img"
-                [src]="current.getBusiness('logo')?current.getBusiness('logo'):'/assets/logo/icon.ico'"
-                alt="react-logo">
 
-            </a>
-
-            <a routerLink="/settings/set-company" class="simple-text logo-normal">
-              {{current.getBusiness('name')}}<br />
-              <table><tr><td><mat-icon style="color:green">check_circle_outline</mat-icon></td>
-              <td><small>  {{current.getCurrentBranch('name')}} branch</small></td>
-              </tr></table>
-            </a>
-            <div class="navbar-minimize">
-              <button type="button" [matMenuTriggerFor]="aboveMenu" mat-icon-button
-                class="expand-button no-style icon-button" style="margin-left: 57px; margin-top: 16px;">
-                <mat-icon>expand_more</mat-icon>
-              </button>
-              <mat-menu #aboveMenu="matMenu" yPosition="above">
-              <div style="margin:6px;"  *ngFor="let branch of  current.getBusiness('branches')">
-                 <a  mat-menu-item class="button-cancel" [class.isSwitched]="branch.pivot.switched==1" [disabled]="branch.pivot.switched==1" (click)="branch.pivot.switched==0?maySwitchBranch(branch):isSwitchedMessage()" style="margin-bottom:5px;padding-left: 40px;padding-right: 40px;">
-                    <mat-icon style="color:green" *ngIf="branch.pivot.switched">toggle_on</mat-icon>
-                    <mat-icon style="color:gray" *ngIf="!(branch.pivot.switched)">toggle_off</mat-icon>
-                  {{branch.name}} branch
-                  </a>
-                <mat-divider></mat-divider>
-              </div>
-                <a  mat-menu-item class="button" style="margin:6px;padding-left: 40px;padding-right: 40px;" routerLink="/settings/branches">
-                <mat-icon style="color:white">device_hub</mat-icon> Manage branch
-                </a>
-                
-              </mat-menu>
-            </div>
-          </div>
-        </div>
-      </div>
+       <material-navbar [class.fullmaterialnavbar]="!isOpened" position="sidebar">
+              <switch-branch></switch-branch>
+        </material-navbar>
 
       <div class="sidebar-wrapper ps">
-        <div class="user" *ngIf="current.isLoggedIn()">
-          <div class="photo">
-            <img [src]="current.get('avatar')" alt="Avatar"></div>
-          <div class="info">
-            <a [matMenuTriggerFor]="menu">
-              <span>{{current.get('email').substring(0,20)}}..<b class="caret"></b></span>
-              <br /><b style="margin-top:-1%;fon-size:12px!important">System Admin</b>
-            </a>
-            <mat-menu #menu="matMenu" yPosition="above">
-
-              <a class="account-settings-link" mat-menu-item (click)="openAccountSettings()">
-                <mat-icon class="mat-icon" svgIcon="settings"></mat-icon>
-                <span trans>Account Settings</span>
-              </a>
-
-              <div class="logout-item" mat-menu-item (click)="logOut()">
-                <mat-icon class="mat-icon" svgIcon="exit-to-app"></mat-icon>
-                <span trans>Log Out</span>
-              </div>
-             
-            </mat-menu>
-
-          </div>
-        </div>
-
-
-
-
+       <logged-in-user-widget class="user"></logged-in-user-widget>
+     
         <mat-nav-list class="main-menu-items">
           <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
         </mat-nav-list>
@@ -80,6 +19,7 @@
     <mat-sidenav-content class="main-content-inner" [class.isLeftSideClosed]="!(navService.isOpenedLeftSide | async)">
 
       <router-outlet></router-outlet>
+      
     </mat-sidenav-content>
 
   </mat-sidenav-container>

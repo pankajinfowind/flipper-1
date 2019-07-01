@@ -13,27 +13,25 @@ export class MaterialNavbar implements OnInit {
     @Input() showToggleButton = false;
     @Input() container = false;
     @Input() showAuthButtons = false;
-
+    @Input() position :string='sidebar';
     @Output() toggleButtonClick = new EventEmitter();
     version:string;
     business:any;
     branch: any;
     constructor(
         public config: Settings,
-        public currentUser: CurrentUser,
+        public current: CurrentUser,
     ) {
-      this.business=this.currentUser.get('business')[0];
-      this.branch=this.currentUser.get('branches').find(b=>b.id==parseInt(localStorage.getItem('active_branch')));
+      this.business=this.current.get('business')[0];
+      this.branch=this.current.get('branches').find(b=>b.id==parseInt(localStorage.getItem('active_branch')));
       this.version=localStorage.getItem("version");
     }
     
   ngOnInit() {
-
-    document.onreadystatechange =  () => {
-        if (document.readyState == "complete") {
-           // this.init();
-        }
-    };
+    if(this.current.isAdmin()){
+      this.showToggleButton=true;
+    }
+ 
 }  
 
   

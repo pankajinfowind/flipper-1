@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CurrentUser } from '../common/auth/current-user';
 import { Router } from '@angular/router';
 import { GlobalVariables } from '../common/core/global-variables';
+import { Modal } from '../common/core/ui/dialogs/modal.service';
+import { SwitchBranchModelComponent } from '../common/core/ui/switch-branch/switch-branch-model/switch-branch-model.component';
 
 @Component({
   selector: 'app-redirect',
@@ -10,7 +12,7 @@ import { GlobalVariables } from '../common/core/global-variables';
 })
 export class RedirectComponent implements OnInit {
 
-  constructor(public auth:CurrentUser, private router: Router, public v: GlobalVariables) {
+  constructor(private modal: Modal,public auth:CurrentUser, private router: Router, public v: GlobalVariables) {
 
      this.goTo();
   }
@@ -22,10 +24,19 @@ export class RedirectComponent implements OnInit {
   goTo(){
    
     if (this.auth.hasBusiness) {
+      console.log(this.auth.hasCurrentBranch());
         if(this.auth.isAdmin()){
           this.v.webTitle('Admin');
           localStorage.setItem('active_menu','dashboard');
           return this.router.navigate(["/admin/analytics"]);
+           }else if(this.auth.isCashier()){
+          this.v.webTitle('Cashier');
+          if(this.auth.hasCurrentBranch()){
+            return this.router.navigate(["/cashier/pos"]);
+          }else{
+            this.branchesModel();
+          }
+          
         }
     }else{
       this.v.webTitle('Create Business/Company');
@@ -33,4 +44,13 @@ export class RedirectComponent implements OnInit {
     }
 
   }
+
+  branchesModel(): void {
+    this.modal.open(SwitchBranchModelComponent,null,
+    {panelClass:'be-modal',width:'500px',hasBackdrop :false}).afterClosed().subscribe(data => {
+      if ( ! data) return;
+      this.auth.clear();
+      return this.router.navigate(["/login"]);
+  });;
+    }
 }

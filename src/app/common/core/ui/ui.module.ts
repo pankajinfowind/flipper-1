@@ -23,6 +23,9 @@ import { TranslationsModule } from '../translations/translations.module';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Settings } from '../config/settings.service';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { SwitchBranchModelComponent } from './switch-branch/switch-branch-model/switch-branch-model.component';
+import { SwitchBranchComponent } from './switch-branch/switch-branch/switch-branch.component';
+import { MaterialModule } from '../../../material/material.module';
 
 @NgModule({
     imports: [
@@ -38,14 +41,11 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
         TranslationsModule,
 
         // material
-        MatButtonModule,
-        MatSnackBarModule,
-        MatMenuModule,
-        MatCheckboxModule,
-        MatTooltipModule,
-        MatIconModule,
+        MaterialModule,
     ],
     declarations: [
+        SwitchBranchModelComponent,
+         SwitchBranchComponent,
         LoadingIndicatorComponent,
         NoResultsMessageComponent,
         CustomMenuComponent,
@@ -61,6 +61,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
         NotFoundPageComponent
     ],
     exports: [
+        SwitchBranchModelComponent,SwitchBranchComponent,
         LoadingIndicatorComponent,
         NoResultsMessageComponent,
         CustomMenuComponent,
@@ -92,6 +93,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
         MatTooltipModule,
         MatIconModule,
     ],
+    entryComponents: [SwitchBranchModelComponent],
     providers: [BreakpointsService]
 })
 export class UiModule {

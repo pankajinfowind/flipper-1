@@ -22,6 +22,7 @@ import { CrupdateBrandModalComponent } from '../brands/crupdate-brand-modal/crup
 import { SelectCategoryModelComponent } from '../categories/select-category-model/select-category-model.component';
 import { SelectBrandModalComponent } from '../brands/select-brand-modal/select-brand-modal.component';
 import { CrupdateBranchModalComponent } from '../branch/crupdate-branch-modal/crupdate-branch-modal.component';
+import { AssignStockToBranchComponent } from '../branch/assign-stock-to-branch/assign-stock-to-branch.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { CrupdateBranchModalComponent } from '../branch/crupdate-branch-modal/cr
     BrandComponent,
     BranchComponent,
     MasterComponent,
+    AssignStockToBranchComponent,
     CrupdateCategoryModalComponent,
     CrupdateBrandModalComponent,
     SelectCategoryModelComponent,
@@ -70,6 +72,7 @@ import { CrupdateBranchModalComponent } from '../branch/crupdate-branch-modal/cr
 entryComponents: [CrupdateCategoryModalComponent,
   CrupdateBrandModalComponent,
   SelectCategoryModelComponent,
+  AssignStockToBranchComponent,
   SelectBrandModalComponent,CrupdateBranchModalComponent]
 })
 export class MasterModule {

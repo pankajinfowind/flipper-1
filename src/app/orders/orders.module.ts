@@ -15,6 +15,7 @@ import { PosOrderState } from '../store/states/PosOrderStates';
 import { OrderHeldComponent } from './order-held/order-held.component';
 import { PreviewOrderInvoiceComponent } from './orders/preview-order-invoice/preview-order-invoice.component';
 import { PrintOutModule } from '../print-out/print-out.module';
+import { UiModule } from '../common/core/ui/ui.module';
 
 @NgModule({
   declarations:
@@ -46,6 +47,7 @@ import { PrintOutModule } from '../print-out/print-out.module';
     OrderRoutingModule,
     DataTableModule,
     PrintOutModule,
+    UiModule,
     NgxsModule.forFeature([PosOrderState]),
   ]
 })

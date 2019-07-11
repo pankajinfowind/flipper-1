@@ -106,15 +106,15 @@
               </thead>
               <tbody *ngIf="(invoice$ | async).orderItems.length > 0">
                 <tr *ngFor="let item of (invoice$ | async).orderItems">
-                  <td> <b class="small text-center"><b>{{item.item_code}}</b></b></td>
-                  <th><b class="small text-center"><b>{{item.item}}</b></b></th>
-                  <th><b class="small-md text-center"><b>{{item.qty}}</b></b></th>
-                  <th><b class="small-md text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.price}}</b></b></th>
-                  <th><b class="small-md text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.total_amount | roundNumber}}</b></b></th>
-                  <th *ngIf="(invoice$ | async).printFormat[0].customer_type_name && (invoice$ | async).printFormat[0].has_customer_type">
-                  <b class="small-md text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.total_customer_type_amount_discount | roundNumber}}</b></b></th>
-                  <th *ngIf="(invoice$ | async).printFormat[0].customer_type_name && (invoice$ | async).printFormat[0].has_customer_type">
-                  <b class="small-md text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.company_total_amount_discount | roundNumber}}</b></b></th>
+                  <td> <b class="text-center"><b>{{item.item_code}}</b></b></td>
+                  <td><b class="text-center"><b>{{item.item}}</b></b></td>
+                  <td><b class="text-center"><b>{{item.qty}}</b></b></td>
+                  <td><b class="text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.price}}</b></b></td>
+                  <td><b class="text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.total_amount | roundNumber}}</b></b></td>
+                  <td *ngIf="(invoice$ | async).printFormat[0].customer_type_name && (invoice$ | async).printFormat[0].has_customer_type">
+                  <b class="text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.total_customer_type_amount_discount | roundNumber}}</b></b></td>
+                  <td *ngIf="(invoice$ | async).printFormat[0].customer_type_name && (invoice$ | async).printFormat[0].has_customer_type">
+                  <b class="text-center"><b class="text-center">{{(invoice$ | async).business.currency_code }} {{item.company_total_amount_discount | roundNumber}}</b></b></td>
                 </tr>
             
               </tbody>
@@ -212,8 +212,8 @@
                 <table class="border-none" cellpadding="6" cellspacing="0" border="0">
                   <tr class="border-none">
                     <th class="border-none">
-                      <span style="font-weight: bold;">{{(invoice$ | async).printFormat[0].done_at}} <span style="font-size:12px">{{(invoice$ | async).branch.name?(invoice$ | async).branch.name:'...........'}} </span></span>
-                      &nbsp;<span style="font-weight: bold;">{{(invoice$ | async).printFormat[0].done_on}} <span style="font-size:12px">{{today | date}}</span> </span>
+                      <span style="font-weight: bold;font-size:12px">{{(invoice$ | async).printFormat[0].done_at}} <span style="font-size:12px">{{(invoice$ | async).branch.name?(invoice$ | async).branch.name:'...........'}} </span></span>
+                      &nbsp;<span style="font-weight: bold;font-size:12px">{{(invoice$ | async).printFormat[0].done_on}} <span style="font-size:12px">{{today | date}}</span> </span>
                    </tr>
                   <tr class="border-none">
                     <td class="border-none" style="font-size:12px;font-weight: italic">
@@ -221,7 +221,7 @@
                     </td>
                   </tr>
                   <tr class="border-none">
-                    <td class="border-none"  style="font-size:15px;float: left;font-weight: bold">
+                    <td class="border-none"  style="font-size:12px;float: left;font-weight: bold">
                       {{(invoice$ | async).printFormat[0].nom_signature_cachet}} 
                     </td>
 

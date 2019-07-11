@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GlobalVariables } from '../../common/core/global-variables';
@@ -10,7 +10,6 @@ import { Bootstrapper } from '../../common/core/bootstrapper.service';
 import { Router } from '@angular/router';
 import { Toast } from '../../common/core/ui/toast.service';
 import { Settings } from '../../common/core/config/settings.service';
-import { Business } from '../api/business';
 import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { PopupImageCropperModelComponent } from '../../image-cropper/popup-image-cropper-model/popup-image-cropper-model.component';
 
@@ -22,7 +21,8 @@ export interface SelectorBox {
 @Component({
   selector: 'app-new-business',
   templateUrl: './new-business.component.html',
-  styleUrls: ['./new-business.component.scss']
+  styleUrls: ['./new-business.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class NewBusinessComponent implements OnInit {
   businessForm: FormGroup;

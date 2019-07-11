@@ -16,24 +16,21 @@ export class SwitchBranchModelComponent implements OnInit {
   constructor(
     private router: Router,
     public auth: AuthService,
-    public current: CurrentUser,
-    private dialogRef: MatDialogRef<SwitchBranchModelComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-) { }
+    public current: CurrentUser) { }
 
   ngOnInit() {
   }
   close(){
-    return this.dialogRef.close('closed'); 
+   // return this.dialogRef.close('closed'); 
   }
   logOut(){
     this.loading.next(true);
     this.auth.logOut().pipe(finalize(() => this.loading.next(false)))
             .subscribe(() => {
-              this.dialogRef.close('closed');
+             // this.dialogRef.close('closed');
               this.current.clear();
        this.router.navigate(["/login"]);
-       this.dialogRef.close('closed'); 
+      // this.dialogRef.close('closed'); 
             }, error => {
               console.log(error);
             });

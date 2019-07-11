@@ -18,6 +18,6 @@ public update(id:number,params: CustomizeInvoice): Observable<CustomizeInvoice> 
   return this.http.put('customize-invoice'+'/'+id, params);
 }
   public deleteMultiple(ids: number[]) {
-    return this.http.delete('customize-invoices', {ids});
+    return this.http.delete('customize-invoices/delete-multiple', {ids});
   }
 }

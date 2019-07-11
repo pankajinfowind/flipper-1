@@ -3,7 +3,7 @@
 import { tap } from 'rxjs/internal/operators/tap';
 import { PosOrdersState, OrdersApiIndexParams } from '../model/pos-order-state-model';
 import { POS_ORDER_STATE_MODEL_DEFAULTS } from '../model/pos-order-state';
-import { LoadOrderEntriesAction, LoadMoreOrderEntries, LoadOrderEntries, OrderAction, CurrentOrder, LoadCurrentOrder, CustomerOrder, CustomerAction, CreateInvoice, InvoiceAction, InvoiceDetails } from '../actions/pos-Order.action';
+import { LoadOrderEntriesAction, LoadMoreOrderEntries, LoadOrderEntries, OrderAction, CurrentOrder, LoadCurrentOrder, CustomerOrder, CustomerAction, CreateInvoice, InvoiceAction, InvoiceDetails, UpdateCurrentOrder, CreateOrder, OrderParmsAction, UpdateOrderItems, OrderItemsAction, UpdateOrder, DeleteOrder, DeleteOrderItems } from '../actions/pos-Order.action';
 import { ApiOrderService } from '../../orders/orders/api/api.service';
 import { Orders } from '../../orders/orders';
 import { finalize } from 'rxjs/operators';
@@ -87,6 +87,15 @@ export class PosOrderState {
            oldState.loading=false;
         return ctx.patchState(oldState);
   }
+  @Action(UpdateCurrentOrder)
+  updateCurrentOrder(ctx: StateContext<PosOrdersState>, action: OrderAction){
+    const oldState = ctx.getState();
+           oldState.order=action.order;
+           oldState.loading=false;
+         ctx.patchState(oldState);
+        return this.store.dispatch(new CustomerOrder(oldState.order.customer));
+  }
+
   @Action(CreateInvoice)
   createInvoices(ctx: StateContext<PosOrdersState>, action: InvoiceAction){
     ctx.patchState({ loading: true });
@@ -98,6 +107,50 @@ export class PosOrderState {
     }));
   }
 
+  @Action(CreateOrder)
+  createOrder(ctx: StateContext<PosOrdersState>, action: OrderParmsAction){
+    ctx.patchState({ loading: true });
+
+   return this.api.createOrder(action.orderParms).pipe(tap(response => {
+             return this.store.dispatch(new UpdateCurrentOrder(response));
+    }));
+  }
+
+  @Action(UpdateOrder)
+  updateOrder(ctx: StateContext<PosOrdersState>, action: OrderAction){
+    ctx.patchState({ loading: true });
+
+   return this.api.updateOrder(action.order).pipe(tap(response => {
+             return this.store.dispatch(new UpdateCurrentOrder(response));
+    }));
+  }
+
+  @Action(DeleteOrder)
+  deleteOrder(ctx: StateContext<PosOrdersState>, action: OrderAction){
+    ctx.patchState({ loading: true });
+
+   return this.api.deleteOrder(action.order).pipe(tap(response => {
+      return this.store.dispatch(new CurrentOrder());       
+    }));
+  }
+
+  @Action(UpdateOrderItems)
+  updateOrderItems(ctx: StateContext<PosOrdersState>, action: OrderItemsAction){
+    ctx.patchState({ loading: true });
+
+   return this.api.updateOrderItem(action.orderItems).pipe(tap(response => {
+             return this.store.dispatch(new UpdateCurrentOrder(response));
+    }));
+  }
+
+  @Action(DeleteOrderItems)
+  deleteOrderItems(ctx: StateContext<PosOrdersState>, action: OrderItemsAction){
+    ctx.patchState({ loading: true });
+
+   return this.api.deleteOrderedItem(action.orderItems).pipe(tap(response => {
+             return this.store.dispatch(new UpdateCurrentOrder(response));
+    }));
+  }
   @Action(InvoiceDetails)
   invoicesDetails(ctx: StateContext<PosOrdersState>, action: InvoiceAction){
     const oldState = ctx.getState();
@@ -170,6 +223,8 @@ export class PosOrderState {
 
 
   }
+
+  
 
   removeDups(data: Orders[]=[]) {
     let obj = {};

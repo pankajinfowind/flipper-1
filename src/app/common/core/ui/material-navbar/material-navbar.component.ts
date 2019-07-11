@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit} from '@angular/core';
 import { Settings } from '../../config/settings.service';
 import {CurrentUser} from '../../../auth/current-user';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'material-navbar',
@@ -16,15 +17,12 @@ export class MaterialNavbar implements OnInit {
     @Input() position :string='sidebar';
     @Output() toggleButtonClick = new EventEmitter();
     version:string;
-    business:any;
-    branch: any;
     constructor(
         public config: Settings,
         public current: CurrentUser,
+        private router: Router,
     ) {
-      this.business=this.current.get('business')[0];
-      this.branch=this.current.get('branches').find(b=>b.id==parseInt(localStorage.getItem('active_branch')));
-      this.version=localStorage.getItem("version");
+   
     }
     
   ngOnInit() {
@@ -34,6 +32,8 @@ export class MaterialNavbar implements OnInit {
  
 }  
 
-  
+gotoDashBoard(){
+  return this.router.navigate(["/admin/analytics"]);
+}
 
 }

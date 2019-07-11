@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'pos-list-item-header',
   templateUrl: './list-item-header.component.html',
-  styleUrls: ['../../sale-point/sale-point.component.scss'],
+  styleUrls: ['./list-item-header.component.scss'],
 })
 export class ListItemHeaderComponent implements OnInit {
   @Select(PosCateoriesState.category) category$: Observable<Category>;

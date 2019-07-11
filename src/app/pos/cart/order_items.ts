@@ -33,6 +33,8 @@ export class OrderItems {
   action?:string;
   sale_price?:CustomerTypePrices;
   available_qty?:number;
+  changed_price?:number;
+  lastUpdated?:boolean;
   constructor(params: Object = {}) {
     for (let name in params) {
       this[name] = params[name];

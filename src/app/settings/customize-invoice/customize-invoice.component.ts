@@ -37,6 +37,7 @@ ngOnDestroy() {
 }
 
 newInvoiceCustomization(){
+  this.shared.update(null);
   this.router.navigate(["/admin/settings/new-customize-invoice"]);
 }
 updateInvoiceCustomization(data){

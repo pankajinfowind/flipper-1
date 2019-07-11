@@ -37,7 +37,7 @@
           <mat-chip *ngIf="ordered.is_currently_processing==0">Recent ordered</mat-chip>
         </mat-chip-list>
       <mat-panel-title class="col-2 text-center">
-        <b>{{business.currency_code}}  {{total(ordered.order_items,'total_amount')}}</b>
+        <b>{{currentUser.getBusiness('currency_code')}}  {{total(ordered.order_items,'total_amount')}}</b>
       </mat-panel-title>
 
     </mat-expansion-panel-header>
@@ -52,6 +52,7 @@
         <td *ngIf="ordered.invoice">
         <button mat-raised-button  class="button"  *ngIf="ordered.invoice && ordered.invoice.printFormat && !ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"   trans>Print Preview Invoice</button>
         <button mat-raised-button  class="button"  *ngIf="ordered.invoice && ordered.invoice.printFormat && ordered.invoice.printFormat[0].has_customer_type" (click)="showPreviewInvoiceModal(ordered.invoice)"  trans>Print Preview {{ordered.invoice.printFormat[0].customer_type_name}} Invoice</button>
+           &nbsp;<button mat-raised-button  class="button-success"  *ngIf="ordered.invoice" (click)="printReceiptModel(ordered.invoice)" trans>Print Receipt</button>
         </td>
       </tr>
       </table>
@@ -73,7 +74,7 @@
               <th>{{ord_items.item}}</th>
               <th>{{ord_items.qty}}</th>
               <th>{{ord_items.each}}</th>
-              <th>{{business.currency_code}} {{ord_items.total_amount}}</th>
+              <th>{{currentUser.getBusiness('currency_code')}} {{ord_items.total_amount}}</th>
             </tr>
           </tbody>
         </table>
@@ -82,4 +83,9 @@
 
   </mat-expansion-panel>
 </mat-accordion>
+  <no-results-message *ngIf="(entries$| async).length == 0">
+        <span primary-text trans>Nothing To Display.</span>
+        <span secondary-text trans >Seems like no {{status}} orders.</span>
+    </no-results-message>
+    <br />
 </mat-dialog-content>

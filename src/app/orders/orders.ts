@@ -10,7 +10,7 @@ export class Orders {
   updated_at?: Date;
   status?: string;
   customer_id?: number;
-  is_currently_processing: any;
+  is_currently_processing?: any;
   all?: string;
   user?: any;
   customer?: Customer;

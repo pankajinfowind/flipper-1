@@ -1,24 +1,7 @@
-<div class="primary-section__body">
-    <div class="product-area">
-      <div class="primary-section-content">
-        <div class="primary-section-content__header">
-          <div class="breadcrumb-menu product-area__breadcrumb-menu">
-             <span class="breadcrumb-menu__item float-right mr-3">
-             </span>
-            <span class="breadcrumb-menu__item" *ngIf="(category$ | async)"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="breadcrumb-menu__chevron" style="width: 1.5rem; height: 2rem; fill: rgb(0, 0, 0);">
-                <g>
-                  <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
-                </g>
-              </svg><a class="breadcrumb-menu__link">{{(category$ | async).name}}</a>
-            </span>
-            <span class="breadcrumb-menu__item">
-             <a routerLink="/admin/analytics" style="margin-top:6px" mat-icon-button class="close-button no-style icon-button"><mat-icon>menu</mat-icon></a> &nbsp; &nbsp;
-              <a class="breadcrumb-menu__link" (click)="goBackToCategory()">Home</a>
-            </span>
-            
-          </div>
-         
-        </div>
-        </div>
-        </div>
-        </div>
+<div id="cssmenu" style=" margin-top: 50px;margin-left: 10px;">  
+    <ul>
+        <li class="active" *ngIf="(category$ | async)"><a>{{(category$ | async).name}}</a></li>
+        <li class="search"><a><pos-search-bar></pos-search-bar></a></li>
+        <li><a (click)="goBackToCategory()" style="cursor:pointer"> POS </a></li>
+    </ul>
+</div> 

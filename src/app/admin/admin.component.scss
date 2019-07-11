@@ -7,7 +7,7 @@ $blue:rgb(3, 155, 229);;
   width:100%;
   position:fixed;top:2rem;left:0;right:0;bottom:0;
   overflow:hidden!important;
-  border-top: solid 1.5px $site-selected-item-bg-color;
+  // border-top: solid 1.5px $site-selected-item-bg-color;
 
 
   .main-left-column {
@@ -23,15 +23,17 @@ $blue:rgb(3, 155, 229);;
     outline: none;
     cursor: pointer;
     -webkit-user-drag: none;
-    border-right: solid 1px $site-selected-item-bg-color;
+    //border-right: solid 1px $site-selected-item-bg-color;
     color: $site-text-color-400;
     overflow: hidden!important;;
-   
+    border: none!important;
 
     material-navbar {
       margin-top: 2px;
       width: 100%;
     }
+   
+
    
 
 .user:after,  .user:after {
@@ -41,14 +43,14 @@ $blue:rgb(3, 155, 229);;
   right: 4px;
   height: 1px;
   width: calc(100% - 20px);
-  background-color: rgb(213, 217, 222);;
+  background-color: #ffff;;
 }
 .sidebar-wrapper {
-  margin-top: -15px;
+  margin-top: 1px;
   position: relative;
   height: calc(100vh - 75px);
   overflow: auto;
-  width: 290px;
+  width: 100%;
   z-index: 4;
   padding-bottom: 100px;
 

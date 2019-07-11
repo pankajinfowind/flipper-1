@@ -23,6 +23,7 @@ export class NavService {
     });
   }
 
+ 
   public closeNav() {
     this.appDrawer.close();
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, BehaviorSubject} from 'rxjs';
-import {map, startWith, debounceTime, distinctUntilChanged, switchMap, filter} from 'rxjs/operators';
+import {map, startWith, debounceTime, distinctUntilChanged, switchMap, filter, take} from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
 import { PosStockStates } from '../../store/states/PosStockStates';
 import { Stock } from '../../stock/api/stock';
@@ -11,7 +11,7 @@ import { CurrentUser } from '../../common/auth/current-user';
 import { Business } from '../../business/api/business';
 import { ApiPosService } from '../api/api.service';
 import { MatBottomSheet, MatAutocompleteSelectedEvent } from '@angular/material';
-import { CurrentOrder } from '../../store/actions/pos-Order.action';
+import { CurrentOrder, OrderParms, CreateOrder, UpdateOrderItems } from '../../store/actions/pos-Order.action';
 import { Orders } from '../../orders/orders';
 import { BottomSheetOverviewStock } from '../pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
 import { OrderItems } from '../cart/order_items';
@@ -31,7 +31,6 @@ export class PosSearchBarComponent implements OnInit
   formControl = new FormControl();
   //public results: BehaviorSubject<State[]> = new BehaviorSubject([]);
   public results: Observable<any>;
-  private lastQuery: string;
   public dispaly_autocomplete:boolean=false;
   states: Stock[] = [
 ];
@@ -55,39 +54,16 @@ states2: Stock[] = [
   accent='accent';
   primary='primary';
   mode = 'determinate';
-  current_order:Orders=null;
   selectedItem=null;
-  customer:Customer=null;
-  constructor(private api: ApiPosService,private bottomSheet: MatBottomSheet,private store:Store,public currentUser: CurrentUser) {
-    this.searchableResults();
-    this.allItems();
+  constructor(private bottomSheet: MatBottomSheet,private store:Store,public currentUser: CurrentUser) {
+
    }
 
 
   ngOnInit() {
-    if (this.currentUser.user) {
-      this.business = this.currentUser.get('business')[0];
-      this.store.dispatch(new CurrentOrder());
-
-      this.current_order$.subscribe(current=>{
-        if(current){
-          this.current_order=current as Orders;
-        }else{
-          this.current_order=null;
-        }
-      });
-    }
-    this.formControl.valueChanges
-    .pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      startWith(''),
-      map(state => state ? this.openSearchPage(state): this.searchableResults())
-    );
+    this.searchableResults();
   }
-  public executeAction(e: MatAutocompleteSelectedEvent) {
-    this.trigger.nativeElement.blur();
-  }
+ 
 
   percentage(num,num1) {
     let sum=Math.round(parseInt(num) *100)/parseInt(num1);
@@ -96,22 +72,11 @@ states2: Stock[] = [
   private searchableResults(){
     this.store.dispatch(new LoadSearchableStockEntries());
   }
-  private allItems(){
-    this.items_entries$.subscribe(res=>this.states2.push(...res));
-  }
+ 
   public openSearchPage(params){
     this.store.dispatch(new LoadSearchableStockEntries(params));
   }
 
-  removeDups(data: Stock[]=[]) {
-    let obj = {};
-    if(data && data.length==0) return [];
-    data = Object.keys(data.reduce((prev, next) => {
-      if (!obj[next.id]) obj[next.id] = next;
-      return obj;
-    }, obj)).map((i) => obj[i]);
-    return data.reverse();
-  };
 
   public resetForm() {
     this.formControl.reset();
@@ -137,63 +102,49 @@ addItemToCart(stock: Stock) {
 }
 
 saveToCartWithOrder(cart,stock:Stock){
-  if (!this.business) return;
 
   if (cart.total_qty <= 0) {
     alert("Stock Quantity is unavailable");
   } else {
-   const sale_price=stock.customer_price;
-    const cart_data: OrderItems = {
-      batch_no:cart.batch_no,
-      note: null,
-      reason_id: null,
-      discount_value:stock.customer_type.discount_value,
-      tax_rate_id: stock.tax_rate?stock.tax_rate.id:null,
-      sale_price_id: sale_price?sale_price.id:null,
-      order_id: this.current_order?this.current_order.id:null,
-      stock_id: stock?stock.stock_id:null,
-      discount_reason_id: null,
-      refund_reason_id:null,
-      qty: 1,
-      action:'add'
-    };
+    this.current_order$.pipe(take(1)).subscribe(current_order => {
+            const sale_price=stock.customer_price;
+              const cart_data: OrderItems = {
+                batch_no:cart.batch_no,
+                note: null,
+                reason_id: null,
+                discount_value:stock.customer_type.discount_value,
+                tax_rate_id: stock.tax_rate?stock.tax_rate.id:null,
+                sale_price_id: sale_price?sale_price.id:null,
+                order_id: current_order?current_order.id:null,
+                stock_id: stock?stock.stock_id:null,
+                discount_reason_id: null,
+                refund_reason_id:null,
+                qty: 1,
+                action:'add'
+              };
 
-    if (this.current_order) {
-      this.updateOrder(cart_data);
-    } else {
-    this.createNewOrder({ status: 'pending',
-      branch_id: parseInt(localStorage.getItem('active_branch')),
-      user_id: this.currentUser.get('id'),
-      business_id: this.currentUser.get('business')[0].id,
-      customer_id:this.customer?this.customer.id:null,
-      cart_data: cart_data });
-    }
+          if (current_order) {
+            this.updateOrderItems(cart_data);
+          } else {
+          this.createNewOrder({ status: 'pending',
+            branch_id: parseInt(localStorage.getItem('active_branch')),
+            user_id: this.currentUser.get('id'),
+            business_id: this.currentUser.getBusiness('id'),
+            customer_id:null,
+            cart_data: cart_data });
+          }
+        }
+      );
   }
-}
-updateOrder(params) {
-this.api.updateOrderItem(params).subscribe(
-  res => {
-      if(res['status']){
-         this.store.dispatch(new CurrentOrder());
-      }
-  },
-  _error => {
-    console.error(_error);
-  }
-);
 }
 
-createNewOrder(params) {
-this.api.createOrder(params).subscribe(
-  res => {
-    if(res['order']){
-      this.store.dispatch(new CurrentOrder());
-     }
-  },
-  _error => {
-    console.error(_error);
+  updateOrderItems(params) {
+    params.lastUpdated=true;
+    return this.store.dispatch(new UpdateOrderItems(params));
   }
-);
-}
+
+  createNewOrder(params:OrderParms) {
+    return this.store.dispatch(new CreateOrder(params));
+  }
 
 }

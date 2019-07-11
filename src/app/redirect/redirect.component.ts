@@ -24,7 +24,7 @@ export class RedirectComponent implements OnInit {
   goTo(){
    
     if (this.auth.hasBusiness) {
-      console.log(this.auth.hasCurrentBranch());
+   //   console.log(this.auth.hasCurrentBranch());
         if(this.auth.isAdmin()){
           this.v.webTitle('Admin');
           localStorage.setItem('active_menu','dashboard');
@@ -45,12 +45,7 @@ export class RedirectComponent implements OnInit {
 
   }
 
-  branchesModel(): void {
-    this.modal.open(SwitchBranchModelComponent,null,
-    {panelClass:'be-modal',width:'500px',hasBackdrop :false}).afterClosed().subscribe(data => {
-      if ( ! data) return;
-      this.auth.clear();
-      return this.router.navigate(["/login"]);
-  });;
+  branchesModel() {
+    return this.router.navigate(["/switch-branch"]);
     }
 }

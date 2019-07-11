@@ -4,6 +4,7 @@ import {CurrentUser} from '../../../auth/current-user';
 import { Router } from '@angular/router';
 import { constructDependencies } from '@angular/core/src/di/reflective_provider';
 import { ElectronService } from 'ngx-electron';
+import { Bootstrapper } from '../../bootstrapper.service';
 
 @Component({
     selector: 'logged-in-user-widget',
@@ -14,7 +15,7 @@ import { ElectronService } from 'ngx-electron';
 export class LoggedInUserWidgetComponent  {
   loading:boolean=false;
   ipcRenderer: any;
-    constructor(private _electronService: ElectronService,private router: Router, public currentUser: CurrentUser, public auth: AuthService) {
+    constructor(private bootstrapper: Bootstrapper,private _electronService: ElectronService,private router: Router, public currentUser: CurrentUser, public auth: AuthService) {
       if (this.isElectron()) {
         this.ipcRenderer = this._electronService.ipcRenderer;
         this.ipcRenderer.send("version-ping", "ping");
@@ -28,9 +29,12 @@ export class LoggedInUserWidgetComponent  {
 
     logOut(){
     this.loading=true;
-    this.auth.logOut().subscribe(() => {
+    this.auth.logOut().subscribe(
+      response =>  {
       this.loading=false;
       this.currentUser.clear();
+      //console.log(response.data);
+      this.bootstrapper.bootstrap(response.data);
       this.router.navigate(["/login"]);
     });
   }

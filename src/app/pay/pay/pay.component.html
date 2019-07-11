@@ -12,15 +12,15 @@
           <div class="flipper-pay-panel__numeric-selector">
             <div class="flipper-pay-panel__predefined-container">
               <ul class="flipper-pay-panel__predefined-inner">
-                <li (click)="mainKeyClicked('50')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  50</li>
-                <li (click)="mainKeyClicked('100')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  100</li>
-                <li (click)="mainKeyClicked('200')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  200</li>
-                <li (click)="mainKeyClicked('1000')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{business.currency_code}} </span>  1000</li>
+                <li (click)="mainKeyClicked('50')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  50</li>
+                <li (click)="mainKeyClicked('100')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  100</li>
+                <li (click)="mainKeyClicked('200')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  200</li>
+                <li (click)="mainKeyClicked('1000')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  1000</li>
               </ul>
             </div>
             <div class="flipper-pay-panel__numeric-selector-display-container">
               <div class="flipper-pay-panel__numeric-selector-display">
-               <span class="currency">{{business.currency_code}}
+               <span class="currency">{{currentUser.getBusiness('currency_code')}}
                   <mat-form-field   appearance="outline">
                       <mat-label>Amount Paid</mat-label>
                       <input  matInput placeholder="Amount Paid" (input)="displayBalanceChangesDue()" (onEnter)="displayBalanceChangesDue()" (click)="setInputToNull()" (mouseleave)="setInputToValueble()" (blur)="setInputToValueble()" autofocus  type="number" [(ngModel)]="numeric_selector" #ctrl="ngModel"  required>
@@ -75,24 +75,24 @@
             <div class="flipper-pay-panel__summary">
               <ul class="flipper-pay-panel__summary--left">
                 <li class="flipper-pay-panel__summary--label">Amount Due</li>
-                <li class="flipper-pay-panel__summary--amount-due"><span class="currency">{{business.currency_code}} </span> {{total('total_amount')}}</li>
+                <li class="flipper-pay-panel__summary--amount-due"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount') | roundNumber}}</li>
                 <li class="flipper-pay-panel__summary--label">Tax</li>
-                <li><span class="currency">{{business.currency_code}} </span> {{total('taxable_vat')}}</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('taxable_vat') | roundNumber }}</li>
                 <li class="flipper-pay-panel__summary--label">Basket Discount</li>
-                <li><span class="currency">{{business.currency_code}} </span> {{total('total_amount_discount')}}</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount_discount') | roundNumber}}</li>
               </ul>
               <ul class="flipper-pay-panel__summary--right">
                 <li class="flipper-pay-panel__summary--label">Item Discount</li>
-                <li><span class="currency">{{business.currency_code}} </span> {{total('total_amount_discount')}}</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount_discount') | roundNumber}}</li>
                 <li class="flipper-pay-panel__summary--label">Customer Discount</li>
-                <li><span class="currency">{{business.currency_code}} </span> {{total('total_amount_discount')}}</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount_discount') | roundNumber}}</li>
                 <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}">Change Due</li>
-                <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}"><span class="currency">{{business.currency_code}} </span>
-                  {{amount_return}}</li>
+                <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>
+                  {{amount_return | roundNumber}}</li>
 
                   <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '500'}">Discount Change Due</li>
-                  <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '400'}"><span class="currency">{{business.currency_code}} </span>
-                    {{d_amount_return}}</li>
+                  <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '400'}"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>
+                    {{d_amount_return | roundNumber}}</li>
 
               </ul>
             </div>
@@ -100,19 +100,22 @@
         </div>
 
 
-        <ul class="button-group button-group--inline flipper-pay-buttons">
-          <li class="button-group__button flipper-pay-panel__list-button">
-            <div (click)="payingInvoice()" class="flipper-pay-panel__list-button-label">Cash</div>
+        <ul class="button-group button-group--inline flipper-pay-buttons row">
+          <li class="button-group__button flipper-pay-panel__list-button col" (click)="payingInvoice()">
+            <div  class="flipper-pay-panel__list-button-label">Cash</div>
           </li>
-          <!-- <li (click)="payingInvoice('Other')" class="button-group__button flipper-pay-panel__list-button">
-            <div class="flipper-pay-panel__list-button-label">Gift Voucher</div>
-          </li> -->
+           <li class="button-group__button flipper-pay-panel__list-button col" *ngIf="(invoice$ | async)" (click)="printDirectReceipt()">
+            <div  class="flipper-pay-panel__list-button-label">Print Receipt</div>
+          </li>
+          <li class="button-group__button flipper-pay-panel__list-button col" *ngIf="(invoice$ | async)">
+            <app-print-invoice [preview]="preview"></app-print-invoice>
+          </li>
         </ul>
         <ul class="button-group button-group--inline flipper-pay-buttons">
         
         </ul>
       </div>
-      <app-print-invoice [preview]="preview"></app-print-invoice>
+     
     </div>
   </div>
 </div>

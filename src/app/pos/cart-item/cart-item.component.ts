@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
-import { Observable, BehaviorSubject, Subject } from "rxjs";
-import { Pos } from "../pos";
-import { PosModelService } from "../pos-model.service";
+import { Observable, BehaviorSubject } from "rxjs";
 import {
   trigger,
   state,
@@ -12,131 +10,67 @@ import {
 import { OrderItems } from "../cart/order_items";
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 import { Customer } from "../../customers/customer";
-import { ApiPosService } from '../api/api.service';
 import { Orders } from '../../orders/orders';
 import { CurrentUser } from '../../common/auth/current-user';
-import { Business } from '../../business/api/business';
-import { NgxService } from '../../common/ngx-db/ngx-service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { PosOrderState } from '../../store/states/PosOrderStates';
 import { Select, Store } from '@ngxs/store';
-import { CurrentOrder } from '../../store/actions/pos-Order.action';
+import { CurrentOrder, UpdateOrderItems, OrderParms, CreateOrder, UpdateOrder, DeleteOrder, DeleteOrderItems } from '../../store/actions/pos-Order.action';
 import { SelectCustomerModelComponent } from '../../customers/manage-customer/select-customer-model/select-customer-model.component';
 import { OpenPosCategory } from '../../store/actions/pos-categories.action';
 import { LocalStorage } from '../../common/core/services/local-storage.service';
+import { SelectTaxrateModalComponent } from '../../setup/tax-rates/select-taxrate-modal/select-taxrate-modal.component';
+import { Modal } from '../../common/core/ui/dialogs/modal.service';
+import { take } from 'rxjs/operators';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',
   styleUrls: ["./cart-item.component.scss"]
 })
 export class CartDialog implements OnInit {
-  item_deleted = [];
   public loading = new BehaviorSubject(false);
   cart_item: OrderItems;
   status: string;
-  order_items$: Observable<OrderItems[]>;
 
   centered = true;
   disabled = false;
   unbounded = false;
   radius: number=50;
   color: string='green';
-default_qty:number=0;
+  default_qty:number=0;
+  default_price:number=0;
+
   constructor(
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
-      const _data=this.data;
-    this.default_qty=_data.data.qty as number;
-    this.cart_item = _data.data as OrderItems;
-    this.status = this.data.status;
+            const _data=this.data;
+            this.default_qty=_data.data.qty as number;
+            this.default_price=_data.data.price;
+            this.cart_item = _data.data as OrderItems;
+            this.status = this.data.status;
   }
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
-
-  keysClicked(nums) {
-    if (this.status == 'Quantity') {
-      if (nums == 'x') {
-        this.cart_item.qty = 0;
-      } else {
-        const converted=parseInt(this.cart_item.qty + '' + nums);
-        if ( converted > this.cart_item.available_qty) {
-          alert('Quantity will create a negative stock level');
-        } else {
-          this.cart_item.qty = this.cart_item.qty == 0 ? nums : this.cart_item.qty + '' + nums;
-        }
-      }
-    } else {
-      if (nums == 'x') {
-        //this.cart_item.discount = 0;
-      } else {
-       // this.cart_item.discount = this.cart_item.discount == 0 ? nums : this.cart_item.discount + '' + nums;
-      }
-
-    }
-  }
-  increaseDecrease(sign) {
-    if (sign == '+') {
-      //case of puls
-      if (this.status == 'Quantity') {
-        this.cart_item.qty += 1;
-        if (this.cart_item.qty > this.cart_item.available_qty) {
-          this.cart_item.qty -= 1;
-          alert('Quantity will create a negative stock level');
-        }
-      }
-
-    } else {
-      // case of minus
-      if (this.status == 'Quantity') {
-        this.cart_item.qty -= 1;
-        if (this.cart_item.qty < 0) {
-          this.cart_item.qty += 1;
-          alert('Quantity must be greater than 0');
-        }
-      }
-    }
-    this.cart_item.action=this.default_qty < this.cart_item.qty?'add':'remove';
+updateInput(value){
+if(this.status=='Quantity'){
+this.cart_item.qty= parseInt(value);
+this.cart_item.action="none";
+}
+if(this.status=='Price'){
+  this.cart_item.changed_price= parseInt(value);
+  this.cart_item.action="changePrice";
   }
 
-
-  update() {
-    if(this.default_qty == this.cart_item.qty && this.status=='Quantity'){
-        alert("Nothing Updated. Quantity didn't changed");
-    }
-    const params:OrderItems=this.cart_item;
-    const cart_data: OrderItems = {
-      batch_no:params.batch_no,
-      note: params.note,
-      reason_id: params.reason_id,
-      discount_value:params.customer_type_discount_value || 0.00,
-      tax_rate_id:params.tax_rate?params.tax_rate.id:null || null,
-      sale_price_id: params.sale_price_id || null,
-      order_id: params.order_id || null,
-      stock_id: params.stock_id || null,
-      discount_reason_id: params.discount_reason_id || null,
-      refund_reason_id:params.refund_reason_id || null,
-      qty: this.cart_item.qty,
-      action:params.action
-    };
 if(this.status=='Note'){
-  cart_data.action="note";
+  this.cart_item.action="note";
+  this.cart_item.note=value;
 }
-return this.dialogRef.close(cart_data);
 }
-
-  removeDuplicate(ordered_items:OrderItems[]= [],id){
-    let obj = {};
-    let _ordered_items: OrderItems[] = [];
-    _ordered_items = Object.keys(ordered_items.reduce((prev, next) => {
-      if (!obj[next[id]]) obj[next[id]] = next;
-      return obj;
-    }, obj)).map((i) => obj[i]);
-    return _ordered_items;
-  }
-
+  update() {
+ return this.dialogRef.close(this.cart_item);
+}
   close(): void {
-    this.dialogRef.close({ status: 'none' });
+    this.dialogRef.close();
   }
 }
 
@@ -159,166 +93,76 @@ return this.dialogRef.close(cart_data);
   ]
 })
 export class CartItemComponent implements OnInit, OnDestroy {
-  order_items$: Observable<OrderItems[]>;
-  data: OrderItems[] = [];
-  all_total = { num_item: 0, total_tax: 0, total_amount: 0, total_due: 0, total_discount: 0 };
   dataSource = new MatTableDataSource<OrderItems>([]);
-  business: Business;
+
   @Select(PosOrderState.selectedOrders) current_order$: Observable<Orders>;
   @Select(PosOrderState.loading) loading$: Observable<boolean>;
-  current_order:Orders=null;
 
 @Select(PosOrderState.customerOrder) customer$: Observable<Customer>;
-customer:Customer=null;
-  sub: any;
-  id: any;
-
+  
   constructor(
     private localStorage: LocalStorage,
-    private route:ActivatedRoute,
     private store:Store,
     private router: Router,
     public currentUser: CurrentUser,
-    private api: ApiPosService,
-    private posModelService: PosModelService,
-    public dialog: MatDialog,
-    public db: NgxService //TODO: this line no unit test for it
+    private modal: Modal,
+    public dialog: MatDialog
   ) { }
   columnsToDisplay = ["item", "qty", "each", "total"];
   expandedElement: OrderItems | null;
 
-  private unsubscribe$: Subject<void> = new Subject<void>();
-  //TODO:use this strategy of unsubscribing to orders.components
   ngOnDestroy(): void {
-    // for declarative unsubscription
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      this.id = params['categoryId'];
- });
     this.store.dispatch(new CurrentOrder());
-
-    if (this.currentUser.user) {
-      this.business = this.currentUser.get('business')[0];
-    }
     if (this.current_order$) {
-      this.loadCartItem();
+      this.loadData();
     }
-    this.customer$.subscribe(customer=>{
-      if(customer){
-        this.customer= customer as Customer;
-      }else{
-        this.customer=null;
-      }
-});
   }
-  loadCartItem(){
-    this.current_order$.subscribe(res => {
-      if (res) {
-        this.current_order=res?res:null;
-        //console.log(this.current_order);
-        this.data = res.order_items.length > 0?res.order_items:[];
-        this.expandedElement = this.data
-          ? this.data[this.data.length - 1]
-          : null;
-      }else{
-        this.data=[];
-        this.current_order=null;
-        this.total('qty');
-        this.total('total_amount_discount');
-        this.total('total_amount');
-        this.total('taxable_vat');
-      }
+  
 
+ loadData(){
+    if(this.current_order$){
+      this.current_order$.subscribe(current_order => {
+        if(current_order){
+          this.expandedElement=current_order.order_items.length >0?current_order.order_items.find(o=>o.lastUpdated):null;
+        }
+       
+      });
+    }
+ }
+
+  deleteOrdered() {
+    this.current_order$.pipe(take(1)).subscribe(current_order => {
+      let result = confirm("Are you sure,you want to delete this current transction?");
+      if (result) {
+        //DeleteOrder
+        return this.store.dispatch(new DeleteOrder(current_order));
+      }
+    });
+   
+  }
+  holdOrdered() {
+    this.current_order$.pipe(take(1)).subscribe(current_order => {
+      current_order.status = "hold";
+      current_order.is_currently_processing = 0;
+        return this.updateOrder(current_order);
+      
     });
   }
 
-  updatePosLayout(panel = 'home') {
-    this.posModelService.update({ panel_content: panel });
-  }
-
-
-  payOrdered() {
-
-    //TODO: ask ganza the service that complete payment action
-    this.posModelService.update({ panel_content: 'pay' });
-  }
-
-  deleteOrdered() {
-    let result = confirm("Are you sure,you want to delete this current transction?");
-    if (result) {
-      this.api.deleteOrder(this.current_order.id).subscribe(
-        res => {
-          if (res.status == 'success') {
-            if(res['deleted']){
-              this.store.dispatch(new CurrentOrder());
-              this.current_order=null;
-              this.loadCartItem();
-              this.data=[];
-              this.total('qty');
-              this.total('total_amount_discount');
-              this.total('total_amount');
-              this.total('taxable_vat');
-            }
-          }
-        },
-        _error => {
-          console.error(_error);
-        }
-      );
-    }
-  }
-  holdOrdered() {
-    this.current_order.status = "hold";
-    this.current_order.is_currently_processing = 0;
-    this.updateOrder(this.current_order);
-    this.loadCartItem();
-    this.data=[];
-    this.total('qty');
-    this.total('total_amount_discount');
-    this.total('total_amount');
-    this.total('taxable_vat');
-    this.current_order=null;
-  }
-
   updateOrder(params:Orders) {
-    this.api.updateOrder(params, params.id).subscribe(
-      res => {
-
-          this.store.dispatch(new CurrentOrder());
-      },
-      _error => {
-        console.error(_error);
-      }
-    );
+    return this.store.dispatch(new UpdateOrder(params));
   }
-  createNewOrder(params) {
-    this.api.createOrder(params).subscribe(
-      res => {
-        if(res['order']){
-          this.store.dispatch(new CurrentOrder());
-         }
-      },
-      _error => {
-        console.error(_error);
-      }
-    );
+
+  createNewOrder(params:OrderParms) {
+    return this.store.dispatch(new CreateOrder(params));
   }
 
 
   updateOrderItems(params) {
-    this.api.updateOrderItem(params).subscribe(
-      res => {
-          if(res['status']){
-             this.store.dispatch(new CurrentOrder());
-          }
-      },
-      _error => {
-        console.error(_error);
-      }
-    );
+    params.lastUpdated=true;
+    return this.store.dispatch(new UpdateOrderItems(params));
   }
 
   updateQty(params:OrderItems,action) {
@@ -334,23 +178,20 @@ customer:Customer=null;
       discount_reason_id: params.discount_reason_id || null,
       refund_reason_id:params.refund_reason_id || null,
       qty: 1,
-      action:action
+      action:action,
+      lastUpdated:true
     };
     return this.updateOrderItems(cart_data);
   }
 
 
 
-  deleteOrderedItem(element) {
-    this.api.deleteOrderedItem(element.id).subscribe(res => {
-        if(res['deleted']){
-          this.store.dispatch(new CurrentOrder());
-
-        }
-    });
+  deleteOrderedItem(element:OrderItems) {
+    
+   return this.store.dispatch(new DeleteOrderItems(element));
   }
 
-  cartDialog(element, status): void {
+  cartDialog(element:OrderItems, status): void {
     if (element) {
       const dialogRef = this.dialog.open(CartDialog, {
         width: '300px',
@@ -367,22 +208,18 @@ customer:Customer=null;
 
   }
 
-  total(data,prop="total") {
-    var total = 0;
+  total(data=[],prop="total") {
+    var total = 0.00;
     if (data.length > 0) {
-      for (var i = 0, _len = this.data.length; i < _len; i++) {
-        total += data.data[i][prop]
+      for (var i = 0, _len = data.length; i < _len; i++) {
+        total += data[i][prop]
       }
     }
     return total;
 
   }
 
- 
-convertToDecimal(total:number){
-  const s=total.toString();
-  return  parseFloat(s).toFixed(2);
-}
+
  textEllipsis(str, maxLength, { side = "end", ellipsis = "..." } = {}) {
   if (str.length > maxLength) {
     switch (side) {
@@ -399,33 +236,61 @@ convertToDecimal(total:number){
 goto(r){
   return this.router.navigate(["/admin/pos/"+r]);
 }
+
+  createOrUpdateOrderItem(customer){
+
+      this.current_order$.pipe(take(1)).subscribe(current_order => {
+          if(current_order){
+            const order:Orders=current_order;
+            order.customer_id=customer.id;
+            order.is_currently_processing=1;
+            order.status = "pending";
+            this.updateOrder(order);
+
+          }else{
+
+            this.createNewOrder(
+                          { 
+                              status: 'pending',
+                              branch_id: parseInt(localStorage.getItem('active_branch')),
+                              user_id: this.currentUser.get('id'),
+                              business_id: this.currentUser.getBusiness('id'),
+                              customer_id:customer?customer.id:null,
+                              cart_data: null 
+                          }
+                      );
+          }
+
+          const customer_type_id=customer.customer_type?customer.customer_type.id:null;
+          this.localStorage.set('pos-customerTypeId', customer_type_id);
+          this.store.dispatch(new OpenPosCategory(this.localStorage.get('pos-categoryId'),null));
+    });
+  }
+
   chooseCustomer() {
+    let _customer:Customer=null;
     this.dialog.open(SelectCustomerModelComponent, {
       width: '1200px',
-      data: {enabled:true,customer_id:this.customer?this.customer.id:null}
+      data: {enabled:true,customer_id:_customer?_customer.id:null}
     }).afterClosed().subscribe(customer  => {
       if ( ! customer) return;
-           const _customer=customer as Customer;
-              if(this.current_order){
-                const order:Orders=this.current_order;
-                order.customer_id=customer.id;
-                order.is_currently_processing=1;
-                order.status = "pending";
-                this.updateOrder(order);
-              }else{
-                this.createNewOrder({ status: 'pending',
-                branch_id: parseInt(localStorage.getItem('active_branch')),
-                user_id: this.currentUser.get('id'),
-                business_id: this.currentUser.get('business')[0].id,
-                customer_id:_customer?_customer.id:null,
-                cart_data: [] });
-              }
-              const customer_type_id=_customer.customer_type?_customer.customer_type.id:null;
-              this.localStorage.set('pos-customerTypeId', customer_type_id);
-              this.store.dispatch(new OpenPosCategory(this.localStorage.get('pos-categoryId'),null));
+        
+          _customer=customer;
+          
+      return this.createOrUpdateOrderItem(_customer);
+    });
+  }
 
-
-
+  showChooseTaxRateModal(element:OrderItems) {
+    this.modal.open(
+      SelectTaxrateModalComponent,
+        {enabled:true,
+          tax_rate_id:element.tax_rate?element.tax_rate.id:null},
+        'select-taxrate-modal-container'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        element.tax_rate_id=data.id;
+        return this.updateOrderItems(element);
     });
   }
 

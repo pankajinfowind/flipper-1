@@ -24,7 +24,7 @@
 
                     <div *ngIf="stock.customer_price" class="text-info text-center ellipsis">
                       <h6>{{stock.customer_type.name}}</h6>
-                      <span>{{business.currency_code}} {{stock.customer_price.sale_price_including_tax}}</span>
+                      <span>{{currentUser.getBusiness('currency_code')}} {{stock.customer_price.sale_price_including_tax}}</span>
                       </div>
 
                     <div class="clearfix"></div>

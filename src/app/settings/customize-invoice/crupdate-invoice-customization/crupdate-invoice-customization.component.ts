@@ -148,9 +148,8 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
         this.customizeForm.get('customer_type_name').setValue(name);
         this.customizeForm.value.has_customer_type=true;
       }else if(this.customizeForm.value.customerTypeIds.length > 1){
+       // this.customizeForm.get('customer_type_name').setValue(null);
         this.customizeForm.value.has_customer_type=true;
-        this.customizeForm.get('customer_type_name').setValue(null);
-        
       }
    
     }else{
@@ -347,6 +346,7 @@ export class CrupdateInvoiceCustomizationComponent implements OnInit {
 
 
   close() {
+    this.shared.update(null);
     this.router.navigate(["/admin/settings/customize-invoice"]);
   }
   public confirm() {

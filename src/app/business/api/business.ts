@@ -30,7 +30,7 @@ export class Business {
   street3?:string;
   logo?:string;
   branches?:Branch[]
-
+  receipt?:null;
     constructor(params: Object = {}) {
       for (let name in params) {
           this[name] = params[name];

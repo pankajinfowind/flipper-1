@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, AfterViewInit, ViewChild, VERSION, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, VERSION, ElementRef } from '@angular/core';
 import { Settings } from '../common/core/config/settings.service';
 import { Router } from '@angular/router';
 import { LocalStorage } from '../common/core/services/local-storage.service';
@@ -6,14 +6,8 @@ import { NavItem } from '../nav-menu-bar/nav-item';
 import { NavService } from '../nav-menu-bar/nav.service';
 import { CurrentUser } from '../common/auth/current-user';
 import { Business } from '../business/api/business';
-import { ElectronService } from 'ngx-electron';
 import { AuthService } from '../common/auth/auth.service';
-import { Branch } from './master/branch/api/branch';
-import { Toast } from '../common/core/ui/toast.service';
-import { ApiBranchService } from './master/branch/api/api.service';
-import { finalize } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { Bootstrapper } from '../common/core/bootstrapper.service';
 import { SharedModelService } from '../shared-model/shared-model-service';
 
 @Component({
@@ -133,6 +127,12 @@ public loading = new BehaviorSubject(false);
         isSubmenu:true,
       },
       {
+        displayName: 'Receipt Setting',
+        iconName: 'group',
+        route: 'settings/receipt-setting',
+        isSubmenu:true,
+      },
+      {
         displayName: 'Invoices Customization',
         iconName: 'group',
         route: 'settings/customize-invoice',
@@ -154,7 +154,7 @@ public loading = new BehaviorSubject(false);
 
 
     business:Business;
-  constructor(public shared:SharedModelService,private bootstrapper: Bootstrapper,private api_pranch:ApiBranchService,private toast: Toast,public auth: AuthService,public current: CurrentUser,public navService: NavService,public localStorage: LocalStorage,private router: Router,public setting:Settings) {
+  constructor(public shared:SharedModelService,public auth: AuthService,public current: CurrentUser,public navService: NavService,public localStorage: LocalStorage,private router: Router,public setting:Settings) {
   
   }
 

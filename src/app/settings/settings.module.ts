@@ -18,9 +18,10 @@ import { CrupdateUserModalComponent } from './users/crupdate-user-modal/crupdate
 import { UserBranchesComponent } from './user-branches/user-branches.component';
 import { BranchUsersComponent } from './branch-users/branch-users.component';
 import { SelectUserModelComponent } from './branch-users/select-user-model/select-user-model.component';
+import { ReceiptSettingComponent } from './receipt-setting/receipt-setting.component';
 
 @NgModule({
-  declarations: [CrupdateUserModalComponent,SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent,PreviewInvoiceCustomizedComponent, UsersComponent, UserBranchesComponent, BranchUsersComponent, SelectUserModelComponent],
+  declarations: [CrupdateUserModalComponent,SettingsComponent, SetCompanyComponent, CustomizeInvoiceComponent, CrupdateInvoiceCustomizationComponent,PreviewInvoiceCustomizedComponent, UsersComponent, UserBranchesComponent, BranchUsersComponent, SelectUserModelComponent, ReceiptSettingComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,

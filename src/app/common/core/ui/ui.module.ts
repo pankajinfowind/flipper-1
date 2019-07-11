@@ -93,7 +93,7 @@ import { MaterialModule } from '../../../material/material.module';
         MatTooltipModule,
         MatIconModule,
     ],
-    entryComponents: [SwitchBranchModelComponent],
+    entryComponents: [],
     providers: [BreakpointsService]
 })
 export class UiModule {

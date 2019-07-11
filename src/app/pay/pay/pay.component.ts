@@ -10,6 +10,9 @@ import { Select, Store } from '@ngxs/store';
 import { PosOrderState } from '../../store/states/PosOrderStates';
 import { CurrentOrder, CreateInvoice, InvoiceDetails } from '../../store/actions/pos-Order.action';
 import { Customer } from '../../customers/customer';
+import { MatDialog } from '@angular/material';
+import { PrintReceiptModelComponent } from '../../print-out/print-receipt-model/print-receipt-model.component';
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-pay',
   templateUrl: './pay.component.html',
@@ -35,15 +38,13 @@ export class PayComponent implements OnInit {
   canPrintOut: boolean=false;
 
   constructor(
+    public dialog: MatDialog,
     private store:Store,
     public currentUser: CurrentUser,
   ){ }
 
   ngOnInit() {
     this.store.dispatch(new InvoiceDetails(null));
-    if (this.currentUser.user) {
-      this.business = this.currentUser.get('business')[0];
-    }
 
     this.loadOrder();
     this.loadCustomer();
@@ -147,42 +148,63 @@ loadCustomer(){
 
     }
 
-    payingInvoice(){
+    async payingInvoice(){
       this.loadOrder();
 
-     if(this.currently_ordered){
-      if(this.amount_return_color =='red'){
-          alert('Amount paid is less than amount due.');
-      }else{
-        this.store.dispatch(new InvoiceDetails(null));
-        const forming_invoice:Invoice={
-          invoice_no:randomString(6),
-          invoice_date:new Date(),
-          total_discounts:this._total('total_amount_discount'),
-          total_items:this._total('qty'),
-          taxable_vat:this._total('taxable_vat'),
-          total_amount:this._total('total_amount'),
-          amount_given:parseInt(this.numeric_selector==0?this.total('total_amount'):this.numeric_selector),
-          amount_return:this.amount_return,
-          status:Status.COMPLETE,
-          branch_id: parseInt(localStorage.getItem('active_branch')),
-          payment_method:PaymentMethod.CASH,
-          order:this.currently_ordered?this.currently_ordered:null,
-          orderItems:this.data,
-          tax_rate_id:null,
-          order_id:this.currently_ordered.id,
-          customer_id:this.customer?this.customer.id:null,
-          customer_type_id:this.customer?this.customer.customer_type?this.customer.customer_type.id:null:null
+      if(this.currently_ordered){
+          if(this.amount_return_color =='red'){
+              alert('Amount paid is less than amount due.');
+          }else{
+            this.store.dispatch(new InvoiceDetails(null));
+            const forming_invoice:Invoice={
+              invoice_no:randomString(6),
+              invoice_date:new Date(),
+              total_discounts:this._total('total_amount_discount'),
+              total_items:this._total('qty'),
+              taxable_vat:this._total('taxable_vat'),
+              total_amount:this._total('total_amount'),
+              amount_given:parseInt(this.numeric_selector==0?this.total('total_amount'):this.numeric_selector),
+              amount_return:this.amount_return,
+              status:Status.COMPLETE,
+              branch_id: parseInt(localStorage.getItem('active_branch')),
+              payment_method:PaymentMethod.CASH,
+              order:this.currently_ordered?this.currently_ordered:null,
+              orderItems:this.data,
+              tax_rate_id:null,
+              order_id:this.currently_ordered.id,
+              customer_id:this.customer?this.customer.id:null,
+              customer_type_id:this.customer?this.customer.customer_type?this.customer.customer_type.id:null:null
+            }
+            this.store.dispatch(new CreateInvoice(forming_invoice));
+            this.data=[];
+            if(this.currentUser.getReceipt('can_auto_print')){
+              if(this.invoice$){
+                await this.printDirectReceipt();
+               }
+            }
+           
+          }
+
         }
-        this.store.dispatch(new CreateInvoice(forming_invoice));
-        this.data=[];
-      }
+        
+
     }
 
+    printDirectReceipt(){
+      this.invoice$.subscribe(invoice => {
+        if(invoice){
+          return  this.printReceiptModel(invoice);
+        }});
     }
    
 
-
+    printReceiptModel(invoice?: Invoice) {
+      console.log(invoice);
+      this.dialog.open(PrintReceiptModelComponent, {
+        width: '400px',
+        data: invoice?invoice:null
+      });
+    }
 
 
 }

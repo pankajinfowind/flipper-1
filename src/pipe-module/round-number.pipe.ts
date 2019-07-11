@@ -45,7 +45,9 @@ export class RoundNumberPipe implements PipeTransform {
     var decs = (newString.substring(newString.lastIndexOf(".")+1)).length;
     for(var i=0;i<decimals-decs;i++) newString += "0";
     //var newNumber = Number(newString);// make it a number if you like
-    return newString; // Output the result to the form field (change for your purposes)
+    return this.formatNumber (newString); // Output the result to the form field (change for your purposes)
   }
-
+	 formatNumber (num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+  }
 }

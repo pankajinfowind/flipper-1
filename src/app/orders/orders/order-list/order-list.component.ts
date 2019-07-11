@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import {  Router } from '@angular/router';
 import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
 import { Orders } from '../../orders';
 import { MatSort, MatDialog } from '@angular/material';
@@ -12,17 +11,17 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { OrdersApiIndexParams } from '../../../store/model/pos-order-state-model';
 import { SET_POS_ORDER_ORDERBY, SET_POS_ORDER_ORDERDIR } from '../../../store/model/pos-order-state';
 import { Store, Select } from '@ngxs/store';
-import { LoadOrderEntries, CurrentOrder } from '../../../store/actions/pos-Order.action';
+import { LoadOrderEntries, UpdateOrder, DeleteOrder } from '../../../store/actions/pos-Order.action';
 import { PosOrderState } from '../../../store/states/PosOrderStates';
 import { ApiPosService } from '../../../pos/api/api.service';
 import { Invoice } from '../../../invoices/invoice';
 import { PreviewOrderInvoiceComponent } from '../preview-order-invoice/preview-order-invoice.component';
+import { PrintReceiptModelComponent } from '../../../print-out/print-receipt-model/print-receipt-model.component';
 @Component({
   selector: 'order-list',
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.scss'],
   providers: [UrlAwarePaginator],
-  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger("detailExpand", [
       state(
@@ -57,9 +56,6 @@ export class OrderListComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,private router: Router,private api: ApiPosService,private store:Store,public currentUser: CurrentUser,public paginator: UrlAwarePaginator) { }
 
   ngOnInit() {
-    if (this.currentUser.user) {
-      this.business = this.currentUser.get('business')[0];
-    }
     this.loadOrder();
   }
 
@@ -78,7 +74,6 @@ export class OrderListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paginator.destroy();
   }
 
   total(data, arg) {
@@ -97,44 +92,27 @@ export class OrderListComponent implements OnInit, OnDestroy {
     order.status = "pending";
     order.is_currently_processing = 1;
     this.updateOrder(order);
-    this.loadOrder();
     return this.router.navigate(['/admin/pos/till-categories']);
+  }
+  updateOrder(params:Orders) {
+    return this.store.dispatch(new UpdateOrder(params));
   }
   updateResumedOrder(order){
     order.status = "pending";
     order.is_currently_processing = 1;
     this.updateOrder(order);
-    this.loadOrder();
     return this.router.navigate(['/admin/pos/till-categories']);
   }
 
-  updateOrder(params:Orders) {
-    this.api.updateOrder(params, params.id).subscribe(
-      res => {
-          this.store.dispatch(new CurrentOrder());
-      },
-      _error => {
-        console.error(_error);
+
+  deleteOrdered(current_order) {
+      let result = confirm("Are you sure,you want to delete this current transction?");
+      if (result) {
+        //DeleteOrder
+         this.store.dispatch(new DeleteOrder(current_order));
+         return this.router.navigate(['/admin/pos/till-categories']);
       }
-    );
-  }
-  deleteOrdered(order) {
-    let result = confirm("Are you sure,you want to delete this current transction?");
-    if (result) {
-      this.api.deleteOrder(order.id).subscribe(
-        res => {
-          if (res.status == 'success') {
-            if(res['deleted']){
-              this.store.dispatch(new CurrentOrder());
-              this.loadOrder();
-            }
-          }
-        },
-        _error => {
-          console.error(_error);
-        }
-      );
-    }
+   
   }
   public showPreviewInvoiceModal(invoice?: Invoice) {
     this.dialog.open(PreviewOrderInvoiceComponent, {
@@ -142,4 +120,12 @@ export class OrderListComponent implements OnInit, OnDestroy {
       data: invoice?invoice:null
     });
   }
+
+  printReceiptModel(invoice?: Invoice) {
+    this.dialog.open(PrintReceiptModelComponent, {
+      width: '400px',
+      data: invoice?invoice:null
+    });
+  }
 }
+

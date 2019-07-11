@@ -16,6 +16,7 @@ export class CurrentUser {
 
   private currentBranch: Branch;
   private currentBusiness:Business;
+  private currentReceipt:any;
   private userRole: Role;
   private allRoles:Role[];
   private currentPermissions:any;
@@ -43,6 +44,7 @@ export class CurrentUser {
   public currentRoleChanged: EventEmitter<Role> = new EventEmitter();
   public currentPermissionChanged: EventEmitter<any> = new EventEmitter();
   public currentRolesChanged: EventEmitter<Role[]> = new EventEmitter();
+  public currentReceiptChanged: EventEmitter<any> = new EventEmitter();
   public userSetting() {
     return this.current.settings;
   }
@@ -53,6 +55,7 @@ export class CurrentUser {
   branch:Branch;
   user_role:Role[];
   business:Business;
+  receipt:any;
   roles:Role[];
   permissions:any;
   has_business_belongs:boolean;
@@ -103,6 +106,11 @@ export class CurrentUser {
     return this.business;
   }
 
+  public getReceipt<K extends keyof any>(prop: K): any[K] {
+    this.receipt = this.currentReceipt && this.currentReceipt[prop];
+    return this.receipt;
+  }
+
   public setCurrentBranch(key: string, value: any): void {
     this.currentBranch[key] = value;
   }
@@ -132,13 +140,16 @@ public setPermissions(key: string, value: any): void {
 
     if (model) {
       this.current = model.user_logged_in;
-      console.log(model);
       this.currentBranch=model.switched_branch;
       this.userRole=model.user_logged_role;
       this.currentBusiness=model.business;
       this.allRoles=model.roles;
       this.currentPermissions=model.permissions;
       this.hasBusiness=model.has_business_belongs;
+      if(model.business){
+        this.currentReceipt=model.business.receipt;
+      }
+    
 
       if(model.switched_branch){
         const active_branch=model.switched_branch;
@@ -155,6 +166,7 @@ public setPermissions(key: string, value: any): void {
     this.currentRoleChanged.emit(this.userRole);
     this.currentRolesChanged.emit(this.allRoles);
     this.currentPermissionChanged.emit(this.currentPermissions);
+    this.currentReceiptChanged.emit(this.currentReceipt);
   }
 
   /**
@@ -226,13 +238,14 @@ public setPermissions(key: string, value: any): void {
     this.currentBusiness=null;
     this.allRoles=[];
     this.currentPermissions=null;
-
+    this.currentReceipt=null;
     this.userChanged.emit(this.current);
     this.currentBranchChanged.emit(this.currentBranch);
     this.currentBusinessChanged.emit(this.currentBusiness);
     this.currentRoleChanged.emit(this.userRole);
     this.currentRolesChanged.emit(this.allRoles);
     this.currentPermissionChanged.emit(this.currentPermissions);
+    this.currentReceiptChanged.emit(this.currentReceipt);
   }
 
   /**

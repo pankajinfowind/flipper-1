@@ -5,7 +5,7 @@ material-navbar {
     .navbar-container {
         background-color:$site-bg-color-100;
         color:  $admin-left-col-text-color;
-        box-shadow: $box-shadow-3;
+        // box-shadow: $box-shadow-3;
         z-index: 2;
         position: fixed;
         height: $material-navbar-height;
@@ -63,7 +63,7 @@ material-navbar {
         display: block;
         margin: 0 30px 0 20px;
     }
-
+ 
     .nav-searchbar {
         background: #eee no-repeat 11px 11px;
         width: 100%;

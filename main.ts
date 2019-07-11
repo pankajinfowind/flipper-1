@@ -43,7 +43,15 @@ ipcMain.on("iWantToSaveDataOf", (event, args) => {
   // });
 
 });
+ipcMain.on('main-send', function(event, sender_name) {
 
+  var arr = BrowserWindow.getAllWindows();
+  for(var i = 0; i < arr.length; i++){
+      const toWindow = arr[i];
+      toWindow.webContents.send('picker-list-update');
+  }
+
+});
 ipcMain.on("version-ping", (event, arg) => {
   event.sender.send("version-pong", app.getVersion());
 });

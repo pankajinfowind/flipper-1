@@ -1,86 +1,38 @@
 <div class="modal-header">
-    <h2 mat-dialog-title trans>{{status}} </h2>
-    <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
-        <mat-icon>close</mat-icon>
-    </button>
+  <h2 mat-dialog-title trans>{{status}} </h2>
+  <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
 
 
-    <mat-dialog-content class="many-inputs" *ngIf="status=='Quantity'">
-        <br />
-        <div class="row">
+<mat-dialog-content class="many-inputs" *ngIf="status=='Quantity'">
+  <mat-form-field class="w-100">
+    <input class="col-12" matInput placeholder="Update Qty" (input)="updateInput($event.target.value)" [(ngModel)]="default_qty" />
+  </mat-form-field>
+</mat-dialog-content>
 
-          <div class="col-7">
-            <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increaseDecrease('+')"><mat-icon>add</mat-icon></button>
-            <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increaseDecrease('-')"><mat-icon>remove</mat-icon></button>
-          </div>
-            <div class="col-5 text-right" style="font-size:25px;font-weight: 500">{{cart_item.qty}}</div>
-        </div>
-        <br />
-            <mat-grid-list cols="3" rowHeight="3:2">
-                <mat-grid-tile (click)="keysClicked('1')">1</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('2')">2</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('3')">3</mat-grid-tile>
+<mat-dialog-content class="many-inputs" *ngIf="status=='Price'">
+  <mat-form-field class="w-100">
+    <input class="col-12" matInput placeholder="Update Price" (input)="updateInput($event.target.value)" [(ngModel)]="default_price" />
+  </mat-form-field>
+</mat-dialog-content>
 
-                <mat-grid-tile (click)="keysClicked('4')">4</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('5')">5</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('6')">6</mat-grid-tile>
 
-                <mat-grid-tile (click)="keysClicked('7')">7</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('8')">8</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('9')">9</mat-grid-tile>
+<mat-dialog-content class="many-inputs" *ngIf="status=='Note'">
+  <mat-form-field class="w-100">
+    <textarea class="col-12" matInput placeholder="Write note!" (input)="updateInput($event.target.value)" [(ngModel)]="cart_item.note"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
 
-                <mat-grid-tile (click)="keysClicked('.')">.</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('0')">0</mat-grid-tile>
-                <mat-grid-tile (click)="keysClicked('x')"><mat-icon>backspace</mat-icon></mat-grid-tile>
-              </mat-grid-list>
+<div>
+  <br />
+  <mat-divider></mat-divider>
 
-      </mat-dialog-content>
-
-      <mat-dialog-content class="many-inputs" *ngIf="status=='Note'">
-          <mat-form-field class="w-100">
-              <textarea class="col-12" matInput placeholder="Write note!" (input)="cart_item.note=$event.target.value"></textarea>
-            </mat-form-field>
-      </mat-dialog-content>
-
-      <mat-dialog-content class="many-inputs" *ngIf="status=='Discount'">
-          <br />
-          <div class="row">
-
-            <div class="col-7">
-              <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increaseDecrease('+')"><mat-icon>add</mat-icon></button>
-              <button type="button" style="font-size:25px;font-weight: 500" mat-button class="cancel-button"  trans (click)="increaseDecrease('-')"><mat-icon>remove</mat-icon></button>
-            </div>
-              <div class="col-5 text-right" style="font-size:25px;font-weight: 500">{{cart_item.discount}} % </div>
-          </div>
-          <br />
-              <mat-grid-list cols="3" rowHeight="3:2">
-                  <mat-grid-tile (click)="keysClicked('1')">1</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('2')">2</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('3')">3</mat-grid-tile>
-
-                  <mat-grid-tile (click)="keysClicked('4')">4</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('5')">5</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('6')">6</mat-grid-tile>
-
-                  <mat-grid-tile (click)="keysClicked('7')">7</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('8')">8</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('9')">9</mat-grid-tile>
-
-                  <mat-grid-tile (click)="keysClicked('.')">.</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('0')">0</mat-grid-tile>
-                  <mat-grid-tile (click)="keysClicked('x')"><mat-icon>backspace</mat-icon></mat-grid-tile>
-                </mat-grid-list>
-
-        </mat-dialog-content>
-  <div>
-    <br />
-    <mat-divider></mat-divider>
-
-    <mat-dialog-actions class="float-right">
-        <button (click)="close()" type="button" mat-button class="cancel-button" trans [disabled]="loading | async">Cancel</button>
-        <button type="button" (click)="update()" *ngIf="status=='Quantity'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
-        <button type="button" (click)="update()" *ngIf="status=='Discount'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
-        <button type="button" (click)="update()" *ngIf="status=='Note'" mat-raised-button color="primary" class="submit-button"  [disabled]="loading | async" trans>Update</button>
-    </mat-dialog-actions>
-    </div>
+  <mat-dialog-actions class="float-right">
+    <button (click)="close()" type="button" mat-button class="cancel-button" trans
+      [disabled]="loading | async">Cancel</button>
+    <button type="button" (click)="update()" mat-raised-button color="primary"
+      class="submit-button" [disabled]="loading | async" trans>Update</button>
+  </mat-dialog-actions>
+</div>

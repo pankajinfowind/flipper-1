@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LandingPage extends StatefulWidget{
-
+class LandingPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -10,37 +9,35 @@ class LandingPage extends StatefulWidget{
   }
 }
 
-class _LandingPage extends State<LandingPage>{
+class _LandingPage extends State<LandingPage> {
   int number = 0;
-  final TextEditingController _textnumber = TextEditingController();
-   int initialValue = 0;
+  int initialValue = 0;
 
-  Widget _uppderPart(){
+  Widget _upperPart() {
     return Material(
-      // first column
-    );
+        // first column
+        );
   }
 
-  Widget _btnAddition(){
+  Widget _btnAddition() {
     return RaisedButton(
-      onPressed: (){
-        print(initialValue = initialValue+1);
+      onPressed: () {
+        print(initialValue = initialValue + 1);
       },
     );
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
-      color: Colors.purpleAccent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _uppderPart(),
-            _btnAddition()
-
-          ],
-        ),
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[ //this is column, can add any widget inside to achieve design we want.
+          _upperPart(),
+          _btnAddition()
+        ],
+      ),
     );
   }
 }

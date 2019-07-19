@@ -93,7 +93,7 @@ export class PosOrderState {
            oldState.order=action.order;
            oldState.loading=false;
          ctx.patchState(oldState);
-        return this.store.dispatch(new CustomerOrder(oldState.order.customer));
+        return this.store.dispatch(new CustomerOrder(oldState.order?oldState.order.customer:null));
   }
 
   @Action(CreateInvoice)
@@ -207,7 +207,7 @@ export class PosOrderState {
            if(response){
             currentState.order=response as Orders;
             currentState.loading=false;
-            currentState.customer=currentState.order.customer;
+            currentState.customer=currentState.order?currentState.order.customer:null;
              ctx.patchState(currentState as Partial<PosOrdersState>);
            }else{
             currentState.order=null;

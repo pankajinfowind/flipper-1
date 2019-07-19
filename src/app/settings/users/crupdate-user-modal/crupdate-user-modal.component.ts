@@ -72,9 +72,9 @@ export class CrupdateUserModalComponent implements OnInit {
 
         request.pipe(finalize(() => this.loading.next(false)))
             .subscribe(response => {
-                this.close(response);
                 const action = this.updating ? 'updated' : 'created';
                 this.toast.open('User has been ' + action);
+                return this.close("response");
             }, error => {
                 this.handleErrors(error);
             });

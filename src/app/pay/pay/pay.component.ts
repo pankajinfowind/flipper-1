@@ -199,7 +199,6 @@ loadCustomer(){
    
 
     printReceiptModel(invoice?: Invoice) {
-      console.log(invoice);
       this.dialog.open(PrintReceiptModelComponent, {
         width: '400px',
         data: invoice?invoice:null

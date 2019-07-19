@@ -87,18 +87,6 @@ export class PrintInvoiceComponent implements OnInit {
     }, 500);
     return false;
   }
-  // total(prop) {
-  //   var total = 0;
-  //   if (this.orderItems.length > 0) {
-  //     for (var i = 0, _len = this.orderItems.length; i < _len; i++) {
-  //       total += this.orderItems[i][prop]
-  //     }
-  //   }
-  //   const s=total.toString();
-  //   return  parseFloat(s).toFixed(2);
-  // }
-
-
 
 
   getAge(dateString) {

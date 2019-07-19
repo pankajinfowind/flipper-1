@@ -86,8 +86,7 @@ ngOnDestroy() {
           {user},
           'crupdate-user-modal-container'
       ).beforeClose().subscribe(data => {
-      //  this.shared.remove();
-          if ( ! data) return;
+          if (!data) return;
           this.paginator.refresh();
       });
   }

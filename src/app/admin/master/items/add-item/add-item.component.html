@@ -23,7 +23,7 @@
               <div class="row">
                 <mat-form-field class="col-6" appearance="outline">
                   <mat-label>Enter product name</mat-label>
-                  <input matInput placeholder="Name" (input)="filterItem({query: formGroup.value.item})" formControlName="item" required>
+                  <input matInput placeholder="Name" (input)="filterItem({query: formGroup.value.item,status:'item'})" formControlName="item" required>
                   <mat-hint>Appears on till.</mat-hint>
                   <mat-error *ngIf="item.invalid && (item.dirty || item.touched)">
 
@@ -48,7 +48,7 @@
 
                 <mat-form-field class="col-6" appearance="outline">
                   <mat-label>Enter S.K.U number</mat-label>
-                  <input matInput placeholder="SKU (if available)" (input)="filterItem({query: formGroup.value.sku})" formControlName="sku" required>
+                  <input matInput placeholder="SKU (if available)" (input)="filterItem({query: formGroup.value.sku,status:'item'})" formControlName="sku" required>
                   <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
                   <mat-error *ngIf="sku.invalid && (sku.dirty || sku.touched)">
 
@@ -63,7 +63,7 @@
 
                 <mat-form-field class="col-6" appearance="outline">
                   <mat-label>Enter Barcode number</mat-label>
-                  <input matInput placeholder="Barcode (if available)" (input)="filterItem({query: formGroup.value.barcode})" formControlName="barcode" required>
+                  <input matInput placeholder="Barcode (if available)" (input)="filterItem({query: formGroup.value.barcode,status:'item'})" formControlName="barcode" required>
                   <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info
                   </mat-icon>
                   <mat-error *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)">
@@ -148,7 +148,6 @@
                       <input matInput placeholder="Enter Cost price (Inc Tax)"
                         (input)="calculateCostExcludingTax($event)" type="number"
                         formControlName="cost_price_including_tax" required>
-                        <mat-hint *ngIf="data.item && data.item.tax_rate">Tax rate:{{data.item.tax_rate.name}} ({{data.item.tax_rate.percentage}} %)</mat-hint>
                     </mat-form-field>
                   </td>
 
@@ -173,7 +172,6 @@
                       <mat-label>Retail Price (Including TAX)</mat-label>
                       <input matInput placeholder="Retail Price (INC TAX)" (input)="calculateSaleExcludingTax($event)"
                         type="number" formControlName="sale_price_including_tax" required>
-                        <mat-hint *ngIf="data.item && data.item.tax_rate">Tax rate:{{data.item.tax_rate.name}} ({{data.item.tax_rate.percentage}} %)</mat-hint>
                     </mat-form-field>
                   </td>
                 </tr>

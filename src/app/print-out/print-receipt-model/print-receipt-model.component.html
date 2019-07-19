@@ -4,7 +4,7 @@
 	    <mat-icon svgIcon="close"></mat-icon>
 	  </button>
 	</div>
-	<mat-card-content class="mat-dialog-content">
+	<mat-card-content class="mat-dialog-content" *ngIf="invoice">
 	  <div id="receipt" [ngStyle]="currentStyles">
 
 	    <div id="top" [ngStyle]="currentStyles">
@@ -82,7 +82,7 @@
 	              </td>
 	            </tr>
 	          </thead>
-	          <tbody *ngIf="invoice.orderItems.length > 0">
+	          <tbody *ngIf="invoice && invoice.orderItems.length > 0">
 			  <tr *ngFor="let item of invoice.orderItems; let index = index" class="tabletitle">
 			  <td>{{index+1}}</td>
 			   <td>{{item.item}}</td>

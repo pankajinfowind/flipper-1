@@ -230,7 +230,7 @@ calculateSaleExcludingTax(event){
 
 
   getTax() {
-    return this.data.item && this.data.item.tax_rate?this.data.item.tax_rate.percentage:0 ;
+    return this.data.item && this.data.item.tax_rate?this.data.item.tax_rate.percentage:this.tax_rate_percentage ;
   }
 
   saveComplete() {

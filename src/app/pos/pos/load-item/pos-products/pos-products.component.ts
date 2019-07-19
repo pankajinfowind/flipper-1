@@ -54,8 +54,11 @@ export class PosProductsComponent implements OnInit {
   current_order:Orders=null;
   selectedItem=null;
   customer:Customer=null;
+  bg_img: string=null;
 
-  constructor( public dialog: MatDialog,private api: ApiPosService,private bottomSheet: MatBottomSheet,public currentUser: CurrentUser,private store:Store, private route:ActivatedRoute,private localStorage: LocalStorage) {}
+  constructor( public dialog: MatDialog,private api: ApiPosService,private bottomSheet: MatBottomSheet,public currentUser: CurrentUser,private store:Store, private route:ActivatedRoute,private localStorage: LocalStorage) {
+    this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?'/assets/drugs/drugs.ico':'/assets/drugs/any.png';
+  }
 
   ngOnInit() {
       //pos-categoryId

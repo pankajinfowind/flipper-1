@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { CategoriesApiIndexParams } from '../../../../store/model/pos-category-state-model';
 import { SET_POS_CAT_ORDERBY, SET_POS_CAT_ORDERDIR } from '../../../../store/model/pos-category-state';
 import { LoadCategoriesEntries, ClosePosCategory } from '../../../../store/actions/pos-categories.action';
+import { CurrentUser } from '../../../../common/auth/current-user';
 @Component({
   selector: 'app-item-categories',
   templateUrl: './item-categories.component.html',
@@ -31,8 +32,10 @@ export class ItemCategoriesComponent implements OnInit {
   @Select(PosCateoriesState.entries) entries$: Observable<Category[]>;
   @Select(PosCateoriesState.meta) meta$: Observable<any>;
   @Select(PosCateoriesState.loading) loading$: Observable<boolean>;
-
-  constructor(private localStorage: LocalStorage,  private router: Router,private store:Store) {}
+  bg_img: string=null;
+  constructor(public currentUser:CurrentUser,private localStorage: LocalStorage,  private router: Router,private store:Store) {
+this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?'/assets/drugs/drugs.ico':'/assets/drugs/any.png';
+  }
 
 
   ngOnInit() {

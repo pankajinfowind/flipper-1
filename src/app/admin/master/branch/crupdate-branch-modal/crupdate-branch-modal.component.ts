@@ -5,8 +5,8 @@ import { finalize } from 'rxjs/operators';
 import { Toast } from '../../../../common/core/ui/toast.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { Branch } from '../api/Branch';
 import { ApiBranchService } from '../api/api.service';
+import { Branch } from '../api/branch';
 
 export interface CrupdatBranchModalData {
     branch?: Branch;

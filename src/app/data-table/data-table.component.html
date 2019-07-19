@@ -1,5 +1,5 @@
 <div class="admin-table-panel">
-    <div class="admin-table-panel-header">
+    <div class="admin-table-panel-header" *ngIf="!hiddenHeader">
         <div class="header-inner default" [class.hidden]="dataSource.anyRowsSelected() && selectedActions.children.length">
             <div class="left"><ng-content select="[headerLeftActions]"></ng-content></div>
 

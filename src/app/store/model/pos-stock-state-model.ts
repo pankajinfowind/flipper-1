@@ -61,6 +61,7 @@ export interface StockApiIndexParams {
   order_dir?: SortDirection;
   categoryId?: number | '0';
   customerTypeId?:number;
+  branch_id?:number;
   query?: string;
   type?: string;
   per_page?: number;

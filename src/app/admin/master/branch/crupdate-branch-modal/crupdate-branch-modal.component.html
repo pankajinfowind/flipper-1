@@ -1,4 +1,6 @@
-<div class="modal-header">
+
+  <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+  <div class="modal-header">
     <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update Branch Details</h2>
     <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a Branch</h2>
     <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>

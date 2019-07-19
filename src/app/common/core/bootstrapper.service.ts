@@ -89,7 +89,6 @@ export class Bootstrapper {
 
     // set all settings returned from server
     this.settings.setMultiple(data.settings);
-
     // set translations
     if (data.i18n) {
       this.i18n.setLocalization(data.i18n);

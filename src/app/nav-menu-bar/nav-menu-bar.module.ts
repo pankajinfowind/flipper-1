@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
 import { MaterialModule } from '../material/material.module';
 import { NavService } from './nav.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

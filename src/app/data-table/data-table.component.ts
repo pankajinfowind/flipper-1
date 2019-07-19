@@ -69,6 +69,7 @@ export class DataTableComponent<T> implements OnInit, AfterContentInit {
     @Input() public isLoading: boolean=false;
     @Input() public canExpandedDetail:boolean=false;
     @Input() public notFoundMessage: string=null;
+    @Input() public hiddenHeader: boolean=false;
     /**
      * Columns that should be displayed in data table.
      */

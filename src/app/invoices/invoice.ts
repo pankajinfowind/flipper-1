@@ -6,6 +6,7 @@ import { Customer } from '../customers/customer';
 import { CustomerType } from '../setup/customerType/api/CustomerType';
 import { CustomizeInvoice } from '../settings/customize-invoice/customize-invoice';
 import { Business } from '../business/api/business';
+import { User } from '../common/core/types/models/User';
 
 
 export class Invoice {
@@ -41,6 +42,7 @@ export class Invoice {
   customer_type_discount_value?:any;
   printFormat?:Array<CustomizeInvoice>;
   business?:Business;
+  user?:User;
   constructor(params: Object = {}) {
     for (let name in params) {
       this[name] = params[name];

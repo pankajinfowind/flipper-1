@@ -2,8 +2,6 @@ import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { MasterState } from '../../../state/master-state';
 import { Observable } from 'rxjs';
-import { DetailsService } from '../../../details/details.service';
-import { Details } from '../../../details/details';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -31,13 +29,10 @@ toggled=false;
 @Select(MasterState.loading) loading$: Observable<boolean>;
 isMobile=false;
 leftColumnIsHidden=false;
-subscription: Observable<Details>;
-details$: Observable<Details>;
-constructor(private route: ActivatedRoute,private detailsService:DetailsService) {
+constructor(private route: ActivatedRoute) {
  }
 
   ngOnInit() {
-    this.subscription = this.details$ = this.detailsService.details$;
 
   }
 

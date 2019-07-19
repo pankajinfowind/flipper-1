@@ -7,7 +7,6 @@ import { MaterialModule } from "../../../material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { UiModule } from "../../../common/core/ui/ui.module";
 import { MasterRoutingModule } from "./master-routing.module";
-import { DetailsModule } from "../../../details/details.module";
 import { ApiCategoryService } from '../categories/api/api.service';
 import { ApiItemService } from '../items/api/api.service';
 import { HttpModule } from '../../../common/core/http/http.module';
@@ -23,12 +22,13 @@ import { SelectCategoryModelComponent } from '../categories/select-category-mode
 import { SelectBrandModalComponent } from '../brands/select-brand-modal/select-brand-modal.component';
 import { CrupdateBranchModalComponent } from '../branch/crupdate-branch-modal/crupdate-branch-modal.component';
 import { AssignStockToBranchComponent } from '../branch/assign-stock-to-branch/assign-stock-to-branch.component';
+import { SetupModule } from '../../../setup/setup.module';
 
 @NgModule({
   imports: [
     CommonModule,
     MasterRoutingModule,
-    DetailsModule,
+    SetupModule,
      MaterialModule,
       FormsModule,
        UiModule,
@@ -73,7 +73,7 @@ entryComponents: [CrupdateCategoryModalComponent,
   CrupdateBrandModalComponent,
   SelectCategoryModelComponent,
   AssignStockToBranchComponent,
-  SelectBrandModalComponent,CrupdateBranchModalComponent]
+  SelectBrandModalComponent,CrupdateBranchModalComponent,AddItemComponent]
 })
 export class MasterModule {
 

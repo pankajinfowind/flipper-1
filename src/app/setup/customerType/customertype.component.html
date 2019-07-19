@@ -1,6 +1,6 @@
-<data-table [dataSource]="dataSource" itemsName="Customer type" [isLoading]="(loading | async)"  matSort>
+<data-table [dataSource]="dataSource" itemsName="Price Books" [isLoading]="(loading | async)"  matSort>
   <div headerLeftActions>
-      <button mat-raised-button  class="button" (click)="showCrupdateCustomerTypeModal()"  trans>Create a Customer type</button>
+      <button mat-raised-button  class="button" (click)="showCrupdateCustomerTypeModal()"  trans>Create a price book</button>
     </div>
   <div class="input-container" headerRightActions>
       <input type="text" class="search" placeholder="Search everything ..." trans-placeholder [formControl]="dataSource.searchQuery">
@@ -29,7 +29,7 @@
   <mat-cell *matCellDef="let customertype">
       <button (click)="selectCustomerType(customertype)" class="button-success" *ngIf="customertype.id!=selectedId" [disabled]="customertype.id==selectedId?true:false"  [matTooltip]="'Select Customer Type' | trans">Select
       </button>
-      <button  class="button-cancel" *ngIf="customertype.id==selectedId"  [matTooltip]="'Selected Customer Type' | trans">Selected
+      <button  class="button-cancel" *ngIf="customertype.id==selectedId"  [matTooltip]="'Selected price book' | trans">Selected
       </button>
   </mat-cell>
 </ng-container>
@@ -37,7 +37,7 @@
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let customertype">
-          <button mat-icon-button (click)="showCrupdateCustomerTypeModal(customertype)"  [matTooltip]="'Edit Customer Type' | trans">
+          <button mat-icon-button (click)="showCrupdateCustomerTypeModal(customertype)"  [matTooltip]="'Edit price book' | trans">
               <mat-icon svgIcon="edit"></mat-icon>
           </button>
       </mat-cell>

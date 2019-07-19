@@ -35,14 +35,6 @@
           </button>
       </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="stock">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let branch">
-          <button class="button-success" (click)="openStockUnassigned(branch)"  [matTooltip]="'View Users' | trans">
-              Assign Stock
-          </button>
-      </mat-cell>
-  </ng-container>
 
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>

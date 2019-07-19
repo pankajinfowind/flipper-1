@@ -4,6 +4,7 @@ import { Branch } from '../../admin/master/branch/api/branch';
 import { Role } from '../core/types/models/Role';
 import { Business } from '../../business/api/business';
 import { LocalStorage } from '../core/services/local-storage.service';
+import { NavItem } from '../../nav-menu-bar/nav-item';
 
 @Injectable({
   providedIn: "root"
@@ -19,6 +20,7 @@ export class CurrentUser {
   private currentReceipt:any;
   private userRole: Role;
   private allRoles:Role[];
+  private allMenus:NavItem[];
   private currentPermissions:any;
 
   /**
@@ -44,6 +46,7 @@ export class CurrentUser {
   public currentRoleChanged: EventEmitter<Role> = new EventEmitter();
   public currentPermissionChanged: EventEmitter<any> = new EventEmitter();
   public currentRolesChanged: EventEmitter<Role[]> = new EventEmitter();
+  public currentMenusChanged: EventEmitter<NavItem[]> = new EventEmitter();
   public currentReceiptChanged: EventEmitter<any> = new EventEmitter();
   public userSetting() {
     return this.current.settings;
@@ -57,6 +60,7 @@ export class CurrentUser {
   business:Business;
   receipt:any;
   roles:Role[];
+  menus:NavItem[];
   permissions:any;
   has_business_belongs:boolean;
   public get<K extends keyof User>(prop: K): User[K] {
@@ -122,6 +126,10 @@ export class CurrentUser {
   public getRoles(): Array<Role> {
     return this.allRoles;
   }
+
+  public getMenus(): Array<NavItem> {
+    return this.allMenus;
+  }
 //currentPermissions
 
 public getPermissions<K extends keyof any>(prop: K): any[K] {
@@ -144,6 +152,7 @@ public setPermissions(key: string, value: any): void {
       this.userRole=model.user_logged_role;
       this.currentBusiness=model.business;
       this.allRoles=model.roles;
+      this.allMenus=model.menus;
       this.currentPermissions=model.permissions;
       this.hasBusiness=model.has_business_belongs;
       if(model.business){
@@ -165,6 +174,7 @@ public setPermissions(key: string, value: any): void {
     this.currentBusinessChanged.emit(this.currentBusiness);
     this.currentRoleChanged.emit(this.userRole);
     this.currentRolesChanged.emit(this.allRoles);
+    this.currentMenusChanged.emit(this.allMenus);
     this.currentPermissionChanged.emit(this.currentPermissions);
     this.currentReceiptChanged.emit(this.currentReceipt);
   }
@@ -237,6 +247,7 @@ public setPermissions(key: string, value: any): void {
     this.userRole=null;
     this.currentBusiness=null;
     this.allRoles=[];
+    this.allMenus=[];
     this.currentPermissions=null;
     this.currentReceipt=null;
     this.userChanged.emit(this.current);
@@ -246,6 +257,7 @@ public setPermissions(key: string, value: any): void {
     this.currentRolesChanged.emit(this.allRoles);
     this.currentPermissionChanged.emit(this.currentPermissions);
     this.currentReceiptChanged.emit(this.currentReceipt);
+    this.currentMenusChanged.emit(this.allMenus);
   }
 
   /**

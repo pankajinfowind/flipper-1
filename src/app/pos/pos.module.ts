@@ -30,6 +30,7 @@ import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
 import { PosSearchBarComponent } from './pos-search-bar/pos-search-bar.component';
 import { PosSearchStockStates } from '../store/states/PosSearchStockStates';
 import { GlobalVariables } from '../common/core/global-variables';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     SalePointComponent,
@@ -55,6 +56,7 @@ import { GlobalVariables } from '../common/core/global-variables';
       HttpClientModule,
       HttpModule,
       PipeModuleModule,
+      FlexLayoutModule,
       NgxsModule.forFeature([PosCateoriesState,PosStockStates,PosSearchStockStates,PosOrderState]),
     ],
   exports: [

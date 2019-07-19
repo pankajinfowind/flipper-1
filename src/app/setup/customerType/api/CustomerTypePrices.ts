@@ -4,7 +4,7 @@ export class CustomerTypePrices {
   id?: number;
   customer_type_id?: number;
   customer_type?:CustomerType;
-  active ?: number;
+  active?: number;
   created_at?: any;
   updated_at?: any;
   item_id?:number;

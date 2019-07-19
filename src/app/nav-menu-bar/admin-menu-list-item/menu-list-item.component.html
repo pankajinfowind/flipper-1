@@ -13,5 +13,5 @@
   </span>
 </a>
 <div *ngIf="expanded" class="collapsed">
-  <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1"></app-menu-list-item>
+  <admin-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1"></admin-menu-list-item>
 </div>

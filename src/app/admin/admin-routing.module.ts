@@ -4,9 +4,6 @@ import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../common/guards/auth-guard.service';
 import { RedirectComponent } from '../redirect/redirect.component';
 import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
-import { AvailabeStockComponent } from '../stock/availabe-stock/availabe-stock.component';
-import { StockSoldOutComponent } from '../stock/stock-sold-out/stock-sold-out.component';
-import { StockLowerComponent } from '../stock/stock-lower/stock-lower.component';
 import { StockMovementComponent } from '../stock/stock-movement/stock-movement.component';
 import { ExpiredStockComponent } from '../stock/expired-stock/expired-stock.component';
 import { ItemsComponent } from './master/items/items.component';
@@ -20,6 +17,11 @@ import { BranchComponent } from './master/branch/branch.component';
 import { UsersComponent } from '../settings/users/users.component';
 import { UserBranchesComponent } from '../settings/user-branches/user-branches.component';
 import { ReceiptSettingComponent } from '../settings/receipt-setting/receipt-setting.component';
+import { CustomerTypeComponent } from '../setup/customerType/customertype.component';
+import { TaxRatesComponent } from '../setup/tax-rates/tax-rates.component';
+import { ReasonComponent } from '../setup/reasons/reason.component';
+import { ExpirationSettingComponent } from '../setup/expiration_setting/expiration_setting.component';
+import { StockTableComponent } from '../stock/stock-table/stock-table.component';
 
 
 const routes: Routes = [
@@ -47,9 +49,8 @@ const routes: Routes = [
               },
               {
                 path: 'stock', children: [
-                      { path: 'available', component: AvailabeStockComponent },
-                      { path: 'stockout', component: StockSoldOutComponent },
-                      { path: 'lowerstock', component: StockLowerComponent },
+                      { path: 'stock-control', component: StockTableComponent },
+                      { path: 'stock-order', component: StockTableComponent },
                       { path: 'stockmovement', component: StockMovementComponent },
                       { path: 'expireditem', component: ExpiredStockComponent}
                   ]
@@ -75,6 +76,10 @@ const routes: Routes = [
               { path: 'branches', component: BranchComponent },
               { path: 'users', component: UsersComponent },
               { path: 'user-branches', component: UserBranchesComponent },
+              { path: 'customertype', component: CustomerTypeComponent },
+              { path: 'tax-rate', component: TaxRatesComponent },
+              { path: 'reason', component: ReasonComponent},
+              { path: 'expiration_setting', component: ExpirationSettingComponent},
               //
                 
             ]

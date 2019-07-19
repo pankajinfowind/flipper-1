@@ -216,7 +216,11 @@ html{
   color: #fff;
   background: #08a042;
 }
-.button-cancel,.button,.button-success{
+.button-danger{
+  color: #fff;
+  background: #d34a27;
+}
+.button-cancel,.button,.button-success,.button-danger{
 
     border: 1px solid transparent;
     text-align: center;

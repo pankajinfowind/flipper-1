@@ -18,7 +18,7 @@ const routes: Routes = [
     {path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule', canLoad: [AuthGuard]},
     {path: 'cashier', loadChildren: 'app/cashier/cashier.module#CashierModule', canLoad: [AuthGuard]},
 ];
-//SwitchBranchModelComponent
+
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]

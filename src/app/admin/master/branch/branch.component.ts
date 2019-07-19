@@ -12,6 +12,7 @@ import { CrupdateBranchModalComponent } from './crupdate-branch-modal/crupdate-b
 import { ConfirmModalComponent } from '../../../common/core/ui/confirm-modal/confirm-modal.component';
 import { BranchUsersComponent } from '../../../settings/branch-users/branch-users.component';
 import { AssignStockToBranchComponent } from './assign-stock-to-branch/assign-stock-to-branch.component';
+import { Bootstrapper } from '../../../common/core/bootstrapper.service';
 @Component({
   selector: 'app-branch',
   templateUrl: './branch.component.html',
@@ -28,7 +29,7 @@ export class BranchComponent implements OnInit,OnDestroy {
   @Output() valueChange = new EventEmitter<Branch>();
   public dataSource: PaginatedDataTableSource<Branch>;
   public loading = new BehaviorSubject(false);
-  constructor(public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBranchService) { }
+  constructor(private bootstrapper: Bootstrapper,public v: GlobalVariables,public paginator: UrlAwarePaginator,private modal: Modal,private api:ApiBranchService) { }
 
   ngOnInit() {
     if(!this.enableSelectButton){
@@ -54,7 +55,8 @@ ngOnDestroy() {
     public deleteSelectedBranchs() {
       const ids = this.dataSource.selectedRows.selected.map(branch => branch.branch_id);
       this.loading.next(true);
-      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(() => {
+      this.api.deleteMultiple(ids).pipe(finalize(() => this.loading.next(false))).subscribe(response =>  {
+        this.bootstrapper.bootstrap(response.data);
           this.paginator.refresh();
           this.dataSource.selectedRows.clear();
       });
@@ -84,8 +86,9 @@ ngOnDestroy() {
         CrupdateBranchModalComponent,
           {branch},
           'crupdate-branch-modal-container'
-      ).beforeClose().subscribe(data => {
-          if ( ! data) return;
+      ).beforeClose().subscribe(response => {
+          if ( ! response) return;
+          this.bootstrapper.bootstrap(response.data);
           this.paginator.refresh();
       });
   }
@@ -104,11 +107,4 @@ ngOnDestroy() {
     return this.valueChange.emit(branch);
   }
 
-  openStockUnassigned(branch): void {
-      this.modal.open(AssignStockToBranchComponent,{branch},
-      {panelClass:'be-modal',width:'800px'}).beforeClose().subscribe(data => {
-        if ( ! data) return;
-        this.paginator.refresh();
-    });;
-      }
 }

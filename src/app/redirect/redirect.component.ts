@@ -24,7 +24,6 @@ export class RedirectComponent implements OnInit {
   goTo(){
    
     if (this.auth.hasBusiness) {
-   //   console.log(this.auth.hasCurrentBranch());
         if(this.auth.isAdmin()){
           this.v.webTitle('Admin');
           localStorage.setItem('active_menu','dashboard');
@@ -37,7 +36,16 @@ export class RedirectComponent implements OnInit {
             this.branchesModel();
           }
           
+        }else if(this.auth.isManager()){
+         this.v.webTitle('Branch Manager');
+          if(this.auth.hasCurrentBranch()){
+            return this.router.navigate(["/admin/analytics"]);
+          }else{
+            this.branchesModel();
+          }
+          
         }
+
     }else{
       this.v.webTitle('Create Business/Company');
       return this.router.navigate(["/customer"]);

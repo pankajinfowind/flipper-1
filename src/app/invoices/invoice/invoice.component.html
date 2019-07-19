@@ -83,6 +83,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="printReceiptModel(invoice)" [matTooltip]="'Preview Receipt' | trans"><mat-icon>receipt</mat-icon> Preview Receipt</button>
             <button mat-menu-item (click)="showPreviewInvoiceModal(invoice)" [matTooltip]="'Preview Invoice' | trans"><mat-icon>print</mat-icon> Preview Invoice</button>
           </mat-menu>
       </mat-cell>

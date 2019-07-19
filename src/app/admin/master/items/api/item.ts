@@ -1,6 +1,7 @@
 import { Brand } from '../../brands/api/brand';
 import { TAXRATE } from '../../../../setup/tax-rates/api/tax-rate';
 import { CustomerType } from '../../../../setup/customerType/api/CustomerType';
+import { CustomerTypePrices } from '../../../../setup/customerType/api/CustomerTypePrices';
 
 export class Item {
   id?: number;
@@ -26,7 +27,7 @@ export class Item {
   unit_sale?:number;
   unit_cost?:number;
   upc?:number;
-  customer_type_items?:CustomerType;
+  customer_type_items?:CustomerTypePrices[]=[];
   cost_price_excluding_tax?:number;
   cost_price_including_tax?:number;
   margin?:number;

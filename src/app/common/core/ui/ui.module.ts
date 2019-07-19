@@ -83,15 +83,7 @@ import { MaterialModule } from '../../../material/material.module';
         // internal
         ConfirmModalModule,
         CustomScrollbarModule,
-        TranslationsModule,
-
-        // material
-        MatButtonModule,
-        MatSnackBarModule,
-        MatMenuModule,
-        MatCheckboxModule,
-        MatTooltipModule,
-        MatIconModule,
+        TranslationsModule
     ],
     entryComponents: [],
     providers: [BreakpointsService]

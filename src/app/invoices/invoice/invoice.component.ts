@@ -12,6 +12,7 @@ import { InvoiceService } from '../invoice.service';
 import { GlobalVariables } from '../../common/core/global-variables';
 import { LocalStorage } from '../../common/core/services/local-storage.service';
 import { InvoicePreviewComponent } from '../invoice-preview/invoice-preview.component';
+import { PrintReceiptModelComponent } from '../../print-out/print-receipt-model/print-receipt-model.component';
 
 @Component({
   selector: 'app-invoice',
@@ -81,6 +82,11 @@ export class InvoiceComponent implements OnInit, OnDestroy{
       data: invoice?invoice:null
     });
   }
-
+  printReceiptModel(invoice?: Invoice) {
+    this.dialog.open(PrintReceiptModelComponent, {
+      width: '400px',
+      data: invoice?invoice:null
+    });
+  }
 
 }

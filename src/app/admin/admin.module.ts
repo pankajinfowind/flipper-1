@@ -10,8 +10,8 @@ import { MasterModule } from './master/master/master.module';
 import { StockModule } from '../stock/stock.module';
 import { SalesModule } from '../sales/sales.module';
 import { SettingsModule } from '../settings/settings.module';
-import { MenuListItemComponent } from '../nav-menu-bar/menu-list-item/menu-list-item.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MenuListItemComponent } from '../nav-menu-bar/admin-menu-list-item/menu-list-item.component';
 import { NavService } from '../nav-menu-bar/nav.service';
 
 @NgModule({
@@ -27,7 +27,7 @@ import { NavService } from '../nav-menu-bar/nav.service';
     SalesModule,
     SettingsModule
   ],
-  exports: [AdminComponent],
+  exports: [AdminComponent,MenuListItemComponent],
   declarations: [AdminComponent,MenuListItemComponent],
   providers: [NavService]
 })

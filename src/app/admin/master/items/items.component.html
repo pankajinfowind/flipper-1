@@ -1,6 +1,6 @@
 <data-table [dataSource]="dataSource" itemsName="Products" [isLoading]="(loading | async)" hiddenCheckBox="false" matSort>
   <div headerLeftActions>
-      <button mat-raised-button  class="button" (click)="addItem()"  trans>Create a Product</button>
+      <button mat-raised-button  class="button" (click)="addItemModal()"  trans>Create a Product</button>
     </div>
   <div class="input-container" headerRightActions>
       <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">
@@ -68,7 +68,7 @@
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let product">
-          <button mat-icon-button (click)="openDetails('Edit a Product','edit',product)"  [matTooltip]="'Edit Product' | trans">
+          <button mat-icon-button (click)="addItemModal(product)"  [matTooltip]="'Edit Product' | trans">
               <mat-icon svgIcon="edit"></mat-icon>
           </button>
       </mat-cell>

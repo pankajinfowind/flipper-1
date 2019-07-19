@@ -14,58 +14,52 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast } from '../../../common/core/ui/toast.service';
 import { SharedModelService } from '../../../shared-model/shared-model-service';
 import { Modal } from '../../../common/core/ui/dialogs/modal.service';
-import { SelectReasonModalComponent } from '../../../setup/reasons/select-reason-modal/select-reason-modal.component';
 import { SelectReasonModelComponent } from './select-reason-model/select-reason-model.component';
-
+export interface ModalData {
+  stock:Stock;
+  action:string;
+}
 @Component({
   selector: 'app-update-stock-model',
   templateUrl: './update-stock-model.component.html',
   styleUrls: ['./update-stock-model.component.scss']
 })
+
 export class UpdateStockModelComponent implements OnInit {
 
-  subscription: Observable<Details>;
-  details$: Observable<Details>;
   stockForm: FormGroup;
   stock:Stock;
-  setup$: Observable<SetUp>;
   reasons: Reason[] = [];
   public loading = new BehaviorSubject(false);
   current_stock:number=0;
   found_stock:boolean=false;
   // action:any;
-  constructor(public shared:SharedModelService,private toast: Toast,private setupModelService: SetUpModelService,private modal: Modal,private detailsService:DetailsService,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
-    @Inject(MAT_DIALOG_DATA) public action: any) {
+  constructor(private toast: Toast,private modal: Modal,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ModalData) {
+      console.log(this.data);
+      this.stock=this.data.stock['stock'];
    }
-   close(): void {
-    this.dialogRef.close({status:'none'});
+   close(data?): void {
+    this.dialogRef.close(data);
   }
 
     ngOnInit() {
-      this.subscription = this.details$ = this.detailsService.details$;
-      this.details$ = this.detailsService.details$;
-      this.setup$ = this.setupModelService.setup$;
-      this.details$.subscribe(res=>{
-        if(res){
-        const numberPatern = '^[0-9.,]+$';
-        this.stock=res.sender_data;
-        this.stockForm = new FormGroup({
-            qty:this.action && this.action==='add'?new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])):
-            new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])),
-            transction_date: new FormControl(new Date(), [Validators.required]),
-            expired_date: new FormControl(),
-            manufacture_date: new FormControl(),
-            batch_no:new FormControl(this.stock.item.sku,[Validators.required]),
-            comments:new FormControl('no comments'),
-            action: new FormControl(this.action),
-            in_stock_qty: new FormControl(0),
-            total_qty: new FormControl(0),
-            stock_id: new FormControl(res.sender_data && res.sender_data.stock_id),
-            reason_id:new FormControl(null),
-            reason:new FormControl('', [Validators.required]),
-          });
-        }
-       });
+      const numberPatern = '^[0-9.,]+$';
+       this.stockForm = new FormGroup({
+        qty:this.data && this.data.action==='add'?new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])):
+        new FormControl(1, Validators.compose([Validators.required, Validators.pattern(numberPatern), Validators.min(1)])),
+        transction_date: new FormControl(new Date(), [Validators.required]),
+        expired_date: new FormControl(),
+        manufacture_date: new FormControl(),
+        batch_no:new FormControl(this.stock? this.stock.item.sku:'',[Validators.required]),
+        comments:new FormControl('no comments'),
+        action: new FormControl(this.data.action),
+        in_stock_qty: new FormControl(0),
+        total_qty: new FormControl(0),
+        stock_id: new FormControl(this.stock?this.stock.stock_id:0),
+        reason_id:new FormControl(null),
+        reason:new FormControl('', [Validators.required]),
+      });
        this.checkEmpty(0);
     }
 
@@ -82,7 +76,7 @@ export class UpdateStockModelComponent implements OnInit {
         if(arrays.length > 0){
             this.current_stock=this.arrayAdd(this.arrayGetColumn(arrays,'in_qty'))-this.arrayAdd(this.arrayGetColumn(arrays,'out_qty'));
         }
-        if(this.action=='add'){
+        if(this.data.action=='add'){
           this.found_stock=true;
         }else{
           this.found_stock=arrays.length > 0?true:false;
@@ -140,10 +134,8 @@ arrayGetColumn(array,column){
       this.api.addOrRemoveExistingItem(this.stockForm.value).pipe(finalize(() =>this.loading.next(false)))
       .subscribe(
             res => {
-                  this.detailsService.receiverData(res,true);
                   this.toast.open('Stock updated Successfully!');
-                  this.shared.remove();
-              this.close();
+              this.close(res);
             },
         _error => {
         console.error(_error);

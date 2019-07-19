@@ -12,7 +12,7 @@ import { LoadCategoriesEntries, ClosePosCategory } from '../../../../store/actio
 @Component({
   selector: 'app-item-categories',
   templateUrl: './item-categories.component.html',
-  styleUrls: ['../../../sale-point/sale-point.component.scss'],
+  styleUrls: ['./item-categories.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

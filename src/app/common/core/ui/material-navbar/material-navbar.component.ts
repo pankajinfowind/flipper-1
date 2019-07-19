@@ -26,7 +26,7 @@ export class MaterialNavbar implements OnInit {
     }
     
   ngOnInit() {
-    if(this.current.isAdmin()){
+    if(this.current.isAdmin() || this.current.isManager()){
       this.showToggleButton=true;
     }
  

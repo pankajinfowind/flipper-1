@@ -16,17 +16,17 @@ export class ApiBranchService {
 
 
 
-  public create(params: Branch): Observable<Branch> {
+  public create(params: Branch): Observable<any> {
       return this.http.post(API_ROUTES_BRANCH.BRANCH, params);
   }
-  public get(): BackendResponse<{ branches: Branch[] }> {
+  public get() {
       return this.http.get(API_ROUTES_BRANCH.BRANCH);
   }
 
   public attachUserBranch(params: any): Observable<any> {
     return this.http.post(API_ROUTES_BRANCH.ATTACH_USER_BRANCH, params);
 }
- public update(id:number,params: Branch): Observable<Branch> {
+ public update(id:number,params: Branch): Observable<any> {
   return this.http.put(API_ROUTES_BRANCH.BRANCH+'/'+id, params);
 }
  public delete(id:number): BackendResponse<{ data: Branch }> {

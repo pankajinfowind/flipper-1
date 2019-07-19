@@ -1,5 +1,4 @@
 <div class="app-admin" style="overflow:none">
-  <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
   <mat-sidenav-container class="content">
     <mat-sidenav [opened]="(navService.isOpenedLeftSide | async)" mode="side" class="main-left-column">
 
@@ -10,8 +9,8 @@
       <div class="sidebar-wrapper ps">
        <logged-in-user-widget class="user"></logged-in-user-widget>
      
-        <mat-nav-list class="main-menu-items">
-          <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
+        <mat-nav-list class="main-menu-items" *ngIf="navItems.length > 0">
+          <admin-menu-list-item *ngFor="let item of navItems" [item]="item"></admin-menu-list-item>
         </mat-nav-list>
       </div>
     </mat-sidenav>

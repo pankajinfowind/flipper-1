@@ -23,7 +23,7 @@ import { Customer } from '../../../../customers/customer';
 @Component({
   selector: 'app-pos-products',
   templateUrl: './pos-products.component.html',
-  styleUrls: ['../../../sale-point/sale-point.component.scss'],
+  styleUrls: ['./pos-products.component.scss'],
 })
 export class PosProductsComponent implements OnInit {
   sub: any
@@ -72,6 +72,7 @@ export class PosProductsComponent implements OnInit {
     this.selectedItem=stock;
     if(stock['stockMovmentsTransformable'].length > 1){
         this.openBottomSheet(stock['stockMovmentsTransformable'],stock.item.item).afterDismissed().subscribe(cart_data => {
+          if(!cart_data) return;
           this.saveToCartWithOrder(cart_data,stock);
         });
     }else{
@@ -81,7 +82,7 @@ export class PosProductsComponent implements OnInit {
 
   saveToCartWithOrder(cart,stock:Stock){
   
-    if (cart.total_qty <= 0) {
+    if (cart && cart.total_qty <= 0) {
       alert("Stock Quantity is unavailable");
     } else {
       this.current_order$.pipe(take(1)).subscribe(current_order => {

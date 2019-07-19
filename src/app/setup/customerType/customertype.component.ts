@@ -33,7 +33,7 @@ export class CustomerTypeComponent implements  OnInit, OnDestroy {
 
   ngOnInit() {
     if(!this.enableSelectButton){
-    this.v.webTitle('Manage Customer Types');
+    this.v.webTitle('Manage Price books');
     }
     this.dataSource = new PaginatedDataTableSource<CustomerType>({
         uri: 'customertype',

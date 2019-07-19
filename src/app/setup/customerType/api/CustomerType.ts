@@ -11,7 +11,7 @@ export class CustomerType {
   customer_type_items?:CustomerTypePrices[]=[];
   created_at?: any;
   updated_at?: any;
-
+  active?: number;
   constructor(params: Object = {}) {
     for (let name in params) {
       this[name] = params[name];

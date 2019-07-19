@@ -18,6 +18,7 @@ import { SharedModelService } from '../../../shared-model/shared-model-service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { GlobalVariables } from '../../../common/core/global-variables';
+import { AddItemComponent } from './add-item/add-item.component';
 
 @Component({
   selector: "app-items",
@@ -62,9 +63,20 @@ this.detailsService.details$.subscribe(response=>{
 })
 
 }
-  addItem(){
-    this.router.navigate(["/admin/setup/add-item"]);
-  }
+ 
+  public addItemModal(item?) {
+    this.modal.open(
+      AddItemComponent,
+        {enabled:true,
+          item:item?item:null},
+          {
+            width: '1200px'
+          }
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.paginator.refresh();
+    });
+}
 /**
      * Delete currently selected users.
      */

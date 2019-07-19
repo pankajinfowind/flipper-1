@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuListItemComponent } from './menu-list-item.component';
+import { StockButtonModelComponent } from './stock-button-model.component';
 
-describe('MenuListItemComponent', () => {
-  let component: MenuListItemComponent;
-  let fixture: ComponentFixture<MenuListItemComponent>;
+describe('StockButtonModelComponent', () => {
+  let component: StockButtonModelComponent;
+  let fixture: ComponentFixture<StockButtonModelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuListItemComponent ]
+      declarations: [ StockButtonModelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MenuListItemComponent);
+    fixture = TestBed.createComponent(StockButtonModelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

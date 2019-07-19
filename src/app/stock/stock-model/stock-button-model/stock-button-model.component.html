@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h2 mat-dialog-title trans>Operation Button</h2>
+  <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+ <mat-card-actions class="mx-auto col-10">
+
+  <button type="button" class="button" (click)="addStock('add')" mat-raised-button>
+          <mat-icon>add</mat-icon> Add Stock
+          </button>
+
+         <button type="button" class="button-danger" (click)="addStock('remove')" mat-raised-button>
+          <mat-icon>remove</mat-icon> Remove Stock
+          </button>
+         
+          <button type="button" class="button-cancel" (click)="close()" mat-raised-button>
+          <mat-icon>close</mat-icon> Cancel
+          </button>
+   
+     </mat-card-actions>

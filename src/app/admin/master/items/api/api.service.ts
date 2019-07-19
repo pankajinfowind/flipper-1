@@ -14,19 +14,23 @@ export class ApiItemService {
     }
 
 
-    public create(params: Item): BackendResponse<{ data: any[] }> {
+    public create(params: Item): BackendResponse<Item> {
         return this.http.post(API_ROUTES_ITEMS.ITEM, params);
     }
-    public update(params: Item, id: number): BackendResponse<{ data: any[] }> {
+    public update(params: Item, id: number): BackendResponse<Item> {
         return this.http.put(API_ROUTES_ITEMS.ITEM + '/' + id, params);
     }
-    public delete(params: any): BackendResponse<{ data: Item[] }> {
+    public delete(params: any): BackendResponse<boolean> {
         return this.http.post(API_ROUTES_ITEMS.DELETE, params);
     }
-    public get(): BackendResponse<{ data: Item[] }> {
+    public get(): BackendResponse<Item[]> {
         return this.http.get(API_ROUTES_ITEMS.ITEM);
     }
     public deleteMultiple(ids: number[]) {
       return this.http.delete(API_ROUTES_ITEMS.DELETE_MULTIPLE, {ids});
     }
+    public filterItem(params): BackendResponse<any> {
+        return this.http.get("filter-item", params);
+    }
+   
 }

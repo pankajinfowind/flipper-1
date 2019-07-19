@@ -17,9 +17,7 @@ import { CustomerTypeComponent } from './customerType/customertype.component';
 import { ApiCustomerTypeService } from './customerType/api/api.service';
 import { ExpirationSettingComponent } from './expiration_setting/expiration_setting.component';
 import { ApiExpirationSettingService } from './expiration_setting/api/api.service';
-import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
 import { NavService } from './nav-service';
-import { MasterModule } from '../admin/master/master/master.module';
 import { CrupdateCustomerTypeModalComponent } from './customerType/crupdate-customet-type-modal/crupdate-customer-type-modal.component';
 import { DataTableModule } from '../data-table/data-table/data-table.module';
 import { CrupdateTaxRateModalComponent } from './tax-rates/crupdate-tax-rate-modal/crupdate-tax-rate-modal.component';
@@ -29,9 +27,11 @@ import { CrupdatePeriodModalComponent } from './expiration_setting/crupdate-peri
 import { SelectTaxrateModalComponent } from './tax-rates/select-taxrate-modal/select-taxrate-modal.component';
 import { SelectCustomerTypeModalComponent } from './select-customer-type-modal/select-customer-type-modal.component';
 import { SelectReasonModalComponent } from './reasons/select-reason-modal/select-reason-modal.component';
+import { SelectCustomerTypeModelComponent } from './customerType/select-customer-type-model/select-customer-type-model.component';
+import { AttachItemCustomerTypesModelComponent } from './customerType/attach-item-customer-types-model/attach-item-customer-types-model.component';
 
 @NgModule({
-  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent, MenuListItemComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent, CrupdatePeriodModalComponent, SelectTaxrateModalComponent, SelectCustomerTypeModalComponent, SelectReasonModalComponent],
+  declarations: [ReasonComponent,SetupComponent, TaxRatesComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,ExpirationSettingComponent,CrupdateCustomerTypeModalComponent, CrupdateTaxRateModalComponent, CrupdateReasonModalComponent, ReasonDataTableComponent, CrupdatePeriodModalComponent, SelectTaxrateModalComponent, SelectCustomerTypeModalComponent, SelectReasonModalComponent, SelectCustomerTypeModelComponent, AttachItemCustomerTypesModelComponent],
   exports: [ReasonComponent,SetupComponent, TaxRatesComponent,ExpirationSettingComponent,NoEntryFoundSetUpComponent,CustomerTypeComponent,CrupdateCustomerTypeModalComponent,CrupdateTaxRateModalComponent,SelectTaxrateModalComponent,SelectCustomerTypeModalComponent,SelectReasonModalComponent],
   imports: [
     CommonModule,
@@ -43,7 +43,6 @@ import { SelectReasonModalComponent } from './reasons/select-reason-modal/select
     ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
-    MasterModule,
     DataTableModule
   ],
   providers: [
@@ -60,7 +59,9 @@ import { SelectReasonModalComponent } from './reasons/select-reason-modal/select
     CrupdatePeriodModalComponent,
     SelectTaxrateModalComponent,
     SelectCustomerTypeModalComponent,
-    SelectReasonModalComponent
+    SelectReasonModalComponent,
+    SelectCustomerTypeModelComponent,
+    AttachItemCustomerTypesModelComponent
   ]
 })
 export class SetupModule {

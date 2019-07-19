@@ -89,7 +89,7 @@ export class PasswordVerifyComponent implements OnInit {
 
     this.auth.login(this.v.model).subscribe(
       response => {
-
+        this.v.loading = false;
         if(response == 422 || response == '422'){
           this.v.errorMsg="These credentials do not match our records. ";
 

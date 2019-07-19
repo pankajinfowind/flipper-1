@@ -1,7 +1,16 @@
 
-<data-table [dataSource]="dataSource" [itemsName]="title" [isLoading]="(loading | async)" hiddenCheckBox="false" matSort>
+<data-table [dataSource]="dataSource" [itemsName]="title" [isLoading]="(loading | async)" notFoundMessage="Seems like no stock found!" hiddenCheckBox="false" matSort>
   <div headerLeftActions>
-      <!-- <button mat-raised-button  class="button" (click)="addItem()"  trans>Create a stock</button> -->
+      <mat-form-field appearance="outline">
+        <mat-label>Choose Stock Type</mat-label>
+
+        <mat-select [(ngModel)]="default_status">
+              <mat-option *ngFor="let t of stockTypes" [value]="t.value" (onSelectionChange)="stockParams($event)">
+                {{t.viewValue}}
+              </mat-option>
+            </mat-select>
+    </mat-form-field>
+
     </div>
   <div class="input-container" headerRightActions>
       <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">
@@ -26,35 +35,35 @@
 
 <ng-container matColumnDef="item">
   <mat-header-cell *matHeaderCellDef trans>Stock</mat-header-cell>
-  <mat-cell *matCellDef="let stock"> <span class="ellipsis" [matTooltip]="stock.item.item">{{stock.item.item}}</span> </mat-cell>
+  <mat-cell *matCellDef="let stock" (click)="openOperationBtn(stock)"> <span class="ellipsis" [matTooltip]="stock.item.item">{{stock.item.item}}</span> </mat-cell>
 </ng-container>
 
 <ng-container matColumnDef="category">
   <mat-header-cell *matHeaderCellDef trans>Category</mat-header-cell>
-  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.category?stock.category.name:'----'}} </span></mat-cell>
+  <mat-cell *matCellDef="let stock" (click)="openOperationBtn(stock)"> <span class="ellipsis">{{stock.category?stock.category.name:'----'}} </span></mat-cell>
 </ng-container>
 <ng-container matColumnDef="tax_rate">
   <mat-header-cell *matHeaderCellDef trans>Tax rate</mat-header-cell>
-  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.tax_rate?stock.tax_rate.name+'('+stock.tax_rate.percentage+')':'---'}}</span> </mat-cell>
+  <mat-cell *matCellDef="let stock" (click)="openOperationBtn(stock)"> <span class="ellipsis">{{stock.tax_rate?stock.tax_rate.name+'('+stock.tax_rate.percentage+')':'---'}}</span> </mat-cell>
 </ng-container>
 
 <ng-container matColumnDef="available_stock_qty">
   <mat-header-cell *matHeaderCellDef  trans>Quantities</mat-header-cell>
-  <mat-cell *matCellDef="let stock"> {{stock.available_stock_qty}} </mat-cell>
+  <mat-cell *matCellDef="let stock" (click)="openOperationBtn(stock)"> {{stock.available_stock_qty}} </mat-cell>
 </ng-container>
 
 <ng-container matColumnDef="created_at">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Created at</mat-header-cell>
-  <mat-cell *matCellDef="let stock"> {{stock.created_at | date}} </mat-cell>
+  <mat-cell *matCellDef="let stock" (click)="openOperationBtn(stock)"> {{stock.created_at | date}} </mat-cell>
 </ng-container>
 <ng-container matColumnDef="updated_at">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Updated at</mat-header-cell>
-  <mat-cell *matCellDef="let stock"> {{stock.updated_at | date}} </mat-cell>
+  <mat-cell *matCellDef="let stock" (click)="openOperationBtn(stock)"> {{stock.updated_at | date}} </mat-cell>
 </ng-container>
 
 <ng-container matColumnDef="progress">
     <mat-header-cell *matHeaderCellDef trans>Progress</mat-header-cell>
-    <mat-cell *matCellDef="let stock">
+    <mat-cell *matCellDef="let stock" (click)="openOperationBtn(stock)">
         <mat-progress-bar
         *ngIf="percentage(stock.available_stock_qty,stock.in_stock_qty)
         >= 71" [mode]="determinate" [color]="accent"
@@ -77,9 +86,8 @@
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let stock">
-          <button mat-icon-button (click)="openDetails('Stock
-          Details','info',stock,'app-info-stock-model')"  [matTooltip]="'Edit stock' | trans">
-              <mat-icon svgIcon="edit"></mat-icon>
+          <button mat-icon-button (click)="openOperationBtn(stock)"  [matTooltip]="'Edit stock' | trans">
+              <mat-icon svgIcon="info"></mat-icon>
           </button>
       </mat-cell>
   </ng-container>

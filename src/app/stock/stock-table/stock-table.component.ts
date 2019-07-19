@@ -12,6 +12,11 @@ import{SharedModelService} from "../../shared-model/shared-model-service";
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { GlobalVariables } from '../../common/core/global-variables';
+import { StockButtonModelComponent } from '../stock-model/stock-button-model/stock-button-model.component';
+export interface SelectorBox {
+  value: string;
+  viewValue?: string;
+}
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
@@ -24,6 +29,12 @@ export class StockTableComponent implements OnInit,OnDestroy {
   public dataSource: PaginatedDataTableSource<Stock>;
   public loading = new BehaviorSubject(false);
   cart: EventEmitter<Stock> = new EventEmitter();
+  stockTypes: SelectorBox[] =  [
+    {value: 'stockout',viewValue:'Stock Out'},
+    {value: 'available',viewValue:'Current Stock'},
+    {value: 'lowerstock',viewValue:'Lower Stock'}
+  ];
+  default_status='stockout';
   constructor(public v: GlobalVariables,public shared:SharedModelService,public paginator: UrlAwarePaginator,private detailsService:DetailsService,private api:ApiStockService,private modal: Modal) {
 
   }
@@ -37,31 +48,25 @@ export class StockTableComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.v.webTitle(this.title);
       this.dataSource = new PaginatedDataTableSource<Stock>({
-        uri: "stock/"+parseInt(localStorage.getItem('active_branch'))+this.url,
+        uri: "stock",
         dataPaginator: this.paginator,
-        matSort: this.matSort
+        matSort: this.matSort,
+        staticParams:{branch_id:parseInt(localStorage.getItem('active_branch'))}
     });
     this.viewUpCommingData();
-    this.reloadPage();
   }
 
   ngOnDestroy() {
     this.paginator.destroy();
   }
-reloadPage(){
-  this.shared.shared$.subscribe(shared=>{
-    if(shared.data && shared.data.reload){
-     
-    this.dataSource.config.uri= "stock/"+parseInt(localStorage.getItem('active_branch'))+this.url;
-    this.dataSource.config.dataPaginator= this.paginator;
-    this.dataSource.config.matSort= this.matSort;
-    if ( ! this.dataSource.config.delayInit) this.dataSource.init();
-      this.detailsService.update({reload:false});
-      this.paginator.refresh();
+
+  stockParams(event?){
+    if(event.isUserInput) {
+      this.dataSource.setParams({status:event.source.value});
     }
-  });
-  
-}
+ 
+  }
+
 
   viewUpCommingData(){
     this.detailsService.details$.subscribe(response=>{
@@ -81,9 +86,16 @@ reloadPage(){
 
 
 
-  openDetails(title='Stock Details',action='info',obj,component='app-info-stock-model'){
-    this.shared.update(obj);
-    this.detailsService.update({title:title,sender_data:obj,module:'app-stock',component:component,action:action,detailsVisible:true});
+  openOperationBtn(stock:Stock){
+  this.modal.open(
+    StockButtonModelComponent,
+      {stock:stock?stock:null,
+    },
+      'select-reason-modal'
+  ).beforeClose().subscribe(data => {
+      if ( ! data) return;
+      this.paginator.refresh();
+  });
  }
  /**
      * Delete currently selected users.

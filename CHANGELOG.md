@@ -1,6 +1,10 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.4.20-alpha.27](https://github.com/StreamUpBox/flipper/compare/v0.4.20-alpha.21...v0.4.20-alpha.27) (2019-07-19)
+
+
 
 <a name="0.4.20-alpha.26"></a>
 ## [0.4.20-alpha.26](https://github.com/StreamUpBox/flipper/compare/v0.4.20-alpha.25...v0.4.20-alpha.26) (2019-05-31)

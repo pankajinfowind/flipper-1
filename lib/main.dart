@@ -31,8 +31,7 @@ class _Login extends StatelessWidget {
             Column(
               children: <Widget>[
                 Image.asset('assets/cm1.jpeg'),
-                SizedBox(height: 20.0),
-                Text("Login")
+                SizedBox(height: 20.0)
               ],
             ),
             SizedBox(height: 120.0),

@@ -1,3 +1,4 @@
+import 'package:enexus/categories_page.dart' as categories;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class Login extends StatelessWidget {
 }
 
 class _Login extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
 
@@ -63,7 +65,13 @@ class _Login extends StatelessWidget {
                   color: Colors.blueAccent,
                   textColor: Colors.white,
                   child: Text("Next"),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      //got to nextPage this is how we do it.
+                      MaterialPageRoute(builder: (context) => categories.CategoriesPage()),
+                    );
+                  },
                 )
               ],
             )
@@ -72,5 +80,4 @@ class _Login extends StatelessWidget {
       ),
     );
   }
-
 }

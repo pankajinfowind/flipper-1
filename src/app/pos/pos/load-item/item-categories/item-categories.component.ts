@@ -33,8 +33,9 @@ export class ItemCategoriesComponent implements OnInit {
   @Select(PosCateoriesState.meta) meta$: Observable<any>;
   @Select(PosCateoriesState.loading) loading$: Observable<boolean>;
   bg_img: string=null;
+  
   constructor(public currentUser:CurrentUser,private localStorage: LocalStorage,  private router: Router,private store:Store) {
-this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?'/assets/drugs/drugs.ico':'/assets/drugs/any.png';
+this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?this.localStorage.drug_item:this.localStorage.any_item;
   }
 
 

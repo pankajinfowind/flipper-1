@@ -1,5 +1,8 @@
 
-<div *ngIf="(invoice$ | async)">
+<div *ngIf="(invoice$ | async) && (invoice$ | async).printFormat.length == 0">
+Please, you need to customize invoice before print,<br /> if you're admin Go to settings > invoices customization > click New invoice customization button
+</div>
+<div *ngIf="(invoice$ | async) && (invoice$ | async).printFormat.length > 0">
 <div [ngStyle]="{display:preview?'block':'none'}">
 <button mat-raised-button  class="button" style="float:left;margin-left:10px" *ngIf="!(invoice$ | async).printFormat[0].has_customer_type" (click)="printInvoice('invoice')"  trans>Print Invoice</button>
 <button mat-raised-button  class="button" style="float:left;margin-left:10px" *ngIf="(invoice$ | async).printFormat[0].has_customer_type" (click)="printInvoice('invoice')"  trans>Print {{(invoice$ | async).printFormat[0].customer_type_name}} Invoice</button>

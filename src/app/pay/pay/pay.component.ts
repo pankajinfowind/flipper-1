@@ -150,11 +150,15 @@ loadCustomer(){
 
     async payingInvoice(){
       this.loadOrder();
-
+      if(!this.currently_ordered || !this.data){
+        alert('No order details'); 
+        return;  
+      }
       if(this.currently_ordered){
           if(this.amount_return_color =='red'){
               alert('Amount paid is less than amount due.');
           }else{
+            
             this.store.dispatch(new InvoiceDetails(null));
             const forming_invoice:Invoice={
               invoice_no:randomString(6),

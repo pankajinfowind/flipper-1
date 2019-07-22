@@ -92,16 +92,17 @@ export class OrderListComponent implements OnInit, OnDestroy {
     order.status = "pending";
     order.is_currently_processing = 1;
     this.updateOrder(order);
-    return this.router.navigate(['/admin/pos/till-categories']);
+  
   }
-  updateOrder(params:Orders) {
-    return this.store.dispatch(new UpdateOrder(params));
+  async updateOrder(params:Orders) {
+     this.store.dispatch(new UpdateOrder(params));
+     this.router.navigate(['/admin/pos/till-categories']);
+      return await this;
   }
   updateResumedOrder(order){
     order.status = "pending";
     order.is_currently_processing = 1;
-    this.updateOrder(order);
-    return this.router.navigate(['/admin/pos/till-categories']);
+    return this.updateOrder(order);
   }
 
 
@@ -110,7 +111,8 @@ export class OrderListComponent implements OnInit, OnDestroy {
       if (result) {
         //DeleteOrder
          this.store.dispatch(new DeleteOrder(current_order));
-         return this.router.navigate(['/admin/pos/till-categories']);
+         this.router.navigate(['/admin/pos/till-categories']);
+         return this;
       }
    
   }

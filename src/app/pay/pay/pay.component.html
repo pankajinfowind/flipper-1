@@ -107,7 +107,7 @@
            <li class="button-group__button flipper-pay-panel__list-button col" *ngIf="(invoice$ | async)" (click)="printDirectReceipt()">
             <div  class="flipper-pay-panel__list-button-label">Print Receipt</div>
           </li>
-          <li class="button-group__button flipper-pay-panel__list-button col" *ngIf="(invoice$ | async)">
+          <li class="button-group__button flipper-pay-panel__list-button col" *ngIf="(invoice$ | async) && (invoice$ | async).printFormat.length > 0">
             <app-print-invoice [preview]="preview"></app-print-invoice>
           </li>
         </ul>

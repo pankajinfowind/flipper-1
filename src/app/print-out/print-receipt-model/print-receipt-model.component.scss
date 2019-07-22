@@ -28,14 +28,9 @@
         min-height: 50px;
     }
     
-    #top .logo{position: relative;height: 50px;width: 50px;top: 0%;left: 47%;border:solid 1px #ccc;border-radius:50px}
+    #top .logo{position: relative;height: 50px;width: 50px;top: 0%;left: 47%;border:solid 1px #ccc;border-radius:50px;}
     
-    .clientlogo {
-        float: left;
-        height: 60px;
-        width: 60px;
-        border-radius: 50px;
-    }
+    .clientlogo {height: 50px;width: 50px;border-radius: 50px;}
     
     .info {
         display: block;

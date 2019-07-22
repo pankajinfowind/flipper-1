@@ -9,7 +9,7 @@
 
 	    <div id="top" [ngStyle]="currentStyles">
 	      <div class="logo" *ngIf="current.getReceipt('company_logo')">
-	        <img style="width:100%;object-fit: contain;max-width: 100%;max-height: 100%;"  [src]="getSantizeUrl(current.getReceipt('company_logo'))" />
+	        <img class="clientlogo"  [src]="logo" />
 	      </div>
 	      <div class="info">
 	        <table [ngStyle]="currentStyles">

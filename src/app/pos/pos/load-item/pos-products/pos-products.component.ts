@@ -8,7 +8,7 @@ import { Category } from '../../../../admin/master/categories/api/category';
 import { LocalStorage } from '../../../../common/core/services/local-storage.service';
 import { PosStockStates } from '../../../../store/states/PosStockStates';
 import { Stock } from '../../../../stock/api/stock';
-import { CurrentOrder, CreateOrder, OrderParms, UpdateOrderItems } from '../../../../store/actions/pos-Order.action';
+import {  CreateOrder, OrderParms, UpdateOrderItems } from '../../../../store/actions/pos-Order.action';
 import { PosOrderState } from '../../../../store/states/PosOrderStates';
 import { Orders } from '../../../../orders/orders';
 import { Business } from '../../../../business/api/business';
@@ -57,7 +57,7 @@ export class PosProductsComponent implements OnInit {
   bg_img: string=null;
 
   constructor( public dialog: MatDialog,private api: ApiPosService,private bottomSheet: MatBottomSheet,public currentUser: CurrentUser,private store:Store, private route:ActivatedRoute,private localStorage: LocalStorage) {
-    this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?'/assets/drugs/drugs.ico':'/assets/drugs/any.png';
+    this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?this.localStorage.drug_item:this.localStorage.any_item;
   }
 
   ngOnInit() {

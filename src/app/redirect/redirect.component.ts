@@ -22,7 +22,7 @@ export class RedirectComponent implements OnInit {
   }
 
   goTo(){
-   
+    console.log(this.auth.hasBusiness);
     if (this.auth.hasBusiness) {
         if(this.auth.isAdmin()){
           this.v.webTitle('Admin');
@@ -48,6 +48,7 @@ export class RedirectComponent implements OnInit {
 
     }else{
       this.v.webTitle('Create Business/Company');
+      console.log(this.auth.hasBusiness);
       return this.router.navigate(["/customer"]);
     }
 

@@ -58,7 +58,6 @@ class _Login extends StatelessWidget {
                 FlatButton(
                   child: Text("Cancel"),
                   onPressed: (){
-
                   },
                  ),
                 RaisedButton(
@@ -80,4 +79,8 @@ class _Login extends StatelessWidget {
       ),
     );
   }
+//start learning how to use http should finish login today! learn if I should use block here.
+//  Future<http.Response> fetchPost() {
+//    return http.get('https://jsonplaceholder.typicode.com/posts/1');
+//  }
 }

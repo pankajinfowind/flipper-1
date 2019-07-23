@@ -10,6 +10,7 @@ import { CategoriesApiIndexParams } from '../../../../store/model/pos-category-s
 import { SET_POS_CAT_ORDERBY, SET_POS_CAT_ORDERDIR } from '../../../../store/model/pos-category-state';
 import { LoadCategoriesEntries, ClosePosCategory } from '../../../../store/actions/pos-categories.action';
 import { CurrentUser } from '../../../../common/auth/current-user';
+
 @Component({
   selector: 'app-item-categories',
   templateUrl: './item-categories.component.html',
@@ -32,13 +33,12 @@ export class ItemCategoriesComponent implements OnInit {
   @Select(PosCateoriesState.entries) entries$: Observable<Category[]>;
   @Select(PosCateoriesState.meta) meta$: Observable<any>;
   @Select(PosCateoriesState.loading) loading$: Observable<boolean>;
-  bg_img: string=null;
+  bg_img: any=null;
   
   constructor(public currentUser:CurrentUser,private localStorage: LocalStorage,  private router: Router,private store:Store) {
 this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?this.localStorage.drug_item:this.localStorage.any_item;
   }
-
-
+ 
   ngOnInit() {
     this.localStorage.set('pos-load-data', 'ofCategories');
     this.store.dispatch(new ClosePosCategory());

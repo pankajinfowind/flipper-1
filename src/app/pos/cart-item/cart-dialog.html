@@ -8,20 +8,20 @@
 
 <mat-dialog-content class="many-inputs" *ngIf="status=='Quantity'">
   <mat-form-field class="w-100">
-    <input class="col-12" matInput placeholder="Update Qty" (input)="updateInput($event.target.value)" [(ngModel)]="default_qty" />
+    <input  class="col-12" matInput placeholder="Update Qty" (click)="$event.target.select()" (input)="updateInput($event.target.value)" [(ngModel)]="default_qty" />
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-content class="many-inputs" *ngIf="status=='Price'">
   <mat-form-field class="w-100">
-    <input class="col-12" matInput placeholder="Update Price" (input)="updateInput($event.target.value)" [(ngModel)]="default_price" />
+    <input class="col-12" matInput placeholder="Update Price"  (click)="$event.target.select()" (input)="updateInput($event.target.value)" [(ngModel)]="default_price" />
   </mat-form-field>
 </mat-dialog-content>
 
 
 <mat-dialog-content class="many-inputs" *ngIf="status=='Note'">
   <mat-form-field class="w-100">
-    <textarea class="col-12" matInput placeholder="Write note!" (input)="updateInput($event.target.value)" [(ngModel)]="cart_item.note"></textarea>
+    <textarea class="col-12" matInput placeholder="Write note!"  (click)="$event.target.select()" (input)="updateInput($event.target.value)" [(ngModel)]="cart_item.note"></textarea>
   </mat-form-field>
 </mat-dialog-content>
 

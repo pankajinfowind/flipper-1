@@ -62,6 +62,7 @@ export interface CategoriesApiIndexParams {
   order_by?: SortColumn;
   order_dir?: SortDirection;
   categoryId?: number | '0';
+  branch_id?: number | '0';
   query?: string;
   type?: string;
   per_page?: number;

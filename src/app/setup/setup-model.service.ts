@@ -28,7 +28,6 @@ export class SetUpModelService {
     const newModel = { ...modelSnapshot, ...stateUpdates };
     // set new model data (after mutation)
     this.model.set(newModel);
-    //console.log('mastering',this.model.get());
   }
 
 

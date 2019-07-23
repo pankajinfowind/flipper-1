@@ -79,7 +79,7 @@ export class BootstrapperSetUp {
           },
           error => {
             this.modelSetUpService.update({ loading: false });
-            console.log("bootstrap error", error);
+           // console.log("bootstrap error", error);
             reject();
           }
         );

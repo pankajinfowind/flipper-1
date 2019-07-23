@@ -40,7 +40,6 @@ constructor(private api:ApiStockService,private modal: Modal) {}
 
 
   ngOnInit() {
-    this.entries$.subscribe(e=>console.log(e));
 }
 
 

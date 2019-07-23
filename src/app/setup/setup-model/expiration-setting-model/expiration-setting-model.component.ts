@@ -64,7 +64,6 @@ export class ExpirationSettingModelComponent implements OnInit {
 
 
   ngOnInit() {
-    this.business = this.currentUser.get('business')[0];
     this.setup$ = this.setupModelService.setup$;
     this.details$ = this.detailsService.details$;
 
@@ -73,7 +72,6 @@ export class ExpirationSettingModelComponent implements OnInit {
 
 autoChange(event){
   const inputed_value=event.target.value;
-  console.log(inputed_value);
   if(!this.expirationSettingForm.get('name').valid){
     this.expirationSettingForm.get('name').setValue(inputed_value);
   }

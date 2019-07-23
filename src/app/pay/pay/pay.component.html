@@ -23,7 +23,7 @@
                <span class="currency">{{currentUser.getBusiness('currency_code')}}
                   <mat-form-field   appearance="outline">
                       <mat-label>Amount Paid</mat-label>
-                      <input  matInput placeholder="Amount Paid" (input)="displayBalanceChangesDue()" (onEnter)="displayBalanceChangesDue()" (click)="setInputToNull()" (mouseleave)="setInputToValueble()" (blur)="setInputToValueble()" autofocus  type="number" [(ngModel)]="numeric_selector" #ctrl="ngModel"  required>
+                      <input  matInput placeholder="Amount Paid" (input)="displayBalanceChangesDue()" (click)="$event.target.select()" (onEnter)="displayBalanceChangesDue()"  (mouseleave)="setInputToValueble()" (blur)="setInputToValueble()" autofocus  type="number" [(ngModel)]="numeric_selector" #ctrl="ngModel"  required>
                       </mat-form-field>
                     </span>
               </div>

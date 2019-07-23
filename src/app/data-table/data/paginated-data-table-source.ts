@@ -142,7 +142,7 @@ export class PaginatedDataTableSource<T> extends DataTableSource<T> {
 
         delete params['length'];
         delete params['previousPageIndex'];
-        console.log(params);
+       // console.log(params);
         return params;
     }
 

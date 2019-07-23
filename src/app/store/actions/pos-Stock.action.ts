@@ -1,4 +1,3 @@
-import { CategoriesApiIndexParams } from '../model/pos-category-state-model';
 import { Stock } from '../../stock/api/stock';
 import { StockApiIndexParams } from '../model/pos-stock-state-model';
 
@@ -30,7 +29,7 @@ export class OpenPosStock implements StockIdAction{
 
 
 export interface LoadStockEntriesAction {
-  queryParams?: CategoriesApiIndexParams;
+  queryParams?: StockApiIndexParams;
   stock?: Stock;
   loadMore?: boolean;
   type?:string;

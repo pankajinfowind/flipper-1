@@ -30,17 +30,15 @@ export class SessionsComponent {
       );
   }
   errorHandler(problem: string, prex: any): any {
-    console.log(prex);
-    // Raven.captureException(problem);
-    // Raven.showReportDialog();
+  
   }
   onCartItemAdded(item: Stock) {
     this.cart_items.push(item);
-    console.log(this.cart_items);
+   // console.log(this.cart_items);
   }
   saveInvoice() {
     if (this.cart_items.length > 0) {
-      console.log("submitting to api");
+   //   console.log("submitting to api");
       //TODO: make the values to be dynamic
       //TODO: make sure customer modules it also done no longer faking
       this.api
@@ -61,7 +59,7 @@ export class SessionsComponent {
           branch_id: "1"
         })
         .subscribe(invoice => {
-          console.log(invoice);
+          //console.log(invoice);
         });
     } else {
       //nothing in shopping cart

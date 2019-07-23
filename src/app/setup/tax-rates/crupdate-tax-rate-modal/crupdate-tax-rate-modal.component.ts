@@ -41,7 +41,7 @@ export class CrupdateTaxRateModalComponent implements OnInit {
     }
 
     ngOnInit() {
-      console.log(this.data.taxrate);
+    
         this.resetState();
         if (this.data.taxrate) {
             this.updating = true;

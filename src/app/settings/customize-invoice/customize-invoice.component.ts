@@ -76,7 +76,6 @@ this.router.navigate(["/admin/settings/new-customize-invoice"]);
      * or for creating a new user otherwise.
      */
     public showCrupdateCustomizeInvoiceModal(customize?: CustomizeInvoice) {
-      console.log(customize);
       // this.modal.open(
       //   CrupdateCategoryModalComponent,
       //     {customize},

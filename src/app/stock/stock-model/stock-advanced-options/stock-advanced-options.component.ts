@@ -248,8 +248,6 @@ export class StockAdvancedOptionsComponent implements OnInit, OnChanges {
   updateMinValue(event) {
 
     this.min_stock_value_valid_value = this.stockFormGroup.value.max_stock;
-    // console.log(this.min_stock_value_valid_value);
-    // this.stockFormGroup.get("max_stock").
     this.stockFormGroup.value.min_stock.max(this.min_stock_value_valid_value);
   }
   edit(element) {

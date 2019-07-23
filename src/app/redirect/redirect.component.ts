@@ -3,7 +3,6 @@ import { CurrentUser } from '../common/auth/current-user';
 import { Router } from '@angular/router';
 import { GlobalVariables } from '../common/core/global-variables';
 import { Modal } from '../common/core/ui/dialogs/modal.service';
-import { SwitchBranchModelComponent } from '../common/core/ui/switch-branch/switch-branch-model/switch-branch-model.component';
 
 @Component({
   selector: 'app-redirect',
@@ -22,7 +21,6 @@ export class RedirectComponent implements OnInit {
   }
 
   goTo(){
-    console.log(this.auth.hasBusiness);
     if (this.auth.hasBusiness) {
         if(this.auth.isAdmin()){
           this.v.webTitle('Admin');
@@ -48,7 +46,6 @@ export class RedirectComponent implements OnInit {
 
     }else{
       this.v.webTitle('Create Business/Company');
-      console.log(this.auth.hasBusiness);
       return this.router.navigate(["/customer"]);
     }
 

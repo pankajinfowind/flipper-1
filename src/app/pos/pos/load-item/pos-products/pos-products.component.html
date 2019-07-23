@@ -9,8 +9,8 @@
     <mat-card>
 
  <mat-card-header>
-    <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + bg_img + ')'}" style="width:40px; height: 40px;
-  border-radius: 50%; border:1px solid #ccc;background-size: cover;"></div>
+    <img mat-card-avatar [src]="bg_img"  style="width:40px; height: 40px;
+  border-radius: 50%; border:1px solid #ccc;" />
       <mat-card-title class="ellipsis"><span class="ellipsis" matTooltip="{{stock.name}}"
             [matTooltipPosition]="'left'" style="font-size:12px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{stock.name}}</span>
       </mat-card-title>

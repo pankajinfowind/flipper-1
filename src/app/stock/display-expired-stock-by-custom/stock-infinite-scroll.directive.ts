@@ -27,14 +27,12 @@ export class StockInfiniteScrollDirective extends InfiniteScroll {
   }
 
   protected isLoading(): boolean {
-    console.log('loading ...');
       return this.store.selectSnapshot(PosStockExpiredStates.loading);
 
 
   }
 
   protected canLoadMore(): boolean {
-    console.log('can load more');
       return this.store.selectSnapshot(PosStockExpiredStates.canLoadMoreEntries);
 
   }

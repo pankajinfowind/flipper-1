@@ -18,14 +18,14 @@
                   (click)="loadItemsOfCategory(category)" class="mt-2 mb-1">
     <mat-card  [style.color]="'#ffff'" [style.background-color]="category.color">
     
-  <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + bg_img + ')'}" style="width:60px;
+  <img mat-card-avatar [src]="bg_img" style="width:60px;
   position: absolute;
     top: 40%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
   height: 60px;
-  border-radius: 50%; border:1px solid #fff; background-size: cover; background-position: center center; "></div>
+  border-radius: 50%; border:1px solid #fff; " />
      <br /><br /><br />
       <mat-card-footer class="ellipsis text-center"><span class="text-center" style="font-size:14px;text-align:center; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" matTooltip="{{category.name}}"
                     [matTooltipPosition]="'left'">{{category.name}}</span>

@@ -36,7 +36,6 @@ export class UpdateStockModelComponent implements OnInit {
   // action:any;
   constructor(private toast: Toast,private modal: Modal,private api:ApiStockService,public dialogRef: MatDialogRef<UpdateStockModelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ModalData) {
-      console.log(this.data);
       this.stock=this.data.stock['stock'];
    }
    close(data?): void {

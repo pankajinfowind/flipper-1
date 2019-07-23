@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
+import { Component, OnInit, Inject, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
 import {
   trigger,
@@ -8,7 +8,7 @@ import {
   animate
 } from "@angular/animations";
 import { OrderItems } from "../cart/order_items";
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocompleteSelectedEvent } from "@angular/material";
 import { Customer } from "../../customers/customer";
 import { Orders } from '../../orders/orders';
 import { CurrentUser } from '../../common/auth/current-user';
@@ -39,7 +39,6 @@ export class CartDialog implements OnInit {
   color: string='green';
   default_qty:number=0;
   default_price:number=0;
-
   constructor(
     public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
@@ -49,7 +48,8 @@ export class CartDialog implements OnInit {
             this.cart_item = _data.data as OrderItems;
             this.status = this.data.status;
   }
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 updateInput(value){
 if(this.status=='Quantity'){
@@ -72,7 +72,11 @@ if(this.status=='Note'){
   close(): void {
     this.dialogRef.close();
   }
+
+ 
 }
+
+
 
 @Component({
   selector: "app-cart-item",

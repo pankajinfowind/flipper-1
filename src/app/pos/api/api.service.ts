@@ -29,7 +29,8 @@ export class ApiPosService {
     }
 
     public getCategoriesEntries(params: CategoriesApiIndexParams = {}): Observable<CategoriesEntriesPaginationResponse> {
-      return this.http.get('category', params);
+      params.branch_id=parseInt(this.localStorage.get('active_branch'));
+      return this.http.get('stock-categories', params);
     }
 
     public getMostSoldStockEntries(params: StockApiIndexParams = {}): Observable<StockEntriesPaginationResponse> {

@@ -16,7 +16,7 @@ import { CurrentUser } from '../../../../common/auth/current-user';
 import { BottomSheetOverviewStock } from '../../boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
 import { MatBottomSheet, MatDialog } from '@angular/material';
 import { OrderItems } from '../../../cart/order_items';
-import { finalize, take } from 'rxjs/operators';
+import {  take } from 'rxjs/operators';
 import { ApiPosService } from '../../../api/api.service';
 import { Customer } from '../../../../customers/customer';
 
@@ -54,11 +54,12 @@ export class PosProductsComponent implements OnInit {
   current_order:Orders=null;
   selectedItem=null;
   customer:Customer=null;
-  bg_img: string=null;
+  bg_img: any=null;
 
   constructor( public dialog: MatDialog,private api: ApiPosService,private bottomSheet: MatBottomSheet,public currentUser: CurrentUser,private store:Store, private route:ActivatedRoute,private localStorage: LocalStorage) {
     this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?this.localStorage.drug_item:this.localStorage.any_item;
   }
+ 
 
   ngOnInit() {
       //pos-categoryId

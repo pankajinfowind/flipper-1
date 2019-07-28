@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:enexus/lib/bloc/provider.dart';
+import 'package:enexus/bloc/provider.dart';
 import 'package:enexus/model/food_item.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -24,7 +24,6 @@ class CartListBloc extends BlocBase {
 
   removeFromList(FoodItem foodItem) {
     listSink.add(provider.removeFromList(foodItem));
-    
   }
 
 //dispose will be called automatically by closing its streams

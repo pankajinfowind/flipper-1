@@ -1,8 +1,9 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'lib/bloc/cartlistBloc.dart';
-import 'lib/bloc/listTileColorBloc.dart';
-import 'lib/cart.dart';
+
+import 'bloc/cartlistBloc.dart';
+import 'bloc/listTileColorBloc.dart';
+import 'cart.dart';
 import 'model/food_item.dart';
 
 

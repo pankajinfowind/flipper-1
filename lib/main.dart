@@ -1,7 +1,8 @@
+import 'package:enexus/categories_page.dart' as categories;
 import 'package:enexus/data/moor_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moor_flutter/moor_flutter.dart' as v;
+//import 'package:moor_flutter/moor_flutter.dart' as v;
 import 'package:provider/provider.dart';
 import 'data/moor_database.dart';
 
@@ -80,21 +81,21 @@ class _Login extends StatelessWidget {
     //check if we are logged in
     //is the user login in then go to next page or show login error
     //insert data in database and log the response
-    final dao = Provider.of<UserDao>(context);
-    final user = UserCompanion(
-      id: v.Value(1),
-      username: v.Value("richie"),
-      email: v.Value("b@gmail.com"),
-      avatar: v.Value("http"),
-    );
-    dao.insertUser(user);
+//    final dao = Provider.of<UserDao>(context);
+//    final user = UserCompanion(
+//      id: v.Value(1),
+//      username: v.Value("richie"),
+//      email: v.Value("b@gmail.com"),
+//      avatar: v.Value("http"),
+//    );
+//    dao.insertUser(user);
 
     //select users
 //    print(dao.watchUsers());
 
-//    Navigator.push(
-//      context,
-//      MaterialPageRoute(builder: (context) => categories.CategoriesPage()),
-//    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => categories.CategoriesPage()),
+    );
   }
 }

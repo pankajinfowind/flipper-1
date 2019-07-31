@@ -6,7 +6,6 @@ import 'bloc/listTileColorBloc.dart';
 import 'cart.dart';
 import 'model/food_item.dart';
 
-
 class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,55 +33,32 @@ class Home extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             FirstHalf(),
-            SizedBox(height: 45),
-            for (var foodItem in fooditemList.foodItems)
-              Builder(
-                builder: (context) {
-                  return ItemContainer(foodItem: foodItem);
-                },
-              )
+            //grid view here.
+            Container(
+              child: CustomScrollView(
+                primary: false,
+                slivers: <Widget>[
+                  SliverPadding(
+                    padding: const EdgeInsets.all(20.0),
+                    sliver: SliverGrid.count(
+                      crossAxisSpacing: 10.0,
+                      crossAxisCount: 2,
+                      children: <Widget>[
+                        const Text('He\'d have you all unravel at the'),
+                        const Text('Heed not the rabble'),
+                        const Text('Sound of screams but the'),
+                        const Text('Who scream'),
+                        const Text('Revolution is coming...'),
+                        const Text('Revolution, they...'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       )),
-    );
-  }
-}
-
-class ItemContainer extends StatelessWidget {
-  ItemContainer({
-    @required this.foodItem,
-  });
-
-  final FoodItem foodItem;
-  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-
-  addToCart(FoodItem foodItem) {
-    bloc.addToList(foodItem);
-  }
-
-  removeFromList(FoodItem foodItem) {
-    bloc.removeFromList(foodItem);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        addToCart(foodItem);
-        final snackBar = SnackBar(
-          content: Text('${foodItem.title} added to Cart Here is clicked'),
-          duration: Duration(milliseconds: 550),
-        );
-
-        Scaffold.of(context).showSnackBar(snackBar);
-      },
-      child: Items(
-        hotel: foodItem.hotel,
-        itemName: foodItem.title,
-        itemPrice: foodItem.price,
-        imgUrl: foodItem.imgUrl,
-        leftAligned: (foodItem.id % 2) == 0 ? true : false,
-      ),
     );
   }
 }

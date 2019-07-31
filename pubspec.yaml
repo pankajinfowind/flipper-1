@@ -26,7 +26,7 @@ dependencies:
     # For the UI
   provider: ^3.0.0+1
   flutter_slidable: ^0.5.3
-  flutter_material_color_picker: ^1.0.0
+  flutter_material_color_picker: ^1.0.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -34,7 +34,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  moor_generator: ^1.6.0
+  moor_generator: ^1.6.0+2
   build_runner:
 
 

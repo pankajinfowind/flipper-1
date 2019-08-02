@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:enexus/categories_page.dart' as categories;
 import 'package:enexus/data/moor_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //import 'package:moor_flutter/moor_flutter.dart' as v;
 import 'package:provider/provider.dart';
 import 'data/moor_database.dart';
 
-void main() => runApp(Login());
+void main() {
+  _setTargetPlatformForDesktop();
+  runApp(Login());
+}
 
 class Login extends StatelessWidget {
   @override
@@ -16,13 +22,25 @@ class Login extends StatelessWidget {
       providers: [
         Provider(builder: (_) => db.userDao),
       ],
-      child: CupertinoApp(
+      child: MaterialApp(
         color: Colors.white,
         title: "Login",
         home: _Login(),
         debugShowCheckedModeBanner: false,
       ),
     );
+  }
+}
+
+void _setTargetPlatformForDesktop() {
+  TargetPlatform targetPlatform;
+  if (Platform.isMacOS) {
+    targetPlatform = TargetPlatform.iOS;
+  } else if (Platform.isLinux || Platform.isWindows) {
+    targetPlatform = TargetPlatform.android;
+  }
+  if (targetPlatform != null) {
+    debugDefaultTargetPlatformOverride = targetPlatform;
   }
 }
 

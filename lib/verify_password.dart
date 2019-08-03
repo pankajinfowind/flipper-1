@@ -1,20 +1,12 @@
-import 'dart:io';
-
+import 'package:enexus/categories_page.dart' as categories;
 import 'package:enexus/data/moor_database.dart';
-import 'package:enexus/verify_password.dart';
+import 'package:enexus/main.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:moor_flutter/moor_flutter.dart' as v;
 import 'package:provider/provider.dart';
 import 'data/moor_database.dart';
 
-void main() {
-  _setTargetPlatformForDesktop();
-  runApp(Login());
-}
-
-class Login extends StatelessWidget {
+class VerifyPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = Database();
@@ -29,18 +21,6 @@ class Login extends StatelessWidget {
         debugShowCheckedModeBanner: false,
       ),
     );
-  }
-}
-
-void _setTargetPlatformForDesktop() {
-  TargetPlatform targetPlatform;
-  if (Platform.isMacOS) {
-    targetPlatform = TargetPlatform.iOS;
-  } else if (Platform.isLinux || Platform.isWindows) {
-    targetPlatform = TargetPlatform.android;
-  }
-  if (targetPlatform != null) {
-    debugDefaultTargetPlatformOverride = targetPlatform;
   }
 }
 
@@ -61,18 +41,19 @@ class _Login extends StatelessWidget {
               ],
             ),
             SizedBox(height: 90.0),
+            SizedBox(height: 12.0),
             TextField(
               decoration: InputDecoration(
-                  labelText: 'username or email',
+                  labelText: 'password',
                   filled: true,
                   border: OutlineInputBorder()),
+              obscureText: true,
             ),
-            SizedBox(height: 12.0),
             Stack(
               children: <Widget>[
                 FlatButton(
-                  child: Text("Cancel"),
-                  onPressed: () {},
+                  child: Text("Back"),
+                  onPressed: () => goBack(context),
                 ),
                 Positioned(
                   left: 200,
@@ -85,7 +66,7 @@ class _Login extends StatelessWidget {
                       ],
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(0.0)),
-                    onPressed: () => goVerifyPassword(context),
+                    onPressed: () => goToProductsPages(context),
                   ),
                 ),
               ],
@@ -97,23 +78,17 @@ class _Login extends StatelessWidget {
   }
 
   //functions
-  void goVerifyPassword(context) {
-    //check if we are logged in
-    //is the user login in then go to next page or show login error
-    //insert data in database and log the response
-//    final dao = Provider.of<UserDao>(context);
-//    final user = UserCompanion(
-//      id: v.Value(1),
-//      username: v.Value("richie"),
-//      email: v.Value("b@gmail.com"),
-//      avatar: v.Value("http"),
-//    );
-//    dao.insertUser(user);
-//    print(dao.watchUsers());
-
+  void goToProductsPages(context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => VerifyPassword()),
+      MaterialPageRoute(builder: (context) => categories.CategoriesPage()),
+    );
+  }
+
+  void goBack(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
     );
   }
 }

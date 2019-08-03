@@ -41,7 +41,24 @@ class _Login extends StatelessWidget {
               ],
             ),
             SizedBox(height: 90.0),
-            SizedBox(height: 12.0),
+//            show profile pic of identified user.
+            Container(
+              child: Center(
+                child: ActionChip(
+                    avatar: CircleAvatar(
+//                      backgroundColor: Colors.white,
+                      child: Image.asset("assets/cm0.jpeg"),
+                    ),
+                    backgroundColor: Colors.white,
+                    labelStyle: TextStyle(
+                        color: Color(0xff000000),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold),
+                    label: Text('beastar457@gmail.com'),
+                    onPressed: () {}),
+              ),
+            ),
+            SizedBox(height: 40.0),
             TextField(
               decoration: InputDecoration(
                   labelText: 'password',

@@ -17,7 +17,7 @@ class _Home extends StatelessWidget {
     // TODO: implement build
     return Container(
       color: Colors.white,
-      child: Text("we got here"),
+      child: Text("I am desktop sir"),
     );
   }
 }

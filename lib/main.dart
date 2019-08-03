@@ -52,14 +52,15 @@ class _Login extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
-            SizedBox(height: 20.0),
-            Column(
+            SizedBox(height: 220.0),
+            Stack(
               children: <Widget>[
-                Image.asset('assets/cm1.jpeg'),
-                SizedBox(height: 20.0)
+                Positioned(
+                  child: Image.asset('assets/logo.png'),
+                ),
               ],
             ),
-            SizedBox(height: 120.0),
+            SizedBox(height: 90.0),
             TextField(
               decoration: InputDecoration(
                   labelText: 'username',
@@ -74,17 +75,25 @@ class _Login extends StatelessWidget {
                   border: OutlineInputBorder()),
               obscureText: true,
             ),
-            ButtonBar(
+            Stack(
               children: <Widget>[
                 FlatButton(
                   child: Text("Cancel"),
                   onPressed: () {},
                 ),
-                RaisedButton(
-                  color: Colors.blueAccent,
-                  textColor: Colors.white,
-                  child: Text("Next"),
-                  onPressed: () => goToProductsPages(context),
+                Positioned(
+                  left: 200,
+                  top: 8,
+                  child: CupertinoButton(
+                    color: Colors.blueAccent,
+                    child: Stack(
+                      children: <Widget>[
+                        Text("Next"),
+                      ],
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(0.0)),
+                    onPressed: () => goToProductsPages(context),
+                  ),
                 ),
               ],
             )

@@ -24,6 +24,9 @@ class Login extends StatelessWidget {
       ],
       child: MaterialApp(
         color: Colors.white,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
         title: "Login",
         home: _Login(),
         debugShowCheckedModeBanner: false,
@@ -63,9 +66,10 @@ class _Login extends StatelessWidget {
             SizedBox(height: 90.0),
             TextField(
               decoration: InputDecoration(
-                  labelText: 'username or email',
-                  filled: true,
-                  border: OutlineInputBorder()),
+                labelText: 'username or email',
+                filled: true,
+                border: OutlineInputBorder(),
+              ),
             ),
             SizedBox(height: 12.0),
             Stack(
@@ -76,7 +80,6 @@ class _Login extends StatelessWidget {
                 ),
                 Positioned(
                   left: 200,
-                  top: 8,
                   child: CupertinoButton(
                     color: Colors.blueAccent,
                     child: Stack(
@@ -84,7 +87,7 @@ class _Login extends StatelessWidget {
                         Text("Next"),
                       ],
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(0.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                     onPressed: () => goVerifyPassword(context),
                   ),
                 ),

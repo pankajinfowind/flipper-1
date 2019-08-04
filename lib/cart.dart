@@ -4,9 +4,8 @@ import 'package:enexus/model/food_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'bloc/cartlistBloc.dart';
-import 'bloc/listTileColorBloc.dart';
-
+import 'blocs/cartlistBloc.dart';
+import 'blocs/listTileColorBloc.dart';
 
 class Cart extends StatelessWidget {
   @override
@@ -290,13 +289,14 @@ class CartListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LongPressDraggable(
-      hapticFeedbackOnStart: false,      
+      hapticFeedbackOnStart: false,
       maxSimultaneousDrags: 1,
       data: foodItem,
       feedback: DraggableChildFeedback(foodItem: foodItem),
       child: DraggableChild(foodItem: foodItem),
-      childWhenDragging: foodItem.quantity > 1 ? DraggableChild(foodItem: foodItem) : Container(),
-      
+      childWhenDragging: foodItem.quantity > 1
+          ? DraggableChild(foodItem: foodItem)
+          : Container(),
     );
   }
 }
@@ -385,9 +385,7 @@ class ItemContent extends StatelessWidget {
                     color: Colors.black,
                     fontWeight: FontWeight.w700),
                 children: [
-                  TextSpan(
-                    text: foodItem.quantity.toString()
-                    ),
+                  TextSpan(text: foodItem.quantity.toString()),
                   TextSpan(text: " x "),
                   TextSpan(
                     text: foodItem.title,
@@ -459,7 +457,6 @@ class _DragTargetWidgetState extends State<DragTargetWidget> {
       onLeave: (FoodItem foodItem) {
         colorBloc.setColor(Colors.white);
       },
-      
       builder: (BuildContext context, List incoming, List rejected) {
         return Padding(
           padding: const EdgeInsets.all(5.0),

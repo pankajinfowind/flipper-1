@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:enexus/bloc/provider.dart';
+import 'package:enexus/blocs/provider.dart';
 import 'package:enexus/model/food_item.dart';
 import 'package:rxdart/rxdart.dart';
 

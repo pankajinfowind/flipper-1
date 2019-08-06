@@ -5,8 +5,10 @@ import 'package:meta/meta.dart';
 abstract class LoginEvent extends Equatable {
   LoginEvent([List props = const []]) : super(props);
 }
-class GetLogin extends LoginEvent{
-  final String username;
 
-  GetLogin(this.username): super([username]);
+class GetLogin extends LoginEvent {
+  final String username;
+  final String password;
+
+  GetLogin(this.username, this.password) : super([username, password]);
 }

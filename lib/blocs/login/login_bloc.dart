@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:enexus/data/rest.dart';
 import './bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  RestDatasource api = new RestDatasource();
   @override
   LoginState get initialState => InitialLoginState();
 
@@ -10,6 +12,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    // TODO: Add Logic
+    if (event is GetLogin) {
+      yield IsLoggingState();
+      final login = await api.login(event.username, event.password);
+      yield LoggedInState(login);
+    }
   }
 }

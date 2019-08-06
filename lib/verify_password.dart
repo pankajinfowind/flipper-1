@@ -1,6 +1,7 @@
 import 'package:enexus/categories_page.dart' as categories;
 import 'package:enexus/data/moor_database.dart';
-import 'package:enexus/main.dart';
+import 'package:enexus/widgets/login.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

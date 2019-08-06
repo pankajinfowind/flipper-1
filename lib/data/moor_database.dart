@@ -9,6 +9,11 @@ class Categories extends Table {
   TextColumn get description => text().nullable()();
 }
 
+class Token extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get token => text()();
+}
+
 class User extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get username => text().withLength(max: 16)();
@@ -16,7 +21,7 @@ class User extends Table {
   TextColumn get avatar => text().nullable()();
 }
 
-@UseMoor(tables: [Categories, User], daos: [UserDao])
+@UseMoor(tables: [Categories, User, Token], daos: [UserDao, TokenDao])
 class Database extends _$Database {
   Database()
       : super(FlutterQueryExecutor.inDatabaseFolder(
@@ -28,10 +33,10 @@ class Database extends _$Database {
   MigrationStrategy get migration {
     return MigrationStrategy(
       beforeOpen: (engine, details) async {
-        // populate data
-        await engine
-            .into(categories)
-            .insert(const CategoriesCompanion(description: Value('Sweets')));
+        // populate data example
+//        await engine
+//            .into(categories)
+//            .insert(const CategoriesCompanion(description: Value('Sweets')));
       },
     );
   }
@@ -46,4 +51,19 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
   Future insertUser(Insertable<UserData> user) => into(db.user).insert(user);
 
   Stream<List<UserData>> watchUsers() => select(db.user).watch();
+}
+
+@UseDao(tables: [Token])
+class TokenDao extends DatabaseAccessor<Database> with _$TokenDaoMixin {
+  final Database db;
+  TokenDao(this.db) : super(db);
+  Future insertToken(Insertable<TokenData> token) =>
+      into(db.token).insert(token);
+
+  Future<List<TokenData>> getToken() {
+    // print(t);
+//    return (select(db.token)..where((token) => token.token.equals(t)))
+//        .getSingle();
+    return (select(db.token)).get();
+  }
 }

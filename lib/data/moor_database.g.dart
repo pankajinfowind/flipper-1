@@ -376,16 +376,166 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
   }
 }
 
+class TokenData extends DataClass implements Insertable<TokenData> {
+  final int id;
+  final String token;
+  TokenData({@required this.id, @required this.token});
+  factory TokenData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return TokenData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      token:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}token']),
+    );
+  }
+  factory TokenData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return TokenData(
+      id: serializer.fromJson<int>(json['id']),
+      token: serializer.fromJson<String>(json['token']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return {
+      'id': serializer.toJson<int>(id),
+      'token': serializer.toJson<String>(token),
+    };
+  }
+
+  @override
+  T createCompanion<T extends UpdateCompanion<TokenData>>(bool nullToAbsent) {
+    return TokenCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      token:
+          token == null && nullToAbsent ? const Value.absent() : Value(token),
+    ) as T;
+  }
+
+  TokenData copyWith({int id, String token}) => TokenData(
+        id: id ?? this.id,
+        token: token ?? this.token,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TokenData(')
+          ..write('id: $id, ')
+          ..write('token: $token')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc($mrjc(0, id.hashCode), token.hashCode));
+  @override
+  bool operator ==(other) =>
+      identical(this, other) ||
+      (other is TokenData && other.id == id && other.token == token);
+}
+
+class TokenCompanion extends UpdateCompanion<TokenData> {
+  final Value<int> id;
+  final Value<String> token;
+  const TokenCompanion({
+    this.id = const Value.absent(),
+    this.token = const Value.absent(),
+  });
+}
+
+class $TokenTable extends Token with TableInfo<$TokenTable, TokenData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $TokenTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false, hasAutoIncrement: true);
+  }
+
+  final VerificationMeta _tokenMeta = const VerificationMeta('token');
+  GeneratedTextColumn _token;
+  @override
+  GeneratedTextColumn get token => _token ??= _constructToken();
+  GeneratedTextColumn _constructToken() {
+    return GeneratedTextColumn(
+      'token',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, token];
+  @override
+  $TokenTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'token';
+  @override
+  final String actualTableName = 'token';
+  @override
+  VerificationContext validateIntegrity(TokenCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.token.present) {
+      context.handle(
+          _tokenMeta, token.isAcceptableValue(d.token.value, _tokenMeta));
+    } else if (token.isRequired && isInserting) {
+      context.missing(_tokenMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TokenData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return TokenData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(TokenCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.token.present) {
+      map['token'] = Variable<String, StringType>(d.token.value);
+    }
+    return map;
+  }
+
+  @override
+  $TokenTable createAlias(String alias) {
+    return $TokenTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(const SqlTypeSystem.withDefaults(), e);
   $CategoriesTable _categories;
   $CategoriesTable get categories => _categories ??= $CategoriesTable(this);
   $UserTable _user;
   $UserTable get user => _user ??= $UserTable(this);
+  $TokenTable _token;
+  $TokenTable get token => _token ??= $TokenTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
+  TokenDao _tokenDao;
+  TokenDao get tokenDao => _tokenDao ??= TokenDao(this as Database);
   @override
-  List<TableInfo> get allTables => [categories, user];
+  List<TableInfo> get allTables => [categories, user, token];
 }
 
 // **************************************************************************
@@ -394,4 +544,8 @@ abstract class _$Database extends GeneratedDatabase {
 
 mixin _$UserDaoMixin on DatabaseAccessor<Database> {
   $UserTable get user => db.user;
+}
+
+mixin _$TokenDaoMixin on DatabaseAccessor<Database> {
+  $TokenTable get token => db.token;
 }

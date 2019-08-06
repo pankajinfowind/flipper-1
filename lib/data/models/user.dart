@@ -1,21 +1,18 @@
 class User {
   //check if this model is full
-  String _username;
-  String _password;
-  User(this._username, this._password);
+  // ignore: non_constant_identifier_names
+  String _access_token;
+  User(this._access_token);
 
   User.map(dynamic obj) {
-    this._username = obj["username"];
-    this._password = obj["password"];
+    this._access_token = obj["access_token"];
   }
 
-  String get username => _username;
-  String get password => _password;
+  String get token => _access_token;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    map["username"] = _username;
-    map["password"] = _password;
+    map["access_token"] = _access_token;
 
     return map;
   }

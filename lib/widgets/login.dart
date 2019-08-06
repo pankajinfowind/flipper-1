@@ -29,7 +29,12 @@ class LoginUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dao = Provider.of<TokenDao>(context);
-
+    Future<List<TokenData>> tokenExist = dao.getToken();
+    tokenExist.then((onData) {
+      if (onData.length > 1) {
+        goHome(context);
+      }
+    });
     return SafeArea(
       child: BlocListener(
           bloc: BlocProvider.of<LoginBloc>(context),
@@ -46,9 +51,8 @@ class LoginUi extends StatelessWidget {
                 token: v.Value(state.loginData.token),
               );
 
-              Future<List<TokenData>> tokenExist = dao.getToken();
               dao.insertToken(token);
-
+              Future<List<TokenData>> tokenExist = dao.getToken();
               tokenExist.then((onData) {
                 if (onData.length > 1) {
                   goHome(context);

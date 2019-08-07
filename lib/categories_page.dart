@@ -1,6 +1,9 @@
-import 'package:enexus/products/products.dart';
+import 'package:enexus/screens/chats.dart';
+import 'package:enexus/screens/friends.dart';
+import 'package:enexus/screens/home.dart';
+import 'package:enexus/screens/notifications.dart';
+import 'package:enexus/screens/profile.dart';
 import 'package:enexus/widgets/icon_badge.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesPage extends StatefulWidget {
@@ -10,26 +13,35 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
   PageController _pageController;
-  int _page = 0;
+  int _page = 2;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
-//        onPageChanged: onPageChanged,
-        children: <Widget>[Products()],
+        onPageChanged: onPageChanged,
+        children: <Widget>[
+          Chats(),
+          Friends(),
+          Home(),
+          Notifications(),
+          Profile(),
+        ],
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           // sets the background color of the `BottomNavigationBar`
-          canvasColor: Colors.white,
+          canvasColor: Theme.of(context).primaryColor,
           // sets the active color of the `BottomNavigationBar` if `Brightness` is light
-          primaryColor: Colors.white,
+          primaryColor: Theme.of(context).accentColor,
           textTheme: Theme.of(context).textTheme.copyWith(
                 caption: TextStyle(color: Colors.grey[500]),
               ),
         ),
         child: BottomNavigationBar(
+          backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(

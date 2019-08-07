@@ -4,6 +4,7 @@
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
+
 project 'Runner', {
   'Debug' => :debug,
   'Profile' => :release,
@@ -34,6 +35,9 @@ end
 
 target 'Runner' do
   use_frameworks!
+
+  #my pod installed dependencies not flutter generated one.
+#  pod 'RealmSwift'
 
   # Prepare symlinks folder. We use symlinks to avoid having Podfile.lock
   # referring to absolute paths on developers' machines.

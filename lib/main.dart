@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'categories_page.dart';
+
 void main() {
   _setTargetPlatformForDesktop();
   runApp(App());
@@ -25,7 +27,9 @@ class App extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         title: "Login",
-        home: Login(),
+//        home: Login(),
+        home:
+            CategoriesPage(), //FIXME will keep login this is just for me to not hit login on each app restart
         debugShowCheckedModeBanner: false,
       ),
     );

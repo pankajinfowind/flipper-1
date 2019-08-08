@@ -159,41 +159,26 @@ class FirstHalf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(35, 25, 0, 0),
+      padding: const EdgeInsets.fromLTRB(15, 25, 10, 0),
       child: Column(
         children: <Widget>[
           searchBar(),
-          SizedBox(height: 5),
         ],
       ),
     );
   }
 
   Widget searchBar() {
-    return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Icon(
-            Icons.search,
-            color: Colors.black45,
+    return Container(
+      child: TextField(
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: "Search....",
+          contentPadding: EdgeInsets.symmetric(vertical: 15),
+          hintStyle: TextStyle(
+            color: Colors.black87,
           ),
-          SizedBox(width: 20),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search....",
-                contentPadding: EdgeInsets.symmetric(vertical: 10),
-                hintStyle: TextStyle(
-                  color: Colors.black87,
-                ),
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

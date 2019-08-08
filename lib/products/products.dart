@@ -76,17 +76,19 @@ class _ProductsState extends State<Products>
                 children: <Widget>[
                   Row(
                     children: <Widget>[
+                      SizedBox(width: 10),
                       CircleAvatar(
                         backgroundImage: AssetImage(
                           "assets/cm2.jpeg",
                         ),
-                        radius: 50,
+                        radius: 25,
                       ),
+                      SizedBox(width: 10),
                       CircleAvatar(
                         backgroundImage: AssetImage(
                           "assets/cm2.jpeg",
                         ),
-                        radius: 50,
+                        radius: 25,
                       ),
                     ],
                   )

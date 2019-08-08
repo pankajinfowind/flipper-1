@@ -78,7 +78,7 @@ class _ProductsState extends State<Products>
                   Row(
                     children: <Widget>[
                       SizedBox(width: 10),
-                      BadgeImage(
+                      BadgeCircleImage(
                         image: "assets/cm5.jpeg",
                         notificationCount: 2,
                       ),

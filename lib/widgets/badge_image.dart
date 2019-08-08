@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class BadgeImage extends StatefulWidget {
+class BadgeCircleImage extends StatefulWidget {
   final String image;
   final double size;
   final Color color;
   int notificationCount;
 
-  BadgeImage(
+  BadgeCircleImage(
       {Key key,
       @required this.image,
       this.notificationCount = 16,
@@ -16,10 +16,10 @@ class BadgeImage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _BadgeImageState createState() => _BadgeImageState();
+  _BadgeCircleImageState createState() => _BadgeCircleImageState();
 }
 
-class _BadgeImageState extends State<BadgeImage> {
+class _BadgeCircleImageState extends State<BadgeCircleImage> {
   int counter = 0;
 
   @override
@@ -32,6 +32,7 @@ class _BadgeImageState extends State<BadgeImage> {
     return Stack(
       children: <Widget>[
         CircleAvatar(
+          //TODO: add ability for widget to use local assets or network image on demand.
           backgroundImage: AssetImage(
             widget.image,
           ),

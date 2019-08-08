@@ -173,7 +173,7 @@ class FirstHalf extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: "Search....",
+          labelText: "Search....",
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           hintStyle: TextStyle(
             color: Colors.black87,

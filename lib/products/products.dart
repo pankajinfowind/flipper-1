@@ -1,3 +1,4 @@
+import 'package:enexus/widgets/badge_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -76,6 +77,46 @@ class _ProductsState extends State<Products>
                 children: <Widget>[
                   Row(
                     children: <Widget>[
+                      SizedBox(width: 10),
+                      BadgeImage(
+                        image: "assets/cm5.jpeg",
+                        notificationCount: 2,
+                      ),
+                      SizedBox(width: 10),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          "assets/cm2.jpeg",
+                        ),
+                        radius: 25,
+                      ),
+                      SizedBox(width: 10),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          "assets/cm8.jpeg",
+                        ),
+                        radius: 25,
+                      ),
+                      SizedBox(width: 10),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          "assets/cm5.jpeg",
+                        ),
+                        radius: 25,
+                      ),
+                      SizedBox(width: 10),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          "assets/cm2.jpeg",
+                        ),
+                        radius: 25,
+                      ),
+                      SizedBox(width: 10),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          "assets/cm0.jpeg",
+                        ),
+                        radius: 25,
+                      ),
                       SizedBox(width: 10),
                       CircleAvatar(
                         backgroundImage: AssetImage(

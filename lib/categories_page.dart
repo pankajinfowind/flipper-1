@@ -1,3 +1,4 @@
+import 'package:enexus/products/products.dart';
 import 'package:enexus/screens/chats.dart';
 import 'package:enexus/screens/friends.dart';
 import 'package:enexus/screens/home.dart';
@@ -25,7 +26,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         children: <Widget>[
           Chats(),
           Friends(),
-          Home(),
+          Products(),
           Notifications(),
           Profile(),
         ],

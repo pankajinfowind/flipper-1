@@ -67,14 +67,29 @@ class _ProductsState extends State<Products>
         child: ListView(
           children: <Widget>[
             FirstHalf(),
-            //for images circle
+            //List waiting clients in your shop, or normal friends to chat with!.
             Container(
-              height: 30,
+              height: 105,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 children: <Widget>[
-                  Text("I am shrinked"),
+                  Row(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          "assets/cm2.jpeg",
+                        ),
+                        radius: 50,
+                      ),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          "assets/cm2.jpeg",
+                        ),
+                        radius: 50,
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

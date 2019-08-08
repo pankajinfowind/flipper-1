@@ -60,20 +60,23 @@ class _ProductsState extends State<Products>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-//        ListView(
-//          children: <Widget>[
-//            FirstHalf(),
-//            SizedBox(height: 45),
-//          ],
-//        )
       body: GestureDetector(
         onTap: () {
           print("hahahah");
         },
         child: ListView(
           children: <Widget>[
-            Row(
-              children: <Widget>[Text("I am here")],
+            FirstHalf(),
+            //for images circle
+            Container(
+              height: 30,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: <Widget>[
+                  Text("I am shrinked"),
+                ],
+              ),
             ),
             GridView.count(
               crossAxisCount: 4,
@@ -101,69 +104,39 @@ class FirstHalf extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(35, 25, 0, 0),
       child: Column(
         children: <Widget>[
-//          CustomAppBar(),
-          //you could also use the spacer widget to give uneven distances, i just decided to go with a sizebox
-          SizedBox(height: 30),
-          title(),
-          SizedBox(height: 30),
           searchBar(),
-          SizedBox(height: 45),
-//          categories(),
+          SizedBox(height: 5),
         ],
       ),
     );
   }
 
-  Widget title() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(width: 45),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Food",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 30,
-              ),
-            ),
-            Text(
-              "Delivery",
-              style: TextStyle(
-                fontWeight: FontWeight.w200,
-                fontSize: 30,
-              ),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
   Widget searchBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Icon(
-          Icons.search,
-          color: Colors.black45,
-        ),
-        SizedBox(width: 20),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Icon(
+            Icons.search,
+            color: Colors.black45,
+          ),
+          SizedBox(width: 20),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
                 hintText: "Search....",
                 contentPadding: EdgeInsets.symmetric(vertical: 10),
                 hintStyle: TextStyle(
                   color: Colors.black87,
                 ),
                 border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red))),
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

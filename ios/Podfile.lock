@@ -11,6 +11,8 @@ PODS:
   - Realm/Headers (3.16.2)
   - RealmSwift (3.16.2):
     - Realm (= 3.16.2)
+  - scrollable_bottom_sheet (0.2.1):
+    - Flutter
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
@@ -19,6 +21,7 @@ DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_realm (from `.symlinks/plugins/flutter_realm/ios`)
   - RealmSwift
+  - scrollable_bottom_sheet (from `.symlinks/plugins/scrollable_bottom_sheet/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
@@ -32,6 +35,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/flutter/ios"
   flutter_realm:
     :path: ".symlinks/plugins/flutter_realm/ios"
+  scrollable_bottom_sheet:
+    :path: ".symlinks/plugins/scrollable_bottom_sheet/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
 
@@ -41,6 +46,7 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   Realm: 0e73b4edeb5b6a90da3d83206883b2e34e00eb38
   RealmSwift: a81e650171ef0a5f999df1ed8d39ba8d6fce88a4
+  scrollable_bottom_sheet: ecd7a481fe0ae43f5448160e42690b41deb4f0f5
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
 
 PODFILE CHECKSUM: 73d0f24e84a516d785a6a59534456e42a53c7bb7

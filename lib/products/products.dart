@@ -20,39 +20,39 @@ class _ProductsState extends State<Products>
     _tabController = TabController(vsync: this, initialIndex: 0, length: 2);
   }
 
-  void _showBottomSheetCallback() {
-    _scaffoldKey.currentState.showBottomSheet<void>((BuildContext context) {
-      return SizedBox(
-        height: 410,
-        child: Card(
-          child: Column(
-            children: [
-              CupertinoButton(
-                color: Colors.blue[500],
-                child: Text("+"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text('(408) 555-1212',
-                    style: TextStyle(fontWeight: FontWeight.w500)),
-                leading: Icon(
-                  Icons.contact_phone,
-                  color: Colors.blue[500],
-                ),
-              ),
-              ListTile(
-                title: Text('costa@example.com'),
-                leading: Icon(
-                  Icons.contact_mail,
-                  color: Colors.blue[500],
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    });
-  }
+//  void _showBottomSheetCallback() {
+//    _scaffoldKey.currentState.showBottomSheet<void>((BuildContext context) {
+//      return SizedBox(
+//        height: 410,
+//        child: Card(
+//          child: Column(
+//            children: [
+//              CupertinoButton(
+//                color: Colors.blue[500],
+//                child: Text("+"),
+//              ),
+//              Divider(),
+//              ListTile(
+//                title: Text('(408) 555-1212',
+//                    style: TextStyle(fontWeight: FontWeight.w500)),
+//                leading: Icon(
+//                  Icons.contact_phone,
+//                  color: Colors.blue[500],
+//                ),
+//              ),
+//              ListTile(
+//                title: Text('costa@example.com'),
+//                leading: Icon(
+//                  Icons.contact_mail,
+//                  color: Colors.blue[500],
+//                ),
+//              ),
+//            ],
+//          ),
+//        ),
+//      );
+//    });
+//  }
 
   //fake list of categories
   //TODO: replace this hard coded list view with real data

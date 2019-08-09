@@ -13,27 +13,99 @@ class Cart extends StatelessWidget {
         child: Card(
           child: Column(
             children: [
-              CupertinoButton(
-                color: Colors.blue[500],
-                child: Text("+"),
-                onPressed: () {},
+              Row(
+                children: <Widget>[
+                  SizedBox(width: 20),
+                  SizedBox(
+                    width: 100,
+                    child: FlatButton(
+                      color: Colors.blue[500],
+                      child: Center(
+                        child: Text(
+                          "+",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  SizedBox(width: 30),
+                  SizedBox(
+                    width: 100,
+                    child: FlatButton(
+                      color: Colors.blue[500],
+                      child: Center(
+                        child: Text(
+                          "10",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  SizedBox(width: 40),
+                  SizedBox(
+                    width: 100,
+                    child: FlatButton(
+                      color: Colors.blue[500],
+                      child: Center(
+                        child: Text(
+                          "-",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  )
+                ],
               ),
               Divider(),
-              ListTile(
-                title: Text('(408) 555-1212',
-                    style: TextStyle(fontWeight: FontWeight.w500)),
-                leading: Icon(
-                  Icons.contact_phone,
-                  color: Colors.blue[500],
-                ),
-              ),
-              ListTile(
-                title: Text('costa@example.com'),
-                leading: Icon(
-                  Icons.contact_mail,
-                  color: Colors.blue[500],
-                ),
-              ),
+              Row(
+                children: <Widget>[
+                  SizedBox(width: 20),
+                  SizedBox(
+                    width: 100,
+                    child: FlatButton(
+                      color: Colors.blue[500],
+                      child: Center(
+                        child: Text(
+                          "+",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  SizedBox(width: 30),
+                  SizedBox(
+                    width: 100,
+                    child: FlatButton(
+                      color: Colors.blue[500],
+                      child: Center(
+                        child: Text(
+                          "10",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  SizedBox(width: 40),
+                  SizedBox(
+                    width: 100,
+                    child: FlatButton(
+                      color: Colors.blue[500],
+                      child: Center(
+                        child: Text(
+                          "-",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         ),

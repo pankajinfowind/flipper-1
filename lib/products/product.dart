@@ -1,15 +1,13 @@
-import 'package:enexus/CategoryItemsPage.dart';
-import 'package:enexus/products/product.dart';
 import 'package:enexus/widgets/badge_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Products extends StatefulWidget {
+class Product extends StatefulWidget {
   @override
-  _ProductsState createState() => _ProductsState();
+  _ProductState createState() => _ProductState();
 }
 
-class _ProductsState extends State<Products>
+class _ProductState extends State<Product>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -18,40 +16,6 @@ class _ProductsState extends State<Products>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, initialIndex: 0, length: 2);
-  }
-
-  void _showBottomSheetCallback() {
-    _scaffoldKey.currentState.showBottomSheet<void>((BuildContext context) {
-      return SizedBox(
-        height: 410,
-        child: Card(
-          child: Column(
-            children: [
-              CupertinoButton(
-                color: Colors.blue[500],
-                child: Text("+"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text('(408) 555-1212',
-                    style: TextStyle(fontWeight: FontWeight.w500)),
-                leading: Icon(
-                  Icons.contact_phone,
-                  color: Colors.blue[500],
-                ),
-              ),
-              ListTile(
-                title: Text('costa@example.com'),
-                leading: Icon(
-                  Icons.contact_mail,
-                  color: Colors.blue[500],
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    });
   }
 
   //fake list of categories
@@ -81,7 +45,7 @@ class _ProductsState extends State<Products>
 
     for (int i = 0; i < allCities.length; i++) {
       var widget = Card(
-        color: Colors.blue, //set a bg of a card.
+        color: Colors.white, //set a bg of a card.
         child: Center(
           child: Text(
             'Item $i',
@@ -94,29 +58,13 @@ class _ProductsState extends State<Products>
     return allWidgets;
   }
 
-  Widget _buildBottomSheet() {
-    //it disable back button
-    return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {},
-      child: Container(
-        child: Text("I am bottom"),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       key: _scaffoldKey,
       body: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CategoryItemsPage()),
-          );
-        },
+        onTap: () {},
         child: ListView(
           children: <Widget>[
             FirstHalf(),

@@ -33,6 +33,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  scrollable_bottom_sheet: ^0.2.1
   #TODO: need to dig deeper on the bellow package it is not stable at all.
   flutter_realm: ^0.1.0
 

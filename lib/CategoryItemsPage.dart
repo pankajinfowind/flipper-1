@@ -1,4 +1,4 @@
-import 'package:enexus/products/products.dart';
+import 'package:enexus/products/product.dart';
 import 'package:enexus/screens/chats.dart';
 import 'package:enexus/screens/friends.dart';
 import 'package:enexus/screens/notifications.dart';
@@ -6,18 +6,22 @@ import 'package:enexus/screens/profile.dart';
 import 'package:enexus/widgets/icon_badge.dart';
 import 'package:flutter/material.dart';
 
-class CategoriesPage extends StatefulWidget {
+class CategoryItemsPage extends StatefulWidget {
   @override
-  _CategoriesPageState createState() => _CategoriesPageState();
+  _CategoryItemsPageState createState() => _CategoryItemsPageState();
 }
 
-class _CategoriesPageState extends State<CategoriesPage> {
+class _CategoryItemsPageState extends State<CategoryItemsPage> {
   PageController _pageController;
   int _page = 2;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+//        backgroundColor: Colors.white,
+        title: Text("POS"),
+      ),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
@@ -25,7 +29,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         children: <Widget>[
           Chats(),
           Friends(),
-          Products(),
+          Product(),
           Notifications(),
           Profile(),
         ],
@@ -58,7 +62,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.home,
+                Icons.shopping_cart,
               ),
               title: Container(height: 0.0),
             ),

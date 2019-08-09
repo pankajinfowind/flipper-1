@@ -1,3 +1,4 @@
+import 'package:enexus/products/cart.dart';
 import 'package:enexus/widgets/badge_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,12 @@ class _ProductState extends State<Product>
     return Scaffold(
       key: _scaffoldKey,
       body: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Cart()),
+          );
+        },
         child: ListView(
           children: <Widget>[
             FirstHalf(),

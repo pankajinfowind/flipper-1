@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'blocs/cartlistBloc.dart';
 import 'blocs/listTileColorBloc.dart';
 
-class Cart extends StatelessWidget {
+class CartOld extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();

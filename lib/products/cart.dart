@@ -12,7 +12,7 @@ class _CartState extends State<Cart> {
   @override
   void initState() {
     super.initState();
-    _textController.text = "1";
+    _textController.text = "2";
   }
 
   @override
@@ -25,52 +25,57 @@ class _CartState extends State<Cart> {
         child: Card(
           child: Column(
             children: [
-              Row(
-                children: <Widget>[
-                  SizedBox(width: 20),
-                  SizedBox(
-                    width: 100,
-                    child: FlatButton(
-                      color: Colors.blue[500],
-                      child: Center(
-                        child: Text(
-                          "+",
-                          textAlign: TextAlign.center,
+              GestureDetector(
+                onTap: () {
+                  print("here we go");
+                },
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(width: 20),
+                    SizedBox(
+                      width: 100,
+                      child: FlatButton(
+                        color: Colors.blue[500],
+                        child: Center(
+                          child: Text(
+                            "+",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    SizedBox(width: 30),
+                    SizedBox(
+                      width: 100,
+                      height: 40,
+                      child: TextField(
+                        autofocus: true,
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          labelText: 'Qty',
+                          filled: true,
+                          border: OutlineInputBorder(),
                         ),
                       ),
-                      onPressed: () {},
                     ),
-                  ),
-                  SizedBox(width: 30),
-                  SizedBox(
-                    width: 100,
-                    height: 40,
-                    child: TextField(
-                      autofocus: true,
-                      controller: _textController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        labelText: 'Qty',
-                        filled: true,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 40),
-                  SizedBox(
-                    width: 100,
-                    child: FlatButton(
-                      color: Colors.blue[500],
-                      child: Center(
-                        child: Text(
-                          "-",
-                          textAlign: TextAlign.center,
+                    SizedBox(width: 40),
+                    SizedBox(
+                      width: 100,
+                      child: FlatButton(
+                        color: Colors.blue[500],
+                        child: Center(
+                          child: Text(
+                            "-",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
+                        onPressed: () {},
                       ),
-                      onPressed: () {},
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
               Divider(),
               Row(

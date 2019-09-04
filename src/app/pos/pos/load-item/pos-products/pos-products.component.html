@@ -1,0 +1,31 @@
+<loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
+
+<div *ngIf="(entries$| async).length > 0" class="col-12" fxLayout="wrap row" fxLayout.xs="column" fxLayoutGap="10px"
+  fxLayoutGap.xs="0" fxLayoutAlign="center">
+
+  <div fxFlex="20%" *ngFor="let stock of (entries$| async)" matRipple [matRippleCentered]="centered"
+    [matRippleDisabled]="disabled" [matRippleUnbounded]="unbounded" [matRippleRadius]="radius" [matRippleColor]="color"
+    (click)="addItemToCart(stock)" [class.isactive]="selectedItem && selectedItem.id==stock.id" class="mt-2 mb-1">
+    <mat-card>
+
+ <mat-card-header>
+    <img mat-card-avatar [src]="bg_img"  style="width:40px; height: 40px;
+  border-radius: 50%; border:1px solid #ccc;" />
+      <mat-card-title class="ellipsis"><span class="ellipsis" matTooltip="{{stock.name}}"
+            [matTooltipPosition]="'left'" style="font-size:12px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{stock.name}}</span>
+      </mat-card-title>
+   <mat-card-subtitle *ngIf="stock.customer_price">
+           <div class="text-info text-center ellipsis"> {{stock.customer_type.name}} / <span>{{currentUser.getBusiness('currency_code')}}
+              {{stock.customer_price.sale_price_including_tax}}</span>
+              </div>
+        </mat-card-subtitle>
+  </mat-card-header>
+
+      <mat-card-footer>
+      <div class="ellipsis text-center"> Qty:{{stock.available_stock_qty}} /
+          {{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %
+      </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="modal-header">
+  <h2 class="modal-title" mat-dialog-title trans>Choose Brand</h2>
+  <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+
+<app-brand [enableSelectButton]="enableSelectButton" [selectedId]="selectedId" (valueChange)="checkChanges($event)"></app-brand>

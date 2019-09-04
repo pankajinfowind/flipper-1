@@ -1,0 +1,101 @@
+@import "../../app_sass/variables";
+@import "../../app_sass/modal.scss";
+.receipt-dialog-contents{
+    height:500px;
+}
+#receipt {
+    padding: 2mm;
+    margin: 0 auto;
+    width: 90mm;
+    background: #FFF;
+    #top,
+    #mid,
+    #bot {
+        border-bottom: 2px dotted #000;
+
+    }
+    
+    #top {
+        min-height: 60px;
+        text-align: center;
+    }
+   
+    #mid {
+        min-height:auto;
+    }
+    
+    #bot {
+        min-height: 50px;
+    }
+    
+    #top .logo{position: relative;height: 50px;width: 50px;top: 0%;left: 47%;border:solid 1px #ccc;border-radius:50px;}
+    
+    .clientlogo {height: 50px;width: 50px;border-radius: 50px;}
+    
+    .info {
+        display: block;
+        margin-left: 0;
+    }
+    
+    .title {
+        float: right;
+    }
+    
+    .title p {
+        
+        text-align: right;
+    }
+    
+   table {
+        width: 100%;
+        border: none !important;
+        line-height: 1.1em;
+    }
+    
+    tr,
+    td {
+        padding: 0px;
+        margin: 0px;
+    }
+    
+    .tabletitle {
+        padding: 0px;
+        margin: 0px;
+    }
+    
+    .service {
+        padding: 0px;
+        margin: 0px;
+    }
+    
+    .item {
+        width: 50mm;
+        padding: 0px;
+    }
+    
+    #legalcopy {
+        margin-top: 20mm;
+    }
+    
+    .table-borderless>tbody>tr>td,
+    .table-borderless>tbody>tr>th,
+    .table-borderless>tfoot>tr>td,
+    .table-borderless>tfoot>tr>th,
+    .table-borderless>thead>tr>td,
+    .table-borderless>thead>tr>th {
+        border: none !important;
+    }
+    
+    .bottomBord {
+        border-top: 1px dotted #000;
+    }
+    
+    .topbord {
+        border-bottom: 1px dotted #000;
+    }
+      
+}
+
+.right{
+    float: right!important;
+}

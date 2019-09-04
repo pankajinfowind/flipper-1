@@ -1,0 +1,38 @@
+
+<data-table [dataSource]="dataSource" itemsName="Invoice Customization" [isLoading]="(loading | async)" matSort>
+    <div headerLeftActions>
+        <button mat-raised-button  class="button" (click)="newInvoiceCustomization()"  trans>New Invoice Customization</button>
+      </div>
+    <div class="input-container" headerRightActions>
+        <input type="text" class="search" placeholder="Search Invoice Customization ..." trans-placeholder [formControl]="dataSource.searchQuery">
+        <mat-icon svgIcon="search"></mat-icon>
+      </div>
+
+    <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedCustomizeInvoice()" headerSelectedActions>
+        <mat-icon svgIcon="delete"></mat-icon>
+    </button>
+
+    <ng-container matColumnDef="default_title">
+        <mat-header-cell *matHeaderCellDef mat-sort-header trans>Title</mat-header-cell>
+        <mat-cell *matCellDef="let customize"> {{customize.default_title}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="company_name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header trans>Header</mat-header-cell>
+        <mat-cell *matCellDef="let customize"> {{customize.company_name}},<br />{{customize.address}},<br />{{customize.contact}} </mat-cell>
+    </ng-container>
+
+  <ng-container matColumnDef="customer_type_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Customer Type</mat-header-cell>
+      <mat-cell *matCellDef="let customize"> {{customize.customer_type_name}} </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let customize">
+            <button mat-icon-button (click)="updateInvoiceCustomization(customize)"  [matTooltip]="'Edit Customize Invoice' | trans">
+                <mat-icon svgIcon="edit"></mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+  </data-table>

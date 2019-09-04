@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h2 mat-dialog-title trans>Advanced options</h2>
+  <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
+      <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+  <mat-dialog-content class="many-inputs">
+      <div class="input-container">
+<app-stock-advanced-options  [canAddNew]="'false'"></app-stock-advanced-options>
+      </div>
+</mat-dialog-content>

@@ -1,0 +1,46 @@
+@import "../../app_sass/variables";
+@import "../../app_sass/modal.scss";
+
+.mat-table,.mat-cell {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: normal !important;
+  text-align: center !important;
+  font-size: 14px;
+  font-weight: 400;
+}
+.mat-table,.mat-header-cell{
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+.wv-tooltip__target {
+  position: relative;
+  overflow: visible;
+}
+.wv-badge--muted, .wv-badge--success, .wv-badge--warning {
+  text-align: center;
+  width: auto;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 8px;
+  font-size: 13px;
+    line-height: 16px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 2px 0;
+    border-radius: 3px;
+    color: white;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+.wv-badge--success {
+  background-color: #23c770;
+}
+.wv-badge--danger {
+  background-color: #d74242;
+}
+.wv-badge--muted {
+  background-color: #849194;
+}

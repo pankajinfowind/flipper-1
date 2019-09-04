@@ -1,0 +1,86 @@
+<div class="navbar-container" *ngIf="position=='topbar'">
+  <button class="no-style toggle-sidebar-button" color="primary" (click)="gotoDashBoard()" mat-icon-button *ngIf="(current.isAdmin() || current.isManager())">
+    <mat-icon svgIcon="menu"></mat-icon>
+  </button>
+  <a class="logo-container">
+
+    <table>
+      <tr>
+
+        <td>
+          <img class="logo-1" [src]="current.getBusiness('logo')?current.getBusiness('logo'):'/assets/logo/icon.ico'">
+        </td>
+
+        <td>
+          <div class="text-logo">{{current.getBusiness('name')}}
+            <span class="text-logo-sm">
+              <table>
+                <tr>
+                  <td>
+                    <mat-icon style="color:green">check_circle_outline</mat-icon>
+                  </td>
+                  <td><small> {{current.getCurrentBranch('name')}} branch</small></td>
+                </tr>
+              </table>
+            </span>
+            </div>
+        </td>
+
+        <td>
+
+          <button type="button" [matMenuTriggerFor]="aboveMenus" mat-icon-button
+            class="expand-button no-style icon-button" style="margin-left: 2px; margin-top: 0px;">
+            <mat-icon>expand_more</mat-icon>
+          </button>
+          <mat-menu #aboveMenus="matMenu" yPosition="above">
+         <switch-branch></switch-branch>
+          <a mat-menu-item class="button" *ngIf="!(current.isCashier() || current.isManager())"  style="margin:6px;padding-left: 40px;padding-right: 40px;"
+            routerLink="/settings/branches">
+            <mat-icon style="color:white">device_hub</mat-icon> Manage branch
+          </a>
+
+        </mat-menu>
+        </td>
+       </tr>
+    </table>
+</a>
+ <ng-content></ng-content>
+<logged-in-user-widget> </logged-in-user-widget>
+
+</div>
+
+<div class="nav-container-sidebar" *ngIf="position=='sidebar'">
+  <div class="logo">
+    <a routerLink="/settings/set-company" class="simple-text logo-mini">
+      <img class="logo-img" [src]="current.getBusiness('logo')?current.getBusiness('logo'):'/assets/logo/icon.ico'"
+        alt="react-logo">
+
+    </a>
+
+    <a routerLink="/settings/set-company" class="simple-text logo-normal">
+      {{current.getBusiness('name')}}<br />
+      <table>
+        <tr>
+          <td>
+            <mat-icon style="color:green">check_circle_outline</mat-icon>
+          </td>
+          <td><small> {{current.getCurrentBranch('name')}} branch</small></td>
+        </tr>
+      </table>
+    </a>
+    <div class="navbar-minimize">
+      <button type="button" [matMenuTriggerFor]="aboveMenu" mat-icon-button class="expand-button no-style icon-button"
+        style="margin-left: 57px; margin-top: 16px;">
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #aboveMenu="matMenu" yPosition="above">
+        <switch-branch></switch-branch>
+        <a mat-menu-item class="button" *ngIf="!(current.isCashier() || current.isManager())" style="margin:6px;padding-left: 40px;padding-right: 40px;"
+          routerLink="/settings/branches">
+          <mat-icon style="color:white">device_hub</mat-icon> Manage branch
+        </a>
+
+      </mat-menu>
+    </div>
+  </div>
+</div>

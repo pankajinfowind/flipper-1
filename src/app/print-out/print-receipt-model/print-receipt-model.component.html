@@ -1,0 +1,195 @@
+	<div class="modal-header">
+	  <h2 class="modal-title" mat-dialog-title trans>Print Receipt</h2>
+	  <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button">
+	    <mat-icon svgIcon="close"></mat-icon>
+	  </button>
+	</div>
+	<mat-card-content class="receipt-dialog-content" *ngIf="invoice">
+	<div *ngIf="(invoice.amount_return!=0.00 || invoice.amount_return!= 0 || invoice.amount_return!='0.00' || invoice.amount_return!='0')" style="font-size:24px">
+		Balance Due: <span class="text-info">{{current.getBusiness('currency_code') }} {{invoice.amount_return}}</span>
+		 <mat-divider></mat-divider>
+	</div>
+
+	  <div id="receipt"  [ngStyle]="currentStyles">
+
+	    <div id="top" [ngStyle]="currentStyles">
+	      <div class="logo" *ngIf="current.getReceipt('company_logo')">
+	        <img class="clientlogo"  [src]="logo" />
+	      </div>
+	      <div class="info">
+	        <table [ngStyle]="currentStyles">
+	          <tr>
+	            <td>
+	             {{current.getReceipt('company')}}
+	            </td>
+	          </tr>
+	          <tr *ngIf="current.getReceipt('address')">
+	            <td>
+	              {{current.getReceipt('address')}}
+	            </td>
+	          </tr>
+	          <tr *ngIf="current.getReceipt('pbox')">
+	            <td>
+	              PO BOX: {{current.getReceipt('pbox')}}
+	            </td>
+	          </tr>
+	          <tr *ngIf="current.getReceipt('tel')">
+	            <td>
+	              Tel: {{current.getReceipt('tel')}}
+	            </td>
+	          </tr>
+	          <tr *ngIf="current.getReceipt('email')">
+	            <td>
+	              eMail: {{current.getReceipt('email')}}
+	            </td>
+	          </tr>
+	          <tr *ngIf="current.getReceipt('tax_number')">
+	            <td>
+	              TIN: {{current.getReceipt('tax_number')}}
+	            </td>
+	          </tr>
+	        </table>
+	      </div>
+	      <!--End Info-->
+	    </div>
+		
+	    <!--End InvoiceTop-->
+	    <div id="mid" *ngIf="current.getReceipt('can_show_customer_info') && invoice.customer" [ngStyle]="currentStyles">
+	      <div class="info">
+	        <p>
+	          <span *ngIf="invoice.customer.full_name">CLIENT : {{invoice.customer.full_name}}</span> <br />
+	         <span *ngIf="invoice.customer.phone"> TEL : {{invoice.customer.phone}}</span>
+	        </p>
+
+	      </div>
+	    </div>
+	    <!--End Invoice Mid-->
+
+	    <div id="bot" [ngStyle]="currentStyles">
+
+	      <div id="table">
+	        <table class="table table-borderless" [ngStyle]="currentStyles">
+	          <thead>
+	            <tr class="tabletitle" style="border-bottom: 2px dotted #000!important;">
+	              <td>No.
+	              </td>
+	              <td class="item">
+	                ITEM
+	              </td>
+	              <td class="item" style="text-align:center">
+	                QTY
+	              </td>
+	              <td class="item" style="text-align:center">
+	                PRICE
+	              </td>
+	              <td class="item" style="text-align:right">
+	                AMOUNT
+	              </td>
+	            </tr>
+	          </thead>
+	          <tbody *ngIf="invoice && invoice.orderItems.length > 0">
+			  <tr *ngFor="let item of invoice.orderItems; let index = index" class="tabletitle">
+			  <td>{{index+1}}</td>
+			   <td>{{item.item}}</td>
+			    <td style="text-align:center">{{item.qty | roundNumber}}</td>
+				 <td style="text-align:center">{{item.price | roundNumber}}</td>
+				  <td style="text-align:right"> {{item.qty*item.price | roundNumber}}</td>
+			  </tr>
+	          </tbody>
+	          <tfoot>
+	            <tr class="tabletitle" style="border-top: 2px dotted #000 !important;">
+	              <td class="item" colspan="2">
+	                TOTAL
+	              </td>
+	              <td class="item" colspan="3" style="text-align:right">
+	                {{invoice.total_amount | roundNumber}} B
+	              </td>
+	            </tr>
+
+	            <tr class="tabletitle" *ngIf="current.getReceipt('show_tax_breakdown')">
+	              <td class="item" colspan="2">
+	                TOTAL B-{{invoice.orderItems.length > 0?invoice.orderItems[0].tax_rate_percentage:'0.00'}}%
+	              </td>
+	              <td class="item" colspan="3" style="text-align:right">
+	                {{invoice.total_amount | roundNumber}}
+	              </td>
+	            </tr>
+
+	            <tr class="tabletitle" *ngIf="current.getReceipt('show_tax_breakdown')">
+	              <td class="item" colspan="2">
+	                TOTAL TAX B
+	              </td>
+	              <td class="item" colspan="3" style="text-align:right">
+	               {{total(invoice.orderItems,'taxable_vat') | roundNumber}}
+	              </td>
+	            </tr>
+	            <tr class="tabletitle" *ngIf="current.getReceipt('show_tax_breakdown')">
+	              <td class="item" colspan="2">
+	                TOTAL TAX
+	              </td>
+	              <td class="item" colspan="3" style="text-align:right">
+	                {{total(invoice.orderItems,'taxable_vat') | roundNumber}}
+	              </td>
+	            </tr>
+	            <tr class="tabletitle" style="border-top: 2px dotted #000 !important;" >
+	              <td class="item" colspan="2">
+	                CASH
+	              </td>
+	              <td class="item" colspan="3" style="text-align:right">
+	                {{invoice.business.currency_code }} {{invoice.total_amount | roundNumber}}
+	              </td>
+	            </tr>
+	            <tr class="bottomBrd tabletitle" style="border-bottom: 2px dotted #000 !important;">
+	              <td class="item" colspan="2">
+	                ITEMS NUMBER:
+	              </td>
+	              <td class="item"colspan="3" style="text-align:right">
+	                <span class="total2">{{invoice.orderItems.length}}</span>
+	              </td>
+	            </tr>
+	            <tr class="bottomBrd tabletitle">
+	              <td class="item" colspan="3">
+	                RECEIPT NUMBER:
+	              </td>
+	              <td class="item" colspan="3" style="text-align:right">
+	                {{invoice.invoice_no}}
+	              </td>
+	            </tr>
+	            <tr class="bottomBrd tabletitle">
+	              <td class="item" colspan="3">
+	                DATE: {{invoice.invoice_date | date :'mediumDate'}}
+	              </td>
+	              <td class="item" colspan="2" style="text-align:right">
+	                TIME: {{invoice.invoice_date | date :'shortTime'}}
+	              </td>
+	            </tr>
+	            <tr class="bottomBrd tabletitle" style="border-bottom: 2px dotted #000 !important;">
+	              <td class="item" colspan="2">
+	                OPERATOR:
+	              </td>
+	              <td class="item" colspan="3" style="text-align:right">
+					<span *ngIf="invoice.user">{{invoice.user.first_name}} {{invoice.user.last_name}}</span>
+	              </td>
+	            </tr>
+	          </tfoot>
+	        </table>
+	      </div>
+	      <!--End Table-->
+
+	      <div id="legalcopy" [ngStyle]="currentStyles">
+	        <p class="legal" style="text-align:center"><b>{{current.getReceipt('receipt_message')}}</b> 
+	        </p>
+	      </div>
+
+	    </div>
+	    <!--End InvoiceBot-->
+	  </div>
+	  <!--End Invoice-->
+	</mat-card-content>
+	<mat-card-actions>
+	  <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+	    <button (click)="close()" type="button" mat-button class="button-cancel" trans>No Receipt</button>
+	    <button type="button" class="button" (click)="printReceipt('receipt')" mat-raised-button>Print
+	    </button>
+	  </div>
+	</mat-card-actions>

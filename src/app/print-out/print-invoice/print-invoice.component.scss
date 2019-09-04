@@ -1,0 +1,158 @@
+@import "../../app_sass/variables";
+@import "../../app_sass/modal.scss";
+@media print {body {color: #000;background-color: #fff;}}
+* { // this works for all but td
+  word-wrap:break-word;
+}
+.invoice-box {
+  max-width: 850px;
+  margin: auto;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 15px;
+  color: #000;
+  text-align: left
+}
+
+.invoice-box table {
+  width: 100%;
+  table-layout: fixed;
+  text-align: left
+}
+
+.invoice-box table td {
+  padding: 2px;
+  vertical-align: top;
+ 
+}
+
+.invoice-box tr,
+td,
+th {
+  border: thin solid #000;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+}
+
+.th-border,
+.tr-border {
+  border: none !important;
+}
+
+.invoice-box table tr td:nth-child(2) {
+  text-align: right
+}
+
+.invoice-box table tr.top table td {
+  padding-bottom:7px
+}
+
+.invoice-box table tr.top table td.title {
+  font-size: 45px;
+  line-height: 45px;
+  color: #000;
+}
+
+.heading {
+  background: #eee;
+  border-bottom: thin solid #ddd;
+  font-weight: 700
+}
+
+.percentage_total {
+  display: inline-flex;
+  width: 100%;
+}
+
+.signature {
+  width: 60%;
+}
+
+.table-none {
+  width: 30%;
+  color:#fff;
+}
+.table-tax{
+    width: 50%;
+    font-size: 13px; 
+}
+
+.table-percentage_total {
+  width: 50%;
+}
+
+.table-signature_done {
+  width: 60%;
+  font-size: 14pt; 
+}
+
+.table-reception {
+    width: 40%; 
+}
+
+
+
+.no-bottom-border {
+  border-bottom: 0;
+  border-left: 0;
+}
+.border-none{
+    padding: 0px !important;
+    border: none !important;
+}
+.small{
+  font-size: 9.5px!important;
+}
+.small-md{
+  font-size: 15px!important;
+  align-items: center;
+  align-content: center;
+  text-align: center
+}
+.text-center{
+text-align: center !important;
+}
+
+
+.buttons__print-button {
+display: -webkit-box;
+display: flex;
+-webkit-align-items: center;
+align-items: center;
+-webkit-box-pack: center;
+-webkit-justify-content: center;
+justify-content: center;
+height: 4rem;
+max-height: 4rem;
+font-size: 1rem;
+border-radius: 4px;
+background: #4CAF50;
+outline: 0;
+color: #fff;
+padding: 0 1rem;
+-webkit-box-flex: 0;
+-webkit-flex: 0 35%;
+flex: 0 35%;
+
+text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  -webkit-box-align: center;
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-appearance: none;
+  font-family: opensanssemibold,arial,helvetica,sans-serif;
+  letter-spacing: .5px;
+  overflow: hidden;
+  height: 4rem;
+  max-height: 4rem;
+  font-size: 1rem;
+  outline: 0;
+  color: #fff;
+  padding: 0 1rem;
+}

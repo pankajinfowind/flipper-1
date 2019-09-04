@@ -1,0 +1,67 @@
+
+<data-table [dataSource]="dataSource" itemsName="Users" [hiddenCheckBox]="hiddenCheckBox"  [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateUsersModal()"  trans>Create a new user</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search user ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedUsers()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+ <ng-container matColumnDef="avatar" *ngIf="!enableSelectButton">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Avatar</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+          <img class="avatar"  src="{{user.avatar}}">
+      </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="first_name" *ngIf="!enableSelectButton">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>First Name</mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.first_name}} </mat-cell>
+  </ng-container>
+
+   <ng-container matColumnDef="last_name" *ngIf="!enableSelectButton">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Last Name</mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.last_name}} </mat-cell>
+  </ng-container>
+   <ng-container matColumnDef="email" *ngIf="!enableSelectButton">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Email</mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+  </ng-container>
+     <ng-container matColumnDef="phone" *ngIf="!enableSelectButton">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Phone</mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.phone}} </mat-cell>
+  </ng-container>
+    <ng-container matColumnDef="display_name" *ngIf="!enableSelectButton">
+      <mat-header-cell *matHeaderCellDef trans>Role</mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.role.display_name}} </mat-cell>
+  </ng-container>
+
+      <ng-container matColumnDef="first_name" *ngIf="enableSelectButton">
+      <mat-header-cell *matHeaderCellDef trans>Names</mat-header-cell>
+      <mat-cell *matCellDef="let user"><table>
+      <tr><td><img class="avatar"  src="{{user.avatar}}"></td>
+      <td> {{user.first_name}} {{user.last_name}}</td>
+      <td> <button (click)="selectUser(user)" class="button-success" *ngIf="user.id!=selectedId"   [matTooltip]="'Select user' | trans">Select
+        </button>
+        <button  class="button-cancel" *ngIf="user.id==selectedId"  [matTooltip]="'Selected user' | trans">Selected
+        </button></td>
+        </tr>
+        </table>
+       </mat-cell>
+  </ng-container>
+
+  
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let user">
+          <button mat-icon-button (click)="showCrupdateUsersModal(user)"  [matTooltip]="'Edit user' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

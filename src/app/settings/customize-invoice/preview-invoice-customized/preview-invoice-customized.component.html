@@ -1,0 +1,326 @@
+<button mat-raised-button  class="button" style="float:right;margin-right:20px" (click)="printInvoice('invoice')"  trans>Print</button>
+<div style="min-width:600px;" id="invoice" *ngIf="(invoice$ | async)">
+  <div class="invoice-box">
+    <div class="printSection">
+      <div style="min-width:600px;">
+        <div>
+          <div class="invoice-box">
+            <table class="title">
+              <tr class="tr-border">
+                <th class="th-border" style="width:15%" *ngIf="!(invoice$ | async).hide_logo">
+                  <img [src]="(invoice$ | async).logo?(invoice$ | async).logo:'assets/logo/avatar.png'" alt="" style="width:100%">
+                </th>
+                <th class="th-border" [style]="(invoice$ | async).hide_logo?'width:80%':'width:100%'">
+                  <span>{{(invoice$ | async).company_name?(invoice$ | async).company_name:'Company name'}}</span><br />
+                  <span>{{(invoice$ | async).address?(invoice$ | async).address:'Company address'}}</span><br />
+                  <span>{{(invoice$ | async).contact?(invoice$ | async).contact:'Company contact'}}</span>
+                  <br />
+                  <span>{{(invoice$ | async).tax_number}}</span>
+                </th>
+                <th class="th-border" style="width:25%">
+                  N°:<br />
+                  Date:<br />
+                </th>
+              </tr>
+
+
+
+            </table>
+            <table cellpadding="0" cellspacing="0" style="margin-top:5%">
+              <tr class="border-none">
+                <th class="th-border" style="text-align:center; text-decoration:underline;border:none">
+                  {{(invoice$ | async).default_title?(invoice$ | async).default_title:'Invoice'}}
+                </th>
+              </tr>
+            </table>
+
+            <table cellpadding="0" cellspacing="0" style="margin-top:4%">
+
+              <tr class="border-none">
+                <th class="th-border">
+                  {{(invoice$ | async).customer_number?(invoice$ | async).customer_number:'Cust . N°'}}:.....
+                </th>
+              </tr>
+              <tr class="border-none">
+                <th class="th-border">
+                  {{(invoice$ | async).customer_name?(invoice$ | async).customer_name:'Name'}}:.....
+                </th>
+              </tr>
+
+              <tr class="border-none">
+                <th class="th-border">
+                  {{(invoice$ | async).customer_dob?(invoice$ | async).customer_dob:'Birth date'}}:.....
+                </th>
+              </tr>
+
+              <tr class="border-none">
+                <th class="th-border">
+                  {{(invoice$ | async).customer_address?(invoice$ | async).customer_address:'Address'}}:.....
+                </th>
+              </tr>
+              <tr class="border-none">
+                <th class="th-border">
+                  {{(invoice$ | async).beneficiary?(invoice$ | async).beneficiary:'Beneficiary'}}:.....
+                </th>
+              </tr>
+
+
+            </table>
+
+
+            <table cellpadding="6" cellspacing="0" style="margin-top:4%">
+
+              <thead>
+                <tr valign="top" style="border:none!important" *ngIf="(invoice$ | async).default_sub_title">
+                  <th style="border:none!important" colspan="5">
+                    {{(invoice$ | async).default_sub_title?(invoice$ | async).default_sub_title:''}}</th>
+                </tr>
+                <tr valign="top" class="heading">
+                  <th>{{(invoice$ | async).number?(invoice$ | async).number:'Code'}}</th>
+                  <th>{{(invoice$ | async).items?(invoice$ | async).items:'Items'}}</th>
+                  <th>{{(invoice$ | async).units?(invoice$ | async).units:'Quantity'}}</th>
+                  <th>{{(invoice$ | async).price?(invoice$ | async).price:'Price'}}</th>
+                  <th>{{(invoice$ | async).amount?(invoice$ | async).amount:'Amount'}}</th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type">P.
+                    {{(invoice$ | async).adherent?(invoice$ | async).adherent:'Adherent'}}</th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type">P.
+                    {{(invoice$ | async).customer_type_name?(invoice$ | async).customer_type_name:''}}</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr>
+                  <td></td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                </tr>
+                <tr>
+                  <td></td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                </tr>
+                <tr>
+                  <td></td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                </tr>
+                <tr>
+                  <td></td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                  <th *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"></th>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4" class="no-bottom-border" *ngIf="!(invoice$ | async).has_customer_type"
+                    style="text-align:right;font-weight: bold">TOTAL: </td>
+                  <td colspan="6" class="no-bottom-border" *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type"
+                    style="text-align:right;font-weight: bold">TOTAL: </td>
+                  <td style="border:1px solid #000;text-align:left;font-weight: bold">
+                    0.00 </td>
+                </tr>
+              </tfoot>
+            </table>
+            <br />
+            <div class="percentage_total">
+              <div class="table-tax">
+              <div *ngIf="(invoice$ | async).hide_taxable_table==false">
+                <table class="border-none" cellpadding="0" cellspacing="0" border="0">
+                  <tr class="border-none">
+                    <td style="width:50%" class="border-none">
+                      <span style="float: left;font-weight: bold">TOTAL A-EX </span>
+                    </td>
+                    <th style="width:50%" class="border-none">00.00
+                    </th>
+
+                  </tr>
+                  <tr class="border-none">
+                    <td style="width:50%" class="border-none">
+                      <span style="float: left;font-weight: bold">TOTAL B-18.00% </span>
+                    </td>
+                    <th style="width:50%" class="border-none">00.00
+                    </th>
+
+                  </tr>
+                  <tr class="border-none">
+                    <td style="width:50%" class="border-none">
+                      <span style="float: left;font-weight: bold">TOTAL B </span>
+                    </td>
+                    <th style="width:50%" class="border-none">00.00
+                    </th>
+
+                  </tr>
+                  <tr class="border-none">
+                    <td style="width:50%" class="border-none">
+                      <span style="float: left;font-weight: bold">TOTAL TAX </span>
+                    </td>
+                    <th style="width:50%" class="border-none">00.00
+                    </th>
+
+                  </tr>
+                </table>
+                </div>
+              </div>
+              <div class="table-percentage_total">
+               <div *ngIf="(invoice$ | async).hide_discount_table==false">
+                <table  cellpadding="0" cellspacing="0"  *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type">
+                  <tr>
+                    <th style="width:40%">
+                      <span style="float: left;font-weight: bold">TOTAL</span>
+                      <span style="float: right;font-weight: bold">100%</span>
+                    </th>
+                    <th style="width:60%">RWF ...
+                    </th>
+
+                  </tr>
+
+                  <tr>
+                    <th style="width:40%">
+                      <span
+                        style="float: left;font-weight: bold">{{(invoice$ | async).adherent?(invoice$ | async).adherent:'ADRHERENT'}}</span>
+                      <span style="float: right;font-weight: bold">...%</span>
+                    </th>
+                    <th style="width:60%">RWF ...</th>
+                  </tr>
+                  <tr>
+                    <th style="width:40%">
+                      <span
+                        style="float: left;font-weight: bold">{{(invoice$ | async).customer_type_name?(invoice$ | async).customer_type_name:''}}</span>
+                      <span style="float: right;font-weight: bold">...%</span>
+                    </th>
+                    <th style="width:60%">RWF ...</th>
+
+                  </tr>
+
+                </table>
+                </div>
+              </div>
+
+
+            </div>
+            <br />
+
+
+            <div class="percentage_total" style="margin-top:8%">
+              <div class="table-signature_done">
+                <table class="border-none" cellpadding="6" cellspacing="0" border="0">
+                  <tr class="border-none">
+                    <th class="border-none">
+                      <span style="font-weight: bold">{{(invoice$ | async).done_at}} ........... </span>
+                      &nbsp;<span style="font-weight: bold">{{(invoice$ | async).done_on}} ........... </span>
+                   </tr>
+                  <tr class="border-none">
+                    <td class="border-none" style="font-size:12px;font-weight: italic">
+                      {{(invoice$ | async).done_title}}
+                    </td>
+                  </tr>
+                  <tr class="border-none">
+                    <td class="border-none"  style="font-size:15px;float: left;font-weight: bold">
+                      {{(invoice$ | async).nom_signature_cachet}} 
+                    </td>
+
+                  </tr>
+                </table>
+
+              </div>
+
+              <div class="table-reception">
+                <div *ngIf="(invoice$ | async).hide_reception_table==false">
+                <table cellpadding="0" cellspacing="0" border=1>
+
+                  <tr class="border-none">
+                    <th colspan="2" class="border-none" style="text-align:center">
+                      {{(invoice$ | async).reception_title}}
+                    </th>
+                  </tr>
+
+                  <tr class="border-none" *ngIf="(invoice$ | async).reception_field_a">
+                    <th style="width:40%" class="border-none">
+                      <span style="float: left;font-weight: bold">{{(invoice$ | async).reception_field_a}}:</span>
+                    </th>
+                    <th style="width:60%" class="border-none">.......</th>
+                  </tr>
+
+                  <tr class="border-none"  *ngIf="(invoice$ | async).reception_field_b">
+                    <th style="width:40%" class="border-none">
+                      <span style="float: left;font-weight: bold">{{(invoice$ | async).reception_field_b}}:</span>
+                    </th>
+                    <th style="width:60%" class="border-none">....... </th>
+                  </tr>
+
+                   <tr class="border-none" *ngIf="(invoice$ | async).reception_field_c">
+                    <th style="width:40%" class="border-none">
+                      <span style="float: left;font-weight: bold">{{(invoice$ | async).reception_field_c}}:</span>
+                    </th>
+                    <th style="width:60%" class="border-none">....... </th>
+                  </tr>
+                   <tr class="border-none" *ngIf="(invoice$ | async).reception_field_d">
+                    <th style="width:40%" class="border-none">
+                      <span style="float: left;font-weight: bold">{{(invoice$ | async).reception_field_d}}:</span>
+                    </th>
+                    <th style="width:60%" class="border-none">....... </th>
+                  </tr>
+                   <tr class="border-none" *ngIf="(invoice$ | async).reception_field_e">
+                    <th style="width:40%" class="border-none">
+                      <span style="float: left;font-weight: bold">{{(invoice$ | async).reception_field_e}}:</span>
+                    </th>
+                    <th style="width:60%" class="border-none">....... </th>
+                  </tr>
+
+
+                </table>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div style="width:100%;margin-top:6%">
+            <div *ngIf="(invoice$ | async).hide_visa==false">
+                <b style="float:right;text-align:center" *ngIf="(invoice$ | async).customer_type_name && (invoice$ | async).has_customer_type">VISA {{(invoice$ | async).customer_type_name}} <br /> Date & Signature</b>
+          </div>
+            </div>
+
+             <div class="percentage_total border-none" style=" float:right;margin-top:6%">
+                  <table class="border-none" cellpadding="0" cellspacing="0" border="0">
+
+                      <tr  style="border:1px solid #000;margin:3px;" *ngIf="(invoice$ | async).default_footer">
+                        <th   style="text-align:center;word-wrap: break-word;">
+                          <p style="display:block; width:98%; word-wrap:break-word;padding:3px">{{(invoice$ | async).default_footer}}</p>
+                        </th>
+                      </tr>
+
+                       <tr  class="border-none">
+                        <th  class="border-none" style="text-align:center;word-wrap: break-word;">
+                           <hr />
+                              <b>&copy; Flipper Ltd</b>
+                        </th>
+                      </tr>
+                  </table>
+               </div>
+
+
+          </div>
+
+        </div>
+      </div>
+     
+     
+    </div>
+  </div>
+</div>

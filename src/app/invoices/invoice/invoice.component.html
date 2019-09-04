@@ -1,0 +1,91 @@
+<data-table [dataSource]="dataSource" itemsName="Invoices" [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <!-- <button mat-raised-button  class="button" (click)="showCrupdateInvoiceModal()"  trans>Create a invoice</button> -->
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Enter Invoice #" trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedInvoices()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="invoice_no">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>#No</mat-header-cell>
+      <mat-cell *matCellDef="let invoice"> {{invoice.invoice_no}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="customer_id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Customer</mat-header-cell>
+    <mat-cell *matCellDef="let invoice"><span class="ellipsis">{{invoice.customer?invoice.customer.full_name:'--no customer--'}}</span>
+    </mat-cell>
+</ng-container>
+<ng-container matColumnDef="customer_type_id">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Customer Type</mat-header-cell>
+  <mat-cell *matCellDef="let invoice"><span class="ellipsis">{{invoice.customer_type?invoice.customer_type.name:''}}</span>
+  </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="invoice_date">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Date</mat-header-cell>
+    <mat-cell *matCellDef="let invoice">{{invoice.invoice_date | date}}
+    </mat-cell>
+</ng-container>
+<ng-container matColumnDef="invoice_time">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Time</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{invoice.invoice_date | date:'shortTime' }}
+  </mat-cell>
+</ng-container>
+<ng-container matColumnDef="total_items">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Items</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{invoice.total_items}}</mat-cell>
+</ng-container>
+<ng-container matColumnDef="total_amount">
+<mat-header-cell *matHeaderCellDef mat-sort-header>Total Amount</mat-header-cell>
+<mat-cell *matCellDef="let invoice">{{currentUser.getBusiness('currency_code')}} {{invoice.total_amount}}</mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="total_discounts">
+<mat-header-cell *matHeaderCellDef mat-sort-header>Total Discount</mat-header-cell>
+<mat-cell *matCellDef="let invoice">{{currentUser.getBusiness('currency_code')}} {{invoice.total_discounts}}</mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="amount_given">
+<mat-header-cell *matHeaderCellDef mat-sort-header>Amount Paid</mat-header-cell>
+<mat-cell *matCellDef="let invoice">{{currentUser.getBusiness('currency_code')}} {{invoice.amount_given}}</mat-cell>
+</ng-container>
+<ng-container matColumnDef="amount_return">
+<mat-header-cell *matHeaderCellDef mat-sort-header>Change Due</mat-header-cell>
+<mat-cell *matCellDef="let invoice">{{currentUser.getBusiness('currency_code')}} {{invoice.amount_return}}</mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="payment_method">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Method</mat-header-cell>
+  <mat-cell *matCellDef="let invoice">{{invoice.payment_method}}</mat-cell>
+</ng-container>
+<ng-container matColumnDef="status">
+<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+<mat-cell *matCellDef="let invoice">
+    <span class="wv-tooltip__target">
+      <span class="wv-badge wv-badge--success" *ngIf="invoice.status=='complete'">Complete</span>
+      <span class="wv-badge wv-badge--muted" *ngIf="invoice.status=='pending'">Pending</span>
+      <span class="wv-badge wv-badge--danger" *ngIf="invoice.status=='failed'">Failed</span>
+      </span>
+  </mat-cell>
+</ng-container>
+
+
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let invoice">
+          <button mat-icon-button  [matTooltip]="'More action...' | trans" [matMenuTriggerFor]="appMenu"  *ngIf="invoice && invoice.printFormat">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="printReceiptModel(invoice)" [matTooltip]="'Preview Receipt' | trans"><mat-icon>receipt</mat-icon> Preview Receipt</button>
+            <button mat-menu-item (click)="showPreviewInvoiceModal(invoice)" [matTooltip]="'Preview Invoice' | trans"><mat-icon>print</mat-icon> Preview Invoice</button>
+          </mat-menu>
+      </mat-cell>
+  </ng-container>
+</data-table>

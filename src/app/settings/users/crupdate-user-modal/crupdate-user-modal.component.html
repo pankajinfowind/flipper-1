@@ -1,0 +1,92 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update User Details</h2>
+    <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a User</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+   <form autocomplete="off" [formGroup]="userForm" (ngSubmit)="confirm()">
+     <mat-card-content class="mat-dialog-content">
+
+           <mat-form-field  appearance="outline" class="w-100">
+               <mat-label>Enter first name</mat-label>
+               <input matInput placeholder="first name" formControlName="first_name" required>
+
+             <mat-error  *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)">
+                   <mat-error *ngIf="first_name.errors.first_name && !first_name.errors.required">
+                     Please enter a valid first name
+                   </mat-error>
+                   <mat-error *ngIf="first_name.errors.required">
+                    first name is <strong>required</strong>
+                   </mat-error>
+             </mat-error>
+
+         </mat-form-field>
+
+          <mat-form-field  appearance="outline" class="w-100">
+               <mat-label>Enter last name</mat-label>
+               <input matInput placeholder="first name" formControlName="last_name" required>
+
+             <mat-error  *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)">
+                   <mat-error *ngIf="last_name.errors.last_name && !last_name.errors.required">
+                     Please enter a valid last name
+                   </mat-error>
+                   <mat-error *ngIf="last_name.errors.required">
+                    last name is <strong>required</strong>
+                   </mat-error>
+             </mat-error>
+
+         </mat-form-field>
+
+            <mat-form-field  appearance="outline" class="w-100">
+               <mat-label>Enter phone</mat-label>
+               <input matInput placeholder="phone" formControlName="phone" required>
+
+             <mat-error  *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                   <mat-error *ngIf="phone.errors.phone && !phone.errors.required">
+                     Please enter a valid phone
+                   </mat-error>
+                   <mat-error *ngIf="phone.errors.required">
+                    phone is <strong>required</strong>
+                   </mat-error>
+             </mat-error>
+
+         </mat-form-field>
+
+            <mat-form-field  appearance="outline" class="w-100">
+               <mat-label>Enter email</mat-label>
+               <input matInput placeholder="email" formControlName="email" required>
+
+             <mat-error  *ngIf="email.invalid && (email.dirty || email.touched)">
+                   <mat-error *ngIf="email.errors.email && !email.errors.required">
+                     Please enter a valid email
+                   </mat-error>
+                   <mat-error *ngIf="email.errors.required">
+                    email is <strong>required</strong>
+                   </mat-error>
+             </mat-error>
+
+         </mat-form-field>
+
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Choose Role</mat-label>
+                  <mat-select placeholder="Role" [formControl]="role_id" required>
+                    <mat-option *ngFor="let role of current.getRoles()" [value]="role.id">{{role.display_name}}</mat-option>
+                  </mat-select>
+                  <mat-hint>The user can has role</mat-hint>
+                  <mat-error *ngIf="role_id.invalid">
+                    <strong>Please role is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+
+     </mat-card-content>
+
+     <mat-card-actions>
+        <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+          <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
+          <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !userForm.valid">
+              <span *ngIf="updating" trans>Update</span>
+              <span *ngIf="!updating" trans>Create</span>
+          </button>
+      </div>
+     </mat-card-actions>
+
+   </form>

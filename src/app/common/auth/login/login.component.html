@@ -1,0 +1,20 @@
+<div class="animated bounceInUp">
+  <app-email-verify
+    *ngIf="!next_step && !rest_password"
+    [label]="label"
+    [token]="token"
+    [appname]="appname"
+    [redirecturl]="appname"
+    (valueChange)="checkChanges($event)"
+  ></app-email-verify>
+  <app-password-verify
+    *ngIf="next_step && !rest_password"
+    [user]="user"
+    [label]="label"
+    [token]="token"
+    [appname]="appname"
+    [redirecturl]="appname"
+    (valueChange)="checkChanges($event)"
+  ></app-password-verify>
+ 
+</div>

@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <h2 class="modal-title" mat-dialog-title trans>{{data.branch.name}} branch users</h2>
+  <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button">
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</div>
+<form autocomplete="off" [formGroup]="userForm" (ngSubmit)="confirm()">
+  <mat-card-content class="mat-dialog-content">
+    <table style="width:90%;margin-left: 40px;">
+
+      <tr>
+        <td>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Enter names</mat-label>
+            <input matInput placeholder="Enter user name"  (input)="showChooseUserModal()" (click)="showChooseUserModal()" formControlName="names" required>
+
+            <mat-error *ngIf="names.invalid && (names.dirty || names.touched)">
+              <mat-error *ngIf="names.errors.names && !names.errors.required">
+                Please enter a valid first name
+              </mat-error>
+              <mat-error *ngIf="names.errors.required">
+                name is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+
+          </mat-form-field>
+        </td>
+        <td>
+          <button style=" margin-top: -17px;" mat-raised-button class="button" [disabled]="(loading | async) || !userForm.valid" trans>Assign</button>
+        </td>
+      </tr>
+    </table>
+  </mat-card-content>
+</form>
+
+<div style="margin-top:-68px">
+
+  <data-table [dataSource]="dataSource" itemsName="Users" [isLoading]="(loading | async)" matSort>
+
+    <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDetachSelectedUsers()"
+      headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+    </button>
+
+    <ng-container matColumnDef="avatar">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Avatar</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <img class="avatar" src="{{user.avatar}}">
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="first_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Names</mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.first_name}} {{user.last_name}} ({{user.role.name}})
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <button mat-icon-button (click)="showCrupdateUsersModal(user)" [matTooltip]="'Edit user' | trans">
+          <mat-icon svgIcon="edit"></mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+  </data-table>
+</div>

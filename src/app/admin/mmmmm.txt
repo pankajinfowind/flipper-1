@@ -1,0 +1,26 @@
+<mat-sidenav [opened]="isOpened" mode="side" class="main-left-column" style="width: 90px;">
+  <div class="nH bAw nn" style="width: 83px; height: 100%; overflow:hidden;">
+    <div class="brC-aT5-aOt-Jw">
+      <div class="brC-aT5-aOt-bsf-Jw">
+        <nav class="brC-bsf-aT5-aOt list-horizontal">
+            <mat-list class="main-menu-items" *ngFor="let link of appearance.navLinks" class="aT5-aOt-I bse-bvF-aLp" (click)="navigation(link.path)" [class.active]="localStorage.get('active_menu')==link.path" style="
+            padding-top: 13px;padding-bottom: 13px;cursor:pointer;">
+            <a  class="main-menu-item">
+                <mat-icon class="aT5-aOt-I-JX-Jw" style="margin-top: 8.5px;margin-left: 5px; cursor:pointer;">{{link.icon}}</mat-icon>
+            <label class="titles">{{link.label}}</label>
+          </a>
+          </mat-list>
+
+          <div class="brC-aT5-aOt-axR" role="separator" style="margin-top: 12px" aria-hidden="false"
+            aria-disabled="true" id=":nv"></div>
+
+        </nav>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</mat-sidenav>
+ <material-navbar [class.fullmaterialnavbar]="!isOpened"> </material-navbar>

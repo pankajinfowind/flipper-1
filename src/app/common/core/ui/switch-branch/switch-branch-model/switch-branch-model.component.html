@@ -1,0 +1,11 @@
+<div class="mx-auto col-4">
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title trans>{{current.getBusiness('name')}} Business</h2>
+</div>
+<mat-card-content class="mat-dialog-content">
+<switch-branch></switch-branch>
+
+ <button mat-raised-button class="float-right close-button no-style icon-button" (click)="logOut()" [disabled]="(loading | async)" type="button">Log out </button>
+</mat-card-content>
+ <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+</div>

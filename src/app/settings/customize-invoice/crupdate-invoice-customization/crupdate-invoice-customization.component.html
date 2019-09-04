@@ -1,0 +1,347 @@
+<div class="app-crupdate-invoice-customization">
+  <div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title trans>Invoice Customization</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button">
+      <mat-icon svgIcon="close"></mat-icon>
+    </button>
+  </div>
+
+  <div class="row ml-2 mb-5 pl-2 pb-5 custom-content">
+
+    <form [formGroup]="customizeForm" class="col-4 mb-5" (ngSubmit)="confirm()">
+
+      <mat-card-content class="inv-dialog-content row mb-4 mr-2">
+        <mat-form-field class="mx-auto col-10" appearance="outline">
+          <mat-label>Choose Invoice Type(s)</mat-label>
+          <mat-select placeholder="Invoice Type(s)" [formControl]="customerTypeIds" multiple
+            (selectionChange)="updatedcustomerTypeIds()">
+            <mat-option *ngFor="let customer_type of customerTypes" [value]="customer_type.id">{{customer_type.name}}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Means that invoice will be belongs to choosen invoice types</mat-hint>
+
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10" *ngIf="customizeForm.value.customerTypeIds!=null">
+          <mat-label>Customer Type Name</mat-label>
+          <input matInput placeholder="Customer Type Name" formControlName="customer_type_name" (input)="updateModel()"
+            required>
+          <mat-hint><i>It should be insurance name(Rssb) or the customer type name(Bronzen customer)</i></mat-hint>
+          <mat-error *ngIf="customer_type_name.invalid && (customer_type_name.dirty || customer_type_name.touched)">
+            <mat-error *ngIf="customer_type_name.errors.required">
+              customer type name is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+        </mat-form-field><br />
+
+        <mat-divider></mat-divider>
+        <h3 class="modal-title m-4" mat-dialog-title trans>Invoice contact info settings</h3>
+
+        <div class="mx-auto col-10">
+        <div class="col-10">
+          <img [src]="customizeForm.value.logo" class="d-block rounded" style="width:128px" *ngIf="customizeForm.value.logo" />
+          <br />
+          <button type="button" class="button-success" *ngIf="customizeForm.value.logo!='assets/logo/avatar.png'"
+            mat-raised-button (click)="uploadLogoModel()">
+            <span trans>Change Logo</span>
+          </button>
+          </div>
+          <div class="col-2">
+          <button type="button" class="button" *ngIf="customizeForm.value.logo=='assets/logo/avatar.png'"
+            mat-raised-button (click)="uploadLogoModel()">
+            <span trans>Upload Logo</span>
+          </button>
+          </div>
+          <br />
+        </div>
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Enter company name</mat-label>
+          <input matInput placeholder="Company Name" formControlName="company_name" (input)="updateModel()" required>
+
+          <mat-error *ngIf="company_name.invalid && (company_name.dirty || company_name.touched)">
+            <mat-error *ngIf="company_name.errors.required">
+              Business/Company name is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Enter company address</mat-label>
+          <input matInput placeholder="Company address" formControlName="address" (input)="updateModel()" required>
+
+          <mat-error *ngIf="address.invalid && (address.dirty || address.touched)">
+            <mat-error *ngIf="address.errors.required">
+              Business/Company address is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Enter company contact</mat-label>
+          <input matInput placeholder="Company contact" formControlName="contact" (input)="updateModel()" required>
+
+          <mat-error *ngIf="contact.invalid && (contact.dirty || contact.touched)">
+            <mat-error *ngIf="contact.errors.required">
+              Business/Company contact is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Enter company tax number</mat-label>
+          <input matInput placeholder="Company tax number" formControlName="tax_number" (input)="updateModel()">
+
+        </mat-form-field><br />
+        <h3 class="modal-title m-4" mat-dialog-title trans>Invoice Customer settings</h3>
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Customer No</mat-label>
+          <input matInput placeholder="Rename Customer No" formControlName="customer_number" (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Customer Name</mat-label>
+          <input matInput placeholder="Rename Customer Name" formControlName="customer_name" (input)="updateModel()">
+
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Customer Address</mat-label>
+          <input matInput placeholder="Rename Customer Address" formControlName="customer_address"
+            (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Customer Birth Date</mat-label>
+          <input matInput placeholder="Rename Customer Birth Date" formControlName="customer_dob"
+            (input)="updateModel()">
+
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Customer Beneficiary</mat-label>
+          <input matInput placeholder="Rename Customer Beneficiary" formControlName="beneficiary"
+            (input)="updateModel()">
+        </mat-form-field><br />
+
+
+        <h3 class="modal-title m-4" mat-dialog-title trans>Invoice settings</h3>
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Default title</mat-label>
+          <input matInput placeholder="Default title" formControlName="default_title" required (input)="updateModel()">
+
+          <mat-error *ngIf="default_title.invalid && (default_title.dirty || default_title.touched)">
+            <mat-error *ngIf="default_title.errors.required">
+              Default title is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+          <mat-hint><i>The default title for all invoices. You can change this on each invoice.</i></mat-hint>
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Default subheading</mat-label>
+          <input matInput placeholder="Default subheading" formControlName="default_sub_title" (input)="updateModel()">
+          <mat-hint><i>This will be displayed below the title of each invoice.</i></mat-hint>
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Default footer</mat-label>
+          <input matInput placeholder="Default footer" formControlName="default_footer" (input)="updateModel()">
+          <mat-hint><i>This will be displayed at the bottom of each invoice.</i></mat-hint>
+        </mat-form-field><br />
+
+
+
+        <h3 class="modal-title m-4" mat-dialog-title trans>Invoice column settings</h3>
+        <label class="modal-title m-4" id="radio-group-label">Edit the titles of the columns on your invoices:</label>
+        <table class="ml-4 mx-auto col-10">
+          <tr>
+            <th>Code</th>
+            <td>
+              <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
+                <mat-radio-button class="radio-button" *ngFor="let code of codes" [value]="code"
+                  [checked]="code === 'Code'" (change)="updatedCode(code)">
+                  {{code}}
+                </mat-radio-button>
+                <mat-form-field appearance="outline" *ngIf="favoriteCode=='Other'">
+                  <mat-label>Other</mat-label>
+                  <input matInput placeholder="Other" formControlName="number" (input)="updateModel()">
+                </mat-form-field>
+              </mat-radio-group>
+
+            </td>
+          </tr>
+          <tr>
+            <th>Items</th>
+            <td>
+              <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
+                <mat-radio-button class="radio-button" *ngFor="let item of _items" [value]="item"
+                  [checked]="item === 'Items'" (change)="updatedItem(item)">
+                  {{item}}
+                </mat-radio-button>
+                <mat-form-field appearance="outline" *ngIf="favoriteItem=='Other'">
+                  <mat-label>Other</mat-label>
+                  <input matInput placeholder="Other" formControlName="items" (input)="updateModel()">
+                </mat-form-field>
+              </mat-radio-group>
+            </td>
+          </tr>
+          <tr>
+            <th>Units</th>
+            <td>
+              <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
+                <mat-radio-button class="radio-button" *ngFor="let unit of _units" [value]="unit"
+                  [checked]="unit === 'Quantity'" (change)="updatedUnit(unit)">
+                  {{unit}}
+                </mat-radio-button>
+                <mat-form-field appearance="outline" *ngIf="favoriteUnit=='Other'">
+                  <mat-label>Other</mat-label>
+                  <input matInput placeholder="Other" formControlName="units" (input)="updateModel()">
+                </mat-form-field>
+
+              </mat-radio-group>
+            </td>
+          </tr>
+          <tr>
+            <th>Price</th>
+            <td>
+
+              <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
+                <mat-radio-button class="radio-button" *ngFor="let price of prices" [value]="price"
+                  [checked]="price === 'Price'" (change)="updatedPrice(price)">
+                  {{price}}
+                </mat-radio-button>
+                <mat-form-field appearance="outline" *ngIf="favoritePrice=='Other'">
+                  <mat-label>Other</mat-label>
+                  <input matInput placeholder="Other" formControlName="price" (input)="updateModel()">
+                </mat-form-field>
+
+              </mat-radio-group>
+            </td>
+          </tr>
+          <tr>
+            <th>Amount</th>
+            <td>
+              <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
+                <mat-radio-button class="radio-button" *ngFor="let amount of amounts" [value]="amount"
+                  [checked]="amount === 'Amount'" (change)="updatedAmount(amount)">
+                  {{amount}}
+                </mat-radio-button>
+                <mat-form-field appearance="outline" *ngIf="favoriteAmount=='Other'">
+                  <mat-label>Other</mat-label>
+                  <input matInput placeholder="Other" formControlName="amount" (input)="updateModel()">
+                </mat-form-field>
+
+              </mat-radio-group>
+            </td>
+          </tr>
+        </table>
+
+        <h3 class="modal-title m-4" mat-dialog-title trans>Invoice receiption settings</h3>
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Receiption Title</mat-label>
+          <input matInput placeholder="Rename Receiption Title" formControlName="reception_title"
+            (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Receiption Field 1</mat-label>
+          <input matInput placeholder="Receiption Field 1" formControlName="reception_field_a" (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Receiption Field 2</mat-label>
+          <input matInput placeholder="Receiption Field 2" formControlName="reception_field_b" (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Receiption Field 3</mat-label>
+          <input matInput placeholder="Receiption Field 3" formControlName="reception_field_c" (input)="updateModel()">
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Receiption Field 4</mat-label>
+          <input matInput placeholder="Receiption Field 4" formControlName="reception_field_d" (input)="updateModel()">
+        </mat-form-field><br />
+
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Receiption Field 5</mat-label>
+          <input matInput placeholder="Receiption Field 5" formControlName="reception_field_e" (input)="updateModel()">
+        </mat-form-field><br />
+        <h3 class="modal-title m-4" mat-dialog-title trans>More details settings</h3>
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Done Message</mat-label>
+          <input matInput placeholder="Done Message" formControlName="done_title" (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Done at</mat-label>
+          <input matInput placeholder="Rename Done at or Fait a" formControlName="done_at" (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Done on</mat-label>
+          <input matInput placeholder="Rename Done on or Fait le" formControlName="done_on" (input)="updateModel()">
+
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="mx-auto col-10">
+          <mat-label>Rename Nome , Cashet and Signature</mat-label>
+          <input matInput placeholder="Rename Nome , Cashet and Signature" formControlName="nom_signature_cachet"
+            (input)="updateModel()">
+
+        </mat-form-field><br />
+
+        <label class="modal-title m-4" id="radio-group-label">Hide info on your invoices:</label>
+        <table class="ml-4 mx-auto col-10">
+          <tr>
+            <td>
+              <mat-checkbox formControlName="hide_logo" (click)="hideLogo()">Hide Logo</mat-checkbox>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-checkbox formControlName="hide_visa" (click)="hideVisa()">Hide Visa</mat-checkbox>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-checkbox formControlName="hide_discount_table" (click)="hideDiscountTable()">Hide Discount Table
+              </mat-checkbox>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-checkbox formControlName="hide_taxable_table" (click)="hideTaxableTable()">Hide Taxable Table
+              </mat-checkbox>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-checkbox formControlName="hide_reception_table" (click)="hideReceptionTable()">Hide Receiption Table
+              </mat-checkbox>
+            </td>
+          </tr>
+        </table>
+      </mat-card-content>
+      <div class="buttons float-right mat-dialog-actions" mat-dialog-actions>
+        <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)"
+          trans>Cancel</button>
+        <button type="submit" class="button" mat-raised-button [disabled]="(loading | async) || !customizeForm.valid">
+          <span *ngIf="updating" trans>Update</span>
+          <span *ngIf="!updating" trans>Create</span>
+        </button>
+      </div>
+    </form>
+
+    <div class="col-8">
+      <div class="inv-dialog-content ml-2 mb-4 mr-0">
+      <h2 class="modal-title m-3" mat-dialog-title trans>Preview Invoice</h2>
+        <app-preview-invoice-customized></app-preview-invoice-customized>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title  trans> {{stock_name}} product</h2>
+</div>
+<mat-divider></mat-divider>
+<mat-nav-list *ngFor="let stock of stocks">
+  <a mat-list-item (click)="openLink(stock,$event)"  matRipple
+  [matRippleCentered]="centered"
+  [matRippleDisabled]="disabled"
+  [matRippleUnbounded]="unbounded"
+  [matRippleRadius]="radius"
+  [matRippleColor]="color">
+    <span mat-line>{{stock.batch_no}} ({{stock_name}})</span>
+    <span mat-line>
+      <mat-chip-list>
+        <mat-chip>in qty({{stock.in_qty}})</mat-chip>-
+        <mat-chip>out qty({{stock.out_qty}})</mat-chip>=
+        <mat-chip color="primary" selected>total({{stock.total_qty}})</mat-chip>
+      </mat-chip-list>
+    </span>
+    <span  mat-line class="col-12"><div style="float:right"><label *ngIf="stock.expired_date!='1970-01-01 00:00:00'">expired at:{{stock.expired_date | date: 'mediumDate'}}, </label><label>created at:{{stock.created_at | date: 'mediumDate'}}</label></div></span>
+  </a>
+  <mat-divider></mat-divider>
+</mat-nav-list>
+
+<div class="text" *ngIf="stocks.length == 0">
+    <div class="main">
+      {{stock_name}} item was Expired.
+    </div>
+</div>

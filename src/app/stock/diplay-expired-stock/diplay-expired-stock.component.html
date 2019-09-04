@@ -1,0 +1,73 @@
+<data-table [dataSource]="dataSource" itemsName="Stock Expired" [isLoading]="(loading | async)" hiddenCheckBox="true" matSort>
+  <div headerLeftActions>
+      <!-- <button mat-raised-button  class="button" (click)="addItem()"  trans>Create a stock</button> -->
+    </div>
+  <div class="input-container" headerRightActions>
+      <!-- <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon> -->
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedStocks()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="batch_no">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Batch No</mat-header-cell>
+    <mat-cell *matCellDef="let stock"> <mat-label [matTooltip]="stock.batch_no">{{stock.batch_no}}</mat-label>
+     </mat-cell>
+</ng-container>
+<ng-container matColumnDef="sku">
+    <mat-header-cell *matHeaderCellDef trans>S.K.U
+      <mat-icon matSuffix [matTooltip]="'Stock Keeping Unit'" aria-label="Stock Keeping Unit">info</mat-icon>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let stock">
+        <mat-label [matTooltip]="stock.item.sku" class="ellipsis">{{stock.item.sku}}</mat-label>
+   </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="item">
+  <mat-header-cell *matHeaderCellDef trans>Stock</mat-header-cell>
+  <mat-cell *matCellDef="let stock">
+      <mat-label [matTooltip]="stock.item?stock.item.item:'no item name displayed'" class="ellipsis">{{stock.item?stock.item.item:'----'}}</mat-label>
+     </mat-cell>
+</ng-container>
+
+
+<ng-container matColumnDef="in_qty">
+  <mat-header-cell *matHeaderCellDef trans>In Qty</mat-header-cell>
+  <mat-cell *matCellDef="let stock">
+      <mat-label class="ellipsis">{{stock.in_qty}}</mat-label>
+     </mat-cell>
+</ng-container>
+
+
+<ng-container matColumnDef="out_qty">
+  <mat-header-cell *matHeaderCellDef trans>Out Qty</mat-header-cell>
+  <mat-cell *matCellDef="let stock">
+      <mat-label class="ellipsis">{{stock.out_qty}}</mat-label>
+     </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="total_qty">
+  <mat-header-cell *matHeaderCellDef trans>Total Qty</mat-header-cell>
+  <mat-cell *matCellDef="let stock">
+      <mat-label class="ellipsis">{{stock.total_qty}}</mat-label>
+     </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="expired_date">
+  <mat-header-cell *matHeaderCellDef trans>Expired Date</mat-header-cell>
+  <mat-cell *matCellDef="let stock">
+      <mat-label class="ellipsis">{{stock.expired_date | date: 'mediumDate'}}</mat-label>
+     </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="manufacture_date">
+  <mat-header-cell *matHeaderCellDef trans>Manf. Date</mat-header-cell>
+  <mat-cell *matCellDef="let stock">
+      <mat-label class="ellipsis">{{stock.manufacture_date | date: 'mediumDate'}}</mat-label>
+     </mat-cell>
+</ng-container>
+
+</data-table>
+

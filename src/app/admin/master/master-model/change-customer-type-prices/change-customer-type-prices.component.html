@@ -1,0 +1,150 @@
+<!-- <loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator> -->
+
+<mat-accordion class="fp-headers-align">
+  <mat-expansion-panel *ngIf="dataSource.data && dataSource.data.length > 0" [expanded]="step === 0" (opened)="setStep(0)"
+    hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>edit</mat-icon> Edit Existing
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="details-panel" *ngIf="dataSource.data && dataSource.data.length > 0">
+
+      <table mat-table [dataSource]="dataSource" class="w-100" style="overflow-x: hidden" multiTemplateDataRows>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.customer_type?element.customer_type.name:''}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price (INC TAX)
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.sale_price_including_tax}} {{currency_code}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button class="d-inline-block" color="accent" (click)="expandedElement = expandedElement === element ? null : element;edit(element)">
+              <mat-icon>edit</mat-icon> Edit
+            </button>
+            <button mat-button class="d-inline-block" color="warn" [disabled]="(loading | async)" (click)="delete(element)">
+              <mat-icon>delete</mat-icon> delete
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="fp-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <form [formGroup]="customertypeFormGroup" (ngSubmit)="saveCustometTypeUpdate(element)">
+
+                <table class="table mt-3">
+                  <tr>
+                    <td>
+                      <div class="m-4">
+                        {{element.customer_type?element.customer_type.name:''}} <b>{{currency_code}}</b>
+                      </div>
+                    </td>
+                    <td>
+                      <mat-form-field class="m-4" appearance="outline">
+                        <mat-label>Enter Price (INC TAX)</mat-label>
+                        <input matInput placeholder="Price (INC TAX)" type="number" formControlName="sale_price_including_tax"
+                          required>
+
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <div class="m-4 float-right">
+                        <button mat-raised-button type="submit" color="primary" [disabled]="(loading | async)">Update</button>
+
+                      </div>
+                    </td>
+                    <td>
+                      <div class="m-4 float-right">
+                        <button mat-button mat-raised-button (click)="expandedElement = expandedElement === element ? null : element"
+                          [disabled]="(loading | async)">Close</button>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+              </form>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="fp-element-row" [class.highlighted]="expandedElement === element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="fp-detail-row"></tr>
+
+      </table>
+
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="dataSource_new_customer_type.data.length > 0" [expanded]="dataSource.data.length==0?step === 0:step === 1" (opened)="setStep(dataSource.data.length==0?0:1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>add</mat-icon> Add New
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="newCustomerTypeForm">
+        <button type="button" class="m-3 float-right button-success" (click)="saveNewCustomerType(null,true)" mat-raised-button  [disabled]="loading | async">Save all</button>
+        <!-- <input matInput class="w-100 p-2" (keyup)="applyFilter($event.target.value)" [disabled]="dataSource_new_customer_type.data.length == 0" placeholder="Search"> -->
+
+  <div style="overflow: auto">
+      <table formArrayName="newCustomerType" mat-table [dataSource]="dataSource_new_customer_type" class="w-100">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef > Customer Type </th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+              {{element.name}}<br />
+            <mat-form-field class="hidden">
+              <input matInput formControlName="item_id" required hidden>
+              <input matInput formControlName="customer_type_id" required hidden>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef > Price(INC TAX)</th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+            <!-- unit quantity input field -->
+
+                <input matInput placeholder="Price(INC TAX)"  type="number"
+                  formControlName="sale_price_including_tax" required>
+
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef > Action </th>
+          <td mat-cell *matCellDef="let element; let index = index">
+            <button type="button" class="m-3 float-right button" (click)="saveNewCustomerType(element)" mat-raised-button  [disabled]="loading | async">Save</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsNewCustomerType"></tr>
+
+        <tr (click)="selected_row_id = row.id" [class.highlighted]="selected_row_id==row.id?true:false" mat-row *matRowDef="let row; columns: displayedColumnsNewCustomerType; let index = index">
+        </tr>
+
+
+      </table>
+    </div>
+    </form>
+  </mat-expansion-panel>
+
+</mat-accordion>

@@ -1,0 +1,38 @@
+
+  <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+  <div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update Branch Details</h2>
+    <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a Branch</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+   <form autocomplete="off" [formGroup]="branchForm" (ngSubmit)="confirm()">
+     <mat-card-content class="mat-dialog-content">
+
+           <mat-form-field  appearance="outline" class="w-100">
+               <mat-label>Enter branch name</mat-label>
+             <input matInput placeholder="branch name" formControlName="name" required>
+
+             <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+                   <mat-error *ngIf="name.errors.name && !name.errors.required">
+                     Please enter a valid branch
+                   </mat-error>
+                   <mat-error *ngIf="name.errors.required">
+                    branch is <strong>required</strong>
+                   </mat-error>
+             </mat-error>
+
+         </mat-form-field>
+
+     </mat-card-content>
+
+     <mat-card-actions>
+        <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+          <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
+          <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !branchForm.valid">
+              <span *ngIf="updating" trans>Update</span>
+              <span *ngIf="!updating" trans>Create</span>
+          </button>
+      </div>
+     </mat-card-actions>
+
+   </form>

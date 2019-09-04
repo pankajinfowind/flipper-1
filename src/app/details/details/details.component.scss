@@ -1,0 +1,41 @@
+@import "../../app_sass/variables";
+
+.app-details {
+  display: block;
+  padding: 28px 0;
+  margin-top: -7px;
+  overflow: hidden;
+   .header {
+    margin-bottom: 8.7px;
+    padding: 0 24px;
+
+    .title {
+      display: flex;
+      align-items: center;
+
+        margin-top: -7px;
+      .name {
+        font-size: 1.2rem;
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      mat-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 18px;
+      }
+    }
+
+    .close-button {
+      color: $site-text-color-300;
+      margin-left: auto;
+    }
+  }
+
+  .mat-tab-label {
+    min-width: 50%;
+  }
+
+}

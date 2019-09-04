@@ -1,0 +1,19 @@
+<mat-divider></mat-divider>
+<div class="app-details-panel">
+    <ng-container  *ngIf="details$ | async as details" [ngSwitch]="details.module">
+        <div class="details-list">
+            <app-master-model  *ngIf="details.module=='app-master'"></app-master-model>
+            <app-stock-model  *ngIf="details.module=='app-stock'"></app-stock-model>
+            <app-setup-model  *ngIf="details.module=='app-setup'"></app-setup-model>
+       </div>
+
+        <ng-template *ngSwitchDefault>
+            <div class="nothing-selected">
+                <div class="text" trans>No Action Made.</div>
+            </div>
+        </ng-template>
+      </ng-container>
+</div>
+
+
+

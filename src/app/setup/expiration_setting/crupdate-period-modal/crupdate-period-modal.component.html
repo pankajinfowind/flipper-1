@@ -1,0 +1,74 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update Period Details</h2>
+    <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a Period</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+   <form autocomplete="off" [formGroup]="dataForm" (ngSubmit)="confirm()">
+     <mat-card-content class="mat-dialog-content">
+        <mat-form-field   appearance="outline" class="w-100">
+            <mat-label>Choose period</mat-label>
+          <mat-select placeholder="Choose period"  formControlName="period" required>
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let period of periods" [value]="period.value">{{period.valueName}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="period.invalid && (period.dirty || period.touched)">
+            <strong *ngIf="period.errors.required">Period is required.</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="col-6">
+            <mat-label>Enter name</mat-label>
+          <input  matInput placeholder="Name" formControlName="name" value="{{name.value?name.value:period.value}}">
+            <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+              <mat-error *ngIf="name.errors.name && !name.errors.required">
+                Please enter a valid name
+              </mat-error>
+              <mat-error *ngIf="name.errors.required">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="outline" class="col-6" *ngIf="period.value && !(period.value=='today' || period.value=='yestarday' || period.value=='tomorrow')">
+            <mat-label>Enter period interval</mat-label>
+          <input  matInput placeholder="Period interval"  formControlName="period_value">
+          <mat-error *ngIf="period_value.invalid && (period_value.dirty || period_value.touched)">
+            <mat-error *ngIf="period_value.invalid && !period_value.errors.required">
+              Please enter a valid period interval, only number allowed
+            </mat-error>
+            <mat-error *ngIf="period_value.errors.required">
+                Period interval is <strong>required</strong>
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field  appearance="outline" class="w-100">
+          <mat-label>Choose Color</mat-label>
+        <mat-select placeholder="Choose Color" formControlName="color">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">{{color.valueName}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="color.invalid && (color.dirty || color.touched)">
+          <strong *ngIf="color.errors.required">Color is required.</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+        <mat-form-field  appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+              <textarea  matInput placeholder="Description (optional)" formControlName="description"></textarea>
+          </mat-form-field>
+
+     </mat-card-content>
+
+     <mat-card-actions>
+        <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+          <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
+          <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !dataForm.valid">
+              <span *ngIf="updating" trans>Update</span>
+              <span *ngIf="!updating" trans>Create</span>
+          </button>
+      </div>
+     </mat-card-actions>
+
+   </form>

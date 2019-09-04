@@ -1,0 +1,18 @@
+   <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+  <div style="margin:6px;" *ngFor="let branch of  current.getBusiness('branches')">
+                  <a mat-menu-item class="button-cancel" [class.isSwitched]="branch.pivot.switched==1"
+                    [disabled]="branch.pivot.switched==1"
+                    (click)="branch.pivot.switched==0?maySwitchBranch(branch):isSwitchedMessage()"
+                    style="margin-bottom:5px;padding-left: 40px;padding-right: 40px;">
+                    <mat-icon style="color:green" *ngIf="branch.pivot.switched==true">toggle_on</mat-icon>
+                    <mat-icon style="color:gray" *ngIf="branch.pivot.switched==false">toggle_off</mat-icon>
+                    {{branch.name}} branch
+                  </a>
+                  <mat-divider></mat-divider>
+                 
+  </div>
+    <no-results-message style="margin:6px;" hideImg="true" *ngIf="current.getBusiness('branches').length ==0 ">
+    <span style="font-size:14px" primary-text trans>Hi {{current.get('first_name')}}, </span>
+                <span style="font-size:12px" secondary-text trans>Seems like no branch has been assigned to you yet. <br /><b>Please, contact via Admin to allow you to operate in a branch.</b></span>
+      </no-results-message>
+

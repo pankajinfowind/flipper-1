@@ -1,0 +1,66 @@
+@import '../theme';
+@import "../../app_sass/variables";
+$blue:rgb(3, 155, 229);;
+admin-menu-list-item {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+
+  .menu-list-item{
+    cursor:pointer;
+    display: block;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 400;
+    color: $admin-left-col-text-color;
+    text-transform: capitalize;
+    padding-bottom:30px;
+   line-height: 12px;
+   font-family: $font-family;
+     .mat-icon {
+      position: relative;
+      vertical-align: middle;
+      margin-right: 10px;
+      top: 0px;
+      
+    }
+    .mat-icon:not(.toggle-expansion-icon) {
+      &:hover {
+        transform: rotate(45deg);
+      }
+    }
+.mat-icon-expanded{
+  margin-right: -10px; 
+  &:hover {
+    transform: rotate(45deg);
+  }
+}
+
+    &:hover {
+      background-color: $admin-left-col-active-color;
+    }
+   
+    &.active {
+      color: $site-primary-color-100;
+      background-color: $site-selected-item-bg-color;
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+      .text {
+        font-weight: 500!important;
+      }
+
+      &:not(.active):not(.drag-over):hover {
+        background-color: $site-bg-color-300;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
+      
+    }
+
+  }
+.collapsed{
+  border-left:solid 2px $blue;
+  margin-left:30px;
+}
+}

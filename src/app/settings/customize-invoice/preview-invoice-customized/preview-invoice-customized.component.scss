@@ -1,0 +1,107 @@
+@import "../../../app_sass/variables";
+@import "../../../app_sass/modal.scss";
+@media print {body {color: #000;background-color: #fff;}}
+* { // this works for all but td
+  word-wrap:break-word;
+}
+
+.invoice-box {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+}
+
+.invoice-box table {
+  width: 100%;
+  line-height: inherit;
+  text-align: left;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.invoice-box table td {
+  padding: 5px;
+  vertical-align: top
+}
+
+.invoice-box tr,
+td,
+th {
+  border: 1px solid #000;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+}
+
+.th-border,
+.tr-border {
+  border: none !important;
+}
+
+.invoice-box table tr td:nth-child(2) {
+  text-align: right
+}
+
+.invoice-box table tr.top table td {
+  padding-bottom: 20px
+}
+
+.invoice-box table tr.top table td.title {
+  font-size: 45px;
+  line-height: 45px;
+  color: #000;
+}
+
+.heading {
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  font-weight: 700
+}
+
+.percentage_total {
+  display: inline-flex;
+  width: 100%;
+}
+
+.signature {
+  width: 60%;
+}
+
+.table-none {
+  width: 30%;
+  color:#fff;
+}
+.table-tax{
+    width: 50%;
+    font-size: 13px; 
+}
+
+.table-percentage_total {
+  width: 50%;
+}
+
+.table-signature_done {
+  width: 60%;
+  font-size: 14pt; 
+}
+
+.table-reception {
+    width: 40%; 
+}
+
+
+
+.no-bottom-border {
+  border-bottom: 0;
+  border-left: 0;
+}
+.border-none{
+    padding: 0px !important;
+    border: none !important;
+}
+

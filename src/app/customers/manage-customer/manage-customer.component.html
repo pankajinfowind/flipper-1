@@ -1,0 +1,149 @@
+<div class="modal-header">
+  <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update Customer Details</h2>
+  <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a Customer</h2>
+  <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+
+
+<form autocomplete="off" [formGroup]="dataForm" (ngSubmit)="confirm()">
+  <mat-card-content class="mat-dialog-content">
+
+      <div class="item row">
+        <div class="col-12">
+
+            <mat-form-field class="col-6" appearance="outline">
+              <mat-label>Choose Customer Type</mat-label>
+              <input  matInput placeholder="Choose Customer Type"  (input)="showChooseCustomerTypeModal()" (click)="showChooseCustomerTypeModal()" formControlName="customer_type">
+              <mat-error *ngIf="customer_type.invalid && (customer_type.dirty || customer_type.touched)">
+                  <strong *ngIf="customer_type.errors.required">Choose Customer Type is required.</strong>
+                </mat-error>
+            </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Title</mat-label>
+            <mat-select placeholder="Mr or Mrs" formControlName="title" required>
+              <mat-option *ngFor="let t of titles" [value]="t">
+                {{t}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="title.invalid && (title.dirty || title.touched)">
+              Title is required.
+            </mat-error>
+
+          </mat-form-field>
+
+
+
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Status</mat-label>
+            <mat-select placeholder="Single or Married" formControlName="status" required>
+              <mat-option *ngFor="let s of statuss" [value]="s">
+                {{s}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="status.invalid && (status.dirty || status.touched)">
+              Status is required.
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline" class="col-6">
+              <mat-label>Gender</mat-label>
+              <mat-select placeholder="Male or Female" formControlName="gender" required>
+                <mat-option *ngFor="let g of genders" [value]="g">
+                  {{g}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+                Gender is required.
+              </mat-error>
+
+            </mat-form-field>
+        </div>
+
+        <div class="col-12">
+
+            <mat-form-field appearance="outline" class="col-6">
+                <mat-label>Full name</mat-label>
+
+                <input matInput placeholder="Full name" formControlName="full_name" required>
+                <mat-error *ngIf="full_name.invalid && (full_name.dirty || full_name.touched)">
+                  <mat-error *ngIf="full_name.errors.required">
+                    Full name is required
+                  </mat-error>
+                </mat-error>
+
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-6">
+                  <mat-label>Customer No(if available)</mat-label>
+                  <input matInput placeholder="Customer No(Optional)" formControlName="customer_no">
+                </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-6">
+                  <mat-label>Email(if available)</mat-label>
+                  <input matInput placeholder="Email(Optional)" formControlName="email">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Phone No(if available)</mat-label>
+                    <input matInput placeholder="Phone No(Optional)" formControlName="phone">
+                  </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-6">
+                  <mat-label>Beneficiary(if available)</mat-label>
+                  <input matInput placeholder="Beneficiary(Optional)" formControlName="beneficiary">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Department(if available)</mat-label>
+                    <input matInput placeholder="Department(Optional)" formControlName="department">
+                  </mat-form-field>
+
+
+          </div>
+
+          <div class="col-12">
+              <mat-form-field appearance="outline" class="col-6">
+                  <mat-label>Date of Birth</mat-label>
+
+                  <input matInput  [matDatepicker]="dob" placeholder="Transction date" formControlName="dob"
+                    required>
+                  <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                  <mat-datepicker #dob></mat-datepicker>
+                </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-6">
+                  <mat-label>Address(if available)</mat-label>
+                  <input matInput placeholder="Address(Optional)" formControlName="address">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>City (if available)</mat-label>
+                    <input matInput placeholder="City(Optional)" formControlName="city">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="col-6">
+                      <mat-label>State(if available)</mat-label>
+                      <input matInput placeholder="State(Optional)" formControlName="state">
+                    </mat-form-field>
+            </div>
+            <div class="col-12">
+
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Country(if available)</mat-label>
+                    <input matInput placeholder="Country(Optional)" formControlName="country">
+                  </mat-form-field>
+            </div>
+
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+      <button (click)="close()" type="button" mat-button class="button-cancel" [disabled]="(loading | async)" trans>Cancel</button>
+      <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !dataForm.valid">
+          <span *ngIf="updating" trans>Update</span>
+          <span *ngIf="!updating" trans>Create</span>
+      </button>
+  </div>
+ </mat-card-actions>
+
+</form>

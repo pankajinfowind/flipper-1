@@ -1,0 +1,122 @@
+<loading-indicator [isVisible]="(loading$ | async)" class="overlay"></loading-indicator>
+<div class="primary-section-screen-replacement__page-content flipper-pay-panel">
+  <div class="iscroll__wrapper flipper-pay-panel__items-iscroll-wrapper">
+    <div class="flipper-pay-panel__items-iscroll-scroller" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+      <div class="flipper-pay-panel__cash-entry primary-section-screen-replacement__card">
+        <ul class="button-group button-group--inline flipper-pay-panel__function-buttons">
+          <!-- <li class="button-group__button flipper-pay-panel__list-button">Show Tenders</li>
+          <li class="button-group__button flipper-pay-panel__list-button">Tax Exemption</li>
+          <li class="button-group__button flipper-pay-panel__list-button">Split by item</li> -->
+        </ul>
+        <div class="flipper-pay-panel__numeric-selector-container">
+          <div class="flipper-pay-panel__numeric-selector">
+            <div class="flipper-pay-panel__predefined-container">
+              <ul class="flipper-pay-panel__predefined-inner">
+                <li (click)="mainKeyClicked('50')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  50</li>
+                <li (click)="mainKeyClicked('100')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  100</li>
+                <li (click)="mainKeyClicked('200')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  200</li>
+                <li (click)="mainKeyClicked('1000')" class="flipper-pay-panel__predefined-item flipper-pay-panel__key"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>  1000</li>
+              </ul>
+            </div>
+            <div class="flipper-pay-panel__numeric-selector-display-container">
+              <div class="flipper-pay-panel__numeric-selector-display">
+               <span class="currency">{{currentUser.getBusiness('currency_code')}}
+                  <mat-form-field   appearance="outline">
+                      <mat-label>Amount Paid</mat-label>
+                      <input  matInput placeholder="Amount Paid" (input)="displayBalanceChangesDue()" (click)="$event.target.select()" (onEnter)="displayBalanceChangesDue()"  (mouseleave)="setInputToValueble()" (blur)="setInputToValueble()" autofocus  type="number" [(ngModel)]="numeric_selector" #ctrl="ngModel"  required>
+                      </mat-form-field>
+                    </span>
+              </div>
+              <div class="flipper-pay-panel__num-pad num-pad--dark num-pad">
+                <div class="num-pad__inner">
+                  <div class="num-pad__top">
+                    <div class="num-pad__row"><span data-qa-id="numpad__digit-1" class="Tappable-inactive num-pad__tappable"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('1')" class="flipper-pay-panel__key num-pad__item num-pad__key">1</div>
+                      </span><span data-qa-id="numpad__digit-2" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('2')" class="flipper-pay-panel__key num-pad__item num-pad__key">2</div>
+                      </span><span data-qa-id="numpad__digit-3" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('3')" class="flipper-pay-panel__key num-pad__item num-pad__key">3</div>
+                      </span></div>
+                    <div class="num-pad__row"><span data-qa-id="numpad__digit-4" class="Tappable-inactive num-pad__tappable"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('4')" class="flipper-pay-panel__key num-pad__item num-pad__key">4</div>
+                      </span><span data-qa-id="numpad__digit-5" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('5')" class="flipper-pay-panel__key num-pad__item num-pad__key">5</div>
+                      </span><span data-qa-id="numpad__digit-6" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('6')" class="flipper-pay-panel__key num-pad__item num-pad__key">6</div>
+                      </span></div>
+                    <div class="num-pad__row"><span data-qa-id="numpad__digit-7" class="Tappable-inactive num-pad__tappable"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('7')" class="flipper-pay-panel__key num-pad__item num-pad__key">7</div>
+                      </span><span data-qa-id="numpad__digit-8" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('8')" class="flipper-pay-panel__key num-pad__item num-pad__key">8</div>
+                      </span><span data-qa-id="numpad__digit-9" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                        <div (click)="keysClicked('9')" class="flipper-pay-panel__key num-pad__item num-pad__key">9</div>
+                      </span></div>
+                  </div>
+                  <div class="num-pad__row num-pad__bottom"><span data-qa-id="numpad__digit-decimal" class="Tappable-inactive num-pad__tappable"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                      <div (click)="keysClicked('.')" class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__decimal-point-key">.</div>
+                    </span><span data-qa-id="numpad__digit-0" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                      <div (click)="keysClicked('0')" class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__zero-key">0</div>
+                    </span><span data-qa-id="numpad__digit-delete" class="Tappable-inactive num-pad__tappable" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); user-select: none; cursor: pointer;">
+                      <div  (click)="keysClicked('x')" class="flipper-pay-panel__key num-pad__item num-pad__key num-pad__delete-key"><svg viewBox="0 0 24 24"
+                          preserveAspectRatio="xMidYMid meet" style="width: 1.5rem; height: 2rem; fill: rgb(255, 255, 255);">
+                          <g>
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"></path>
+                          </g>
+                        </svg></div>
+                    </span></div>
+                </div>
+              </div>
+            </div>
+            <div class="flipper-pay-panel__summary">
+              <ul class="flipper-pay-panel__summary--left">
+                <li class="flipper-pay-panel__summary--label">Amount Due</li>
+                <li class="flipper-pay-panel__summary--amount-due"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount') | roundNumber}}</li>
+                <li class="flipper-pay-panel__summary--label">Tax</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('taxable_vat') | roundNumber }}</li>
+                <li class="flipper-pay-panel__summary--label">Basket Discount</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount_discount') | roundNumber}}</li>
+              </ul>
+              <ul class="flipper-pay-panel__summary--right">
+                <li class="flipper-pay-panel__summary--label">Item Discount</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount_discount') | roundNumber}}</li>
+                <li class="flipper-pay-panel__summary--label">Customer Discount</li>
+                <li><span class="currency">{{currentUser.getBusiness('currency_code')}} </span> {{total('total_amount_discount') | roundNumber}}</li>
+                <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}">Change Due</li>
+                <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':amount_return_color,'font-weight': '500'}"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>
+                  {{amount_return | roundNumber}}</li>
+
+                  <li class="flipper-pay-panel__summary--label" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '500'}">Discount Change Due</li>
+                  <li class="flipper-pay-panel__summary--amount-due" [ngStyle]= "{'color':d_amount_return_color,'font-weight': '400'}"><span class="currency">{{currentUser.getBusiness('currency_code')}} </span>
+                    {{d_amount_return | roundNumber}}</li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+        <ul class="button-group button-group--inline flipper-pay-buttons row">
+          <li class="button-group__button flipper-pay-panel__list-button col" (click)="payingInvoice()">
+            <div  class="flipper-pay-panel__list-button-label">Cash</div>
+          </li>
+           <li class="button-group__button flipper-pay-panel__list-button col" *ngIf="(invoice$ | async)" (click)="printDirectReceipt()">
+            <div  class="flipper-pay-panel__list-button-label">Print Receipt</div>
+          </li>
+          <li class="button-group__button flipper-pay-panel__list-button col" *ngIf="(invoice$ | async) && (invoice$ | async).printFormat.length > 0">
+            <app-print-invoice [preview]="preview"></app-print-invoice>
+          </li>
+        </ul>
+        <ul class="button-group button-group--inline flipper-pay-buttons">
+        
+        </ul>
+      </div>
+     
+    </div>
+  </div>
+</div>
+

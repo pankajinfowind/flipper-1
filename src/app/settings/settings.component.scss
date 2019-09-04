@@ -1,0 +1,110 @@
+@import "../app_sass/variables";
+
+
+.setting{
+  height: 100%;
+  background-color: $admin-background-color;
+  overflow: auto;
+
+  .mat-sidenav-container {
+    width: 100%;
+    height: calc(100% - #{$admin-nav-height+1});
+    overflow: hidden;
+
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      width: $admin-left-col-width;
+      flex: 0 0 $admin-left-col-width;
+      background-color: $admin-left-col-background-color;
+      height: 100%;
+      border-right: none;
+      line-height: inherit;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: inherit;
+      outline: none;
+      cursor: pointer;
+      -webkit-user-drag: none;
+
+       .menu-items {
+        width: 100%;
+
+        .menu-item {
+          display: block;
+          width: 100%;
+          padding: 12px;
+          margin-top: 7px;
+          // border-left: 5px solid transparent;
+          // border-bottom: 1px solid $admin-left-col-border-color;
+          font-size: 1rem;
+          font-weight: 400;
+          color: $admin-left-col-text-color;
+          text-transform: capitalize;
+          height: 43px;
+
+           .mat-icon {
+            position: relative;
+            vertical-align: middle;
+            margin-right: 10px;
+            top: -1px;
+          }
+          .mat-icon:not(.toggle-expansion-icon) {
+            margin-right: 15px;
+          }
+
+          &:hover {
+            background-color: $admin-left-col-active-color;
+          }
+
+          &.active {
+            color: $site-primary-color-100;
+            background-color: $site-selected-item-bg-color;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+            .text {
+              font-weight: 500!important;
+            }
+
+            &:not(.active):not(.drag-over):hover {
+              background-color: $site-bg-color-300;
+              border-top-right-radius: 25px;
+              border-bottom-right-radius: 25px;
+            }
+          }
+        }
+      }
+
+       .version {
+        margin-top: auto;
+        padding: 5px 8px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .right-sidebar {
+      width: 400px;
+      flex: 0 0 400px;
+      border-left: 1px solid $site-border-color-200;
+      background-color: $site-bg-color-100;
+      color: $site-text-color-400;
+      overflow: hidden;
+
+      .mat-drawer-inner-container{
+        overflow: hidden;
+      }
+    }
+
+    .content-inner {
+      height: 100%;
+      flex: 1 1 auto;
+      background-color:$site-bg-color-100;
+      // box-shadow: $admin-card-box-shadow;
+      line-height: inherit;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: auto;
+    }
+  }
+}

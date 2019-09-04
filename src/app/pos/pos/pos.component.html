@@ -1,0 +1,24 @@
+<div class="pos">
+  <material-navbar class="material-navbar" position="topbar">
+    <table style="margin-left:70px">
+      <tr>
+        <td>
+          <pos-list-item-header></pos-list-item-header>
+        </td>
+      </tr>
+    </table>
+  </material-navbar>
+  <mat-sidenav-container class="mat-sidenav-container">
+
+    <mat-sidenav [opened]="true" [mode]="isMobile ? 'over' : 'side'" position="end" class="right-sidebar">
+      <app-cart-item class="app-cart-item"></app-cart-item>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content-inner">
+      <div class="loading-overlay-container" posInfiniteScroll>
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,18 @@
+<div style="background: #ffffff 50% 50% repeat-x;" class="m-3">
+  <nav mat-tab-nav-bar>
+      <a mat-tab-link
+         *ngFor="let routeLink of routeLinks; let i = index;"
+         [routerLink]="routeLink.link"
+         routerLinkActive="mat-tab-link-active"
+         #rla="routerLinkActive"
+         [active]="activeLinkIndex === i"
+         (click)="activeLinkIndex = i"
+         [routerLinkActiveOptions]="{exact: true}"
+      >
+          {{routeLink.label}}
+      </a>
+  </nav>
+  <div class="order-lists">
+  <router-outlet></router-outlet>
+  </div>
+</div>

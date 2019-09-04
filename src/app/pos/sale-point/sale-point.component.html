@@ -1,0 +1,85 @@
+<div class="primary-section__body">
+  <div class="product-area">
+    <div class="primary-section-content">
+      <div class="primary-section-content__header">
+        <div class="breadcrumb-menu product-area__breadcrumb-menu">
+
+
+          <span class="breadcrumb-menu__item" *ngIf="is_categry_clicked && (pos$ | async).panel_content=='home'"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="breadcrumb-menu__chevron" style="width: 1.5rem; height: 2rem; fill: rgb(0, 0, 0);">
+              <g>
+                <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
+              </g>
+            </svg><a class="breadcrumb-menu__link">{{category_selected.name}}</a></span>
+          <span class="breadcrumb-menu__item"><a class="breadcrumb-menu__link" (click)="homeDir()">Home</a></span>
+
+        </div>
+      </div>
+
+
+      <div class="primary-section-content__body">
+        <div class="product-area__main">
+          <div *ngIf="pos$ && categories" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+            <div *ngIf="(pos$ | async).panel_content=='home'">
+              <div *ngIf="!is_categry_clicked && categories.length > 0">
+
+                <div class="row m-3" style="margin-right: 0.75rem; margin-bottom: 0.75rem;">
+                  <mat-card *ngFor="let category of categories" [style.color]="'#ffff'" [style.background-color]="category.color"
+                  matRipple
+                  [matRippleCentered]="centered"
+                  [matRippleDisabled]="disabled"
+                  [matRippleUnbounded]="unbounded"
+                  [matRippleRadius]="radius"
+                  [matRippleColor]="color"
+                    class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 generic-tile generic-tile--MEDIUM category-tile user-defined-colour__darkBlue category-tile--MEDIUM ellipsis"
+                    (click)="categoriesClicked(category)"><span class="ellipsis" matTooltip="{{category.name}}"
+                    [matTooltipPosition]="'left'"
+                    aria-label="category.name">{{category.name}}</span></mat-card>
+                </div>
+              </div>
+
+              <div *ngIf="is_categry_clicked  && currently_stocks.length > 0">
+                <div class="row m-3" style="margin-right: 0.75rem; margin-bottom: 0.75rem;">
+                  <mat-card *ngFor="let stock of currently_stocks" class="col-sm-6 col-md-2 col-lg-2 col-xs-6 m-1 ellipsis"
+                   matTooltip="{{stock.name}}"
+                    [matTooltipPosition]="'left'"
+                    aria-label="stock.name"   matRipple
+                    [matRippleCentered]="centered"
+                    [matRippleDisabled]="disabled"
+                    [matRippleUnbounded]="unbounded"
+                    [matRippleRadius]="radius"
+                    [matRippleColor]="color">
+
+                    <span class="ellipsis">{{stock.name}} </span>
+
+                    <mat-chip-list *ngIf="stock.customer_type && stock.customer_type.active==1">
+                      <mat-chip>{{stock.customer_type.name}} price : {{stock.item.currency}} {{stock.item.unit_sale}}</mat-chip>
+                      </mat-chip-list>
+                      <mat-chip-list *ngIf="stock.customer_type && stock.customer_type.active==0">
+                        <mat-chip>Retail price: {{stock.item.currency}} {{stock.item.unit_sale}}</mat-chip>
+                        </mat-chip-list>
+                    <div class="clearfix"></div>
+
+                    <small class="row row-divided ellipsis">
+                      <div class="text-left col-6 column-one">
+                        <span class="ellipsis">
+                        Level:{{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %
+                        </span>
+                      </div>
+                      <div class="vertical-divider"></div>
+                      <div class="text-right col-6 column-two">
+                        <span class="ellipsis">{{stock.available_stock_qty}} Qty</span>
+                      </div>
+                    </small>
+
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

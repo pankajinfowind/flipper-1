@@ -1,0 +1,98 @@
+
+<data-table [dataSource]="dataSource" itemsName="Stock Movements" [isLoading]="(loading | async)" hiddenCheckBox="false" matSort>
+  <div headerLeftActions>
+      <!-- <button mat-raised-button  class="button" (click)="addItem()"  trans>Create a stock</button> -->
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedStocks()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Action
+      </mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+          <mat-chip-list aria-label="Stock Action">
+              <mat-chip color="primary" *ngIf="stock.type=='add'" selected>+</mat-chip>
+              <mat-chip color="warn" *ngIf="stock.type=='remove'" selected>-</mat-chip>
+            </mat-chip-list>
+          </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="batch_no">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Batch No</mat-header-cell>
+    <mat-cell *matCellDef="let stock"> <mat-label [matTooltip]="stock.batch_no">{{stock.batch_no}}</mat-label>
+     </mat-cell>
+</ng-container>
+<ng-container matColumnDef="sku">
+    <mat-header-cell *matHeaderCellDef trans>S.K.U
+      <mat-icon matSuffix [matTooltip]="'Stock Keeping Unit'" aria-label="Stock Keeping Unit">info</mat-icon>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let stock">
+        <mat-label [matTooltip]="stock.item.sku" class="ellipsis">{{stock.item.sku}}</mat-label>
+   </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="item">
+  <mat-header-cell *matHeaderCellDef trans>Stock</mat-header-cell>
+  <mat-cell *matCellDef="let stock">
+      <mat-label [matTooltip]="stock.item?stock.item.item:'no item name displayed'" class="ellipsis">{{stock.item?stock.item.item:'----'}}</mat-label>
+     </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="reason">
+  <mat-header-cell *matHeaderCellDef trans>Reason</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.reason?stock.reason.name:'----'}} </span></mat-cell>
+</ng-container>
+<ng-container matColumnDef="in">
+  <mat-header-cell *matHeaderCellDef trans>Entry Qty</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> <span class="ellipsis">{{stock.in_qty}}</span> </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="out">
+  <mat-header-cell *matHeaderCellDef  trans>Out Qty</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> {{stock.out_qty}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="transction_date">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Transction date</mat-header-cell>
+  <mat-cell *matCellDef="let stock">{{!stock.transction_date?'--':stock.transction_date | date}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="expired_date">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Expired date</mat-header-cell>
+  <mat-cell *matCellDef="let stock">{{!stock.expired_date?'--':stock.expired_date | date}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="manufacture_date">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Manuf. date</mat-header-cell>
+  <mat-cell *matCellDef="let stock">{{!stock.manufacture_date?'--':stock.manufacture_date | date}}  </mat-cell>
+</ng-container>
+<!-- <ng-container matColumnDef="created_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Created at</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> {{stock.created_at | date}} </mat-cell>
+</ng-container> -->
+<ng-container matColumnDef="updated_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Updated at</mat-header-cell>
+  <mat-cell *matCellDef="let stock"> {{stock.updated_at | date}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="comments">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Note</mat-header-cell>
+    <mat-cell *matCellDef="let stock">
+        <mat-label [matTooltip]="stock.comments" class="ellipsis">{{stock.comments}}</mat-label>
+       </mat-cell>
+  </ng-container>
+
+  <!-- <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+          <button mat-icon-button (click)="openDetails('Stock
+          Details','info',stock,'app-info-stock-model')"  [matTooltip]="'Edit stock' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container> -->
+</data-table>
+

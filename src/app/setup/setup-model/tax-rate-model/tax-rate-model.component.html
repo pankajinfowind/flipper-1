@@ -1,0 +1,73 @@
+<div class="details-list">
+   <!-- Items ---------------------------------- -->
+
+   <form [formGroup]="taxtRateForm" (ngSubmit)="saveTaxRate()">
+      <mat-card-content class="row">
+          <mat-form-field  appearance="outline" class="col-12">
+              <mat-label>Enter name</mat-label>
+            <input  matInput placeholder="Name" formControlName="name" required>
+              <mat-error  *ngIf="name.invalid && (name.dirty || name.touched)">
+                <mat-error *ngIf="name.errors.name && !name.errors.required">
+                  Please enter a valid Tax rate name
+                </mat-error>
+                <mat-error *ngIf="name.errors.required">
+                  Tax rate name is <strong>required</strong>
+                </mat-error>
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field  appearance="outline" class="col-12">
+              <mat-label>Enter percentage</mat-label>
+            <input  matInput placeholder="Percentage" formControlName="percentage" required>
+            <mat-error *ngIf="percentage.invalid && (percentage.dirty || percentage.touched)">
+              <mat-error *ngIf="percentage.invalid && !percentage.errors.required">
+                Please enter a valid percentage, only number allowed
+              </mat-error>
+              <mat-error *ngIf="percentage.errors.required">
+                Percentage is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field  appearance="outline" class="col-12">
+              <mat-label>Enter tax code</mat-label>
+            <input  matInput placeholder="Tax code" formControlName="tax_code" required>
+              <mat-error  *ngIf="tax_code.invalid && (tax_code.dirty || tax_code.touched)">
+                <mat-error *ngIf="tax_code.errors.tax_code && !tax_code.errors.required">
+                  Please enter a valid tax code
+                </mat-error>
+                <mat-error *ngIf="tax_code.errors.required">
+                  Tax code is <strong>required</strong>
+                </mat-error>
+              </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field  appearance="outline" class="col-12">
+              <mat-label>Choose tax type</mat-label>
+            <mat-select placeholder="Choose tax type" formControlName="tax_type" required>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let tax_type of tax_types" [value]="tax_type">{{tax_type}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="tax_type.invalid && (tax_type.dirty || tax_type.touched)">
+              <strong *ngIf="tax_type.errors.required">Tax type is required.</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+
+          <mat-form-field  appearance="outline" class="col-12">
+              <mat-label>Description</mat-label>
+                <textarea  matInput placeholder="Description (optional)" formControlName="description"></textarea>
+            </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions class="card-actions">
+        <button type="submit" class="float-right" mat-button [disabled]="(loading | async)"> <span *ngIf="need_to_add_new">Save</span>
+          <span *ngIf="!need_to_add_new">Edit</span></button>
+        <button type="button" class="float-right" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button>
+      </mat-card-actions>
+    </form>
+</div>
+
+

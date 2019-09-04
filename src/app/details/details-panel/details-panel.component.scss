@@ -1,0 +1,58 @@
+@import "../../app_sass/variables";
+
+.app-details-panel {
+  display: block;
+  padding: 24px;
+  margin-top:3px;
+  height: calc(100%  - #{$admin-nav-height+1});
+  .details-list {
+    .item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .name {
+        width: 120px;
+        flex: 0 0 120px;
+        color:  $site-text-color-300;;
+      }
+
+      .value {
+        flex: 1 1 auto;
+      }
+
+      .type-value {
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .nothing-selected {
+    display: flex;
+    align-items: center;
+    font-size: 1.7rem;
+    font-weight: 400;
+
+    .mat-icon {
+      margin-right: 5px;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+  }
+
+  .location-item .value {
+    font-weight: 500;
+    cursor: pointer;
+
+    .mat-icon {
+      color:  $site-text-color-300;
+      vertical-align: bottom;
+    }
+
+    &:hover .text {
+      color: $link-color;
+      text-decoration: underline;
+    }
+  }
+}

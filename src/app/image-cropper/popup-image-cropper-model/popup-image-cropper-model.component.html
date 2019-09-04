@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title trans>Upload {{data.title}}</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+<mat-card-content class="mat-dialog-content">
+<input type="file" (change)="fileChangeEvent($event)" />
+<button (click)="rotateLeft()">Rotate left</button>
+<button (click)="rotateRight()">Rotate right</button>
+<button (click)="flipHorizontal()">Flip horizontal</button>
+<button (click)="flipVertical()">Flip vertical</button>
+
+<div>
+  <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 3"
+      [resizeToWidth]="128"
+      [cropperMinWidth]="128"
+      [onlyScaleDown]="true"
+      [roundCropper]="false"
+      format="png"
+      outputType="base64"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+      [style.display]="showCropper ? null : 'none'"
+  ></image-cropper>
+</div>
+<img [src]="croppedImage" />
+</mat-card-content>
+
+<mat-card-actions>
+    <div class="buttons float-right mat-dialog-actions" mat-dialog-actions>
+      <button (click)="close()" type="button" mat-button class="button" trans>Done</button>
+  </div>
+ </mat-card-actions>
+

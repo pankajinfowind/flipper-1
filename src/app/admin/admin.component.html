@@ -1,0 +1,25 @@
+<div class="app-admin" style="overflow:none">
+  <mat-sidenav-container class="content">
+    <mat-sidenav [opened]="(navService.isOpenedLeftSide | async)" mode="side" class="main-left-column">
+
+       <material-navbar [class.fullmaterialnavbar]="!isOpened" position="sidebar">
+              <switch-branch></switch-branch>
+        </material-navbar>
+
+      <div class="sidebar-wrapper ps">
+       <logged-in-user-widget class="user"></logged-in-user-widget>
+     
+        <mat-nav-list class="main-menu-items" *ngIf="navItems.length > 0">
+          <admin-menu-list-item *ngFor="let item of navItems" [item]="item"></admin-menu-list-item>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-content-inner" [class.isLeftSideClosed]="!(navService.isOpenedLeftSide | async)">
+
+      <router-outlet></router-outlet>
+      
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>

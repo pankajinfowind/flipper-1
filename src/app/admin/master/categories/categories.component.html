@@ -1,0 +1,45 @@
+
+<data-table [dataSource]="dataSource" itemsName="Categories" [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateCategoryModal()"  trans>Create a Category</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search Categories ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedCategories()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+      <mat-cell *matCellDef="let category"> {{category.name}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="color" *ngIf="!enableSelectButton">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Color</mat-header-cell>
+    <mat-cell *matCellDef="let category">
+        <span class="badge__target">
+          <span class="badge badge--success" [style.color]="'#ffff'" [style.background-color]="category.color?category.color:'#1da1f2'">{{category.color?category.color:'none'}} </span>
+      </span>
+    </mat-cell>
+</ng-container>
+<ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let category">
+        <button (click)="selectCategory(category)" class="button-success" *ngIf="category.id!=selectedId" [disabled]="category.id==selectedId?true:false"  [matTooltip]="'Select Category' | trans">Select
+        </button>
+        <button  class="button-cancel" *ngIf="category.id==selectedId"  [matTooltip]="'Selected Category' | trans">Selected
+        </button>
+    </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let category">
+          <button mat-icon-button (click)="showCrupdateCategoryModal(category)"  [matTooltip]="'Edit Category' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

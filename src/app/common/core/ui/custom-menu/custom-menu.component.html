@@ -1,0 +1,20 @@
+<ng-container *ngFor="let item of menu.items">
+    <ng-container *ngIf="shouldShow(item)">
+        <a class="nav-item {{itemClass}}" *ngIf="item.type === 'link'" href="{{item.action}}" [ngClass]="toSnakeCase(item.label)">
+            <mat-icon [svgIcon]="item.icon" *ngIf="item.icon"></mat-icon>
+            <span class="text" trans>{{item.label}}</span>
+        </a>
+
+        <a class="nav-item {{itemClass}}" *ngIf="item.type === 'route'" [routerLink]="'/' + item.action" [ngClass]="toSnakeCase(item.label)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon [svgIcon]="item.icon" *ngIf="item.icon"></mat-icon>
+            <span class="text" trans>{{item.label}}</span>
+        </a>
+
+        <a class="nav-item {{itemClass}}" *ngIf="item.type === 'page'" [routerLink]="'/pages/' + item.action" [ngClass]="toSnakeCase(item.label)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon [svgIcon]="item.icon" *ngIf="item.icon"></mat-icon>
+            <span class="text" trans>{{item.label}}</span>
+        </a>
+    </ng-container>
+</ng-container>
+
+<ng-content></ng-content>

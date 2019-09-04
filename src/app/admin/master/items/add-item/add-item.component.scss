@@ -1,0 +1,74 @@
+@import "../../../../app_sass/variables";
+
+
+.details-list {
+  border: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  overflow: hidden !important;
+
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+
+    .name {
+      width: 120px;
+      flex: 0 0 120px;
+      color:  $site-text-color-300;;
+    }
+
+    .value {
+      flex: 1 1 auto;
+    }
+
+    .type-value {
+      text-transform: capitalize;
+    }
+  }
+  .card-actions{
+    margin-top: -17px                                                                                                                                                                                                                                                                                                                                                                                                                                                                                x;
+  }
+
+
+
+  .sd_section-container {
+    max-height: 320px;
+    width: 100%;
+    overflow: auto;
+  }
+  .fst_section-container{
+    max-height: 400px;
+    width: 100%;
+    overflow: auto;
+  }
+
+  table {
+    width: 800px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);
+    transition-duration: 0ms;
+    transform: translate(0px, 0px) translateZ(0px);
+  }
+
+  td.mat-column-star {
+    width: 20px;
+    padding-right: 8px;
+  }
+
+  .input{
+    width:80%;margin-top:25px;margin-left:5px
+  }
+  .th_label{
+    margin-top:25px;margin-left:5px
+  }
+
+  .mat-table-sticky:first-child {
+    border-right: 1px solid #e0e0e0;
+  }
+
+  .mat-table-sticky:last-child {
+    border-left: 1px solid #e0e0e0;
+  }
+}

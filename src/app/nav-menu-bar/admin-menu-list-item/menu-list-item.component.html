@@ -1,0 +1,17 @@
+<a mat-list-item  [ngStyle]="{'padding-left': (depth * 12) + 'px'}" (click)="onItemSelected(item)"
+   [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}"
+   class="menu-list-item">
+  <mat-icon class="mat-icon" *ngIf="!item.isSubmenu">{{item.iconName}}</mat-icon>
+  <mat-icon class="mat-icon" *ngIf="item.isSubmenu && !router.isActive(item.route, true)">radio_button_unchecked</mat-icon>
+   <mat-icon class="mat-icon" *ngIf="item.isSubmenu && router.isActive(item.route, true)">radio_button_checked</mat-icon>
+  {{item.displayName}}
+  <span fxFlex *ngIf="item.children && item.children.length">
+    <span fxFlex></span>
+    <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'" class="mat-icon-expanded">
+      expand_more
+    </mat-icon>
+  </span>
+</a>
+<div *ngIf="expanded" class="collapsed">
+  <admin-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1"></admin-menu-list-item>
+</div>

@@ -1,0 +1,58 @@
+@import "../../../app_sass/variables";
+
+.app-crupdate-invoice-customization {
+  height: 90%;
+
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+  }
+
+  .radio-button {
+    margin: 5px;
+  }
+
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: $modal-header-text-color;
+    margin: $modal-header-margin;
+
+    >h2 {
+      font-size: $modal-header-font-size;
+      font-weight: $modal-header-font-weight;
+      flex: 1 1 auto;
+      margin: 0;
+      line-height: 30px;
+    }
+  }
+
+
+
+  .mat-dialog-actions {
+    justify-content: flex-end;
+    padding-bottom: 16px;
+  }
+
+  .custom-content {
+    height: 100% !important;
+
+    .inv-dialog-content {
+      flex: 1 1 auto;
+      position: absolute;
+      padding-top: 1px;
+      padding-bottom: 2px;
+      overflow: auto;
+      max-height: 88% !important;
+      bottom: 0;
+    }
+
+    .app-popup-image-cropper-model-container {
+      display: block;
+    }
+
+  }
+}

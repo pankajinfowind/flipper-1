@@ -1,0 +1,54 @@
+
+<div class="modal-header">
+  <h2 mat-dialog-title trans>Choose Stock Reason</h2>
+  <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<data-table [dataSource]="dataSource" hiddenCheckBox='true' [itemsName]="reasonName" [isLoading]="(loading | async)"  matSort>
+
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everything ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+      <mat-cell *matCellDef="let reason"> <span class="ellipsis">{{reason.name}}</span> </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="stock_movements_status" *ngIf="reasonType=='stock_movements'">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Action</mat-header-cell>
+    <mat-cell *matCellDef="let reason">
+        <mat-chip-list aria-label="Stock Action">
+            <mat-chip color="primary" *ngIf="reason.stock_movements_status=='add'" selected>+ {{reason.stock_movements_status}}</mat-chip>
+            <mat-chip color="warn" *ngIf="reason.stock_movements_status=='remove'" selected>- {{reason.stock_movements_status}}</mat-chip>
+          </mat-chip-list>
+    </mat-cell>
+</ng-container>
+<ng-container matColumnDef="discount_value" *ngIf="reasonType=='discount'">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Discount Value</mat-header-cell>
+    <mat-cell *matCellDef="let reason"> {{reason.discount_value}}% </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="return_to_stock" *ngIf="reasonType=='refund'">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Return to stock?</mat-header-cell>
+    <mat-cell *matCellDef="let reason"> {{reason.return_to_stock}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="description" *ngIf="!enableSelectButton">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Description</mat-header-cell>
+  <mat-cell *matCellDef="let reason"> {{reason.description}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+  <mat-cell *matCellDef="let reason">
+      <button (click)="selectReason(reason)" class="button-success" *ngIf="reason.id!=selectedId" [disabled]="reason.id==selectedId?true:false"  [matTooltip]="'Select Reason' | trans">Select
+      </button>
+      <button  class="button-cancel" *ngIf="reason.id==selectedId"  [matTooltip]="'Selected Reason' | trans">Selected
+      </button>
+  </mat-cell>
+</ng-container>
+</data-table>

@@ -1,0 +1,61 @@
+@import "../../app_sass/variables";
+customer-list{
+  display: none;
+}
+.pos{
+  height: 100%;
+  background-color: #0175a8;
+  position:fixed;top:2rem;left:0;right:0;bottom:0;
+  overflow:hidden!important;
+  border-top: solid 1.5px $site-selected-item-bg-color;
+
+
+
+  .has-ad {
+    ad-host {
+        margin-top: 25px;
+    }
+
+  }
+ 
+
+  .mat-sidenav-container {
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+   
+    .right-sidebar {
+      width: 480px;
+     height: 95%;
+     min-height: 94%;
+      min-width: 370px;
+      flex: 0 0 370px;
+      padding: 0;
+      margin: 0;
+      border-left: 1px solid $site-border-color-200;
+      background-color: $site-bg-color-100;
+      color: $site-text-color-400;
+       margin-top: 45px;
+    }
+
+    .content-inner {
+      width: calc(100% - 480px);
+      flex: 1 1 auto;
+      overflow: hidden;
+      background-color: #0175a8;
+      line-height: inherit;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-top: 45px;
+
+      .loading-overlay-container {
+        position: relative;
+        overflow: auto;
+        height: 95%;
+        min-height: 94%;
+      }
+    }
+  }
+}

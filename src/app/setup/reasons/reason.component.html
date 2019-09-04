@@ -1,0 +1,6 @@
+
+<mat-tab-group color="primary">
+    <mat-tab *ngFor="let link of links" class="m-4" [label]="link.label">
+        <reason-data-table [reasonName]="link.label" [url]="link.url" [reasonType]="link.reason_type"></reason-data-table>
+    </mat-tab>
+  </mat-tab-group>

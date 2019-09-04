@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h2 mat-dialog-title trans>{{status}} </h2>
+  <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+
+<mat-dialog-content class="many-inputs" *ngIf="status=='Quantity'">
+  <mat-form-field class="w-100">
+    <input  class="col-12" matInput placeholder="Update Qty" (click)="$event.target.select()" (input)="updateInput($event.target.value)" [(ngModel)]="default_qty" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-content class="many-inputs" *ngIf="status=='Price'">
+  <mat-form-field class="w-100">
+    <input class="col-12" matInput placeholder="Update Price"  (click)="$event.target.select()" (input)="updateInput($event.target.value)" [(ngModel)]="default_price" />
+  </mat-form-field>
+</mat-dialog-content>
+
+
+<mat-dialog-content class="many-inputs" *ngIf="status=='Note'">
+  <mat-form-field class="w-100">
+    <textarea class="col-12" matInput placeholder="Write note!"  (click)="$event.target.select()" (input)="updateInput($event.target.value)" [(ngModel)]="cart_item.note"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<div>
+  <br />
+  <mat-divider></mat-divider>
+
+  <mat-dialog-actions class="float-right">
+    <button (click)="close()" type="button" mat-button class="cancel-button" trans
+      [disabled]="loading | async">Cancel</button>
+    <button type="button" (click)="update()" mat-raised-button color="primary"
+      class="submit-button" [disabled]="loading | async" trans>Update</button>
+  </mat-dialog-actions>
+</div>

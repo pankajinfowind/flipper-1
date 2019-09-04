@@ -1,0 +1,41 @@
+<ng-container *ngIf="currentUser.isLoggedIn()">
+    <div class="menu-trigger" [matMenuTriggerFor]="menu">
+        <img class="avatar" *ngIf="currentUser.get('avatar')" src="{{currentUser.get('avatar')}}">
+
+       <div class="email">{{currentUser.get('email').substring(0,25)}}..</div>
+        <mat-icon class="dropdown-icon">
+            <svg style="width:24px;height:24px;color:aliceblue" viewBox="0 0 24 24">
+                <path fill="#ccc" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M7,10L12,15L17,10H7Z" />
+            </svg>
+        </mat-icon> 
+
+        <button class="no-style mobile-toggle">
+            <mat-icon svgIcon="menu"></mat-icon>
+        </button>
+    </div>
+
+    <mat-menu #menu="matMenu" [overlapTrigger]="false" class="logged-in-user-widget-menu">
+        <!-- <a class="admin-link" mat-menu-item routerLink="/admin" *ngIf="currentUser.hasPermission('admin.access')">
+            <mat-icon class="mat-icon" svgIcon="dashboard"></mat-icon>
+            <span trans>Admin Area</span>
+        </a> -->
+
+        <ng-content></ng-content>
+
+        <a class="account-settings-link" mat-menu-item (click)="openAccountSettings()">
+            <mat-icon class="mat-icon" svgIcon="settings"></mat-icon>
+            <span trans>Account Settings</span>
+        </a>
+
+        <!-- <a class="subscription-link" mat-menu-item routerLink="/billing/subscription" *ngIf="currentUser.isSubscribed()">
+            <mat-icon class="mat-icon" svgIcon="credit-card"></mat-icon>
+            <span trans>Subscription</span>
+        </a> -->
+
+        <div class="logout-item" mat-menu-item (click)="logOut()">
+            <mat-icon class="mat-icon" svgIcon="exit-to-app"></mat-icon>
+            <span trans>Log Out</span>
+        </div>
+    </mat-menu>
+</ng-container>
+<loading-indicator [isVisible]="loading" class="overlay"></loading-indicator>

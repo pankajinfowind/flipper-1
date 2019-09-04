@@ -1,0 +1,45 @@
+<data-table [dataSource]="dataSource" itemsName="Price Books" [isLoading]="(loading | async)"  matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateCustomerTypeModal()"  trans>Create a price book</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everything ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedCustomerTypes()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+      <mat-cell *matCellDef="let customertype"> {{customertype.name}} <span *ngIf="enableSelectButton">({{customertype.discount_value}}%)</span></mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="discount_value" *ngIf="!enableSelectButton">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Percentage(%)</mat-header-cell>
+    <mat-cell *matCellDef="let customertype"> {{customertype.discount_value}}% </mat-cell>
+</ng-container>
+<ng-container matColumnDef="description" *ngIf="!enableSelectButton">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Description</mat-header-cell>
+  <mat-cell *matCellDef="let customertype"> {{customertype.description}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+  <mat-cell *matCellDef="let customertype">
+      <button (click)="selectCustomerType(customertype)" class="button-success" *ngIf="customertype.id!=selectedId" [disabled]="customertype.id==selectedId?true:false"  [matTooltip]="'Select Customer Type' | trans">Select
+      </button>
+      <button  class="button-cancel" *ngIf="customertype.id==selectedId"  [matTooltip]="'Selected price book' | trans">Selected
+      </button>
+  </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let customertype">
+          <button mat-icon-button (click)="showCrupdateCustomerTypeModal(customertype)"  [matTooltip]="'Edit price book' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

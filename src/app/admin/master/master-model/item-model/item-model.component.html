@@ -1,0 +1,123 @@
+<div class="details-list">
+   <!-- Items ---------------------------------- -->
+
+   <form [formGroup]="itemForm" (ngSubmit)="saveItem()">
+      <mat-card-content>
+        <mat-form-field class="ybx-mat mat-full-wdth" appearance="outline">
+            <mat-label>Enter product name</mat-label>
+            <input class="text-secondary" matInput placeholder="Item name" formControlName="item" required>
+              <mat-error  *ngIf="item.invalid && (item.dirty || item.touched)">
+                <mat-error *ngIf="item.errors.item && !item.errors.required">
+                  Please enter a valid item name
+                </mat-error>
+                <mat-error *ngIf="item.errors.required">
+                  Item name is <strong>required</strong>
+                </mat-error>
+              </mat-error>
+          </mat-form-field><br />
+
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+              <mat-label>Enter SKU</mat-label>
+            <input class="text-secondary" [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit" matInput placeholder="Sku (auto generated if blank)" formControlName="sku" required>
+            <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
+
+            <mat-error  *ngIf="sku.invalid && (sku.dirty || sku.touched)">
+              <mat-error *ngIf="sku.errors.sku && !sku.errors.required">
+                Please enter a valid sku
+              </mat-error>
+              <mat-error *ngIf="sku.errors.required">
+                  Item sku is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+              <mat-label>Enter barcode</mat-label>
+            <input class="text-secondary"[matTooltip]="barcode_tool_tips" aria-label="Barcode" matInput placeholder="Barcode (if available)" formControlName="barcode" required>
+            <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info</mat-icon>
+
+            <mat-error  *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)">
+              <mat-error *ngIf="barcode.errors.barcode && !barcode.errors.required">
+                Please enter a valid barcode, only number allowed
+              </mat-error>
+              <mat-error *ngIf="barcode.errors.required">
+                  Item barcode is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+          </mat-form-field><br />
+
+          <mat-form-field  class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+              <mat-label>Choose product Category</mat-label>
+              <input  matInput placeholder="Choose category"  (input)="showChooseCategoryModal()" (click)="showChooseCategoryModal()" formControlName="category" required>
+
+              <mat-error *ngIf="category.invalid && (category.dirty || category.touched)">
+                <strong *ngIf="category.errors.required">Category is required.</strong>
+              </mat-error>
+
+            </mat-form-field>
+
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+              <mat-label>Enter color</mat-label>
+              <mat-select formControlName="color">
+                <mat-option *ngFor="let color of colors" [value]="color.value" [style.color]="'#ffff'" [style.background-color]="color.value">
+                  {{color.valueName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="color.invalid && (color.dirty || color.touched)">
+                <strong *ngIf="color.errors.required">Color is required.</strong>
+              </mat-error>
+            </mat-form-field>
+<br />
+
+              <mat-form-field class="col-6 ybx-mat mat-full-wdth"  appearance="outline">
+                  <mat-label>Choose product Brand</mat-label>
+                  <input  matInput placeholder="Choose Brand"  (input)="showChooseBrandModal()" (click)="showChooseBrandModal()" formControlName="brand">
+                  <mat-error *ngIf="brand.invalid && (brand.dirty || brand.touched)">
+                      <strong *ngIf="brand.errors.required">Brand is required.</strong>
+                    </mat-error>
+                </mat-form-field>
+
+
+          <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+              <mat-label>Choose product Tax Rate</mat-label>
+              <input  matInput placeholder="Choose Tax Rate"  (input)="showChooseTaxRateModal()" (click)="showChooseTaxRateModal()" formControlName="tax_rate">
+              <mat-error *ngIf="tax_rate.invalid && (tax_rate.dirty || tax_rate.touched)">
+                  <strong *ngIf="tax_rate.errors.required">Tax rate is required.</strong>
+                </mat-error>
+            </mat-form-field>
+
+
+            <br />
+                  <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+                    <mat-label>Enter Order code</mat-label>
+                    <input class="text-secondary" matInput placeholder="Order code (if available)" formControlName="product_order_code">
+                    <mat-hint>For reference to supplier.</mat-hint>
+
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6 ybx-mat mat-full-wdth" appearance="outline">
+                    <mat-label>Enter Article code</mat-label>
+                    <input class="text-secondary" matInput placeholder="Article code (if available)" formControlName="article_code">
+                    <mat-hint>For use in accounting.</mat-hint>
+
+                  </mat-form-field>
+
+<br />
+            <mat-form-field class="mt-3 ybx-mat mat-full-wdth" appearance="outline">
+              <mat-label>Enter summary</mat-label>
+                <textarea class="text-secondary" matInput placeholder="Leave a summary" formControlName="summary"></textarea>
+            </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions class="card-actions">
+          <button type="button" (click)="openEditItemDialog()" mat-raised-button  color='primary' class="button-success float-left mt-2"  [disabled]="(loading | async)">
+            <span *ngIf="!need_to_add_new">Advanced options</span></button>
+
+        <button type="submit" class="float-right button" mat-button [disabled]="(loading | async)"> <span *ngIf="need_to_add_new">Save</span>
+          <span *ngIf="!need_to_add_new">Edit</span></button>
+        <!-- <button type="button" class="float-right button-cancel" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button> -->
+      </mat-card-actions>
+    </form>
+</div>
+
+

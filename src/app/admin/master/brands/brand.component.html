@@ -1,0 +1,38 @@
+
+<data-table [dataSource]="dataSource" itemsName="Brands" [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateBrandModal()"  trans>Create a Brand</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search brands ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedBrands()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+      <mat-cell *matCellDef="let brand"> {{brand.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let brand">
+        <button (click)="selectBrand(brand)" class="button-success" *ngIf="brand.id!=selectedId" [disabled]="brand.id==selectedId?true:false"  [matTooltip]="'Select Brand' | trans">Select
+        </button>
+        <button  class="button-cancel" *ngIf="brand.id==selectedId"  [matTooltip]="'Selected Brand' | trans">Selected
+        </button>
+    </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let brand">
+          <button mat-icon-button (click)="showCrupdateBrandModal(brand)"  [matTooltip]="'Edit Brand' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

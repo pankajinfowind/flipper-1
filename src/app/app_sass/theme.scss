@@ -1,0 +1,48 @@
+
+// =============================================== //
+//                  @ IMPORT                       //
+// =============================================== //
+
+@import "btn";
+@import "mixins";
+@import "variables";
+
+// =============================================== //
+//              COMMON ID                          //
+// =============================================== //
+
+#header, #section{
+    position: relative;
+    overflow: hidden;
+}
+
+
+// =============================================== //
+//              COMMON CLASSES                     //
+// =============================================== //
+
+.clearfix{
+    max-width: 100%;
+    padding: 25px 0px;
+}
+
+.brd-less{
+    border-radius: 0px;
+    border:0px;
+}
+
+.header-content{
+    .navbar{
+        -webkit-box-shadow:0 1px 4px 0 rgba(0, 0, 0, 0.39), inset 0 -1px 0 0 rgba(218, 220, 224, 0.349);
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.39), inset 0 -1px 0 0 rgba(218, 220, 224, 0.349);
+    }
+}
+
+.section-content{
+    background-color: rgb(255, 255, 255);
+    color: rgb(116, 116, 116);
+    position: relative;
+}
+
+
+

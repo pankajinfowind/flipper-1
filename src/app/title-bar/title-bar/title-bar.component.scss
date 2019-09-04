@@ -1,0 +1,32 @@
+@import "../../app_sass/variables";
+#title-bar {
+    -webkit-app-region: drag;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+    background-color: #03a9f4;
+    padding: none;
+    margin: 0px;
+    width:100%;
+    position:fixed;top:0;bottom:0;
+    box-shadow: none;
+    float:right;
+    //  background-color:$site-bg-color-100;
+    border-bottom: 1px solid $site-border-color-200;
+  }
+  
+  #title {
+    position: fixed;
+    top: 0px;
+    left: 6px;
+    color:white;
+  }
+  
+  #title-bar-btns {
+    -webkit-app-region: no-drag;
+    position: fixed;
+    top: 0px;
+    right: 6px;
+    float: right;
+  }

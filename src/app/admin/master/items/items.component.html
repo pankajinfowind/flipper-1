@@ -1,0 +1,76 @@
+<data-table [dataSource]="dataSource" itemsName="Products" [isLoading]="(loading | async)" hiddenCheckBox="false" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="addItemModal()"  trans>Create a Product</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedProducts()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="sku">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>S.K.U</mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{product.sku}} </mat-cell>
+  </ng-container>
+
+  <!-- <ng-container matColumnDef="barcode">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Barcode</mat-header-cell>
+    <mat-cell *matCellDef="let product"> {{product.barcode}} </mat-cell>
+</ng-container> -->
+
+<ng-container matColumnDef="item">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis" [matTooltip]="product.item">{{product.item}}</span> </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="category">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Category</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.category?product.category.name:'----'}} </span></mat-cell>
+</ng-container>
+<!-- <ng-container matColumnDef="brand">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Brand</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.brand?product.brand.name:'----'}}</span> </mat-cell>
+</ng-container> -->
+<ng-container matColumnDef="tax_rate">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Tax rate</mat-header-cell>
+  <mat-cell *matCellDef="let product"> <span class="ellipsis">{{product.tax_rate?product.tax_rate.name+'('+product.tax_rate.percentage+')':'---'}}</span> </mat-cell>
+</ng-container>
+
+<!-- <ng-container matColumnDef="manufacturer">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Manufacturer</mat-header-cell>
+  <mat-cell *matCellDef="let product"><span class="ellipsis"> {{product.manufacturer}}</span> </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="summary">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Summary</mat-header-cell>
+  <mat-cell *matCellDef="let product"><span class="ellipsis"> {{product.summary}} </span></mat-cell>
+</ng-container>
+<ng-container matColumnDef="product_order_code">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Order code</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.product_order_code}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="article_code">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Article code</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.article_code}} </mat-cell>
+</ng-container> -->
+<ng-container matColumnDef="created_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Created at</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.created_at | date}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="updated_at">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Updated at</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.updated_at | date}} </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let product">
+          <button mat-icon-button (click)="addItemModal(product)"  [matTooltip]="'Edit Product' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

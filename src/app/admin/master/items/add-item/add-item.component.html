@@ -1,0 +1,193 @@
+ <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+  <form [formGroup]="formGroup" (ngSubmit)="saveComplete()">
+   <div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update a Product Details</h2>
+    <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Create a Product</h2>
+<div class="float-right">
+     <button type="submit" class="button" mat-raised-button  [disabled]="(loading | async) || !formGroup.valid">
+               <span *ngIf="updating" trans>Update</span>
+              <span *ngIf="!updating" trans>Create</span>
+          </button>
+    &nbsp;&nbsp;
+    <button type="button" (click)="close()" mat-icon-button class="button-cancel">
+      <mat-icon svgIcon="close"></mat-icon> Close
+    </button>
+    </div>
+  </div>
+    <mat-card-content>
+      <br />
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-5">
+              <div class="row">
+                <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Enter product name</mat-label>
+                  <input matInput placeholder="Name" (input)="filterItem({query: formGroup.value.item,status:'item'})" formControlName="item" required>
+                  <mat-hint>Appears on till.</mat-hint>
+                  <mat-error *ngIf="item.invalid && (item.dirty || item.touched)">
+
+                    <mat-error *ngIf="item.errors.item && !item.errors.required">
+                      Please enter a valid product name
+                    </mat-error>
+                    <mat-error *ngIf="item.errors.required">
+                      Product name is <strong>required</strong>
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Choose product Category</mat-label>
+                  <input matInput placeholder="Choose category" (input)="showChooseCategoryModal()"
+                    (click)="showChooseCategoryModal()" formControlName="category" required>
+
+                  <mat-error *ngIf="category.invalid && (category.dirty || category.touched)">
+                    <strong *ngIf="category.errors.required">Category is required.</strong>
+                  </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Enter S.K.U number</mat-label>
+                  <input matInput placeholder="SKU (if available)" (input)="filterItem({query: formGroup.value.sku,status:'item'})" formControlName="sku" required>
+                  <mat-icon matSuffix [matTooltip]="sku_tool_tips" aria-label="Stock Keeping Unit">info</mat-icon>
+                  <mat-error *ngIf="sku.invalid && (sku.dirty || sku.touched)">
+
+                    <mat-error *ngIf="sku.errors.sku && !sku.errors.required">
+                      Please enter a valid sku name
+                    </mat-error>
+                    <mat-error *ngIf="sku.errors.required">
+                      Sku number is <strong>required</strong>
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Enter Barcode number</mat-label>
+                  <input matInput placeholder="Barcode (if available)" (input)="filterItem({query: formGroup.value.barcode,status:'item'})" formControlName="barcode" required>
+                  <mat-icon matSuffix [matTooltip]="barcode_tool_tips" aria-label="Universal Product Code">info
+                  </mat-icon>
+                  <mat-error *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)">
+
+                    <mat-error *ngIf="barcode.errors.barcode && !barcode.errors.required">
+                      Please enter a valid barcode
+                    </mat-error>
+                    <mat-error *ngIf="barcode.errors.required">
+                      Barcode number is <strong>required</strong>
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Choose product Brand</mat-label>
+                  <input matInput placeholder="Choose Brand" (input)="showChooseBrandModal()"
+                    (click)="showChooseBrandModal()" formControlName="brand">
+                  <mat-error *ngIf="brand.invalid && (brand.dirty || brand.touched)">
+                    <strong *ngIf="brand.errors.required">Brand is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Choose product Tax Rate</mat-label>
+                  <input matInput placeholder="Choose Tax Rate" (input)="showChooseTaxRateModal()"
+                    (click)="showChooseTaxRateModal()" formControlName="tax_rate">
+                  <mat-error *ngIf="tax_rate.invalid && (tax_rate.dirty || tax_rate.touched)">
+                    <strong *ngIf="tax_rate.errors.required">Tax rate is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Enter product Order code</mat-label>
+                  <input matInput placeholder="Order code (if available)" formControlName="product_order_code">
+                  <mat-hint>For reference to supplier.</mat-hint>
+                  <mat-error
+                    *ngIf="product_order_code.invalid && (product_order_code.dirty || product_order_code.touched)">
+                    <strong *ngIf="product_order_code.errors.required">product Order code is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="col-6" appearance="outline" *ngIf="!updating">
+                  <mat-label>Minimum stock value</mat-label>
+                  <input matInput placeholder="Minimum stock value" formControlName="min_stock" required>
+
+                </mat-form-field>
+
+                <mat-form-field class="col-6" appearance="outline" *ngIf="!updating">
+                  <mat-label>Maximum stock value</mat-label>
+                  <input matInput placeholder="Maximum stock value" formControlName="max_stock" required>
+                </mat-form-field>
+
+                <mat-form-field class="col-12" appearance="outline" >
+                  <mat-label>Enter product Description</mat-label>
+                  <textarea matInput placeholder="Description (optional)" formControlName="summary"></textarea>
+                  <mat-hint>Appears on receipt.</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-7">
+              <table class="table">
+                <tr>
+                  <th colspan="2">Cost/Supply Price <br />
+                   <mat-hint>(Including Tax) (Not saved, this is only  used to calculate Cost price
+                        exc. Tax)</mat-hint>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Cost price Excluding Tax</mat-label>
+                      <input matInput placeholder="Enter Cost price (Exc Tax)"
+                        (input)="calculateCostIncludingTax($event)" type="number"
+                        formControlName="cost_price_excluding_tax" required>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Cost price (Including Tax)</mat-label>
+                      <input matInput placeholder="Enter Cost price (Inc Tax)"
+                        (input)="calculateCostExcludingTax($event)" type="number"
+                        formControlName="cost_price_including_tax" required>
+                    </mat-form-field>
+                  </td>
+
+                </tr>
+                <tr>
+                  <th colspan="2">Retail Price<br />
+                   <mat-hint>(Excluding Tax) (Not saved, this is only  used to calculate Retail Price
+                        inc. Tax)</mat-hint>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Retail Price (Excluding Tax)</mat-label>
+                      <input matInput placeholder="Enter Retail Price (Exc TAX)"
+                        (input)="calculateSaleIncludingTax($event)" type="number"
+                        formControlName="sale_price_excluding_tax" required>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Retail Price (Including TAX)</mat-label>
+                      <input matInput placeholder="Retail Price (INC TAX)" (input)="calculateSaleExcludingTax($event)"
+                        type="number" formControlName="sale_price_including_tax" required>
+                    </mat-form-field>
+                  </td>
+                </tr>
+                 <tr>
+                  <th colspan="2"> 
+                    <button type="button" (click)="addorupdateCustomerTypePriceModal()" class="button-success" mat-raised-button>
+                              <span *ngIf="!updating" trans>Add Customer Specific Prices</span>
+                              <span *ngIf="updating" trans>Update Customer Specific Prices</span>
+                  </button>
+               </th>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+  </form>

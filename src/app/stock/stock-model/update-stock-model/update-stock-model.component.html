@@ -1,0 +1,168 @@
+<div class="modal-header">
+  <h2 mat-dialog-title trans>Stock Adjustment - ({{data.action}})</h2>
+  <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+
+<form [formGroup]="stockForm" (ngSubmit)="updateStock()">
+  <mat-dialog-content class="many-inputs">
+    <div>
+
+      <div class="item row">
+        <div class="name col-5" trans><b>{{stock.item.item}}</b></div>
+        <div class="value col-7" trans>({{stock.item.sku}}) {{stock.branch.name}} has <b>{{stock.available_stock_qty}}</b>
+          in-stock</div>
+      </div>
+
+      <mat-divider></mat-divider>
+      <br />
+
+      <div class="item row">
+        <div class="name col-3" trans><b>Batch No:</b></div>
+        <div class="value col-9">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Batch No</mat-label>
+
+            <input  type="text" matInput placeholder="Batch No" (input)="checkEmpty($event)" (click)="empty()" (focusout)="checkEmpty($event)" formControlName="batch_no"
+              required>
+            <mat-error *ngIf="batch_no.invalid && (batch_no.dirty || batch_no.touched)">
+
+              <mat-error *ngIf="batch_no.errors.required">
+                Batch No is required
+              </mat-error>
+            </mat-error>
+
+          </mat-form-field>
+
+
+        </div>
+        <mat-error class="col-12" *ngIf="!found_stock && data.action=='remove'">
+            {{stock.item.item}} product with Batch No {{stockForm.value.batch_no}} is not exist. <br />NB: you can't remove item in stock.
+           </mat-error>
+
+           <mat-error class="col-12" *ngIf="found_stock && current_stock<=0 && data.action=='remove'">
+               {{stock.item.item}} product with Batch No {{stockForm.value.batch_no}} has {{current_stock}} Quantity.
+ <br />NB:Remove can't be possible because it is out of stock.
+           </mat-error>
+      </div>
+     <div *ngIf="(found_stock && current_stock > 0 && data.action=='remove') || found_stock && data.action=='add'">
+      <div class="item row">
+        <div class="name col-3" trans><b>Reason:</b></div>
+        <div class="value col-9">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Choose stock movement reason</mat-label>
+            <input  matInput placeholder="Choose Customer Type"  (input)="showChooseReasonModal()" (click)="showChooseReasonModal()" formControlName="reason">
+
+            <mat-error *ngIf="reason.invalid && (reason.dirty || reason.touched)">
+              <strong *ngIf="reason.errors.required">Stock Movement Reason is required.</strong>
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="item row">
+        <div class="name col-3" trans><b>Transction date:</b></div>
+        <div class="value col-9">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Transction date</mat-label>
+
+            <input matInput  [matDatepicker]="transctiondate" placeholder="Transction date" formControlName="transction_date"
+              required>
+            <mat-datepicker-toggle matSuffix [for]="transctiondate"></mat-datepicker-toggle>
+            <mat-datepicker #transctiondate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="item row" *ngIf="data.action=='add'">
+        <div class="name col-3" trans><b>Expired date:</b></div>
+        <div class="value col-9">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Expired date</mat-label>
+
+            <input matInput  [matDatepicker]="expireddate" placeholder="Expired date" formControlName="expired_date">
+            <mat-datepicker-toggle matSuffix [for]="expireddate"></mat-datepicker-toggle>
+            <mat-datepicker #expireddate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="item row" *ngIf="data.action=='add'">
+        <div class="name col-3" trans><b>Manufacture date:</b></div>
+        <div class="value col-9">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Manufacture date</mat-label>
+
+            <input matInput  [matDatepicker]="manufacturedate" placeholder="Manufacture date" formControlName="manufacture_date">
+            <mat-datepicker-toggle matSuffix [for]="manufacturedate"></mat-datepicker-toggle>
+            <mat-datepicker #manufacturedate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="item row">
+        <div class="name col-3" trans><b>Quantity:</b></div>
+        <div class="value col-9">
+          <mat-form-field  *ngIf="data.action" appearance="outline" class="col-12">
+            <mat-label>Quantity</mat-label>
+            <input  type="number"  matInput placeholder="Quantity" formControlName="qty" required>
+            <mat-error *ngIf="qty.invalid && (qty.dirty || qty.touched)">
+
+              <mat-error *ngIf="qty.errors.required">
+                Quantity is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="qty.errors.min">
+                Quantity <strong>must be greater than 0</strong>
+              </mat-error>
+            </mat-error>
+
+
+          </mat-form-field>
+
+        </div>
+        <mat-error class="col-12" *ngIf="(current_stock-stockForm.value.qty)<=0 && data.action=='remove'">
+            {{stock.item.item}} product with Batch No {{stockForm.value.batch_no}} has {{current_stock-stockForm.value.qty}} Quantity.
+           <br /> NB:Quantity ({{current_stock-stockForm.value.qty}})<strong>will create a negative stock level</strong>
+        </mat-error>
+      </div>
+      <div class="item row" *ngIf="data.action=='add'">
+        <h6 class="col-12"> {{stock.item.item}} product with Batch No {{stockForm.value.batch_no}} has <b>{{current_stock+stockForm.value.qty}}</b></h6>
+        <h6 class="col-12">All Total Quantity of {{stock.item.item}} product is <b>{{calculateTQty('add')}}</b></h6>
+
+      </div>
+      <div class="item row" *ngIf="data.action=='remove' && ((current_stock-stockForm.value.qty) > 0)">
+          <h6 class="col-12"> {{stock.item.item}} product with Batch No {{stockForm.value.batch_no}} has <b>{{current_stock-stockForm.value.qty}}</b></h6>
+        <h6 class="col-12">All Total Quantity of {{stock.item.item}} product is <b>{{calculateTQty('remove')}}</b></h6>
+      </div>
+      <br />
+      <div class="item row">
+        <div class="name col-3" trans><b>Comments</b></div>
+        <div class="value col-9">
+          <mat-form-field  appearance="outline" class="col-12">
+            <mat-label>Comments</mat-label>
+            <textarea  matInput placeholder="Comments" formControlName="comments" required></textarea>
+            <mat-error *ngIf="comments.invalid && (comments.dirty || comments.touched)">
+              <mat-error *ngIf="comments.errors.comments && !comments.errors.required">
+                Please enter a valid comments
+              </mat-error>
+              <mat-error *ngIf="comments.errors.required">
+                Comments is <strong>required</strong>
+              </mat-error>
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    </mat-dialog-content>
+    <mat-card-actions class="card-actions" *ngIf="(found_stock && current_stock > 0 && data.action=='remove') || found_stock && data.action=='add'">
+      <button type="submit" class="float-right" mat-raised-button color='accent' [disabled]="(loading | async) || stockForm.invalid || ((current_stock-stockForm.value.qty)<=0 && data.action=='remove')">
+        Submit </button>
+
+      <button type="button" class="float-right" (click)='close()' [disabled]="(loading | async)" mat-button>Close</button>
+    </mat-card-actions>
+</form>

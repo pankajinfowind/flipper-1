@@ -1,0 +1,48 @@
+
+<data-table [dataSource]="dataSource" itemsName="branches" [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateBranchModal()"  trans>Create a new branch</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search branchs ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedBranchs()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+      <mat-cell *matCellDef="let branch"> {{branch.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let branch">
+        <button (click)="selectBranch(branch)" class="button-success" *ngIf="branch.id!=selectedId" [disabled]="branch.id==selectedId?true:false"  [matTooltip]="'Select branch' | trans">Select
+        </button>
+        <button  class="button-cancel" *ngIf="branch.id==selectedId"  [matTooltip]="'Selected branch' | trans">Selected
+        </button>
+    </mat-cell>
+</ng-container>
+
+ <ng-container matColumnDef="users">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let branch">
+          <button class="button" (click)="showUsersModal(branch)"  [matTooltip]="'View Users' | trans">
+              View users assigned
+          </button>
+      </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let branch">
+          <button mat-icon-button (click)="showCrupdateBranchModal(branch)"  [matTooltip]="'Edit branch' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+
+</data-table>

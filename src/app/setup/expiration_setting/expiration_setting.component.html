@@ -1,0 +1,58 @@
+<data-table [dataSource]="dataSource" itemsName="Periods"  [isLoading]="(loading | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdatePeriodModal()"  trans>Create a Period</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everything ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedPeriods()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+      <mat-cell *matCellDef="let period"> {{period.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="period">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Period</mat-header-cell>
+    <mat-cell *matCellDef="let period">
+        <span  class="text" [ngSwitch]="period.period">
+            <label *ngSwitchCase="'tomorrow'">Tomorrow</label>
+            <label *ngSwitchCase="'today'">Today</label>
+            <label *ngSwitchCase="'yestarday'">Yestarday</label>
+            <label *ngSwitchCase="'day'">{{period.period_value}} Day(s)</label>
+            <label *ngSwitchCase="'week'">{{period.period_value}} Week(s)</label>
+            <label *ngSwitchCase="'month'">{{period.period_value}} Month(s)</label>
+            <label *ngSwitchCase="'year'">{{period.period_value}} Year(s)</label>
+            <label *ngSwitchDefault>Now..</label>
+         </span>
+    </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="color">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Color</mat-header-cell>
+    <mat-cell *matCellDef="let period">
+        <span class="badge__target">
+          <span class="badge badge--success" [style.color]="'#ffff'" [style.background-color]="period.color?period.color:'#1da1f2'">{{period.color?period.color:'none'}} </span>
+      </span>
+    </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Description</mat-header-cell>
+    <mat-cell *matCellDef="let period"> {{period.description}} </mat-cell>
+</ng-container>
+
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let period">
+          <button mat-icon-button (click)="showCrupdatePeriodModal(period)"  [matTooltip]="'Edit Period' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

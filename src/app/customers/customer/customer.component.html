@@ -1,0 +1,72 @@
+<data-table [dataSource]="dataSource" [hiddenCheckBox]="hiddenCheckBox" itemsName="Customers" [isLoading]="(loading$ | async)" matSort>
+  <div headerLeftActions>
+      <button mat-raised-button  class="button" (click)="showCrupdateCustomerModal()"  trans>Create a Customer</button>
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search everything ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+  <button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedCustomers()" headerSelectedActions>
+      <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+
+  <ng-container matColumnDef="cstomer_no">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Cust. No</mat-header-cell>
+      <mat-cell *matCellDef="let customer"> {{customer.customer_no}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Title</mat-header-cell>
+      <mat-cell *matCellDef="let customer"> {{customer.title}} </mat-cell>
+</ng-container>
+  <ng-container matColumnDef="full_name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Full Name</mat-header-cell>
+      <mat-cell *matCellDef="let customer"> <span class="ellipsis">{{customer.full_name}}</span> </mat-cell>
+</ng-container>
+<ng-container matColumnDef="customer_type_id">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Cust . Type</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> <span class="ellipsis">{{customer.customer_type?customer.customer_type.name:''}}</span> </mat-cell>
+</ng-container>
+<ng-container matColumnDef="gender">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Gender</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.gender}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="status">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Status</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.status}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="phone">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Phone</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.phone}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="address">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Address</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.address}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="dob">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>D.O.B</mat-header-cell>
+    <mat-cell *matCellDef="let customer"> {{customer.dob | date}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="selected" *ngIf="enableSelectButton">
+  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+  <mat-cell *matCellDef="let customer">
+      <button (click)="selectCustomer(customer)" class="button-success" *ngIf="customer.id!=selectedId" [disabled]="customer.id==selectedId?true:false"  [matTooltip]="'Select Customer' | trans">Select
+      </button>
+      <button  class="button-cancel" *ngIf="customer.id==selectedId"  [matTooltip]="'Selected Customer' | trans">Selected
+      </button>
+  </mat-cell>
+</ng-container>
+
+  <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let customer">
+          <button mat-icon-button (click)="showCrupdateCustomerModal(customer)"  [matTooltip]="'Edit Customer' | trans">
+              <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+</data-table>

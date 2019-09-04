@@ -1,0 +1,90 @@
+<div class="modal-header">
+    <h2 mat-dialog-title trans>Advanced options</h2>
+    <button type="button" mat-icon-button (click)="close()" class="close-button" tabindex="-1">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+    <mat-dialog-content class="many-inputs">
+        <div>
+
+            <b>Currently Selected Product: {{data?data.item:'---'}}</b>
+            <hr />
+            <mat-vertical-stepper [linear]="isLinear" #stepper>
+
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup" (ngSubmit)="saveItemPrice()">
+                          <ng-template matStepLabel>Product Pricing</ng-template><br />
+                          <b>Tax Rate: {{data.tax_rate?data.tax_rate.name:''}}({{data.tax_rate?data.tax_rate.percentage:'0.00'}} %)</b>
+                    <hr />
+                  <mat-card-content>
+                          <table class="mt-4 w-100 col-12">
+
+                            <tr class="row">
+                                <td class="col-3">Cost price (EXCLUDING TAX)</td>
+                                <td class="col-9">
+                                  <mat-form-field  appearance="outline">
+                                    <mat-label>Enter cost price (EXCLUDING TAX)</mat-label>
+                                    <input class="text-secondary" matInput placeholder="Enter cost price (EXC TAX)"  (input)="calculateCostIncludingTax($event)" type="number" formControlName="cost_price_excluding_tax"
+                                      required>
+                                  </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="col-3">Cost price (INCLUDING TAX)</td>
+                                <td class="col-9">
+                                    <mat-form-field  appearance="outline">
+                                        <mat-label>Enter cost price (INCLUDING TAX)</mat-label>
+                                        <input matInput placeholder="Enter cost price (INC TAX)"  (input)="calculateCostExcludingTax($event)" type="number" formControlName="cost_price_including_tax"
+                                          required>
+
+
+                                      </mat-form-field>
+                                </td>
+                                </tr>
+
+                                <tr class="row">
+                                  <td class="col-3">Sale price (EXCLUDING TAX)</td>
+                                  <td class="col-9">
+                                      <mat-form-field  appearance="outline">
+                                          <mat-label>Enter sale price (EXCLUDING TAX)</mat-label>
+                                          <input class="text-secondary" matInput placeholder="Enter sale price (EXC TAX)" (input)="calculateSaleIncludingTax($event)" type="number" formControlName="sale_price_excluding_tax"
+                                          required>
+                                        </mat-form-field>
+                                  </td>
+                                </tr>
+
+                                <tr class="row">
+                                <td class="col-3">Sale price (INCLUDING TAX)</td>
+                                <td class="col-9">
+                                    <mat-form-field  appearance="outline">
+                                        <mat-label>Enter sale price (INCLUDING TAX)</mat-label>
+                                        <input class="text-secondary" matInput placeholder="Enter sale price (INC TAX)" (input)="calculateSaleExcludingTax($event)" type="number" formControlName="sale_price_including_tax"
+                                          required>
+                                      </mat-form-field>
+                                </td>
+                              </tr>
+                          </table>
+
+                  </mat-card-content>
+                <mat-card-actions class="m-3 float-center" style="position: relative;left: 360px;">
+                  <button mat-button mat-raised-button type="submit"  class="button" [disabled]="(loading | async)">Save</button>
+                </mat-card-actions>
+
+                    </form>
+                  </mat-step>
+
+                <mat-step [stepControl]="secondFormGroup">
+                    <ng-template matStepLabel>Stock Adjustment </ng-template>
+                    <app-stock-advanced-options  [canAddNew]="'true'" (valueChange)="checkChanges($event)"></app-stock-advanced-options>
+                </mat-step>
+
+                <mat-step>
+                  <ng-template matStepLabel>Customer Specific Prices</ng-template>
+                  <app-change-customer-type-prices (valueChange)="checkChanges($event)"></app-change-customer-type-prices>
+                </mat-step>
+              </mat-vertical-stepper>
+
+        </div>
+    </mat-dialog-content>
+

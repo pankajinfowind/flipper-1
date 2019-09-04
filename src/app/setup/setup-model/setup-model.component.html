@@ -1,0 +1,14 @@
+
+<ng-container  *ngIf="details$ | async as details" [ngSwitch]="details.component">
+    <app-tax-rate-model *ngSwitchCase="'app-tax-rate'"></app-tax-rate-model>
+    <app-reason-model *ngSwitchCase="'app-reason'"></app-reason-model>
+    <app-customertype-model *ngSwitchCase="'app-customertype'"></app-customertype-model>
+    <app-expiration-setting-model *ngSwitchCase="'app-expiration-setting'"></app-expiration-setting-model>
+
+    <ng-template *ngSwitchDefault>
+        <div class="nothing-selected">
+            <div class="text" trans>No Action Made.</div>
+        </div>
+    </ng-template>
+</ng-container>
+

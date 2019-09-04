@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h2 class="modal-title" mat-dialog-title *ngIf="updating" trans>Update Customer Specific Prices</h2>
+  <h2 class="modal-title" mat-dialog-title *ngIf="!updating" trans>Add Customer Specific Prices</h2>
+  <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button">
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="carForm" (ngSubmit)="doSubmit()">
+  <mat-card-content class="mat-dialog-content">
+    <div formArrayName="details" class="form-group" *ngFor="let field of getControls(); let ind = index;">
+      <table class="table">
+        <tr [formGroupName]="ind">
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>Customer type</mat-label>
+              <input matInput placeholder="Name" (input)="showChooseCustomerTypeModal(field)"
+                (click)="showChooseCustomerTypeModal(field)" formControlName="name" required>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>Price</mat-label>
+              <input matInput placeholder="Price" formControlName="sale_price_excluding_tax"
+                (input)="updatePrice(field)" required>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+      <button (click)="addRow()" class="button" mat-raised-button> + Add New Row</button>
+      <button type="submit" class="button-success" mat-raised-button [disabled]="!carForm.valid">Submit</button>
+    </div>
+  </mat-card-actions>
+</form>

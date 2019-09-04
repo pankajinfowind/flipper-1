@@ -1,0 +1,207 @@
+@import '../../../../../scss/variables';
+
+material-navbar {
+ 
+    .navbar-container {
+        background-color:$site-bg-color-100;
+        color:  $admin-left-col-text-color;
+        // box-shadow: $box-shadow-3;
+        z-index: 2;
+        position: fixed;
+        height: $material-navbar-height;
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .logo-container {
+        height: auto;
+        width: auto;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        box-sizing: border-box;
+        height: 56px;
+        padding: 0 5px;
+        margin: 8px;
+        color: #1c252c;
+        background: #d7e0ea;
+        cursor: pointer;
+        border-radius: 500px;
+
+        .logo-1 {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+        .text-logo {
+          font-size: 1.2rem;
+          color: $admin-left-col-text-color;
+          margin-top:35px;
+      }
+      .text-logo:first-letter {
+        text-transform: uppercase;
+    }
+      .text-logo-sm {
+        margin-left: 20px;
+        font-size: 1rem;
+        //color: black!important;
+        color: $admin-left-col-text-color;
+        font-weight:400;
+    }
+     .text-logo-sm:first-letter {
+      text-transform: uppercase;
+      }
+    }
+
+
+
+    .toggle-sidebar-button {
+        display: block;
+        margin: 0 30px 0 20px;
+    }
+ 
+    .nav-searchbar {
+        background: #eee no-repeat 11px 11px;
+        width: 100%;
+        height: 65%;
+        max-height: 48px;
+        // separate logo and search bar
+        margin-left: 80px;
+        // needed to separate search bar and user avatar
+        // on small screens, if there's no menu items
+        margin-right: 180px;
+
+        input,
+        form {
+            height: 100%;
+        }
+
+        @media only screen and (max-width: $tablet) {
+            display: block;
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            max-width: 300px;
+        }
+        @media only screen and (max-width: $phone) {
+            display: block;
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            max-width: 200px;
+        }
+    }
+
+    logged-in-user-widget {
+        margin-left: auto;
+    }
+
+
+    .nav-container-sidebar {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        box-sizing: border-box;
+        height: 56px;
+        padding: 0 5px;
+        margin: 8px;
+        color: #1c252c;
+        background: #d7e0ea;
+        cursor: pointer;
+        border-radius: 500px;
+    
+      .logo {
+        position: relative;
+        padding: .5rem .7rem;
+        z-index: 4;
+        width:100%;
+    }
+    *, :after, :before {
+      box-sizing: border-box;
+      }
+      div {
+          display: block;
+      }
+   .logo a.logo-mini {
+        opacity: 1;
+        float: left;
+        margin-left: 2px;
+        margin-right: 9.5px;
+        margin-top: 9.5px;
+         overflow: hidden;
+  
+    }
+    .logo a.logo-normal, .logo a.logo-normal {
+      padding-top: 19px;
+      display: block;
+      opacity: 1;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+  }
+  .logo .simple-text {
+    padding: .5rem 0;
+    display: block;
+    position: relative; 
+    overflow-wrap: break-word;
+     flex-grow: 0; flex-shrink: 1; 
+    cursor: inherit;
+    flex-grow: 0; flex-shrink: 0;
+    text-decoration: none;
+    overflow: hidden;
+    color: #1c252c;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: Averta, sans-serif;
+    margin-top: 2px;
+  }
+  
+  img {
+    border-radius: 50%;
+  }
+  .logo-img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+  
+  img, svg {
+    vertical-align: middle;
+  }
+  
+  .navbar-minimize {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    opacity: 1;
+    float:right;
+  }
+  .expand-button {
+    flex: 0 0 $modal-close-button-size;
+    width: $modal-close-button-size;
+    height: $modal-close-button-size;
+    line-height: $modal-close-button-size;
+    color: $modal-close-button-color;
+    transition: transform ease 0.2s;
+    z-index: 999;
+   
+
+    &:hover {
+      transform: rotate(45deg);
+    }
+
+    .mat-icon {
+      width: $modal-close-button-size;
+      height: $modal-close-button-size;
+    }
+  }
+
+}
+}

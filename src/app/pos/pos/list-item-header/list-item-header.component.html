@@ -1,0 +1,7 @@
+<div id="cssmenu" style=" margin-top: 50px;margin-left: 10px;">  
+    <ul>
+        <li class="active" *ngIf="(category$ | async)"><a>{{(category$ | async).name}}</a></li>
+        <li class="search"><a><pos-search-bar></pos-search-bar></a></li>
+        <li><a (click)="goBackToCategory()" style="cursor:pointer"> POS </a></li>
+    </ul>
+</div> 

@@ -1,0 +1,37 @@
+<loading-indicator [isVisible]="loading$ | async" class="overlay"></loading-indicator>
+
+<div *ngIf="(entries$| async).length > 0"
+  class="col-12"
+  fxLayout="wrap row"
+  fxLayout.xs="column"
+    fxLayoutGap="10px"
+    fxLayoutGap.xs="0"
+  fxLayoutAlign="center"
+>
+  <div fxFlex="20%"  *ngFor="let category of (entries$| async)" 
+                  matRipple
+                  [matRippleCentered]="centered"
+                  [matRippleDisabled]="disabled"
+                  [matRippleUnbounded]="unbounded"
+                  [matRippleRadius]="radius"
+                  [matRippleColor]="color"
+                  (click)="loadItemsOfCategory(category)" class="mt-2 mb-1">
+    <mat-card  [style.color]="'#ffff'" [style.background-color]="category.color">
+    
+  <img mat-card-avatar [src]="bg_img" style="width:60px;
+  position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  height: 60px;
+  border-radius: 50%; border:1px solid #fff; " />
+     <br /><br /><br />
+      <mat-card-footer class="ellipsis text-center"><span class="text-center" style="font-size:14px;text-align:center; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" matTooltip="{{category.name}}"
+                    [matTooltipPosition]="'left'">{{category.name}}</span>
+       </mat-card-footer>   
+  
+    </mat-card>
+  </div>
+</div>
+

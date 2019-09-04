@@ -1,0 +1,27 @@
+<div class="stock">
+<mat-sidenav-container class="content">
+  <mat-sidenav [opened]="!leftColumnIsHidden" mode="side" class="left-column">
+      <mat-list class="menu-items"  *ngFor="let link of links">
+          <a class="menu-item" [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="updateTitle(link.menu)">
+              <mat-icon >{{link.icon}}</mat-icon>
+              <span class="text" trans>{{link.menu}}</span>
+          </a>
+       </mat-list>
+
+    <div class="version">
+
+        <!-- Version: {{settings.get('version')}} -->
+    </div>
+</mat-sidenav>
+
+
+<mat-sidenav [opened]="(details$ | async).detailsVisible" [mode]="(isMobile) ? 'over' : 'side'" position="end" class="right-sidebar">
+  <app-details></app-details>
+</mat-sidenav>
+
+<mat-sidenav-content class="content-inner" style="overflow: hidden">
+    <router-outlet></router-outlet>
+</mat-sidenav-content>
+</mat-sidenav-container>
+
+</div>

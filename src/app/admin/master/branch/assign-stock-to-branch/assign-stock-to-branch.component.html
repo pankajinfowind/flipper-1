@@ -1,0 +1,24 @@
+
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title  trans>Assign Stock</h2>
+    <button type="button" (click)="close()" mat-icon-button class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+
+<data-table [dataSource]="dataSource" itemsName="Items" [isLoading]="(loading | async)" notFoundMessage="All items have been assigned" matSort>
+  <div headerLeftActions>
+   
+    </div>
+  <div class="input-container" headerRightActions>
+      <input type="text" class="search" placeholder="Search items ..." trans-placeholder [formControl]="dataSource.searchQuery">
+      <mat-icon svgIcon="search"></mat-icon>
+    </div>
+
+     <button mat-raised-button  class="button" [matTooltip]="'Attaching Items selected' | trans" (click)="maybeAttachSelectedItems()" headerSelectedActions>Attach</button>
+
+  <ng-container matColumnDef="item_id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header trans>Item</mat-header-cell>
+      <mat-cell *matCellDef="let stock"> {{stock.item.item}} </mat-cell>
+  </ng-container>
+  
+
+</data-table>

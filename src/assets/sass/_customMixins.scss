@@ -1,0 +1,38 @@
+// ================================================ //
+//                  MIXINS                          //
+// ================================================ //
+
+
+@mixin default-transition {
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+@mixin box-shadow {
+    -webkit-box-shadow: 2px 5px 30px rgba(0,0,0,0.1);
+    -moz-box-shadow: 2px 5px 30px rgba(0,0,0,0.1);
+    -ms-box-shadow: 2px 5px 30px rgba(0,0,0,0.1);
+    box-shadow: 2px 5px 30px rgba(0,0,0,0.1);
+}
+@mixin navTabs-shadow {
+    -webkit-box-shadow: 2px 3px 12px rgba(0,0,0,0.15);
+    -moz-box-shadow: 2px 3px 12px rgba(0,0,0,0.15);
+    -ms-box-shadow: 2px 3px 12px rgba(0,0,0,0.15);
+    box-shadow: 2px 3px 12px rgba(0,0,0,0.15);
+}
+
+@mixin stripe-shadow {
+    -webkit-box-shadow: 20px 30px 15px rgba(0,0,0,0.1);
+    -moz-box-shadow: 20px 30px 15px rgba(0,0,0,0.1);
+    -ms-box-shadow: 20px 30px 15px rgba(0,0,0,0.1);
+    box-shadow: 20px 30px 15px rgba(0,0,0,0.1);
+}
+@mixin stripe-animation{
+    animation-duration: 3000ms;
+    transition-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+

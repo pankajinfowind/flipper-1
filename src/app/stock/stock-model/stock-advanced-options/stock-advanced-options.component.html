@@ -1,0 +1,363 @@
+<!-- <loading-indicator [isVisible]="loading | async" class="overlay"></loading-indicator> -->
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel *ngIf="dataSource.data && dataSource.data.length > 0" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>edit</mat-icon> Edit Existing
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="details-panel" *ngIf="dataSource.data && dataSource.data.length> 0">
+
+      <table mat-table [dataSource]="dataSource" class="w-100" style="overflow-x: hidden" multiTemplateDataRows>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef>Branch
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.branch?element.branch.name:''}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currenty_qty">
+          <th mat-header-cell *matHeaderCellDef>Currenty stock
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.available_stock_qty}}</span> </td>
+        </ng-container>
+        <ng-container matColumnDef="min_stock">
+          <th mat-header-cell *matHeaderCellDef>Min stock
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.min_stock}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="max_stock">
+          <th mat-header-cell *matHeaderCellDef>Max stock
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.max_stock}}</span> </td>
+        </ng-container>
+        <ng-container matColumnDef="on_order">
+          <th mat-header-cell *matHeaderCellDef>On order
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.on_order}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit_sale">
+          <th mat-header-cell *matHeaderCellDef>Unit of sale
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">{{element.unit_of_sale}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="show_alert">
+          <th mat-header-cell *matHeaderCellDef>Show alert
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="text">
+              <mat-checkbox [disabled]="'true'" [checked]="element.show_alert"></mat-checkbox>
+            </span> </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button class="d-inline-block" color="accent" (click)="expandedElement = expandedElement === element ? null : element;edit(element)">
+              <mat-icon>edit</mat-icon> Edit
+            </button>
+            <button mat-button class="d-inline-block" color="warn" [disabled]="(loading | async)" (click)="delete(element)">
+              <mat-icon>delete</mat-icon> delete
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <form [formGroup]="stockFormGroup" (ngSubmit)="saveStockUpdate(element)">
+                <mat-card-content class="mt-3 row">
+
+                  <div class="col-6">
+
+
+                    <div class="item row">
+                      <table class="m-3">
+
+                        <tr>
+                          <td>
+                            <mat-form-field class="m-3" appearance="outline">
+                              <mat-label>Choose Branch</mat-label>
+                              <mat-select placeholder="Branch" class="w-100" formControlName="branch_id">
+                                <mat-option *ngFor="let branch of branchList" [value]="branch.branch_id">
+                                  {{branch.name}}
+                                </mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="branch_id.invalid">
+                                <strong>Please branch is required.</strong>
+                              </mat-error>
+                            </mat-form-field>
+
+                          </td>
+                          <td>
+                            <mat-form-field class="m-3" appearance="outline">
+                              <mat-label>Update Unit of Sale</mat-label>
+                              <input  matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
+
+                            </mat-form-field>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </div>
+
+
+                  </div>
+                  <div class="item row">
+                    <div class="col-6">
+                      <table class="m-3">
+
+                        <tr>
+                          <td>
+                            <mat-form-field class="m-3" appearance="outline">
+                              <mat-label>Update Minimum stock value</mat-label>
+                              <input matInput placeholder="Minimum stock value" (input)="updateMinValue($event)"
+                                formControlName="min_stock" required>
+                              <mat-error *ngIf="min_stock.invalid && (min_stock.dirty || min_stock.touched)">
+                                <!-- <strong *ngIf="min_stock.errors.max">Should be less than maximum stock value.</strong> -->
+                              </mat-error>
+
+                            </mat-form-field>
+                          </td>
+                          <td class="m-3">
+                            <mat-form-field appearance="outline">
+                              <mat-label>Update Maximum stock value</mat-label>
+                              <input  matInput placeholder="Maximum stock value" (input)="updateMinValue($event)"
+                                formControlName="max_stock" required>
+
+                            </mat-form-field>
+                          </td>
+                        </tr>
+
+
+                        <tr>
+                          <td>
+                            <mat-form-field class="m-3" appearance="outline">
+                              <mat-label>Update On Order</mat-label>
+                              <input matInput placeholder="On Order value" formControlName="on_order"
+                                required>
+                            </mat-form-field>
+                          </td>
+                          <td>
+                            <mat-checkbox class="m-3" formControlName="show_alert">Show alerts Messages</mat-checkbox>
+                          </td>
+                        </tr>
+
+
+
+                      </table>
+
+                    </div>
+                  </div>
+
+                </mat-card-content>
+
+                <mat-card-actions class="card-actions float-right m-2">
+                  <button mat-button mat-raised-button class="m-4 button-cancel" (click)="expandedElement = expandedElement === element ? null : element"
+                    [disabled]="(loading | async)">Close</button>
+                  <button mat-raised-button type="submit" class="m-4 float-right button" [disabled]="(loading | async)">Update</button>
+                </mat-card-actions>
+              </form>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+          [class.highlighted]="expandedElement === element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+
+      </table>
+      <pre>
+
+* Check the "alerts" to receive email notifications when products are low on stock.
+* Minimum value is the stock level at which to reorder.
+* Maximum value is used to calculate the number of products to reorder.
+
+For example: If the Minimum value is 2 and the Maximum value is 5,
+            when the current stock drops below 2, reorder more items to bring
+            the stock back to the maximum value.
+  </pre>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="canAddNew && dataSource_new_stock.data.length > 0" [expanded]="dataSource.data.length==0?step === 0:step === 1" (opened)="setStep(dataSource.data.length==0?0:1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>add</mat-icon> Add New
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="newStockForm">
+        <button type="button" class="m-3 float-right" (click)="saveNewStock(null,true)" mat-raised-button color="accent" [disabled]="loading | async">Save all</button>
+      <mat-form-field class="w-100 p-2">
+        <input matInput (keyup)="applyFilter($event.target.value)" [disabled]="dataSource_new_stock.data.length == 0" placeholder="Search">
+      </mat-form-field>
+
+  <div style="overflow: auto">
+      <table formArrayName="newStock" mat-table [dataSource]="dataSource_new_stock" class="w-100">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef > Branch </th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+              {{element.name}}
+            <mat-form-field class="hidden">
+              <input matInput formControlName="branch_id" required hidden>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="available_stock_qty">
+          <th mat-header-cell *matHeaderCellDef > Current Quantity</th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+            <!-- unit quantity input field -->
+            <mat-form-field class="m-3" appearance="outline">
+              <mat-label>Current Qty</mat-label>
+
+                <input matInput placeholder="Current Qty"  type="number"
+                  formControlName="qty" required>
+
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="stock_mvmts_reason">
+            <th mat-header-cell *matHeaderCellDef >Stock movement</th>
+            <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+              <mat-form-field class="cm-3" appearance="outline">
+                  <mat-label>Stock movement reason</mat-label>
+                  <mat-select placeholder="Stock movement reason" formControlName="reason_id" required>
+                      <mat-option>None</mat-option>
+                    <mat-option *ngFor="let reason of reasons" [value]="reason.reason_id">
+                      {{reason.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+
+
+        <ng-container matColumnDef="expired_date">
+          <th mat-header-cell *matHeaderCellDef > Expired date </th>
+          <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+            <mat-form-field class="m-3" appearance="outline">
+              <mat-label>Expired date</mat-label>
+
+              <input matInput [matDatepicker]="expireddate" placeholder="Expired date (if needed)" formControlName="expired_date">
+              <mat-datepicker-toggle matSuffix [for]="expireddate"></mat-datepicker-toggle>
+              <mat-datepicker #expireddate></mat-datepicker>
+
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transction_date">
+          <th mat-header-cell *matHeaderCellDef > Transction date </th>
+          <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+            <mat-form-field class="m-3" appearance="outline">
+              <mat-label>Transction date</mat-label>
+
+              <input matInput [matDatepicker]="transctiondate" placeholder="Transction date" formControlName="transction_date"
+                required>
+              <mat-datepicker-toggle matSuffix [for]="transctiondate"></mat-datepicker-toggle>
+              <mat-datepicker #transctiondate></mat-datepicker>
+
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="min_stock">
+          <th mat-header-cell *matHeaderCellDef >Min stock </th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+            <mat-form-field class="m-3" appearance="outline">
+              <mat-label>Minimum stock value</mat-label>
+              <input  matInput placeholder="Minimum stock value"
+                formControlName="min_stock" required>
+            </mat-form-field>
+
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="max_stock">
+          <th mat-header-cell *matHeaderCellDef >Max stock </th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+            <mat-form-field class="m-3" appearance="outline">
+              <mat-label>Maximum stock value</mat-label>
+              <input  matInput placeholder="Maximum stock value"
+                formControlName="max_stock" required>
+
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="on_order">
+          <th mat-header-cell *matHeaderCellDef >On Order </th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+            <mat-form-field class="m-3" appearance="outline">
+              <mat-label>On Order</mat-label>
+              <input  matInput placeholder="On Order value" formControlName="on_order"
+                required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit_sale">
+          <th mat-header-cell *matHeaderCellDef >Unit of Sale</th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+            <mat-form-field class="m-3" appearance="outline">
+              <mat-label>Unit of Sale</mat-label>
+              <input  matInput placeholder="Unit of Sale" formControlName="unit_of_sale">
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="show_alert">
+          <th mat-header-cell *matHeaderCellDef >Show alerts </th>
+          <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+            <mat-checkbox class="col-12" formControlName="show_alert"></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operation">
+          <th mat-header-cell *matHeaderCellDef > Operation </th>
+          <td mat-cell *matCellDef="let element; let index = index">
+            <button type="button" class="m-3 float-right button" (click)="saveNewStock(element)" mat-raised-button [disabled]="loading | async">Save</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsNewStock"></tr>
+
+        <tr (click)="selected_row_id = row.id" [class.highlighted]="selected_row_id==row.id?true:false" mat-row *matRowDef="let row; columns: displayedColumnsNewStock; let index = index">
+        </tr>
+
+
+      </table>
+<pre>
+
+  * Check the "alerts" to receive email notifications when products are low on stock.
+  * Minimum value is the stock level at which to reorder.
+  * Maximum value is used to calculate the number of products to reorder.
+
+  For example: If the Minimum value is 2 and the Maximum value is 5,
+              when the current stock drops below 2, reorder more items to bring
+              the stock back to the maximum value.
+    </pre>
+    </div>
+    </form>
+  </mat-expansion-panel>
+
+</mat-accordion>

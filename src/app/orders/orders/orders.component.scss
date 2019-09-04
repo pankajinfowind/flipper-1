@@ -1,0 +1,35 @@
+@import"../../app_sass/variables";
+@import "../../app_sass/modal.scss";
+[_nghost-c5] {
+  display: inline-block !important;
+  width: 100%;
+}
+.mat-tab-link-active,
+.mat-tab-label-active {
+  background-color: $site-selected-item-bg-color;
+  color: $site-primary-color-100;;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+    font-weight: 500!important;
+
+}
+nav{
+  margin-top:5px;
+  background: #ffffff;
+}
+.mat-tab-link,
+.mat-tab-label {
+  line-height: 30px !important;
+  height: 30px !important;
+  min-width: 100px !important;
+
+}
+.tabContentContainer {
+  border: 1px solid #aaaaaa;
+  background: #ffffff 50% 50% repeat-x;
+}
+
+.order-lists{
+  height: calc(100% - 30px);
+  background: #ffffff 50% 50% repeat-x;
+}

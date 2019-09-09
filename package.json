@@ -36,6 +36,7 @@
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "ng:serve": "npm run postinstall:web && ng serve --aot --proxy-config proxy.conf.json --prod",
     "ng:serve:web": "npm run postinstall:web && ng serve -o --aot --proxy-config proxy.conf.json --prod",
+    "ng:memory": "npm run postinstall:web &&  node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -o --aot --proxy-config proxy.conf.json --prod",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run postinstall:electron && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build -p  always --linux",

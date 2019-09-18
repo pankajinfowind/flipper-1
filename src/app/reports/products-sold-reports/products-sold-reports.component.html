@@ -1,0 +1,92 @@
+<br />
+<br />
+<data-table [dataSource]="dataSource" itemsName="Top Sold Product Report(s)" class="mt-4" [isLoading]="(loading | async)"
+  notFoundMessage="Seems like no  sales found!" hiddenCheckBox="true" matSort>
+
+   <div headerLeftActions>
+   
+      <div class="container float-left mt-2">
+        <form [formGroup]="dataForm">
+          <table class="w-100 ml-3">
+           <tr><th><h3>Top Sold Product Report(s)</h3></th>
+            <tr>
+            
+              <td>
+                <mat-form-field appearance="outline">
+                  <mat-label>Date From</mat-label>
+
+                  <input matInput [matDatepicker]="from" placeholder="Date From" formControlName="from"
+                    (dateInput)="orderParams()" (dateChange)="orderParams()">
+                  <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                  <mat-datepicker #from></mat-datepicker>
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field appearance="outline">
+                  <mat-label>Date To</mat-label>
+                  <input matInput [matDatepicker]="to" placeholder="Date To" formControlName="to"
+                    (dateInput)="orderParams()" (dateChange)="orderParams()">
+                  <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                  <mat-datepicker #to></mat-datepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+  </div>
+
+  <div class="input-container" headerRightActions>
+    <button mat-raised-button  class="button" (click)="export()"  trans>Export Top Product Sold Report(s) List</button>
+    <!-- <input type="text" class="search" placeholder="Search Order#,Supplier,name,Order Due" trans-placeholder
+      [formControl]="dataSource.searchQuery">
+    <mat-icon svgIcon="search"></mat-icon>
+     !-->
+  </div>
+
+  <!--<button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedOrders()"
+    headerSelectedActions>
+    <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+  !-->
+
+  <ng-container matColumnDef="sku">
+    <mat-header-cell *matHeaderCellDef trans>SKU</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+      <span class="ellipsis">
+        {{sale.sku}}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="item">
+    <mat-header-cell *matHeaderCellDef trans>Items</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+     <span class="ellipsis">
+        {{sale.item}}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="items">
+    <mat-header-cell *matHeaderCellDef trans>Qty Sold</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+     {{sale.items}}
+    </mat-cell>
+  </ng-container>
+
+  
+    <ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef trans>Category</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+     {{sale.category}}
+    </mat-cell>
+  </ng-container>
+ 
+  <ng-container matColumnDef="created_at">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Last Updated at</mat-header-cell>
+    <mat-cell *matCellDef="let sale"> {{sale.created_at | date}} </mat-cell>
+  </ng-container>
+
+</data-table>

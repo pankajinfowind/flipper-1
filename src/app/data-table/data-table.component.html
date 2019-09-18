@@ -48,7 +48,8 @@
     <div #noResults><ng-content *ngIf="dataSource.isEmpty()" select="no-results-message"></ng-content></div>
 
     <no-results-message *ngIf="!noResults.children.length && dataSource.isEmpty()">
-        <span primary-text trans>Nothing To Display.</span>
+        <span primary-text trans *ngIf="notFoundMessage">{{itemsName}}.</span>
+          <span primary-text trans *ngIf="!notFoundMessage">Nothing To Display.</span>
         <span secondary-text trans *ngIf="!notFoundMessage">Seems like no {{itemsName}} have been created yet.</span>
         <span secondary-text trans *ngIf="notFoundMessage">{{notFoundMessage}}</span>
     </no-results-message>

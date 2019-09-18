@@ -64,8 +64,8 @@ constructor(private localStorage: LocalStorage,private store:Store,private api:A
         this.loadData();
 }
 loadData(){
-  const from= this.searchForm.value.from?this.searchForm.value.from.getDate() + "-" + (this.searchForm.value.from.getMonth() + 1) + "-" + this.searchForm.value.from.getFullYear():null;
-  const to= this.searchForm.value.to?this.searchForm.value.to.getDate() + "-" + (this.searchForm.value.to.getMonth() + 1) + "-" + this.searchForm.value.to.getFullYear():null;
+  const from= this.searchForm.value.from?this.searchForm.value.from:null;
+  const to= this.searchForm.value.to?this.searchForm.value.to :null;
   this.localStorage.set('stockExpiredUrl',"expired_item/custom/"+parseInt(localStorage.getItem('active_branch'))+'/'+from+'/'+to);
   this.store.dispatch(new LoadStockExpiredEntries());
 

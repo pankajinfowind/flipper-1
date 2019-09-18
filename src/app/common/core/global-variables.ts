@@ -21,7 +21,10 @@ export class GlobalVariables {
         this.router.navigate(["no-internet"]);
       }
     }
-
+    downloadFile(url) {
+      return window.location.href=url;
+   }
+   
    
     isInternetConnection() {
       var isOnLine = window.navigator.onLine;

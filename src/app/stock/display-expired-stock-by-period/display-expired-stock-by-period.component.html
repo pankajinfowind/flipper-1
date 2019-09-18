@@ -2,7 +2,7 @@
 
 <div class="table-container" *ngIf="(entries$ | async) && (entries$ | async).length > 0" stockInfiniteScroll>
 
-<table mat-table [dataSource]="entries$ | async">
+<table mat-table [dataSource]="entries$ | async" hiddenCheckBox="true">
 <ng-container matColumnDef="batch_no">
   <th mat-header-cell *matHeaderCellDef> Batch No </th>
   <td mat-cell *matCellDef="let stock"> <mat-label [matTooltip]="stock.batch_no">{{stock.batch_no}}</mat-label> </td>

@@ -1,7 +1,7 @@
 @import "~@angular/material/theming";
 @include mat-core();
-$anms-light-primary: mat-palette($mat-grey, 200, 500, 300);
-$anms-light-accent: mat-palette($mat-brown, 200);
+$anms-light-primary:  mat-palette($mat-indigo, 800, 300, 900);
+$anms-light-accent: mat-palette($mat-light-blue);
 $anms-light-warn: mat-palette($mat-deep-orange, 200);
 
 $anms-light-theme: mat-light-theme(

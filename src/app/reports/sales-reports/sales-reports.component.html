@@ -1,6 +1,4 @@
-<br />
-<br />
-<data-table [dataSource]="dataSource" itemsName="Sales Report(s)" class="mt-4" hiddenCheckBox="true" [isLoading]="(loading | async)"
+<data-table [dataSource]="dataSource" itemsName="Sales Report(s)"  hiddenCheckBox="true" [isLoading]="(loading | async)"
   notFoundMessage="Seems like no result found!"  matSort>
 
     <div headerLeftActions>
@@ -8,7 +6,7 @@
       <div class="container float-left mt-2">
         <form [formGroup]="dataForm">
           <table class="w-100 ml-3">
-           <tr><th><h3>Sales Report(s)</h3></th>
+          
             <tr>
             
               <td>
@@ -56,6 +54,13 @@
     <mat-cell *matCellDef="let sale"> {{sale.id}} </mat-cell>
   </ng-container>
 
+ <ng-container matColumnDef="item">
+    <mat-header-cell *matHeaderCellDef trans>PRODUCT</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+      <span class="ellipsis"  matTooltip="{{sale.item}}" [matTooltipPosition]="'left'">{{sale.item}}</span>
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="sku">
     <mat-header-cell *matHeaderCellDef trans>SKU</mat-header-cell>
     <mat-cell *matCellDef="let sale">
@@ -70,27 +75,71 @@
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="item">
-    <mat-header-cell *matHeaderCellDef trans>Items</mat-header-cell>
-    <mat-cell *matCellDef="let sale">
-     {{sale.item}}
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="customer_name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Customer</mat-header-cell>
-    <mat-cell *matCellDef="let sale"> <span class="ellipsis" [matTooltip]="sale.customer_name">{{sale.customer_name}}</span></mat-cell>
-  </ng-container>
+ 
 
   <ng-container matColumnDef="customer_type_name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Status</mat-header-cell>
-    <mat-cell *matCellDef="let sale"> <span class="ellipsis">{{sale.customer_type_name}} </span></mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>CUST. TYPE</mat-header-cell>
+    <mat-cell *matCellDef="let sale"> <span class="ellipsis"  matTooltip="{{sale.customer_type_name}}" [matTooltipPosition]="'left'">{{sale.customer_type_name}} </span></mat-cell>
   </ng-container>
+
   <ng-container matColumnDef="tax_rate_name">
-    <mat-header-cell *matHeaderCellDef trans>Items</mat-header-cell>
-    <mat-cell *matCellDef="let sale"> <span class="ellipsis">{{sale.tax_rate_name}} </span>
+    <mat-header-cell *matHeaderCellDef trans>TAX (%)</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{sale.tax_rate_name}}
     </mat-cell>
   </ng-container>
+
+   <ng-container matColumnDef="discount_name">
+    <mat-header-cell *matHeaderCellDef trans>DISC. (%)</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{sale.discount_name}}
+    </mat-cell>
+  </ng-container>
+
+   <ng-container matColumnDef="cost_price">
+    <mat-header-cell *matHeaderCellDef trans>COST</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.cost_price}}
+    </mat-cell>
+  </ng-container>
+   <ng-container matColumnDef="sales_price">
+    <mat-header-cell *matHeaderCellDef trans>SALES</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.sales_price}}
+    </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="qty">
+    <mat-header-cell *matHeaderCellDef trans>QTY</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{sale.qty}}
+    </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="total_cost_amount">
+    <mat-header-cell *matHeaderCellDef trans>TOTAL. COST</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.total_cost_amount}}
+    </mat-cell>
+  </ng-container>
+   <ng-container matColumnDef="total_sold_amount">
+    <mat-header-cell *matHeaderCellDef trans>TOTAL. SOLD</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.total_sold_amount}}
+    </mat-cell>
+  </ng-container>
+
+   <ng-container matColumnDef="profit">
+    <mat-header-cell *matHeaderCellDef trans>PROFIT</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.profit}}
+    </mat-cell>
+  </ng-container>
+
+     <ng-container matColumnDef="taxable_vat">
+    <mat-header-cell *matHeaderCellDef trans>T. TAX</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.taxable_vat}}
+    </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="total_amount_discount">
+    <mat-header-cell *matHeaderCellDef trans>T. DISC</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.total_amount_discount}}
+    </mat-cell>
+  </ng-container>
+ 
  
   <ng-container matColumnDef="created_at">
     <mat-header-cell *matHeaderCellDef mat-sort-header trans>Sold at</mat-header-cell>

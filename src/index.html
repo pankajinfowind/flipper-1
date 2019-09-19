@@ -1,76 +1,124 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  
+
   <title>Flipper</title>
   <base href="">
 
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="./icon.ico">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- 
+
+  <script>
+    var global = global || window;
+    var Buffer = Buffer || [];
+    var process = process || {
+      env: {
+        DEBUG: undefined
+      },
+      version: []
+    };
+  </script>
 
 </head>
 
 <body style="overflow:hidden!important;position:fixed;top:0;left:0;right:0;bottom:0;">
+  <script>
+    function isElectron() {
+      return window && window.process && window.process.type;
+    }
+    this.loadTitleBar();
+
+    function loadTitleBar() {
+      if (isElectron()) {
+        const customTitlebar = require('custom-electron-titlebar');
+        let MyTitleBar = new customTitlebar.Titlebar({
+          backgroundColor: customTitlebar.Color.WHITE,
+          shadow: false,
+          icon: 'icon.ico'
+        });
+        MyTitleBar.updateTitle(localStorage.getItem('flipperTitle')?localStorage.getItem('flipperTitle'):'Flipper');
+      }
+    }
+  </script>
 
   <app-root>
-      <style>
-        html {
-        scroll-behavior: smooth;
+    <style>
+      html {
+      overflow: hidden !important;
       }
-        #element::-webkit-scrollbar {
-            display: none;
+
+      #element::-webkit-scrollbar {
+        display: none;
+      }
+
+      app-root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden !important;
+        color:#364EDA;
+        
+        font-family: -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen-Sans,
+          Ubuntu,
+          Cantarell,
+          Helvetica,
+          sans-serif;
+        font-size: .99em;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        background: white;
+        ;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      @keyframes dots {
+        50% {
+          transform: translateY(-.4rem);
         }
-          app-root {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow:hidden!important;
-            color: rgb(248, 248, 248);;
-            font-family: -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Oxygen-Sans,
-                Ubuntu,
-                Cantarell,
-                Helvetica,
-                sans-serif;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-          }
-          body {
-            background: rgb(66, 136, 253);;
-            position:absolute;top:0;left:0;right:0;bottom:0;
-            margin: 0;
-            padding: 0;
-          }
 
-          @keyframes dots {
-            50% {
-              transform: translateY(-.4rem);
-            }
-            100% {
-              transform: translateY(0);
-            }
-          }
+        100% {
+          transform: translateY(0);
+        }
+      }
 
-          .d {
-            animation: dots 1.5s ease-out infinite;
-          }
-          .d-2 {
-            animation-delay: .5s;
-          }
-          .d-3 {
-            animation-delay: 1s;
-          }
-          </style>
-    Loading<span class="d">.</span><span class="d d-2">.</span><span class="d d-3">.</span>
-    </app-root>
+      .d {
+        animation: dots 1.5s ease-out infinite;
+      }
+
+      .d-2 {
+        animation-delay: .5s;
+      }
+
+      .d-3 {
+        animation-delay: 1s;
+      }
+    </style>
+    <div style="position: relative;bottom:20px;left:-6px">
+    <svg height="220" viewBox="0 0 1631 292" width="220" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="nonzero"><g fill="#364EDA"><path d="M707.6 90.8v116.3c-1.1 37.1-32.2 67.5-69.8 67.5-9.5 0-17.2-7.8-17.2-17.2 0-9.2 7.8-17.2 17.2-17.2 19.2 0 35-15.5 35-35v-2c-10.3 6-22.4 9.5-35 9.5-38.2 0-69.5-31.3-69.5-69.5V90.9c0-9.2 8-17.2 17.2-17.2 9.5 0 17.2 7.8 17.2 17.2v52.3c0 19.2 15.8 35 35 35s35-15.8 35-35V90.9c0-9.5 7.8-17.2 17.2-17.2 9.4 0 17.7 7.6 17.7 17.1zM853.9 145.1c-.6 7.8-4 14.1-14.9 14.1h-88c4.9 14.4 18.1 25 33.9 24.4 9.8-.6 18.4-3.7 25.6-11.2 6.3-6 16.9-6 23 .3 6.9 6.9 6.9 17.2 0 23.6-28.4 28.4-75.5 28.7-102.3-6.9-36.2-48.3-1.4-115.5 53.7-115.8 38.8-.3 70.4 32.4 69 71.5zM753 125.8h63.8c-6-11.2-18.1-19.2-31.9-19.2-14.1 0-25.8 8-31.9 19.2zM1005.5 145.4v59.5c0 38.5-31.3 69.8-69.8 69.8-9.5 0-17.2-8-17.2-17.2 0-9.5 7.8-17.2 17.2-17.2 18.7 0 33.9-14.7 35-33.3-10.9 6.6-23.6 10.3-37.1 10.3-39.6 0-71.8-32.2-71.8-71.8 0-39.6 32.2-71.8 71.8-71.8 39.8-.2 71.9 32 71.9 71.7zm-34.4 0c0-20.4-16.9-37.3-37.3-37.3s-37.1 16.9-37.1 37.3 16.7 37.1 37.1 37.1c20.3-.1 37.3-16.8 37.3-37.1zM1022.5 145.4c0-39.6 32.2-71.8 71.8-71.8 39.6 0 71.8 32.2 71.8 71.8 0 39.6-32.2 71.8-71.8 71.8-39.6 0-71.8-32.2-71.8-71.8zm109.1 0c0-20.4-16.9-37.3-37.3-37.3S1057 125 1057 145.4s16.9 37.3 37.3 37.3 37.3-17 37.3-37.3zM1327 145.6c0 39.4-32.2 71.5-71.5 71.5-39.6 0-72.1-32.2-72.1-71.5V33.3c0-9.5 7.8-17.2 17.5-17.2 9.5 0 17.2 7.8 17.2 17.2v50.6c10.9-6.6 23.8-10.3 37.3-10.3 39.4-.1 71.6 32.4 71.6 72zm-34.5 0c0-20.7-16.7-37.3-37.1-37.3-20.7 0-37.3 16.7-37.3 37.3 0 20.4 16.7 37.1 37.3 37.1 20.5 0 37.1-16.7 37.1-37.1zM1343.4 145.4c0-39.6 32.2-71.8 71.8-71.8 39.6 0 71.8 32.2 71.8 71.8 0 39.6-32.2 71.8-71.8 71.8-39.7 0-71.8-32.2-71.8-71.8zm109.1 0c0-20.4-16.9-37.3-37.3-37.3s-37.3 16.9-37.3 37.3 16.9 37.3 37.3 37.3 37.3-17 37.3-37.3zM1625.5 187.9c3.2 3.2 5.2 7.8 5.2 12.1 0 9.8-7.8 17.2-17.2 17.2-4.9 0-9.2-1.7-12.4-4.9l-42.2-42.5-42.5 42.5c-2.9 3.2-7.5 4.9-12.1 4.9-9.8 0-17.2-7.5-17.2-17.2 0-4.6 1.7-9.2 4.9-12.1l42.5-42.5-42.5-42.2c-3.2-3.2-4.9-7.5-4.9-12.3 0-9.5 7.5-17.2 17.2-17.2 4.3 0 8.9 2 12.1 5.2l42.5 42.2 42.2-42.2c3.2-3.2 7.8-5.2 12.4-5.2 9.5 0 17.2 7.8 17.2 17.2 0 4.6-2 9.2-5.2 12.3l-42.2 42.2 42.2 42.5z"></path></g><g fill="#00B9F9"><path d="M236.6 290.6L.1 164.3 236.6 35l236.5 129.3z"></path><path d="M473.1 129.4v34.9l-32.7-17.4zM.1 129.4v34.9l32.3-17.6z"></path></g><path d="M236.6 255.7L.1 129.4 236.6.1l236.5 129.3z" fill="#364EDA"></path><path d="M383.5 127.8l-146.9 78.5-68.4-36.5-18 8.9 86.4 46.1 163.6-87.4z" fill="#FFF"></path></g></svg>
+    <small style="font-size:8px;position: relative;top: 4.5px;left: 3px;">BETA</small>
+   <br />
+   <i style="position: relative;
+    bottom: 72px;
+    left: 80px;">Loading<span class="d">.</span><span class="d d-2">.</span><span class="d d-3">.</span></i>
+   </div>
+  </app-root>
 </body>
-</html>
 
+</html>

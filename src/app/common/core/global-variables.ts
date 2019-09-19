@@ -9,10 +9,10 @@ import { ElectronService } from './config/electron.service';
 export class GlobalVariables {
 
   titlebar:any=null;
-  constructor( public electronService: ElectronService,public localStorage: LocalStorage,public router: Router) {
-    if (this.electronService.isElectron) {
-          this.titlebar = this.electronService.viewTitleBar();
-       }
+  constructor(public electronService: ElectronService,public localStorage: LocalStorage,public router: Router) {
+    // if (this.electronService.isElectron) {
+    //       this.titlebar = this.electronService.viewTitleBar();
+    //    }
    }
 
   
@@ -470,11 +470,9 @@ export class GlobalVariables {
   }
 
   webTitle(title = "Flipper") {
-    if (this.electronService.isElectron) {
-        this.titlebar.updateTitle(title + ' - Flipper');
-    }else{
+  
       document.title = title;
-    }
+      localStorage.setItem('flipperTitle',title);
     return this.localStorage.set('flipper-title',title);
 
   }

@@ -1,6 +1,5 @@
-<br />
-<br />
-<data-table [dataSource]="dataSource" itemsName="Top Sold Product Report(s)" class="mt-4" [isLoading]="(loading | async)"
+
+<data-table [dataSource]="dataSource" itemsName="Top Sold Product Report(s)" [isLoading]="(loading | async)"
   notFoundMessage="Seems like no  sales found!" hiddenCheckBox="true" matSort>
 
    <div headerLeftActions>
@@ -8,7 +7,6 @@
       <div class="container float-left mt-2">
         <form [formGroup]="dataForm">
           <table class="w-100 ml-3">
-           <tr><th><h3>Top Sold Product Report(s)</h3></th>
             <tr>
             
               <td>

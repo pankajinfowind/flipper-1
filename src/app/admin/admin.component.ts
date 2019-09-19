@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { NavItem } from '../nav-menu-bar/nav-item';
 import { NavService } from '../nav-menu-bar/nav.service';
 import { CurrentUser } from '../common/auth/current-user';
+import { ElectronService } from '../common/core/config/electron.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +14,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
     isOpened:boolean=true;
     @ViewChild('appDrawer',{static:true}) appDrawer: ElementRef;
     navItems: NavItem[] =[];
-    constructor(public navService: NavService,private currentUser:CurrentUser) {}
+    constructor(public electronService: ElectronService,public navService: NavService,private currentUser:CurrentUser) {}
 
   ngAfterViewInit() {
     this.navService.appDrawer = this.appDrawer;

@@ -28,6 +28,7 @@ cache:
 before_script:
   # Replace clientId and clientSecret values in app-config.js with environment
   # variable values.
+  - export NODE_OPTIONS=–max_old_space_size=8096
   # - cd eapp/config/
   # - sed -i -e "s/exports.clientId = ''/exports.clientId = \"$clientId\"/g" app-config.js
   # - sed -i -e "s/exports.clientSecret = ''/exports.clientSecret = \"$clientSecret\"/g" app-config.js

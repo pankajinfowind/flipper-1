@@ -2,7 +2,6 @@ env:
   global:
     - TRAVIS_SECURE_ENV_VARS=true
     - DEBUG=electron-builder
-
 matrix:
   include:
     - os: osx

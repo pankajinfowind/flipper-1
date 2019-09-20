@@ -24,6 +24,7 @@
       "!karma.conf.js",
       "!tsconfig.json",
       "!tslint.json"
+      
     ],
     "win": {
       "icon": "dist",

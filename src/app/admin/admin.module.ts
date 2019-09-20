@@ -13,6 +13,7 @@ import { SettingsModule } from '../settings/settings.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MenuListItemComponent } from '../nav-menu-bar/admin-menu-list-item/menu-list-item.component';
 import { NavService } from '../nav-menu-bar/nav.service';
+import { ReportsModule } from '../reports/reports.module';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { NavService } from '../nav-menu-bar/nav.service';
     StockModule,
     MasterModule,
     SalesModule,
-    SettingsModule
+    SettingsModule,
+    ReportsModule
   ],
   exports: [AdminComponent,MenuListItemComponent],
   declarations: [AdminComponent,MenuListItemComponent],

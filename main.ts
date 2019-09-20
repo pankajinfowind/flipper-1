@@ -111,9 +111,9 @@ function createWindow() {
     frame: false,
     webPreferences: {
       nodeIntegration: true
-      }
+      },
+      icon: path.join(__dirname, 'icon.ico')
   };
-
 
 
   win = new BrowserWindow(windowOptions);
@@ -147,7 +147,63 @@ function createWindow() {
     win = null;
   });
 
+  let appIcon = null;
 
+
+  const iconPath = path.join(__dirname, 'icon.ico');
+  appIcon = new Tray(iconPath);
+
+  const contextMenu = Menu.buildFromTemplate([
+    
+    {
+    label: "Create Account",
+        click() {
+          require("electron").shell.openExternal("https://yegobox.com/register");
+        }
+      },
+      {
+        label: "Help Center",
+        click() {
+          require("electron").shell.openExternal("https://flipper.rw");
+        }
+      },
+      {
+        label: "About Flipper",
+        click() {
+          const modalPath = path.join('file://', __dirname, 'about.html')
+          let wins = new BrowserWindow({frame: false, alwaysOnTop: true,transparent: true, width: 450, height: 250,
+             webPreferences: {
+            nodeIntegration: true
+            },
+            icon: path.join(__dirname, 'icon.ico') })
+          wins.on('close', function () { wins = null })
+          wins.loadURL(modalPath)
+          wins.setMenu(null)
+          wins.show();
+        }
+      },
+      { 
+        role: "Quit",
+        click: () => {
+            if (process.platform !== "darwin") {
+              app.quit();
+              win = null;
+            }
+          }
+       }
+  ]);
+
+  appIcon.setToolTip("Flipper");
+  appIcon.setContextMenu(contextMenu);
+
+  
+  ipcMain.on("remove-tray", () => {
+    appIcon.destroy();
+  });
+  
+  app.on("window-all-closed", () => {
+    if (appIcon) appIcon.destroy();
+  });
 
 }
 
@@ -164,44 +220,7 @@ function makeSingleInstance() {
   });
 }
 
-let appIcon = null;
 
-ipcMain.on("put-in-tray", event => {
-  let iconName;
-  if (serve) {
-    iconName =
-      process.platform === "win32"
-        ? "src/assets/tray-icon/windows-icon.png"
-        : "src/assets/tray-icon/iconTemplate.png";
-  } else {
-    iconName =
-      process.platform === "win32"
-        ? "dist/assets/tray-icon/windows-icon.png"
-        : "dist/assets/tray-icon/iconTemplate.png";
-  }
-  const iconPath = path.join(__dirname, iconName);
-  appIcon = new Tray(iconPath);
-
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: "Remove",
-      click: () => {
-        event.sender.send("tray-removed");
-      }
-    }
-  ]);
-
-  appIcon.setToolTip("Flipper in the tray.");
-  appIcon.setContextMenu(contextMenu);
-});
-
-ipcMain.on("remove-tray", () => {
-  appIcon.destroy();
-});
-
-app.on("window-all-closed", () => {
-  if (appIcon) appIcon.destroy();
-});
 try {
   app.on("ready", createWindow);
 
@@ -228,7 +247,7 @@ try {
 
 const menu = Menu.buildFromTemplate([
   {
-    label: 'File',
+    label: 'Flipper',
     submenu: [
       { 
         role: "Quit",
@@ -258,19 +277,23 @@ const menu = Menu.buildFromTemplate([
   },
 
   {
-    role: "help",
+    role: "Help",
     submenu: [
       {
-        label: "Report issue",
+        label: "Help Center",
         click() {
-          require("electron").shell.openExternal("https://flipper.yegobox.rw");
+          require("electron").shell.openExternal("https://flipper.rw");
         }
       },
       {
-        label: "About",
+        label: "About Flipper",
         click() {
           const modalPath = path.join('file://', __dirname, 'about.html')
-          let wins = new BrowserWindow({frame: false, alwaysOnTop: true,transparent: true, width: 400, height: 200 })
+          let wins = new BrowserWindow({frame: false, alwaysOnTop: true,transparent: true, width: 450, height: 250, 
+            webPreferences: {
+            nodeIntegration: true
+            },
+            icon: path.join(__dirname, 'icon.ico') })
           wins.on('close', function () { wins = null })
           wins.loadURL(modalPath)
           wins.setMenu(null)

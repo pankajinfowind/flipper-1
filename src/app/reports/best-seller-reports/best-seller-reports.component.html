@@ -1,0 +1,79 @@
+
+<data-table [dataSource]="dataSource" itemsName="Best Seller Report(s)"  hiddenCheckBox="true"  [isLoading]="(loading | async)"
+  notFoundMessage="Seems like no result found!"  matSort>
+
+   <div headerLeftActions>
+      <div class="container float-left mt-2">
+        <form [formGroup]="dataForm">
+          <table class="w-100 ml-3">
+          
+            <tr>
+            
+              <td>
+                <mat-form-field appearance="outline">
+                  <mat-label>Date From</mat-label>
+
+                  <input matInput [matDatepicker]="from" placeholder="Date From" formControlName="from"
+                    (dateInput)="orderParams()" (dateChange)="orderParams()">
+                  <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                  <mat-datepicker #from></mat-datepicker>
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field appearance="outline">
+                  <mat-label>Date To</mat-label>
+                  <input matInput [matDatepicker]="to" placeholder="Date To" formControlName="to"
+                    (dateInput)="orderParams()" (dateChange)="orderParams()">
+                  <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                  <mat-datepicker #to></mat-datepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+  </div>
+
+  <div class="input-container" headerRightActions>
+    <button mat-raised-button  class="button" (click)="export()"  trans>Export Best Seller Report(s) List</button>
+    <!-- <input type="text" class="search" placeholder="Search Order#,Supplier,name,Order Due" trans-placeholder
+      [formControl]="dataSource.searchQuery">
+    <mat-icon svgIcon="search"></mat-icon>
+     !-->
+  </div>
+
+  <!--<button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedOrders()"
+    headerSelectedActions>
+    <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+  !-->
+
+  <ng-container matColumnDef="user">
+    <mat-header-cell *matHeaderCellDef trans>Seller Name</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+    
+        {{sale.user}}
+    </mat-cell>
+  </ng-container>
+    <ng-container matColumnDef="branch">
+    <mat-header-cell *matHeaderCellDef trans>Branch</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+        {{sale.branch}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="items">
+    <mat-header-cell *matHeaderCellDef trans>Items</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+     {{sale.items}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="total_amounts">
+    <mat-header-cell *matHeaderCellDef trans>Total Amount Sold</mat-header-cell>
+    <mat-cell *matCellDef="let sale"> {{currentUser.getBusiness('currency_code')}} {{sale.total_amounts}}
+    </mat-cell>
+  </ng-container>
+ 
+</data-table>

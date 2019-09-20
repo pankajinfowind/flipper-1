@@ -20,44 +20,15 @@
 <style>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,600');
 body {
-    background: #262626;
-    color:#fff;
+    background:#fff;
+    color:#364EDA;
     font-family: 'Montserrat';
     margin:0;
-}
-.row {
-    width:100%;
-    margin-top:50px;
-    background:#1A1A1A;
-    border-bottom: 3px solid #FF0057;
-    display: grid;
-    grid-template-columns: 35% auto 35%;
-    align-items: center;
-}
-.subtext {
-    font-size:.8em;
-    text-transform:uppercase;
-    margin-bottom: 10px;
-}
-img {
-    width: 20px;
-}
-h1 {
-    margin: 0 0 10px 0;
-}
-button {
-    float:right;
-    background:#FF0057;
-    border:none;
-    color:#fff;
-    text-transform:uppercase;
-    padding:10px;
-    margin-right: 30px;
-    cursor:pointer;
+    font-weight:bold
 }
 </style>
 </head>
-<body style="overflow:hidden!important;position:fixed;top:0;left:0;right:0;bottom:0;">
+<body style="overflow:hidden!important;position:fixed;top:0;left:0;right:0;bottom:0;border:solid 1px #364EDA">
  <script>
 const ipcRenderer = require('electron').ipcRenderer;
  ipcRenderer.send("version-ping", "ping");
@@ -66,25 +37,26 @@ const ipcRenderer = require('electron').ipcRenderer;
       });
 const custom_electron_titlebar_1 = require("custom-electron-titlebar");
 var titlebar =new custom_electron_titlebar_1.Titlebar({
-    backgroundColor: custom_electron_titlebar_1.Color.BLACK,
+    backgroundColor: custom_electron_titlebar_1.Color.fromHex('#364EDA'),
     icon: '',
     shadow: false
 });
 titlebar.updateMenu(null);
  
  </script>
-  <div class="row">
+<div style="margin:20px">
+  <table style="width:100%;margin-top:27px;">
+  <tr>
+  <td>Version:</td><td> <p id="version"></p></td>
+  </tr>
 
-        <div id="price-container">
-            <p class="h1">Version</p>
-            <h1 id="price"></h1>
-        </div>
-        <div id="goal-container">
-            <p id="version"></p>
-        </div>
-        <div id="right-container">
-           
-        </div>
-    </div>
+  <tr>
+  <td colspan="2"><p>
+  Flipper is software that uses in different business
+           like (shop, pharmacy, etc) and developed to manage inventory, business sales, and customer needs has also a point of sales(P.O.S).
+  </p></td>
+  </tr>
+</table>
+      </div> 
 </body>
 </html>

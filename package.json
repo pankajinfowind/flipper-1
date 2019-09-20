@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.4.20-alpha.29",
+  "version": "0.4.20-alpha.30",
   "description": "Flipper is software that uses in different business like (shop, pharmacy, etc) and developed to manage inventory, business sales, and customer needs has also a point of sales(P.O.S).",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -23,11 +23,11 @@
     "ng": "ng",
     "start:all": "npm-run-all -p ng:serve electron:serve",
     "start": "npm-run-all -p ng:serve:web electron:serve",
-    "build": "npm-run-all -p build:web build:electron",
+    "build": "npm run postinstall:electron && npm run electron:serve-tsc && ng build",
+    "build:dev": "npm run build -- -c dev",
+    "build:prod": "npm run build -- -c production",
     "build:web": "ng build --source-map=false --prod --deploy-url=flipper/",
     "build:electron": "npm run postinstall:electron && npm run electron:serve-tsc && ng build",
-    "build:dev": "npm run build:electron -- -c dev",
-    "build:prod": "npm run build:electron -- -c production",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "buildMemory": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --source-map=false --prod --source-map --common-chunk=false --deploy-url=domains/",
@@ -122,6 +122,12 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "gulp": "^4.0.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-svg-sprite": "^1.5.0",
+    "gulp-svgmin": "^2.2.0"
   }
 }

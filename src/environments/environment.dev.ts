@@ -7,5 +7,5 @@ export const AppConfig = {
   production: false,
   environment: "DEV",
   isElectron:false,
-  url: "https://flipper.yegobox.rw/"
+  url: "http://cloud.flipper.rw/"
 };

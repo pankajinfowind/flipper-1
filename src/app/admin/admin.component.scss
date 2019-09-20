@@ -1,6 +1,7 @@
 @import "../app_sass/variables";
 $admin-main-left-width:300px!default;
 $blue:rgb(3, 155, 229);;
+
 .app-admin{
   height: 100%;
   background-color: $admin-background-color;
@@ -9,7 +10,10 @@ $blue:rgb(3, 155, 229);;
   overflow:hidden!important;
   // border-top: solid 1.5px $site-selected-item-bg-color;
 
-
+  .isElectronn{
+    position: relative;
+    top: 22px!important;
+  }
   .main-left-column {
     display: flex;
     flex-direction: column;

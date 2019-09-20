@@ -24,6 +24,9 @@ import { ExpirationSettingComponent } from '../setup/expiration_setting/expirati
 import { StockTableComponent } from '../stock/stock-table/stock-table.component';
 import { SuppliersComponent } from './master/suppliers/suppliers.component';
 import { StockOrdersComponent } from '../stock/stock-orders/stock-orders.component';
+import { SalesReportsComponent } from '../reports/sales-reports/sales-reports.component';
+import { ProductsSoldReportsComponent } from '../reports/products-sold-reports/products-sold-reports.component';
+import { BestSellerReportsComponent } from '../reports/best-seller-reports/best-seller-reports.component';
 
 
 const routes: Routes = [
@@ -59,7 +62,15 @@ const routes: Routes = [
                       { path: 'expireditem', component: ExpiredStockComponent},
                       { path: 'orders', component: StockOrdersComponent},
                   ]
-              },{
+              },
+              {
+                path: 'reports', children: [
+                      { path: 'sales', component: SalesReportsComponent },
+                      { path: 'product-sold', component: ProductsSoldReportsComponent },
+                      { path: 'best-seller', component: BestSellerReportsComponent},
+                  ]
+              },
+              {
               path: 'sales', children: [
               {
                 path: 'invoices',

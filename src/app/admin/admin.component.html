@@ -1,5 +1,5 @@
 <div class="app-admin" style="overflow:none">
-  <mat-sidenav-container class="content">
+  <mat-sidenav-container class="content" [class.isElectronn]="electronService.isElectron">
     <mat-sidenav [opened]="(navService.isOpenedLeftSide | async)" mode="side" class="main-left-column">
 
        <material-navbar [class.fullmaterialnavbar]="!isOpened" position="sidebar">

@@ -1,0 +1,149 @@
+<data-table [dataSource]="dataSource" itemsName="Sales Report(s)"  hiddenCheckBox="true" [isLoading]="(loading | async)"
+  notFoundMessage="Seems like no result found!"  matSort>
+
+    <div headerLeftActions>
+   
+      <div class="container float-left mt-2">
+        <form [formGroup]="dataForm">
+          <table class="w-100 ml-3">
+          
+            <tr>
+            
+              <td>
+                <mat-form-field appearance="outline">
+                  <mat-label>Date From</mat-label>
+
+                  <input matInput [matDatepicker]="from" placeholder="Date From" formControlName="from"
+                    (dateInput)="orderParams()" (dateChange)="orderParams()">
+                  <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                  <mat-datepicker #from></mat-datepicker>
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field appearance="outline">
+                  <mat-label>Date To</mat-label>
+                  <input matInput [matDatepicker]="to" placeholder="Date To" formControlName="to"
+                    (dateInput)="orderParams()" (dateChange)="orderParams()">
+                  <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                  <mat-datepicker #to></mat-datepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+  </div>
+  <div class="input-container" headerRightActions>
+    <button mat-raised-button  class="button" (click)="export()"  trans>Export Sales Report(s) List</button>
+    <!-- <input type="text" class="search" placeholder="Search Order#,Supplier,name,Order Due" trans-placeholder
+      [formControl]="dataSource.searchQuery">
+    <mat-icon svgIcon="search"></mat-icon>
+     !-->
+  </div>
+
+  <!--<button mat-icon-button [matTooltip]="'Delete selected' | trans" (click)="maybeDeleteSelectedOrders()"
+    headerSelectedActions>
+    <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+  !-->
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>#
+    </mat-header-cell>
+    <mat-cell *matCellDef="let sale"> {{sale.id}} </mat-cell>
+  </ng-container>
+
+ <ng-container matColumnDef="item">
+    <mat-header-cell *matHeaderCellDef trans>PRODUCT</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+      <span class="ellipsis"  matTooltip="{{sale.item}}" [matTooltipPosition]="'left'">{{sale.item}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="sku">
+    <mat-header-cell *matHeaderCellDef trans>SKU</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+    
+        {{sale.sku}}
+    </mat-cell>
+  </ng-container>
+    <ng-container matColumnDef="batch_no">
+    <mat-header-cell *matHeaderCellDef trans>BATCH NO</mat-header-cell>
+    <mat-cell *matCellDef="let sale">
+        {{sale.batch_no}}
+    </mat-cell>
+  </ng-container>
+
+ 
+
+  <ng-container matColumnDef="customer_type_name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>CUST. TYPE</mat-header-cell>
+    <mat-cell *matCellDef="let sale"> <span class="ellipsis"  matTooltip="{{sale.customer_type_name}}" [matTooltipPosition]="'left'">{{sale.customer_type_name}} </span></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="tax_rate_name">
+    <mat-header-cell *matHeaderCellDef trans>TAX (%)</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{sale.tax_rate_name}}
+    </mat-cell>
+  </ng-container>
+
+   <ng-container matColumnDef="discount_name">
+    <mat-header-cell *matHeaderCellDef trans>DISC. (%)</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{sale.discount_name}}
+    </mat-cell>
+  </ng-container>
+
+   <ng-container matColumnDef="cost_price">
+    <mat-header-cell *matHeaderCellDef trans>COST</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.cost_price}}
+    </mat-cell>
+  </ng-container>
+   <ng-container matColumnDef="sales_price">
+    <mat-header-cell *matHeaderCellDef trans>SALES</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.sales_price}}
+    </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="qty">
+    <mat-header-cell *matHeaderCellDef trans>QTY</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{sale.qty}}
+    </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="total_cost_amount">
+    <mat-header-cell *matHeaderCellDef trans>TOTAL. COST</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.total_cost_amount}}
+    </mat-cell>
+  </ng-container>
+   <ng-container matColumnDef="total_sold_amount">
+    <mat-header-cell *matHeaderCellDef trans>TOTAL. SOLD</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.total_sold_amount}}
+    </mat-cell>
+  </ng-container>
+
+   <ng-container matColumnDef="profit">
+    <mat-header-cell *matHeaderCellDef trans>PROFIT</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.profit}}
+    </mat-cell>
+  </ng-container>
+
+     <ng-container matColumnDef="taxable_vat">
+    <mat-header-cell *matHeaderCellDef trans>T. TAX</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.taxable_vat}}
+    </mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="total_amount_discount">
+    <mat-header-cell *matHeaderCellDef trans>T. DISC</mat-header-cell>
+    <mat-cell *matCellDef="let sale">{{currentUser.getBusiness('currency_code')}} {{sale.total_amount_discount}}
+    </mat-cell>
+  </ng-container>
+ 
+ 
+  <ng-container matColumnDef="created_at">
+    <mat-header-cell *matHeaderCellDef mat-sort-header trans>Sold at</mat-header-cell>
+    <mat-cell *matCellDef="let sale"> {{sale.created_at | date}} </mat-cell>
+  </ng-container>
+
+</data-table>

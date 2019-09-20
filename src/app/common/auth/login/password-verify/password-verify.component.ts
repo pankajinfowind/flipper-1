@@ -50,15 +50,7 @@ export class PasswordVerifyComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.v.loading = false;
-    if (this.electronService.isElectron) {
-      this.electronService.send("version-ping", "ping");
-      this.electronService.on("version-pong", (event, version) => {
-        this.v.webTitle("Sign in" + "- version:" + version);
-      });
-    } else {
       this.v.webTitle("Sign in");
-    }
-
   }
 
   ngOnInit() {

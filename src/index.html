@@ -8,7 +8,7 @@
   <base href="">
 
  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="./icon.ico">
+  <link rel="icon" type="image/x-icon" href="icon.ico">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -30,7 +30,7 @@
     function isElectron() {
       return window && window.process && window.process.type;
     }
-    this.loadTitleBar();
+   this.loadTitleBar();
 
     function loadTitleBar() {
       if (isElectron()) {
@@ -38,9 +38,10 @@
         let MyTitleBar = new customTitlebar.Titlebar({
           backgroundColor: customTitlebar.Color.WHITE,
           shadow: false,
-          icon: 'icon.ico'
+          icon: './icon.ico'
         });
         MyTitleBar.updateTitle(localStorage.getItem('flipperTitle')?localStorage.getItem('flipperTitle'):'Flipper');
+       
       }
     }
   </script>

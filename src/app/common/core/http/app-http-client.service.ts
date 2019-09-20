@@ -66,11 +66,11 @@ export class AppHttpClient {
    */
   private prefixUri(uri: string) {
     if (uri.indexOf("://") > -1) return uri;
-    // if (this.settings.getBaseUrl() != "http://localhost:4200/") {
-    //   return AppConfig.url + this.prefix + "/" + uri;
-    // } else {
+    if (this.settings.getBaseUrl() != "http://localhost:4200/") {
+      return AppConfig.url + this.prefix + "/" + uri;
+    } else {
       return this.prefix + "/" + uri;
-   // }
+    }
   }
 
   /**

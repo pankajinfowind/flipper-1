@@ -22,22 +22,12 @@ Raven.config(
 export class LoginComponent implements OnInit {
   ipcRenderer: any;
   ngOnInit(): void {
-    // throw new Error("I Know nothing");
-    // Raven.captureException("we can not load item from stock sir sorry");
-    // Raven.showReportDialog();
+   
   }
   constructor(
     // private _electronService: ElectronService, 
     public v: GlobalVariables) {
-    if (this.isElectron()) {
-      // this.ipcRenderer = this._electronService.ipcRenderer;
-      this.ipcRenderer.send("version-ping", "ping");
-      this.ipcRenderer.on("version-pong", (event, version) => {
-        this.v.webTitle("Sign in" + "- version:" + version);
-      });
-    } else {
       this.v.webTitle("Sign in");
-    }
   }
   @Input() label = "login";
   @Input() token = "";

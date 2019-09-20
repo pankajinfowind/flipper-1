@@ -4,6 +4,7 @@ import * as Dot from 'dot-object';
 import merge from 'deepmerge';
 import { AppHttpClient } from '../http/app-http-client.service';
 import { Observable } from 'rxjs';
+import { AppConfig } from '../../../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -109,6 +110,8 @@ export class Settings {
         // sometimes we might need to get base url supplied by backend
         // even in development environment, for example, to prevent
         // uploaded images from having proxy urls like "localhost:4200"
+        //TODO: for offline app to work we will consider the fact that the icon on desktop
+        //should be saved in assest folder for offline access.
         if (this.has('base_url') && (this.get('vebto.environment') === 'production' || forceServerUrl)) {
             return this.get('base_url') + '/';
         } else if (document.querySelector('base')) {
@@ -124,15 +127,15 @@ export class Settings {
      * Get app's asset base url.
      */
     public getAssetUrl(suffix?: string): string {
-        let uri = (this.get('vebto.assetsUrl') || this.getBaseUrl());
-        const prefix = this.get('vebto.assetsPrefix');
+        let uri =  AppConfig.url;
+        // const prefix = this.get('vebto.assetsPrefix');
 
         // in production assets will be in "client" sub-folder
-        if (this.get('vebto.environment') === 'production' && prefix) {
-            uri += prefix + '/';
-        }
+        // if (this.get('vebto.environment') === 'production' && prefix) {
+        //     uri += prefix + '/';
+        // }
 
-        uri += 'assets/';
+        uri += '/client/assets/';
 
         if (suffix) uri += suffix;
 

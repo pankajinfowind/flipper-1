@@ -1,11 +1,11 @@
 {
   "/secure": {
-    "target": "http://cloud.flipper.rw",
+    "target": "https://cloud.flipper.rw",
     "secure": false,
     "changeOrigin": true
   },
   "/__clockwork": {
-    "target": "http://cloud.flipper.rw",
+    "target": "https://cloud.flipper.rw",
     "secure": false,
     "changeOrigin": true
   }

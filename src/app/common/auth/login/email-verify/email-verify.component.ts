@@ -31,14 +31,8 @@ export class EmailVerifyComponent {
       email: new FormControl("", [Validators.required, Validators.email])
     });
     this.v.loading = false;
-    if (this.electronService.isElectron) {
-      this.ipcRenderer.send("version-ping", "ping");
-      this.ipcRenderer.on("version-pong", (event, version) => {
-        this.v.webTitle("Sign in - eNexus Accounts" + "v" + version);
-      });
-    } else {
       this.v.webTitle("Sign in - eNexus Accounts");
-    }
+    
   }
  
 

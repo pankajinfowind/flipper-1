@@ -19,7 +19,7 @@ export class ApiItemService {
         return this.http.post(API_ROUTES_ITEMS.ITEM, params);
     }
 
-    public importItems(params: any): Observable<any> {
+    public importItems(params: any): BackendResponse<any> {
         this.http.headers['Content-Type']='multipart/form-data';
         return this.http.postNoErrorHandle(API_ROUTES_ITEMS.IMPORT_ITEM, params);
     }

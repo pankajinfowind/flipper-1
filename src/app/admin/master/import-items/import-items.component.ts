@@ -1,12 +1,11 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormBuilder } from '@angular/forms';
 import { CurrentUser } from '../../../common/auth/current-user';
 import { Toast } from '../../../common/core/ui/toast.service';
 import { ApiItemService } from '../items/api/api.service';
-import { HttpHeaders } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { Settings } from '../../../common/core/config/settings.service';
 
 @Component({
   selector: 'import-items-modal',
@@ -18,7 +17,7 @@ export class ImportItemsComponent implements OnInit {
   error='';
   @ViewChild('fileInput',{static:true}) fileInput;  
   constructor(private dialogRef: MatDialogRef<ImportItemsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: null, private _formBuilder: FormBuilder, public currentUser: CurrentUser,  private toast: Toast, private api: ApiItemService) {
+    @Inject(MAT_DIALOG_DATA) public data: null,protected settings: Settings,public currentUser: CurrentUser,  private toast: Toast, private api: ApiItemService) {
    }
 
 
@@ -31,11 +30,13 @@ export class ImportItemsComponent implements OnInit {
   uploadExcel() { 
     this.error=''; 
     let formData = new FormData();  
-    formData.append('excel_file', this.fileInput.nativeElement.files[0])  
+    //this.settings.csrfToken
+    formData.append('_token', this.settings.csrfToken);
+    formData.append('excel_file', this.fileInput.nativeElement.files[0]); 
     this.loading.next(true);
     return this.api.importItems(formData).pipe(finalize(() => this.loading.next(false)))
     .subscribe(response => {
-      console.log(response);
+     // console.log(response);
         if(response){
             this.toast.open('Product imported successfully!');
             this.close(response);

@@ -6,7 +6,9 @@
     position: absolute!important;;
     z-index: -1!important;;
 }
-
+.box{
+    margin-left:15px
+}
 .inputfile + label {
     max-width: 80%;
     font-size: 1.25rem;

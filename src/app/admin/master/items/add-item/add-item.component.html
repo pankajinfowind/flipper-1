@@ -97,12 +97,21 @@
                 </mat-form-field>
 
                 <mat-form-field class="col-6" appearance="outline">
+                  <mat-label>Enter product Article code</mat-label>
+                  <input matInput placeholder="Article code (if available)" formControlName="article_code">
+                  <mat-error
+                    *ngIf="article_code.invalid && (article_code.dirty || article_code.touched)">
+                    <strong *ngIf="article_code.errors.required">Article code is required.</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-6" appearance="outline">
                   <mat-label>Enter product Order code</mat-label>
                   <input matInput placeholder="Order code (if available)" formControlName="product_order_code">
                   <mat-hint>For reference to supplier.</mat-hint>
                   <mat-error
                     *ngIf="product_order_code.invalid && (product_order_code.dirty || product_order_code.touched)">
-                    <strong *ngIf="product_order_code.errors.required">product Order code is required.</strong>
+                    <strong *ngIf="product_order_code.errors.required">Order code is required.</strong>
                   </mat-error>
                 </mat-form-field>
 

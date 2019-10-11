@@ -57,6 +57,10 @@
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Article code</mat-header-cell>
   <mat-cell *matCellDef="let product"> {{product.article_code}} </mat-cell>
 </ng-container> -->
+<ng-container matColumnDef="article_code">
+  <mat-header-cell *matHeaderCellDef mat-sort-header trans>Article code</mat-header-cell>
+  <mat-cell *matCellDef="let product"> {{product.article_code}} </mat-cell>
+</ng-container>
 <ng-container matColumnDef="created_at">
   <mat-header-cell *matHeaderCellDef mat-sort-header trans>Created at</mat-header-cell>
   <mat-cell *matCellDef="let product"> {{product.created_at | date}} </mat-cell>

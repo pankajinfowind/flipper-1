@@ -19,6 +19,7 @@ import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { GlobalVariables } from '../../../common/core/global-variables';
 import { AddItemComponent } from './add-item/add-item.component';
+import { ImportItemsComponent } from '../import-items/import-items.component';
 
 @Component({
   selector: "app-items",
@@ -77,6 +78,17 @@ export class ItemsComponent implements OnInit, OnDestroy {
     ).beforeClose().subscribe(data => {
       if (!data) return;
       this.paginator.refresh();
+    });
+  }
+
+  public importItemModal() {
+    this.modal.open(
+      ImportItemsComponent,
+        {data:null},
+        'import-items-modal-container'
+    ).beforeClose().subscribe(data => {
+        if ( ! data) return;
+        this.paginator.refresh();
     });
   }
   /**

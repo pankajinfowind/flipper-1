@@ -8,7 +8,7 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { HttpErrorHandler } from "./errors/http-error-handler.service";
-import { catchError, filter, map } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 import { Settings } from "../config/settings.service";
 import { AppConfig } from "../../../../environments/environment";
 
@@ -18,6 +18,7 @@ import { AppConfig } from "../../../../environments/environment";
 export class AppHttpClient {
   public prefix = "secure";
   headers = new HttpHeaders({'Accept':'application/json'});
+  //,'Content-Type': 'multipart/form-data'
   /**
    * AppHttpClient Constructor.
    */
@@ -44,6 +45,13 @@ export class AppHttpClient {
       .post<T>(this.prefixUri(uri), params,{headers:this.headers})
       .pipe(catchError(err => this.errorHandler.handle(err, uri)));
   }
+
+  public postNoErrorHandle<T>(uri: string, params: object = null): Observable<T> | any {
+    params['_token']=this.settings.csrfToken;
+    return this.httpClient
+      .post<T>(this.prefixUri(uri), params,{headers:this.headers});
+  }
+
 
   public put<T>(uri: string, params: object = {}): Observable<T> | any {
     params['_token']=this.settings.csrfToken;

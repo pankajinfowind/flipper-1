@@ -1,6 +1,7 @@
 <data-table [dataSource]="dataSource" itemsName="Products" [isLoading]="(loading | async)" hiddenCheckBox="false" matSort>
   <div headerLeftActions>
-      <button mat-raised-button  class="button" (click)="addItemModal()"  trans>Create a Product</button>
+      <button mat-raised-button  class="button" (click)="addItemModal()"  trans>Create a Product</button> | 
+      <button mat-raised-button  class="button" (click)="importItemModal()"  trans>Import Products</button>
     </div>
   <div class="input-container" headerRightActions>
       <input type="text" class="search" placeholder="Search everthing ..." trans-placeholder [formControl]="dataSource.searchQuery">

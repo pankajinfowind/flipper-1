@@ -52,6 +52,7 @@
   "dependencies": {
     "@angular/animations": "~8.2.5",
     "@angular/cdk": "^8.2.0",
+    "@angular/cli": "^8.3.8",
     "@angular/common": "~8.2.5",
     "@angular/compiler": "~8.2.5",
     "@angular/core": "~8.2.5",
@@ -94,7 +95,6 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.4",
-    "@angular/cli": "~8.3.4",
     "@angular/compiler-cli": "~8.2.5",
     "@angular/language-service": "~8.2.5",
     "@ngx-translate/core": "^10.0.1",
@@ -108,6 +108,12 @@
     "electron-builder": "^20.44.4",
     "electron-rebuild": "^1.8.6",
     "electron-reload": "^1.2.2",
+    "gulp": "^4.0.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-svg-sprite": "^1.5.0",
+    "gulp-svgmin": "^2.2.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "jquery": "^3.4.1",
@@ -122,12 +128,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3",
-    "gulp": "^4.0.1",
-    "gulp-clean": "^0.4.0",
-    "gulp-filter": "^5.1.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-svg-sprite": "^1.5.0",
-    "gulp-svgmin": "^2.2.0"
+    "typescript": "~3.5.3"
   }
 }

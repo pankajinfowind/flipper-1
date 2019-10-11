@@ -26,6 +26,7 @@ import { SetupModule } from '../../../setup/setup.module';
 import { SuppliersComponent } from '../suppliers/suppliers.component';
 import { ApiSupplierService } from '../suppliers/api/api.service';
 import { CrupdateSupplierModalComponent } from '../suppliers/crupdate-supplier-modal/crupdate-supplier-modal.component';
+import { ImportItemsComponent } from '../import-items/import-items.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { CrupdateSupplierModalComponent } from '../suppliers/crupdate-supplier-m
     HttpClientModule,
     ItemsComponent,
     AddItemComponent,
+    ImportItemsComponent,
     CategoriesComponent,
     BrandComponent,
     BranchComponent,
@@ -58,6 +60,7 @@ import { CrupdateSupplierModalComponent } from '../suppliers/crupdate-supplier-m
   declarations: [
     ItemsComponent,
     AddItemComponent,
+    ImportItemsComponent,
     CategoriesComponent,
     BrandComponent,
     BranchComponent,
@@ -82,7 +85,7 @@ entryComponents: [CrupdateCategoryModalComponent,
   SelectCategoryModelComponent,
   AssignStockToBranchComponent,
   CrupdateSupplierModalComponent,
-  SelectBrandModalComponent,CrupdateBranchModalComponent,AddItemComponent]
+  SelectBrandModalComponent,CrupdateBranchModalComponent,AddItemComponent,ImportItemsComponent]
 })
 export class MasterModule {
 

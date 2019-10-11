@@ -10,7 +10,7 @@ import { windowStateKeeper } from "./win-state-keeper";
 //TODO: make sure to fix icon thing it is not building
 
 let win, serve;
-const args = process.argv.slice(1);
+const args = process.argv.slice(1); 
 serve = args.some(val => val === "--serve");
 if (process.mas) app.setName("Flipper");
 const debug = /--debug/.test(process.argv[2]);

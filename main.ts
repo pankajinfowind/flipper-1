@@ -19,6 +19,27 @@ const { autoUpdater } = require("electron-updater");
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 
+let iconName;
+if (serve) {
+  if(process.platform === "win32"){
+    iconName ='/app-icon/win/icon.ico';
+  }else
+  if(process.platform === "darwin"){
+    iconName ='/app-icon/mac/icon.icns';
+  }else{
+    iconName ='/app-icon/png/icon.png';
+  }
+ 
+} else {
+  if(process.platform === "win32"){
+    iconName ='/app-icon/win/icon.ico';
+  }else
+  if(process.platform === "darwin"){
+    iconName ='/app-icon/mac/icon.icns';
+  }else{
+    iconName ='/app-icon/png/icon.png';
+  }
+}
 //init a sync...
 //new Sync();
 const isDev = require("electron-is-dev");
@@ -112,7 +133,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true
       },
-      icon: path.join(__dirname, 'icon.ico')
+      icon: path.join(__dirname, iconName)
   };
 
 
@@ -150,7 +171,8 @@ function createWindow() {
   let appIcon = null;
 
 
-  const iconPath = path.join(__dirname, 'icon.ico');
+
+  const iconPath = path.join(__dirname, iconName);
   appIcon = new Tray(iconPath);
 
   const contextMenu = Menu.buildFromTemplate([
@@ -175,7 +197,7 @@ function createWindow() {
              webPreferences: {
             nodeIntegration: true
             },
-            icon: path.join(__dirname, 'icon.ico') })
+            icon: path.join(__dirname, iconName) })
           wins.on('close', function () { wins = null })
           wins.loadURL(modalPath)
           wins.setMenu(null)
@@ -293,7 +315,7 @@ const menu = Menu.buildFromTemplate([
             webPreferences: {
             nodeIntegration: true
             },
-            icon: path.join(__dirname, 'icon.ico') })
+            icon: path.join(__dirname, iconName) })
           wins.on('close', function () { wins = null })
           wins.loadURL(modalPath)
           wins.setMenu(null)

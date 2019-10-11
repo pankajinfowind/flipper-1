@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.4.20-alpha.33",
+  "version": "0.4.20-alpha.32",
   "description": "Flipper is software that uses in different business like (shop, pharmacy, etc) and developed to manage inventory, business sales, and customer needs has also a point of sales(P.O.S).",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -46,7 +46,8 @@
     "test:travis": "npm run postinstall:web && ng test  --browsers=ChromeHeadless",
     "release": "standard-version",
     "mocha": "mocha",
-    "alpha": "npm run release -- --prerelease alpha"
+    "alpha": "npm run release -- --prerelease alpha",
+    "minor": "npm run release -- --release-as minor"
   },
   "private": true,
   "dependencies": {

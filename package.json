@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "0.4.20-alpha.34",
+  "version": "0.5.0",
   "description": "Flipper is software that uses in different business like (shop, pharmacy, etc) and developed to manage inventory, business sales, and customer needs has also a point of sales(P.O.S).",
   "homepage": "https://flipper.yegobox.rw",
   "repository": {
@@ -86,7 +86,6 @@
     "npm-run-all": "^4.1.5",
     "pusher-js": "^4.4.0",
     "raven-js": "^3.27.2",
-    "release": "^6.1.0",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.2",
     "singleton-js": "^1.0.0",
@@ -130,6 +129,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "release": "^6.1.0"
   }
 }

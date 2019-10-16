@@ -1,22 +1,23 @@
 {
   "name": "flipper",
-  "version": "0.5.2",
-  "description": "Flipper is software that uses in different business like (shop, pharmacy, etc) and developed to manage inventory, business sales, and customer needs has also a point of sales(P.O.S).",
-  "homepage": "https://flipper.yegobox.rw",
+  "version": "0.5.3",
+  "description": "Flipper is software that is used in different business like (super market, pharmacies, industries, hotels etc..) and it is developed by team @enexus to manage inventory and sales",
+  "homepage": "https://flipper.rw",
   "repository": {
     "type": "git",
     "url": "https://github.com/StreamUpBox/flipper.git"
   },
   "author": {
-    "name": "Flipper Team",
+    "name": "Enexus Team",
     "email": "flipper@yegobox.com"
   },
   "keywords": [
     "POS",
-    "Pharmacy",
-    "Hospital",
+    "Pharmacies",
+    "Hospitals",
     "Management",
-    "Business"
+    "Business",
+    "Stock"
   ],
   "main": "main.js",
   "scripts": {

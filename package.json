@@ -49,6 +49,12 @@
     "alpha": "npm run release -- --prerelease alpha",
     "minor": "npm run release -- --release-as minor"
   },
+  "config": {
+    "ghooks": {
+      "pre-commit": "ng lint --fix",
+      "post-merge": "npm install"
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.5",
@@ -109,6 +115,7 @@
     "electron-builder": "^20.44.4",
     "electron-rebuild": "^1.8.6",
     "electron-reload": "^1.2.2",
+    "ghooks": "^2.0.4",
     "gulp": "^4.0.1",
     "gulp-clean": "^0.4.0",
     "gulp-filter": "^5.1.0",

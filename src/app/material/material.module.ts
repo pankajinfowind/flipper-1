@@ -33,20 +33,20 @@ import {
   MatTreeModule,
   MatExpansionModule,
   MatBottomSheetModule
-} from "@angular/material";
+} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
-import { OverlayModule } from "@angular/cdk/overlay";
+import { OverlayModule } from '@angular/cdk/overlay';
 
-import { PortalModule } from "@angular/cdk/portal";
+import { PortalModule } from '@angular/cdk/portal';
 
-import { BidiModule } from "@angular/cdk/bidi";
+import { BidiModule } from '@angular/cdk/bidi';
 
-import { A11yModule } from "@angular/cdk/a11y";
+import { A11yModule } from '@angular/cdk/a11y';
 
-import { ObserversModule } from "@angular/cdk/observers";
+import { ObserversModule } from '@angular/cdk/observers';
 
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,

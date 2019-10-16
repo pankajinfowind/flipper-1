@@ -1,27 +1,26 @@
-import { Injectable } from "@angular/core";
-import { HttpErrorResponse } from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { BackendErrorResponse } from "./common/core/types/backend-error-response";
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { BackendErrorResponse } from './common/core/types/backend-error-response';
 
 export interface HttpError {
   uri: string;
   messages: { [key: string]: string };
-  type: "http";
+  type: 'http';
   status: number;
   originalError: Error;
 }
 
 interface OriginalErrorBody {
-  status: "error";
+  status: 'error';
   messages: { [key: string]: string[] };
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export abstract class HttpErrorHandler {
-  protected constructor() // protected i18n: Translations,
-  {}
+  protected constructor() {}
 
   /**
    * Handle http request error.
@@ -32,7 +31,7 @@ export abstract class HttpErrorHandler {
     const error = {
       uri,
       messages: body.messages,
-      type: "http",
+      type: 'http',
       status: response.status,
       originalError: new Error(response.message)
     };
@@ -56,7 +55,7 @@ export abstract class HttpErrorHandler {
   protected parseJson(json: string | OriginalErrorBody): BackendErrorResponse {
     let original: OriginalErrorBody;
 
-    if (typeof json !== "string") {
+    if (typeof json !== 'string') {
       original = json;
     } else {
       try {
@@ -67,7 +66,7 @@ export abstract class HttpErrorHandler {
     }
 
     const newBody = this.getEmptyErrorBody();
-    if (!original || !original.messages) return newBody;
+    if (!original || !original.messages) { return newBody; }
     Object.keys(original.messages).forEach(key => {
       const message = original.messages[key];
       newBody.messages[key] = Array.isArray(message) ? message[0] : message;
@@ -77,6 +76,6 @@ export abstract class HttpErrorHandler {
   }
 
   protected getEmptyErrorBody(): BackendErrorResponse {
-    return { status: "error", messages: {} };
+    return { status: 'error', messages: {} };
   }
 }

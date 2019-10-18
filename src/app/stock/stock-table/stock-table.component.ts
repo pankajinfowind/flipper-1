@@ -70,8 +70,8 @@ export class StockTableComponent implements OnInit,OnDestroy {
   }
 
   export(){
-    let q=this.dataSource.searchQuery?'&query='+this.dataSource.searchQuery:'';
-    return this.v.downloadFile(AppConfig.url+"/secure/export-stock-control?&branch_id="+parseInt(localStorage.getItem('active_branch'))+"&status="+this.default_status+q);
+   // let q=this.dataSource.searchQuery?'&query='+this.dataSource.searchQuery:'';
+    return this.v.downloadFile(AppConfig.url+"/secure/export-stock-control?&branch_id="+parseInt(localStorage.getItem('active_branch'))+"&status="+this.default_status);
   }
   viewUpCommingData(){
     this.detailsService.details$.subscribe(response=>{

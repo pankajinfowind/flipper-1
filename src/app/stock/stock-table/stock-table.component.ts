@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { GlobalVariables } from '../../common/core/global-variables';
 import { StockButtonModelComponent } from '../stock-model/stock-button-model/stock-button-model.component';
+import { AppConfig } from '../../../environments/environment';
 export interface SelectorBox {
   value: string;
   viewValue?: string;
@@ -62,12 +63,16 @@ export class StockTableComponent implements OnInit,OnDestroy {
 
   stockParams(event?){
     if(event.isUserInput) {
+      this.default_status=event.source.value;
       this.dataSource.setParams({status:event.source.value});
     }
  
   }
 
-
+  export(){
+    let q=this.dataSource.searchQuery?'&query='+this.dataSource.searchQuery:'';
+    return this.v.downloadFile(AppConfig.url+"/secure/export-stock-control?&branch_id="+parseInt(localStorage.getItem('active_branch'))+"&status="+this.default_status+q);
+  }
   viewUpCommingData(){
     this.detailsService.details$.subscribe(response=>{
       if(response.receriver_data){

@@ -11,7 +11,7 @@
             </mat-select>
     </mat-form-field>
    
-    <button  mat-raised-button class="button ml-4" (click)="export()"  trans>Export List</button>
+    <button  mat-raised-button class="button ml-4" (click)="export()"  trans>Export List</button> | <button mat-raised-button  class="button" (click)="importItemModal()"  trans>Import New Stock</button>
 
     </div>
   <div class="input-container" headerRightActions>
@@ -29,11 +29,6 @@
       </mat-header-cell>
       <mat-cell *matCellDef="let stock"> {{stock.item.sku}} </mat-cell>
   </ng-container>
-
-  <!-- <ng-container matColumnDef="barcode">
-    <mat-header-cell *matHeaderCellDef trans>Barcode</mat-header-cell>
-    <mat-cell *matCellDef="let stock"> {{stock.item.barcode}} </mat-cell>
-</ng-container> -->
 
 <ng-container matColumnDef="item">
   <mat-header-cell *matHeaderCellDef trans>Stock</mat-header-cell>
@@ -83,7 +78,7 @@
         &nbsp; &nbsp;
       {{percentage(stock.available_stock_qty,stock.in_stock_qty)}} %
     </mat-cell>
-  </ng-container>
+</ng-container>
 
   <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>

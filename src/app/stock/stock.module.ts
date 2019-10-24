@@ -20,6 +20,7 @@ import { DisplayExpiredStockByPeriodComponent } from './display-expired-stock-by
 import { GlobalVariables } from '../common/core/global-variables';
 import { StockOrdersComponent } from './stock-orders/stock-orders.component';
 import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
+import { ImportStocksComponent } from './import-stocks/import-stocks.component';
 
 @NgModule({
   declarations:
@@ -29,7 +30,7 @@ import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
      StockTableComponent,StockMovementComponent, DisplayExpiredStockByCustomComponent,
      DisplayExpiredStockByPeriodComponent,
      StockInfiniteScrollDirective,
-     StockOrdersComponent],
+     StockOrdersComponent,ImportStocksComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -47,7 +48,8 @@ import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
   [StockComponent,
      StockTableComponent,StockMovementComponent,
      DisplayExpiredStockByPeriodComponent,
-     StockInfiniteScrollDirective]
+     StockInfiniteScrollDirective],
+     entryComponents: [ImportStocksComponent]
 })
 export class StockModule {
   constructor(public g: GlobalVariables) {

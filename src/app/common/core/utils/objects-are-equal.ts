@@ -8,7 +8,6 @@ export function objectsAreEqual(a: object, b: object): boolean {
 
     for (let i = 0; i < aProps.length; i++) {
         const propName = aProps[i];
-
         // If values of same property are not equal,
         // objects are not equivalent
         if (a[propName] !== b[propName]) {

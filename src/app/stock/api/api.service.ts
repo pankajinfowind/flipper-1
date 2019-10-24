@@ -45,4 +45,10 @@ export class ApiStockService {
     return this.http.post(API_ROUTES.NEW_BRANCH_STOCKS, params);
 }
     //new-item
+
+    public importItems(params: any): BackendResponse<any> {
+      this.http.headers['Content-Type']='multipart/form-data';
+      return this.http.postNoErrorHandle(API_ROUTES.IMPORT_ITEM, params);
+  }
+
 }

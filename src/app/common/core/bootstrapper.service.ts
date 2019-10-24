@@ -9,7 +9,6 @@ import { CurrentUser } from "../auth/current-user";
 import { HttpClient } from "@angular/common/http";
 import { AppConfig } from "../../../environments/environment";
 import { URL } from "./utils/URL";
-import { Router } from '@angular/router';
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
 }

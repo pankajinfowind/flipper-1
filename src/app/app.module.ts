@@ -21,7 +21,7 @@ import { MaterialModule } from "./material/material.module";
 import { BusinessModule } from "./business/business.module";
 import { AuthModule } from "./common/auth/auth.module";
 import { AdminModule } from "./admin/admin.module";
-import { RouterModule, Router } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { CoreModule } from "./common/core/core.module";
 import { APP_CONFIG } from "./common/core/config/flipper-config";
 import { FLIPPER_CONFIG } from "./flipper-config";

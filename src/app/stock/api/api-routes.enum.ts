@@ -7,5 +7,6 @@ export enum API_ROUTES {
   DELETE_MULTIPLE="stocks/delete-multiple",
   DELETE_MULTIPLE_STOCKMOVEMENT="stock-movement/delete-multiple",
   NEW_BRANCH_STOCKS='create-branch-stocks',
+  IMPORT_ITEM = 'import-stocks',
   
 }

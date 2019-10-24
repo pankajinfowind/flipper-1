@@ -14,6 +14,7 @@ import { finalize } from 'rxjs/operators';
 import { GlobalVariables } from '../../common/core/global-variables';
 import { StockButtonModelComponent } from '../stock-model/stock-button-model/stock-button-model.component';
 import { AppConfig } from '../../../environments/environment';
+import { ImportStocksComponent } from '../import-stocks/import-stocks.component';
 export interface SelectorBox {
   value: string;
   viewValue?: string;
@@ -122,6 +123,17 @@ export class StockTableComponent implements OnInit,OnDestroy {
         if ( ! confirmed) return;
         this.deleteSelectedStocks();
     });
+}
+
+public importItemModal() {
+  this.modal.open(
+    ImportStocksComponent,
+      {data:null},
+      'import-stocks-modal-container'
+  ).beforeClose().subscribe(data => {
+      if ( ! data) return;
+      this.paginator.refresh();
+  });
 }
 }
 

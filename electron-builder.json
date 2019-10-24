@@ -28,7 +28,11 @@
     ],
     "win": {
       "icon": "dist",
-      "target": ["nsis"]
+      "target": ["nsis"],
+      "arch": [
+        "x64",
+        "ia32"
+      ]
     },
     "mac": {
       "icon": "dist",

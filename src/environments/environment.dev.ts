@@ -5,7 +5,7 @@
 
 export const AppConfig = {
   production: false,
-  environment: "DEV",
-  isElectron:false,
-  url: "https://cloud.flipper.rw/"
+  environment: 'DEV',
+  isElectron: false,
+  url: 'https://cloud.flipper.rw/'
 };

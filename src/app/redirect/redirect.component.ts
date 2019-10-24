@@ -11,7 +11,7 @@ import { Modal } from '../common/core/ui/dialogs/modal.service';
 })
 export class RedirectComponent implements OnInit {
 
-  constructor(private modal: Modal,public auth:CurrentUser, private router: Router, public v: GlobalVariables) {
+  constructor(private modal: Modal, public auth: CurrentUser, private router: Router, public v: GlobalVariables) {
 
      this.goTo();
   }
@@ -20,38 +20,38 @@ export class RedirectComponent implements OnInit {
     this.goTo();
   }
 
-  goTo(){
+  goTo() {
     if (this.auth.hasBusiness) {
-        if(this.auth.isAdmin()){
+        if (this.auth.isAdmin()) {
           this.v.webTitle('Admin');
-          localStorage.setItem('active_menu','dashboard');
-          return this.router.navigate(["/admin/analytics"]);
-           }else if(this.auth.isCashier()){
+          localStorage.setItem('active_menu', 'dashboard');
+          return this.router.navigate(['/admin/analytics']);
+           } else if (this.auth.isCashier()) {
           this.v.webTitle('Cashier');
-          if(this.auth.hasCurrentBranch()){
-            return this.router.navigate(["/cashier/pos"]);
-          }else{
+          if (this.auth.hasCurrentBranch()) {
+            return this.router.navigate(['/cashier/pos']);
+          } else {
             this.branchesModel();
           }
-          
-        }else if(this.auth.isManager()){
+
+        } else if (this.auth.isManager()) {
          this.v.webTitle('Branch Manager');
-          if(this.auth.hasCurrentBranch()){
-            return this.router.navigate(["/admin/analytics"]);
-          }else{
+         if (this.auth.hasCurrentBranch()) {
+            return this.router.navigate(['/admin/analytics']);
+          } else {
             this.branchesModel();
           }
-          
+
         }
 
-    }else{
+    } else {
       this.v.webTitle('Create Business/Company');
-      return this.router.navigate(["/customer"]);
+      return this.router.navigate(['/customer']);
     }
 
   }
 
   branchesModel() {
-    return this.router.navigate(["/switch-branch"]);
+    return this.router.navigate(['/switch-branch']);
     }
 }

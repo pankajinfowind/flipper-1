@@ -11,43 +11,43 @@ import { GlobalVariables } from '../common/core/global-variables';
 })
 export class CheckInternetComponent implements OnInit {
 
-  constructor(private router: Router,private bootstrapper: Bootstrapper,public auth:CurrentUser, public v: GlobalVariables) { 
-   
+  constructor(private router: Router, private bootstrapper: Bootstrapper, public auth: CurrentUser, public v: GlobalVariables) {
+
   }
 
   ngOnInit() {
-   
+
   }
-  retry(){
-    if(this.isInternetConnection()){
+  retry() {
+    if (this.isInternetConnection()) {
       this.init_app();
-    this.goTo();
+      this.goTo();
     }
 
   }
-  goTo(){
-   
+  goTo() {
+
     if (this.auth.hasBusiness) {
-        if(this.auth.isAdmin()){
+        if (this.auth.isAdmin()) {
           this.v.webTitle('Admin');
-          localStorage.setItem('active_menu','dashboard');
-          return this.router.navigate(["admin"]);
+          localStorage.setItem('active_menu', 'dashboard');
+          return this.router.navigate(['admin']);
         }
-    }else{
+    } else {
       this.v.webTitle('Create Business/Company');
-      return this.router.navigate(["customer"]);
+      return this.router.navigate(['customer']);
     }
 
   }
 
-  
+
    init_app() {
     return  this.bootstrapper.bootstrap();
   }
- 
+
   isInternetConnection() {
-    var isOnLine = navigator.onLine;
-     if (isOnLine) {
+    const isOnLine = navigator.onLine;
+    if (isOnLine) {
         return true;
      } else {
        return false;

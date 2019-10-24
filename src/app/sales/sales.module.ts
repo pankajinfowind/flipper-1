@@ -19,7 +19,7 @@ import { GlobalVariables } from '../common/core/global-variables';
   ],
   bootstrap: [SalesComponent]
 })
-export class SalesModule { 
+export class SalesModule {
   constructor(public g: GlobalVariables) {
     this.g.checkInternet();
    }

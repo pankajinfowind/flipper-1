@@ -129,8 +129,39 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**"]
-          }
+            "exclude": ["**/node_modules/**",
+              "**/src/app/pos/cart-item/**",
+              "**/src/pipe-module/**",
+              "**/src/app/store/**",
+              "**/src/app/setup/**",
+              "**/src/app/settings/**",
+              "**/src/app/reports/**",
+              "**/src/app/print-out/**",
+              "**/src/app/pos/**",
+              "**/src/app/invoices/**",
+              "**/src/app/image-cropper/**",
+              "**/src/app/details/**",
+              "**/src/app/customers/**",
+              "**/src/app/routing/**",
+              "**/src/app/pay/**",
+              "**/src/app/admin/**",
+              "**/src/app/orders/**",
+              "**/src/app/nav-menu-bar/**",
+              "**/src/app/business/**",
+              "**/src/app/data-table/**",
+              "**/src/app/shared-model/**",
+              "**/src/app/state/**",
+              "**/src/app/title-bar/**",
+              "**/src/app/directives/**",
+              "**win-state-keeper**",
+              "main.ts",
+              "**/src/app/setup/**",
+              "**/src/app/common/**",
+              "**/src/app/stock/**"]
+          },
+          "exclude": [
+            "**/node_modules/**" 
+          ]
         }
       }
     },
@@ -149,7 +180,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**","**/src/app/pos/cart-item/**"]
           }
         }
       }

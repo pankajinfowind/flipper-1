@@ -1,17 +1,17 @@
-//import "zone.js/dist/zone-mix";
+// import "zone.js/dist/zone-mix";
 // import "reflect-metadata";
 // import "../polyfills";
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule } from '@angular/platform-browser';
 import {
   NgModule,
   Injectable,
-  ErrorHandler} from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { AppRoutingModule } from "./app-routing.module";
+  ErrorHandler} from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 // NG Translate
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { WebviewDirective } from "./directives/webview.directive";
 import { AppComponent } from "./app.component";
@@ -36,7 +36,7 @@ import { GlobalVariables } from './common/core/global-variables';
 import { UiModule } from './common/core/ui/ui.module';
 import { ElectronService } from './common/core/config/electron.service';
 Sentry.init({
-  dsn: "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
+  dsn: 'https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436'
 });
 // TODO: improve sentry with this article: https://alligator.io/angular/error-tracking-sentry/
 @Injectable()
@@ -51,7 +51,7 @@ export class SentryErrorHandler implements ErrorHandler {
 }
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({

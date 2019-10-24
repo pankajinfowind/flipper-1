@@ -14,24 +14,24 @@ export class SalesComponent implements OnInit {
 
   links: any[] = [
     {
-      menu:'Invoices',icon:'assignment',path:'invoices',
+      menu: 'Invoices', icon: 'assignment', path: 'invoices',
     },
     {
-      menu:'Customers',icon:'assignment',path:'customers',
+      menu: 'Customers', icon: 'assignment', path: 'customers',
     }
   ];
 
-  toggled=false;
-  isMobile=false;
-  leftColumnIsHidden=false;
-  constructor(public localStorage: LocalStorage,public v: GlobalVariables) {
+  toggled = false;
+  isMobile = false;
+  leftColumnIsHidden = false;
+  constructor(public localStorage: LocalStorage, public v: GlobalVariables) {
         this.localStorage.set('sales-path', 'invoices');
   }
 
     ngOnInit() {
 
     }
-    updateTitle(title){
+    updateTitle(title) {
       this.v.webTitle(title);
     }
 

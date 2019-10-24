@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { LoginComponent } from "./common/auth/login/login.component";
-import { GuestGuard } from "./common/guards/guest-guard.service";
-import { AuthGuard } from "./common/guards/auth-guard.service";
-import { RedirectComponent } from "./redirect/redirect.component";
-import { NewBusinessComponent } from "./business/new-business/new-business.component";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './common/auth/login/login.component';
+import { GuestGuard } from './common/guards/guest-guard.service';
+import { AuthGuard } from './common/guards/auth-guard.service';
+import { RedirectComponent } from './redirect/redirect.component';
+import { NewBusinessComponent } from './business/new-business/new-business.component';
 import { CheckInternetComponent } from './check-internet/check-internet.component';
 import { SwitchBranchModelComponent } from './common/core/ui/switch-branch/switch-branch-model/switch-branch-model.component';
 

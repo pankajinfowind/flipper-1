@@ -1,20 +1,14 @@
 name: enexus
-description: A new Flutter application.
+description: An inventory system for all.
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 0.1.0
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: '>=2.0.0 <3.0.0'
+  # The example interacts with build scripts on the Flutter side that are not
+  # yet stable, so it requires a very recent version of Flutter.
+  # This version will increase regularly as the build scripts change.
+  flutter: '>=1.10.2-pre.54'
 
 dependencies:
   flutter:
@@ -23,7 +17,7 @@ dependencies:
   rxdart:
   http: ^0.12.0+2
   moor_flutter: ^1.6.0
-    # For the UI
+  # For the UI
   provider: ^3.0.0+1
   flutter_slidable: ^0.5.3
   flutter_material_color_picker: ^1.0.3

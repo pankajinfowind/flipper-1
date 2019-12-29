@@ -17,22 +17,22 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   ValueNotifier<bool> _sideOpenController;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
-  VoidCallback _showPersistentBottomSheetCallBack;
 
   @override
   void initState() {
     super.initState();
     _sideOpenController = ValueNotifier<bool>(false);
-    _showPersistentBottomSheetCallBack = _showBottomSheet;
   }
 
   void _showBottomSheet() {
     _scaffoldKey.currentState
         .showBottomSheet((context) {
-          return Container(
-            color: Colors.greenAccent,
-            child: Center(
-              child: Text("Bottom sheet"),
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text("title"),
+              ),
+              body: Text("hello"),
             ),
           );
         })
@@ -53,11 +53,8 @@ class _DashBoardState extends State<DashBoard> {
       converter: DashBoardViewModel.fromStore,
       // ignore: missing_return
       builder: (context, vm) {
-        if (vm.hasSheet) {
-          _showBottomSheet();
-        }
         if (vm.hasUser) {
-          return Scaffold(
+          final we = Scaffold(
             key: _scaffoldKey,
             body: SlideOutScreen(
               main: HomeScreen(
@@ -68,6 +65,12 @@ class _DashBoardState extends State<DashBoard> {
               sideOpenController: _sideOpenController,
             ),
           );
+          if (vm.hasSheet) {
+            //TODO: publish medium article on how to know if a widget has done building so you can set state into widget tree in this case our persistent sheets.
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) => _showBottomSheet());
+          }
+          return we;
         }
       },
     );

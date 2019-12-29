@@ -2,6 +2,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
+import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,9 @@ class _DashBoardState extends State<DashBoard> {
         .showBottomSheet((context) {
           return SafeArea(
             child: Scaffold(
-              appBar: AppBar(
-                title: Text("title"),
+              //TODO: build commonAppBar so it work for all use case
+              appBar: CommonAppBar(
+                title: "Hello",
               ),
               body: Text("hello"),
             ),

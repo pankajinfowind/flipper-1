@@ -1,6 +1,8 @@
-
+import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../flipper_localization.dart';
 import '../../theme.dart';
@@ -11,6 +13,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String _title;
   final String _subtitle;
 
+  //TODO: build commonAppBar so it work for all use case
   const CommonAppBar({
     Widget action,
     Widget leftAction,
@@ -50,6 +53,10 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                       style: AppTheme.buttonTextStyle,
                     ),
                     onPressed: () {
+                      //OnBottomSheetClosed
+                      StoreProvider.of<AppState>(context)
+                          .dispatch(OnBottomSheetClosed());
+
                       Navigator.of(context).pop();
                     }),
               ),

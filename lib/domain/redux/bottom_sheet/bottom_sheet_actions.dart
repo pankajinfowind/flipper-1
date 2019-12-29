@@ -1,6 +1,8 @@
 import 'package:flipper/model/sheet.dart';
 import 'package:flutter/material.dart';
 
+class OnBottomSheetClosed {}
+
 @immutable
 class OnBottomSheetChanged {
   final Sheets sheet;

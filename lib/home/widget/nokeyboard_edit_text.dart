@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class NoKeyboardEditableText extends TextFormField {
   NoKeyboardEditableText(
@@ -11,14 +10,11 @@ class NoKeyboardEditableText extends TextFormField {
       InputDecoration decoration})
       : super(
           controller: controller,
-
           focusNode: NoKeyboardEditableTextFocusNode(),
           style: style,
           cursorColor: cursorColor,
           autofocus: autofocus,
           decoration: decoration,
-//            selectionColor: selectionColor,
-//            backgroundCursorColor: Colors.black
         );
 }
 
@@ -27,7 +23,8 @@ class NoKeyboardEditableTextState extends EditableTextState {
   void requestKeyboard() {
     super.requestKeyboard();
     //hide keyboard
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    //SystemChannels.textInput.invokeMethod('TextInput.hide');
+    FocusScope.of(context).requestFocus(widget.focusNode);
   }
 }
 

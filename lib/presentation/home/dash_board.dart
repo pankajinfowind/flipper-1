@@ -1,4 +1,5 @@
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
@@ -39,7 +40,9 @@ class _DashBoardState extends State<DashBoard> {
           );
         })
         .closed
-        .whenComplete(() {});
+        .whenComplete(() {
+          StoreProvider.of<AppState>(context).dispatch(OnBottomSheetClosed());
+        });
   }
 
   @override

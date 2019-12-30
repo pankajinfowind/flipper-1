@@ -2,6 +2,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
+import 'package:flipper/home/widget/nokeyboard_edit_text.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
@@ -33,9 +34,9 @@ class _DashBoardState extends State<DashBoard> {
             child: Scaffold(
               //TODO: build commonAppBar so it work for all use case
               appBar: CommonAppBar(
-                title: "Hello",
+                title: "Add Note",
               ),
-              body: Text("hello"),
+              body: AddNoteWidget(),
             ),
           );
         })
@@ -78,6 +79,37 @@ class _DashBoardState extends State<DashBoard> {
           return we;
         }
       },
+    );
+  }
+}
+
+class AddNoteWidget extends StatelessWidget {
+  const AddNoteWidget({
+    Key key,
+  }) : super(key: key);
+
+//  NoKeyboardEditableText(
+//  controller: TextEditingController(
+//  text: "Add Note",
+//  ),
+//  cursorColor: Colors.green,
+//  selectionColor: Colors.red,
+//  style: TextStyle(
+//  fontStyle: FontStyle.normal, fontSize: 30.0, color: Colors.black),
+//  ),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: NoKeyboardEditableText(
+        controller: TextEditingController(
+          text: "Add Note",
+        ),
+        cursorColor: Colors.green,
+        selectionColor: Colors.red,
+        decoration: InputDecoration(labelText: "Add Note"),
+        style: TextStyle(
+            fontStyle: FontStyle.normal, fontSize: 20.0, color: Colors.black),
+      ),
     );
   }
 }

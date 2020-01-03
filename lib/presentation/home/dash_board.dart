@@ -90,19 +90,20 @@ class AddNoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:
-
-      NoKeyboardEditableText(
-        controller: TextEditingController(
-          text: "Add Note",
+    if (WidgetsBinding.instance.isRootWidgetAttached) {
+      return Container(
+        child: NoKeyboardEditableText(
+          controller: TextEditingController(
+            text: "Add Note",
+          ),
+          cursorColor: Colors.green,
+          selectionColor: Colors.red,
+          decoration: InputDecoration(labelText: "Add Note"),
+          style: TextStyle(
+              fontStyle: FontStyle.normal, fontSize: 20.0, color: Colors.black),
         ),
-        cursorColor: Colors.green,
-        selectionColor: Colors.red,
-        decoration: InputDecoration(labelText: "Add Note"),
-        style: TextStyle(
-            fontStyle: FontStyle.normal, fontSize: 20.0, color: Colors.black),
-      ),
-    );
+      );
+    }
+    return Container();
   }
 }

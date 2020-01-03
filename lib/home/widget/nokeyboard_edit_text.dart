@@ -17,6 +17,7 @@ class NoKeyboardEditableText extends TextFormField {
           decoration: decoration,
         );
 }
+//TODO: detect tap, double tap on the field and also disable keyboard.
 
 class NoKeyboardEditableTextState extends EditableTextState {
   @override

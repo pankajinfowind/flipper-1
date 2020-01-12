@@ -2,7 +2,6 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
-import 'package:flipper/home/widget/nokeyboard_edit_text.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
@@ -72,9 +71,11 @@ class _DashBoardState extends State<DashBoard> {
             ),
           );
           if (vm.hasSheet) {
-            //TODO: publish medium article on how to know if a widget has done building so you can set state into widget tree in this case our persistent sheets.
             WidgetsBinding.instance
                 .addPostFrameCallback((_) => _showBottomSheet());
+            //clear the hasSheet immediately so on focus of textInput it does not attempt to rebuild it again.
+            //TODO: make another reducer for OnBottomSheetClosed to reflect what is being done here.
+            StoreProvider.of<AppState>(context).dispatch(OnBottomSheetClosed());
           }
           return we;
         }
@@ -90,20 +91,7 @@ class AddNoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (WidgetsBinding.instance.isRootWidgetAttached) {
-      return Container(
-        child: NoKeyboardEditableText(
-          controller: TextEditingController(
-            text: "Add Note",
-          ),
-          cursorColor: Colors.green,
-          selectionColor: Colors.red,
-          decoration: InputDecoration(labelText: "Add Note"),
-          style: TextStyle(
-              fontStyle: FontStyle.normal, fontSize: 20.0, color: Colors.black),
-        ),
-      );
-    }
+
     return Container();
   }
 }

@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: Text("Flipper", style: TextStyle(color: Colors.black)),
+        title: Text("Flipper inc", style: TextStyle(color: Colors.black)),
       ),
       body: Container(
         child: Column(
@@ -48,7 +48,7 @@ class _LoginFormState extends State<_LoginForm> {
     final submitCallback = () async {
       //TODO: stop faking login
       final _user = new UserData(
-          email: "sample@yegobox.com", //TODO: get this from after auth2
+          email: "sample@yegobox.com",
           username: "username",
           avatar: "Avatar",
           status: "available",
@@ -60,7 +60,7 @@ class _LoginFormState extends State<_LoginForm> {
           .database
           .userDao
           .insertUser(_user);
-      StoreProvider.of<AppState>(context).dispatch(UserAction);
+      StoreProvider.of<AppState>(context).dispatch(AfterLoginAction);
       //stop faking
     };
 
@@ -69,7 +69,12 @@ class _LoginFormState extends State<_LoginForm> {
 
     return Form(
       child: Column(
-        children: <Widget>[submitButton],
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: submitButton,
+          )
+        ],
       ),
     );
   }

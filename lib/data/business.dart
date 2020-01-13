@@ -1,6 +1,6 @@
 import 'package:moor/moor.dart';
 
-class Token extends Table {
+class Business extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get token => text()();
+  TextColumn get name => text().withLength(max: 16)();
 }

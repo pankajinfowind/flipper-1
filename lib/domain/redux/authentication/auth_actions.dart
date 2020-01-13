@@ -1,14 +1,14 @@
 import "dart:async";
 
-import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/branch.dart';
+import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/user.dart';
 import "package:meta/meta.dart";
 
 // Authentication
 class VerifyAuthenticationState {}
 
-class UserAction {}
+class AfterLoginAction {}
 
 class LogIn {
   final String email;

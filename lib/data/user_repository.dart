@@ -20,7 +20,7 @@ class UserRepository {
 
   Future<void> updateUserToken(String token) async {}
 
-  Stream<List<UserData>> checkAuth(Store<AppState> store) {
-    return store.state.database.userDao.watchUser();
+  Future<List<UserData>> checkAuth(Store<AppState> store) {
+    return store.state.database.userDao.getUser();
   }
 }

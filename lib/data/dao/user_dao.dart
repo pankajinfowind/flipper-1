@@ -1,6 +1,6 @@
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/data/user.dart';
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:moor/moor.dart';
 
 part 'user_dao.g.dart';
 
@@ -11,5 +11,5 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
   UserDao(this.db) : super(db);
 
   Future insertUser(Insertable<UserData> user) => into(db.user).insert(user);
-  Stream<List<UserData>> watchUser() => select(db.user).watch();
+  Future<List<UserData>> getUser() => select(db.user).get();
 }

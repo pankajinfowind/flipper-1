@@ -1,6 +1,6 @@
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/data/user_repository.dart';
 import 'package:flipper/domain/app_actions.dart';
-import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
@@ -28,33 +28,34 @@ List<Middleware<AppState>> createAuthenticationMiddleware(
     TypedMiddleware<AppState, LogIn>(_authLogin(userRepository, navigatorKey)),
     TypedMiddleware<AppState, LogOutAction>(
         _authLogout(userRepository, navigatorKey)),
-    TypedMiddleware<AppState, UserAction>(_user(userRepository, navigatorKey)),
+    TypedMiddleware<AppState, AfterLoginAction>(
+        _loggedIn(userRepository, navigatorKey)),
   ];
 }
 
-void Function(Store<AppState> store, dynamic action, NextDispatcher next) _user(
+void Function(Store<AppState> store, dynamic action, NextDispatcher next)
+    _loggedIn(
   UserRepository userRepository,
   GlobalKey<NavigatorState> navigatorKey,
 ) {
   return (store, action, next) async {
     next(action);
-    userRepository.checkAuth(store).listen((user) {
-      if (user == null || user.length == 0) {
-        navigatorKey.currentState.pushReplacementNamed(Routes.login);
-        return;
-      } else {
-        final _user = User((u) => u
-          ..bearerToken = user[0].bearerToken
-          ..username = user[0].username
-          ..refreshToken = user[0].refreshToken
-          ..status = user[0].status
-          ..avatar = user[0].avatar
-          ..email = user[0].email);
+    List<UserData> user = await userRepository.checkAuth(store);
+    if (user == null || user.length == 0) {
+      navigatorKey.currentState.pushReplacementNamed(Routes.login);
+      return;
+    } else {
+      final _user = User((u) => u
+        ..bearerToken = user[0].bearerToken
+        ..username = user[0].username
+        ..refreshToken = user[0].refreshToken
+        ..status = user[0].status
+        ..avatar = user[0].avatar
+        ..email = user[0].email);
 
-        store.dispatch(OnAuthenticated(user: _user));
-        store.dispatch(ConnectToDataSource());
-      }
-    });
+      store.dispatch(OnAuthenticated(user: _user));
+      store.dispatch(ConnectToDataSource());
+    }
   };
 }
 
@@ -94,59 +95,33 @@ void Function(
       store.dispatch(Unauthenticated);
       return;
     }
-    userRepository.checkAuth(store).listen((user) {
-      if (user == null || user.length == 0) {
-        Router.navigator.pushNamed(Router.login);
-        return;
-      } else {
-        //TODO: check if we have business user then fire getting branch dummy data
-        final _branch_1 = Branch((b) => b
-          ..id = 1
-          ..location = "Kimironko"
-          ..isCurrentFocused = false
-          ..name = "Gikondo Branch"
-          ..description = "Sell beans");
-        final _branch_2 = Branch((b) => b
-          ..id = 1
-          ..location = "Gikondo"
-          ..isCurrentFocused = false
-          ..name = "Gikondo Branch"
-          ..description = "Sell beans");
-        final _branch_3 = Branch((b) => b
-          ..id = 1
-          ..location = "Nyamirambo"
-          ..isCurrentFocused = false
-          ..name = "Nyamirambo Branch"
-          ..description = "Sell beans");
+    List<UserData> user = await userRepository.checkAuth(store);
+    List<UserData> business = await userRepository.checkAuth(store);
+    if (user == null || user.length == 0) {
+      Router.navigator.pushNamed(Router.login);
+      return;
+    } else {
+      //  store.dispatch(OnBranchLoaded(branches: branchList));
 
-        List<Branch> branchList = List<Branch>(3);
-        branchList[0] = _branch_1;
-        branchList[1] = _branch_2;
-        branchList[2] = _branch_3;
+      //defining hint branch
+      //TODO: make hint comes from a default branch
+      final _hint = Hint((h) => h
+        ..name = "Nyamirambo Branch"
+        ..type = HintType.Branch);
+      store.dispatch(OnHintLoaded(hint: _hint));
 
-        store.dispatch(OnBranchLoaded(branches: branchList));
+      final _user = User((u) => u
+        ..bearerToken = user[0].bearerToken
+        ..username = user[0].username
+        ..refreshToken = user[0].refreshToken
+        ..status = user[0].status
+        ..avatar = user[0].avatar
+        ..email = user[0].email);
 
-        //defining hint branch
-        //TODO: make hint comes from a default branch
-        final _hint = Hint((h) => h
-          ..name = "Nyamirambo Branch"
-          ..type = HintType.Branch);
-        store.dispatch(OnHintLoaded(hint: _hint));
+      store.dispatch(OnAuthenticated(user: _user));
 
-        final _user = User((u) => u
-          ..bearerToken = user[0].bearerToken
-          ..username = user[0].username
-          ..refreshToken = user[0].refreshToken
-          ..status = user[0].status
-          ..avatar = user[0].avatar
-          ..email = user[0].email);
-
-        store.dispatch(OnAuthenticated(user: _user));
-        store.dispatch(ConnectToDataSource());
-
-        Router.navigator.pushNamed(Router.dashboard);
-      }
-    });
+      Router.navigator.pushNamed(Router.dashboard);
+    }
   };
 }
 

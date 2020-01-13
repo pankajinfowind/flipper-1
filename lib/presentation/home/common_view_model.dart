@@ -4,18 +4,17 @@ import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:redux/redux.dart';
 
-part 'dashboard_viewmodel.g.dart';
+part 'common_view_model.g.dart';
 
-abstract class DashBoardViewModel
-    implements Built<DashBoardViewModel, DashBoardViewModelBuilder> {
+abstract class CommonViewModel
+    implements Built<CommonViewModel, CommonViewModelBuilder> {
   bool get hasUser;
   bool get hasSheet;
   List<Branch> get branches;
   Hint get hint;
-  DashBoardViewModel._();
-  factory DashBoardViewModel(
-          [void Function(DashBoardViewModelBuilder) updates]) =
-      _$DashBoardViewModel;
+  CommonViewModel._();
+  factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
+      _$CommonViewModel;
 
   static bool _hasUser(Store<AppState> store) {
     return store.state.user != null;
@@ -25,11 +24,11 @@ abstract class DashBoardViewModel
     return store.state.sheet != null;
   }
 
-  static DashBoardViewModel fromStore(Store<AppState> store) {
-    return DashBoardViewModel((vm) => vm
+  static CommonViewModel fromStore(Store<AppState> store) {
+    return CommonViewModel((vm) => vm
       ..hasUser = _hasUser(store)
       ..hasSheet = _hasSheet(store)
-      ..hint = store.state.hint.toBuilder()
+//      ..hint = store.state.hint.toBuilder()
       ..branches = store.state.branches);
   }
 }

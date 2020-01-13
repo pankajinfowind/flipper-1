@@ -9,16 +9,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:auto_route/router_utils.dart';
 import 'package:flipper/presentation/splash/splash_screen.dart';
 import 'package:flipper/presentation/home/dash_board.dart';
-import 'package:flipper/presentation/login/loginscreen.dart';
+import 'package:flipper/presentation/splash/aftersplash.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/sale_screen.dart';
+import 'package:flipper/presentation/business/create_business_screen.dart';
+import 'package:auto_route/transitions_builders.dart';
 
 class Router {
   static const splashScreen = '/';
   static const dashboard = '/dashboard';
-  static const login = '/login';
+  static const afterSplash = '/afterSplash';
   static const bottom = '/bottom';
   static const saleScreen = '/saleScreen';
+  static const createBusinessScreen = '/createBusinessScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -44,10 +47,11 @@ class Router {
           builder: (_) => DashBoard(key: typedArgs),
           settings: settings,
         );
-      case Router.login:
+      case Router.afterSplash:
         return MaterialPageRoute(
-          builder: (_) => LoginScreen(),
+          builder: (_) => AfterSplash(),
           settings: settings,
+          fullscreenDialog: true,
         );
       case Router.bottom:
         if (hasInvalidArgs<Key>(args)) {
@@ -68,6 +72,16 @@ class Router {
           builder: (_) => SaleScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
+        );
+      case Router.createBusinessScreen:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return PageRouteBuilder(
+          pageBuilder: (ctx, animation, secondaryAnimation) =>
+              CreateBusinessScreen(key: typedArgs),
+          settings: settings,
         );
       default:
         return unknownRoutePage(settings.name);

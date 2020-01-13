@@ -4,13 +4,13 @@ import 'package:moor/moor.dart';
 
 part 'token_dao.g.dart';
 
-@UseDao(tables: [Token])
+@UseDao(tables: [TokenTable])
 class TokenDao extends DatabaseAccessor<Database> with _$TokenDaoMixin {
   final Database db;
   TokenDao(this.db) : super(db);
-  Future insertToken(Insertable<TokenData> token) =>
-      into(db.token).insert(token);
-  Future<List<TokenData>> getToken() {
-    return (select(db.token)).get();
+  Future insertToken(Insertable<TokenTableData> token) =>
+      into(db.tokenTable).insert(token);
+  Future<List<TokenTableData>> getToken() {
+    return (select(db.tokenTable)).get();
   }
 }

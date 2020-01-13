@@ -12,7 +12,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AddNoteBarHeader(
+      appBar: CommonAppBar(
         title: "Add Note",
       ),
       body: Row(

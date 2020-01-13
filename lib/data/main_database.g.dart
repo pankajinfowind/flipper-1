@@ -7,7 +7,7 @@ part of 'main_database.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class UserData extends DataClass implements Insertable<UserData> {
+class UserTableData extends DataClass implements Insertable<UserTableData> {
   final int id;
   final String username;
   final String status;
@@ -15,7 +15,7 @@ class UserData extends DataClass implements Insertable<UserData> {
   final String refreshToken;
   final String email;
   final String avatar;
-  UserData(
+  UserTableData(
       {@required this.id,
       @required this.username,
       @required this.status,
@@ -23,12 +23,13 @@ class UserData extends DataClass implements Insertable<UserData> {
       @required this.refreshToken,
       @required this.email,
       this.avatar});
-  factory UserData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory UserTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    return UserData(
+    return UserTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       username: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}username']),
@@ -44,9 +45,9 @@ class UserData extends DataClass implements Insertable<UserData> {
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}avatar']),
     );
   }
-  factory UserData.fromJson(Map<String, dynamic> json,
+  factory UserTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return UserData(
+    return UserTableData(
       id: serializer.fromJson<int>(json['id']),
       username: serializer.fromJson<String>(json['username']),
       status: serializer.fromJson<String>(json['status']),
@@ -71,8 +72,8 @@ class UserData extends DataClass implements Insertable<UserData> {
   }
 
   @override
-  UserCompanion createCompanion(bool nullToAbsent) {
-    return UserCompanion(
+  UserTableCompanion createCompanion(bool nullToAbsent) {
+    return UserTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       username: username == null && nullToAbsent
           ? const Value.absent()
@@ -92,7 +93,7 @@ class UserData extends DataClass implements Insertable<UserData> {
     );
   }
 
-  UserData copyWith(
+  UserTableData copyWith(
           {int id,
           String username,
           String status,
@@ -100,7 +101,7 @@ class UserData extends DataClass implements Insertable<UserData> {
           String refreshToken,
           String email,
           String avatar}) =>
-      UserData(
+      UserTableData(
         id: id ?? this.id,
         username: username ?? this.username,
         status: status ?? this.status,
@@ -111,7 +112,7 @@ class UserData extends DataClass implements Insertable<UserData> {
       );
   @override
   String toString() {
-    return (StringBuffer('UserData(')
+    return (StringBuffer('UserTableData(')
           ..write('id: $id, ')
           ..write('username: $username, ')
           ..write('status: $status, ')
@@ -137,7 +138,7 @@ class UserData extends DataClass implements Insertable<UserData> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is UserData &&
+      (other is UserTableData &&
           other.id == this.id &&
           other.username == this.username &&
           other.status == this.status &&
@@ -147,7 +148,7 @@ class UserData extends DataClass implements Insertable<UserData> {
           other.avatar == this.avatar);
 }
 
-class UserCompanion extends UpdateCompanion<UserData> {
+class UserTableCompanion extends UpdateCompanion<UserTableData> {
   final Value<int> id;
   final Value<String> username;
   final Value<String> status;
@@ -155,7 +156,7 @@ class UserCompanion extends UpdateCompanion<UserData> {
   final Value<String> refreshToken;
   final Value<String> email;
   final Value<String> avatar;
-  const UserCompanion({
+  const UserTableCompanion({
     this.id = const Value.absent(),
     this.username = const Value.absent(),
     this.status = const Value.absent(),
@@ -164,7 +165,7 @@ class UserCompanion extends UpdateCompanion<UserData> {
     this.email = const Value.absent(),
     this.avatar = const Value.absent(),
   });
-  UserCompanion.insert({
+  UserTableCompanion.insert({
     this.id = const Value.absent(),
     @required String username,
     @required String status,
@@ -177,7 +178,7 @@ class UserCompanion extends UpdateCompanion<UserData> {
         bearerToken = Value(bearerToken),
         refreshToken = Value(refreshToken),
         email = Value(email);
-  UserCompanion copyWith(
+  UserTableCompanion copyWith(
       {Value<int> id,
       Value<String> username,
       Value<String> status,
@@ -185,7 +186,7 @@ class UserCompanion extends UpdateCompanion<UserData> {
       Value<String> refreshToken,
       Value<String> email,
       Value<String> avatar}) {
-    return UserCompanion(
+    return UserTableCompanion(
       id: id ?? this.id,
       username: username ?? this.username,
       status: status ?? this.status,
@@ -197,10 +198,11 @@ class UserCompanion extends UpdateCompanion<UserData> {
   }
 }
 
-class $UserTable extends User with TableInfo<$UserTable, UserData> {
+class $UserTableTable extends UserTable
+    with TableInfo<$UserTableTable, UserTableData> {
   final GeneratedDatabase _db;
   final String _alias;
-  $UserTable(this._db, [this._alias]);
+  $UserTableTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -283,13 +285,13 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
   List<GeneratedColumn> get $columns =>
       [id, username, status, bearerToken, refreshToken, email, avatar];
   @override
-  $UserTable get asDslTable => this;
+  $UserTableTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'user';
+  String get $tableName => _alias ?? 'user_table';
   @override
-  final String actualTableName = 'user';
+  final String actualTableName = 'user_table';
   @override
-  VerificationContext validateIntegrity(UserCompanion d,
+  VerificationContext validateIntegrity(UserTableCompanion d,
       {bool isInserting = false}) {
     final context = VerificationContext();
     if (d.id.present) {
@@ -341,13 +343,13 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  UserData map(Map<String, dynamic> data, {String tablePrefix}) {
+  UserTableData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return UserData.fromData(data, _db, prefix: effectivePrefix);
+    return UserTableData.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  Map<String, Variable> entityToSql(UserCompanion d) {
+  Map<String, Variable> entityToSql(UserTableCompanion d) {
     final map = <String, Variable>{};
     if (d.id.present) {
       map['id'] = Variable<int, IntType>(d.id.value);
@@ -374,29 +376,30 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
   }
 
   @override
-  $UserTable createAlias(String alias) {
-    return $UserTable(_db, alias);
+  $UserTableTable createAlias(String alias) {
+    return $UserTableTable(_db, alias);
   }
 }
 
-class TokenData extends DataClass implements Insertable<TokenData> {
+class TokenTableData extends DataClass implements Insertable<TokenTableData> {
   final int id;
   final String token;
-  TokenData({@required this.id, @required this.token});
-  factory TokenData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  TokenTableData({@required this.id, @required this.token});
+  factory TokenTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    return TokenData(
+    return TokenTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       token:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}token']),
     );
   }
-  factory TokenData.fromJson(Map<String, dynamic> json,
+  factory TokenTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return TokenData(
+    return TokenTableData(
       id: serializer.fromJson<int>(json['id']),
       token: serializer.fromJson<String>(json['token']),
     );
@@ -411,21 +414,21 @@ class TokenData extends DataClass implements Insertable<TokenData> {
   }
 
   @override
-  TokenCompanion createCompanion(bool nullToAbsent) {
-    return TokenCompanion(
+  TokenTableCompanion createCompanion(bool nullToAbsent) {
+    return TokenTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       token:
           token == null && nullToAbsent ? const Value.absent() : Value(token),
     );
   }
 
-  TokenData copyWith({int id, String token}) => TokenData(
+  TokenTableData copyWith({int id, String token}) => TokenTableData(
         id: id ?? this.id,
         token: token ?? this.token,
       );
   @override
   String toString() {
-    return (StringBuffer('TokenData(')
+    return (StringBuffer('TokenTableData(')
           ..write('id: $id, ')
           ..write('token: $token')
           ..write(')'))
@@ -437,32 +440,35 @@ class TokenData extends DataClass implements Insertable<TokenData> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is TokenData && other.id == this.id && other.token == this.token);
+      (other is TokenTableData &&
+          other.id == this.id &&
+          other.token == this.token);
 }
 
-class TokenCompanion extends UpdateCompanion<TokenData> {
+class TokenTableCompanion extends UpdateCompanion<TokenTableData> {
   final Value<int> id;
   final Value<String> token;
-  const TokenCompanion({
+  const TokenTableCompanion({
     this.id = const Value.absent(),
     this.token = const Value.absent(),
   });
-  TokenCompanion.insert({
+  TokenTableCompanion.insert({
     this.id = const Value.absent(),
     @required String token,
   }) : token = Value(token);
-  TokenCompanion copyWith({Value<int> id, Value<String> token}) {
-    return TokenCompanion(
+  TokenTableCompanion copyWith({Value<int> id, Value<String> token}) {
+    return TokenTableCompanion(
       id: id ?? this.id,
       token: token ?? this.token,
     );
   }
 }
 
-class $TokenTable extends Token with TableInfo<$TokenTable, TokenData> {
+class $TokenTableTable extends TokenTable
+    with TableInfo<$TokenTableTable, TokenTableData> {
   final GeneratedDatabase _db;
   final String _alias;
-  $TokenTable(this._db, [this._alias]);
+  $TokenTableTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -487,13 +493,13 @@ class $TokenTable extends Token with TableInfo<$TokenTable, TokenData> {
   @override
   List<GeneratedColumn> get $columns => [id, token];
   @override
-  $TokenTable get asDslTable => this;
+  $TokenTableTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'token';
+  String get $tableName => _alias ?? 'token_table';
   @override
-  final String actualTableName = 'token';
+  final String actualTableName = 'token_table';
   @override
-  VerificationContext validateIntegrity(TokenCompanion d,
+  VerificationContext validateIntegrity(TokenTableCompanion d,
       {bool isInserting = false}) {
     final context = VerificationContext();
     if (d.id.present) {
@@ -513,13 +519,13 @@ class $TokenTable extends Token with TableInfo<$TokenTable, TokenData> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  TokenData map(Map<String, dynamic> data, {String tablePrefix}) {
+  TokenTableData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return TokenData.fromData(data, _db, prefix: effectivePrefix);
+    return TokenTableData.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  Map<String, Variable> entityToSql(TokenCompanion d) {
+  Map<String, Variable> entityToSql(TokenTableCompanion d) {
     final map = <String, Variable>{};
     if (d.id.present) {
       map['id'] = Variable<int, IntType>(d.id.value);
@@ -531,21 +537,182 @@ class $TokenTable extends Token with TableInfo<$TokenTable, TokenData> {
   }
 
   @override
-  $TokenTable createAlias(String alias) {
-    return $TokenTable(_db, alias);
+  $TokenTableTable createAlias(String alias) {
+    return $TokenTableTable(_db, alias);
+  }
+}
+
+class BusinessTableData extends DataClass
+    implements Insertable<BusinessTableData> {
+  final int id;
+  final String name;
+  BusinessTableData({@required this.id, @required this.name});
+  factory BusinessTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return BusinessTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+    );
+  }
+  factory BusinessTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return BusinessTableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  @override
+  BusinessTableCompanion createCompanion(bool nullToAbsent) {
+    return BusinessTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+    );
+  }
+
+  BusinessTableData copyWith({int id, String name}) => BusinessTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('BusinessTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is BusinessTableData &&
+          other.id == this.id &&
+          other.name == this.name);
+}
+
+class BusinessTableCompanion extends UpdateCompanion<BusinessTableData> {
+  final Value<int> id;
+  final Value<String> name;
+  const BusinessTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  BusinessTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required String name,
+  }) : name = Value(name);
+  BusinessTableCompanion copyWith({Value<int> id, Value<String> name}) {
+    return BusinessTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
+}
+
+class $BusinessTableTable extends BusinessTable
+    with TableInfo<$BusinessTableTable, BusinessTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $BusinessTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn('name', $tableName, false, maxTextLength: 16);
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  $BusinessTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'business_table';
+  @override
+  final String actualTableName = 'business_table';
+  @override
+  VerificationContext validateIntegrity(BusinessTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.name.present) {
+      context.handle(
+          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+    } else if (name.isRequired && isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BusinessTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return BusinessTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(BusinessTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.name.present) {
+      map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    return map;
+  }
+
+  @override
+  $BusinessTableTable createAlias(String alias) {
+    return $BusinessTableTable(_db, alias);
   }
 }
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $UserTable _user;
-  $UserTable get user => _user ??= $UserTable(this);
-  $TokenTable _token;
-  $TokenTable get token => _token ??= $TokenTable(this);
+  $UserTableTable _userTable;
+  $UserTableTable get userTable => _userTable ??= $UserTableTable(this);
+  $TokenTableTable _tokenTable;
+  $TokenTableTable get tokenTable => _tokenTable ??= $TokenTableTable(this);
+  $BusinessTableTable _businessTable;
+  $BusinessTableTable get businessTable =>
+      _businessTable ??= $BusinessTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
   TokenDao get tokenDao => _tokenDao ??= TokenDao(this as Database);
+  BusinessDao _businessDao;
+  BusinessDao get businessDao => _businessDao ??= BusinessDao(this as Database);
   @override
-  List<TableInfo> get allTables => [user, token];
+  List<TableInfo> get allTables => [userTable, tokenTable, businessTable];
 }

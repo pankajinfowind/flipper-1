@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flipper/data/business.dart';
+import 'package:flipper/data/dao/business_dao.dart';
 import 'package:flipper/data/token.dart';
 import 'package:flipper/data/user.dart';
 import 'package:moor/moor.dart';
@@ -23,17 +25,18 @@ LazyDatabase _openConnection() {
   });
 }
 
-@UseMoor(tables: [User, Token], daos: [UserDao, TokenDao])
+@UseMoor(
+    tables: [UserTable, TokenTable, BusinessTable],
+    daos: [UserDao, TokenDao, BusinessDao])
 class Database extends _$Database {
   Database() : super(_openConnection());
-
   @override
   int get schemaVersion => 1;
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      beforeOpen: (d) async {
-//        await db.customStatement('PRAGMA foreign_keys = ON');
+      beforeOpen: (details) async {
+        customStatement('PRAGMA foreign_keys = ON');
       },
       onCreate: (Migrator m) {
         return m.createAllTables();

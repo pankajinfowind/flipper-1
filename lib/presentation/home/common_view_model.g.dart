@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dashboard_viewmodel.dart';
+part of 'common_view_model.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-class _$DashBoardViewModel extends DashBoardViewModel {
+class _$CommonViewModel extends CommonViewModel {
   @override
   final bool hasUser;
   @override
@@ -16,40 +16,37 @@ class _$DashBoardViewModel extends DashBoardViewModel {
   @override
   final Hint hint;
 
-  factory _$DashBoardViewModel(
-          [void Function(DashBoardViewModelBuilder) updates]) =>
-      (new DashBoardViewModelBuilder()..update(updates)).build();
+  factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
+      (new CommonViewModelBuilder()..update(updates)).build();
 
-  _$DashBoardViewModel._(
-      {this.hasUser, this.hasSheet, this.branches, this.hint})
+  _$CommonViewModel._({this.hasUser, this.hasSheet, this.branches, this.hint})
       : super._() {
     if (hasUser == null) {
-      throw new BuiltValueNullFieldError('DashBoardViewModel', 'hasUser');
+      throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
     }
     if (hasSheet == null) {
-      throw new BuiltValueNullFieldError('DashBoardViewModel', 'hasSheet');
+      throw new BuiltValueNullFieldError('CommonViewModel', 'hasSheet');
     }
     if (branches == null) {
-      throw new BuiltValueNullFieldError('DashBoardViewModel', 'branches');
+      throw new BuiltValueNullFieldError('CommonViewModel', 'branches');
     }
     if (hint == null) {
-      throw new BuiltValueNullFieldError('DashBoardViewModel', 'hint');
+      throw new BuiltValueNullFieldError('CommonViewModel', 'hint');
     }
   }
 
   @override
-  DashBoardViewModel rebuild(
-          void Function(DashBoardViewModelBuilder) updates) =>
+  CommonViewModel rebuild(void Function(CommonViewModelBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DashBoardViewModelBuilder toBuilder() =>
-      new DashBoardViewModelBuilder()..replace(this);
+  CommonViewModelBuilder toBuilder() =>
+      new CommonViewModelBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DashBoardViewModel &&
+    return other is CommonViewModel &&
         hasUser == other.hasUser &&
         hasSheet == other.hasSheet &&
         branches == other.branches &&
@@ -66,7 +63,7 @@ class _$DashBoardViewModel extends DashBoardViewModel {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DashBoardViewModel')
+    return (newBuiltValueToStringHelper('CommonViewModel')
           ..add('hasUser', hasUser)
           ..add('hasSheet', hasSheet)
           ..add('branches', branches)
@@ -75,9 +72,9 @@ class _$DashBoardViewModel extends DashBoardViewModel {
   }
 }
 
-class DashBoardViewModelBuilder
-    implements Builder<DashBoardViewModel, DashBoardViewModelBuilder> {
-  _$DashBoardViewModel _$v;
+class CommonViewModelBuilder
+    implements Builder<CommonViewModel, CommonViewModelBuilder> {
+  _$CommonViewModel _$v;
 
   bool _hasUser;
   bool get hasUser => _$this._hasUser;
@@ -95,9 +92,9 @@ class DashBoardViewModelBuilder
   HintBuilder get hint => _$this._hint ??= new HintBuilder();
   set hint(HintBuilder hint) => _$this._hint = hint;
 
-  DashBoardViewModelBuilder();
+  CommonViewModelBuilder();
 
-  DashBoardViewModelBuilder get _$this {
+  CommonViewModelBuilder get _$this {
     if (_$v != null) {
       _hasUser = _$v.hasUser;
       _hasSheet = _$v.hasSheet;
@@ -109,24 +106,24 @@ class DashBoardViewModelBuilder
   }
 
   @override
-  void replace(DashBoardViewModel other) {
+  void replace(CommonViewModel other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$DashBoardViewModel;
+    _$v = other as _$CommonViewModel;
   }
 
   @override
-  void update(void Function(DashBoardViewModelBuilder) updates) {
+  void update(void Function(CommonViewModelBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$DashBoardViewModel build() {
-    _$DashBoardViewModel _$result;
+  _$CommonViewModel build() {
+    _$CommonViewModel _$result;
     try {
       _$result = _$v ??
-          new _$DashBoardViewModel._(
+          new _$CommonViewModel._(
               hasUser: hasUser,
               hasSheet: hasSheet,
               branches: branches,
@@ -138,7 +135,7 @@ class DashBoardViewModelBuilder
         hint.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'DashBoardViewModel', _$failedField, e.toString());
+            'CommonViewModel', _$failedField, e.toString());
       }
       rethrow;
     }

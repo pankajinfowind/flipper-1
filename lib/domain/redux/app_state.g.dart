@@ -16,20 +16,13 @@ class _$AppState extends AppState {
   @override
   final List<Business> business;
   @override
-  final Hint hint;
-  @override
   final Database database;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
   _$AppState._(
-      {this.user,
-      this.sheet,
-      this.branches,
-      this.business,
-      this.hint,
-      this.database})
+      {this.user, this.sheet, this.branches, this.business, this.database})
       : super._() {
     if (branches == null) {
       throw new BuiltValueNullFieldError('AppState', 'branches');
@@ -54,19 +47,14 @@ class _$AppState extends AppState {
         sheet == other.sheet &&
         branches == other.branches &&
         business == other.business &&
-        hint == other.hint &&
         database == other.database;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc($jc(0, user.hashCode), sheet.hashCode),
-                    branches.hashCode),
-                business.hashCode),
-            hint.hashCode),
+        $jc($jc($jc($jc(0, user.hashCode), sheet.hashCode), branches.hashCode),
+            business.hashCode),
         database.hashCode));
   }
 
@@ -77,7 +65,6 @@ class _$AppState extends AppState {
           ..add('sheet', sheet)
           ..add('branches', branches)
           ..add('business', business)
-          ..add('hint', hint)
           ..add('database', database))
         .toString();
   }
@@ -102,10 +89,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   List<Business> get business => _$this._business;
   set business(List<Business> business) => _$this._business = business;
 
-  HintBuilder _hint;
-  HintBuilder get hint => _$this._hint ??= new HintBuilder();
-  set hint(HintBuilder hint) => _$this._hint = hint;
-
   Database _database;
   Database get database => _$this._database;
   set database(Database database) => _$this._database = database;
@@ -118,7 +101,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _sheet = _$v.sheet?.toBuilder();
       _branches = _$v.branches;
       _business = _$v.business;
-      _hint = _$v.hint?.toBuilder();
       _database = _$v.database;
       _$v = null;
     }
@@ -148,7 +130,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               sheet: _sheet?.build(),
               branches: branches,
               business: business,
-              hint: _hint?.build(),
               database: database);
     } catch (_) {
       String _$failedField;
@@ -157,9 +138,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _user?.build();
         _$failedField = 'sheet';
         _sheet?.build();
-
-        _$failedField = 'hint';
-        _hint?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

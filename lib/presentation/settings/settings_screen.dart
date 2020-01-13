@@ -7,7 +7,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AddNoteBarHeader(
+      appBar: CommonAppBar(
         title: CirclesLocalizations.of(context).settingsTitle,
       ),
       body: ListView(

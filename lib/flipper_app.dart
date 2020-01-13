@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'data/user_repository.dart';
+import 'data/respositories/business_repository.dart';
+import 'data/respositories/user_repository.dart';
 import 'domain/redux/app_reducer.dart';
 import 'domain/redux/authentication/auth_actions.dart';
 import 'domain/redux/authentication/auth_middleware.dart';
@@ -24,14 +25,16 @@ class _FlipperAppState extends State<FlipperApp> {
   Store<AppState> store;
   static final _navigatorKey = GlobalKey<NavigatorState>();
   final userRepo = UserRepository();
+  final businessRepo = BusinessRepository();
   @override
   void initState() {
     super.initState();
     store = Store<AppState>(
       appReducer,
       initialState: AppState.init(),
-      middleware: createAuthenticationMiddleware(userRepo, _navigatorKey)
-        ..addAll(createBusinessMiddleware(_navigatorKey)),
+      middleware:
+          createAuthenticationMiddleware(userRepo, businessRepo, _navigatorKey)
+            ..addAll(createBusinessMiddleware(_navigatorKey)),
     );
     store.dispatch(
       VerifyAuthenticationState(),

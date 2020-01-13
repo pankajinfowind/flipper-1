@@ -1,6 +1,6 @@
 import 'package:moor/moor.dart';
 
-class User extends Table {
+class UserTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get username => text().withLength(max: 16)();
   TextColumn get status => text().withLength(max: 16)();

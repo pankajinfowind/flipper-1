@@ -1,7 +1,6 @@
 import 'package:flipper/data/main_database.dart';
-import 'package:flipper/data/user_repository.dart';
-import 'package:flipper/domain/app_actions.dart';
-import 'package:flipper/model/hint.dart';
+import 'package:flipper/data/respositories/business_repository.dart';
+import 'package:flipper/data/respositories/user_repository.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -20,29 +19,37 @@ import 'auth_actions.dart';
 
 List<Middleware<AppState>> createAuthenticationMiddleware(
   UserRepository userRepository,
+  BusinessRepository businessRepository,
   GlobalKey<NavigatorState> navigatorKey,
 ) {
   return [
     TypedMiddleware<AppState, VerifyAuthenticationState>(
-        _verifyAuthState(userRepository, navigatorKey)),
+        _verifyAuthState(userRepository, businessRepository, navigatorKey)),
     TypedMiddleware<AppState, LogIn>(_authLogin(userRepository, navigatorKey)),
     TypedMiddleware<AppState, LogOutAction>(
         _authLogout(userRepository, navigatorKey)),
     TypedMiddleware<AppState, AfterLoginAction>(
-        _loggedIn(userRepository, navigatorKey)),
+        _verifyAuthState(userRepository, businessRepository, navigatorKey)),
   ];
 }
 
 void Function(Store<AppState> store, dynamic action, NextDispatcher next)
-    _loggedIn(
+    _verifyAuthState(
   UserRepository userRepository,
+  BusinessRepository businessRepository,
   GlobalKey<NavigatorState> navigatorKey,
 ) {
   return (store, action, next) async {
     next(action);
-    List<UserData> user = await userRepository.checkAuth(store);
-    if (user == null || user.length == 0) {
+    if (userRepository.checkAuth(store) == null) {
       navigatorKey.currentState.pushReplacementNamed(Routes.login);
+      store.dispatch(Unauthenticated);
+      return;
+    }
+    List<UserTableData> user = await userRepository.checkAuth(store);
+    List<BusinessTableData> business = await businessRepository.get(store);
+    if (user == null || user.length == 0) {
+      Router.navigator.pushNamed(Router.afterSplash);
       return;
     } else {
       final _user = User((u) => u
@@ -52,9 +59,12 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ..status = user[0].status
         ..avatar = user[0].avatar
         ..email = user[0].email);
-
       store.dispatch(OnAuthenticated(user: _user));
-      store.dispatch(ConnectToDataSource());
+      if (business.length == 0) {
+        Router.navigator.pushNamed(Router.createBusinessScreen);
+      } else {
+        Router.navigator.pushNamed(Router.dashboard);
+      }
     }
   };
 }
@@ -75,52 +85,6 @@ void Function(
     } catch (e) {
       Logger.w("Failed logout", e: e);
       store.dispatch(OnLogoutFail(e));
-    }
-  };
-}
-
-void Function(
-  Store<AppState> store,
-  VerifyAuthenticationState action,
-  NextDispatcher next,
-) _verifyAuthState(
-  UserRepository userRepository,
-  GlobalKey<NavigatorState> navigatorKey,
-) {
-  return (store, action, next) async {
-    next(action);
-
-    if (userRepository.checkAuth(store) == null) {
-      navigatorKey.currentState.pushReplacementNamed(Routes.login);
-      store.dispatch(Unauthenticated);
-      return;
-    }
-    List<UserData> user = await userRepository.checkAuth(store);
-    List<UserData> business = await userRepository.checkAuth(store);
-    if (user == null || user.length == 0) {
-      Router.navigator.pushNamed(Router.login);
-      return;
-    } else {
-      //  store.dispatch(OnBranchLoaded(branches: branchList));
-
-      //defining hint branch
-      //TODO: make hint comes from a default branch
-      final _hint = Hint((h) => h
-        ..name = "Nyamirambo Branch"
-        ..type = HintType.Branch);
-      store.dispatch(OnHintLoaded(hint: _hint));
-
-      final _user = User((u) => u
-        ..bearerToken = user[0].bearerToken
-        ..username = user[0].username
-        ..refreshToken = user[0].refreshToken
-        ..status = user[0].status
-        ..avatar = user[0].avatar
-        ..email = user[0].email);
-
-      store.dispatch(OnAuthenticated(user: _user));
-
-      Router.navigator.pushNamed(Router.dashboard);
     }
   };
 }

@@ -7,5 +7,5 @@ part of 'token_dao.dart';
 // **************************************************************************
 
 mixin _$TokenDaoMixin on DatabaseAccessor<Database> {
-  $TokenTable get token => db.token;
+  $TokenTableTable get tokenTable => db.tokenTable;
 }

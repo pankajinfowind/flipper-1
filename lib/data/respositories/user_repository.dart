@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 
 class UserRepository {
   insertUser(Store<AppState> store, User user) {
-    var u = new UserData(
+    var u = new UserTableData(
         email: user.email,
         status: user.status,
         avatar: user.avatar,
@@ -20,7 +20,7 @@ class UserRepository {
 
   Future<void> updateUserToken(String token) async {}
 
-  Future<List<UserData>> checkAuth(Store<AppState> store) {
+  Future<List<UserTableData>> checkAuth(Store<AppState> store) {
     return store.state.database.userDao.getUser();
   }
 }

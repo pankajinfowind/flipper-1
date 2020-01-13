@@ -2,8 +2,7 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/authentication/auth_actions.dart';
 import 'package:flipper/presentation/settings/privacy_settings_button.dart';
-import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'auth_button.dart';
@@ -47,7 +46,7 @@ class _LoginFormState extends State<_LoginForm> {
   Widget build(BuildContext context) {
     final submitCallback = () async {
       //TODO: stop faking login
-      final _user = new UserData(
+      final _user = new UserTableData(
           email: "sample@yegobox.com",
           username: "username",
           avatar: "Avatar",
@@ -60,7 +59,7 @@ class _LoginFormState extends State<_LoginForm> {
           .database
           .userDao
           .insertUser(_user);
-      StoreProvider.of<AppState>(context).dispatch(AfterLoginAction);
+      StoreProvider.of<AppState>(context).dispatch(AfterLoginAction());
       //stop faking
     };
 

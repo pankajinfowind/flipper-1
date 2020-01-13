@@ -4,7 +4,7 @@ import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
 import 'package:flipper/presentation/common/add_note_bar_header.dart';
-import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
+import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class _DashBoardState extends State<DashBoard> {
           return SafeArea(
             child: Scaffold(
               //TODO: build commonAppBar so it work for all use case
-              appBar: AddNoteBarHeader(
+              appBar: CommonAppBar(
                 title: "Add Note",
               ),
               body: Container(
@@ -65,9 +65,9 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, DashBoardViewModel>(
+    return StoreConnector<AppState, CommonViewModel>(
       distinct: true,
-      converter: DashBoardViewModel.fromStore,
+      converter: CommonViewModel.fromStore,
       // ignore: missing_return
       builder: (context, vm) {
         if (vm.hasUser) {

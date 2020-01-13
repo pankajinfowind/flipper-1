@@ -1,10 +1,10 @@
-import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
+import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class BranchList extends StatefulWidget {
-  final DashBoardViewModel vm;
+  final CommonViewModel vm;
   BranchList({Key key, this.vm}) : super(key: key);
 
   @override

@@ -20,8 +20,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   List<Business> get business;
 
-  @nullable
-  Hint get hint;
+//  @nullable
+//  Hint get hint;
 
   Database get database;
   AppState._();

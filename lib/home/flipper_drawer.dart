@@ -1,4 +1,4 @@
-import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
+import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
 import "package:flutter/material.dart";
 
@@ -8,7 +8,7 @@ import 'business_list/business_list.dart';
 enum DrawerState { CALENDAR, CHANNEL }
 
 class FlipperDrawer extends StatefulWidget {
-  final DashBoardViewModel vm;
+  final CommonViewModel vm;
 
   const FlipperDrawer({Key key, this.vm}) : super(key: key);
   @override

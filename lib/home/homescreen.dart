@@ -1,12 +1,12 @@
 import 'package:flipper/home/flipper_drawer.dart';
 import 'package:flipper/home/home_app_bar.dart';
 import 'package:flipper/home/poswidget.dart';
-import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
+import 'package:flipper/presentation/home/common_view_model.dart';
 import "package:flutter/material.dart";
 
 class HomeScreen extends StatefulWidget {
   final ValueNotifier<bool> sideOpenController;
-  final DashBoardViewModel vm;
+  final CommonViewModel vm;
   final bool showAppBar;
 
   const HomeScreen({

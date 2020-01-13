@@ -1,3 +1,4 @@
+import 'package:flipper/routes/router.gr.dart';
 import "package:flutter/material.dart";
 
 import '../theme.dart';
@@ -27,7 +28,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: <Widget>[
                 SizedBox(
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Router.navigator.pushNamed(Router.saleScreen);
+                    },
                     child: Text(
                       "No sale",
                       style: TextStyle(

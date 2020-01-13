@@ -295,6 +295,14 @@ class AppTheme {
     );
   }
 
+  static TextStyle get headerBarSale {
+    return TextStyle(
+      fontSize: 13,
+      fontFamily: fontFamilyEdmondsansMedium,
+      color: colorTextEnabled,
+    );
+  }
+
   static TextStyle get appBarTitle2TextStyle {
     return TextStyle(
       fontSize: 16,

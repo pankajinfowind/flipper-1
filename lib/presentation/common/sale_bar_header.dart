@@ -1,18 +1,13 @@
-import 'package:flipper/domain/redux/app_state.dart';
-import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/theme.dart';
-import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter/material.dart';
 
-class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SaleBarHeader extends StatelessWidget implements PreferredSizeWidget {
   final Widget _action;
   final Widget _leftAction;
   final String _title;
   final String _subtitle;
 
-  //TODO: build commonAppBar so it work for all use case
-  const CommonAppBar({
+  const SaleBarHeader({
     Widget action,
     Widget leftAction,
     @required String title,
@@ -56,8 +51,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                           icon: Icon(Icons.close),
                           iconSize: 40,
                           onPressed: () {
-                            StoreProvider.of<AppState>(context)
-                                .dispatch(OnBottomSheetClosed());
                             Navigator.of(context).pop();
                           }),
                       SizedBox(
@@ -67,8 +60,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
                             style: _subtitle == null
-                                ? AppTheme.appBarTitleTextStyle
-                                : AppTheme.appBarTitle2TextStyle,
+                                ? AppTheme.headerBarSale
+                                : AppTheme.headerBarSale,
                           ),
                         ),
                       ),
@@ -76,6 +69,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                         width: 160,
                         height: 60,
                       ),
+                      //TODO: merge this sale_bar_header with add_note_bar_header as the only uncommon thing is the bellow line.
                       SizedBox(
                         height: 52,
                         child: Container(

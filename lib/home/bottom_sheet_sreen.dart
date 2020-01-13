@@ -1,4 +1,4 @@
-import 'package:flipper/presentation/common/common_app_bar.dart';
+import 'package:flipper/presentation/common/add_note_bar_header.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetScreen extends StatefulWidget {
@@ -12,7 +12,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(
+      appBar: AddNoteBarHeader(
         title: "Add Note",
       ),
       body: Row(

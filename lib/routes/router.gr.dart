@@ -11,12 +11,14 @@ import 'package:flipper/presentation/splash/splash_screen.dart';
 import 'package:flipper/presentation/home/dash_board.dart';
 import 'package:flipper/presentation/login/loginscreen.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
+import 'package:flipper/home/sale_screen.dart';
 
 class Router {
   static const splashScreen = '/';
   static const dashboard = '/dashboard';
   static const login = '/login';
   static const bottom = '/bottom';
+  static const saleScreen = '/saleScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -54,6 +56,16 @@ class Router {
         final typedArgs = args as Key;
         return MaterialPageRoute(
           builder: (_) => BottomSheetScreen(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.saleScreen:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => SaleScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

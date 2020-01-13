@@ -3,7 +3,7 @@ import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
-import 'package:flipper/presentation/common/common_app_bar.dart';
+import 'package:flipper/presentation/common/add_note_bar_header.dart';
 import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +33,7 @@ class _DashBoardState extends State<DashBoard> {
           return SafeArea(
             child: Scaffold(
               //TODO: build commonAppBar so it work for all use case
-              appBar: CommonAppBar(
+              appBar: AddNoteBarHeader(
                 title: "Add Note",
               ),
               body: Container(

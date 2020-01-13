@@ -27,9 +27,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: true,
+      top: false,
       child: Container(
-        height: 200,
+        height: 180,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -106,5 +106,5 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(AppTheme.appBarSize * 1.2);
+  Size get preferredSize => Size.fromHeight(AppTheme.appBarSize * 0.8);
 }

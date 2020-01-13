@@ -1,11 +1,8 @@
-import 'package:flipper/domain/redux/app_state.dart';
-import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/widget/calculator-buttons.dart';
-import 'package:flipper/model/sheet.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 class KeyPadWidget extends StatefulWidget {
   KeyPadWidget({Key key}) : super(key: key);
@@ -78,11 +75,7 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
                 ),
                 leading: FlatButton(
                   onPressed: () {
-                    final sheet = Sheets((u) => u
-                      ..name = "ADDNOTE"
-                      ..type = Type.ADDNOTE);
-                    StoreProvider.of<AppState>(context)
-                        .dispatch(OnBottomSheetChanged(sheet: sheet));
+                    Router.navigator.pushNamed(Router.bottom);
                   },
                   child: Text(
                     "Add a note",

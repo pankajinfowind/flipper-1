@@ -5,6 +5,7 @@ import 'package:flipper/home/slide_out_screen.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/dashboard_viewmodel.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -82,11 +83,11 @@ class _DashBoardState extends State<DashBoard> {
             ),
           );
           if (vm.hasSheet) {
-            WidgetsBinding.instance
-                .addPostFrameCallback((_) => _showBottomSheet());
-            //clear the hasSheet immediately so on focus of textInput it does not attempt to rebuild it again.
-            //TODO: make another reducer for OnBottomSheetClosed to reflect what is being done here.
-            StoreProvider.of<AppState>(context).dispatch(OnBottomSheetClosed());
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => Router.navigator.pushNamed(Router.bottom));
+//            WidgetsBinding.instance
+//                .addPostFrameCallback((_) => _showBottomSheet());
+//            StoreProvider.of<AppState>(context).dispatch(OnBottomSheetClosed());
           }
           return we;
         }

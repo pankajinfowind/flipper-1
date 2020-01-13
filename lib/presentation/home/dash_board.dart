@@ -3,7 +3,7 @@ import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
-import 'package:flipper/presentation/common/add_note_bar_header.dart';
+import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/cupertino.dart';

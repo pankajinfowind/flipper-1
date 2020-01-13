@@ -1,5 +1,5 @@
 import 'package:flipper/flipper_localization.dart';
-import 'package:flipper/presentation/common/add_note_bar_header.dart';
+import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/settings/privacy_settings_button.dart';
 import "package:flutter/material.dart";
 

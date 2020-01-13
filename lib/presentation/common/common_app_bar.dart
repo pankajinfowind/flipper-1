@@ -12,6 +12,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double _headerMultiplier;
   final double _positioningActionButton;
 
+  final double _bottomSpacer;
+
   const CommonAppBar({
     Widget action,
     Widget leftAction,
@@ -21,6 +23,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     IconData icon,
     double multi,
     double positioningActionButton,
+    double bottomSpacer,
     Key key,
   })  : _action = action,
         _leftAction = leftAction,
@@ -30,6 +33,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         _icon = icon,
         _headerMultiplier = multi,
         _positioningActionButton = positioningActionButton,
+        _bottomSpacer = bottomSpacer,
         super(key: key);
 
   @override
@@ -37,7 +41,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       top: false,
       child: Container(
-        height: 180,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -110,10 +113,12 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 replacement: _leftAction ?? SizedBox.shrink(),
               ),
             ),
-            Container(
-              width: 200.0, // Minimum size of a flat button
+            Center(
               child: _action,
             ),
+            Container(
+              height: _bottomSpacer,
+            )
           ],
         ),
       ),

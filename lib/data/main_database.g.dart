@@ -59,7 +59,7 @@ class UserData extends DataClass implements Insertable<UserData> {
   @override
   Map<String, dynamic> toJson(
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return {
+    return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'username': serializer.toJson<String>(username),
       'status': serializer.toJson<String>(status),
@@ -135,7 +135,7 @@ class UserData extends DataClass implements Insertable<UserData> {
                   $mrjc(refreshToken.hashCode,
                       $mrjc(email.hashCode, avatar.hashCode)))))));
   @override
-  bool operator ==(other) =>
+  bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is UserData &&
           other.id == this.id &&
@@ -404,7 +404,7 @@ class TokenData extends DataClass implements Insertable<TokenData> {
   @override
   Map<String, dynamic> toJson(
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return {
+    return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'token': serializer.toJson<String>(token),
     };
@@ -435,7 +435,7 @@ class TokenData extends DataClass implements Insertable<TokenData> {
   @override
   int get hashCode => $mrjf($mrjc(id.hashCode, token.hashCode));
   @override
-  bool operator ==(other) =>
+  bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is TokenData && other.id == this.id && other.token == this.token);
 }

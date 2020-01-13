@@ -35,7 +35,18 @@ class _DashBoardState extends State<DashBoard> {
               appBar: CommonAppBar(
                 title: "Add Note",
               ),
-              body: AddNoteWidget(),
+              body: Container(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextFormField(
+                        decoration:
+                            InputDecoration(hintText: 'Enter a search term'),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           );
         })
@@ -81,17 +92,5 @@ class _DashBoardState extends State<DashBoard> {
         }
       },
     );
-  }
-}
-
-class AddNoteWidget extends StatelessWidget {
-  const AddNoteWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Container();
   }
 }

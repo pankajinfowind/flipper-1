@@ -1,10 +1,7 @@
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/business/business_middleware.dart';
-import 'package:flipper/presentation/home/dash_board.dart';
-import 'package:flipper/presentation/login/loginscreen.dart';
-import 'package:flipper/presentation/splash/splash_screen.dart';
-import 'package:flipper/routes.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -49,29 +46,19 @@ class _FlipperAppState extends State<FlipperApp> {
     return StoreProvider(
       store: store,
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: localizationsDelegates,
-        supportedLocales: [
-          const Locale("de", "DE"),
-          const Locale("en", "EN"),
-          const Locale("pt_BR", "PT"),
-          const Locale("rw", "RW"),
-        ],
-        title: "Flipper",
-        navigatorKey: _navigatorKey,
-        theme: AppTheme.theme,
-        routes: {
-          Routes.login: (context) {
-            return LoginScreen();
-          },
-          Routes.splash: (context) {
-            return SplashScreen();
-          },
-          Routes.dashboard: (context) {
-            return DashBoard();
-          }
-        },
-      ),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: localizationsDelegates,
+          supportedLocales: [
+            const Locale("de", "DE"),
+            const Locale("en", "EN"),
+            const Locale("pt_BR", "PT"),
+            const Locale("rw", "RW"),
+          ],
+          title: "Flipper",
+          theme: AppTheme.theme,
+          navigatorKey: Router.navigatorKey,
+          initialRoute: Router.splashScreen,
+          onGenerateRoute: Router.onGenerateRoute),
     );
   }
 }

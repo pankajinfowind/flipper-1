@@ -4,6 +4,7 @@ import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/logger.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -95,7 +96,7 @@ void Function(
     }
     userRepository.checkAuth(store).listen((user) {
       if (user == null || user.length == 0) {
-        navigatorKey.currentState.pushReplacementNamed(Routes.login);
+        Router.navigator.pushNamed(Router.login);
         return;
       } else {
         //TODO: check if we have business user then fire getting branch dummy data
@@ -142,9 +143,8 @@ void Function(
 
         store.dispatch(OnAuthenticated(user: _user));
         store.dispatch(ConnectToDataSource());
-        navigatorKey.currentState.pushReplacementNamed(Routes
-            .dashboard); //TODO: I think I don't need to call this line here
 
+        Router.navigator.pushNamed(Router.dashboard);
       }
     });
   };

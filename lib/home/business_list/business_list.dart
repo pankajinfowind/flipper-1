@@ -129,6 +129,7 @@ class _BusinessListState extends State<BusinessList> {
 
   void _openUserAccount(BuildContext context) {
     final uid = StoreProvider.of<AppState>(context).state.user.id;
+    //FIXME: should use Router.navigator.pushNamed(Router.dashboard); to navigate ASAP;
     Navigator.of(context).pushNamed(Routes.user, arguments: uid);
   }
 }

@@ -31,8 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     children: <Widget>[
                       Positioned(
                         top: constraints.maxHeight / 3.0,
-                        left: MediaQuery.of(context).size.width /
-                            2.5, //TODO: doubting.
+                        left: MediaQuery.of(context).size.width / 2.5,
                         child: Center(
                           child: Column(
                             children: <Widget>[

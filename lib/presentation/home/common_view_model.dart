@@ -24,7 +24,7 @@ abstract class CommonViewModel
   }
 
   static bool _hasAction(Store<AppState> store) {
-    return store.state.user != null;
+    return store.state.action != null;
   }
 
   static bool _hasSheet(Store<AppState> store) {

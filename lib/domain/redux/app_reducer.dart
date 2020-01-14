@@ -5,19 +5,17 @@ import 'package:flipper/domain/redux/user/user_reducer.dart';
 import 'package:redux/redux.dart';
 
 import '../app_actions.dart';
+import 'app_actions/app_actions_reducer.dart';
 import 'app_state.dart';
 
 final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, OnProductLoaded>(_onUserLoaded),
-  TypedReducer<AppState, OnUser>(_onUser),
   ...authReducers,
   ...businessReducer,
   ...userReducers,
-  ...bottomSheetReducer
+  ...bottomSheetReducer,
+  ...appActionReducer
 ]);
 AppState _onUserLoaded(AppState state, OnProductLoaded action) {
-//  return state.rebuild((a)=>...)
-}
-AppState _onUser(AppState state, OnUser action) {
-//  return state.rebuild((a)=>...)
+//  return state.rebuild((a)=>a..user =>action.userReducers)
 }

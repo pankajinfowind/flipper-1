@@ -1,5 +1,3 @@
-import 'package:flipper/home/widget/loader.dart';
-import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -26,6 +24,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   final Widget _action;
+  final Widget _actionButton;
   final Widget _leftAction;
   final String _title;
   final String _subtitle;
@@ -37,6 +36,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const CommonAppBar({
     Widget action,
+    Widget actionButton,
     Widget leftAction,
     @required String title,
     String subtitle,
@@ -47,6 +47,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     double bottomSpacer,
     Key key,
   })  : _action = action,
+        _actionButton = actionButton,
         _leftAction = leftAction,
         _title = title,
         _subtitle = subtitle,
@@ -117,39 +118,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                         child: SizedBox(
                           height: 52,
                           child: Container(
-                              color: Colors.blue,
-                              child: FlatButton(
-                                onPressed: () {
-                                  Future.delayed(Duration(seconds: 5)).then(
-                                      (_) => {
-                                            Router.navigator.pushNamed(Router
-                                                .settingUpApplicationScreen)
-                                          });
-                                  showDialog<void>(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext dialogContext) {
-                                      return Dialog(
-                                        backgroundColor: Colors.transparent,
-                                        elevation: 0,
-                                        child: Material(
-                                          type: MaterialType.transparency,
-                                          child: Loader(
-                                            radius: 60.0,
-                                            dotRadius: 6.0,
-                                          ), //put my Loader here
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Text(
-                                  _actionTitle ?? "Done",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )),
+                            color: Colors.blue,
+                            child: _actionButton,
+                          ),
                         ),
                       ),
                     ],

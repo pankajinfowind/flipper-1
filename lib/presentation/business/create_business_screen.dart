@@ -23,7 +23,6 @@ class CreateBusinessScreen extends StatefulWidget {
 class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
   final _formKey = GlobalKey<FormState>();
   Store<AppState> store;
-  Position _currentPosition;
 
   Position position;
   _getCurrentLocation() async {
@@ -67,6 +66,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
             //do validation
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
+              print("valid we can submit and continue");
               return Container();
             }
             return Container();
@@ -103,79 +103,80 @@ class CreateBusinessForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-      child: Form(
-        child: Column(
-          key: _formKey,
-          children: <Widget>[
-            Text("ACCOUNT INFORMATION"),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Container(
-                width: 300,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Business name";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {},
-                  decoration: InputDecoration(hintText: "Business name"),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Container(
-                width: 300,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Email is required";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {},
-                  decoration: InputDecoration(hintText: "Email"),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Container(
-                width: 300,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Password should be given";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {},
-                  decoration: InputDecoration(hintText: "Password"),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(55, 20, 0, 0),
-              child: Row(
-                children: <Widget>[
-                  Flexible(
-                    child: Text(
-                        "Accept Flipper's Seller Agreement and Privacy Policy:" +
-                            position.toString()),
+    return Wrap(
+      children: <Widget>[
+        Form(
+          child: Column(
+            key: _formKey,
+            children: <Widget>[
+              Text("ACCOUNT INFORMATION"),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Container(
+                  width: 300,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Business name";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {},
+                    decoration: InputDecoration(hintText: "Business name"),
                   ),
-                  Radio(
-                    value: 1,
-                  )
-                ],
+                ),
               ),
-            )
-          ],
-        ),
-      ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Container(
+                  width: 300,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Email is required";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {},
+                    decoration: InputDecoration(hintText: "Email"),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Container(
+                  width: 300,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Password should be given";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {},
+                    decoration: InputDecoration(hintText: "Password"),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(55, 20, 0, 0),
+                child: Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                          "Accept Flipper's Seller Agreement and Privacy Policy:" +
+                              position.toString()),
+                    ),
+                    Radio(
+                      value: 1,
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 }

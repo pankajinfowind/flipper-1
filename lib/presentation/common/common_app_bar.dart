@@ -3,6 +3,27 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
+  showOverlay(BuildContext context) async {
+    OverlayState overlayState = Overlay.of(context);
+    OverlayEntry overlayEntry = OverlayEntry(
+//        opaque: true,
+        builder: (context) => Material(
+              type: MaterialType.transparency,
+              child: Center(
+                  // Aligns the container to center
+                  child: Container(
+                // A simplified version of dialog.
+                width: 100.0,
+                height: 56.0,
+                color: Colors.green,
+                child: Text('aurole'),
+              )),
+            ));
+    overlayState.insert(overlayEntry);
+    await Future.delayed(Duration(seconds: 5));
+    overlayEntry.remove();
+  }
+
   final Widget _action;
   final Widget _leftAction;
   final String _title;
@@ -98,6 +119,17 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                           child: Container(
                               color: Colors.blue,
                               child: FlatButton(
+                                onPressed: () {
+                                  showDialog<void>(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext dialogContext) {
+                                      return Dialog(
+                                        child: Text("we got it covered"),
+                                      );
+                                    },
+                                  );
+                                },
                                 child: Text(
                                   _actionTitle ?? "Done",
                                   textAlign: TextAlign.center,

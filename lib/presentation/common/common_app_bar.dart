@@ -1,4 +1,5 @@
 import 'package:flipper/home/widget/loader.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -7,7 +8,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   showOverlay(BuildContext context) async {
     OverlayState overlayState = Overlay.of(context);
     OverlayEntry overlayEntry = OverlayEntry(
-//        opaque: true,
         builder: (context) => Material(
               type: MaterialType.transparency,
               child: Center(
@@ -121,6 +121,11 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                               color: Colors.blue,
                               child: FlatButton(
                                 onPressed: () {
+                                  Future.delayed(Duration(seconds: 5)).then(
+                                      (_) => {
+                                            Router.navigator.pushNamed(Router
+                                                .settingUpApplicationScreen)
+                                          });
                                   showDialog<void>(
                                     context: context,
                                     barrierDismissible: false,

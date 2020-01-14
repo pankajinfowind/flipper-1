@@ -12,6 +12,7 @@ import 'package:flipper/presentation/home/dash_board.dart';
 import 'package:flipper/presentation/splash/aftersplash.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/sale_screen.dart';
+import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
 import 'package:auto_route/transitions_builders.dart';
 
@@ -21,6 +22,7 @@ class Router {
   static const afterSplash = '/afterSplash';
   static const bottom = '/bottom';
   static const saleScreen = '/saleScreen';
+  static const settingUpApplicationScreen = '/settingUpApplicationScreen';
   static const createBusinessScreen = '/createBusinessScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
@@ -70,6 +72,12 @@ class Router {
         final typedArgs = args as Key;
         return MaterialPageRoute(
           builder: (_) => SaleScreen(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.settingUpApplicationScreen:
+        return MaterialPageRoute(
+          builder: (_) => SettingUpApplicationScreen(),
           settings: settings,
           fullscreenDialog: true,
         );

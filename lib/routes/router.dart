@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/transitions_builders.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/sale_screen.dart';
+import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
 import 'package:flipper/presentation/home/dash_board.dart';
 import 'package:flipper/presentation/splash/aftersplash.dart';
@@ -19,6 +20,8 @@ class $Router {
   @MaterialRoute(fullscreenDialog: true)
   SaleScreen saleScreen;
 
+  @MaterialRoute(fullscreenDialog: true)
+  SettingUpApplicationScreen settingUpApplicationScreen;
   //TODO: work on sliding left animation later.
   @CustomRoute(
       transitionsBuilder: TransitionsBuilders.slideLeft,

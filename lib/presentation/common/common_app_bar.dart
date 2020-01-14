@@ -1,3 +1,4 @@
+import 'package:flipper/home/widget/loader.dart';
 import 'package:flipper/theme.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -125,7 +126,15 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     barrierDismissible: false,
                                     builder: (BuildContext dialogContext) {
                                       return Dialog(
-                                        child: Text("we got it covered"),
+                                        backgroundColor: Colors.transparent,
+                                        elevation: 0,
+                                        child: Material(
+                                          type: MaterialType.transparency,
+                                          child: Loader(
+                                            radius: 60.0,
+                                            dotRadius: 6.0,
+                                          ), //put my Loader here
+                                        ),
                                       );
                                     },
                                   );

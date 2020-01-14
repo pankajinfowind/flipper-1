@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flipper/util/HexColor.dart';
 import "package:flutter/material.dart";
 
 class Loader extends StatefulWidget {
@@ -94,7 +95,8 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
                     offset: Offset(0.0, 0.0),
                     child: Dot(
                       radius: radius,
-                      color: Colors.black12,
+                      color: HexColor(
+                          "#955be9"), //TODO: make inner not rotate so our logo stay in position...
                     ),
                   ),
                   Transform.translate(
@@ -205,6 +207,7 @@ class Dot extends StatelessWidget {
       child: Container(
         width: radius,
         height: radius,
+        child: Image.asset("assets/graphics/logo.png"),
         decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       ),
     );

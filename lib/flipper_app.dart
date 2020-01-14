@@ -1,6 +1,7 @@
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/business/business_middleware.dart';
+import 'package:flipper/domain/redux/permission/permission_middleware.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,8 @@ class _FlipperAppState extends State<FlipperApp> {
       initialState: AppState.init(),
       middleware:
           createAuthenticationMiddleware(userRepo, businessRepo, _navigatorKey)
-            ..addAll(createBusinessMiddleware(_navigatorKey)),
+            ..addAll(createBusinessMiddleware(_navigatorKey))
+            ..addAll(permissionMiddleware(_navigatorKey)),
     );
     store.dispatch(
       VerifyAuthenticationState(),

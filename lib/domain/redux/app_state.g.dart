@@ -12,6 +12,10 @@ class _$AppState extends AppState {
   @override
   final Sheets sheet;
   @override
+  final AppActions action;
+  @override
+  final Permission permissions;
+  @override
   final List<Branch> branches;
   @override
   final List<Business> business;
@@ -22,7 +26,13 @@ class _$AppState extends AppState {
       (new AppStateBuilder()..update(updates)).build();
 
   _$AppState._(
-      {this.user, this.sheet, this.branches, this.business, this.database})
+      {this.user,
+      this.sheet,
+      this.action,
+      this.permissions,
+      this.branches,
+      this.business,
+      this.database})
       : super._() {
     if (branches == null) {
       throw new BuiltValueNullFieldError('AppState', 'branches');
@@ -45,6 +55,8 @@ class _$AppState extends AppState {
     return other is AppState &&
         user == other.user &&
         sheet == other.sheet &&
+        action == other.action &&
+        permissions == other.permissions &&
         branches == other.branches &&
         business == other.business &&
         database == other.database;
@@ -53,7 +65,13 @@ class _$AppState extends AppState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, user.hashCode), sheet.hashCode), branches.hashCode),
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, user.hashCode), sheet.hashCode),
+                        action.hashCode),
+                    permissions.hashCode),
+                branches.hashCode),
             business.hashCode),
         database.hashCode));
   }
@@ -63,6 +81,8 @@ class _$AppState extends AppState {
     return (newBuiltValueToStringHelper('AppState')
           ..add('user', user)
           ..add('sheet', sheet)
+          ..add('action', action)
+          ..add('permissions', permissions)
           ..add('branches', branches)
           ..add('business', business)
           ..add('database', database))
@@ -80,6 +100,16 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   SheetsBuilder _sheet;
   SheetsBuilder get sheet => _$this._sheet ??= new SheetsBuilder();
   set sheet(SheetsBuilder sheet) => _$this._sheet = sheet;
+
+  AppActionsBuilder _action;
+  AppActionsBuilder get action => _$this._action ??= new AppActionsBuilder();
+  set action(AppActionsBuilder action) => _$this._action = action;
+
+  PermissionBuilder _permissions;
+  PermissionBuilder get permissions =>
+      _$this._permissions ??= new PermissionBuilder();
+  set permissions(PermissionBuilder permissions) =>
+      _$this._permissions = permissions;
 
   List<Branch> _branches;
   List<Branch> get branches => _$this._branches;
@@ -99,6 +129,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _user = _$v.user?.toBuilder();
       _sheet = _$v.sheet?.toBuilder();
+      _action = _$v.action?.toBuilder();
+      _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
       _business = _$v.business;
       _database = _$v.database;
@@ -128,6 +160,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               user: _user?.build(),
               sheet: _sheet?.build(),
+              action: _action?.build(),
+              permissions: _permissions?.build(),
               branches: branches,
               business: business,
               database: database);
@@ -138,6 +172,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _user?.build();
         _$failedField = 'sheet';
         _sheet?.build();
+        _$failedField = 'action';
+        _action?.build();
+        _$failedField = 'permissions';
+        _permissions?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

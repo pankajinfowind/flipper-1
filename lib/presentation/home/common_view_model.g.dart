@@ -12,14 +12,24 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final bool hasSheet;
   @override
+  final bool hasAction;
+  @override
   final List<Branch> branches;
+  @override
+  final AppActions appAction;
   @override
   final Hint hint;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
 
-  _$CommonViewModel._({this.hasUser, this.hasSheet, this.branches, this.hint})
+  _$CommonViewModel._(
+      {this.hasUser,
+      this.hasSheet,
+      this.hasAction,
+      this.branches,
+      this.appAction,
+      this.hint})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -27,8 +37,14 @@ class _$CommonViewModel extends CommonViewModel {
     if (hasSheet == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasSheet');
     }
+    if (hasAction == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'hasAction');
+    }
     if (branches == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'branches');
+    }
+    if (appAction == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'appAction');
     }
     if (hint == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hint');
@@ -49,15 +65,21 @@ class _$CommonViewModel extends CommonViewModel {
     return other is CommonViewModel &&
         hasUser == other.hasUser &&
         hasSheet == other.hasSheet &&
+        hasAction == other.hasAction &&
         branches == other.branches &&
+        appAction == other.appAction &&
         hint == other.hint;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode),
-            branches.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode),
+                    hasAction.hashCode),
+                branches.hashCode),
+            appAction.hashCode),
         hint.hashCode));
   }
 
@@ -66,7 +88,9 @@ class _$CommonViewModel extends CommonViewModel {
     return (newBuiltValueToStringHelper('CommonViewModel')
           ..add('hasUser', hasUser)
           ..add('hasSheet', hasSheet)
+          ..add('hasAction', hasAction)
           ..add('branches', branches)
+          ..add('appAction', appAction)
           ..add('hint', hint))
         .toString();
   }
@@ -84,9 +108,18 @@ class CommonViewModelBuilder
   bool get hasSheet => _$this._hasSheet;
   set hasSheet(bool hasSheet) => _$this._hasSheet = hasSheet;
 
+  bool _hasAction;
+  bool get hasAction => _$this._hasAction;
+  set hasAction(bool hasAction) => _$this._hasAction = hasAction;
+
   List<Branch> _branches;
   List<Branch> get branches => _$this._branches;
   set branches(List<Branch> branches) => _$this._branches = branches;
+
+  AppActionsBuilder _appAction;
+  AppActionsBuilder get appAction =>
+      _$this._appAction ??= new AppActionsBuilder();
+  set appAction(AppActionsBuilder appAction) => _$this._appAction = appAction;
 
   HintBuilder _hint;
   HintBuilder get hint => _$this._hint ??= new HintBuilder();
@@ -98,7 +131,9 @@ class CommonViewModelBuilder
     if (_$v != null) {
       _hasUser = _$v.hasUser;
       _hasSheet = _$v.hasSheet;
+      _hasAction = _$v.hasAction;
       _branches = _$v.branches;
+      _appAction = _$v.appAction?.toBuilder();
       _hint = _$v.hint?.toBuilder();
       _$v = null;
     }
@@ -126,11 +161,15 @@ class CommonViewModelBuilder
           new _$CommonViewModel._(
               hasUser: hasUser,
               hasSheet: hasSheet,
+              hasAction: hasAction,
               branches: branches,
+              appAction: appAction.build(),
               hint: hint.build());
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'appAction';
+        appAction.build();
         _$failedField = 'hint';
         hint.build();
       } catch (e) {

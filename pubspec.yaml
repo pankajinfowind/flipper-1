@@ -35,6 +35,8 @@ dependencies:
   path:
   json_annotation: ^3.0.0
   cached_network_image: 1.1.3
+  geolocator: ^5.2.0
+  permission_handler: ^4.0.0
   flutter_circular_chart: ^0.1.0
 #  pusher_websocket_flutter: ^0.1.1
 #  vibration: 1.2.2 #error

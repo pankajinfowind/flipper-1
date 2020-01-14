@@ -5,7 +5,7 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
-  showOverlay(BuildContext context) async {
+  showTour(BuildContext context) async {
     OverlayState overlayState = Overlay.of(context);
     OverlayEntry overlayEntry = OverlayEntry(
         builder: (context) => Material(
@@ -33,7 +33,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final IconData _icon;
   final double _headerMultiplier;
   final double _positioningActionButton;
-
   final double _bottomSpacer;
 
   const CommonAppBar({

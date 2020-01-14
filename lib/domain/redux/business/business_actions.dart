@@ -5,6 +5,17 @@ import 'package:flutter/material.dart';
 class ShouldLoadBusiness {}
 
 @immutable
+class CreateBusiness {
+  final Business business;
+
+  CreateBusiness(this.business);
+  @override
+  String toString() {
+    return "CreateBusiness{CreateBusiness: $business}";
+  }
+}
+
+@immutable
 class OnBusinessLoaded {
   final List<Business> business;
 

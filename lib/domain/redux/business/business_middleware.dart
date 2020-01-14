@@ -10,6 +10,7 @@ List<Middleware<AppState>> createBusinessMiddleware(
 ) {
   return [
     TypedMiddleware<AppState, ShouldLoadBusiness>(_business(navigatorKey)),
+    TypedMiddleware<AppState, CreateBusiness>(_createBusiness(navigatorKey)),
   ];
 }
 
@@ -20,5 +21,14 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
   return (store, action, next) async {
     next(action);
     //TODO: listen for form submitted and talk to a corresponding repository and dispatch createdBusiness....
+  };
+}
+
+void Function(Store<AppState> store, dynamic action, NextDispatcher next)
+    _createBusiness(
+  GlobalKey<NavigatorState> navigatorKey,
+) {
+  return (store, action, next) async {
+    next(action);
   };
 }

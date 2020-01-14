@@ -18,7 +18,9 @@ class _$AppState extends AppState {
   @override
   final List<Branch> branches;
   @override
-  final List<Business> business;
+  final List<Business> businesses;
+  @override
+  final Business business;
   @override
   final Database database;
 
@@ -31,6 +33,7 @@ class _$AppState extends AppState {
       this.action,
       this.permissions,
       this.branches,
+      this.businesses,
       this.business,
       this.database})
       : super._() {
@@ -58,6 +61,7 @@ class _$AppState extends AppState {
         action == other.action &&
         permissions == other.permissions &&
         branches == other.branches &&
+        businesses == other.businesses &&
         business == other.business &&
         database == other.database;
   }
@@ -68,10 +72,12 @@ class _$AppState extends AppState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, user.hashCode), sheet.hashCode),
-                        action.hashCode),
-                    permissions.hashCode),
-                branches.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, user.hashCode), sheet.hashCode),
+                            action.hashCode),
+                        permissions.hashCode),
+                    branches.hashCode),
+                businesses.hashCode),
             business.hashCode),
         database.hashCode));
   }
@@ -84,6 +90,7 @@ class _$AppState extends AppState {
           ..add('action', action)
           ..add('permissions', permissions)
           ..add('branches', branches)
+          ..add('businesses', businesses)
           ..add('business', business)
           ..add('database', database))
         .toString();
@@ -115,9 +122,13 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   List<Branch> get branches => _$this._branches;
   set branches(List<Branch> branches) => _$this._branches = branches;
 
-  List<Business> _business;
-  List<Business> get business => _$this._business;
-  set business(List<Business> business) => _$this._business = business;
+  List<Business> _businesses;
+  List<Business> get businesses => _$this._businesses;
+  set businesses(List<Business> businesses) => _$this._businesses = businesses;
+
+  BusinessBuilder _business;
+  BusinessBuilder get business => _$this._business ??= new BusinessBuilder();
+  set business(BusinessBuilder business) => _$this._business = business;
 
   Database _database;
   Database get database => _$this._database;
@@ -132,7 +143,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _action = _$v.action?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
-      _business = _$v.business;
+      _businesses = _$v.businesses;
+      _business = _$v.business?.toBuilder();
       _database = _$v.database;
       _$v = null;
     }
@@ -163,7 +175,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               action: _action?.build(),
               permissions: _permissions?.build(),
               branches: branches,
-              business: business,
+              businesses: businesses,
+              business: _business?.build(),
               database: database);
     } catch (_) {
       String _$failedField;
@@ -176,6 +189,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _action?.build();
         _$failedField = 'permissions';
         _permissions?.build();
+
+        _$failedField = 'business';
+        _business?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

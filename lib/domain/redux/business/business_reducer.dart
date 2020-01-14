@@ -7,7 +7,7 @@ final businessReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, OnCreatingBusiness>(_onCreatingBusiness),
 ];
 AppState _onAuthenticated(AppState state, OnBusinessLoaded action) {
-  return state.rebuild((a) => a..business = action.business);
+  return state.rebuild((a) => a..businesses = action.business);
 }
 
 AppState _onCreatingBusiness(AppState state, OnCreatingBusiness action) {

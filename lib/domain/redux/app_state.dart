@@ -25,7 +25,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   List<Branch> get branches;
 
   @nullable
-  List<Business> get business;
+  List<Business> get businesses;
+
+  @nullable
+  Business get business;
 
 //  @nullable
 //  Hint get hint;
@@ -36,7 +39,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   factory AppState.init() => AppState((a) => a
     ..database = Database()
-    ..business = List<Business>()
+    ..businesses = List<Business>()
     ..branches = List<Branch>());
 
   AppState clear() {

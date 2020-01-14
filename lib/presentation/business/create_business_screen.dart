@@ -12,6 +12,8 @@ import 'package:geolocator/geolocator.dart';
 class Business {
   String name;
   String password;
+  String agreeTerms;
+  String email;
 }
 
 class CreateBusinessScreen extends StatefulWidget {
@@ -23,7 +25,7 @@ class CreateBusinessScreen extends StatefulWidget {
 
 class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
   final _formKey = GlobalKey<FormState>();
-
+  final Business business = Business();
   Position position;
   _getCurrentLocation() async {
     var geolocator = Geolocator();
@@ -95,7 +97,9 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                             }
                             return null;
                           },
-                          onSaved: (value) {},
+                          onSaved: (name) {
+                            business.name = name;
+                          },
                           decoration:
                               InputDecoration(hintText: "Business name"),
                         ),
@@ -112,7 +116,9 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                             }
                             return null;
                           },
-                          onSaved: (value) {},
+                          onSaved: (email) {
+                            business.email = email;
+                          },
                           decoration: InputDecoration(hintText: "Email"),
                         ),
                       ),
@@ -122,13 +128,16 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                       child: Container(
                         width: 300,
                         child: TextFormField(
+                          style: TextStyle(color: Colors.black),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Password should be given";
                             }
                             return null;
                           },
-                          onSaved: (value) {},
+                          onSaved: (password) {
+                            business.password = password;
+                          },
                           decoration: InputDecoration(hintText: "Password"),
                         ),
                       ),
@@ -142,19 +151,25 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                                 "Accept Flipper's Seller Agreement and Privacy Policy:" +
                                     position.toString()),
                           ),
+                          //TODO: make this radio when clicked to show that.
                           Radio(
-                            value: 1,
+                            activeColor: Colors.red,
+                            focusColor: Colors.red,
+                            onChanged: (agreeTerm) {
+                              business.agreeTerms = agreeTerm;
+                            },
+                            value: "1",
                           )
                         ],
                       ),
                     ),
                     Visibility(
-                      visible: true,
+                      visible: false,
                       child: FlatButton(
                         child: Text("invisible button"),
                         onPressed: vm.hasAction ? _handleFormSubmit() : null,
                       ),
-                    ),
+                    )
                   ],
                 ),
               )
@@ -163,22 +178,24 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
         );
       },
     );
-    //store.dispatch(OnBusinessLoaded(business: businessList));
-    //TODO: On Creating a business then create one branch default and set it as hint then go to dashboard..
-    //TODO: now fire the branches to store //   //  store.dispatch(OnBranchLoaded(branches: branchList)); get branch list from localDB
-    //TODO: make hint comes from a default branch
-    //      final _hint = Hint((h) => h
-    //        ..name = "Nyamirambo Branch"
-    //        ..type = HintType.Branch);
-    //      store.dispatch(OnHintLoaded(hint: _hint));
   }
 
   _handleFormSubmit() {
+    print(business.agreeTerms);
     //todo: reset app action
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
     }
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-    print("we got the button here");
+    //store.dispatch(OnBusinessLoaded(business: businessList));
+    //TODO: On Creating a business then create one branch default and set it as hint then go to dashboard..
+    //TODO: now fire the branches to store //   //  store.dispatch(OnBranchLoaded(branches: branchList)); get branch list from localDB
+    //TODO: make hint comes from a default branch
+    //todo:      final _hint = Hint((h) => h
+    // todo:       ..name = "Nyamirambo Branch"
+    //todo:       ..type = HintType.Branch);
+    //todo:      store.dispatch(OnHintLoaded(hint: _hint));
+
+    StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
   }
 }

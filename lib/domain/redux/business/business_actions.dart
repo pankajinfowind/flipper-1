@@ -1,8 +1,9 @@
-import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flutter/material.dart';
 
 class ShouldLoadBusiness {}
+
+class BusinessCreated {}
 
 @immutable
 class CreateBusiness {
@@ -24,17 +25,5 @@ class OnBusinessLoaded {
   @override
   String toString() {
     return "OnBranchLoaded{OnHintLoaded: $business}";
-  }
-}
-
-@immutable
-class OnCreatingBusiness {
-  final AppActions action;
-
-  OnCreatingBusiness({@required this.action});
-
-  @override
-  String toString() {
-    return "OnCreatingBusiness{OnCreatingBusiness: $action}";
   }
 }

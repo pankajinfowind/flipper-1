@@ -18,6 +18,8 @@ class _$AppState extends AppState {
   @override
   final List<Branch> branches;
   @override
+  final Branch branch;
+  @override
   final List<Business> businesses;
   @override
   final Business business;
@@ -33,13 +35,11 @@ class _$AppState extends AppState {
       this.action,
       this.permissions,
       this.branches,
+      this.branch,
       this.businesses,
       this.business,
       this.database})
       : super._() {
-    if (branches == null) {
-      throw new BuiltValueNullFieldError('AppState', 'branches');
-    }
     if (database == null) {
       throw new BuiltValueNullFieldError('AppState', 'database');
     }
@@ -61,6 +61,7 @@ class _$AppState extends AppState {
         action == other.action &&
         permissions == other.permissions &&
         branches == other.branches &&
+        branch == other.branch &&
         businesses == other.businesses &&
         business == other.business &&
         database == other.database;
@@ -73,10 +74,12 @@ class _$AppState extends AppState {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, user.hashCode), sheet.hashCode),
-                            action.hashCode),
-                        permissions.hashCode),
-                    branches.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, user.hashCode), sheet.hashCode),
+                                action.hashCode),
+                            permissions.hashCode),
+                        branches.hashCode),
+                    branch.hashCode),
                 businesses.hashCode),
             business.hashCode),
         database.hashCode));
@@ -90,6 +93,7 @@ class _$AppState extends AppState {
           ..add('action', action)
           ..add('permissions', permissions)
           ..add('branches', branches)
+          ..add('branch', branch)
           ..add('businesses', businesses)
           ..add('business', business)
           ..add('database', database))
@@ -122,6 +126,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   List<Branch> get branches => _$this._branches;
   set branches(List<Branch> branches) => _$this._branches = branches;
 
+  BranchBuilder _branch;
+  BranchBuilder get branch => _$this._branch ??= new BranchBuilder();
+  set branch(BranchBuilder branch) => _$this._branch = branch;
+
   List<Business> _businesses;
   List<Business> get businesses => _$this._businesses;
   set businesses(List<Business> businesses) => _$this._businesses = businesses;
@@ -143,6 +151,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _action = _$v.action?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
+      _branch = _$v.branch?.toBuilder();
       _businesses = _$v.businesses;
       _business = _$v.business?.toBuilder();
       _database = _$v.database;
@@ -175,6 +184,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               action: _action?.build(),
               permissions: _permissions?.build(),
               branches: branches,
+              branch: _branch?.build(),
               businesses: businesses,
               business: _business?.build(),
               database: database);
@@ -189,6 +199,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _action?.build();
         _$failedField = 'permissions';
         _permissions?.build();
+
+        _$failedField = 'branch';
+        _branch?.build();
 
         _$failedField = 'business';
         _business?.build();

@@ -1,7 +1,10 @@
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/domain/redux/authentication/auth_actions.dart';
+import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/permission/permission_check.dart';
 import 'package:flipper/model/app_action.dart';
+import 'package:flipper/model/business.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
@@ -9,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:geolocator/geolocator.dart';
 
-class Business {
+class TBusiness {
   String name;
   String password;
   String agreeTerms;
@@ -25,7 +28,7 @@ class CreateBusinessScreen extends StatefulWidget {
 
 class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
   final _formKey = GlobalKey<FormState>();
-  final Business business = Business();
+  final TBusiness tBusiness = TBusiness();
   Position position;
   _getCurrentLocation() async {
     var geolocator = Geolocator();
@@ -91,6 +94,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                       child: Container(
                         width: 300,
                         child: TextFormField(
+                          style: TextStyle(color: Colors.black),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Business name";
@@ -98,10 +102,11 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                             return null;
                           },
                           onSaved: (name) {
-                            business.name = name;
+                            tBusiness.name = name;
                           },
-                          decoration:
-                              InputDecoration(hintText: "Business name"),
+                          decoration: InputDecoration(
+                              hintText: "Business name",
+                              focusColor: Colors.blue),
                         ),
                       ),
                     ),
@@ -110,6 +115,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                       child: Container(
                         width: 300,
                         child: TextFormField(
+                          style: TextStyle(color: Colors.black),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Email is required";
@@ -117,7 +123,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                             return null;
                           },
                           onSaved: (email) {
-                            business.email = email;
+                            tBusiness.email = email;
                           },
                           decoration: InputDecoration(hintText: "Email"),
                         ),
@@ -136,7 +142,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                             return null;
                           },
                           onSaved: (password) {
-                            business.password = password;
+                            tBusiness.password = password;
                           },
                           decoration: InputDecoration(hintText: "Password"),
                         ),
@@ -156,7 +162,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
                             activeColor: Colors.red,
                             focusColor: Colors.red,
                             onChanged: (agreeTerm) {
-                              business.agreeTerms = agreeTerm;
+                              tBusiness.agreeTerms = agreeTerm;
                             },
                             value: "1",
                           )
@@ -181,21 +187,16 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
   }
 
   _handleFormSubmit() {
-    print(business.agreeTerms);
-    //todo: reset app action
+    StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
     }
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-    //store.dispatch(OnBusinessLoaded(business: businessList));
-    //TODO: On Creating a business then create one branch default and set it as hint then go to dashboard..
-    //TODO: now fire the branches to store //   //  store.dispatch(OnBranchLoaded(branches: branchList)); get branch list from localDB
-    //TODO: make hint comes from a default branch
-    //todo:      final _hint = Hint((h) => h
-    // todo:       ..name = "Nyamirambo Branch"
-    //todo:       ..type = HintType.Branch);
-    //todo:      store.dispatch(OnHintLoaded(hint: _hint));
-
-    StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
+    final business = Business((b) => b
+      ..name = tBusiness.name
+      ..type = BusinessType.NORMAL);
+    StoreProvider.of<AppState>(context).dispatch(CreateBusiness(business));
+    //finally verify if all is good and go to dashboard.
+    StoreProvider.of<AppState>(context).dispatch(VerifyAuthenticationState());
   }
 }

@@ -3,13 +3,13 @@ import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:redux/redux.dart';
 
 final businessReducer = <AppState Function(AppState, dynamic)>[
-  TypedReducer<AppState, OnBusinessLoaded>(_onAuthenticated),
-  TypedReducer<AppState, OnCreatingBusiness>(_onCreatingBusiness),
+  TypedReducer<AppState, OnBusinessLoaded>(_onBusinessLoaded),
+  TypedReducer<AppState, CreateBusiness>(_onCreatingBusiness),
 ];
-AppState _onAuthenticated(AppState state, OnBusinessLoaded action) {
+AppState _onBusinessLoaded(AppState state, OnBusinessLoaded action) {
   return state.rebuild((a) => a..businesses = action.business);
 }
 
-AppState _onCreatingBusiness(AppState state, OnCreatingBusiness action) {
-  return state.rebuild((a) => a..action = action.action.toBuilder());
+AppState _onCreatingBusiness(AppState state, CreateBusiness action) {
+  return state.rebuild((a) => a..business = action.business.toBuilder());
 }

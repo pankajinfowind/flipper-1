@@ -47,7 +47,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       return;
     }
     List<UserTableData> user = await userRepository.checkAuth(store);
-    List<BusinessTableData> business = await businessRepository.get(store);
+    List<BusinessTableData> business = await businessRepository.getBusinesses(store);
     if (user == null || user.length == 0) {
       Router.navigator.pushNamed(Router.afterSplash);
       return;

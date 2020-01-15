@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flipper/data/branch.dart';
 import 'package:flipper/data/business.dart';
+import 'package:flipper/data/dao/branch_dao.dart';
 import 'package:flipper/data/dao/business_dao.dart';
 import 'package:flipper/data/token.dart';
 import 'package:flipper/data/user.dart';
@@ -26,8 +28,8 @@ LazyDatabase _openConnection() {
 }
 
 @UseMoor(
-    tables: [UserTable, TokenTable, BusinessTable],
-    daos: [UserDao, TokenDao, BusinessDao])
+    tables: [UserTable, TokenTable, BusinessTable, BranchTable],
+    daos: [UserDao, TokenDao, BusinessDao, BranchDao])
 class Database extends _$Database {
   Database() : super(_openConnection());
   @override

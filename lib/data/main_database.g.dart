@@ -546,7 +546,9 @@ class BusinessTableData extends DataClass
     implements Insertable<BusinessTableData> {
   final int id;
   final String name;
-  BusinessTableData({@required this.id, @required this.name});
+  final String email;
+  BusinessTableData(
+      {@required this.id, @required this.name, @required this.email});
   factory BusinessTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -556,6 +558,8 @@ class BusinessTableData extends DataClass
     return BusinessTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      email:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}email']),
     );
   }
   factory BusinessTableData.fromJson(Map<String, dynamic> json,
@@ -563,6 +567,7 @@ class BusinessTableData extends DataClass
     return BusinessTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      email: serializer.fromJson<String>(json['email']),
     );
   }
   @override
@@ -571,6 +576,7 @@ class BusinessTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'email': serializer.toJson<String>(email),
     };
   }
 
@@ -579,47 +585,60 @@ class BusinessTableData extends DataClass
     return BusinessTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      email:
+          email == null && nullToAbsent ? const Value.absent() : Value(email),
     );
   }
 
-  BusinessTableData copyWith({int id, String name}) => BusinessTableData(
+  BusinessTableData copyWith({int id, String name, String email}) =>
+      BusinessTableData(
         id: id ?? this.id,
         name: name ?? this.name,
+        email: email ?? this.email,
       );
   @override
   String toString() {
     return (StringBuffer('BusinessTableData(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('email: $email')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, email.hashCode)));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is BusinessTableData &&
           other.id == this.id &&
-          other.name == this.name);
+          other.name == this.name &&
+          other.email == this.email);
 }
 
 class BusinessTableCompanion extends UpdateCompanion<BusinessTableData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String> email;
   const BusinessTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.email = const Value.absent(),
   });
   BusinessTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
-  }) : name = Value(name);
-  BusinessTableCompanion copyWith({Value<int> id, Value<String> name}) {
+    @required String email,
+  })  : name = Value(name),
+        email = Value(email);
+  BusinessTableCompanion copyWith(
+      {Value<int> id, Value<String> name, Value<String> email}) {
     return BusinessTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      email: email ?? this.email,
     );
   }
 }
@@ -646,8 +665,16 @@ class $BusinessTableTable extends BusinessTable
     return GeneratedTextColumn('name', $tableName, false, maxTextLength: 16);
   }
 
+  final VerificationMeta _emailMeta = const VerificationMeta('email');
+  GeneratedTextColumn _email;
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  GeneratedTextColumn get email => _email ??= _constructEmail();
+  GeneratedTextColumn _constructEmail() {
+    return GeneratedTextColumn('email', $tableName, false, maxTextLength: 16);
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name, email];
   @override
   $BusinessTableTable get asDslTable => this;
   @override
@@ -669,6 +696,12 @@ class $BusinessTableTable extends BusinessTable
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
     }
+    if (d.email.present) {
+      context.handle(
+          _emailMeta, email.isAcceptableValue(d.email.value, _emailMeta));
+    } else if (email.isRequired && isInserting) {
+      context.missing(_emailMeta);
+    }
     return context;
   }
 
@@ -689,12 +722,170 @@ class $BusinessTableTable extends BusinessTable
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
     }
+    if (d.email.present) {
+      map['email'] = Variable<String, StringType>(d.email.value);
+    }
     return map;
   }
 
   @override
   $BusinessTableTable createAlias(String alias) {
     return $BusinessTableTable(_db, alias);
+  }
+}
+
+class BranchTableData extends DataClass implements Insertable<BranchTableData> {
+  final int id;
+  final String name;
+  BranchTableData({@required this.id, @required this.name});
+  factory BranchTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return BranchTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+    );
+  }
+  factory BranchTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return BranchTableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  @override
+  BranchTableCompanion createCompanion(bool nullToAbsent) {
+    return BranchTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+    );
+  }
+
+  BranchTableData copyWith({int id, String name}) => BranchTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('BranchTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is BranchTableData &&
+          other.id == this.id &&
+          other.name == this.name);
+}
+
+class BranchTableCompanion extends UpdateCompanion<BranchTableData> {
+  final Value<int> id;
+  final Value<String> name;
+  const BranchTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  BranchTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required String name,
+  }) : name = Value(name);
+  BranchTableCompanion copyWith({Value<int> id, Value<String> name}) {
+    return BranchTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
+}
+
+class $BranchTableTable extends BranchTable
+    with TableInfo<$BranchTableTable, BranchTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $BranchTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn('name', $tableName, false, maxTextLength: 16);
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  $BranchTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'branch_table';
+  @override
+  final String actualTableName = 'branch_table';
+  @override
+  VerificationContext validateIntegrity(BranchTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.name.present) {
+      context.handle(
+          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+    } else if (name.isRequired && isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BranchTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return BranchTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(BranchTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.name.present) {
+      map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    return map;
+  }
+
+  @override
+  $BranchTableTable createAlias(String alias) {
+    return $BranchTableTable(_db, alias);
   }
 }
 
@@ -707,12 +898,17 @@ abstract class _$Database extends GeneratedDatabase {
   $BusinessTableTable _businessTable;
   $BusinessTableTable get businessTable =>
       _businessTable ??= $BusinessTableTable(this);
+  $BranchTableTable _branchTable;
+  $BranchTableTable get branchTable => _branchTable ??= $BranchTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
   TokenDao get tokenDao => _tokenDao ??= TokenDao(this as Database);
   BusinessDao _businessDao;
   BusinessDao get businessDao => _businessDao ??= BusinessDao(this as Database);
+  BranchDao _branchDao;
+  BranchDao get branchDao => _branchDao ??= BranchDao(this as Database);
   @override
-  List<TableInfo> get allTables => [userTable, tokenTable, businessTable];
+  List<TableInfo> get allTables =>
+      [userTable, tokenTable, businessTable, branchTable];
 }

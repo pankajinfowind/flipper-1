@@ -22,7 +22,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   Permission get permissions;
 
+  @nullable
   List<Branch> get branches;
+
+  @nullable
+  Branch get branch;
+
 
   @nullable
   List<Business> get businesses;

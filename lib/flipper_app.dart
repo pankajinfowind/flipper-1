@@ -1,3 +1,4 @@
+import 'package:flipper/data/respositories/branch_repository.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/business/business_middleware.dart';
@@ -13,6 +14,7 @@ import 'data/respositories/user_repository.dart';
 import 'domain/redux/app_reducer.dart';
 import 'domain/redux/authentication/auth_actions.dart';
 import 'domain/redux/authentication/auth_middleware.dart';
+import 'domain/redux/branch/branch_middleware.dart';
 import 'flipper_localization.dart';
 
 class FlipperApp extends StatefulWidget {
@@ -27,6 +29,7 @@ class _FlipperAppState extends State<FlipperApp> {
   static final _navigatorKey = GlobalKey<NavigatorState>();
   final userRepo = UserRepository();
   final businessRepo = BusinessRepository();
+  final branchRepo = BranchRepository();
   @override
   void initState() {
     super.initState();
@@ -35,8 +38,9 @@ class _FlipperAppState extends State<FlipperApp> {
       initialState: AppState.init(),
       middleware:
           createAuthenticationMiddleware(userRepo, businessRepo, _navigatorKey)
-            ..addAll(createBusinessMiddleware(_navigatorKey))
-            ..addAll(permissionMiddleware(_navigatorKey)),
+            ..addAll(createBusinessMiddleware(_navigatorKey, businessRepo))
+            ..addAll(permissionMiddleware(_navigatorKey))
+            ..addAll(createBranchMiddleware(_navigatorKey,branchRepo)),
     );
     store.dispatch(
       VerifyAuthenticationState(),

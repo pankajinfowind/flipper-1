@@ -12,6 +12,8 @@ class _$Business extends Business {
   @override
   final String name;
   @override
+  final String email;
+  @override
   final String hexColor;
   @override
   final String image;
@@ -26,27 +28,12 @@ class _$Business extends Business {
   _$Business._(
       {this.id,
       this.name,
+      this.email,
       this.hexColor,
       this.image,
       this.type,
       this.abbreviation})
-      : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('Business', 'id');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('Business', 'name');
-    }
-    if (hexColor == null) {
-      throw new BuiltValueNullFieldError('Business', 'hexColor');
-    }
-    if (type == null) {
-      throw new BuiltValueNullFieldError('Business', 'type');
-    }
-    if (abbreviation == null) {
-      throw new BuiltValueNullFieldError('Business', 'abbreviation');
-    }
-  }
+      : super._();
 
   @override
   Business rebuild(void Function(BusinessBuilder) updates) =>
@@ -61,6 +48,7 @@ class _$Business extends Business {
     return other is Business &&
         id == other.id &&
         name == other.name &&
+        email == other.email &&
         hexColor == other.hexColor &&
         image == other.image &&
         type == other.type &&
@@ -71,7 +59,11 @@ class _$Business extends Business {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc($jc(0, id.hashCode), name.hashCode), hexColor.hashCode),
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), name.hashCode),
+                        email.hashCode),
+                    hexColor.hashCode),
                 image.hashCode),
             type.hashCode),
         abbreviation.hashCode));
@@ -82,6 +74,7 @@ class _$Business extends Business {
     return (newBuiltValueToStringHelper('Business')
           ..add('id', id)
           ..add('name', name)
+          ..add('email', email)
           ..add('hexColor', hexColor)
           ..add('image', image)
           ..add('type', type)
@@ -100,6 +93,10 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _email;
+  String get email => _$this._email;
+  set email(String email) => _$this._email = email;
 
   String _hexColor;
   String get hexColor => _$this._hexColor;
@@ -123,6 +120,7 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
     if (_$v != null) {
       _id = _$v.id;
       _name = _$v.name;
+      _email = _$v.email;
       _hexColor = _$v.hexColor;
       _image = _$v.image;
       _type = _$v.type;
@@ -151,6 +149,7 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
         new _$Business._(
             id: id,
             name: name,
+            email: email,
             hexColor: hexColor,
             image: image,
             type: type,

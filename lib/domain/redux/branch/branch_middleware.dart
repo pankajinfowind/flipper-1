@@ -40,8 +40,11 @@ _onSetBranchHint(GlobalKey<NavigatorState> navigatorKey,
           final _hint = Hint((h)=>h..name=branches[0].name..type=HintType.Branch);
           store.dispatch(OnHintLoaded(hint: _hint));
         }else{
-          final _hint = Hint((h)=>h..name=store.state.branch.name..type=HintType.Branch);
-          store.dispatch(OnHintLoaded(hint: _hint));
+          //TODO: get the branch that is set as hint
+          if(store.state.branch ==null){
+            final _hint = Hint((h)=>h..name=branches[0].name..type=HintType.Branch);
+            store.dispatch(OnHintLoaded(hint: _hint));
+          }
         }
     }
   };

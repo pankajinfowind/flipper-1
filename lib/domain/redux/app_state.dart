@@ -3,6 +3,7 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/permission.dart';
 import 'package:flipper/model/sheet.dart';
 import 'package:flipper/model/user.dart';
@@ -35,8 +36,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   Business get business;
 
-//  @nullable
-//  Hint get hint;
+  @nullable
+  Hint get hint;
 
   Database get database;
   AppState._();

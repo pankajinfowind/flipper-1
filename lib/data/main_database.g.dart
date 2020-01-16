@@ -662,7 +662,11 @@ class $BusinessTableTable extends BusinessTable
   @override
   GeneratedTextColumn get name => _name ??= _constructName();
   GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn('name', $tableName, false, maxTextLength: 16);
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _emailMeta = const VerificationMeta('email');
@@ -670,7 +674,11 @@ class $BusinessTableTable extends BusinessTable
   @override
   GeneratedTextColumn get email => _email ??= _constructEmail();
   GeneratedTextColumn _constructEmail() {
-    return GeneratedTextColumn('email', $tableName, false, maxTextLength: 16);
+    return GeneratedTextColumn(
+      'email',
+      $tableName,
+      false,
+    );
   }
 
   @override
@@ -834,7 +842,11 @@ class $BranchTableTable extends BranchTable
   @override
   GeneratedTextColumn get name => _name ??= _constructName();
   GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn('name', $tableName, false, maxTextLength: 16);
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      false,
+    );
   }
 
   @override

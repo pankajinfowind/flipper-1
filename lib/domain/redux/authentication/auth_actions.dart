@@ -19,29 +19,8 @@ class LogIn {
       : completer = completer ?? Completer();
 }
 
-@immutable
-class OnHintLoaded {
-  final Hint hint;
 
-  const OnHintLoaded({@required this.hint});
 
-  @override
-  String toString() {
-    return "OnBranchLoaded{OnHintLoaded: $hint}";
-  }
-}
-
-@immutable
-class OnBranchLoaded {
-  final List<Branch> branches;
-
-  const OnBranchLoaded({@required this.branches});
-
-  @override
-  String toString() {
-    return "OnBranchLoaded{OnBranchLoaded: $branches}";
-  }
-}
 
 @immutable
 class OnAuthenticated {

@@ -37,7 +37,7 @@ class _FlipperAppState extends State<FlipperApp> {
       appReducer,
       initialState: AppState.init(),
       middleware:
-          createAuthenticationMiddleware(userRepo, businessRepo, _navigatorKey)
+          createAuthenticationMiddleware(userRepo, businessRepo,branchRepo, _navigatorKey)
             ..addAll(createBusinessMiddleware(_navigatorKey, businessRepo))
             ..addAll(permissionMiddleware(_navigatorKey))
             ..addAll(createBranchMiddleware(_navigatorKey,branchRepo)),

@@ -194,8 +194,10 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     final business = Business((b) => b
       ..name = tBusiness.name
+      ..email = tBusiness.email
       ..type = BusinessType.NORMAL);
-    StoreProvider.of<AppState>(context).dispatch(CreateBusiness(business));
+    StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
+    StoreProvider.of<AppState>(context).dispatch(CreateBusiness());
     //finally verify if all is good and go to dashboard.
     StoreProvider.of<AppState>(context).dispatch(VerifyAuthenticationState());
   }

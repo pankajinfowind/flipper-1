@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 class ShouldLoadBusiness {}
 
 class BusinessCreated {}
+class CreateBusiness {}
 
 @immutable
-class CreateBusiness {
+class WithBusiness {
   final Business business;
 
-  CreateBusiness(this.business);
+  WithBusiness(this.business);
   @override
   String toString() {
     return "CreateBusiness{CreateBusiness: $business}";

@@ -8,7 +8,6 @@ class BranchRepository {
   insert(Store<AppState> store, Branch b) {
     var branch = new BranchTableData(name: b.name);
     store.state.database.branchDao.insert(branch);
-    store.dispatch(BusinessCreated());
   }
 
   Future<void> update(String token) async {}

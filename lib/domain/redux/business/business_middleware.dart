@@ -23,12 +23,16 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 ) {
   return (store, action, next) async {
     next(action);
-    businessRepository.insert(store, store.state.business);
-    List<BusinessTableData> businessList = await businessRepository.getBusinesses(store);
-    List<Business> businesses = [];
-    businessList.forEach((b)=>{
-      businesses.add(Business((bu)=>bu..name=b.name..id=b.id))
-    });
-    store.dispatch(OnBusinessLoaded(business: businesses));
+    //TODO: get yegobox id and other users information from yegobox and use them while creating flipper account
+    if(store.state.business != null){
+      businessRepository.insert(store, store.state.business);
+      List<BusinessTableData> businessList = await businessRepository.getBusinesses(store);
+      List<Business> businesses = [];
+      businessList.forEach((b)=>{
+        businesses.add(Business((bu)=>bu..name=b.name..id=b.id))
+      });
+      store.dispatch(BusinessCreated());
+      store.dispatch(OnBusinessLoaded(business: businesses));
+    }
   };
 }

@@ -24,6 +24,8 @@ class _$AppState extends AppState {
   @override
   final Business business;
   @override
+  final Hint hint;
+  @override
   final Database database;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
@@ -38,6 +40,7 @@ class _$AppState extends AppState {
       this.branch,
       this.businesses,
       this.business,
+      this.hint,
       this.database})
       : super._() {
     if (database == null) {
@@ -64,6 +67,7 @@ class _$AppState extends AppState {
         branch == other.branch &&
         businesses == other.businesses &&
         business == other.business &&
+        hint == other.hint &&
         database == other.database;
   }
 
@@ -75,13 +79,15 @@ class _$AppState extends AppState {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, user.hashCode), sheet.hashCode),
-                                action.hashCode),
-                            permissions.hashCode),
-                        branches.hashCode),
-                    branch.hashCode),
-                businesses.hashCode),
-            business.hashCode),
+                            $jc(
+                                $jc($jc($jc(0, user.hashCode), sheet.hashCode),
+                                    action.hashCode),
+                                permissions.hashCode),
+                            branches.hashCode),
+                        branch.hashCode),
+                    businesses.hashCode),
+                business.hashCode),
+            hint.hashCode),
         database.hashCode));
   }
 
@@ -96,6 +102,7 @@ class _$AppState extends AppState {
           ..add('branch', branch)
           ..add('businesses', businesses)
           ..add('business', business)
+          ..add('hint', hint)
           ..add('database', database))
         .toString();
   }
@@ -138,6 +145,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   BusinessBuilder get business => _$this._business ??= new BusinessBuilder();
   set business(BusinessBuilder business) => _$this._business = business;
 
+  HintBuilder _hint;
+  HintBuilder get hint => _$this._hint ??= new HintBuilder();
+  set hint(HintBuilder hint) => _$this._hint = hint;
+
   Database _database;
   Database get database => _$this._database;
   set database(Database database) => _$this._database = database;
@@ -154,6 +165,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _branch = _$v.branch?.toBuilder();
       _businesses = _$v.businesses;
       _business = _$v.business?.toBuilder();
+      _hint = _$v.hint?.toBuilder();
       _database = _$v.database;
       _$v = null;
     }
@@ -187,6 +199,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               branch: _branch?.build(),
               businesses: businesses,
               business: _business?.build(),
+              hint: _hint?.build(),
               database: database);
     } catch (_) {
       String _$failedField;
@@ -205,6 +218,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
         _$failedField = 'business';
         _business?.build();
+        _$failedField = 'hint';
+        _hint?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

@@ -18,9 +18,9 @@ class _$AppState extends AppState {
   @override
   final List<Branch> branches;
   @override
-  final Branch branch;
-  @override
   final List<Business> businesses;
+  @override
+  final Branch branch;
   @override
   final Business business;
   @override
@@ -37,8 +37,8 @@ class _$AppState extends AppState {
       this.action,
       this.permissions,
       this.branches,
-      this.branch,
       this.businesses,
+      this.branch,
       this.business,
       this.hint,
       this.database})
@@ -64,8 +64,8 @@ class _$AppState extends AppState {
         action == other.action &&
         permissions == other.permissions &&
         branches == other.branches &&
-        branch == other.branch &&
         businesses == other.businesses &&
+        branch == other.branch &&
         business == other.business &&
         hint == other.hint &&
         database == other.database;
@@ -84,8 +84,8 @@ class _$AppState extends AppState {
                                     action.hashCode),
                                 permissions.hashCode),
                             branches.hashCode),
-                        branch.hashCode),
-                    businesses.hashCode),
+                        businesses.hashCode),
+                    branch.hashCode),
                 business.hashCode),
             hint.hashCode),
         database.hashCode));
@@ -99,8 +99,8 @@ class _$AppState extends AppState {
           ..add('action', action)
           ..add('permissions', permissions)
           ..add('branches', branches)
-          ..add('branch', branch)
           ..add('businesses', businesses)
+          ..add('branch', branch)
           ..add('business', business)
           ..add('hint', hint)
           ..add('database', database))
@@ -133,13 +133,13 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   List<Branch> get branches => _$this._branches;
   set branches(List<Branch> branches) => _$this._branches = branches;
 
-  BranchBuilder _branch;
-  BranchBuilder get branch => _$this._branch ??= new BranchBuilder();
-  set branch(BranchBuilder branch) => _$this._branch = branch;
-
   List<Business> _businesses;
   List<Business> get businesses => _$this._businesses;
   set businesses(List<Business> businesses) => _$this._businesses = businesses;
+
+  BranchBuilder _branch;
+  BranchBuilder get branch => _$this._branch ??= new BranchBuilder();
+  set branch(BranchBuilder branch) => _$this._branch = branch;
 
   BusinessBuilder _business;
   BusinessBuilder get business => _$this._business ??= new BusinessBuilder();
@@ -162,8 +162,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _action = _$v.action?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
-      _branch = _$v.branch?.toBuilder();
       _businesses = _$v.businesses;
+      _branch = _$v.branch?.toBuilder();
       _business = _$v.business?.toBuilder();
       _hint = _$v.hint?.toBuilder();
       _database = _$v.database;
@@ -196,8 +196,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               action: _action?.build(),
               permissions: _permissions?.build(),
               branches: branches,
-              branch: _branch?.build(),
               businesses: businesses,
+              branch: _branch?.build(),
               business: _business?.build(),
               hint: _hint?.build(),
               database: database);
@@ -215,7 +215,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
         _$failedField = 'branch';
         _branch?.build();
-
         _$failedField = 'business';
         _business?.build();
         _$failedField = 'hint';

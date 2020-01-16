@@ -1,5 +1,7 @@
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/presentation/home/common_view_model.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import 'package:flipper/util/HexColor.dart';
 import "package:flutter/material.dart";
@@ -9,8 +11,8 @@ import '../../routes.dart';
 
 class BusinessList extends StatefulWidget {
 //  final Function(DrawerState) stateChangeCallback;
-
-  const BusinessList();
+  final CommonViewModel vm;
+  const BusinessList({Key key, this.vm}): super(key: key);
 
   @override
   _BusinessListState createState() => _BusinessListState();
@@ -18,15 +20,6 @@ class BusinessList extends StatefulWidget {
 
 class _BusinessListState extends State<BusinessList> {
   bool _calendarSelected = false;
-
-  //TODO: replace dummy data with real data from source!
-  Business dummyBusiness = Business((c) => c
-    ..id = 1
-    ..name = "B"
-    ..hexColor = "#f5a623" //orange
-    ..image = "image"
-    ..abbreviation = "Yegobox"
-    ..type = BusinessType.NORMAL);
 
   _buildFirstSectionFlipperLogo(BuildContext context) {
     return Container(
@@ -67,7 +60,9 @@ class _BusinessListState extends State<BusinessList> {
           children: <Widget>[
             _Style.defaultPadding,
             _GroupSettingsButton(
-                Image.asset("assets/graphics/drawer/create_topic.png"), () {}),
+                Image.asset("assets/graphics/drawer/create_topic.png"), () {
+                  Router.navigator.pushNamed(Router.createBusiness);
+            }),
           ],
         ));
   }
@@ -92,15 +87,24 @@ class _BusinessListState extends State<BusinessList> {
   }
 
   _buildSecondSectionBusinessList(BuildContext context,
-      {onClick: true, hasNotification: true}) {
+      {onClick: true, hasNotification: true,data}) {
     return Container(
       height: _Style.itemHeight,
       child: Padding(
         padding:
             const EdgeInsets.only(top: _Style.padding, right: _Style.padding),
-        child: _GroupButton(dummyBusiness, (id) {}, onClick, hasNotification),
+        child: _GroupButton(data, (id) {}, onClick, hasNotification),
       ),
     );
+  }
+
+  Widget getRenderableBusinessList(List<Business> businesses)
+  {
+    List<Widget> list = new List<Widget>();
+    for(var i = 0; i < businesses.length; i++){
+      list.add( _buildSecondSectionBusinessList(context, onClick: false,data: businesses[i]));
+    }
+    return new Row(children: list);
   }
 
   @override
@@ -110,16 +114,9 @@ class _BusinessListState extends State<BusinessList> {
       child: Column(
         children: <Widget>[
           _buildFirstSectionFlipperLogo(context),
-//         TODO: start simulating more business loaded.
-          _buildSecondSectionBusinessList(context),
-          //setting on click set highlight on side.
-          _buildSecondSectionBusinessList(context, onClick: false),
-          _buildSecondSectionBusinessList(context, onClick: false),
-          _buildSecondSectionBusinessList(context, onClick: false),
-          _buildSecondSectionBusinessList(context, onClick: false),
-          _buildSecondSectionBusinessList(context, onClick: false),
 
-//        FIXME:  will handle the case of many business loaded later in v2.
+          getRenderableBusinessList(widget.vm.businesses),
+          //setting on click set highlight on side.
           _buildThirdSection(context),
           _buildFourthSection(context)
         ],
@@ -132,51 +129,6 @@ class _BusinessListState extends State<BusinessList> {
     //FIXME: should use Router.navigator.pushNamed(Router.dashboard); to navigate ASAP;
     Navigator.of(context).pushNamed(Routes.user, arguments: uid);
   }
-}
-
-class _GroupListItem extends StatelessWidget {
-  final Business _group;
-  final bool _selected;
-  final bool _hasUpdates;
-  final Function _selectionCallback;
-
-  const _GroupListItem(
-    group,
-    selected,
-    hasUpdates,
-    selectionCallback, {
-    Key key,
-  })  : _group = group,
-        _selected = selected,
-        _hasUpdates = hasUpdates,
-        _selectionCallback = selectionCallback,
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: _Style.itemHeight,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: _Style.padding,
-            right: _Style.padding,
-          ),
-          child: _GroupButton(
-            _group,
-            (id) {
-              _selectionCallback();
-              _selectGroup(context, id);
-            },
-            _selected,
-            _hasUpdates,
-          ),
-        ));
-  }
-
-  void _selectGroup(
-    BuildContext context,
-    int id,
-  ) {}
 }
 
 class _GroupSettingsButton extends StatelessWidget {
@@ -222,7 +174,7 @@ class _GroupButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _circleColor = HexColor(business.hexColor);
+    final _circleColor = HexColor("#f5a623"); //TODO: make this color comes from setting in v.2
     final _groupText = business.abbreviation.substring(0, 2).toUpperCase();
 
     return Container(

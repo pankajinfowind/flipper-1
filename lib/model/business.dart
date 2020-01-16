@@ -8,8 +8,6 @@ abstract class Business implements Built<Business, BusinessBuilder> {
   @nullable
   String get name;
 
-  @nullable
-  String get email;
 
   @nullable
   String get hexColor;

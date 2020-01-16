@@ -12,9 +12,13 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final bool hasSheet;
   @override
+  final bool hasHint;
+  @override
   final bool hasAction;
   @override
   final List<Branch> branches;
+  @override
+  final List<Business> businesses;
   @override
   final AppActions appAction;
   @override
@@ -26,8 +30,10 @@ class _$CommonViewModel extends CommonViewModel {
   _$CommonViewModel._(
       {this.hasUser,
       this.hasSheet,
+      this.hasHint,
       this.hasAction,
       this.branches,
+      this.businesses,
       this.appAction,
       this.hint})
       : super._() {
@@ -42,6 +48,9 @@ class _$CommonViewModel extends CommonViewModel {
     }
     if (branches == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'branches');
+    }
+    if (businesses == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'businesses');
     }
     if (appAction == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'appAction');
@@ -65,8 +74,10 @@ class _$CommonViewModel extends CommonViewModel {
     return other is CommonViewModel &&
         hasUser == other.hasUser &&
         hasSheet == other.hasSheet &&
+        hasHint == other.hasHint &&
         hasAction == other.hasAction &&
         branches == other.branches &&
+        businesses == other.businesses &&
         appAction == other.appAction &&
         hint == other.hint;
   }
@@ -76,9 +87,13 @@ class _$CommonViewModel extends CommonViewModel {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode),
-                    hasAction.hashCode),
-                branches.hashCode),
+                $jc(
+                    $jc(
+                        $jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode),
+                            hasHint.hashCode),
+                        hasAction.hashCode),
+                    branches.hashCode),
+                businesses.hashCode),
             appAction.hashCode),
         hint.hashCode));
   }
@@ -88,8 +103,10 @@ class _$CommonViewModel extends CommonViewModel {
     return (newBuiltValueToStringHelper('CommonViewModel')
           ..add('hasUser', hasUser)
           ..add('hasSheet', hasSheet)
+          ..add('hasHint', hasHint)
           ..add('hasAction', hasAction)
           ..add('branches', branches)
+          ..add('businesses', businesses)
           ..add('appAction', appAction)
           ..add('hint', hint))
         .toString();
@@ -108,6 +125,10 @@ class CommonViewModelBuilder
   bool get hasSheet => _$this._hasSheet;
   set hasSheet(bool hasSheet) => _$this._hasSheet = hasSheet;
 
+  bool _hasHint;
+  bool get hasHint => _$this._hasHint;
+  set hasHint(bool hasHint) => _$this._hasHint = hasHint;
+
   bool _hasAction;
   bool get hasAction => _$this._hasAction;
   set hasAction(bool hasAction) => _$this._hasAction = hasAction;
@@ -115,6 +136,10 @@ class CommonViewModelBuilder
   List<Branch> _branches;
   List<Branch> get branches => _$this._branches;
   set branches(List<Branch> branches) => _$this._branches = branches;
+
+  List<Business> _businesses;
+  List<Business> get businesses => _$this._businesses;
+  set businesses(List<Business> businesses) => _$this._businesses = businesses;
 
   AppActionsBuilder _appAction;
   AppActionsBuilder get appAction =>
@@ -131,8 +156,10 @@ class CommonViewModelBuilder
     if (_$v != null) {
       _hasUser = _$v.hasUser;
       _hasSheet = _$v.hasSheet;
+      _hasHint = _$v.hasHint;
       _hasAction = _$v.hasAction;
       _branches = _$v.branches;
+      _businesses = _$v.businesses;
       _appAction = _$v.appAction?.toBuilder();
       _hint = _$v.hint?.toBuilder();
       _$v = null;
@@ -161,8 +188,10 @@ class CommonViewModelBuilder
           new _$CommonViewModel._(
               hasUser: hasUser,
               hasSheet: hasSheet,
+              hasHint: hasHint,
               hasAction: hasAction,
               branches: branches,
+              businesses: businesses,
               appAction: appAction.build(),
               hint: hint.build());
     } catch (_) {

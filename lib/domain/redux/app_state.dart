@@ -27,11 +27,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   List<Branch> get branches;
 
   @nullable
-  Branch get branch;
+  List<Business> get businesses;
 
 
   @nullable
-  List<Business> get businesses;
+  Branch get branch;
+
 
   @nullable
   Business get business;

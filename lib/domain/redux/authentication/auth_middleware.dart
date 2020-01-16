@@ -3,7 +3,9 @@ import 'package:flipper/data/respositories/branch_repository.dart';
 import 'package:flipper/data/respositories/business_repository.dart';
 import 'package:flipper/data/respositories/user_repository.dart';
 import 'package:flipper/domain/redux/branch/branch_actions.dart';
+import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/branch.dart';
+import 'package:flipper/model/business.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -54,8 +56,8 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
     List<UserTableData> user = await userRepository.checkAuth(store);
     List<BranchTableData> branch = await branchRepository.getBranches(store);
-    List<BusinessTableData> business = await businessRepository.getBusinesses(store);
-    if (business == null || business.length == 0) {
+    List<BusinessTableData> businesses = await businessRepository.getBusinesses(store);
+    if (businesses == null || businesses.length == 0) {
       Router.navigator.pushNamed(Router.afterSplash);
       return;
     } else {
@@ -75,9 +77,16 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       });
       store.dispatch(OnBranchLoaded(branches: branches));
       store.dispatch(OnAuthenticated(user: _user));
+
+      List<Business> businessList = [];
+      businesses.forEach((b)=>{
+        print(b.name),
+        businessList.add(Business((bu)=>bu..id=b.id..abbreviation=b.name..name=b.name))
+      });
+      store.dispatch(OnBusinessLoaded(business: businessList ));
       //branch
-      if (business.length == 0) {
-        Router.navigator.pushNamed(Router.createBusinessScreen);
+      if (businesses.length == 0) {
+        Router.navigator.pushNamed(Router.signUpScreen);
       } else {
         Router.navigator.pushNamed(Router.dashboard);
       }

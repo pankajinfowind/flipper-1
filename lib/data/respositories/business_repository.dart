@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 class BusinessRepository {
   insert(Store<AppState> store, Business business) {
     var bussiness =
-        new BusinessTableData(name: business.name, email: business.email);
+        new BusinessTableData(name: business.name);
     store.state.database.businessDao.insert(bussiness);
     store.dispatch(BusinessCreated());
   }

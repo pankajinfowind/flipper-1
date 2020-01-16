@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/transitions_builders.dart';
+import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/sale_screen.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
+import 'package:flipper/presentation/business/sign_up_screen.dart';
 import 'package:flipper/presentation/home/dash_board.dart';
 import 'package:flipper/presentation/splash/aftersplash.dart';
 import 'package:flipper/presentation/splash/splash_screen.dart';
@@ -27,5 +29,8 @@ class $Router {
       transitionsBuilder: TransitionsBuilders.slideLeft,
       durationInMilliseconds: 200)
   @MaterialRoute(fullscreenDialog: true)
-  CreateBusinessScreen createBusinessScreen;
+  SignUpScreen signUpScreen;
+
+  @MaterialRoute(fullscreenDialog: true)
+  CreateBusinessScreen createBusiness;
 }

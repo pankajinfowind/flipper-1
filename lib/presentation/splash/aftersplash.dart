@@ -54,7 +54,7 @@ class AfterSplash extends StatelessWidget {
                       child: FlatButton(
                         onPressed: () {
                           Router.navigator
-                              .pushNamed(Router.createBusinessScreen);
+                              .pushNamed(Router.signUpScreen);
                         },
                         color: Colors.blue,
                         child: Text(

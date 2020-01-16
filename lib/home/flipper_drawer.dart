@@ -33,7 +33,9 @@ class _FlipperDrawerState extends State<FlipperDrawer> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              BusinessList(),
+              BusinessList(
+                vm: widget.vm,
+              ),
               BranchList(
                 vm: widget.vm,
               )

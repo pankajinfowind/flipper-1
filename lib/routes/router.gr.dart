@@ -13,8 +13,9 @@ import 'package:flipper/presentation/splash/aftersplash.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/sale_screen.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
-import 'package:flipper/presentation/business/create_business_screen.dart';
+import 'package:flipper/presentation/business/sign_up_screen.dart';
 import 'package:auto_route/transitions_builders.dart';
+import 'package:flipper/presentation/business/create_business_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -23,7 +24,8 @@ class Router {
   static const bottom = '/bottom';
   static const saleScreen = '/saleScreen';
   static const settingUpApplicationScreen = '/settingUpApplicationScreen';
-  static const createBusinessScreen = '/createBusinessScreen';
+  static const signUpScreen = '/signUpScreen';
+  static const createBusiness = '/createBusiness';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -81,15 +83,25 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.createBusinessScreen:
+      case Router.signUpScreen:
         if (hasInvalidArgs<Key>(args)) {
           return misTypedArgsRoute<Key>(args);
         }
         final typedArgs = args as Key;
         return PageRouteBuilder(
           pageBuilder: (ctx, animation, secondaryAnimation) =>
-              CreateBusinessScreen(key: typedArgs),
+              SignUpScreen(key: typedArgs),
           settings: settings,
+        );
+      case Router.createBusiness:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => CreateBusinessScreen(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
         );
       default:
         return unknownRoutePage(settings.name);

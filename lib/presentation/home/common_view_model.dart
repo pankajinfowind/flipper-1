@@ -36,7 +36,7 @@ abstract class CommonViewModel
       ..hasUser = _hasUser(store)
       ..hasSheet = _hasSheet(store)
       ..hasAction = _hasAction(store)
-//      ..hint = store.state.hint.toBuilder()
+      ..hint = store.state.hint.toBuilder()
       ..branches = store.state.branches);
   }
 }

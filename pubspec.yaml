@@ -119,6 +119,7 @@ flutter:
     - assets/graphics/drawer/create_topic.png
     - assets/graphics/drawer/account.png
     - assets/graphics/drawer/settings.png
+    - assets/graphics/arrow-up-right.svg
 
   fonts:
     - family: Heebo-Black

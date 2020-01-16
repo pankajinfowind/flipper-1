@@ -18,7 +18,7 @@ class _BranchListState extends State<BranchList> {
   DropdownButton _BranchItem() => DropdownButton<String>(
         isDense: true,
         hint: Text(
-          widget.vm.hint.name??"Hinr_",
+          widget.vm.hint.name??"Hint_",
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white),
         ),

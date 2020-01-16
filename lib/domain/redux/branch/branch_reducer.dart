@@ -4,7 +4,7 @@ import "package:redux/redux.dart";
 
 
 final branchReducers = <AppState Function(AppState, dynamic)>[
-  TypedReducer<AppState, OnBranchLoaded>(_onBranchLoaded),
+    TypedReducer<AppState, OnBranchLoaded>(_onBranchLoaded),
   TypedReducer<AppState, OnHintLoaded>(_onHintLoaded),
 ];
 

@@ -120,6 +120,8 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen>  {
     final business = Business((b) => b
       ..name = tBusiness.name
       ..type = BusinessType.NORMAL);
+
+
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
     StoreProvider.of<AppState>(context).dispatch(CreateBusiness());
     //finally verify if all is good and go to dashboard.

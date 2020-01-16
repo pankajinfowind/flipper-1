@@ -546,9 +546,7 @@ class BusinessTableData extends DataClass
     implements Insertable<BusinessTableData> {
   final int id;
   final String name;
-  final String email;
-  BusinessTableData(
-      {@required this.id, @required this.name, @required this.email});
+  BusinessTableData({@required this.id, @required this.name});
   factory BusinessTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -558,8 +556,6 @@ class BusinessTableData extends DataClass
     return BusinessTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      email:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}email']),
     );
   }
   factory BusinessTableData.fromJson(Map<String, dynamic> json,
@@ -567,7 +563,6 @@ class BusinessTableData extends DataClass
     return BusinessTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      email: serializer.fromJson<String>(json['email']),
     );
   }
   @override
@@ -576,7 +571,6 @@ class BusinessTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'email': serializer.toJson<String>(email),
     };
   }
 
@@ -585,60 +579,47 @@ class BusinessTableData extends DataClass
     return BusinessTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
-      email:
-          email == null && nullToAbsent ? const Value.absent() : Value(email),
     );
   }
 
-  BusinessTableData copyWith({int id, String name, String email}) =>
-      BusinessTableData(
+  BusinessTableData copyWith({int id, String name}) => BusinessTableData(
         id: id ?? this.id,
         name: name ?? this.name,
-        email: email ?? this.email,
       );
   @override
   String toString() {
     return (StringBuffer('BusinessTableData(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('email: $email')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, email.hashCode)));
+  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is BusinessTableData &&
           other.id == this.id &&
-          other.name == this.name &&
-          other.email == this.email);
+          other.name == this.name);
 }
 
 class BusinessTableCompanion extends UpdateCompanion<BusinessTableData> {
   final Value<int> id;
   final Value<String> name;
-  final Value<String> email;
   const BusinessTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
-    this.email = const Value.absent(),
   });
   BusinessTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
-    @required String email,
-  })  : name = Value(name),
-        email = Value(email);
-  BusinessTableCompanion copyWith(
-      {Value<int> id, Value<String> name, Value<String> email}) {
+  }) : name = Value(name);
+  BusinessTableCompanion copyWith({Value<int> id, Value<String> name}) {
     return BusinessTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
-      email: email ?? this.email,
     );
   }
 }
@@ -669,20 +650,8 @@ class $BusinessTableTable extends BusinessTable
     );
   }
 
-  final VerificationMeta _emailMeta = const VerificationMeta('email');
-  GeneratedTextColumn _email;
   @override
-  GeneratedTextColumn get email => _email ??= _constructEmail();
-  GeneratedTextColumn _constructEmail() {
-    return GeneratedTextColumn(
-      'email',
-      $tableName,
-      false,
-    );
-  }
-
-  @override
-  List<GeneratedColumn> get $columns => [id, name, email];
+  List<GeneratedColumn> get $columns => [id, name];
   @override
   $BusinessTableTable get asDslTable => this;
   @override
@@ -704,12 +673,6 @@ class $BusinessTableTable extends BusinessTable
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
     }
-    if (d.email.present) {
-      context.handle(
-          _emailMeta, email.isAcceptableValue(d.email.value, _emailMeta));
-    } else if (email.isRequired && isInserting) {
-      context.missing(_emailMeta);
-    }
     return context;
   }
 
@@ -729,9 +692,6 @@ class $BusinessTableTable extends BusinessTable
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
-    }
-    if (d.email.present) {
-      map['email'] = Variable<String, StringType>(d.email.value);
     }
     return map;
   }

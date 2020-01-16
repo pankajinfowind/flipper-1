@@ -8,6 +8,7 @@ import 'package:flipper/model/business.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
+import 'package:flipper/util/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:geolocator/geolocator.dart';
@@ -94,12 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: 300,
                         child: TextFormField(
                           style: TextStyle(color: Colors.black),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Business name";
-                            }
-                            return null;
-                          },
+                          validator: Validators.isStringHasMoreChars,
                           onSaved: (name) {
                             tBusiness.name = name;
                           },
@@ -198,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //      ..email = tBusiness.email //TODO: was requesting email but should not be saved in business so therefore is should also be populated from auth yegobox
       ..type = BusinessType.NORMAL);
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
-    StoreProvider.of<AppState>(context).dispatch(CreateBusiness());
+    StoreProvider.of<AppState>(context).dispatch(CreateBusinessOnSignUp());
     //finally verify if all is good and go to dashboard.
     StoreProvider.of<AppState>(context).dispatch(VerifyAuthenticationState());
   }

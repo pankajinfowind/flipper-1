@@ -11,6 +11,8 @@ List<Middleware<AppState>> createBusinessMiddleware(
   BusinessRepository businessRepository,
 ) {
   return [
+    TypedMiddleware<AppState, CreateBusinessOnSignUp>(
+        _createBusiness(navigatorKey, businessRepository)),
     TypedMiddleware<AppState, CreateBusiness>(
         _createBusiness(navigatorKey, businessRepository)),
   ];
@@ -24,13 +26,18 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
   return (store, action, next) async {
     next(action);
     //TODO: get yegobox id and other users information from yegobox and use them while creating flipper account
-    if(store.state.business != null){
+    if (store.state.business != null) {
       businessRepository.insert(store, store.state.business);
-      List<BusinessTableData> businessList = await businessRepository.getBusinesses(store);
+      List<BusinessTableData> businessList =
+          await businessRepository.getBusinesses(store);
       List<Business> businesses = [];
-      businessList.forEach((b)=>{
-        businesses.add(Business((bu)=>bu..name=b.name..id=b.id))
-      });
+      businessList.forEach((b) => {
+            businesses.add(Business((bu) => bu
+              ..name = b.name
+              ..id = b.id))
+          });
+      //clean business so it won't create dups
+      //store.dispatch(ResetBusiness());
       store.dispatch(BusinessCreated());
       store.dispatch(OnBusinessLoaded(business: businesses));
     }

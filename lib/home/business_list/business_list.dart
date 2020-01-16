@@ -12,7 +12,7 @@ import '../../routes.dart';
 class BusinessList extends StatefulWidget {
 //  final Function(DrawerState) stateChangeCallback;
   final CommonViewModel vm;
-  const BusinessList({Key key, this.vm}): super(key: key);
+  const BusinessList({Key key, this.vm}) : super(key: key);
 
   @override
   _BusinessListState createState() => _BusinessListState();
@@ -61,7 +61,12 @@ class _BusinessListState extends State<BusinessList> {
             _Style.defaultPadding,
             _GroupSettingsButton(
                 Image.asset("assets/graphics/drawer/create_topic.png"), () {
-                  Router.navigator.pushNamed(Router.createBusiness);
+                  //TODO: fix overflow when loading more than 7 businesses for now we are not alloing user to create more than2 business
+              if(widget.vm.businesses.length>=3){
+
+                return;
+              }
+              Router.navigator.pushNamed(Router.createBusiness);
             }),
           ],
         ));
@@ -87,7 +92,7 @@ class _BusinessListState extends State<BusinessList> {
   }
 
   _buildSecondSectionBusinessList(BuildContext context,
-      {onClick: true, hasNotification: true,data}) {
+      {onClick: true, hasNotification: true, data}) {
     return Container(
       height: _Style.itemHeight,
       child: Padding(
@@ -98,13 +103,15 @@ class _BusinessListState extends State<BusinessList> {
     );
   }
 
-  Widget getRenderableBusinessList(List<Business> businesses)
-  {
+  Widget getRenderableBusinessList(List<Business> businesses) {
     List<Widget> list = new List<Widget>();
-    for(var i = 0; i < businesses.length; i++){
-      list.add( _buildSecondSectionBusinessList(context, onClick: false,data: businesses[i]));
+    for (var i = 0; i < businesses.length; i++) {
+      list.add(_buildSecondSectionBusinessList(context,
+          onClick: false, data: businesses[i]));
     }
-    return new Row(children: list);
+    return Expanded(
+      child: Column(children: list),
+    );
   }
 
   @override
@@ -114,7 +121,6 @@ class _BusinessListState extends State<BusinessList> {
       child: Column(
         children: <Widget>[
           _buildFirstSectionFlipperLogo(context),
-
           getRenderableBusinessList(widget.vm.businesses),
           //setting on click set highlight on side.
           _buildThirdSection(context),
@@ -174,7 +180,8 @@ class _GroupButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _circleColor = HexColor("#f5a623"); //TODO: make this color comes from setting in v.2
+    final _circleColor =
+        HexColor("#f5a623"); //TODO: make this color comes from setting in v.2
     final _groupText = business.abbreviation.substring(0, 2).toUpperCase();
 
     return Container(

@@ -80,7 +80,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
       List<Business> businessList = [];
       businesses.forEach((b)=>{
-        print(b.name),
         businessList.add(Business((bu)=>bu..id=b.id..abbreviation=b.name..name=b.name))
       });
       store.dispatch(OnBusinessLoaded(business: businessList ));

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class ShouldLoadBusiness {}
 
 class BusinessCreated {}
-class CreateBusiness {}
+class CreateBusinessOnSignUp {}
+  class CreateBusiness {}
+class ResetBusiness {}
 
 @immutable
 class WithBusiness {

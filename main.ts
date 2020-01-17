@@ -104,6 +104,7 @@ if (!isDev) {
     sendStatusToWindow(log_message);
   });
   autoUpdater.on("update-downloaded", info => {
+
     const dialogOpts = {
       type: "info",
       buttons: ["Restart", "Later"],
@@ -113,10 +114,13 @@ if (!isDev) {
       detail:
         "A new version has been downloaded. Restart the application to apply the updates."
     };
+
     dialog.showMessageBox(dialogOpts, response => {
       if (response === 0) autoUpdater.quitAndInstall();
     });
+
     sendStatusToWindow("Update downloaded");
+    
   });
 }
 

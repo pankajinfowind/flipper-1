@@ -3,6 +3,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/home/flipper_drawer.dart';
 import 'package:flipper/home/home_app_bar.dart';
 import 'package:flipper/home/poswidget.dart';
+import 'package:flipper/home/product_screen.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_redux/flutter_redux.dart';
@@ -27,9 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<Widget> tabs = [
     Poswidget(),
-    Container(
-      child: Text("second Tab"),
-    )
+    ProductScreen()
   ];
 
   @override
@@ -61,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
           StoreProvider.of<AppState>(context).dispatch(OnSetTab()); //persist tab
         },
       ),
-      body: tabs[0], //TODO:get this from browser
+      body: tabs[widget.vm.tab],
       drawer: FlipperDrawer(
         vm: widget.vm,
       ),

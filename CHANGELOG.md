@@ -1,9 +1,157 @@
-## <small>6.3.1 (2019-11-01)</small>
+# Changelog
 
-* [Bumped Version]  6.3.1 ([671b6a3](https://github.com/maximegris/angular-electron/commit/671b6a3))
-* #395 - require is not defined ([c4b2cb6](https://github.com/maximegris/angular-electron/commit/c4b2cb6)), closes [#395](https://github.com/maximegris/angular-electron/issues/395)
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## 1.1.0-alpha.0 (2020-01-17)
+
+### 6.3.1 (2019-11-01)
+
+## 6.3.0 (2019-10-25)
+
+## 6.2.0 (2019-09-29)
+
+## 6.1.0 (2019-08-15)
+
+### 6.0.1 (2019-05-31)
+
+## 6.0.0 (2019-05-31)
 
 
+### Features
+
+* **CI:** update Ubuntu and Node versions in Travis ([e0ff557](https://github.com/maximegris/angular-electron/commit/e0ff5570cd3c29b29ab63341424843ea60ea394e))
+
+
+### Bug Fixes
+
+* **e2e:** add mocha types ([20e1e89](https://github.com/maximegris/angular-electron/commit/20e1e892c0d81bab572f319ba3a5eff1315bb1d7))
+* **e2e:** without devTools ([2581983](https://github.com/maximegris/angular-electron/commit/258198393d859ec0950f431b85bb348acab1acf7)), closes [/github.com/electron/spectron/issues/174#issuecomment-319242097](https://github.com/maximegris//github.com/electron/spectron/issues/174/issues/issuecomment-319242097)
+* type conflicts ([a2971bf](https://github.com/maximegris/angular-electron/commit/a2971bf203d6337663418b13c9fa93f94ed08d15))
+
+## 5.1.0 (2018-11-30)
+
+## 5.0.0 (2018-11-11)
+
+## 4.3.0 (2018-10-26)
+
+### 4.2.2 (2018-08-22)
+
+### 4.2.1 (2018-08-22)
+
+## 4.2.0 (2018-08-19)
+
+## 4.1.0 (2018-06-27)
+
+
+### Features
+
+* **zone:** add zone-patch-electron to patch Electron native APIs in polyfills ([01842e2](https://github.com/maximegris/angular-electron/commit/01842e27948cfa8a94ba5c093a75bb020b2c59f6))
+
+## 4.0.0 (2018-05-25)
+
+### 3.4.1 (2018-05-25)
+
+## 3.4.0 (2018-05-25)
+
+
+### Bug Fixes
+
+* **test:** create polyfills-test.ts for karma test & setup Travis CI ([7fbc68c](https://github.com/maximegris/angular-electron/commit/7fbc68cd1fa65bb129f5b894c9e7976375ae6a80))
+* **travis:** set progress to false (speed up npm) ([be48531](https://github.com/maximegris/angular-electron/commit/be48531517097115db1eca13c1b7069375f7dbdd))
+
+## 3.3.0 (2018-04-15)
+
+## 3.2.0 (2018-04-15)
+
+## 3.1.0 (2018-03-15)
+
+### 3.0.1 (2018-03-07)
+
+## 3.0.0 (2018-02-25)
+
+### 2.7.1 (2018-02-15)
+
+## 2.7.0 (2018-02-15)
+
+
+### Bug Fixes
+
+* fixes maximegris/angular-electron[#118](https://github.com/maximegris/angular-electron/issues/118) ([6d21e69](https://github.com/maximegris/angular-electron/commit/6d21e69b6b09f45afa7dff76eed95951860768f4))
+
+## 2.6.0 (2018-01-24)
+
+## 2.5.0 (2018-01-12)
+
+
+### Bug Fixes
+
+* fixes maximegris/angular-electron[#98](https://github.com/maximegris/angular-electron/issues/98) ([136344b](https://github.com/maximegris/angular-electron/commit/136344b1cb96ea9947a080394c2280721ff45667))
+
+### 2.4.1 (2017-12-14)
+
+## 2.4.0 (2017-12-08)
+
+## 2.3.0 (2017-12-04)
+
+## 2.2.0 (2017-11-28)
+
+### 2.1.1 (2017-11-19)
+
+## 2.1.0 (2017-11-19)
+
+## 2.0.0 (2017-11-13)
+
+## 1.9.0 (2017-09-22)
+
+### 1.8.1 (2017-09-22)
+
+## 1.8.0 (2017-09-09)
+
+## 1.7.0 (2017-08-18)
+
+### 1.6.1 (2017-07-27)
+
+## 1.6.0 (2017-07-16)
+
+## 1.5.0 (2017-06-10)
+
+### 1.4.4 (2017-06-08)
+
+### 1.4.3 (2017-06-06)
+
+### 1.4.2 (2017-05-31)
+
+## 1.4.0 (2017-05-23)
+
+### 1.3.6 (2017-05-21)
+
+### 1.3.5 (2017-05-18)
+
+### 1.3.4 (2017-05-12)
+
+### 1.3.3 (2017-05-10)
+
+### 1.3.2 (2017-05-05)
+
+### 1.3.1 (2017-05-05)
+
+## 1.3.0 (2017-05-01)
+
+### 1.2.1 (2017-04-30)
+
+## 1.2.0 (2017-04-19)
+
+### 1.1.2 (2017-04-18)
+
+### 1.1.1 (2017-04-12)
+
+## 1.1.0 (2017-04-12)
+
+### 1.0.3 (2017-04-07)
+
+### 1.0.2 (2017-04-07)
+
+### 1.0.1 (2017-04-03)
 
 ## 6.3.0 (2019-10-25)
 

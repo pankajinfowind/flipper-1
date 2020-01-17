@@ -1,6 +1,5 @@
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
-import 'package:flipper/domain/redux/authentication/auth_actions.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/permission/permission_check.dart';
 import 'package:flipper/domain/redux/user/user_actions.dart';
@@ -56,6 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (context, vm) {
         return Scaffold(
           appBar: CommonAppBar(
+            title: "",
             actionButton: FlatButton(
               onPressed: () {
                 StoreProvider.of<AppState>(context).dispatch(AppAction(
@@ -131,13 +131,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Container(
                         width: 300,
                         child: TextFormField(
+                          obscureText: true,
                           style: TextStyle(color: Colors.black),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Password should be given";
-                            }
-                            return null;
-                          },
+                          validator: Validators.isStringHasMoreChars,
                           onSaved: (password) {
                             tBusiness.password = password;
                           },
@@ -151,11 +147,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: <Widget>[
                           Flexible(
                             child: Text(
-                                "Accept Flipper's Seller Agreement and Privacy Policy:" +
-                                    position.toString()),
+                                "Accept Flipper's Seller Agreement and Privacy Policy"),
                           ),
-                          //TODO: make this radio when clicked to show that.
                           Radio(
+                            groupValue: 1,
                             activeColor: Colors.red,
                             focusColor: Colors.red,
                             onChanged: (agreeTerm) {
@@ -191,7 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     Business business = Business((b) => b
       ..name = tBusiness.name
-      ..abbreviation = tBusiness.name.substring(0,2).toLowerCase()
+      ..abbreviation = tBusiness.name.substring(0, 2).toLowerCase()
       ..isActive = true
       ..type = BusinessType.NORMAL);
 

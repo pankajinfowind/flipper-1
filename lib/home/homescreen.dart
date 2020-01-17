@@ -1,8 +1,11 @@
+import 'package:flipper/domain/redux/app_actions/actions.dart';
+import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/home/flipper_drawer.dart';
 import 'package:flipper/home/home_app_bar.dart';
 import 'package:flipper/home/poswidget.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_redux/flutter_redux.dart';
 
 class HomeScreen extends StatefulWidget {
   final ValueNotifier<bool> sideOpenController;
@@ -31,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: HomeAppBar(
@@ -49,9 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text('ITEMS'),
           ),
         ],
-        currentIndex: 0, //TODO:get this from
+        currentIndex: widget.vm.tab,
+
         selectedItemColor: Colors.amber[800],
-        onTap: (num) {},
+        onTap: (num) {
+          StoreProvider.of<AppState>(context).dispatch(CurrentTab(tab: num));
+          StoreProvider.of<AppState>(context).dispatch(OnSetTab()); //persist tab
+        },
       ),
       body: tabs[0], //TODO:get this from browser
       drawer: FlipperDrawer(

@@ -8,6 +8,7 @@ final businessReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, NextActiveBussiness>(_onNextActiveBusinessId),
   TypedReducer<AppState, WithBusiness>(_onCreatingBusiness),
   TypedReducer<AppState, ResetBusiness>(_resetBusiness),
+  TypedReducer<AppState, RefreshBusinessList>(_refreshBusinessList),
 ];
 AppState _onBusinessLoaded(AppState state, OnBusinessLoaded action) {
   return state.rebuild((a) => a..businesses = action.business);
@@ -25,3 +26,12 @@ AppState _onActiveBusinessId(AppState state, ActiveBusinessId action) {
 AppState _onNextActiveBusinessId(AppState state, NextActiveBussiness action) {
   return state.rebuild((a) => a..nextActiveBusiness = action.bussiness.toBuilder());
 }
+AppState _refreshBusinessList(AppState state, RefreshBusinessList action) {
+  //TODO:FIXME: this is not updating as it should
+  //FIXME:
+  return state.rebuild((a) => a
+//    ..businesses.remove( state.previousActiveBusiness)
+//    ..businesses.add(action.updatedBusiness)
+  );
+}
+

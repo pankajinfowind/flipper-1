@@ -796,6 +796,161 @@ class $BusinessUserTableTable extends BusinessUserTable
   }
 }
 
+class TabsTableData extends DataClass implements Insertable<TabsTableData> {
+  final int id;
+  final int tab;
+  TabsTableData({@required this.id, this.tab});
+  factory TabsTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return TabsTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      tab: intType.mapFromDatabaseResponse(data['${effectivePrefix}tab']),
+    );
+  }
+  factory TabsTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return TabsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      tab: serializer.fromJson<int>(json['tab']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tab': serializer.toJson<int>(tab),
+    };
+  }
+
+  @override
+  TabsTableCompanion createCompanion(bool nullToAbsent) {
+    return TabsTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      tab: tab == null && nullToAbsent ? const Value.absent() : Value(tab),
+    );
+  }
+
+  TabsTableData copyWith({int id, int tab}) => TabsTableData(
+        id: id ?? this.id,
+        tab: tab ?? this.tab,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TabsTableData(')
+          ..write('id: $id, ')
+          ..write('tab: $tab')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(id.hashCode, tab.hashCode));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is TabsTableData && other.id == this.id && other.tab == this.tab);
+}
+
+class TabsTableCompanion extends UpdateCompanion<TabsTableData> {
+  final Value<int> id;
+  final Value<int> tab;
+  const TabsTableCompanion({
+    this.id = const Value.absent(),
+    this.tab = const Value.absent(),
+  });
+  TabsTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.tab = const Value.absent(),
+  });
+  TabsTableCompanion copyWith({Value<int> id, Value<int> tab}) {
+    return TabsTableCompanion(
+      id: id ?? this.id,
+      tab: tab ?? this.tab,
+    );
+  }
+}
+
+class $TabsTableTable extends TabsTable
+    with TableInfo<$TabsTableTable, TabsTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $TabsTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _tabMeta = const VerificationMeta('tab');
+  GeneratedIntColumn _tab;
+  @override
+  GeneratedIntColumn get tab => _tab ??= _constructTab();
+  GeneratedIntColumn _constructTab() {
+    return GeneratedIntColumn(
+      'tab',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, tab];
+  @override
+  $TabsTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'tabs_table';
+  @override
+  final String actualTableName = 'tabs_table';
+  @override
+  VerificationContext validateIntegrity(TabsTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.tab.present) {
+      context.handle(_tabMeta, tab.isAcceptableValue(d.tab.value, _tabMeta));
+    } else if (tab.isRequired && isInserting) {
+      context.missing(_tabMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TabsTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return TabsTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(TabsTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.tab.present) {
+      map['tab'] = Variable<int, IntType>(d.tab.value);
+    }
+    return map;
+  }
+
+  @override
+  $TabsTableTable createAlias(String alias) {
+    return $TabsTableTable(_db, alias);
+  }
+}
+
 class BusinessTableData extends DataClass
     implements Insertable<BusinessTableData> {
   final int id;
@@ -1209,6 +1364,8 @@ abstract class _$Database extends GeneratedDatabase {
   $BusinessUserTableTable _businessUserTable;
   $BusinessUserTableTable get businessUserTable =>
       _businessUserTable ??= $BusinessUserTableTable(this);
+  $TabsTableTable _tabsTable;
+  $TabsTableTable get tabsTable => _tabsTable ??= $TabsTableTable(this);
   $BusinessTableTable _businessTable;
   $BusinessTableTable get businessTable =>
       _businessTable ??= $BusinessTableTable(this);
@@ -1222,7 +1379,15 @@ abstract class _$Database extends GeneratedDatabase {
   BusinessDao get businessDao => _businessDao ??= BusinessDao(this as Database);
   BranchDao _branchDao;
   BranchDao get branchDao => _branchDao ??= BranchDao(this as Database);
+  TabsDao _tabsDao;
+  TabsDao get tabsDao => _tabsDao ??= TabsDao(this as Database);
   @override
-  List<TableInfo> get allTables =>
-      [userTable, tokenTable, businessUserTable, businessTable, branchTable];
+  List<TableInfo> get allTables => [
+        userTable,
+        tokenTable,
+        businessUserTable,
+        tabsTable,
+        businessTable,
+        branchTable
+      ];
 }

@@ -1,7 +1,9 @@
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/data/respositories/branch_repository.dart';
 import 'package:flipper/data/respositories/business_repository.dart';
+import 'package:flipper/data/respositories/general_repository.dart';
 import 'package:flipper/data/respositories/user_repository.dart';
+import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/branch/branch_actions.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/branch.dart';
@@ -26,16 +28,17 @@ List<Middleware<AppState>> createAuthenticationMiddleware(
   UserRepository userRepository,
   BusinessRepository businessRepository,
   BranchRepository branchRepository,
+  GeneralRepository generalRepository,
   GlobalKey<NavigatorState> navigatorKey,
 ) {
   return [
     TypedMiddleware<AppState, VerifyAuthenticationState>(_verifyAuthState(
-        userRepository, businessRepository, branchRepository, navigatorKey)),
+        userRepository, businessRepository, branchRepository,generalRepository, navigatorKey)),
     TypedMiddleware<AppState, LogIn>(_authLogin(userRepository, navigatorKey)),
     TypedMiddleware<AppState, LogOutAction>(
         _authLogout(userRepository, navigatorKey)),
     TypedMiddleware<AppState, AfterLoginAction>(_verifyAuthState(
-        userRepository, businessRepository, branchRepository, navigatorKey)),
+        userRepository, businessRepository, branchRepository,generalRepository, navigatorKey)),
   ];
 }
 
@@ -44,6 +47,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
   UserRepository userRepository,
   BusinessRepository businessRepository,
   BranchRepository branchRepository,
+  GeneralRepository generalRepository,
   GlobalKey<NavigatorState> navigatorKey,
 ) {
   return (store, action, next) async {
@@ -55,6 +59,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     }
 
     UserTableData user = await userRepository.checkAuth(store);
+    TabsTableData tab = await generalRepository.getTab(store);
     List<BranchTableData> branch = await branchRepository.getBranches(store);
     List<BusinessTableData> businesses =
         await businessRepository.getBusinesses(store);
@@ -70,10 +75,18 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ..status = user.status
         ..avatar = user.avatar
         ..email = user.email);
-      Branch b = Branch((b) => b
-        ..id = branch[0].id
-        ..name = branch[0].name);
-      store.dispatch(OnSetBranchHint(branch: b));
+
+      //TODO: bellow line has issue.
+      try{
+        Branch hint = Branch((b) => b
+          ..id = branch[0].id
+          ..name = branch[0].name);
+        store.dispatch(OnSetBranchHint(branch: hint));
+      }catch(e){}
+
+
+
+
       List<Branch> branches = [];
       branch.forEach((b) => {
             branches.add(Branch((bu) => bu
@@ -92,6 +105,8 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..name = b.name))
           });
       store.dispatch(OnBusinessLoaded(business: businessList));
+      final currentTab = tab==null? 0: tab.tab;
+      store.dispatch(CurrentTab(tab: currentTab));
       //branch
       if (businesses.length == 0) {
         Router.navigator.pushNamed(Router.signUpScreen);

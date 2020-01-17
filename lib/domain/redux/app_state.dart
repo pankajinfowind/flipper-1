@@ -21,6 +21,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Business get previousActiveBusiness;
 
   @nullable
+  int get tab;
+
+  @nullable
   Business get nextActiveBusiness;
 
   @nullable

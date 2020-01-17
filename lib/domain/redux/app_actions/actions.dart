@@ -9,4 +9,15 @@ class AppAction {
 }
 
 @immutable
+class OnSetTab {
+}
+
+@immutable
+class CurrentTab {
+  final int tab;
+
+  const CurrentTab({@required this.tab});
+}
+
+@immutable
 class ResetAppAction {}

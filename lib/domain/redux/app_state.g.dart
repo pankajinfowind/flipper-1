@@ -14,6 +14,8 @@ class _$AppState extends AppState {
   @override
   final Business previousActiveBusiness;
   @override
+  final int tab;
+  @override
   final Business nextActiveBusiness;
   @override
   final Sheets sheet;
@@ -41,6 +43,7 @@ class _$AppState extends AppState {
       {this.user,
       this.userId,
       this.previousActiveBusiness,
+      this.tab,
       this.nextActiveBusiness,
       this.sheet,
       this.action,
@@ -71,6 +74,7 @@ class _$AppState extends AppState {
         user == other.user &&
         userId == other.userId &&
         previousActiveBusiness == other.previousActiveBusiness &&
+        tab == other.tab &&
         nextActiveBusiness == other.nextActiveBusiness &&
         sheet == other.sheet &&
         action == other.action &&
@@ -96,10 +100,12 @@ class _$AppState extends AppState {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, user.hashCode),
-                                                    userId.hashCode),
-                                                previousActiveBusiness
-                                                    .hashCode),
+                                                $jc(
+                                                    $jc($jc(0, user.hashCode),
+                                                        userId.hashCode),
+                                                    previousActiveBusiness
+                                                        .hashCode),
+                                                tab.hashCode),
                                             nextActiveBusiness.hashCode),
                                         sheet.hashCode),
                                     action.hashCode),
@@ -118,6 +124,7 @@ class _$AppState extends AppState {
           ..add('user', user)
           ..add('userId', userId)
           ..add('previousActiveBusiness', previousActiveBusiness)
+          ..add('tab', tab)
           ..add('nextActiveBusiness', nextActiveBusiness)
           ..add('sheet', sheet)
           ..add('action', action)
@@ -148,6 +155,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _$this._previousActiveBusiness ??= new BusinessBuilder();
   set previousActiveBusiness(BusinessBuilder previousActiveBusiness) =>
       _$this._previousActiveBusiness = previousActiveBusiness;
+
+  int _tab;
+  int get tab => _$this._tab;
+  set tab(int tab) => _$this._tab = tab;
 
   BusinessBuilder _nextActiveBusiness;
   BusinessBuilder get nextActiveBusiness =>
@@ -200,6 +211,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _user = _$v.user?.toBuilder();
       _userId = _$v.userId;
       _previousActiveBusiness = _$v.previousActiveBusiness?.toBuilder();
+      _tab = _$v.tab;
       _nextActiveBusiness = _$v.nextActiveBusiness?.toBuilder();
       _sheet = _$v.sheet?.toBuilder();
       _action = _$v.action?.toBuilder();
@@ -237,6 +249,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               user: _user?.build(),
               userId: userId,
               previousActiveBusiness: _previousActiveBusiness?.build(),
+              tab: tab,
               nextActiveBusiness: _nextActiveBusiness?.build(),
               sheet: _sheet?.build(),
               action: _action?.build(),
@@ -255,6 +268,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
         _$failedField = 'previousActiveBusiness';
         _previousActiveBusiness?.build();
+
         _$failedField = 'nextActiveBusiness';
         _nextActiveBusiness?.build();
         _$failedField = 'sheet';

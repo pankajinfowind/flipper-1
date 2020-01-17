@@ -14,6 +14,8 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final bool hasHint;
   @override
+  final int tab;
+  @override
   final Business currentBusiness;
   @override
   final bool hasAction;
@@ -33,6 +35,7 @@ class _$CommonViewModel extends CommonViewModel {
       {this.hasUser,
       this.hasSheet,
       this.hasHint,
+      this.tab,
       this.currentBusiness,
       this.hasAction,
       this.branches,
@@ -78,6 +81,7 @@ class _$CommonViewModel extends CommonViewModel {
         hasUser == other.hasUser &&
         hasSheet == other.hasSheet &&
         hasHint == other.hasHint &&
+        tab == other.tab &&
         currentBusiness == other.currentBusiness &&
         hasAction == other.hasAction &&
         branches == other.branches &&
@@ -95,9 +99,11 @@ class _$CommonViewModel extends CommonViewModel {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, hasUser.hashCode),
-                                    hasSheet.hashCode),
-                                hasHint.hashCode),
+                                $jc(
+                                    $jc($jc(0, hasUser.hashCode),
+                                        hasSheet.hashCode),
+                                    hasHint.hashCode),
+                                tab.hashCode),
                             currentBusiness.hashCode),
                         hasAction.hashCode),
                     branches.hashCode),
@@ -112,6 +118,7 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('hasUser', hasUser)
           ..add('hasSheet', hasSheet)
           ..add('hasHint', hasHint)
+          ..add('tab', tab)
           ..add('currentBusiness', currentBusiness)
           ..add('hasAction', hasAction)
           ..add('branches', branches)
@@ -137,6 +144,10 @@ class CommonViewModelBuilder
   bool _hasHint;
   bool get hasHint => _$this._hasHint;
   set hasHint(bool hasHint) => _$this._hasHint = hasHint;
+
+  int _tab;
+  int get tab => _$this._tab;
+  set tab(int tab) => _$this._tab = tab;
 
   BusinessBuilder _currentBusiness;
   BusinessBuilder get currentBusiness =>
@@ -172,6 +183,7 @@ class CommonViewModelBuilder
       _hasUser = _$v.hasUser;
       _hasSheet = _$v.hasSheet;
       _hasHint = _$v.hasHint;
+      _tab = _$v.tab;
       _currentBusiness = _$v.currentBusiness?.toBuilder();
       _hasAction = _$v.hasAction;
       _branches = _$v.branches;
@@ -205,6 +217,7 @@ class CommonViewModelBuilder
               hasUser: hasUser,
               hasSheet: hasSheet,
               hasHint: hasHint,
+              tab: tab,
               currentBusiness: _currentBusiness?.build(),
               hasAction: hasAction,
               branches: branches,

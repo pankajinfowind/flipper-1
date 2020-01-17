@@ -1,4 +1,5 @@
 import 'package:flipper/presentation/home/common_view_model.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,7 +19,7 @@ class _BranchListState extends State<BranchList> {
   DropdownButton _BranchItem() => DropdownButton<String>(
         isDense: true,
         hint: Text(
-          widget.vm.hint.name??"Hint_",
+          widget.vm.hint.name,
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white),
         ),
@@ -81,12 +82,17 @@ class _BranchListState extends State<BranchList> {
                   "assets/graphics/credit-card.svg",
                   semanticsLabel: 'Pos',
                 ),
-                title: Text(
-                  "Pos",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: _Style.fontFamily,
-                      fontSize: 18),
+                title: GestureDetector(
+                  onTap: (){
+                    Router.navigator.pushNamed(Router.dashboard); //pos on dashboard.
+                  },
+                  child: Text(
+                    "Pos",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: _Style.fontFamily,
+                        fontSize: 18),
+                  ),
                 ),
                 dense: true,
               ),

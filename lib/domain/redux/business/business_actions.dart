@@ -16,6 +16,11 @@ class SetActiveBusiness {
 
   SetActiveBusiness(this.businessId);
 }
+class RefreshBusinessList {
+  final Business updatedBusiness;
+
+  RefreshBusinessList(this.updatedBusiness);
+}
 
 @immutable
 class WithBusiness {

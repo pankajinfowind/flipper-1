@@ -85,9 +85,6 @@ class _DashBoardState extends State<DashBoard> {
           if (vm.hasSheet) {
             WidgetsBinding.instance.addPostFrameCallback(
                 (_) => Router.navigator.pushNamed(Router.bottom));
-//            WidgetsBinding.instance
-//                .addPostFrameCallback((_) => _showBottomSheet());
-//            StoreProvider.of<AppState>(context).dispatch(OnBottomSheetClosed());
           }
           return we;
         }

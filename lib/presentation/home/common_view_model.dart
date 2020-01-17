@@ -15,6 +15,8 @@ abstract class CommonViewModel
   @nullable
   bool get hasHint;
   @nullable
+  int get tab;
+  @nullable
   Business get currentBusiness;
   bool get hasAction;
   List<Branch> get branches;
@@ -46,6 +48,7 @@ abstract class CommonViewModel
       ..hasSheet = _hasSheet(store)
       ..hasAction = _hasAction(store)
       ..businesses = store.state.businesses
+      ..tab = store.state.tab
       ..currentBusiness =store.state.previousActiveBusiness==null?null: store.state.previousActiveBusiness.toBuilder()
       ..hint = _hasHint(store)==null?null: store.state.hint.toBuilder()
       ..branches = store.state.branches);

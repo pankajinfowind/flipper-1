@@ -5,6 +5,8 @@ import 'package:flipper/data/business.dart';
 import 'package:flipper/data/business_user.dart';
 import 'package:flipper/data/dao/branch_dao.dart';
 import 'package:flipper/data/dao/business_dao.dart';
+import 'package:flipper/data/dao/tab_dao.dart';
+import 'package:flipper/data/tabs.dart';
 import 'package:flipper/data/token.dart';
 import 'package:flipper/data/user.dart';
 import 'package:moor/moor.dart';
@@ -29,8 +31,8 @@ LazyDatabase _openConnection() {
 }
 
 @UseMoor(
-    tables: [UserTable, TokenTable,BusinessUserTable, BusinessTable, BranchTable],
-    daos: [UserDao, TokenDao, BusinessDao, BranchDao])
+    tables: [UserTable, TokenTable,BusinessUserTable,TabsTable, BusinessTable, BranchTable],
+    daos: [UserDao, TokenDao, BusinessDao, BranchDao,TabsDao])
 class Database extends _$Database {
   Database() : super(_openConnection());
   @override
@@ -40,6 +42,13 @@ class Database extends _$Database {
     return MigrationStrategy(
       beforeOpen: (details) async {
         customStatement('PRAGMA foreign_keys = ON');
+      },
+      onUpgrade: (Migrator  migrator,from,to) async{
+        if (from == 1) {
+          //await migrator.addColumn(tabsTable, tabsTable.tab);
+          //await migrator.issueCustomQuery("ALTER TABLE tabs_table CHANGE id int( 30 ) NOT NULL AUTO_INCREMENT");
+          //await migrator.createTable(tabsTable);
+        }
       },
       onCreate: (Migrator m) {
         return m.createAllTables();

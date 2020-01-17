@@ -1,4 +1,6 @@
 import 'package:flipper/data/respositories/branch_repository.dart';
+import 'package:flipper/data/respositories/general_repository.dart';
+import 'package:flipper/domain/redux/app_actions/app_action_middleware.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/business/business_middleware.dart';
@@ -31,6 +33,7 @@ class _FlipperAppState extends State<FlipperApp> {
   final userRepo = UserRepository();
   final businessRepo = BusinessRepository();
   final branchRepo = BranchRepository();
+  final generalRepo = GeneralRepository();
   @override
   void initState() {
     super.initState();
@@ -38,9 +41,10 @@ class _FlipperAppState extends State<FlipperApp> {
       appReducer,
       initialState: AppState.init(),
       middleware:
-          createAuthenticationMiddleware(userRepo, businessRepo,branchRepo, _navigatorKey)
+          createAuthenticationMiddleware(userRepo, businessRepo,branchRepo,generalRepo, _navigatorKey)
             ..addAll(createBusinessMiddleware(_navigatorKey, businessRepo))
             ..addAll(permissionMiddleware(_navigatorKey))
+            ..addAll(AppActionMiddleware(_navigatorKey,generalRepo))
             ..addAll(userMiddleware(userRepo,_navigatorKey))
             ..addAll(createBranchMiddleware(_navigatorKey,branchRepo)),
     );

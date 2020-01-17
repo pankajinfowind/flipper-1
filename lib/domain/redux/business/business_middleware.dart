@@ -67,7 +67,14 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       if(store.state.previousActiveBusiness !=null){
         businessRepository.update(store, store.state.previousActiveBusiness,active: false);
       }
-
+      final updated= Business((b)=>
+          b..id=store.state.nextActiveBusiness.id
+          ..abbreviation=store.state.nextActiveBusiness.abbreviation
+          ..name= store.state.nextActiveBusiness.name
+          ..hexColor=store.state.nextActiveBusiness.hexColor
+          ..isActive=true
+      );
+      store.dispatch(RefreshBusinessList(updated));
     }
   };
 }

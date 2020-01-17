@@ -1,5 +1,21 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
-</div>
+<!--  -->
+<!-- <flipper-menu 
+[menuEntries]="entries" 
+(menuToggled)="isMenuToggled($event)" 
+(switchedBusiness)="displaySwitchedBusiness($event)" 
+(switchedBranch)="displaySwitchedBranch($event)"
+(logoutUser)="didUserLoggedOut($event)" 
+(routerClicked)="getRouterClicked($event)" 
+ >
+ </flipper-menu> -->
+ <!-- <flipper-dashboard [dashboardEntries]="dashboardEntries"></flipper-dashboard> -->
+ <flipper-basic-pos
+[currentOrder]="currentOrder"
+[collectCashCompleted]="collectCashCompleted"
+[currency]="currency"
+(addToCartEmit)="addToCart($event)"
+[foundVariant]="foundVariant"
+(searchEmitValue)="searchPosVariant($event)"
+(saveOrderUpdatedEmit)="saveOrderUpdated($event)"
+(didCollectCashEmit)="didCollectCash($event)">
+</flipper-basic-pos>

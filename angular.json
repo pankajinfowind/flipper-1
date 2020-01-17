@@ -7,6 +7,11 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -27,6 +32,12 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                ".",
+                "./styles"
+              ]
+            },
             "scripts": [],
             "customWebpackConfig": {
               "path": "./angular.webpack.js"
@@ -70,6 +81,7 @@
             "production": {
               "optimization": true,
               "outputHashing": "all",
+              "crossOrigin": "anonymous",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
@@ -154,6 +166,7 @@
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
+          "preserveSymlinks": true, 
           "options": {
             "tsConfig": [
               "e2e/tsconfig.e2e.json"

@@ -1,7 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
-  margin: 0;
-  padding: 0;
-
-  height: 100%;
+@font-face {
+  font-family: Heebo;
+  src: local(Heebo-Regular),
+    url(./assets/font/Heebo-Regular.woff) format("woff"),
+    url(./assets/font/Heebo-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
 }
+@font-face {
+  font-family: Heebo;
+  src: local(Heebo-Medium),
+    url(./assets/font/Heebo-Medium.woff) format("woff"),
+    url(./assets/font/Heebo-Medium.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Heebo;
+  src: local(Heebo-Bold),
+    url(./assets/font/Heebo-Bold.woff) format("woff"),
+    url(./assets/font/Heebo-Bold.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Roboto;
+  src: local(Roboto-Regular),
+    url(./assets/font/Roboto-Regular.woff2) format("woff2"),
+    url(./assets/font/Roboto-Regular.woff) format("woff"),
+    url(./assets/font/Roboto-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+@import '../styles/app-all';
+
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+overflow: hidden;
+font-family: 'Roboto', 'Heebo', sans-serif!important;
+-webkit-touch-callout: none; /* iOS Safari */
+-webkit-user-select: none; /* Safari */
+ -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                              supported by Chrome, Opera and Firefox */
+}
+

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, dialog, nativeImage } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -6,12 +6,104 @@ let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
+///////////////////// AUTO UPDATED  /////////////////////////////
+
+const log = require("electron-log");
+const { autoUpdater } = require("electron-updater");
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info";
+
+const isDev = require("electron-is-dev");
+function sendStatusToWindow(text) {
+  log.info(app.getVersion() + "::" + text);
+  win.webContents.send("message", text);
+
+  const dialogOpt = {
+    type: "info",
+    buttons: ["Cancel"],
+    title: "Flipper Update",
+    message: "Updated the Flipper version("+app.getVersion()+")",
+    detail:text,
+  };
+ 
+  showMessage(dialogOpt);
+}
+
+if (!isDev) {
+  autoUpdater.on("checking-for-update", () => {
+    sendStatusToWindow("Checking for update...");
+    // tag
+  });
+  autoUpdater.on("update-available", info => {
+    sendStatusToWindow("Update available.");
+  });
+  autoUpdater.on("update-not-available", info => {
+    sendStatusToWindow("Update not available.");
+  });
+  autoUpdater.on("error", err => {
+    sendStatusToWindow("Error in auto-updater. " + err);
+  });
+  autoUpdater.on("download-progress", progressObj => {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+    log_message =
+      log_message +
+      " (" +
+      progressObj.transferred +
+      "/" +
+      progressObj.total +
+      ")";
+    sendStatusToWindow(log_message);
+  });
+  autoUpdater.on("update-downloaded", info => {
+    const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
+    const dialogOpt = {
+      type: "info",
+      buttons: ["Restart", "Later"],
+      title: "Flipper Update",
+      message: "Updated the Flipper version("+app.getVersion()+")",
+      detail:"A new version has been downloaded. Restart the application to apply the updates.",
+        icon: iconImage
+    };
+   
+    showMessage(dialogOpt);
+
+    sendStatusToWindow("Update downloaded");
+
+  });
+}
+
+function showMessage(dialogOpt){
+  const window = BrowserWindow.getFocusedWindow();
+  dialog.showMessageBox(window,dialogOpt).then(response=>{
+    if (response) autoUpdater.quitAndInstall();
+},error=>{
+return dialog.showMessageBox(window, {
+type: 'error',
+message: error,
+});
+});
+}
+
+let iconName;
+
+  if(process.platform === "win32"){
+    iconName =path.join(__dirname, '../assets/win/icon.ico');
+  }else
+  if(process.platform === "darwin"){
+    iconName =path.join(__dirname, '../assets/mac/icon.icns');
+  }else{
+    iconName =path.join(__dirname, '../assets/png/icon.png');
+  }
+
+
 function createWindow() {
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
-
+  
   // Create the browser window.
+  
   win = new BrowserWindow({
     x: 0,
     y: 0,
@@ -20,6 +112,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    icon: iconName
   });
 
   if (serve) {
@@ -36,7 +129,7 @@ function createWindow() {
   }
 
   if (serve) {
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
   }
 
   // Emitted when the window is closed.

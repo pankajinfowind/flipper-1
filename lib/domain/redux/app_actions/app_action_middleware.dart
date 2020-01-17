@@ -25,7 +25,10 @@ _setTab(
   return (store, action, next) async {
     next(action);
     if(store.state.tab !=null){
-      generalRepository.insert(store, store.state.tab);
+     final updated =  await generalRepository.update(store, store.state.tab);
+     if(!updated){
+       await generalRepository.insert(store, store.state.tab);
+     }
     }
   };
 }

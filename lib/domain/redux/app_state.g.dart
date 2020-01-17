@@ -10,6 +10,8 @@ class _$AppState extends AppState {
   @override
   final User user;
   @override
+  final int userId;
+  @override
   final Sheets sheet;
   @override
   final AppActions action;
@@ -33,6 +35,7 @@ class _$AppState extends AppState {
 
   _$AppState._(
       {this.user,
+      this.userId,
       this.sheet,
       this.action,
       this.permissions,
@@ -60,6 +63,7 @@ class _$AppState extends AppState {
     if (identical(other, this)) return true;
     return other is AppState &&
         user == other.user &&
+        userId == other.userId &&
         sheet == other.sheet &&
         action == other.action &&
         permissions == other.permissions &&
@@ -80,7 +84,11 @@ class _$AppState extends AppState {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc($jc(0, user.hashCode), sheet.hashCode),
+                                $jc(
+                                    $jc(
+                                        $jc($jc(0, user.hashCode),
+                                            userId.hashCode),
+                                        sheet.hashCode),
                                     action.hashCode),
                                 permissions.hashCode),
                             branches.hashCode),
@@ -95,6 +103,7 @@ class _$AppState extends AppState {
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
           ..add('user', user)
+          ..add('userId', userId)
           ..add('sheet', sheet)
           ..add('action', action)
           ..add('permissions', permissions)
@@ -114,6 +123,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   UserBuilder _user;
   UserBuilder get user => _$this._user ??= new UserBuilder();
   set user(UserBuilder user) => _$this._user = user;
+
+  int _userId;
+  int get userId => _$this._userId;
+  set userId(int userId) => _$this._userId = userId;
 
   SheetsBuilder _sheet;
   SheetsBuilder get sheet => _$this._sheet ??= new SheetsBuilder();
@@ -158,6 +171,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AppStateBuilder get _$this {
     if (_$v != null) {
       _user = _$v.user?.toBuilder();
+      _userId = _$v.userId;
       _sheet = _$v.sheet?.toBuilder();
       _action = _$v.action?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
@@ -192,6 +206,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _$result = _$v ??
           new _$AppState._(
               user: _user?.build(),
+              userId: userId,
               sheet: _sheet?.build(),
               action: _action?.build(),
               permissions: _permissions?.build(),
@@ -206,6 +221,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       try {
         _$failedField = 'user';
         _user?.build();
+
         _$failedField = 'sheet';
         _sheet?.build();
         _$failedField = 'action';

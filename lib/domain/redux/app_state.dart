@@ -15,6 +15,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   User get user;
 
   @nullable
+  int get userId;
+
+  @nullable
   Sheets get sheet;
 
   @nullable

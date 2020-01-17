@@ -3,8 +3,10 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/authentication/auth_actions.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/permission/permission_check.dart';
+import 'package:flipper/domain/redux/user/user_actions.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/user.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
@@ -182,17 +184,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   _handleFormSubmit() {
-    //TODO: make validation a business name should be more that 4 characters
-    //TODO: on  submit substr the name to 2 char ans save it as the abbreviation.
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
     }
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-    final business = Business((b) => b
+    Business business = Business((b) => b
       ..name = tBusiness.name
-//      ..email = tBusiness.email //TODO: was requesting email but should not be saved in business so therefore is should also be populated from auth yegobox
+      ..isActive = true
       ..type = BusinessType.NORMAL);
+
+    User user = User((user) => user
+      ..email = tBusiness.email
+      ..status = "online"
+      ..bearerToken = "none"
+      ..refreshToken = "none"
+      ..isCurrentAuthenticated = true
+      ..avatar = "avatarFromYegobox"
+      ..username = "userNameFromYegobox");
+
+    StoreProvider.of<AppState>(context).dispatch(WithUser(user));
+    StoreProvider.of<AppState>(context).dispatch(CreateUser(user));
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
     StoreProvider.of<AppState>(context).dispatch(CreateBusinessOnSignUp());
     //finally verify if all is good and go to dashboard.

@@ -4,11 +4,12 @@ import 'package:flipper/domain/redux/authentication/auth_actions.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flipper/presentation/common/common_app_bar.dart';
+
 class TBusiness {
   String name;
   String password;
@@ -23,10 +24,9 @@ class CreateBusinessScreen extends StatefulWidget {
   _CreateBusinessScreenState createState() => _CreateBusinessScreenState();
 }
 
-class _CreateBusinessScreenState extends State<CreateBusinessScreen>  {
+class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
   final _formKey = GlobalKey<FormState>();
   final TBusiness tBusiness = TBusiness();
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +110,6 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen>  {
   }
 
   _handleFormSubmit() {
-    //TODO: make validation a business name should be more that 4 characters
-    //TODO: on  submit substr the name to 2 char ans save it as the abbreviation.
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -119,8 +117,9 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen>  {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     final business = Business((b) => b
       ..name = tBusiness.name
+      ..abbreviation = tBusiness.name.substring(1,2)
+      ..hexColor="#f5a623"
       ..type = BusinessType.NORMAL);
-
 
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
     StoreProvider.of<AppState>(context).dispatch(CreateBusiness());

@@ -7,8 +7,6 @@ import 'package:flipper/util/HexColor.dart';
 import "package:flutter/material.dart";
 import "package:flutter_redux/flutter_redux.dart";
 
-import '../../routes.dart';
-
 class BusinessList extends StatefulWidget {
 //  final Function(DrawerState) stateChangeCallback;
   final CommonViewModel vm;
@@ -61,9 +59,9 @@ class _BusinessListState extends State<BusinessList> {
             _Style.defaultPadding,
             _GroupSettingsButton(
                 Image.asset("assets/graphics/drawer/create_topic.png"), () {
-                  //TODO: fix overflow when loading more than 7 businesses for now we are not alloing user to create more than2 business
-              if(widget.vm.businesses.length>=3){
-
+              //TODO: fix overflow when loading more than 7 businesses for now we are not alloing user to create more than2 business
+              if (widget.vm.businesses.length >= 3) {
+                //TODO:show a toast here that we can not create additional business...
                 return;
               }
               Router.navigator.pushNamed(Router.createBusiness);
@@ -98,7 +96,11 @@ class _BusinessListState extends State<BusinessList> {
       child: Padding(
         padding:
             const EdgeInsets.only(top: _Style.padding, right: _Style.padding),
-        child: _GroupButton(data, (id) {}, onClick, hasNotification),
+        child: _GroupButton(data, (id) {
+          //todo: set the business as highlighted on first creation
+          //todo: on auth set highlighted business in store.
+          //todo: reset other highlighted business and set this one with the ID.
+        }, onClick, hasNotification),
       ),
     );
   }
@@ -133,7 +135,7 @@ class _BusinessListState extends State<BusinessList> {
   void _openUserAccount(BuildContext context) {
     final uid = StoreProvider.of<AppState>(context).state.user.id;
     //FIXME: should use Router.navigator.pushNamed(Router.dashboard); to navigate ASAP;
-    Navigator.of(context).pushNamed(Routes.user, arguments: uid);
+//    Navigator.of(context).pushNamed(Routes.user, arguments: uid);
   }
 }
 
@@ -181,8 +183,8 @@ class _GroupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _circleColor =
-        HexColor("#f5a623"); //TODO: make this color comes from setting in v.2
-    final _groupText = business.abbreviation.substring(0, 2).toUpperCase();
+        HexColor(business.hexColor); //TODO: make this color comes from setting in v.2
+    final _groupText = business.abbreviation.toUpperCase();
 
     return Container(
       child: Row(

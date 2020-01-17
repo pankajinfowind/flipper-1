@@ -10,6 +10,7 @@ part of 'main_database.dart';
 class UserTableData extends DataClass implements Insertable<UserTableData> {
   final int id;
   final String username;
+  final bool isCurrentAuthenticated;
   final String status;
   final String bearerToken;
   final String refreshToken;
@@ -17,10 +18,11 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
   final String avatar;
   UserTableData(
       {@required this.id,
-      @required this.username,
+      this.username,
+      @required this.isCurrentAuthenticated,
       @required this.status,
-      @required this.bearerToken,
-      @required this.refreshToken,
+      this.bearerToken,
+      this.refreshToken,
       @required this.email,
       this.avatar});
   factory UserTableData.fromData(
@@ -29,10 +31,13 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
     return UserTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       username: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}username']),
+      isCurrentAuthenticated: boolType.mapFromDatabaseResponse(
+          data['${effectivePrefix}is_current_authenticated']),
       status:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}status']),
       bearerToken: stringType
@@ -50,6 +55,8 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
     return UserTableData(
       id: serializer.fromJson<int>(json['id']),
       username: serializer.fromJson<String>(json['username']),
+      isCurrentAuthenticated:
+          serializer.fromJson<bool>(json['isCurrentAuthenticated']),
       status: serializer.fromJson<String>(json['status']),
       bearerToken: serializer.fromJson<String>(json['bearerToken']),
       refreshToken: serializer.fromJson<String>(json['refreshToken']),
@@ -63,6 +70,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'username': serializer.toJson<String>(username),
+      'isCurrentAuthenticated': serializer.toJson<bool>(isCurrentAuthenticated),
       'status': serializer.toJson<String>(status),
       'bearerToken': serializer.toJson<String>(bearerToken),
       'refreshToken': serializer.toJson<String>(refreshToken),
@@ -78,6 +86,9 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       username: username == null && nullToAbsent
           ? const Value.absent()
           : Value(username),
+      isCurrentAuthenticated: isCurrentAuthenticated == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isCurrentAuthenticated),
       status:
           status == null && nullToAbsent ? const Value.absent() : Value(status),
       bearerToken: bearerToken == null && nullToAbsent
@@ -96,6 +107,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
   UserTableData copyWith(
           {int id,
           String username,
+          bool isCurrentAuthenticated,
           String status,
           String bearerToken,
           String refreshToken,
@@ -104,6 +116,8 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       UserTableData(
         id: id ?? this.id,
         username: username ?? this.username,
+        isCurrentAuthenticated:
+            isCurrentAuthenticated ?? this.isCurrentAuthenticated,
         status: status ?? this.status,
         bearerToken: bearerToken ?? this.bearerToken,
         refreshToken: refreshToken ?? this.refreshToken,
@@ -115,6 +129,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
     return (StringBuffer('UserTableData(')
           ..write('id: $id, ')
           ..write('username: $username, ')
+          ..write('isCurrentAuthenticated: $isCurrentAuthenticated, ')
           ..write('status: $status, ')
           ..write('bearerToken: $bearerToken, ')
           ..write('refreshToken: $refreshToken, ')
@@ -130,17 +145,20 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       $mrjc(
           username.hashCode,
           $mrjc(
-              status.hashCode,
+              isCurrentAuthenticated.hashCode,
               $mrjc(
-                  bearerToken.hashCode,
-                  $mrjc(refreshToken.hashCode,
-                      $mrjc(email.hashCode, avatar.hashCode)))))));
+                  status.hashCode,
+                  $mrjc(
+                      bearerToken.hashCode,
+                      $mrjc(refreshToken.hashCode,
+                          $mrjc(email.hashCode, avatar.hashCode))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is UserTableData &&
           other.id == this.id &&
           other.username == this.username &&
+          other.isCurrentAuthenticated == this.isCurrentAuthenticated &&
           other.status == this.status &&
           other.bearerToken == this.bearerToken &&
           other.refreshToken == this.refreshToken &&
@@ -151,6 +169,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
 class UserTableCompanion extends UpdateCompanion<UserTableData> {
   final Value<int> id;
   final Value<String> username;
+  final Value<bool> isCurrentAuthenticated;
   final Value<String> status;
   final Value<String> bearerToken;
   final Value<String> refreshToken;
@@ -159,6 +178,7 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
   const UserTableCompanion({
     this.id = const Value.absent(),
     this.username = const Value.absent(),
+    this.isCurrentAuthenticated = const Value.absent(),
     this.status = const Value.absent(),
     this.bearerToken = const Value.absent(),
     this.refreshToken = const Value.absent(),
@@ -167,20 +187,19 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
   });
   UserTableCompanion.insert({
     this.id = const Value.absent(),
-    @required String username,
-    @required String status,
-    @required String bearerToken,
-    @required String refreshToken,
+    this.username = const Value.absent(),
+    @required bool isCurrentAuthenticated,
+    this.status = const Value.absent(),
+    this.bearerToken = const Value.absent(),
+    this.refreshToken = const Value.absent(),
     @required String email,
     this.avatar = const Value.absent(),
-  })  : username = Value(username),
-        status = Value(status),
-        bearerToken = Value(bearerToken),
-        refreshToken = Value(refreshToken),
+  })  : isCurrentAuthenticated = Value(isCurrentAuthenticated),
         email = Value(email);
   UserTableCompanion copyWith(
       {Value<int> id,
       Value<String> username,
+      Value<bool> isCurrentAuthenticated,
       Value<String> status,
       Value<String> bearerToken,
       Value<String> refreshToken,
@@ -189,6 +208,8 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
     return UserTableCompanion(
       id: id ?? this.id,
       username: username ?? this.username,
+      isCurrentAuthenticated:
+          isCurrentAuthenticated ?? this.isCurrentAuthenticated,
       status: status ?? this.status,
       bearerToken: bearerToken ?? this.bearerToken,
       refreshToken: refreshToken ?? this.refreshToken,
@@ -217,8 +238,25 @@ class $UserTableTable extends UserTable
   @override
   GeneratedTextColumn get username => _username ??= _constructUsername();
   GeneratedTextColumn _constructUsername() {
-    return GeneratedTextColumn('username', $tableName, false,
-        maxTextLength: 16);
+    return GeneratedTextColumn(
+      'username',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _isCurrentAuthenticatedMeta =
+      const VerificationMeta('isCurrentAuthenticated');
+  GeneratedBoolColumn _isCurrentAuthenticated;
+  @override
+  GeneratedBoolColumn get isCurrentAuthenticated =>
+      _isCurrentAuthenticated ??= _constructIsCurrentAuthenticated();
+  GeneratedBoolColumn _constructIsCurrentAuthenticated() {
+    return GeneratedBoolColumn(
+      'is_current_authenticated',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _statusMeta = const VerificationMeta('status');
@@ -226,7 +264,8 @@ class $UserTableTable extends UserTable
   @override
   GeneratedTextColumn get status => _status ??= _constructStatus();
   GeneratedTextColumn _constructStatus() {
-    return GeneratedTextColumn('status', $tableName, false, maxTextLength: 16);
+    return GeneratedTextColumn('status', $tableName, false,
+        defaultValue: Constant('online'));
   }
 
   final VerificationMeta _bearerTokenMeta =
@@ -239,7 +278,7 @@ class $UserTableTable extends UserTable
     return GeneratedTextColumn(
       'bearer_token',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -253,7 +292,7 @@ class $UserTableTable extends UserTable
     return GeneratedTextColumn(
       'refresh_token',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -282,8 +321,16 @@ class $UserTableTable extends UserTable
   }
 
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, username, status, bearerToken, refreshToken, email, avatar];
+  List<GeneratedColumn> get $columns => [
+        id,
+        username,
+        isCurrentAuthenticated,
+        status,
+        bearerToken,
+        refreshToken,
+        email,
+        avatar
+      ];
   @override
   $UserTableTable get asDslTable => this;
   @override
@@ -304,6 +351,14 @@ class $UserTableTable extends UserTable
           username.isAcceptableValue(d.username.value, _usernameMeta));
     } else if (username.isRequired && isInserting) {
       context.missing(_usernameMeta);
+    }
+    if (d.isCurrentAuthenticated.present) {
+      context.handle(
+          _isCurrentAuthenticatedMeta,
+          isCurrentAuthenticated.isAcceptableValue(
+              d.isCurrentAuthenticated.value, _isCurrentAuthenticatedMeta));
+    } else if (isCurrentAuthenticated.isRequired && isInserting) {
+      context.missing(_isCurrentAuthenticatedMeta);
     }
     if (d.status.present) {
       context.handle(
@@ -356,6 +411,10 @@ class $UserTableTable extends UserTable
     }
     if (d.username.present) {
       map['username'] = Variable<String, StringType>(d.username.value);
+    }
+    if (d.isCurrentAuthenticated.present) {
+      map['is_current_authenticated'] =
+          Variable<bool, BoolType>(d.isCurrentAuthenticated.value);
     }
     if (d.status.present) {
       map['status'] = Variable<String, StringType>(d.status.value);
@@ -542,20 +601,220 @@ class $TokenTableTable extends TokenTable
   }
 }
 
+class BusinessUserTableData extends DataClass
+    implements Insertable<BusinessUserTableData> {
+  final int id;
+  final int userId;
+  final int businessId;
+  BusinessUserTableData({@required this.id, this.userId, this.businessId});
+  factory BusinessUserTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return BusinessUserTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      userId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
+      businessId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
+    );
+  }
+  factory BusinessUserTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return BusinessUserTableData(
+      id: serializer.fromJson<int>(json['id']),
+      userId: serializer.fromJson<int>(json['userId']),
+      businessId: serializer.fromJson<int>(json['businessId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'userId': serializer.toJson<int>(userId),
+      'businessId': serializer.toJson<int>(businessId),
+    };
+  }
+
+  @override
+  BusinessUserTableCompanion createCompanion(bool nullToAbsent) {
+    return BusinessUserTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      businessId: businessId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(businessId),
+    );
+  }
+
+  BusinessUserTableData copyWith({int id, int userId, int businessId}) =>
+      BusinessUserTableData(
+        id: id ?? this.id,
+        userId: userId ?? this.userId,
+        businessId: businessId ?? this.businessId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('BusinessUserTableData(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('businessId: $businessId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(userId.hashCode, businessId.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is BusinessUserTableData &&
+          other.id == this.id &&
+          other.userId == this.userId &&
+          other.businessId == this.businessId);
+}
+
+class BusinessUserTableCompanion
+    extends UpdateCompanion<BusinessUserTableData> {
+  final Value<int> id;
+  final Value<int> userId;
+  final Value<int> businessId;
+  const BusinessUserTableCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.businessId = const Value.absent(),
+  });
+  BusinessUserTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.businessId = const Value.absent(),
+  });
+  BusinessUserTableCompanion copyWith(
+      {Value<int> id, Value<int> userId, Value<int> businessId}) {
+    return BusinessUserTableCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      businessId: businessId ?? this.businessId,
+    );
+  }
+}
+
+class $BusinessUserTableTable extends BusinessUserTable
+    with TableInfo<$BusinessUserTableTable, BusinessUserTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $BusinessUserTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  GeneratedIntColumn _userId;
+  @override
+  GeneratedIntColumn get userId => _userId ??= _constructUserId();
+  GeneratedIntColumn _constructUserId() {
+    return GeneratedIntColumn('user_id', $tableName, true,
+        $customConstraints: 'NULL REFERENCES user_table(id)');
+  }
+
+  final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
+  GeneratedIntColumn _businessId;
+  @override
+  GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
+  GeneratedIntColumn _constructBusinessId() {
+    return GeneratedIntColumn('business_id', $tableName, true,
+        $customConstraints: 'NULL REFERENCES business_table(id)');
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, userId, businessId];
+  @override
+  $BusinessUserTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'business_user_table';
+  @override
+  final String actualTableName = 'business_user_table';
+  @override
+  VerificationContext validateIntegrity(BusinessUserTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.userId.present) {
+      context.handle(
+          _userIdMeta, userId.isAcceptableValue(d.userId.value, _userIdMeta));
+    } else if (userId.isRequired && isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (d.businessId.present) {
+      context.handle(_businessIdMeta,
+          businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
+    } else if (businessId.isRequired && isInserting) {
+      context.missing(_businessIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BusinessUserTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return BusinessUserTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(BusinessUserTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.userId.present) {
+      map['user_id'] = Variable<int, IntType>(d.userId.value);
+    }
+    if (d.businessId.present) {
+      map['business_id'] = Variable<int, IntType>(d.businessId.value);
+    }
+    return map;
+  }
+
+  @override
+  $BusinessUserTableTable createAlias(String alias) {
+    return $BusinessUserTableTable(_db, alias);
+  }
+}
+
 class BusinessTableData extends DataClass
     implements Insertable<BusinessTableData> {
   final int id;
   final String name;
-  BusinessTableData({@required this.id, @required this.name});
+  final bool isActive;
+  BusinessTableData(
+      {@required this.id, @required this.name, @required this.isActive});
   factory BusinessTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
     return BusinessTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      isActive:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_active']),
     );
   }
   factory BusinessTableData.fromJson(Map<String, dynamic> json,
@@ -563,6 +822,7 @@ class BusinessTableData extends DataClass
     return BusinessTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
     );
   }
   @override
@@ -571,6 +831,7 @@ class BusinessTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'isActive': serializer.toJson<bool>(isActive),
     };
   }
 
@@ -579,47 +840,60 @@ class BusinessTableData extends DataClass
     return BusinessTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      isActive: isActive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isActive),
     );
   }
 
-  BusinessTableData copyWith({int id, String name}) => BusinessTableData(
+  BusinessTableData copyWith({int id, String name, bool isActive}) =>
+      BusinessTableData(
         id: id ?? this.id,
         name: name ?? this.name,
+        isActive: isActive ?? this.isActive,
       );
   @override
   String toString() {
     return (StringBuffer('BusinessTableData(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('isActive: $isActive')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, isActive.hashCode)));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is BusinessTableData &&
           other.id == this.id &&
-          other.name == this.name);
+          other.name == this.name &&
+          other.isActive == this.isActive);
 }
 
 class BusinessTableCompanion extends UpdateCompanion<BusinessTableData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<bool> isActive;
   const BusinessTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.isActive = const Value.absent(),
   });
   BusinessTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
+    this.isActive = const Value.absent(),
   }) : name = Value(name);
-  BusinessTableCompanion copyWith({Value<int> id, Value<String> name}) {
+  BusinessTableCompanion copyWith(
+      {Value<int> id, Value<String> name, Value<bool> isActive}) {
     return BusinessTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      isActive: isActive ?? this.isActive,
     );
   }
 }
@@ -650,8 +924,17 @@ class $BusinessTableTable extends BusinessTable
     );
   }
 
+  final VerificationMeta _isActiveMeta = const VerificationMeta('isActive');
+  GeneratedBoolColumn _isActive;
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  GeneratedBoolColumn get isActive => _isActive ??= _constructIsActive();
+  GeneratedBoolColumn _constructIsActive() {
+    return GeneratedBoolColumn('is_active', $tableName, false,
+        defaultValue: Constant(false));
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name, isActive];
   @override
   $BusinessTableTable get asDslTable => this;
   @override
@@ -673,6 +956,12 @@ class $BusinessTableTable extends BusinessTable
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
     }
+    if (d.isActive.present) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableValue(d.isActive.value, _isActiveMeta));
+    } else if (isActive.isRequired && isInserting) {
+      context.missing(_isActiveMeta);
+    }
     return context;
   }
 
@@ -692,6 +981,9 @@ class $BusinessTableTable extends BusinessTable
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.isActive.present) {
+      map['is_active'] = Variable<bool, BoolType>(d.isActive.value);
     }
     return map;
   }
@@ -867,6 +1159,9 @@ abstract class _$Database extends GeneratedDatabase {
   $UserTableTable get userTable => _userTable ??= $UserTableTable(this);
   $TokenTableTable _tokenTable;
   $TokenTableTable get tokenTable => _tokenTable ??= $TokenTableTable(this);
+  $BusinessUserTableTable _businessUserTable;
+  $BusinessUserTableTable get businessUserTable =>
+      _businessUserTable ??= $BusinessUserTableTable(this);
   $BusinessTableTable _businessTable;
   $BusinessTableTable get businessTable =>
       _businessTable ??= $BusinessTableTable(this);
@@ -882,5 +1177,5 @@ abstract class _$Database extends GeneratedDatabase {
   BranchDao get branchDao => _branchDao ??= BranchDao(this as Database);
   @override
   List<TableInfo> get allTables =>
-      [userTable, tokenTable, businessTable, branchTable];
+      [userTable, tokenTable, businessUserTable, businessTable, branchTable];
 }

@@ -4,8 +4,9 @@ import "package:redux/redux.dart";
 import '../app_state.dart';
 
 final userReducers = <AppState Function(AppState, dynamic)>[
-//  TypedReducer<AppState, UsersUpdateAction>(_onUsersUpdate),
   TypedReducer<AppState, OnUserUpdateAction>(_onUserUpdate),
+  TypedReducer<AppState, WithUser>(_withUser),
+  TypedReducer<AppState, UserID>(_userId),
 ];
 
 AppState _onUserUpdate(AppState state, OnUserUpdateAction action) {
@@ -21,3 +22,11 @@ AppState _onUserUpdate(AppState state, OnUserUpdateAction action) {
 //AppState _onUsersUpdate(AppState state, UsersUpdateAction action) {
 //  return state.rebuild((a) => a..groupUsers = ListBuilder(action.users));
 //}
+
+AppState _userId(AppState state, UserID action) {
+  return state.rebuild((a) => a..userId = action.userId);
+}
+
+AppState _withUser(AppState state, WithUser action) {
+  return state.rebuild((a) => a..user = action.user.toBuilder());
+}

@@ -10,8 +10,22 @@ class BusinessDao extends DatabaseAccessor<Database> with _$BusinessDaoMixin {
 
   BusinessDao(this.db) : super(db);
 
-  Future insert(Insertable<BusinessTableData> user) =>
-      into(db.businessTable).insert(user);
+  Future insert(Insertable<BusinessTableData> business) =>
+      into(db.businessTable).insert(business);
+
+  Future assignBusinessToUser(Insertable<BusinessUserTableData> data) =>
+      into(db.businessUserTable).insert(data);
+
+
   Future<List<BusinessTableData>> getBusinesses() =>
       select(db.businessTable).get();
+
+  Future<BusinessTableData> getActiveBusiness() {
+    return (select(db.businessTable)
+      ..orderBy(
+          [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
+      ..where((t)=>t.isActive.equals(true))
+      ..limit(1))
+        .getSingle();
+  }
 }

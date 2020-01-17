@@ -20,6 +20,9 @@ abstract class User implements Built<User, UserBuilder> {
   String get bearerToken;
 
   @nullable
+  bool get isCurrentAuthenticated;
+
+  @nullable
   String get refreshToken;
 
   // Keeps groupId : [channelId], marking the unread channels.

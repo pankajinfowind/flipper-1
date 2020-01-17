@@ -18,6 +18,8 @@ class _$User extends User {
   @override
   final String bearerToken;
   @override
+  final bool isCurrentAuthenticated;
+  @override
   final String refreshToken;
   @override
   final BuiltMap<String, BuiltList> unreadUpdates;
@@ -33,6 +35,7 @@ class _$User extends User {
       this.username,
       this.status,
       this.bearerToken,
+      this.isCurrentAuthenticated,
       this.refreshToken,
       this.unreadUpdates,
       this.avatar})
@@ -54,6 +57,7 @@ class _$User extends User {
         username == other.username &&
         status == other.status &&
         bearerToken == other.bearerToken &&
+        isCurrentAuthenticated == other.isCurrentAuthenticated &&
         refreshToken == other.refreshToken &&
         unreadUpdates == other.unreadUpdates &&
         avatar == other.avatar;
@@ -66,10 +70,12 @@ class _$User extends User {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, id.hashCode), email.hashCode),
-                            username.hashCode),
-                        status.hashCode),
-                    bearerToken.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), email.hashCode),
+                                username.hashCode),
+                            status.hashCode),
+                        bearerToken.hashCode),
+                    isCurrentAuthenticated.hashCode),
                 refreshToken.hashCode),
             unreadUpdates.hashCode),
         avatar.hashCode));
@@ -83,6 +89,7 @@ class _$User extends User {
           ..add('username', username)
           ..add('status', status)
           ..add('bearerToken', bearerToken)
+          ..add('isCurrentAuthenticated', isCurrentAuthenticated)
           ..add('refreshToken', refreshToken)
           ..add('unreadUpdates', unreadUpdates)
           ..add('avatar', avatar))
@@ -113,6 +120,11 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String get bearerToken => _$this._bearerToken;
   set bearerToken(String bearerToken) => _$this._bearerToken = bearerToken;
 
+  bool _isCurrentAuthenticated;
+  bool get isCurrentAuthenticated => _$this._isCurrentAuthenticated;
+  set isCurrentAuthenticated(bool isCurrentAuthenticated) =>
+      _$this._isCurrentAuthenticated = isCurrentAuthenticated;
+
   String _refreshToken;
   String get refreshToken => _$this._refreshToken;
   set refreshToken(String refreshToken) => _$this._refreshToken = refreshToken;
@@ -136,6 +148,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
       _username = _$v.username;
       _status = _$v.status;
       _bearerToken = _$v.bearerToken;
+      _isCurrentAuthenticated = _$v.isCurrentAuthenticated;
       _refreshToken = _$v.refreshToken;
       _unreadUpdates = _$v.unreadUpdates?.toBuilder();
       _avatar = _$v.avatar;
@@ -168,6 +181,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
               username: username,
               status: status,
               bearerToken: bearerToken,
+              isCurrentAuthenticated: isCurrentAuthenticated,
               refreshToken: refreshToken,
               unreadUpdates: _unreadUpdates?.build(),
               avatar: avatar);

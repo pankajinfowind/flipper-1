@@ -18,6 +18,25 @@ class OnUserUpdateAction {
 }
 
 @immutable
+class WithUser {
+  final User user;
+
+  const WithUser(this.user);
+}
+@immutable
+class UserID {
+  final int userId;
+
+  const UserID(this.userId);
+}
+@immutable
+class CreateUser {
+  final User user;
+
+  const CreateUser(this.user);
+}
+
+@immutable
 class UpdateUserLocaleAction {
   final String locale;
 

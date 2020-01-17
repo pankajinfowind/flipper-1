@@ -12,5 +12,12 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
 
   Future insertUser(Insertable<UserTableData> user) =>
       into(db.userTable).insert(user);
-  Future<List<UserTableData>> getUser() => select(db.userTable).get();
+  Future<UserTableData> getUser() {
+    return (select(db.userTable)
+          ..orderBy(
+              [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
+//      ..where() //TODO: add where clause so we return the authenticated one only there should be one authenticated user per device.
+          ..limit(1))
+        .getSingle();
+  }
 }

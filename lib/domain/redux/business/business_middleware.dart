@@ -15,6 +15,8 @@ List<Middleware<AppState>> createBusinessMiddleware(
         _createBusiness(navigatorKey, businessRepository)),
     TypedMiddleware<AppState, CreateBusiness>(
         _createBusiness(navigatorKey, businessRepository)),
+    TypedMiddleware<AppState, SetActiveBusiness>(
+        _setActive(navigatorKey, businessRepository)),
   ];
 }
 
@@ -25,9 +27,12 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 ) {
   return (store, action, next) async {
     next(action);
+
     //TODO: get yegobox id and other users information from yegobox and use them while creating flipper account
-    if (store.state.business != null) {
-      businessRepository.insert(store, store.state.business);
+    if (store.state.business != null  || store.state.userId !=null) {
+      int businessId = await businessRepository.insert(store, store.state.business);
+
+      final assignBusiness = await businessRepository.assignBusinessToUser(store, businessId, store.state.userId);
       List<BusinessTableData> businessList =
           await businessRepository.getBusinesses(store);
       List<Business> businesses = [];
@@ -41,5 +46,16 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       store.dispatch(BusinessCreated());
       store.dispatch(OnBusinessLoaded(business: businesses));
     }
+  };
+}
+
+void Function(Store<AppState> store, dynamic action, NextDispatcher next)
+    _setActive(
+  GlobalKey<NavigatorState> navigatorKey,
+  BusinessRepository businessRepository,
+) {
+  return (store, action, next) async {
+    next(action);
+    //update this given business set is to activ
   };
 }

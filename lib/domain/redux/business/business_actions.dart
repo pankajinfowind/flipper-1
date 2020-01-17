@@ -4,9 +4,18 @@ import 'package:flutter/material.dart';
 class ShouldLoadBusiness {}
 
 class BusinessCreated {}
+
 class CreateBusinessOnSignUp {}
-  class CreateBusiness {}
+
+class CreateBusiness {}
+
 class ResetBusiness {}
+
+class SetActiveBusiness {
+  final Business business;
+
+  SetActiveBusiness(this.business);
+}
 
 @immutable
 class WithBusiness {

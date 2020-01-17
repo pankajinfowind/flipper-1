@@ -4,14 +4,16 @@ import 'package:flipper/model/user.dart';
 import 'package:redux/redux.dart';
 
 class UserRepository {
-  insertUser(Store<AppState> store, User user) {
+  Future<int> insertUser(Store<AppState> store, User user) {
     var u = new UserTableData(
         email: user.email,
         status: user.status,
+        isCurrentAuthenticated: user.isCurrentAuthenticated,
         avatar: user.avatar,
+        username: user.username,
         bearerToken: user.bearerToken,
         refreshToken: user.refreshToken);
-    store.state.database.userDao.insertUser(u);
+    return store.state.database.userDao.insertUser(u);
   }
 
   Future<void> logOut() async {
@@ -20,7 +22,7 @@ class UserRepository {
 
   Future<void> updateUserToken(String token) async {}
 
-  Future<List<UserTableData>> checkAuth(Store<AppState> store) {
+  Future<UserTableData> checkAuth(Store<AppState> store) {
     return store.state.database.userDao.getUser();
   }
 }

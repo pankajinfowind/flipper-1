@@ -29,13 +29,13 @@ List<Middleware<AppState>> createAuthenticationMiddleware(
   GlobalKey<NavigatorState> navigatorKey,
 ) {
   return [
-    TypedMiddleware<AppState, VerifyAuthenticationState>(
-        _verifyAuthState(userRepository, businessRepository,branchRepository, navigatorKey)),
+    TypedMiddleware<AppState, VerifyAuthenticationState>(_verifyAuthState(
+        userRepository, businessRepository, branchRepository, navigatorKey)),
     TypedMiddleware<AppState, LogIn>(_authLogin(userRepository, navigatorKey)),
     TypedMiddleware<AppState, LogOutAction>(
         _authLogout(userRepository, navigatorKey)),
-    TypedMiddleware<AppState, AfterLoginAction>(
-        _verifyAuthState(userRepository, businessRepository,branchRepository, navigatorKey)),
+    TypedMiddleware<AppState, AfterLoginAction>(_verifyAuthState(
+        userRepository, businessRepository, branchRepository, navigatorKey)),
   ];
 }
 
@@ -54,35 +54,43 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       return;
     }
 
-    List<UserTableData> user = await userRepository.checkAuth(store);
+    UserTableData user = await userRepository.checkAuth(store);
     List<BranchTableData> branch = await branchRepository.getBranches(store);
-    List<BusinessTableData> businesses = await businessRepository.getBusinesses(store);
-    if (businesses == null || businesses.length == 0) {
+    List<BusinessTableData> businesses =
+        await businessRepository.getBusinesses(store);
+
+    if ( businesses.length == 0 || user == null) {
       Router.navigator.pushNamed(Router.afterSplash);
       return;
     } else {
-      //TODO: use the above user from db if business is set i.e we have a user
       final _user = User((u) => u
-        ..bearerToken = "user[0].bearerToken"
-        ..username = "user[0].username"
-        ..refreshToken = "user[0].refreshToken"
-        ..status = "user[0].status"
-        ..avatar = "user[0].avatar"
-        ..email = "user[0].email");
-      Branch b = Branch((b)=>b..id=branch[0].id..name=branch[0].name);
+        ..bearerToken = user.bearerToken
+        ..username = user.username
+        ..refreshToken = user.refreshToken
+        ..status = user.status
+        ..avatar = user.avatar
+        ..email = user.email);
+      Branch b = Branch((b) => b
+        ..id = branch[0].id
+        ..name = branch[0].name);
       store.dispatch(OnSetBranchHint(branch: b));
       List<Branch> branches = [];
-      branch.forEach((b)=>{
-        branches.add(Branch((bu)=>bu..name=b.name..id=b.id))
-      });
+      branch.forEach((b) => {
+            branches.add(Branch((bu) => bu
+              ..name = b.name
+              ..id = b.id))
+          });
       store.dispatch(OnBranchLoaded(branches: branches));
       store.dispatch(OnAuthenticated(user: _user));
 
       List<Business> businessList = [];
-      businesses.forEach((b)=>{
-        businessList.add(Business((bu)=>bu..id=b.id..abbreviation=b.name..name=b.name))
-      });
-      store.dispatch(OnBusinessLoaded(business: businessList ));
+      businesses.forEach((b) => {
+            businessList.add(Business((bu) => bu
+              ..id = b.id
+              ..abbreviation = b.name
+              ..name = b.name))
+          });
+      store.dispatch(OnBusinessLoaded(business: businessList));
       //branch
       if (businesses.length == 0) {
         Router.navigator.pushNamed(Router.signUpScreen);

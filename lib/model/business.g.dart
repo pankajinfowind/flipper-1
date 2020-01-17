@@ -12,6 +12,8 @@ class _$Business extends Business {
   @override
   final String name;
   @override
+  final bool isActive;
+  @override
   final String hexColor;
   @override
   final String image;
@@ -26,6 +28,7 @@ class _$Business extends Business {
   _$Business._(
       {this.id,
       this.name,
+      this.isActive,
       this.hexColor,
       this.image,
       this.type,
@@ -45,6 +48,7 @@ class _$Business extends Business {
     return other is Business &&
         id == other.id &&
         name == other.name &&
+        isActive == other.isActive &&
         hexColor == other.hexColor &&
         image == other.image &&
         type == other.type &&
@@ -55,7 +59,11 @@ class _$Business extends Business {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc($jc(0, id.hashCode), name.hashCode), hexColor.hashCode),
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), name.hashCode),
+                        isActive.hashCode),
+                    hexColor.hashCode),
                 image.hashCode),
             type.hashCode),
         abbreviation.hashCode));
@@ -66,6 +74,7 @@ class _$Business extends Business {
     return (newBuiltValueToStringHelper('Business')
           ..add('id', id)
           ..add('name', name)
+          ..add('isActive', isActive)
           ..add('hexColor', hexColor)
           ..add('image', image)
           ..add('type', type)
@@ -84,6 +93,10 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  bool _isActive;
+  bool get isActive => _$this._isActive;
+  set isActive(bool isActive) => _$this._isActive = isActive;
 
   String _hexColor;
   String get hexColor => _$this._hexColor;
@@ -107,6 +120,7 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
     if (_$v != null) {
       _id = _$v.id;
       _name = _$v.name;
+      _isActive = _$v.isActive;
       _hexColor = _$v.hexColor;
       _image = _$v.image;
       _type = _$v.type;
@@ -135,6 +149,7 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
         new _$Business._(
             id: id,
             name: name,
+            isActive: isActive,
             hexColor: hexColor,
             image: image,
             type: type,

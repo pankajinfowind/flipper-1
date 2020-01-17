@@ -26,14 +26,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List<Widget> tabs = [
-    Poswidget(),
-    ProductScreen()
-  ];
+  final List<Widget> tabs = [Poswidget(), ProductScreen()];
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: HomeAppBar(
@@ -44,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.lock_open),
+            icon: Icon(Icons.credit_card),
             title: Text('POS'),
           ),
           BottomNavigationBarItem(
@@ -53,11 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: widget.vm.tab,
-
         selectedItemColor: Colors.amber[800],
         onTap: (num) {
           StoreProvider.of<AppState>(context).dispatch(CurrentTab(tab: num));
-          StoreProvider.of<AppState>(context).dispatch(OnSetTab()); //persist tab
+          StoreProvider.of<AppState>(context)
+              .dispatch(OnSetTab()); //persist tab
         },
       ),
       body: tabs[widget.vm.tab],

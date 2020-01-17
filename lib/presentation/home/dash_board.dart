@@ -32,7 +32,6 @@ class _DashBoardState extends State<DashBoard> {
         .showBottomSheet((context) {
           return SafeArea(
             child: Scaffold(
-              //TODO: build commonAppBar so it work for all use case
               appBar: CommonAppBar(
                 title: "Add Note",
               ),

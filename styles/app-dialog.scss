@@ -1,0 +1,39 @@
+@import 'app-font';
+.dialog-sm {
+  width: 90%;
+  max-width: 300px !important;
+  font-family: $app-font-family !important;
+  border-radius: 8px!important;
+  overflow: hidden!important;
+}
+
+.dialog-md {
+  width: 90%;
+  max-width: 600px !important;
+  font-family: $app-font-family !important;
+  border-radius: 8px!important;
+  overflow: hidden!important;
+}
+
+.dialog-lg {
+  width: 90%;
+  max-width: 1200px !important;
+  font-family: $app-font-family !important;
+  border-radius: 8px!important;
+  overflow: hidden!important;
+}
+
+.dialog-full {
+  //height: 98%;
+  width: 100vw;
+  font-family: $app-font-family !important;
+  border-radius: 8px!important;
+  overflow: hidden!important;
+
+  .mat-dialog-container {
+    max-width: none;
+    font-family: $app-font-family !important;
+    border-radius: 8px!important;
+    overflow: hidden!important;
+  }
+}

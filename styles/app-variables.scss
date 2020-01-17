@@ -1,0 +1,84 @@
+@import 'app-material-theme';
+
+@font-face {
+    font-family: Heebo;
+    src: local(Heebo-Regular),
+      url(/font/Heebo-Regular.woff2) format("woff2"),
+      url(/font/Heebo-Regular.woff) format("woff"),
+      url(/font/Heebo-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+  } 
+   @font-face {
+    font-family: Heebo;
+    src: local(Heebo-Medium),
+      url(/font/Heebo-Medium.woff2) format("woff2"),
+      url(/font/Heebo-Medium.woff) format("woff"),
+      url(/font/Heebo-Medium.ttf) format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+  }
+  @font-face {
+    font-family: Heebo;
+    src: local(Heebo-Bold),
+      url(/font/Heebo-Bold.woff2) format("woff2"),
+      url(/font/Heebo-Bold.woff) format("woff"),
+      url(/font/Heebo-Bold.ttf) format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+  }
+  @font-face {
+    font-family: Roboto;
+    src: local(Roboto-Regular),
+      url(/font/Roboto-Regular.woff2) format("woff2"),
+      url(/font/Roboto-Regular.woff) format("woff"),
+      url(/font/Roboto-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+  }
+
+$app-header-height: 46px;
+$app-font-family:Roboto; //Roboto, "Helvetica Neue", sans-serif;
+$app-font-size: 14px;
+$app-font-size-xs: 10px !default;
+$app-font-size-sm: 12px !default;
+$app-font-size-lg: 16px !default;
+$app-font-size-24: 24px !default;
+$app-font-size-26: 26px !default;
+$app-font-size-28: 28px !default;
+$app-font-size-32: 32px !default;
+
+$app-font-weight-italic: italic!default;
+$app-font-weight: 300!default;
+$app-font-weight-bold: bold!default;
+$app-font-weight-600: 600!default;
+$app-font-weight-400: 400!default;
+$app-font-weight-500: 500!default;
+$app-font-weight-700: 700!default;
+$app-font-weight-800: 800!default;
+
+$app-line-height: (28 / 14) !default;
+$app-line-height-sm: 1.2 !default;
+$app-line-height-lg: 1.5 !default;
+$app-line-height-em: $app-line-height * 1em;
+
+$app-margin-x-sm: 12px;
+$app-margin-y-sm: 8px;
+$app-margin-x: 24px;
+$app-margin-y: 16px;
+
+$app-padding-x-sm: $app-margin-x-sm;
+$app-padding-y-sm: $app-margin-y-sm;
+$app-padding-x: $app-margin-x;
+$app-padding-y: $app-margin-y;
+
+$app-color-green:#40b630;
+$app-color-blue:#1665d8;
+$app-color-red:#e5025b;
+$app-color-purple-1:#955be9;
+$app-color-purple-2:#211a36;
+$app-color-purple-3:#130f1f;

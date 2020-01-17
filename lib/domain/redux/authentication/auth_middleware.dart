@@ -76,13 +76,13 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ..avatar = user.avatar
         ..email = user.email);
 
-      //TODO: bellow line has issue.
-      try{
+        print(branch);
+
         Branch hint = Branch((b) => b
           ..id = branch[0].id
           ..name = branch[0].name);
         store.dispatch(OnSetBranchHint(branch: hint));
-      }catch(e){}
+
 
 
 

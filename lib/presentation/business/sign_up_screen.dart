@@ -208,7 +208,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
     StoreProvider.of<AppState>(context).dispatch(CreateUser(user));
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
     StoreProvider.of<AppState>(context).dispatch(CreateBusinessOnSignUp());
-    //finally verify if all is good and go to dashboard.
-    StoreProvider.of<AppState>(context).dispatch(VerifyAuthenticationState());
   }
 }

@@ -7,6 +7,7 @@ import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createBranchMiddleware(
@@ -26,7 +27,8 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     BranchRepository branchRepo) {
   return (store, action, next) async {
     final branch = Branch((b)=>b..name=store.state.business.name);
-    branchRepo.insert(store, branch);
+    await branchRepo.insert(store, branch);
+    store.dispatch(VerifyAuthenticationState()); //when creating a branch we need to refresh all states i.e we went to auth verify
   };
 }
 

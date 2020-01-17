@@ -12,9 +12,9 @@ class CreateBusiness {}
 class ResetBusiness {}
 
 class SetActiveBusiness {
-  final Business business;
+  final Business businessId;
 
-  SetActiveBusiness(this.business);
+  SetActiveBusiness(this.businessId);
 }
 
 @immutable
@@ -27,6 +27,18 @@ class WithBusiness {
     return "CreateBusiness{CreateBusiness: $business}";
   }
 }
+@immutable
+class ActiveBusinessId{
+  final Business bussiness;
+  ActiveBusinessId(this.bussiness);
+}
+
+@immutable
+class NextActiveBussiness{
+  final Business bussiness;
+  NextActiveBussiness(this.bussiness);
+}
+
 
 @immutable
 class OnBusinessLoaded {

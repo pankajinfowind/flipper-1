@@ -14,6 +14,8 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final bool hasHint;
   @override
+  final Business currentBusiness;
+  @override
   final bool hasAction;
   @override
   final List<Branch> branches;
@@ -31,6 +33,7 @@ class _$CommonViewModel extends CommonViewModel {
       {this.hasUser,
       this.hasSheet,
       this.hasHint,
+      this.currentBusiness,
       this.hasAction,
       this.branches,
       this.businesses,
@@ -75,6 +78,7 @@ class _$CommonViewModel extends CommonViewModel {
         hasUser == other.hasUser &&
         hasSheet == other.hasSheet &&
         hasHint == other.hasHint &&
+        currentBusiness == other.currentBusiness &&
         hasAction == other.hasAction &&
         branches == other.branches &&
         businesses == other.businesses &&
@@ -89,8 +93,12 @@ class _$CommonViewModel extends CommonViewModel {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode),
-                            hasHint.hashCode),
+                        $jc(
+                            $jc(
+                                $jc($jc(0, hasUser.hashCode),
+                                    hasSheet.hashCode),
+                                hasHint.hashCode),
+                            currentBusiness.hashCode),
                         hasAction.hashCode),
                     branches.hashCode),
                 businesses.hashCode),
@@ -104,6 +112,7 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('hasUser', hasUser)
           ..add('hasSheet', hasSheet)
           ..add('hasHint', hasHint)
+          ..add('currentBusiness', currentBusiness)
           ..add('hasAction', hasAction)
           ..add('branches', branches)
           ..add('businesses', businesses)
@@ -128,6 +137,12 @@ class CommonViewModelBuilder
   bool _hasHint;
   bool get hasHint => _$this._hasHint;
   set hasHint(bool hasHint) => _$this._hasHint = hasHint;
+
+  BusinessBuilder _currentBusiness;
+  BusinessBuilder get currentBusiness =>
+      _$this._currentBusiness ??= new BusinessBuilder();
+  set currentBusiness(BusinessBuilder currentBusiness) =>
+      _$this._currentBusiness = currentBusiness;
 
   bool _hasAction;
   bool get hasAction => _$this._hasAction;
@@ -157,6 +172,7 @@ class CommonViewModelBuilder
       _hasUser = _$v.hasUser;
       _hasSheet = _$v.hasSheet;
       _hasHint = _$v.hasHint;
+      _currentBusiness = _$v.currentBusiness?.toBuilder();
       _hasAction = _$v.hasAction;
       _branches = _$v.branches;
       _businesses = _$v.businesses;
@@ -189,6 +205,7 @@ class CommonViewModelBuilder
               hasUser: hasUser,
               hasSheet: hasSheet,
               hasHint: hasHint,
+              currentBusiness: _currentBusiness?.build(),
               hasAction: hasAction,
               branches: branches,
               businesses: businesses,
@@ -197,6 +214,9 @@ class CommonViewModelBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'currentBusiness';
+        _currentBusiness?.build();
+
         _$failedField = 'appAction';
         appAction.build();
         _$failedField = 'hint';

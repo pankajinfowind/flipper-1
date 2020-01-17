@@ -17,6 +17,7 @@ List<Middleware<AppState>> createBusinessMiddleware(
         _createBusiness(navigatorKey, businessRepository)),
     TypedMiddleware<AppState, SetActiveBusiness>(
         _setActive(navigatorKey, businessRepository)),
+
   ];
 }
 
@@ -48,7 +49,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     }
   };
 }
-
 void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     _setActive(
   GlobalKey<NavigatorState> navigatorKey,
@@ -56,6 +56,18 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 ) {
   return (store, action, next) async {
     next(action);
-    //update this given business set is to activ
+    if(store.state.previousActiveBusiness !=null ||store.state.nextActiveBusiness !=null){
+      //remove active from previous active business
+      //add active to new
+      if(store.state.nextActiveBusiness !=null){
+        //set business
+        businessRepository.update(store, store.state.nextActiveBusiness,active: true);
+      }
+
+      if(store.state.previousActiveBusiness !=null){
+        businessRepository.update(store, store.state.previousActiveBusiness,active: false);
+      }
+
+    }
   };
 }

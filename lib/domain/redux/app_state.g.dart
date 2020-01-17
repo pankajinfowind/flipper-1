@@ -12,6 +12,10 @@ class _$AppState extends AppState {
   @override
   final int userId;
   @override
+  final Business previousActiveBusiness;
+  @override
+  final Business nextActiveBusiness;
+  @override
   final Sheets sheet;
   @override
   final AppActions action;
@@ -36,6 +40,8 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.user,
       this.userId,
+      this.previousActiveBusiness,
+      this.nextActiveBusiness,
       this.sheet,
       this.action,
       this.permissions,
@@ -64,6 +70,8 @@ class _$AppState extends AppState {
     return other is AppState &&
         user == other.user &&
         userId == other.userId &&
+        previousActiveBusiness == other.previousActiveBusiness &&
+        nextActiveBusiness == other.nextActiveBusiness &&
         sheet == other.sheet &&
         action == other.action &&
         permissions == other.permissions &&
@@ -86,8 +94,13 @@ class _$AppState extends AppState {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, user.hashCode),
-                                            userId.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, user.hashCode),
+                                                    userId.hashCode),
+                                                previousActiveBusiness
+                                                    .hashCode),
+                                            nextActiveBusiness.hashCode),
                                         sheet.hashCode),
                                     action.hashCode),
                                 permissions.hashCode),
@@ -104,6 +117,8 @@ class _$AppState extends AppState {
     return (newBuiltValueToStringHelper('AppState')
           ..add('user', user)
           ..add('userId', userId)
+          ..add('previousActiveBusiness', previousActiveBusiness)
+          ..add('nextActiveBusiness', nextActiveBusiness)
           ..add('sheet', sheet)
           ..add('action', action)
           ..add('permissions', permissions)
@@ -127,6 +142,18 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   int _userId;
   int get userId => _$this._userId;
   set userId(int userId) => _$this._userId = userId;
+
+  BusinessBuilder _previousActiveBusiness;
+  BusinessBuilder get previousActiveBusiness =>
+      _$this._previousActiveBusiness ??= new BusinessBuilder();
+  set previousActiveBusiness(BusinessBuilder previousActiveBusiness) =>
+      _$this._previousActiveBusiness = previousActiveBusiness;
+
+  BusinessBuilder _nextActiveBusiness;
+  BusinessBuilder get nextActiveBusiness =>
+      _$this._nextActiveBusiness ??= new BusinessBuilder();
+  set nextActiveBusiness(BusinessBuilder nextActiveBusiness) =>
+      _$this._nextActiveBusiness = nextActiveBusiness;
 
   SheetsBuilder _sheet;
   SheetsBuilder get sheet => _$this._sheet ??= new SheetsBuilder();
@@ -172,6 +199,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _user = _$v.user?.toBuilder();
       _userId = _$v.userId;
+      _previousActiveBusiness = _$v.previousActiveBusiness?.toBuilder();
+      _nextActiveBusiness = _$v.nextActiveBusiness?.toBuilder();
       _sheet = _$v.sheet?.toBuilder();
       _action = _$v.action?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
@@ -207,6 +236,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               user: _user?.build(),
               userId: userId,
+              previousActiveBusiness: _previousActiveBusiness?.build(),
+              nextActiveBusiness: _nextActiveBusiness?.build(),
               sheet: _sheet?.build(),
               action: _action?.build(),
               permissions: _permissions?.build(),
@@ -222,6 +253,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _$failedField = 'user';
         _user?.build();
 
+        _$failedField = 'previousActiveBusiness';
+        _previousActiveBusiness?.build();
+        _$failedField = 'nextActiveBusiness';
+        _nextActiveBusiness?.build();
         _$failedField = 'sheet';
         _sheet?.build();
         _$failedField = 'action';

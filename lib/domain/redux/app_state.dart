@@ -18,6 +18,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   int get userId;
 
   @nullable
+  Business get previousActiveBusiness;
+
+  @nullable
+  Business get nextActiveBusiness;
+
+  @nullable
   Sheets get sheet;
 
   @nullable

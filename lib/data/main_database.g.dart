@@ -800,9 +800,13 @@ class BusinessTableData extends DataClass
     implements Insertable<BusinessTableData> {
   final int id;
   final String name;
+  final String abbreviation;
   final bool isActive;
   BusinessTableData(
-      {@required this.id, @required this.name, @required this.isActive});
+      {@required this.id,
+      @required this.name,
+      this.abbreviation,
+      @required this.isActive});
   factory BusinessTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -813,6 +817,8 @@ class BusinessTableData extends DataClass
     return BusinessTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      abbreviation: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}abbreviation']),
       isActive:
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_active']),
     );
@@ -822,6 +828,7 @@ class BusinessTableData extends DataClass
     return BusinessTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      abbreviation: serializer.fromJson<String>(json['abbreviation']),
       isActive: serializer.fromJson<bool>(json['isActive']),
     );
   }
@@ -831,6 +838,7 @@ class BusinessTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'abbreviation': serializer.toJson<String>(abbreviation),
       'isActive': serializer.toJson<bool>(isActive),
     };
   }
@@ -840,16 +848,21 @@ class BusinessTableData extends DataClass
     return BusinessTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      abbreviation: abbreviation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(abbreviation),
       isActive: isActive == null && nullToAbsent
           ? const Value.absent()
           : Value(isActive),
     );
   }
 
-  BusinessTableData copyWith({int id, String name, bool isActive}) =>
+  BusinessTableData copyWith(
+          {int id, String name, String abbreviation, bool isActive}) =>
       BusinessTableData(
         id: id ?? this.id,
         name: name ?? this.name,
+        abbreviation: abbreviation ?? this.abbreviation,
         isActive: isActive ?? this.isActive,
       );
   @override
@@ -857,42 +870,51 @@ class BusinessTableData extends DataClass
     return (StringBuffer('BusinessTableData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('abbreviation: $abbreviation, ')
           ..write('isActive: $isActive')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, isActive.hashCode)));
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(name.hashCode, $mrjc(abbreviation.hashCode, isActive.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is BusinessTableData &&
           other.id == this.id &&
           other.name == this.name &&
+          other.abbreviation == this.abbreviation &&
           other.isActive == this.isActive);
 }
 
 class BusinessTableCompanion extends UpdateCompanion<BusinessTableData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String> abbreviation;
   final Value<bool> isActive;
   const BusinessTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.abbreviation = const Value.absent(),
     this.isActive = const Value.absent(),
   });
   BusinessTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
+    this.abbreviation = const Value.absent(),
     this.isActive = const Value.absent(),
   }) : name = Value(name);
   BusinessTableCompanion copyWith(
-      {Value<int> id, Value<String> name, Value<bool> isActive}) {
+      {Value<int> id,
+      Value<String> name,
+      Value<String> abbreviation,
+      Value<bool> isActive}) {
     return BusinessTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      abbreviation: abbreviation ?? this.abbreviation,
       isActive: isActive ?? this.isActive,
     );
   }
@@ -924,6 +946,20 @@ class $BusinessTableTable extends BusinessTable
     );
   }
 
+  final VerificationMeta _abbreviationMeta =
+      const VerificationMeta('abbreviation');
+  GeneratedTextColumn _abbreviation;
+  @override
+  GeneratedTextColumn get abbreviation =>
+      _abbreviation ??= _constructAbbreviation();
+  GeneratedTextColumn _constructAbbreviation() {
+    return GeneratedTextColumn(
+      'abbreviation',
+      $tableName,
+      true,
+    );
+  }
+
   final VerificationMeta _isActiveMeta = const VerificationMeta('isActive');
   GeneratedBoolColumn _isActive;
   @override
@@ -934,7 +970,7 @@ class $BusinessTableTable extends BusinessTable
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, name, isActive];
+  List<GeneratedColumn> get $columns => [id, name, abbreviation, isActive];
   @override
   $BusinessTableTable get asDslTable => this;
   @override
@@ -955,6 +991,14 @@ class $BusinessTableTable extends BusinessTable
           _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
+    }
+    if (d.abbreviation.present) {
+      context.handle(
+          _abbreviationMeta,
+          abbreviation.isAcceptableValue(
+              d.abbreviation.value, _abbreviationMeta));
+    } else if (abbreviation.isRequired && isInserting) {
+      context.missing(_abbreviationMeta);
     }
     if (d.isActive.present) {
       context.handle(_isActiveMeta,
@@ -981,6 +1025,9 @@ class $BusinessTableTable extends BusinessTable
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.abbreviation.present) {
+      map['abbreviation'] = Variable<String, StringType>(d.abbreviation.value);
     }
     if (d.isActive.present) {
       map['is_active'] = Variable<bool, BoolType>(d.isActive.value);

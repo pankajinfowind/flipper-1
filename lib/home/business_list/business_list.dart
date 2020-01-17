@@ -1,4 +1,5 @@
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -18,6 +19,7 @@ class BusinessList extends StatefulWidget {
 
 class _BusinessListState extends State<BusinessList> {
   bool _calendarSelected = false;
+  int _activeBusiness;
 
   _buildFirstSectionFlipperLogo(BuildContext context) {
     return Container(
@@ -96,10 +98,9 @@ class _BusinessListState extends State<BusinessList> {
       child: Padding(
         padding:
             const EdgeInsets.only(top: _Style.padding, right: _Style.padding),
-        child: _GroupButton(data, (id) {
-          //todo: set the business as highlighted on first creation
-          //todo: on auth set highlighted business in store.
-          //todo: reset other highlighted business and set this one with the ID.
+        child: _GroupButton(data, (business) {
+          StoreProvider.of<AppState>(context).dispatch(NextActiveBussiness(business));
+          StoreProvider.of<AppState>(context).dispatch(SetActiveBusiness(business));
         }, onClick, hasNotification),
       ),
     );
@@ -166,14 +167,14 @@ class _GroupSettingsButton extends StatelessWidget {
 
 class _GroupButton extends StatelessWidget {
   final Business business;
-  final Function(int) onPressedCircle;
-  final bool isSquareShape;
+  final Function(Business) onPressedCircle;
+  final bool isActive;
   final bool hasUpdates;
 
   const _GroupButton(
     this.business,
     this.onPressedCircle,
-    this.isSquareShape,
+    this.isActive,
     this.hasUpdates, {
     Key key,
   })  : assert(business != null),
@@ -183,18 +184,22 @@ class _GroupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _circleColor =
-        HexColor(business.hexColor); //TODO: make this color comes from setting in v.2
-    final _groupText = business.abbreviation.toUpperCase();
+        HexColor("#f5a623"); //TODO: make this color comes from setting in v.2
+    final _groupText = business.abbreviation.substring(0,2).toUpperCase();
 
+    if(business.isActive){
+      StoreProvider.of<AppState>(context).dispatch(ActiveBusinessId(business));
+    }
     return Container(
+
       child: Row(
         children: <Widget>[
-          ..._buildSelectionHighlight(isSquareShape, _circleColor),
+          ..._buildSelectionHighlight(business.isActive, _circleColor),
           _selectableListItem(
             color: _circleColor,
             text: _groupText,
             action: () {
-              onPressedCircle(business.id);
+              onPressedCircle(business);
             },
             updateIndicatorVisible: hasUpdates,
             isSquareShape: true, //set to true by default

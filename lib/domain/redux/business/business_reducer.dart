@@ -4,6 +4,8 @@ import 'package:redux/redux.dart';
 
 final businessReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, OnBusinessLoaded>(_onBusinessLoaded),
+  TypedReducer<AppState, ActiveBusinessId>(_onActiveBusinessId),
+  TypedReducer<AppState, NextActiveBussiness>(_onNextActiveBusinessId),
   TypedReducer<AppState, WithBusiness>(_onCreatingBusiness),
   TypedReducer<AppState, ResetBusiness>(_resetBusiness),
 ];
@@ -16,4 +18,10 @@ AppState _onCreatingBusiness(AppState state, WithBusiness action) {
 }
 AppState _resetBusiness(AppState state, ResetBusiness action) {
   return state.rebuild((a) => a..business = null);
+}
+AppState _onActiveBusinessId(AppState state, ActiveBusinessId action) {
+  return state.rebuild((a) => a..previousActiveBusiness = action.bussiness.toBuilder());
+}
+AppState _onNextActiveBusinessId(AppState state, NextActiveBussiness action) {
+  return state.rebuild((a) => a..nextActiveBusiness = action.bussiness.toBuilder());
 }

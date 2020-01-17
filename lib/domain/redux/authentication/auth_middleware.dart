@@ -88,6 +88,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
             businessList.add(Business((bu) => bu
               ..id = b.id
               ..abbreviation = b.name
+              ..isActive = b.isActive
               ..name = b.name))
           });
       store.dispatch(OnBusinessLoaded(business: businessList));

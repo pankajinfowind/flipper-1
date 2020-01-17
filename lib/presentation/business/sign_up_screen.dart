@@ -198,7 +198,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ..isCurrentAuthenticated = true
       ..avatar = "avatarFromYegobox"
       ..username = "userNameFromYegobox");
-
     StoreProvider.of<AppState>(context).dispatch(WithUser(user));
     StoreProvider.of<AppState>(context).dispatch(CreateUser(user));
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));

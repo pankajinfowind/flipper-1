@@ -1,8 +1,6 @@
 import "package:flutter/widgets.dart";
 import "package:flutter_platform_widgets/flutter_platform_widgets.dart";
 
-import '../../flipper_localization.dart';
-
 enum AccessResourceType { CAMERA, STORAGE }
 
 showNoAccessAlert({
@@ -10,12 +8,11 @@ showNoAccessAlert({
   BuildContext context,
 }) {
   final dialog = PlatformAlertDialog(
-    title: Text(CirclesLocalizations.of(context).platformAlertAccessTitle),
-    content:
-        Text(CirclesLocalizations.of(context).platformAlertAccessBody(type)),
+    title: Text("No access"),
+    content: Text("Camera"),
     actions: <Widget>[
       PlatformDialogAction(
-          child: PlatformText(CirclesLocalizations.of(context).ok),
+          child: PlatformText("Ok"),
           onPressed: () {
             Navigator.pop(context);
           }),
@@ -31,20 +28,20 @@ showNoAccessAlert({
 /// Present PlatformDialog for fetures yet to implement.
 showSoonAlert({BuildContext context}) {
   final actions = [
-    PlatformDialogAction(
-      child: PlatformText(CirclesLocalizations.of(context).cancel),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    ),
+    // PlatformDialogAction(
+    //   child: PlatformText(CirclesLocalizations.of(context).cancel),
+    //   onPressed: () {
+    //     Navigator.pop(context);
+    //   },
+    // ),
   ];
 
   return showPlatformDialog(
     context: context,
-    builder: (_) => PlatformAlertDialog(
-      title: Text(CirclesLocalizations.of(context).genericSoonAlertTitle),
-      content: Text(CirclesLocalizations.of(context).genericSoonAlertMessage),
-      actions: actions,
-    ),
+    // builder: (_) => PlatformAlertDialog(
+    //   title: Text(CirclesLocalizations.of(context).genericSoonAlertTitle),
+    //   content: Text(CirclesLocalizations.of(context).genericSoonAlertMessage),
+    //   actions: actions,
+    // ),
   );
 }

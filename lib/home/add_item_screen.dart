@@ -1,3 +1,4 @@
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
@@ -20,7 +21,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         actionButton: FlatButton(
           onPressed: () {},
           child: Text(
-            "Save",
+            S.of(context).save,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: Colors.white),
@@ -82,6 +83,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     color: Colors.black,
                   ),
                 ),
+              ),
+              Container(
+                height: 24,
               ),
               Center(
                 child: Container(
@@ -165,7 +169,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     color: HexColor("#ecf0f1"),
                     child: Text("Add Variation"),
                     onPressed: () {
-                      Router.navigator.pushNamed(Router.takePictureScreen);
+                      Router.navigator.pushNamed(Router.addVariationScreen);
                     },
                   ),
                 ),

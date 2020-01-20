@@ -3,8 +3,6 @@ import "dart:io";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-
-import '../../flipper_localization.dart';
 import '../../theme.dart';
 
 class DateFormField extends StatefulWidget {
@@ -90,7 +88,7 @@ class _DateFormFieldState extends State<DateFormField> {
                 children: <Widget>[
                   FlatButton(
                     child: Text(
-                      CirclesLocalizations.of(context).cancel,
+                      "Cancel",
                       style: AppTheme.buttonTextStyle,
                     ),
                     onPressed: () {
@@ -101,7 +99,7 @@ class _DateFormFieldState extends State<DateFormField> {
                   ),
                   FlatButton(
                     child: Text(
-                      CirclesLocalizations.of(context).save,
+                      "Save",
                       style: AppTheme.buttonTextStyle,
                     ),
                     onPressed: () {

@@ -6,6 +6,7 @@ import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/business/business_middleware.dart';
 import 'package:flipper/domain/redux/permission/permission_middleware.dart';
 import 'package:flipper/domain/redux/user/user_middleware.dart';
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,6 @@ import 'domain/redux/app_reducer.dart';
 import 'domain/redux/authentication/auth_actions.dart';
 import 'domain/redux/authentication/auth_middleware.dart';
 import 'domain/redux/branch/branch_middleware.dart';
-import 'flipper_localization.dart';
 
 class FlipperApp extends StatefulWidget {
   FlipperApp({Key key}) : super(key: key);
@@ -40,13 +40,13 @@ class _FlipperAppState extends State<FlipperApp> {
     store = Store<AppState>(
       appReducer,
       initialState: AppState.init(),
-      middleware:
-          createAuthenticationMiddleware(userRepo, businessRepo,branchRepo,generalRepo, _navigatorKey)
-            ..addAll(createBusinessMiddleware(_navigatorKey, businessRepo))
-            ..addAll(permissionMiddleware(_navigatorKey))
-            ..addAll(AppActionMiddleware(_navigatorKey,generalRepo))
-            ..addAll(userMiddleware(userRepo,_navigatorKey))
-            ..addAll(createBranchMiddleware(_navigatorKey,branchRepo)),
+      middleware: createAuthenticationMiddleware(
+          userRepo, businessRepo, branchRepo, generalRepo, _navigatorKey)
+        ..addAll(createBusinessMiddleware(_navigatorKey, businessRepo))
+        ..addAll(permissionMiddleware(_navigatorKey))
+        ..addAll(AppActionMiddleware(_navigatorKey, generalRepo))
+        ..addAll(userMiddleware(userRepo, _navigatorKey))
+        ..addAll(createBranchMiddleware(_navigatorKey, branchRepo)),
     );
     store.dispatch(
       VerifyAuthenticationState(),
@@ -62,13 +62,8 @@ class _FlipperAppState extends State<FlipperApp> {
       store: store,
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: localizationsDelegates,
-          supportedLocales: [
-            const Locale("de", "DE"),
-            const Locale("en", "EN"),
-            const Locale("pt_BR", "PT"),
-            const Locale("rw", "RW"),
-          ],
+          localizationsDelegates: [S.delegate],
+          supportedLocales: S.delegate.supportedLocales,
           title: "Flipper",
           theme: AppTheme.theme,
           navigatorKey: Router.navigatorKey,

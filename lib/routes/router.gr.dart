@@ -19,6 +19,7 @@ import 'package:flipper/presentation/business/create_business_screen.dart';
 import 'package:flipper/home/add_item_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/take_picture_screen.dart';
+import 'package:flipper/home/add_variation_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -32,6 +33,7 @@ class Router {
   static const addItemScreen = '/addItemScreen';
   static const editItemTitle = '/editItemTitle';
   static const takePictureScreen = '/takePictureScreen';
+  static const addVariationScreen = '/addVariationScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -132,6 +134,16 @@ class Router {
       case Router.takePictureScreen:
         return MaterialPageRoute(
           builder: (_) => TakePictureScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.addVariationScreen:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => AddVariationScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

@@ -1,4 +1,3 @@
-import 'package:flipper/flipper_localization.dart';
 import "package:flutter/material.dart";
 //import 'package:url_launcher/url_launcher.dart';
 
@@ -10,7 +9,7 @@ class PrivacySettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text(CirclesLocalizations.of(context).privacyButton),
+      child: Text("Privacy Button"),
 //      onPressed: () {
 //        launch(CirclesLocalizations.of(context).privacyLink);
 //      },

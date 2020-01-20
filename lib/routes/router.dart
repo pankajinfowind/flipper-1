@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/transitions_builders.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/home/add_item_screen.dart';
+import 'package:flipper/home/add_variation_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/sale_screen.dart';
@@ -27,7 +28,7 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   SettingUpApplicationScreen settingUpApplicationScreen;
-  //TODO: work on sliding left animation later.
+
   @CustomRoute(
       transitionsBuilder: TransitionsBuilders.slideLeft,
       durationInMilliseconds: 200)
@@ -45,4 +46,7 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   TakePictureScreen takePictureScreen;
+
+  @MaterialRoute(fullscreenDialog: true)
+  AddVariationScreen addVariationScreen;
 }

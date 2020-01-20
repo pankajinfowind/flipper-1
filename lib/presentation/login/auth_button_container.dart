@@ -1,6 +1,5 @@
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/authentication/auth_actions.dart';
-import 'package:flipper/flipper_localization.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter_redux/flutter_redux.dart";
 import "package:redux/redux.dart";
@@ -16,9 +15,7 @@ class AuthButtonContainer extends StatelessWidget {
         converter: _ViewModel.fromStore,
         builder: (BuildContext context, _ViewModel viewModel) {
           return AuthButton(
-              buttonText: viewModel.isLoggedIn
-                  ? CirclesLocalizations.of(context).logOut
-                  : CirclesLocalizations.of(context).logIn,
+              buttonText: "Logout",
               onPressedCallback: viewModel.onPressedCallback);
         });
   }

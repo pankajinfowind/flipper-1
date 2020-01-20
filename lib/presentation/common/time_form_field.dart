@@ -2,8 +2,6 @@ import "dart:io";
 
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-
-import '../../flipper_localization.dart';
 import '../../theme.dart';
 
 class TimeFormField extends StatefulWidget {
@@ -98,7 +96,7 @@ class _TimeFormFieldState extends State<TimeFormField> {
                 children: <Widget>[
                   FlatButton(
                     child: Text(
-                      CirclesLocalizations.of(context).cancel,
+                      "Cancel",
                       style: AppTheme.buttonTextStyle,
                     ),
                     onPressed: () {
@@ -109,7 +107,7 @@ class _TimeFormFieldState extends State<TimeFormField> {
                   ),
                   FlatButton(
                     child: Text(
-                      CirclesLocalizations.of(context).save,
+                      "Save",
                       style: AppTheme.buttonTextStyle,
                     ),
                     onPressed: () {

@@ -1,3 +1,4 @@
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -67,45 +68,55 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: true,
-      child: Container(
-        height: _bottomSpacer,
-        child: Column(
-          children: <Widget>[
-            ListTile(
-              contentPadding:EdgeInsets.symmetric(horizontal: 0.5) ,
-              leading:  Icon(
-                _icon ?? Icons.close,
-                size: 30,
+        top: true,
+        child: Container(
+          height: _bottomSpacer,
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 0.5),
+                leading: GestureDetector(
+                  onTap: () {
+                    //assume that this button always closes the current page!
+                    Router.navigator.pop();
+                  },
+                  child: Icon(
+                    _icon ?? Icons.close,
+                    size: 30,
+                  ),
+                ),
+                title: _title == null
+                    ? Text("")
+                    : Text(
+                        _title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                trailing: _actionButton == null
+                    ? Text("")
+                    : SizedBox(
+                        height: 52,
+                        child: Container(
+                          color: Colors.blue,
+                          child: _actionButton,
+                        ),
+                      ),
+                dense: true,
               ),
-              title: _title==null?Text(""):Text(
-                _title,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.black),
+              Container(
+                child: _additionalText,
               ),
-
-              trailing: _actionButton==null?Text(""):SizedBox(
-              height: 52,
-              child: Container(
-                color: Colors.blue,
-                child: _actionButton,
-              ),
-            ),
-              dense: true,
-            ),
-          Container(
-            child: _additionalText,
+              Expanded(
+                child: Divider(
+                  color: Colors
+                      .black, //TODO: tweak this divider so it can be visible
+                ),
+              )
+            ],
           ),
-            Expanded(
-              child: Divider(
-                color: Colors.black, //TODO: tweak this divider so it can be visible
-              ),
-            )
-          ],
-        ),
-      )
-    );
+        ));
   }
+
   @override
   Size get preferredSize => Size.fromHeight(AppTheme.appBarSize *
       (_headerMultiplier == null ? 0.8 : _headerMultiplier));

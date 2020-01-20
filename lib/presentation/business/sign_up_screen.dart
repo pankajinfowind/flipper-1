@@ -70,8 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             icon: Icons.arrow_back,
             multi: 3,
-            bottomSpacer: 12,
-            positioningActionButton: 265.8,
+            bottomSpacer: 52,
             actionTitle: "Sign Up",
             action: Column(
               children: <Widget>[

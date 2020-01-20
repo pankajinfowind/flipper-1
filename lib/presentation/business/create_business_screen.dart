@@ -36,6 +36,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
       builder: (context, vm) {
         return Scaffold(
           appBar: CommonAppBar(
+            title: "",
             actionButton: FlatButton(
               onPressed: () {
                 StoreProvider.of<AppState>(context).dispatch(AppAction(
@@ -50,8 +51,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
             ),
             icon: Icons.arrow_back,
             multi: 3,
-            bottomSpacer: 12,
-            positioningActionButton: 265.8,
+            bottomSpacer: 120,
             actionTitle: "Sign Up",
             action: Column(
               children: <Widget>[
@@ -117,8 +117,8 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     final business = Business((b) => b
       ..name = tBusiness.name
-      ..abbreviation = tBusiness.name.substring(1,2)
-      ..hexColor="#f5a623"
+      ..abbreviation = tBusiness.name.substring(1, 2)
+      ..hexColor = "#f5a623"
       ..type = BusinessType.NORMAL);
 
     //TODO: send user ID and associate this new created business with userId.

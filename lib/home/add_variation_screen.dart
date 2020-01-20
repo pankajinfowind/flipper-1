@@ -26,7 +26,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
         ),
         icon: Icons.close,
         multi: 3,
-        bottomSpacer: 48,
+        bottomSpacer: 42,
       ),
       body: (ListView(
         children: <Widget>[

@@ -29,7 +29,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         ),
         icon: Icons.close,
         multi: 3,
-        bottomSpacer: 48,
+        bottomSpacer: 42,
       ),
       body: ListView(
         children: <Widget>[

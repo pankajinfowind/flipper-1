@@ -19,7 +19,6 @@ class BusinessList extends StatefulWidget {
 
 class _BusinessListState extends State<BusinessList> {
   bool _calendarSelected = false;
-  int _activeBusiness;
 
   _buildFirstSectionFlipperLogo(BuildContext context) {
     return Container(

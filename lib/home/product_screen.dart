@@ -7,43 +7,26 @@ class ProductScreen extends StatefulWidget {
   _ProductScreenState createState() => _ProductScreenState();
 }
 
+List<Widget> getItems(List<int> itemList) {
+  List<Widget> list = new List<Widget>();
+  for (var i = 0; i < itemList.length; i++) {
+    list.add(ListTile(
+      title: Text(
+        'Sun'+ i.toString(),
+        style: TextStyle(color: Colors.black),
+      ),
+    ));
+  }
+  return list;
+}
+
 class _ProductScreenState extends State<ProductScreen> {
   Widget _myListView(BuildContext context) {
-    final titles = [
-      'bike',
-      'boat',
-      'bus',
-      'car',
-      'railway',
-      'run',
-      'subway',
-      'transit',
-      'walk'
-    ];
-
+    final defaults = [1,2,3,4,5,6,7,8,10];
     return ListView(
       children: ListTile.divideTiles(
         context: context,
-        tiles: [
-          ListTile(
-            title: Text(
-              'Sun',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Moon',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Star',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ],
+        tiles:getItems(defaults),
       ).toList(),
     );
   }
@@ -58,6 +41,10 @@ class _ProductScreenState extends State<ProductScreen> {
         ),
         Expanded(
           child: _myListView(context),
+        ),
+        ListTile(
+          leading: Icon(Icons.add),
+          title: Text('Create new',style: TextStyle(color: Colors.black),),
         )
       ],
     ));

@@ -23,15 +23,21 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     overlayEntry.remove();
   }
 
-  final Widget _action;
+  @Deprecated("_action will be removed soon")
+  final Widget _additionalText;
   final Widget _actionButton;
+  @Deprecated("_leftAction will be removed soon")
   final Widget _leftAction;
   final String _title;
+  @Deprecated("_subtitle will be removed soon")
   final String _subtitle;
+  @Deprecated("_actionTitle will be removed soon")
   final String _actionTitle;
   final IconData _icon;
   final double _headerMultiplier;
+  @Deprecated("_positioningActionButton will be removed soon")
   final double _positioningActionButton;
+  @Deprecated("_bottomSpacer will be removed soon")
   final double _bottomSpacer;
 
   const CommonAppBar({
@@ -46,7 +52,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     double positioningActionButton,
     double bottomSpacer,
     Key key,
-  })  : _action = action,
+  })  : _additionalText = action,
         _actionButton = actionButton,
         _leftAction = leftAction,
         _title = title,
@@ -61,86 +67,45 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: false,
+      top: true,
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, 1.0),
-            )
-          ],
-        ),
-        child: Wrap(
+        height: _bottomSpacer,
+        child: Column(
           children: <Widget>[
-            SafeArea(
-              top: true,
-              child: Visibility(
-                visible: _leftAction == null,
-                child: Container(
-                  // Minimum size of a flat button
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 18,
-                      ),
-                      IconButton(
-                          icon: Icon(
-                            _icon ?? Icons.close,
-                            size: 30,
-                          ),
-                          iconSize: 40,
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          }),
-                      _title == null
-                          ? Container()
-                          : SizedBox(
-                              child: FlatButton(
-                                child: Text(
-                                  _title,
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: _subtitle == null
-                                      ? AppTheme.appBarTitleTextStyle
-                                      : AppTheme.appBarTitle2TextStyle,
-                                ),
-                              ),
-                            ),
-                      Container(
-                        width: (_positioningActionButton == null
-                            ? 0
-                            : _positioningActionButton),
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: SizedBox(
-                          height: 52,
-                          child: Container(
-                            color: Colors.blue,
-                            child: _actionButton,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                replacement: _leftAction ?? SizedBox.shrink(),
+            ListTile(
+              contentPadding:EdgeInsets.symmetric(horizontal: 0.5) ,
+              leading:  Icon(
+                _icon ?? Icons.close,
+                size: 30,
+              ),
+              title: _title==null?Text(""):Text(
+                _title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black),
+              ),
+
+              trailing: _actionButton==null?Text(""):SizedBox(
+              height: 52,
+              child: Container(
+                color: Colors.blue,
+                child: _actionButton,
               ),
             ),
-            Center(
-              child: _action,
+              dense: true,
             ),
-            Container(
-              height: _bottomSpacer,
+          Container(
+            child: _additionalText,
+          ),
+            Expanded(
+              child: Divider(
+                color: Colors.black, //TODO: tweak this divider so it can be visible
+              ),
             )
           ],
         ),
-      ),
+      )
     );
   }
-
   @override
   Size get preferredSize => Size.fromHeight(AppTheme.appBarSize *
       (_headerMultiplier == null ? 0.8 : _headerMultiplier));

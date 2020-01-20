@@ -48,6 +48,10 @@
 
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>Flipper needs access to location when open and in the background.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Flipper want to use your camera</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Flipper want to use your microphone</string>
 	<false/>
 </dict>
 </plist>

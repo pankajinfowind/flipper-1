@@ -16,6 +16,9 @@ import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/presentation/business/sign_up_screen.dart';
 import 'package:auto_route/transitions_builders.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
+import 'package:flipper/home/add_item_screen.dart';
+import 'package:flipper/home/edit_item_title.dart';
+import 'package:flipper/home/take_picture_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -26,6 +29,9 @@ class Router {
   static const settingUpApplicationScreen = '/settingUpApplicationScreen';
   static const signUpScreen = '/signUpScreen';
   static const createBusiness = '/createBusiness';
+  static const addItemScreen = '/addItemScreen';
+  static const editItemTitle = '/editItemTitle';
+  static const takePictureScreen = '/takePictureScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -100,6 +106,32 @@ class Router {
         final typedArgs = args as Key;
         return MaterialPageRoute(
           builder: (_) => CreateBusinessScreen(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.addItemScreen:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => AddItemScreen(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.editItemTitle:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => EditItemTitle(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.takePictureScreen:
+        return MaterialPageRoute(
+          builder: (_) => TakePictureScreen(),
           settings: settings,
           fullscreenDialog: true,
         );

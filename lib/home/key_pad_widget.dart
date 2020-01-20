@@ -33,7 +33,7 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
                 child: Text(
                   "Frw 500",
                   style: TextStyle(color: HexColor("#95a5a6")),
-                ),
+                ), onPressed: () {},
               ),
               leading: FlatButton(
                 onPressed: () {

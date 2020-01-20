@@ -1,4 +1,7 @@
+import 'package:flipper/home/widget/create_options_widget.dart';
 import 'package:flipper/presentation/widgets/payable_widget.dart';
+import 'package:flipper/util/HexColor.dart';
+import 'package:flipper/util/validators.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -36,15 +39,41 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
         body: Column(
       children: <Widget>[
+
         Align(
           child: PayableWidget(),
+        ),
+        Center(
+          child: Form(
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  style: TextStyle(color: Colors.black),
+                  validator: Validators.isStringHasMoreChars,
+                  onSaved: (name) {
+
+                  },
+                  decoration: InputDecoration(
+                      hintText: "Search..",
+                      focusColor: Colors.blue),
+                )
+              ],
+            ),
+          ),
         ),
         Expanded(
           child: _myListView(context),
         ),
-        ListTile(
-          leading: Icon(Icons.add),
-          title: Text('Create new',style: TextStyle(color: Colors.black),),
+        GestureDetector(
+          onTap: (){
+            showDialog(context: context,builder: (BuildContext context){
+              return CreateOptionsWidget();
+            });
+          },
+          child: ListTile(
+            leading: Icon(Icons.add),
+            title: Text('Create new',style: TextStyle(color: Colors.black),),
+          ),
         )
       ],
     ));

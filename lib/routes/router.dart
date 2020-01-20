@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/transitions_builders.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
+import 'package:flipper/home/add_item_screen.dart';
+import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/sale_screen.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
+import 'package:flipper/home/take_picture_screen.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
 import 'package:flipper/presentation/business/sign_up_screen.dart';
 import 'package:flipper/presentation/home/dash_board.dart';
@@ -33,4 +36,13 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   CreateBusinessScreen createBusiness;
+
+  @MaterialRoute(fullscreenDialog: true)
+  AddItemScreen addItemScreen;
+
+  @MaterialRoute(fullscreenDialog: true)
+  EditItemTitle editItemTitle;
+
+  @MaterialRoute(fullscreenDialog: true)
+  TakePictureScreen takePictureScreen;
 }

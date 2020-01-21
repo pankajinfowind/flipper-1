@@ -7,7 +7,7 @@ import {
   ModelService
 }
 from '@enexus/flipper-offline-database';
-import { Menu, APP_CONFIG, Tables } from "@enexus/flipper-components";
+import { Menu, APP_CONFIG, Tables, Reason, Taxes } from "@enexus/flipper-components";
 
 export function init_app(bootstrapper: Bootstrapper) {
   return () => bootstrapper.bootstrap();
@@ -74,6 +74,25 @@ export class Bootstrapper {
                      this.insertDefaultData<Menu>(config.defaultMenu as Menu[],myTable);
                 }
               }
+
+
+  /////////////////////////////////// ADD DEFAULT REASONS
+  
+  if(table.name ==='reasons'){
+    if (config.defaultReasons.length > 0) {
+         this.insertDefaultData<Reason>(config.defaultReasons as Reason[],myTable);
+    }
+  }
+
+      /////////////////////////////////// ADD DEFAULT TAXES
+
+      if(table.name ==='taxes'){
+        if (config.defaultTaxes.length > 0) {
+            this.insertDefaultData<Taxes>(config.defaultTaxes as Taxes[],myTable);
+        }
+      }
+
+
 
 /////////////////////////////////////ADD TYPES //////////////////////////
 

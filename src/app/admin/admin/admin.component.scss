@@ -1,10 +1,9 @@
 
-$admin-max-left-width:21%;
-$admin-min-left-width:7.5%;
+$admin-max-left-width:278px;
+$admin-min-left-width:69px;
 .max-container-fliud{
     position: relative;
     float: right;
-    margin: 20px;
     height: 100vh;
     width: calc(100% - #{$admin-max-left-width});
 

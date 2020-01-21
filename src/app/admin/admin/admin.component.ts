@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MenuEntries, MainModelService, Tables, Business, Branch, Menu } from '@enexus/flipper-components';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { CurrentUser } from '../../core/guards/current-user';
 
 
@@ -27,9 +27,9 @@ export class AdminComponent implements OnInit,OnDestroy  {
     return this.entry;
   }
 
- 
+  private sub: any;
 
-  constructor(private model:MainModelService, private router:Router,public currentUser: CurrentUser) {
+  constructor(private route: ActivatedRoute,private model:MainModelService, private router:Router,public currentUser: CurrentUser) {
     this.loadMenusEntries();
  }
 
@@ -60,22 +60,27 @@ export class AdminComponent implements OnInit,OnDestroy  {
    ngOnDestroy() {
  }
   ngOnInit() {
-    
+   
   }
   isMenuToggled(event){
     this.userToggledMenu=event;
   }
 
-  displaySwitchedBusiness(event){
-    const activatedBusiness=this.currentUser.userHasBusiness();
-   this.activateBusiness(event,true);
-    this.activateBusiness(activatedBusiness,false);
+  displaySwitchedBusiness(event:Business){
+
+    const activatedBusiness:Business=this.currentUser.userHasBusiness();
+
+    activatedBusiness.active=false;
+    event.active=true;
+
+   this.activateOrDesactived<Business>(Tables.business,event,event.id);
+    this.activateOrDesactived<Business>(Tables.business, activatedBusiness,activatedBusiness.id);
+
     this.loadMenusEntries();
   }
 
-  activateBusiness(business:Business,bol:boolean){
-    business.active=bol;
-   this.model.update<Business>(Tables.business,business as Business,business.id as number) ;
+  activateOrDesactived<T>(Table:string,entry:T,id:number){
+   this.model.update<T>(Table,entry as T,id as number) ;
   }
  
   displaySwitchedBranch(event){
@@ -89,6 +94,18 @@ export class AdminComponent implements OnInit,OnDestroy  {
   
   }
   getRouterClicked(event){
+    const updatedMenu=event.menus.find(r=>r.route===event.router);
+    updatedMenu.active=true;
+    
+    const activatedMenu:Menu=this.currentUser.activeMenu();
+    if(activatedMenu){
+      activatedMenu.active=false;
+    }
+    
+
+   this.activateOrDesactived<Menu>(Tables.menu,updatedMenu,updatedMenu.id);
+    this.activateOrDesactived<Menu>(Tables.menu, activatedMenu,activatedMenu.id);
+
   this.router.navigate([event.router]);
   }
 }

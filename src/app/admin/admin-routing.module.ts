@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../core/guards/auth-guard.service';
 import { PageNotFoundComponent } from '../shared/components';
 import { AdminComponent } from './admin/admin.component';
+import { ProductsComponent } from '@enexus/flipper-inventory';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
             loadChildren: () => import('./../settings/settings.module').then(m => m.SettingsModule),
             canLoad: [AuthGuard]
           },
+          {path: 'inventory', component: ProductsComponent},
           {
             path: '**',
             component: PageNotFoundComponent

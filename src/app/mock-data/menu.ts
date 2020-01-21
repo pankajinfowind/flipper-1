@@ -1,18 +1,18 @@
 import { MenuEntries } from "@enexus/flipper-components";
 
-export class MockMenu{
+export class MockMenu {
 
-   static data:MenuEntries= {
-            user: {
+    static data: MenuEntries = {
+        user: {
             id: 1,
             name: 'Ganza respice',
             email: 'respinho2014@gmail.com'
-            },
-            businesses: [
+        },
+        businesses: [
             {
-            id: 1,
-            name: 'Progress Pharamcy',
-            active: true,
+                id: 1,
+                name: 'Progress Pharamcy',
+                active: true,
             },
             // {
             // id: 2,
@@ -32,9 +32,9 @@ export class MockMenu{
         ],
         branches: [
             {
-            id: 1,
-            name: 'Kimironko branch',
-            active: true,
+                id: 1,
+                name: 'Kimironko branch',
+                active: true,
             },
             // {
             // id: 2,
@@ -54,20 +54,20 @@ export class MockMenu{
         ],
         menu: [
             {
-            id: 1,
-            name: 'Analytics',
-            icon: 'analytics.svg',
-            route: 'admin/analytics',
-            active: true,
-            isSetting:false,
+                id: 1,
+                name: 'Analytics',
+                icon: 'analytics.svg',
+                route: 'admin/analytics',
+                active: true,
+                isSetting: false,
             },
             {
-            id: 2,
-            name: 'POS',
-            icon: 'inventory.svg',
-            route: 'admin/pos',
-            active: false,
-            isSetting:false,
+                id: 2,
+                name: 'POS',
+                icon: 'inventory.svg',
+                route: 'admin/pos',
+                active: false,
+                isSetting: false,
             },
             // {
             // id: 3,
@@ -84,14 +84,14 @@ export class MockMenu{
             // active: false,
             // },
             {
-            id: 5,
-            name: 'Settings',
-            icon: 'settings.svg',
-            route: 'admin/settings',
-            active: false,
-            isSetting:true,
+                id: 5,
+                name: 'Settings',
+                icon: 'settings.svg',
+                route: 'admin/settings',
+                active: false,
+                isSetting: true,
             }
-         ]
-            }
-        
+        ]
+    };
+
 }

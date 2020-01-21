@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { User, Business, Tables } from "@enexus/flipper-components";
+import { User, Business, Tables, Menu } from "@enexus/flipper-components";
 import {ModelService}from '@enexus/flipper-offline-database';
 
 
@@ -28,6 +28,11 @@ export class CurrentUser {
         .where('active',true).first<Business>();
       }
 
+      public activeMenu(){
+        return this.model.select(Tables.menu)
+        .where('active',true).first<Menu>();
+      }
+
       public userById(id:number){
         return this.model.select(Tables.user)
         .where('id',id).first<User>();
@@ -44,10 +49,10 @@ export class CurrentUser {
 
 
       public getRedirectUri(): string {
-        let uri="/admin"
+        let uri=this.activeMenu().route;
         if (this.redirectUri) {
            uri = this.redirectUri;
-          this.redirectUri = null;
+           this.redirectUri = null;
         }
         return uri;
       }

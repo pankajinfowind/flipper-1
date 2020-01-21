@@ -11,7 +11,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./pos.component.scss'],
   animations: [
     trigger('insertPos', [
-      transition(':enter', useAnimation(fadeInAnimation, {params: {duration: '1s'}}))
+      transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))
     ]),
   ],
 })
@@ -38,16 +38,15 @@ export class PosComponent implements OnDestroy {
   set theVariantFiltered(value: Variant[]) {
     this.seTheVariantFiltered = value;
   }
-  constructor(private eventBus: FlipperEventBusService, 
-              private totalPipe: CalculateTotalClassPipe) {
-   
-    this.selectedSubscription = this.eventBus.of < OrderEvent > (OrderEvent.CHANNEL)
+  constructor(private eventBus: FlipperEventBusService, private totalPipe: CalculateTotalClassPipe) {
+
+    this.selectedSubscription = this.eventBus.of<OrderEvent>(OrderEvent.CHANNEL)
       .pipe(filter(e => e.order.isActive === true))
       .subscribe(res =>
         this.currentOrder = res.order);
 
 
-    this.variantSubscription = this.eventBus.of < VariantEvent > (VariantEvent.CHANNEL)
+    this.variantSubscription = this.eventBus.of<VariantEvent>(VariantEvent.CHANNEL)
       .pipe(filter(e => e.variant.isActive === true))
       .subscribe(variant => {
         if (variant.variant) {
@@ -56,11 +55,11 @@ export class PosComponent implements OnDestroy {
       });
 
 
-        this.loadTenVariants();
-        
-        if (!this.currentOrder) {
-          this.newOrder();
-        }
+    this.loadTenVariants();
+
+    if (!this.currentOrder) {
+             this.newOrder();
+    }
 
   }
 
@@ -86,7 +85,7 @@ export class PosComponent implements OnDestroy {
     for (let i = 0; i < 10; i++) {
       this.eventBus.publish(new VariantEvent({
         id: rand + i,
-        sku: '157115276' + i,
+        SKU: '157115276' + i,
         name: 'Cake-' + i,
         isActive: true,
         priceVariant: {
@@ -109,11 +108,11 @@ export class PosComponent implements OnDestroy {
   public addOrderItem(item) {
 
     this.currentOrder.orderItems.push(item);
-    this.currentOrder.subTotal = this.totalPipe.transform < Shoppings >
-    (this.currentOrder.orderItems, 'subTotal');
+    this.currentOrder.subTotal = this.totalPipe.transform<Shoppings>
+      (this.currentOrder.orderItems, 'subTotal');
     this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
-     this.currentOrder.cashReceived - this.totalPipe.transform < Shoppings >
-      (this.currentOrder.orderItems, 'subTotal') : 0.00;
+      this.currentOrder.cashReceived - this.totalPipe.transform<Shoppings>
+        (this.currentOrder.orderItems, 'subTotal') : 0.00;
     this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue;
     this.eventBus.publish(new OrderEvent(
       this.currentOrder
@@ -132,7 +131,7 @@ export class PosComponent implements OnDestroy {
 
   }
 
-  
+
   filterByValue(arrayOfObject, term) {
     const query = term.toString().toLowerCase();
     return arrayOfObject.filter((v, i) => {
@@ -160,16 +159,16 @@ export class PosComponent implements OnDestroy {
   }
 
   didCollectCash(event) {
-    this.collectCashCompleted = {isCompleted: false, collectedOrder: this.currentOrder};
+    this.collectCashCompleted = { isCompleted: false, collectedOrder: this.currentOrder };
     if (event === true) {
-      this.collectCashCompleted = {isCompleted: true, collectedOrder: this.currentOrder};
+      this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
       this.currentOrder = null;
       if (!this.currentOrder) {
         this.newOrder();
       }
     }
   }
- saveOrderUpdated(event) {
+  saveOrderUpdated(event) {
     console.log('saved order', event);
   }
 

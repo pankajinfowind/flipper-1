@@ -113,11 +113,11 @@ font-family: 'Roboto', 'Heebo', sans-serif!important;
   background: #fff url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…4yTDExLjksMiBDMTEuNCwxLjMsMTAuNywwLjksMTAsMC45TDEwLDAuOXoiIC8+Cjwvc3ZnPgo=) calc(100% - 10px) 50% no-repeat!important;;
   padding-right: 40px!important;;
 }
-.show-time input[type=email], .show-time input[type=number], .show-time input[type=password], .show-time input[type=search], .show-time input[type=tel], .show-time input[type=text], .show-time input[type=url], .show-time select, .show-time textarea {
+.show-time .input[type=email], .show-time .input[type=number], .show-time .input[type=password], .show-time .input[type=search], .show-time .input[type=tel], .show-time input[type=text], .show-time .input[type=url], .show-time .select, .show-time .textarea {
   transition: color 300ms,border-color 300ms,background-color 300ms;
 }
 
-input {
+.input {
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
   color: -internal-light-dark-color(black, white);
@@ -140,10 +140,10 @@ input {
   border-color: initial;
   border-image: initial;
 }
-select:not(:-internal-list-box) {
+.select:not(:-internal-list-box) {
   overflow: visible !important;
 }
-select {
+.select {
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
   color: -internal-light-dark-color(black, white);
@@ -170,7 +170,7 @@ select {
   border-image: initial;
 }
 
-input[type=email], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=url], textarea,select {
+.input[type=email], .input[type=number], .input[type=password], .input[type=search], .input[type=tel], .input[type=text], .input[type=url], .textarea,.select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -191,12 +191,12 @@ input[type=email], input[type=number], input[type=password], input[type=search],
   height: 40px;
 }
 
-input[type=email]:focus,input[type=number]:focus,input[type=password]:focus,input[type=search]:focus,input[type=tel]:focus,input[type=text]:focus,input[type=url]:focus,select:focus,textarea:focus{border-color:#2996cc;z-index:1}
+.input[type=email]:focus,.input[type=number]:focus,.input[type=password]:focus,.input[type=search]:focus, .input[type=tel]:focus,.input[type=text]:focus,.input[type=url]:focus,.select:focus,.textarea:focus{border-color:#2996cc;z-index:1}
 .field-label {
   display: flex;
   justify-content: space-between;
 }
-.button.expand, button.expand, input[type=button].expand, input[type=reset].expand, input[type=submit].expand {
+.button.expand, button.expand, .input[type=button].expand, .input[type=reset].expand, .input[type=submit].expand {
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -211,7 +211,7 @@ input[type=email]:focus,input[type=number]:focus,input[type=password]:focus,inpu
   transition: color 300ms;
 }
 
-.button, button, input[type=button], input[type=reset], input[type=submit] {
+.button, .input[type=button], .input[type=reset], .input[type=submit] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

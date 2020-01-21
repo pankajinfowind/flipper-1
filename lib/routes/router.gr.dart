@@ -20,6 +20,8 @@ import 'package:flipper/home/add_item_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/take_picture_screen.dart';
 import 'package:flipper/home/add_variation_screen.dart';
+import 'package:flipper/home/add_unit_type.dart';
+import 'package:flipper/home/add_category_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -34,6 +36,8 @@ class Router {
   static const editItemTitle = '/editItemTitle';
   static const takePictureScreen = '/takePictureScreen';
   static const addVariationScreen = '/addVariationScreen';
+  static const addUnitType = '/addUnitType';
+  static const addCategoryScreen = '/addCategoryScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -144,6 +148,26 @@ class Router {
         final typedArgs = args as Key;
         return MaterialPageRoute(
           builder: (_) => AddVariationScreen(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.addUnitType:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => AddUnitType(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.addCategoryScreen:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => AddCategoryScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

@@ -29,7 +29,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         ),
         icon: Icons.close,
         multi: 3,
-        bottomSpacer: 42,
+        bottomSpacer: 52,
       ),
       body: ListView(
         children: <Widget>[
@@ -64,14 +64,19 @@ class _AddItemScreenState extends State<AddItemScreen> {
               Center(
                 child: Container(
                   width: 300,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                    leading: Text("Category"),
-                    trailing: Wrap(
-                      children: <Widget>[
-                        Text("Select Category"),
-                        Icon(Icons.arrow_forward_ios)
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Router.navigator.pushNamed(Router.addCategoryScreen);
+                    },
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
+                      leading: Text("Category"),
+                      trailing: Wrap(
+                        children: <Widget>[
+                          Text("Select Category"),
+                          Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -104,14 +109,19 @@ class _AddItemScreenState extends State<AddItemScreen> {
               Center(
                 child: Container(
                   width: 300,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                    leading: Text("Unit Type"),
-                    trailing: Wrap(
-                      children: <Widget>[
-                        Text("Per Item"),
-                        Icon(Icons.arrow_forward_ios)
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Router.navigator.pushNamed(Router.addUnitType);
+                    },
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
+                      leading: Text("Unit Type"),
+                      trailing: Wrap(
+                        children: <Widget>[
+                          Text("Per Item"),
+                          Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -37,6 +37,15 @@ class S {
       args: [],
     );
   }
+
+  String get unityType {
+    return Intl.message(
+      'Unit Type',
+      name: 'unityType',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

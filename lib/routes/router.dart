@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/transitions_builders.dart';
-import 'package:flipper/domain/redux/business/business_actions.dart';
+import 'package:flipper/home/add_category_screen.dart';
 import 'package:flipper/home/add_item_screen.dart';
+import 'package:flipper/home/add_unit_type.dart';
 import 'package:flipper/home/add_variation_screen.dart';
-import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
+import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/sale_screen.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/home/take_picture_screen.dart';
@@ -49,4 +50,10 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   AddVariationScreen addVariationScreen;
+
+  @MaterialRoute(fullscreenDialog: true)
+  AddUnitType addUnitType;
+
+  @MaterialRoute(fullscreenDialog: true)
+  AddCategoryScreen addCategoryScreen;
 }

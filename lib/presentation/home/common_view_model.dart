@@ -21,6 +21,7 @@ abstract class CommonViewModel
   bool get hasAction;
   List<Branch> get branches;
   List<Business> get businesses;
+  @nullable
   AppActions get appAction;
   Hint get hint;
   CommonViewModel._();
@@ -38,8 +39,9 @@ abstract class CommonViewModel
   static bool _hasSheet(Store<AppState> store) {
     return store.state.sheet != null;
   }
+
   static Hint _hasHint(Store<AppState> store) {
-    return store.state.hint ;
+    return store.state.hint;
   }
 
   static CommonViewModel fromStore(Store<AppState> store) {
@@ -49,8 +51,12 @@ abstract class CommonViewModel
       ..hasAction = _hasAction(store)
       ..businesses = store.state.businesses
       ..tab = store.state.tab
-      ..currentBusiness =store.state.previousActiveBusiness==null?null: store.state.previousActiveBusiness.toBuilder()
-      ..hint = _hasHint(store)==null?null: store.state.hint.toBuilder()
+      ..appAction =
+          store.state.action == null ? null : store.state.action.toBuilder()
+      ..currentBusiness = store.state.previousActiveBusiness == null
+          ? null
+          : store.state.previousActiveBusiness.toBuilder()
+      ..hint = _hasHint(store) == null ? null : store.state.hint.toBuilder()
       ..branches = store.state.branches);
   }
 }

@@ -1,3 +1,5 @@
 {
-    "save": "Sauver"
+    "save": "Sauver",
+    "unityType": "Type d'unité",
+    "category": "Catégorie"
 }

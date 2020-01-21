@@ -1196,6 +1196,201 @@ class $BusinessTableTable extends BusinessTable
   }
 }
 
+class CategoryTableData extends DataClass
+    implements Insertable<CategoryTableData> {
+  final int id;
+  final String tab;
+  final int businessId;
+  CategoryTableData({@required this.id, @required this.tab, this.businessId});
+  factory CategoryTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return CategoryTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      tab: stringType.mapFromDatabaseResponse(data['${effectivePrefix}tab']),
+      businessId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
+    );
+  }
+  factory CategoryTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return CategoryTableData(
+      id: serializer.fromJson<int>(json['id']),
+      tab: serializer.fromJson<String>(json['tab']),
+      businessId: serializer.fromJson<int>(json['businessId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tab': serializer.toJson<String>(tab),
+      'businessId': serializer.toJson<int>(businessId),
+    };
+  }
+
+  @override
+  CategoryTableCompanion createCompanion(bool nullToAbsent) {
+    return CategoryTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      tab: tab == null && nullToAbsent ? const Value.absent() : Value(tab),
+      businessId: businessId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(businessId),
+    );
+  }
+
+  CategoryTableData copyWith({int id, String tab, int businessId}) =>
+      CategoryTableData(
+        id: id ?? this.id,
+        tab: tab ?? this.tab,
+        businessId: businessId ?? this.businessId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CategoryTableData(')
+          ..write('id: $id, ')
+          ..write('tab: $tab, ')
+          ..write('businessId: $businessId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(tab.hashCode, businessId.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is CategoryTableData &&
+          other.id == this.id &&
+          other.tab == this.tab &&
+          other.businessId == this.businessId);
+}
+
+class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
+  final Value<int> id;
+  final Value<String> tab;
+  final Value<int> businessId;
+  const CategoryTableCompanion({
+    this.id = const Value.absent(),
+    this.tab = const Value.absent(),
+    this.businessId = const Value.absent(),
+  });
+  CategoryTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required String tab,
+    this.businessId = const Value.absent(),
+  }) : tab = Value(tab);
+  CategoryTableCompanion copyWith(
+      {Value<int> id, Value<String> tab, Value<int> businessId}) {
+    return CategoryTableCompanion(
+      id: id ?? this.id,
+      tab: tab ?? this.tab,
+      businessId: businessId ?? this.businessId,
+    );
+  }
+}
+
+class $CategoryTableTable extends CategoryTable
+    with TableInfo<$CategoryTableTable, CategoryTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CategoryTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _tabMeta = const VerificationMeta('tab');
+  GeneratedTextColumn _tab;
+  @override
+  GeneratedTextColumn get tab => _tab ??= _constructTab();
+  GeneratedTextColumn _constructTab() {
+    return GeneratedTextColumn(
+      'tab',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
+  GeneratedIntColumn _businessId;
+  @override
+  GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
+  GeneratedIntColumn _constructBusinessId() {
+    return GeneratedIntColumn('business_id', $tableName, true,
+        $customConstraints: 'NULL REFERENCES business_table(id)');
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, tab, businessId];
+  @override
+  $CategoryTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'category_table';
+  @override
+  final String actualTableName = 'category_table';
+  @override
+  VerificationContext validateIntegrity(CategoryTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.tab.present) {
+      context.handle(_tabMeta, tab.isAcceptableValue(d.tab.value, _tabMeta));
+    } else if (tab.isRequired && isInserting) {
+      context.missing(_tabMeta);
+    }
+    if (d.businessId.present) {
+      context.handle(_businessIdMeta,
+          businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
+    } else if (businessId.isRequired && isInserting) {
+      context.missing(_businessIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CategoryTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return CategoryTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(CategoryTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.tab.present) {
+      map['tab'] = Variable<String, StringType>(d.tab.value);
+    }
+    if (d.businessId.present) {
+      map['business_id'] = Variable<int, IntType>(d.businessId.value);
+    }
+    return map;
+  }
+
+  @override
+  $CategoryTableTable createAlias(String alias) {
+    return $CategoryTableTable(_db, alias);
+  }
+}
+
 class BranchTableData extends DataClass implements Insertable<BranchTableData> {
   final int id;
   final String name;
@@ -1369,6 +1564,9 @@ abstract class _$Database extends GeneratedDatabase {
   $BusinessTableTable _businessTable;
   $BusinessTableTable get businessTable =>
       _businessTable ??= $BusinessTableTable(this);
+  $CategoryTableTable _categoryTable;
+  $CategoryTableTable get categoryTable =>
+      _categoryTable ??= $CategoryTableTable(this);
   $BranchTableTable _branchTable;
   $BranchTableTable get branchTable => _branchTable ??= $BranchTableTable(this);
   UserDao _userDao;
@@ -1379,6 +1577,8 @@ abstract class _$Database extends GeneratedDatabase {
   BusinessDao get businessDao => _businessDao ??= BusinessDao(this as Database);
   BranchDao _branchDao;
   BranchDao get branchDao => _branchDao ??= BranchDao(this as Database);
+  CategoryDao _categoryDao;
+  CategoryDao get categoryDao => _categoryDao ??= CategoryDao(this as Database);
   TabsDao _tabsDao;
   TabsDao get tabsDao => _tabsDao ??= TabsDao(this as Database);
   @override
@@ -1388,6 +1588,7 @@ abstract class _$Database extends GeneratedDatabase {
         businessUserTable,
         tabsTable,
         businessTable,
+        categoryTable,
         branchTable
       ];
 }

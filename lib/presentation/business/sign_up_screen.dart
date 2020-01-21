@@ -182,7 +182,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
     }
-    StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
     Business business = Business((b) => b
       ..name = tBusiness.name
       ..abbreviation = tBusiness.name.substring(0, 2).toLowerCase()

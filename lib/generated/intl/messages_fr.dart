@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "save" : MessageLookupByLibrary.simpleMessage("Sauver")
+    "save" : MessageLookupByLibrary.simpleMessage("Sauver"),
+    "unityType" : MessageLookupByLibrary.simpleMessage("Type d\'unité")
   };
 }

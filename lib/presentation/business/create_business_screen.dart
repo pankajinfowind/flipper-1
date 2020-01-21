@@ -120,8 +120,6 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
       ..abbreviation = tBusiness.name.substring(1, 2)
       ..hexColor = "#f5a623"
       ..type = BusinessType.NORMAL);
-
-    //TODO: send user ID and associate this new created business with userId.
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
     StoreProvider.of<AppState>(context).dispatch(CreateBusiness());
     //finally verify if all is good and go to dashboard.

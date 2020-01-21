@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flipper/data/branch.dart';
 import 'package:flipper/data/business.dart';
 import 'package:flipper/data/business_user.dart';
+import 'package:flipper/data/category_table.dart';
 import 'package:flipper/data/dao/branch_dao.dart';
 import 'package:flipper/data/dao/business_dao.dart';
+import 'package:flipper/data/dao/category_dao.dart';
 import 'package:flipper/data/dao/tab_dao.dart';
 import 'package:flipper/data/tabs.dart';
 import 'package:flipper/data/token.dart';
@@ -25,14 +27,28 @@ LazyDatabase _openConnection() {
     // put the database file, called db.sqlite here, into the documents folder
     // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
+
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
     return VmDatabase(file);
   });
 }
 
-@UseMoor(
-    tables: [UserTable, TokenTable,BusinessUserTable,TabsTable, BusinessTable, BranchTable],
-    daos: [UserDao, TokenDao, BusinessDao, BranchDao,TabsDao])
+@UseMoor(tables: [
+  UserTable,
+  TokenTable,
+  BusinessUserTable,
+  TabsTable,
+  BusinessTable,
+  CategoryTable,
+  BranchTable
+], daos: [
+  UserDao,
+  TokenDao,
+  BusinessDao,
+  BranchDao,
+  CategoryDao,
+  TabsDao
+])
 class Database extends _$Database {
   Database() : super(_openConnection());
   @override
@@ -43,11 +59,10 @@ class Database extends _$Database {
       beforeOpen: (details) async {
         customStatement('PRAGMA foreign_keys = ON');
       },
-      onUpgrade: (Migrator  migrator,from,to) async{
+      onUpgrade: (Migrator migrator, from, to) async {
+        print(from);
         if (from == 1) {
-          //await migrator.addColumn(tabsTable, tabsTable.tab);
-          //await migrator.issueCustomQuery("ALTER TABLE tabs_table CHANGE id int( 30 ) NOT NULL AUTO_INCREMENT");
-          //await migrator.createTable(tabsTable);
+          await migrator.createTable(categoryTable);
         }
       },
       onCreate: (Migrator m) {

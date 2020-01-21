@@ -58,9 +58,6 @@ class _$CommonViewModel extends CommonViewModel {
     if (businesses == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'businesses');
     }
-    if (appAction == null) {
-      throw new BuiltValueNullFieldError('CommonViewModel', 'appAction');
-    }
     if (hint == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hint');
     }
@@ -222,7 +219,7 @@ class CommonViewModelBuilder
               hasAction: hasAction,
               branches: branches,
               businesses: businesses,
-              appAction: appAction.build(),
+              appAction: _appAction?.build(),
               hint: hint.build());
     } catch (_) {
       String _$failedField;
@@ -231,7 +228,7 @@ class CommonViewModelBuilder
         _currentBusiness?.build();
 
         _$failedField = 'appAction';
-        appAction.build();
+        _appAction?.build();
         _$failedField = 'hint';
         hint.build();
       } catch (e) {

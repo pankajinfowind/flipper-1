@@ -33,12 +33,16 @@ List<Middleware<AppState>> createAuthenticationMiddleware(
 ) {
   return [
     TypedMiddleware<AppState, VerifyAuthenticationState>(_verifyAuthState(
-        userRepository, businessRepository, branchRepository,generalRepository, navigatorKey)),
+        userRepository,
+        businessRepository,
+        branchRepository,
+        generalRepository,
+        navigatorKey)),
     TypedMiddleware<AppState, LogIn>(_authLogin(userRepository, navigatorKey)),
     TypedMiddleware<AppState, LogOutAction>(
         _authLogout(userRepository, navigatorKey)),
-    TypedMiddleware<AppState, AfterLoginAction>(_verifyAuthState(
-        userRepository, businessRepository, branchRepository,generalRepository, navigatorKey)),
+    TypedMiddleware<AppState, AfterLoginAction>(_verifyAuthState(userRepository,
+        businessRepository, branchRepository, generalRepository, navigatorKey)),
   ];
 }
 
@@ -64,7 +68,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     List<BusinessTableData> businesses =
         await businessRepository.getBusinesses(store);
 
-    if ( businesses.length == 0 || user == null) {
+    if (businesses.length == 0 || user == null) {
       Router.navigator.pushNamed(Router.afterSplash);
       return;
     } else {
@@ -76,16 +80,12 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ..avatar = user.avatar
         ..email = user.email);
 
-        print(branch);
+      print(branch);
 
-        Branch hint = Branch((b) => b
-          ..id = branch[0].id
-          ..name = branch[0].name);
-        store.dispatch(OnSetBranchHint(branch: hint));
-
-
-
-
+      Branch hint = Branch((b) => b
+        ..id = branch[0].id
+        ..name = branch[0].name);
+      store.dispatch(OnSetBranchHint(branch: hint));
 
       List<Branch> branches = [];
       branch.forEach((b) => {
@@ -105,7 +105,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..name = b.name))
           });
       store.dispatch(OnBusinessLoaded(business: businessList));
-      final currentTab = tab==null? 0: tab.tab;
+      final currentTab = tab == null ? 0 : tab.tab;
       store.dispatch(CurrentTab(tab: currentTab));
       //branch
       if (businesses.length == 0) {

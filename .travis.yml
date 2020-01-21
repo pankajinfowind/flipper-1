@@ -35,7 +35,6 @@ before_script:
   # removed this: -e clientId=${clientId} \
   # -e clientSecret=${clientSecret} \ bellow
 script:
-  - npm run lint
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       docker run --rm \

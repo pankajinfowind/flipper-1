@@ -36,14 +36,21 @@
     "test": "ng test",
     "e2e": "ng e2e",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "lint": "ng lint",
     "test:travis": "npm run postinstall:web && ng test  --browsers=ChromeHeadless",
     "release": "standard-version",
+    "lint": "ng lint --fix=true",
     "mocha": "mocha",
     "alpha": "npm run release -- --prerelease alpha",
     "major": "npm run release -- --release-as major",
     "minor": "npm run release -- --release-as minor",
     "patch": "npm run release -- --release-as patch"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run lint",
+      "post-merge": "npm install",
+      "post-rewrite": "npm install"
+    }
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "8.2.0",

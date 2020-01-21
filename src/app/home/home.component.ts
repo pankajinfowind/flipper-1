@@ -38,17 +38,17 @@ export class HomeComponent implements OnDestroy {
   public collectCashCompleted: object = {};
   currency = 'RWF';
 
-  entries:MenuEntries = null;
+  entries: MenuEntries = null;
   dashboardEntries: DashBoardEntries = MockDashboard.data;
 
   constructor(private eventBus: FlipperEventBusService, private totalPipe: CalculateTotalClassPipe) {
     console.log(this.dashboardEntries);
-    this.selectedSubscription = this.eventBus.of < OrderEvent > (OrderEvent.CHANNEL)
+    this.selectedSubscription = this.eventBus.of<OrderEvent>(OrderEvent.CHANNEL)
       .pipe(filter(e => e.order.isActive === true))
       .subscribe(res =>
         this.currentOrder = res.order);
 
-    this.variantSubscription = this.eventBus.of < VariantEvent > (VariantEvent.CHANNEL)
+    this.variantSubscription = this.eventBus.of<VariantEvent>(VariantEvent.CHANNEL)
       .pipe(filter(e => e.variant.isActive === true))
       .subscribe(variant => {
         if (variant.variant) {
@@ -108,11 +108,11 @@ export class HomeComponent implements OnDestroy {
   public addOrderItem(item) {
 
     this.currentOrder.orderItems.push(item);
-    this.currentOrder.subTotal = this.totalPipe.transform < Shoppings >
-    (this.currentOrder.orderItems, 'subTotal');
+    this.currentOrder.subTotal = this.totalPipe.transform<Shoppings>
+      (this.currentOrder.orderItems, 'subTotal');
     this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
-     this.currentOrder.cashReceived - this.totalPipe.transform < Shoppings >
-      (this.currentOrder.orderItems, 'subTotal') : 0.00;
+      this.currentOrder.cashReceived - this.totalPipe.transform<Shoppings>
+        (this.currentOrder.orderItems, 'subTotal') : 0.00;
     this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue;
     this.eventBus.publish(new OrderEvent(
       this.currentOrder
@@ -179,9 +179,9 @@ export class HomeComponent implements OnDestroy {
   }
   didCollectCash(event) {
     // console.log("didCollectCash",event);
-    this.collectCashCompleted = {isCompleted: false, collectedOrder: this.currentOrder};
+    this.collectCashCompleted = { isCompleted: false, collectedOrder: this.currentOrder };
     if (event === true) {
-      this.collectCashCompleted = {isCompleted: true, collectedOrder: this.currentOrder};
+      this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
       this.currentOrder = null;
       if (!this.currentOrder) {
         this.newOrder();

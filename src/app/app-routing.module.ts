@@ -17,24 +17,24 @@ const routes: Routes = [
     path: 'login', component: LoginComponent, canActivate: [GuestGuard]
   },
   {
-    path: 'setup/business/new',component:CreateUpdateBusinessComponent,canActivate: [AuthGuard]
-  }, 
+    path: 'setup/business/new', component: CreateUpdateBusinessComponent, canActivate: [AuthGuard]
+  },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    canLoad: [AuthGuard,HasBusinessGuard]
-  },  
+    canLoad: [AuthGuard, HasBusinessGuard]
+  },
   {
     path: '**',
     component: PageNotFoundComponent
-   }
+  }
 ];
 //
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-      enableTracing: false,
-    }
+    enableTracing: false,
+  }
   )],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

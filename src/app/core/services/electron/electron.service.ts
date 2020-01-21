@@ -22,7 +22,7 @@ export class ElectronService {
     return window && window.process && window.process.type;
   }
 
-  constructor(  @Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document) {
     // Conditional imports
     if (this.isElectron) {
       this.ipcRenderer = window.require('electron').ipcRenderer;
@@ -35,11 +35,11 @@ export class ElectronService {
   }
 
 
-  redirect(url){
+  redirect(url) {
     if (this.isElectron) {
       this.shell.openExternal(url);
-   }else{
-     this.document.location.href=url;
-   }
+    } else {
+      this.document.location.href = url;
+    }
   }
 }

@@ -11,14 +11,16 @@ export class GuestGuard implements CanActivate {
         private currentUser: CurrentUser,
         private router: Router,
     ) {
-       
+
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-   
-        if ( ! this.currentUser.isLoggedIn()) return true;
-      
-              this.router.navigate([this.currentUser.getRedirectUri()]);
+
+        if ( !this.currentUser.isLoggedIn() ) {
+            return true;
+        }
+
+        this.router.navigate([this.currentUser.getRedirectUri()]);
 
         return false;
     }

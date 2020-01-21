@@ -11,40 +11,40 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-        children: [
-          {
-            path: '',
-            redirectTo: 'analytics',
-            pathMatch: 'full',
-        },
-          {
-            path: 'analytics',
-            loadChildren: () => import('./../dashboard/dashboard.module').then(m => m.DashboardModule),
-            canLoad: [AuthGuard]
-          },
-          {
-            path: 'pos',
-            loadChildren: () => import('./../pos/pos.module').then(m => m.PosModule),
-            canLoad: [AuthGuard]
-          },
-          {
-            path: 'settings',
-            loadChildren: () => import('./../settings/settings.module').then(m => m.SettingsModule),
-            canLoad: [AuthGuard]
-          },
-          {path: 'inventory', component: ProductsComponent},
-          {
-            path: '**',
-            component: PageNotFoundComponent
-          }
-        ]
-        
+    children: [
+      {
+        path: '',
+        redirectTo: 'analytics',
+        pathMatch: 'full',
       },
+      {
+        path: 'analytics',
+        loadChildren: () => import('./../dashboard/dashboard.module').then(m => m.DashboardModule),
+        canLoad: [AuthGuard]
+      },
+      {
+        path: 'pos',
+        loadChildren: () => import('./../pos/pos.module').then(m => m.PosModule),
+        canLoad: [AuthGuard]
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./../settings/settings.module').then(m => m.SettingsModule),
+        canLoad: [AuthGuard]
+      },
+      { path: 'inventory', component: ProductsComponent },
       {
         path: '**',
         component: PageNotFoundComponent
       }
-  
+    ]
+
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
+
 ];
 //
 @NgModule({

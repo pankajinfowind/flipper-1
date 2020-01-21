@@ -11,37 +11,36 @@ import { fadeInAnimation } from '@enexus/flipper-components';
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('insertLogin', [
-      transition(':enter', useAnimation(fadeInAnimation, {params: {duration: '1s'}}))
+      transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))
     ]),
   ],
 })
 export class LoginComponent implements OnInit {
 
-  constructor( private router:Router,
-    public currentUser: CurrentUser,
-    public electronService: ElectronService
-    ) {
-   }
+  constructor(private router: Router, public currentUser: CurrentUser, public electronService: ElectronService) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  userLogin(){
+  userLogin() {
 
-    if(this.currentUser.userById(1)){
-      this.currentUser.updateUser({token:'zsaas',active: true},this.currentUser.userById(1).id);
-    }else{
-      this.currentUser.insertUser({name:'Ganza respice',
+    if (this.currentUser.userById(1)) {
+      this.currentUser.updateUser({ token: 'zsaas', active: true }, this.currentUser.userById(1).id);
+    } else {
+      this.currentUser.insertUser({
+        name: 'Ganza respice',
         email: 'respinho2014@gmail.com',
         token: 'dxmsdeod',
-        active: true});
+        active: true
+      });
     }
     this.router.navigate([this.currentUser.getRedirectUri()]);
 
-    this.electronService.redirect("https://yegobox.com/login");
+    this.electronService.redirect('https://yegobox.com/login');
   }
-  //GetStaredNewToFlipper
-  getStaredNewToFlipper(){
-    this.electronService.redirect("https://flipper.rw");
+
+  getStaredNewToFlipper() {
+    this.electronService.redirect('https://flipper.rw');
   }
 
 

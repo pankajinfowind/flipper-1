@@ -2,7 +2,8 @@ import { app, BrowserWindow, screen, dialog, nativeImage } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win, serve;
+let win;
+let serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
@@ -44,16 +45,16 @@ if (!isDev) {
     sendStatusToWindow('Error in auto-updater. ' + err);
   });
   autoUpdater.on('download-progress', progressObj => {
-    let log_message = 'Download speed: ' + progressObj.bytesPerSecond;
-    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-    log_message =
-      log_message +
+    let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;
+    logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%';
+    logMessage =
+      logMessage +
       ' (' +
       progressObj.transferred +
       '/' +
       progressObj.total +
       ')';
-    sendStatusToWindow(log_message);
+    sendStatusToWindow(logMessage);
   });
   autoUpdater.on('update-downloaded', info => {
     const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
@@ -76,7 +77,9 @@ if (!isDev) {
 function showMessage(dialogOpt) {
   const window = BrowserWindow.getFocusedWindow();
   dialog.showMessageBox(window, dialogOpt).then(response => {
-    if (response) autoUpdater.quitAndInstall();
+        if (response) {
+             autoUpdater.quitAndInstall();
+        }
   }, error => {
     return dialog.showMessageBox(window, {
       type: 'error',

@@ -4,6 +4,7 @@
     "adjacent-overload-signatures": [true, {"OPTION_IGNORE_ACCESSORS": true}],
     "forin": false,
     "array-type": false,
+    "whitespace": false,
     "arrow-parens": false,
     "deprecation": {
       "severity": "warning"

@@ -9,11 +9,11 @@ import { trigger, transition, useAnimation } from '@angular/animations';
   styleUrls: ['./dashboard.component.scss'],
   animations: [
     trigger('insertDashboard', [
-      transition(':enter', useAnimation(fadeInAnimation, {params: {duration: '1s'}}))
+      transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))
     ]),
   ],
 })
 export class DashboardComponent {
   dashboardEntries: DashBoardEntries = MockDashboard.data;
-  
+
 }

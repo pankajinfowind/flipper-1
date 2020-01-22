@@ -3,9 +3,12 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/category.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/permission.dart';
+import 'package:flipper/model/price.dart';
 import 'package:flipper/model/sheet.dart';
+import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
 
 part 'app_state.g.dart';
@@ -33,6 +36,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   AppActions get action;
 
   @nullable
+  Price get price;
+
+  @nullable
+  Unit get unit;
+
+  @nullable
+  Category get category;
+
+  @nullable
   Permission get permissions;
 
   @nullable
@@ -41,10 +53,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   List<Business> get businesses;
 
-
   @nullable
   Branch get branch;
-
 
   @nullable
   Business get business;

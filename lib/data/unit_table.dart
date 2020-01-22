@@ -1,6 +1,6 @@
 import 'package:moor/moor.dart';
 
-class CategoryTable extends Table {
+class UnitTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
   IntColumn get businessId => integer()

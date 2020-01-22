@@ -8,8 +8,13 @@ import 'package:flipper/data/dao/branch_dao.dart';
 import 'package:flipper/data/dao/business_dao.dart';
 import 'package:flipper/data/dao/category_dao.dart';
 import 'package:flipper/data/dao/tab_dao.dart';
+import 'package:flipper/data/dao/unit_dao.dart';
+import 'package:flipper/data/item_table.dart';
+import 'package:flipper/data/price_table.dart';
+import 'package:flipper/data/stock_tabble.dart';
 import 'package:flipper/data/tabs.dart';
 import 'package:flipper/data/token.dart';
+import 'package:flipper/data/unit_table.dart';
 import 'package:flipper/data/user.dart';
 import 'package:moor/moor.dart';
 import 'package:moor_ffi/moor_ffi.dart';
@@ -35,15 +40,20 @@ LazyDatabase _openConnection() {
 
 @UseMoor(tables: [
   UserTable,
+  UnitTable,
+  ItemTable,
   TokenTable,
   BusinessUserTable,
   TabsTable,
   BusinessTable,
   CategoryTable,
-  BranchTable
+  BranchTable,
+  StockTable,
+  PriceTable
 ], daos: [
   UserDao,
   TokenDao,
+  UnitDao,
   BusinessDao,
   BranchDao,
   CategoryDao,
@@ -63,6 +73,8 @@ class Database extends _$Database {
         print(from);
         if (from == 1) {
           await migrator.createTable(categoryTable);
+          await migrator.createTable(unitTable);
+          await migrator.createTable(priceTable);
         }
       },
       onCreate: (Migrator m) {

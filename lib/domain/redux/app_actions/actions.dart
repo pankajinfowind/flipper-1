@@ -9,8 +9,10 @@ class AppAction {
 }
 
 @immutable
-class OnSetTab {
-}
+class OnSetTab {}
+
+@immutable
+class CreateCategory {}
 
 @immutable
 class CurrentTab {

@@ -1,5 +1,6 @@
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
@@ -26,7 +27,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
       builder: (context, vm) {
         return Scaffold(
           appBar: CommonAppBar(
-            title: "Category",
+            title: S.of(context).category,
             icon: Icons.close,
             multi: 3,
             bottomSpacer: 52,
@@ -98,6 +99,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                   onChanged: (CategoriesEnum value) {
                     setState(() {
                       _type = value;
+//                      final category = Category((a) => a..name = _type);
+//                      StoreProvider.of<AppState>(context)
+//                          .state
+//                          .rebuild((a) => a..category = category.toBuilder());
                     });
                   },
                 ),
@@ -138,8 +143,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
   _handleFormSubmit() {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-    //TODO: broadcast a unit being saved
-    //TODO: persist a unit to default to when coming back to the screen!.
-    print(_type);
+
+    StoreProvider.of<AppState>(context).dispatch(CreateCategory());
   }
 }

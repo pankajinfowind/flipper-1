@@ -2,13 +2,11 @@ import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/app_action.dart';
+import 'package:flipper/model/unit.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
-import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-
-enum UnityTypes { item, pound, ounce, kg }
 
 class AddUnitType extends StatefulWidget {
   AddUnitType({Key key}) : super(key: key);
@@ -18,7 +16,55 @@ class AddUnitType extends StatefulWidget {
 }
 
 class _AddUnitTypeState extends State<AddUnitType> {
-  UnityTypes _type = UnityTypes.item;
+  int _unit;
+  List<Unit> units = [
+    Unit((u) => u
+      ..name = "item"
+      ..focused = true
+      ..id = 1),
+    Unit((u) => u
+      ..name = "pound"
+      ..focused = false
+      ..id = 2),
+    Unit((u) => u
+      ..name = "ounce"
+      ..focused = false
+      ..id = 3),
+    Unit((u) => u
+      ..name = "kg"
+      ..focused = false
+      ..id = 4),
+  ];
+
+  Widget getUnitsWidgets(List<Unit> unitsList) {
+    List<Widget> list = new List<Widget>();
+    for (var i = 0; i < unitsList.length; i++) {
+      list.add(
+        ListTile(
+          title: Text(
+            'Per ' + unitsList[i].name,
+            style: TextStyle(color: Colors.black),
+          ),
+          trailing: Radio(
+            value: unitsList[i].id,
+            groupValue: unitsList[i].focused ? unitsList[i].id : null,
+            onChanged: (int value) {
+              _unit = value;
+            },
+          ),
+        ),
+      );
+      list.add(Center(
+        child: Container(
+          width: 400,
+          child: Divider(
+            color: Colors.black,
+          ),
+        ),
+      ));
+    }
+    return Wrap(children: list);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,90 +95,13 @@ class _AddUnitTypeState extends State<AddUnitType> {
             children: <Widget>[
               Center(
                 child: Container(
-                  width: 400,
+                  height: 40,
                   child: Divider(
                     color: Colors.black,
                   ),
                 ),
               ),
-              ListTile(
-                title: const Text(
-                  'Per Item',
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: Radio(
-                  value: UnityTypes.item,
-                  groupValue: _type,
-                  onChanged: (UnityTypes value) {
-                    setState(() {
-                      _type = value;
-                    });
-                  },
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: 400,
-                  child: Divider(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              ListTile(
-                title: const Text(
-                  'Per ounce',
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: Radio(
-                  value: UnityTypes.pound,
-                  groupValue: _type,
-                  onChanged: (UnityTypes value) {
-                    setState(() {
-                      _type = value;
-                    });
-                  },
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: 400,
-                  child: Divider(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              ListTile(
-                title: const Text(
-                  'Per Pound',
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: Radio(
-                  value: UnityTypes.ounce,
-                  groupValue: _type,
-                  onChanged: (UnityTypes value) {
-                    setState(() {
-                      _type = value;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                height: 20,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 50,
-                  width: 380,
-                  child: FlatButton(
-                    color: HexColor("#ecf0f1"),
-                    child: Text("Create Unit"),
-                    onPressed: () {},
-                  ),
-                ),
-              ),
-              Container(
-                height: 20,
-              ),
+              getUnitsWidgets(units),
               Text("Edit units and precision in items> Units"),
               Visibility(
                 visible: false,
@@ -152,8 +121,6 @@ class _AddUnitTypeState extends State<AddUnitType> {
 
   _handleFormSubmit() {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-    //TODO: broadcast a unit being saved
-    //TODO: persist a unit to default to when coming back to the screen!.
-    print(_type);
+//    print(UnityTypes);
   }
 }

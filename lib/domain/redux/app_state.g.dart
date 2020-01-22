@@ -22,6 +22,12 @@ class _$AppState extends AppState {
   @override
   final AppActions action;
   @override
+  final Price price;
+  @override
+  final Unit unit;
+  @override
+  final Category category;
+  @override
   final Permission permissions;
   @override
   final List<Branch> branches;
@@ -47,6 +53,9 @@ class _$AppState extends AppState {
       this.nextActiveBusiness,
       this.sheet,
       this.action,
+      this.price,
+      this.unit,
+      this.category,
       this.permissions,
       this.branches,
       this.businesses,
@@ -78,6 +87,9 @@ class _$AppState extends AppState {
         nextActiveBusiness == other.nextActiveBusiness &&
         sheet == other.sheet &&
         action == other.action &&
+        price == other.price &&
+        unit == other.unit &&
+        category == other.category &&
         permissions == other.permissions &&
         branches == other.branches &&
         businesses == other.businesses &&
@@ -101,14 +113,26 @@ class _$AppState extends AppState {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, user.hashCode),
-                                                        userId.hashCode),
-                                                    previousActiveBusiness
-                                                        .hashCode),
-                                                tab.hashCode),
-                                            nextActiveBusiness.hashCode),
-                                        sheet.hashCode),
-                                    action.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        user
+                                                                            .hashCode),
+                                                                    userId
+                                                                        .hashCode),
+                                                                previousActiveBusiness
+                                                                    .hashCode),
+                                                            tab.hashCode),
+                                                        nextActiveBusiness
+                                                            .hashCode),
+                                                    sheet.hashCode),
+                                                action.hashCode),
+                                            price.hashCode),
+                                        unit.hashCode),
+                                    category.hashCode),
                                 permissions.hashCode),
                             branches.hashCode),
                         businesses.hashCode),
@@ -128,6 +152,9 @@ class _$AppState extends AppState {
           ..add('nextActiveBusiness', nextActiveBusiness)
           ..add('sheet', sheet)
           ..add('action', action)
+          ..add('price', price)
+          ..add('unit', unit)
+          ..add('category', category)
           ..add('permissions', permissions)
           ..add('branches', branches)
           ..add('businesses', businesses)
@@ -174,6 +201,18 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AppActionsBuilder get action => _$this._action ??= new AppActionsBuilder();
   set action(AppActionsBuilder action) => _$this._action = action;
 
+  PriceBuilder _price;
+  PriceBuilder get price => _$this._price ??= new PriceBuilder();
+  set price(PriceBuilder price) => _$this._price = price;
+
+  UnitBuilder _unit;
+  UnitBuilder get unit => _$this._unit ??= new UnitBuilder();
+  set unit(UnitBuilder unit) => _$this._unit = unit;
+
+  CategoryBuilder _category;
+  CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
+  set category(CategoryBuilder category) => _$this._category = category;
+
   PermissionBuilder _permissions;
   PermissionBuilder get permissions =>
       _$this._permissions ??= new PermissionBuilder();
@@ -215,6 +254,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _nextActiveBusiness = _$v.nextActiveBusiness?.toBuilder();
       _sheet = _$v.sheet?.toBuilder();
       _action = _$v.action?.toBuilder();
+      _price = _$v.price?.toBuilder();
+      _unit = _$v.unit?.toBuilder();
+      _category = _$v.category?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
       _businesses = _$v.businesses;
@@ -253,6 +295,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               nextActiveBusiness: _nextActiveBusiness?.build(),
               sheet: _sheet?.build(),
               action: _action?.build(),
+              price: _price?.build(),
+              unit: _unit?.build(),
+              category: _category?.build(),
               permissions: _permissions?.build(),
               branches: branches,
               businesses: businesses,
@@ -275,6 +320,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _sheet?.build();
         _$failedField = 'action';
         _action?.build();
+        _$failedField = 'price';
+        _price?.build();
+        _$failedField = 'unit';
+        _unit?.build();
+        _$failedField = 'category';
+        _category?.build();
         _$failedField = 'permissions';
         _permissions?.build();
 

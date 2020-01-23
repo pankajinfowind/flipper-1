@@ -19,57 +19,49 @@ class _SplashScreenState extends State<SplashScreen> {
       converter: SplashViewModel.fromStore,
       builder: (context, vm) {
         return Scaffold(
-          backgroundColor: HexColor("#955be9"),
-          body: SafeArea(
-            child: LayoutBuilder(
-              builder: (builder, constraints) {
-                var isTablet = constraints.maxWidth > 600;
-                var isLandScape =
-                    MediaQuery.of(context).orientation == Orientation.landscape;
-                if (isTablet && isLandScape) {
-                  return Stack(
+          body: Wrap(
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: 2 / 2,
+                child: Container(
+                  color: HexColor("#955be9"),
+                  child: Column(
                     children: <Widget>[
-                      Positioned(
-                        top: constraints.maxHeight / 3.0,
-                        left: MediaQuery.of(context).size.width / 2.5,
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset("assets/graphics/logo.png"),
-                              Text(
-                                "Flipper",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
+                      Container(
+                        height: 80,
+                      ),
+                      Container(
+                        color: Colors.white,
+                        height: 60,
+                        child: Image.asset("assets/graphics/logo.png"),
+                      ),
+                      Container(
+                        height: 40,
                       )
                     ],
-                  );
-                } else {
-                  return Stack(
+                  ),
+                ),
+              ),
+              AspectRatio(
+                aspectRatio: 2 / 2,
+                child: Container(
+                  color: HexColor("#955be9"),
+                  child: Column(
                     children: <Widget>[
-                      Positioned(
-                        top: constraints.maxHeight / 3.0,
-                        left: MediaQuery.of(context).size.width /
-                            2.5, //TODO: doubting.
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset("assets/graphics/logo.png"),
-                              Text(
-                                "Flipper",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
+                      Container(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 10,
+                      ),
                     ],
-                  );
-                }
-              },
-            ),
+                  ),
+                ),
+              )
+            ],
           ),
         );
       },

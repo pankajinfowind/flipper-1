@@ -20,6 +20,7 @@ void Function(Store<AppState> store, CreateCategory action, NextDispatcher next)
     _createCategory(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
   return (store, action, next) {
+    print(store.state.currentActiveBusiness);
     print(store.state.category);
   };
 }

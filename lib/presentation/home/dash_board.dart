@@ -1,3 +1,4 @@
+import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/homescreen.dart';
@@ -86,8 +87,7 @@ class _DashBoardState extends State<DashBoard> {
             WidgetsBinding.instance.addPostFrameCallback(
                 (_) => Router.navigator.pushNamed(Router.bottom));
           }
-          if (vm.hasAction && vm.appAction.name == "saveUnit") {
-           
+          if (vm.hasAction && vm.appAction.name == "showLoader") {
             WidgetsBinding.instance.addPostFrameCallback((_) => {
                   showDialog<void>(
                     context: context,
@@ -105,7 +105,10 @@ class _DashBoardState extends State<DashBoard> {
                         ),
                       );
                     },
-                  )
+                  ).whenComplete(() => {
+                        StoreProvider.of<AppState>(context)
+                            .dispatch(ResetAppAction())
+                      })
                 });
           }
           return we;

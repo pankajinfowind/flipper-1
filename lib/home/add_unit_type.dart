@@ -16,25 +16,6 @@ class AddUnitType extends StatefulWidget {
 }
 
 class _AddUnitTypeState extends State<AddUnitType> {
-  int _unit;
-  List<Unit> units = [
-    Unit((u) => u
-      ..name = "item"
-      ..focused = true
-      ..id = 1),
-    Unit((u) => u
-      ..name = "pound"
-      ..focused = false
-      ..id = 2),
-    Unit((u) => u
-      ..name = "ounce"
-      ..focused = false
-      ..id = 3),
-    Unit((u) => u
-      ..name = "kg"
-      ..focused = false
-      ..id = 4),
-  ];
 
   Widget getUnitsWidgets(List<Unit> unitsList) {
     List<Widget> list = new List<Widget>();
@@ -49,7 +30,11 @@ class _AddUnitTypeState extends State<AddUnitType> {
             value: unitsList[i].id,
             groupValue: unitsList[i].focused ? unitsList[i].id : null,
             onChanged: (int value) {
-              _unit = value;
+              StoreProvider.of<AppState>(context).state.rebuild((u) => u
+                ..unit = Unit((u) => u
+                  ..name = unitsList[i].name
+                  ..id = unitsList[i].id
+                  ..focused = true).toBuilder());
             },
           ),
         ),
@@ -78,7 +63,7 @@ class _AddUnitTypeState extends State<AddUnitType> {
             actionButton: FlatButton(
               onPressed: () {
                 StoreProvider.of<AppState>(context).dispatch(AppAction(
-                    actions: AppActions((a) => a..name = "saveUnit")));
+                    actions: AppActions((a) => a..name = "showLoader")));
               },
               child: Text(
                 S.of(context).save,
@@ -101,13 +86,13 @@ class _AddUnitTypeState extends State<AddUnitType> {
                   ),
                 ),
               ),
-              getUnitsWidgets(units),
+              getUnitsWidgets(vm.units),
               Text("Edit units and precision in items> Units"),
               Visibility(
                 visible: false,
                 child: FlatButton(
                   child: Text("invisible button"),
-                  onPressed: vm.hasAction && vm.appAction.name == 'saveUnit'
+                  onPressed: vm.hasAction && vm.appAction.name == 'showLoader'
                       ? _handleFormSubmit()
                       : null,
                 ),
@@ -121,6 +106,6 @@ class _AddUnitTypeState extends State<AddUnitType> {
 
   _handleFormSubmit() {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-//    print(UnityTypes);
+    StoreProvider.of<AppState>(context).dispatch(CreateCategory());
   }
 }

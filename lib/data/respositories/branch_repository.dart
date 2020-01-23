@@ -4,9 +4,9 @@ import 'package:flipper/model/branch.dart';
 import 'package:redux/redux.dart';
 
 class BranchRepository {
-  insert(Store<AppState> store, Branch b) {
+  Future<int> insert(Store<AppState> store, Branch b) {
     var branch = new BranchTableData(name: b.name);
-    store.state.database.branchDao.insert(branch);
+    return store.state.database.branchDao.insert(branch);
   }
 
   Future<void> update(String token) async {}

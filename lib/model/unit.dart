@@ -8,6 +8,7 @@ abstract class Unit implements Built<Unit, UnitBuilder> {
   bool get focused;
   @nullable
   int get businessId;
+  int get branchId;
   int get id;
   Unit._();
 

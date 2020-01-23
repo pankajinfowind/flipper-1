@@ -21,7 +21,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   int get userId;
 
   @nullable
-  Business get previousActiveBusiness;
+  Business get currentActiveBusiness;
 
   @nullable
   int get tab;
@@ -39,7 +39,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Price get price;
 
   @nullable
+  int get businessId;
+
+  @nullable
   Unit get unit;
+
+  @nullable
+  List<Unit> get units;
 
   @nullable
   Category get category;

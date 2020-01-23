@@ -14,17 +14,23 @@ class _$Unit extends Unit {
   @override
   final int businessId;
   @override
+  final int branchId;
+  @override
   final int id;
 
   factory _$Unit([void Function(UnitBuilder) updates]) =>
       (new UnitBuilder()..update(updates)).build();
 
-  _$Unit._({this.name, this.focused, this.businessId, this.id}) : super._() {
+  _$Unit._({this.name, this.focused, this.businessId, this.branchId, this.id})
+      : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('Unit', 'name');
     }
     if (focused == null) {
       throw new BuiltValueNullFieldError('Unit', 'focused');
+    }
+    if (branchId == null) {
+      throw new BuiltValueNullFieldError('Unit', 'branchId');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('Unit', 'id');
@@ -45,13 +51,17 @@ class _$Unit extends Unit {
         name == other.name &&
         focused == other.focused &&
         businessId == other.businessId &&
+        branchId == other.branchId &&
         id == other.id;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, name.hashCode), focused.hashCode), businessId.hashCode),
+        $jc(
+            $jc($jc($jc(0, name.hashCode), focused.hashCode),
+                businessId.hashCode),
+            branchId.hashCode),
         id.hashCode));
   }
 
@@ -61,6 +71,7 @@ class _$Unit extends Unit {
           ..add('name', name)
           ..add('focused', focused)
           ..add('businessId', businessId)
+          ..add('branchId', branchId)
           ..add('id', id))
         .toString();
   }
@@ -81,6 +92,10 @@ class UnitBuilder implements Builder<Unit, UnitBuilder> {
   int get businessId => _$this._businessId;
   set businessId(int businessId) => _$this._businessId = businessId;
 
+  int _branchId;
+  int get branchId => _$this._branchId;
+  set branchId(int branchId) => _$this._branchId = branchId;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -92,6 +107,7 @@ class UnitBuilder implements Builder<Unit, UnitBuilder> {
       _name = _$v.name;
       _focused = _$v.focused;
       _businessId = _$v.businessId;
+      _branchId = _$v.branchId;
       _id = _$v.id;
       _$v = null;
     }
@@ -115,7 +131,11 @@ class UnitBuilder implements Builder<Unit, UnitBuilder> {
   _$Unit build() {
     final _$result = _$v ??
         new _$Unit._(
-            name: name, focused: focused, businessId: businessId, id: id);
+            name: name,
+            focused: focused,
+            businessId: businessId,
+            branchId: branchId,
+            id: id);
     replace(_$result);
     return _$result;
   }

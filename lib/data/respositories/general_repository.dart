@@ -1,5 +1,6 @@
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/model/unit.dart';
 import 'package:redux/redux.dart';
 
 class GeneralRepository {
@@ -17,8 +18,14 @@ class GeneralRepository {
     return store.state.database.tabsDao.getTab();
   }
 
-  Future<int> insertUnit(Store<AppState> store, int value) {
-//    var tab = new UnitTableData(name: store.state);
-//    return store.state.database.tabsDao.insert(tab);
+  Future<List<UnitTableData>> getUnits(Store<AppState> store) {
+    return store.state.database.unitDao.getUnits();
+  }
+
+  Future<int> insertUnit(Store<AppState> store, Unit unit) {
+
+    var values = new UnitTableData(
+        name: unit.name, branchId: unit.branchId, businessId: unit.businessId,focused: unit.focused);
+    return store.state.database.unitDao.insert(values);
   }
 }

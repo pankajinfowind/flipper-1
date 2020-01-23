@@ -17,21 +17,26 @@ AppState _onBusinessLoaded(AppState state, OnBusinessLoaded action) {
 AppState _onCreatingBusiness(AppState state, WithBusiness action) {
   return state.rebuild((a) => a..business = action.business.toBuilder());
 }
+
 AppState _resetBusiness(AppState state, ResetBusiness action) {
   return state.rebuild((a) => a..business = null);
 }
+
 AppState _onActiveBusinessId(AppState state, ActiveBusinessId action) {
-  return state.rebuild((a) => a..previousActiveBusiness = action.bussiness.toBuilder());
+  return state
+      .rebuild((a) => a..currentActiveBusiness = action.bussiness.toBuilder());
 }
+
 AppState _onNextActiveBusinessId(AppState state, NextActiveBussiness action) {
-  return state.rebuild((a) => a..nextActiveBusiness = action.bussiness.toBuilder());
+  return state
+      .rebuild((a) => a..nextActiveBusiness = action.bussiness.toBuilder());
 }
+
 AppState _refreshBusinessList(AppState state, RefreshBusinessList action) {
   //TODO:FIXME: this is not updating as it should
   //FIXME:
   return state.rebuild((a) => a
 //    ..businesses.remove( state.previousActiveBusiness)
 //    ..businesses.add(action.updatedBusiness)
-  );
+      );
 }
-

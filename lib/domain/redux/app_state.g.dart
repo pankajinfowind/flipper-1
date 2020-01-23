@@ -12,7 +12,7 @@ class _$AppState extends AppState {
   @override
   final int userId;
   @override
-  final Business previousActiveBusiness;
+  final Business currentActiveBusiness;
   @override
   final int tab;
   @override
@@ -24,7 +24,11 @@ class _$AppState extends AppState {
   @override
   final Price price;
   @override
+  final int businessId;
+  @override
   final Unit unit;
+  @override
+  final List<Unit> units;
   @override
   final Category category;
   @override
@@ -48,13 +52,15 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.user,
       this.userId,
-      this.previousActiveBusiness,
+      this.currentActiveBusiness,
       this.tab,
       this.nextActiveBusiness,
       this.sheet,
       this.action,
       this.price,
+      this.businessId,
       this.unit,
+      this.units,
       this.category,
       this.permissions,
       this.branches,
@@ -82,13 +88,15 @@ class _$AppState extends AppState {
     return other is AppState &&
         user == other.user &&
         userId == other.userId &&
-        previousActiveBusiness == other.previousActiveBusiness &&
+        currentActiveBusiness == other.currentActiveBusiness &&
         tab == other.tab &&
         nextActiveBusiness == other.nextActiveBusiness &&
         sheet == other.sheet &&
         action == other.action &&
         price == other.price &&
+        businessId == other.businessId &&
         unit == other.unit &&
+        units == other.units &&
         category == other.category &&
         permissions == other.permissions &&
         branches == other.branches &&
@@ -118,20 +126,25 @@ class _$AppState extends AppState {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        user
+                                                                        $jc(
+                                                                            $jc(
+                                                                                0,
+                                                                                user
+                                                                                    .hashCode),
+                                                                            userId
+                                                                                .hashCode),
+                                                                        currentActiveBusiness
                                                                             .hashCode),
-                                                                    userId
+                                                                    tab
                                                                         .hashCode),
-                                                                previousActiveBusiness
+                                                                nextActiveBusiness
                                                                     .hashCode),
-                                                            tab.hashCode),
-                                                        nextActiveBusiness
-                                                            .hashCode),
-                                                    sheet.hashCode),
-                                                action.hashCode),
-                                            price.hashCode),
-                                        unit.hashCode),
+                                                            sheet.hashCode),
+                                                        action.hashCode),
+                                                    price.hashCode),
+                                                businessId.hashCode),
+                                            unit.hashCode),
+                                        units.hashCode),
                                     category.hashCode),
                                 permissions.hashCode),
                             branches.hashCode),
@@ -147,13 +160,15 @@ class _$AppState extends AppState {
     return (newBuiltValueToStringHelper('AppState')
           ..add('user', user)
           ..add('userId', userId)
-          ..add('previousActiveBusiness', previousActiveBusiness)
+          ..add('currentActiveBusiness', currentActiveBusiness)
           ..add('tab', tab)
           ..add('nextActiveBusiness', nextActiveBusiness)
           ..add('sheet', sheet)
           ..add('action', action)
           ..add('price', price)
+          ..add('businessId', businessId)
           ..add('unit', unit)
+          ..add('units', units)
           ..add('category', category)
           ..add('permissions', permissions)
           ..add('branches', branches)
@@ -177,11 +192,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   int get userId => _$this._userId;
   set userId(int userId) => _$this._userId = userId;
 
-  BusinessBuilder _previousActiveBusiness;
-  BusinessBuilder get previousActiveBusiness =>
-      _$this._previousActiveBusiness ??= new BusinessBuilder();
-  set previousActiveBusiness(BusinessBuilder previousActiveBusiness) =>
-      _$this._previousActiveBusiness = previousActiveBusiness;
+  BusinessBuilder _currentActiveBusiness;
+  BusinessBuilder get currentActiveBusiness =>
+      _$this._currentActiveBusiness ??= new BusinessBuilder();
+  set currentActiveBusiness(BusinessBuilder currentActiveBusiness) =>
+      _$this._currentActiveBusiness = currentActiveBusiness;
 
   int _tab;
   int get tab => _$this._tab;
@@ -205,9 +220,17 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   PriceBuilder get price => _$this._price ??= new PriceBuilder();
   set price(PriceBuilder price) => _$this._price = price;
 
+  int _businessId;
+  int get businessId => _$this._businessId;
+  set businessId(int businessId) => _$this._businessId = businessId;
+
   UnitBuilder _unit;
   UnitBuilder get unit => _$this._unit ??= new UnitBuilder();
   set unit(UnitBuilder unit) => _$this._unit = unit;
+
+  List<Unit> _units;
+  List<Unit> get units => _$this._units;
+  set units(List<Unit> units) => _$this._units = units;
 
   CategoryBuilder _category;
   CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
@@ -249,13 +272,15 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _user = _$v.user?.toBuilder();
       _userId = _$v.userId;
-      _previousActiveBusiness = _$v.previousActiveBusiness?.toBuilder();
+      _currentActiveBusiness = _$v.currentActiveBusiness?.toBuilder();
       _tab = _$v.tab;
       _nextActiveBusiness = _$v.nextActiveBusiness?.toBuilder();
       _sheet = _$v.sheet?.toBuilder();
       _action = _$v.action?.toBuilder();
       _price = _$v.price?.toBuilder();
+      _businessId = _$v.businessId;
       _unit = _$v.unit?.toBuilder();
+      _units = _$v.units;
       _category = _$v.category?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
@@ -290,13 +315,15 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               user: _user?.build(),
               userId: userId,
-              previousActiveBusiness: _previousActiveBusiness?.build(),
+              currentActiveBusiness: _currentActiveBusiness?.build(),
               tab: tab,
               nextActiveBusiness: _nextActiveBusiness?.build(),
               sheet: _sheet?.build(),
               action: _action?.build(),
               price: _price?.build(),
+              businessId: businessId,
               unit: _unit?.build(),
+              units: units,
               category: _category?.build(),
               permissions: _permissions?.build(),
               branches: branches,
@@ -311,8 +338,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _$failedField = 'user';
         _user?.build();
 
-        _$failedField = 'previousActiveBusiness';
-        _previousActiveBusiness?.build();
+        _$failedField = 'currentActiveBusiness';
+        _currentActiveBusiness?.build();
 
         _$failedField = 'nextActiveBusiness';
         _nextActiveBusiness?.build();
@@ -322,8 +349,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _action?.build();
         _$failedField = 'price';
         _price?.build();
+
         _$failedField = 'unit';
         _unit?.build();
+
         _$failedField = 'category';
         _category?.build();
         _$failedField = 'permissions';

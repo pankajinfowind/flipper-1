@@ -8,6 +8,7 @@ import 'package:flipper/domain/redux/branch/branch_actions.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -64,6 +65,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
     UserTableData user = await userRepository.checkAuth(store);
     TabsTableData tab = await generalRepository.getTab(store);
+    List<UnitTableData> unitsList = await generalRepository.getUnits(store);
     List<BranchTableData> branch = await branchRepository.getBranches(store);
     List<BusinessTableData> businesses =
         await businessRepository.getBusinesses(store);
@@ -80,8 +82,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ..avatar = user.avatar
         ..email = user.email);
 
-      print(branch);
-
       Branch hint = Branch((b) => b
         ..id = branch[0].id
         ..name = branch[0].name);
@@ -93,7 +93,22 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..name = b.name
               ..id = b.id))
           });
+
+      List<Unit> units = [];
+
+      unitsList.forEach((b) => {
+            units.add(Unit((u) => u
+              ..name = b.name
+              ..branchId = b.businessId
+              ..businessId = b.businessId
+              ..focused = b.focused
+              ..id = b.id))
+          });
+
+      store.dispatch(UnitR(units));
+
       store.dispatch(OnBranchLoaded(branches: branches));
+
       store.dispatch(OnAuthenticated(user: _user));
 
       List<Business> businessList = [];

@@ -46,7 +46,8 @@ class _FlipperAppState extends State<FlipperApp> {
         ..addAll(permissionMiddleware(_navigatorKey))
         ..addAll(AppActionMiddleware(_navigatorKey, generalRepo))
         ..addAll(userMiddleware(userRepo, _navigatorKey))
-        ..addAll(createBranchMiddleware(_navigatorKey, branchRepo)),
+        ..addAll(
+            createBranchMiddleware(_navigatorKey, branchRepo, generalRepo)),
     );
     store.dispatch(
       VerifyAuthenticationState(),

@@ -13,7 +13,11 @@ class _$Category extends Category {
   factory _$Category([void Function(CategoryBuilder) updates]) =>
       (new CategoryBuilder()..update(updates)).build();
 
-  _$Category._({this.name}) : super._();
+  _$Category._({this.name}) : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('Category', 'name');
+    }
+  }
 
   @override
   Category rebuild(void Function(CategoryBuilder) updates) =>

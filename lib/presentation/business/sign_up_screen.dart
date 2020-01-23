@@ -3,6 +3,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/domain/redux/permission/permission_check.dart';
 import 'package:flipper/domain/redux/user/user_actions.dart';
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/user.dart';
@@ -47,7 +48,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     //grant that we have the permission we need for this activity
-    StoreProvider.of<AppState>(context).dispatch(CheckPermission());
+    StoreProvider.of<AppState>(context)
+        .dispatch(CheckPermission(checking: true));
     _getCurrentLocation();
     return StoreConnector<AppState, CommonViewModel>(
       distinct: true,
@@ -62,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     actions: AppActions((a) => a..name = "createBusiness")));
               },
               child: Text(
-                "Sign up",
+                S.of(context).signup,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: Colors.white),
@@ -70,8 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             icon: Icons.arrow_back,
             multi: 3,
-            bottomSpacer: 52,
-            actionTitle: "Sign Up",
+            bottomSpacer: 120,
             action: Column(
               children: <Widget>[
                 Text("Let's get started"),
@@ -149,13 +150,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 "Accept Flipper's Seller Agreement and Privacy Policy"),
                           ),
                           Radio(
-                            groupValue: 1,
-                            activeColor: Colors.red,
-                            focusColor: Colors.red,
-                            onChanged: (agreeTerm) {
+                            value: "1",
+                            groupValue:
+                                "1", //set a toggle here to accept or deny.
+                            onChanged: (String agreeTerm) {
                               tBusiness.agreeTerms = agreeTerm;
                             },
-                            value: "1",
                           )
                         ],
                       ),
@@ -178,7 +178,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   _handleFormSubmit() {
-    StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
+    StoreProvider.of<AppState>(context).dispatch(
+        AppAction(actions: AppActions((a) => a..name = "showLoader")));
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
     }

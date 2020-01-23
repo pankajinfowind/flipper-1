@@ -4,6 +4,7 @@ import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/hint.dart';
+import 'package:flipper/model/unit.dart';
 import 'package:redux/redux.dart';
 
 part 'common_view_model.g.dart';
@@ -14,6 +15,8 @@ abstract class CommonViewModel
   bool get hasSheet;
   @nullable
   bool get hasHint;
+  @nullable
+  List<Unit> get units;
   @nullable
   int get tab;
   @nullable
@@ -51,11 +54,12 @@ abstract class CommonViewModel
       ..hasAction = _hasAction(store)
       ..businesses = store.state.businesses
       ..tab = store.state.tab
+      ..units = store.state.units
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()
-      ..currentBusiness = store.state.previousActiveBusiness == null
+      ..currentBusiness = store.state.currentActiveBusiness == null
           ? null
-          : store.state.previousActiveBusiness.toBuilder()
+          : store.state.currentActiveBusiness.toBuilder()
       ..hint = _hasHint(store) == null ? null : store.state.hint.toBuilder()
       ..branches = store.state.branches);
   }

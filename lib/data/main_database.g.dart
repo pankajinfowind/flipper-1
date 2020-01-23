@@ -443,19 +443,31 @@ class $UserTableTable extends UserTable
 class UnitTableData extends DataClass implements Insertable<UnitTableData> {
   final int id;
   final String name;
+  final bool focused;
   final int businessId;
-  UnitTableData({@required this.id, @required this.name, this.businessId});
+  final int branchId;
+  UnitTableData(
+      {@required this.id,
+      @required this.name,
+      @required this.focused,
+      @required this.businessId,
+      @required this.branchId});
   factory UnitTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
     return UnitTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      focused:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}focused']),
       businessId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
+      branchId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
     );
   }
   factory UnitTableData.fromJson(Map<String, dynamic> json,
@@ -463,7 +475,9 @@ class UnitTableData extends DataClass implements Insertable<UnitTableData> {
     return UnitTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      focused: serializer.fromJson<bool>(json['focused']),
       businessId: serializer.fromJson<int>(json['businessId']),
+      branchId: serializer.fromJson<int>(json['branchId']),
     );
   }
   @override
@@ -472,7 +486,9 @@ class UnitTableData extends DataClass implements Insertable<UnitTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'focused': serializer.toJson<bool>(focused),
       'businessId': serializer.toJson<int>(businessId),
+      'branchId': serializer.toJson<int>(branchId),
     };
   }
 
@@ -481,60 +497,92 @@ class UnitTableData extends DataClass implements Insertable<UnitTableData> {
     return UnitTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      focused: focused == null && nullToAbsent
+          ? const Value.absent()
+          : Value(focused),
       businessId: businessId == null && nullToAbsent
           ? const Value.absent()
           : Value(businessId),
+      branchId: branchId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(branchId),
     );
   }
 
-  UnitTableData copyWith({int id, String name, int businessId}) =>
+  UnitTableData copyWith(
+          {int id, String name, bool focused, int businessId, int branchId}) =>
       UnitTableData(
         id: id ?? this.id,
         name: name ?? this.name,
+        focused: focused ?? this.focused,
         businessId: businessId ?? this.businessId,
+        branchId: branchId ?? this.branchId,
       );
   @override
   String toString() {
     return (StringBuffer('UnitTableData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('businessId: $businessId')
+          ..write('focused: $focused, ')
+          ..write('businessId: $businessId, ')
+          ..write('branchId: $branchId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, businessId.hashCode)));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          name.hashCode,
+          $mrjc(focused.hashCode,
+              $mrjc(businessId.hashCode, branchId.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is UnitTableData &&
           other.id == this.id &&
           other.name == this.name &&
-          other.businessId == this.businessId);
+          other.focused == this.focused &&
+          other.businessId == this.businessId &&
+          other.branchId == this.branchId);
 }
 
 class UnitTableCompanion extends UpdateCompanion<UnitTableData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<bool> focused;
   final Value<int> businessId;
+  final Value<int> branchId;
   const UnitTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.focused = const Value.absent(),
     this.businessId = const Value.absent(),
+    this.branchId = const Value.absent(),
   });
   UnitTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
-    this.businessId = const Value.absent(),
-  }) : name = Value(name);
+    @required bool focused,
+    @required int businessId,
+    @required int branchId,
+  })  : name = Value(name),
+        focused = Value(focused),
+        businessId = Value(businessId),
+        branchId = Value(branchId);
   UnitTableCompanion copyWith(
-      {Value<int> id, Value<String> name, Value<int> businessId}) {
+      {Value<int> id,
+      Value<String> name,
+      Value<bool> focused,
+      Value<int> businessId,
+      Value<int> branchId}) {
     return UnitTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      focused: focused ?? this.focused,
       businessId: businessId ?? this.businessId,
+      branchId: branchId ?? this.branchId,
     );
   }
 }
@@ -565,17 +613,39 @@ class $UnitTableTable extends UnitTable
     );
   }
 
+  final VerificationMeta _focusedMeta = const VerificationMeta('focused');
+  GeneratedBoolColumn _focused;
+  @override
+  GeneratedBoolColumn get focused => _focused ??= _constructFocused();
+  GeneratedBoolColumn _constructFocused() {
+    return GeneratedBoolColumn(
+      'focused',
+      $tableName,
+      false,
+    );
+  }
+
   final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
   GeneratedIntColumn _businessId;
   @override
   GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
   GeneratedIntColumn _constructBusinessId() {
-    return GeneratedIntColumn('business_id', $tableName, true,
+    return GeneratedIntColumn('business_id', $tableName, false,
         $customConstraints: 'NULL REFERENCES business_table(id)');
   }
 
+  final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
+  GeneratedIntColumn _branchId;
   @override
-  List<GeneratedColumn> get $columns => [id, name, businessId];
+  GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
+  GeneratedIntColumn _constructBranchId() {
+    return GeneratedIntColumn('branch_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES branch_table(id)');
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, focused, businessId, branchId];
   @override
   $UnitTableTable get asDslTable => this;
   @override
@@ -597,11 +667,23 @@ class $UnitTableTable extends UnitTable
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
     }
+    if (d.focused.present) {
+      context.handle(_focusedMeta,
+          focused.isAcceptableValue(d.focused.value, _focusedMeta));
+    } else if (focused.isRequired && isInserting) {
+      context.missing(_focusedMeta);
+    }
     if (d.businessId.present) {
       context.handle(_businessIdMeta,
           businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
     } else if (businessId.isRequired && isInserting) {
       context.missing(_businessIdMeta);
+    }
+    if (d.branchId.present) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableValue(d.branchId.value, _branchIdMeta));
+    } else if (branchId.isRequired && isInserting) {
+      context.missing(_branchIdMeta);
     }
     return context;
   }
@@ -623,8 +705,14 @@ class $UnitTableTable extends UnitTable
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
     }
+    if (d.focused.present) {
+      map['focused'] = Variable<bool, BoolType>(d.focused.value);
+    }
     if (d.businessId.present) {
       map['business_id'] = Variable<int, IntType>(d.businessId.value);
+    }
+    if (d.branchId.present) {
+      map['branch_id'] = Variable<int, IntType>(d.branchId.value);
     }
     return map;
   }

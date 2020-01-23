@@ -70,12 +70,11 @@ class Database extends _$Database {
         customStatement('PRAGMA foreign_keys = ON');
       },
       onUpgrade: (Migrator migrator, from, to) async {
-        print(from);
-        if (from == 1) {
-          await migrator.createTable(categoryTable);
-          await migrator.createTable(unitTable);
-          await migrator.createTable(priceTable);
-        }
+//        if (from == 1) {
+//          await migrator.createTable(categoryTable);
+//          await migrator.createTable(unitTable);
+//          await migrator.createTable(priceTable);
+//        }
       },
       onCreate: (Migrator m) {
         return m.createAllTables();

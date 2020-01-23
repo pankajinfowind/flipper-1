@@ -87,8 +87,7 @@ class _DashBoardState extends State<DashBoard> {
                 (_) => Router.navigator.pushNamed(Router.bottom));
           }
           if (vm.hasAction && vm.appAction.name == "saveUnit") {
-            print("show loader....");
-
+           
             WidgetsBinding.instance.addPostFrameCallback((_) => {
                   showDialog<void>(
                     context: context,

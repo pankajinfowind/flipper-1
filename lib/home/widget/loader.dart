@@ -32,7 +32,6 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
     radius = widget.radius;
     dotRadius = widget.dotRadius;
 
-    print(dotRadius);
 
     controller = AnimationController(
         lowerBound: 0.0,

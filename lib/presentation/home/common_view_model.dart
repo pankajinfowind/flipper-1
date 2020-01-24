@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/app_action.dart';
@@ -15,8 +16,10 @@ abstract class CommonViewModel
   bool get hasSheet;
   @nullable
   bool get hasHint;
+
   @nullable
-  List<Unit> get units;
+  BuiltList<Unit> get units;
+
   @nullable
   int get tab;
   @nullable
@@ -54,7 +57,7 @@ abstract class CommonViewModel
       ..hasAction = _hasAction(store)
       ..businesses = store.state.businesses
       ..tab = store.state.tab
-      ..units = store.state.units
+      ..units = store.state.units.toBuilder()
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()
       ..currentBusiness = store.state.currentActiveBusiness == null

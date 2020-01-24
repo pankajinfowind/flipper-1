@@ -28,7 +28,7 @@ class _$AppState extends AppState {
   @override
   final Unit unit;
   @override
-  final List<Unit> units;
+  final BuiltList<Unit> units;
   @override
   final Category category;
   @override
@@ -228,9 +228,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   UnitBuilder get unit => _$this._unit ??= new UnitBuilder();
   set unit(UnitBuilder unit) => _$this._unit = unit;
 
-  List<Unit> _units;
-  List<Unit> get units => _$this._units;
-  set units(List<Unit> units) => _$this._units = units;
+  ListBuilder<Unit> _units;
+  ListBuilder<Unit> get units => _$this._units ??= new ListBuilder<Unit>();
+  set units(ListBuilder<Unit> units) => _$this._units = units;
 
   CategoryBuilder _category;
   CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
@@ -280,7 +280,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _price = _$v.price?.toBuilder();
       _businessId = _$v.businessId;
       _unit = _$v.unit?.toBuilder();
-      _units = _$v.units;
+      _units = _$v.units?.toBuilder();
       _category = _$v.category?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
@@ -323,7 +323,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               price: _price?.build(),
               businessId: businessId,
               unit: _unit?.build(),
-              units: units,
+              units: _units?.build(),
               category: _category?.build(),
               permissions: _permissions?.build(),
               branches: branches,
@@ -352,7 +352,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
         _$failedField = 'unit';
         _unit?.build();
-
+        _$failedField = 'units';
+        _units?.build();
         _$failedField = 'category';
         _category?.build();
         _$failedField = 'permissions';

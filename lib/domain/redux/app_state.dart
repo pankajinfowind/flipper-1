@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import "package:built_value/built_value.dart";
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/model/app_action.dart';
@@ -45,7 +46,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Unit get unit;
 
   @nullable
-  List<Unit> get units;
+  BuiltList<Unit> get units;
 
   @nullable
   Category get category;
@@ -74,6 +75,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   factory AppState.init() => AppState((a) => a
     ..database = Database()
+    ..units = ListBuilder()
     ..businesses = List<Business>()
     ..branches = List<Branch>());
 

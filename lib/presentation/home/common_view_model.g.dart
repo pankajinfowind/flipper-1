@@ -14,7 +14,7 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final bool hasHint;
   @override
-  final List<Unit> units;
+  final BuiltList<Unit> units;
   @override
   final int tab;
   @override
@@ -149,9 +149,9 @@ class CommonViewModelBuilder
   bool get hasHint => _$this._hasHint;
   set hasHint(bool hasHint) => _$this._hasHint = hasHint;
 
-  List<Unit> _units;
-  List<Unit> get units => _$this._units;
-  set units(List<Unit> units) => _$this._units = units;
+  ListBuilder<Unit> _units;
+  ListBuilder<Unit> get units => _$this._units ??= new ListBuilder<Unit>();
+  set units(ListBuilder<Unit> units) => _$this._units = units;
 
   int _tab;
   int get tab => _$this._tab;
@@ -191,7 +191,7 @@ class CommonViewModelBuilder
       _hasUser = _$v.hasUser;
       _hasSheet = _$v.hasSheet;
       _hasHint = _$v.hasHint;
-      _units = _$v.units;
+      _units = _$v.units?.toBuilder();
       _tab = _$v.tab;
       _currentBusiness = _$v.currentBusiness?.toBuilder();
       _hasAction = _$v.hasAction;
@@ -226,7 +226,7 @@ class CommonViewModelBuilder
               hasUser: hasUser,
               hasSheet: hasSheet,
               hasHint: hasHint,
-              units: units,
+              units: _units?.build(),
               tab: tab,
               currentBusiness: _currentBusiness?.build(),
               hasAction: hasAction,
@@ -237,6 +237,9 @@ class CommonViewModelBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'units';
+        _units?.build();
+
         _$failedField = 'currentBusiness';
         _currentBusiness?.build();
 

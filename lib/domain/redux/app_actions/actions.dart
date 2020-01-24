@@ -19,8 +19,14 @@ class BusinessId {
 @immutable
 class UnitR {
   final List<Unit> units;
-
   UnitR(this.units);
+}
+
+@immutable
+class UpdateUnitAction {
+  final int unitId;
+
+  UpdateUnitAction({@required this.unitId});
 }
 
 @immutable

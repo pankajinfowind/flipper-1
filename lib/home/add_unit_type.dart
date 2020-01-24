@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
@@ -16,8 +17,7 @@ class AddUnitType extends StatefulWidget {
 }
 
 class _AddUnitTypeState extends State<AddUnitType> {
-
-  Widget getUnitsWidgets(List<Unit> unitsList) {
+  Widget getUnitsWidgets(BuiltList<Unit> unitsList) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < unitsList.length; i++) {
       list.add(
@@ -28,13 +28,10 @@ class _AddUnitTypeState extends State<AddUnitType> {
           ),
           trailing: Radio(
             value: unitsList[i].id,
-            groupValue: unitsList[i].focused ? unitsList[i].id : null,
+            groupValue: unitsList[i].focused ? unitsList[i].id : 0,
             onChanged: (int value) {
-              StoreProvider.of<AppState>(context).state.rebuild((u) => u
-                ..unit = Unit((u) => u
-                  ..name = unitsList[i].name
-                  ..id = unitsList[i].id
-                  ..focused = true).toBuilder());
+              StoreProvider.of<AppState>(context)
+                  .dispatch(UpdateUnitAction(unitId: value));
             },
           ),
         ),

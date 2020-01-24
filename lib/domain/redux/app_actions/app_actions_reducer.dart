@@ -9,6 +9,7 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, AppAction>(_onAppActions),
   TypedReducer<AppState, BusinessId>(_onBusinessId),
   TypedReducer<AppState, UnitR>(_onUnits),
+  TypedReducer<AppState, CategoryAction>(_onCategories),
   TypedReducer<AppState, UpdateUnitAction>(_onUpdateUnit),
   TypedReducer<AppState, WithUnitId>(_withUnitId),
   TypedReducer<AppState, ResetAppAction>(_onResetAppAction),
@@ -63,4 +64,8 @@ AppState _onSetTab(AppState state, CurrentTab action) {
 
 AppState _withUnitId(AppState state, WithUnitId action) {
   return state.rebuild((a) => a..focusedUnit = action.unitId);
+}
+
+AppState _onCategories(AppState state, CategoryAction action) {
+  return state.rebuild((a) => a..categories = ListBuilder(action.categories));
 }

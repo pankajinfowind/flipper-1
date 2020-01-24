@@ -1718,28 +1718,42 @@ class $BusinessTableTable extends BusinessTable
 class CategoryTableData extends DataClass
     implements Insertable<CategoryTableData> {
   final int id;
+  final bool focused;
   final String name;
   final int businessId;
-  CategoryTableData({@required this.id, @required this.name, this.businessId});
+  final int branchId;
+  CategoryTableData(
+      {@required this.id,
+      @required this.focused,
+      @required this.name,
+      this.businessId,
+      this.branchId});
   factory CategoryTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
+    final boolType = db.typeSystem.forDartType<bool>();
     final stringType = db.typeSystem.forDartType<String>();
     return CategoryTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      focused:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}focused']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       businessId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
+      branchId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
     );
   }
   factory CategoryTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return CategoryTableData(
       id: serializer.fromJson<int>(json['id']),
+      focused: serializer.fromJson<bool>(json['focused']),
       name: serializer.fromJson<String>(json['name']),
       businessId: serializer.fromJson<int>(json['businessId']),
+      branchId: serializer.fromJson<int>(json['branchId']),
     );
   }
   @override
@@ -1747,8 +1761,10 @@ class CategoryTableData extends DataClass
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'focused': serializer.toJson<bool>(focused),
       'name': serializer.toJson<String>(name),
       'businessId': serializer.toJson<int>(businessId),
+      'branchId': serializer.toJson<int>(branchId),
     };
   }
 
@@ -1756,61 +1772,91 @@ class CategoryTableData extends DataClass
   CategoryTableCompanion createCompanion(bool nullToAbsent) {
     return CategoryTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      focused: focused == null && nullToAbsent
+          ? const Value.absent()
+          : Value(focused),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
       businessId: businessId == null && nullToAbsent
           ? const Value.absent()
           : Value(businessId),
+      branchId: branchId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(branchId),
     );
   }
 
-  CategoryTableData copyWith({int id, String name, int businessId}) =>
+  CategoryTableData copyWith(
+          {int id, bool focused, String name, int businessId, int branchId}) =>
       CategoryTableData(
         id: id ?? this.id,
+        focused: focused ?? this.focused,
         name: name ?? this.name,
         businessId: businessId ?? this.businessId,
+        branchId: branchId ?? this.branchId,
       );
   @override
   String toString() {
     return (StringBuffer('CategoryTableData(')
           ..write('id: $id, ')
+          ..write('focused: $focused, ')
           ..write('name: $name, ')
-          ..write('businessId: $businessId')
+          ..write('businessId: $businessId, ')
+          ..write('branchId: $branchId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, businessId.hashCode)));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          focused.hashCode,
+          $mrjc(
+              name.hashCode, $mrjc(businessId.hashCode, branchId.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is CategoryTableData &&
           other.id == this.id &&
+          other.focused == this.focused &&
           other.name == this.name &&
-          other.businessId == this.businessId);
+          other.businessId == this.businessId &&
+          other.branchId == this.branchId);
 }
 
 class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   final Value<int> id;
+  final Value<bool> focused;
   final Value<String> name;
   final Value<int> businessId;
+  final Value<int> branchId;
   const CategoryTableCompanion({
     this.id = const Value.absent(),
+    this.focused = const Value.absent(),
     this.name = const Value.absent(),
     this.businessId = const Value.absent(),
+    this.branchId = const Value.absent(),
   });
   CategoryTableCompanion.insert({
     this.id = const Value.absent(),
+    @required bool focused,
     @required String name,
     this.businessId = const Value.absent(),
-  }) : name = Value(name);
+    this.branchId = const Value.absent(),
+  })  : focused = Value(focused),
+        name = Value(name);
   CategoryTableCompanion copyWith(
-      {Value<int> id, Value<String> name, Value<int> businessId}) {
+      {Value<int> id,
+      Value<bool> focused,
+      Value<String> name,
+      Value<int> businessId,
+      Value<int> branchId}) {
     return CategoryTableCompanion(
       id: id ?? this.id,
+      focused: focused ?? this.focused,
       name: name ?? this.name,
       businessId: businessId ?? this.businessId,
+      branchId: branchId ?? this.branchId,
     );
   }
 }
@@ -1827,6 +1873,18 @@ class $CategoryTableTable extends CategoryTable
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _focusedMeta = const VerificationMeta('focused');
+  GeneratedBoolColumn _focused;
+  @override
+  GeneratedBoolColumn get focused => _focused ??= _constructFocused();
+  GeneratedBoolColumn _constructFocused() {
+    return GeneratedBoolColumn(
+      'focused',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _nameMeta = const VerificationMeta('name');
@@ -1850,8 +1908,18 @@ class $CategoryTableTable extends CategoryTable
         $customConstraints: 'NULL REFERENCES business_table(id)');
   }
 
+  final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
+  GeneratedIntColumn _branchId;
   @override
-  List<GeneratedColumn> get $columns => [id, name, businessId];
+  GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
+  GeneratedIntColumn _constructBranchId() {
+    return GeneratedIntColumn('branch_id', $tableName, true,
+        $customConstraints: 'NULL REFERENCES branch_table(id)');
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, focused, name, businessId, branchId];
   @override
   $CategoryTableTable get asDslTable => this;
   @override
@@ -1867,6 +1935,12 @@ class $CategoryTableTable extends CategoryTable
     } else if (id.isRequired && isInserting) {
       context.missing(_idMeta);
     }
+    if (d.focused.present) {
+      context.handle(_focusedMeta,
+          focused.isAcceptableValue(d.focused.value, _focusedMeta));
+    } else if (focused.isRequired && isInserting) {
+      context.missing(_focusedMeta);
+    }
     if (d.name.present) {
       context.handle(
           _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
@@ -1878,6 +1952,12 @@ class $CategoryTableTable extends CategoryTable
           businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
     } else if (businessId.isRequired && isInserting) {
       context.missing(_businessIdMeta);
+    }
+    if (d.branchId.present) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableValue(d.branchId.value, _branchIdMeta));
+    } else if (branchId.isRequired && isInserting) {
+      context.missing(_branchIdMeta);
     }
     return context;
   }
@@ -1896,11 +1976,17 @@ class $CategoryTableTable extends CategoryTable
     if (d.id.present) {
       map['id'] = Variable<int, IntType>(d.id.value);
     }
+    if (d.focused.present) {
+      map['focused'] = Variable<bool, BoolType>(d.focused.value);
+    }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
     }
     if (d.businessId.present) {
       map['business_id'] = Variable<int, IntType>(d.businessId.value);
+    }
+    if (d.branchId.present) {
+      map['branch_id'] = Variable<int, IntType>(d.branchId.value);
     }
     return map;
   }

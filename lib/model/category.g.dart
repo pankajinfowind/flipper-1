@@ -9,13 +9,35 @@ part of 'category.dart';
 class _$Category extends Category {
   @override
   final String name;
+  @override
+  final int id;
+  @override
+  final int businessId;
+  @override
+  final bool focused;
+  @override
+  final int branchId;
 
   factory _$Category([void Function(CategoryBuilder) updates]) =>
       (new CategoryBuilder()..update(updates)).build();
 
-  _$Category._({this.name}) : super._() {
+  _$Category._(
+      {this.name, this.id, this.businessId, this.focused, this.branchId})
+      : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('Category', 'name');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('Category', 'id');
+    }
+    if (businessId == null) {
+      throw new BuiltValueNullFieldError('Category', 'businessId');
+    }
+    if (focused == null) {
+      throw new BuiltValueNullFieldError('Category', 'focused');
+    }
+    if (branchId == null) {
+      throw new BuiltValueNullFieldError('Category', 'branchId');
     }
   }
 
@@ -29,17 +51,30 @@ class _$Category extends Category {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Category && name == other.name;
+    return other is Category &&
+        name == other.name &&
+        id == other.id &&
+        businessId == other.businessId &&
+        focused == other.focused &&
+        branchId == other.branchId;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, name.hashCode));
+    return $jf($jc(
+        $jc($jc($jc($jc(0, name.hashCode), id.hashCode), businessId.hashCode),
+            focused.hashCode),
+        branchId.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Category')..add('name', name))
+    return (newBuiltValueToStringHelper('Category')
+          ..add('name', name)
+          ..add('id', id)
+          ..add('businessId', businessId)
+          ..add('focused', focused)
+          ..add('branchId', branchId))
         .toString();
   }
 }
@@ -51,11 +86,31 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  int _businessId;
+  int get businessId => _$this._businessId;
+  set businessId(int businessId) => _$this._businessId = businessId;
+
+  bool _focused;
+  bool get focused => _$this._focused;
+  set focused(bool focused) => _$this._focused = focused;
+
+  int _branchId;
+  int get branchId => _$this._branchId;
+  set branchId(int branchId) => _$this._branchId = branchId;
+
   CategoryBuilder();
 
   CategoryBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _id = _$v.id;
+      _businessId = _$v.businessId;
+      _focused = _$v.focused;
+      _branchId = _$v.branchId;
       _$v = null;
     }
     return this;
@@ -76,7 +131,13 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
 
   @override
   _$Category build() {
-    final _$result = _$v ?? new _$Category._(name: name);
+    final _$result = _$v ??
+        new _$Category._(
+            name: name,
+            id: id,
+            businessId: businessId,
+            focused: focused,
+            branchId: branchId);
     replace(_$result);
     return _$result;
   }

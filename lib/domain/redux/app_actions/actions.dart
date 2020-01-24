@@ -26,6 +26,12 @@ class UnitR {
 }
 
 @immutable
+class CategoryAction {
+  final List<CategoryAction> categories;
+  CategoryAction(this.categories);
+}
+
+@immutable
 class WithUnitId {
   final int unitId;
 

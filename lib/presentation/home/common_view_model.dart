@@ -4,6 +4,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/category.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:redux/redux.dart';
@@ -19,6 +20,8 @@ abstract class CommonViewModel
 
   @nullable
   BuiltList<Unit> get units;
+
+  BuiltList<Category> get categories;
 
   @nullable
   int get tab;
@@ -58,6 +61,7 @@ abstract class CommonViewModel
       ..businesses = store.state.businesses
       ..tab = store.state.tab
       ..units = store.state.units.toBuilder()
+      ..categories = store.state.categories.toBuilder()
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()
       ..currentBusiness = store.state.currentActiveBusiness == null

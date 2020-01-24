@@ -12,6 +12,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future insert(Insertable<CategoryTableData> branch) =>
       into(db.categoryTable).insert(branch);
-  Future<List<CategoryTableData>> getBranches() =>
+
+  Future<List<CategoryTableData>> getCategories() =>
       select(db.categoryTable).get();
 }

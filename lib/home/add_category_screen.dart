@@ -1,6 +1,8 @@
+import 'package:built_collection/src/list.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
+import 'package:flipper/model/category.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
@@ -18,6 +20,39 @@ class AddCategoryScreen extends StatefulWidget {
 
 class _AddCategoryScreenState extends State<AddCategoryScreen> {
   CategoriesEnum _type = CategoriesEnum.beverage;
+
+  getUnitsWidgets(BuiltList<Category> categories) {
+    List<Widget> list = new List<Widget>();
+    for (var i = 0; i < categories.length; i++) {
+      list.add(
+        ListTile(
+          title: Text(
+            'Per ' + categories[i].name,
+            style: TextStyle(color: Colors.black),
+          ),
+          trailing: Radio(
+            value: categories[i].id,
+            groupValue: categories[i].focused ? categories[i].id : 0,
+            onChanged: (int value) {
+              //StoreProvider.of<AppState>(context)
+              //    .dispatch(WithUnitId(unitId: value));
+              //StoreProvider.of<AppState>(context)
+              //  .dispatch(UpdateUnitAction(unitId: value));
+            },
+          ),
+        ),
+      );
+      list.add(Center(
+        child: Container(
+          width: 400,
+          child: Divider(
+            color: Colors.black,
+          ),
+        ),
+      ));
+    }
+    return Wrap(children: list);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,74 +77,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                   ),
                 ),
               ),
-              ListTile(
-                title: const Text(
-                  'Per Item',
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: Radio(
-                  value: CategoriesEnum.beverage,
-                  groupValue: _type,
-                  onChanged: (CategoriesEnum value) {
-                    setState(() {
-                      _type = value;
-                    });
-                  },
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: 400,
-                  child: Divider(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              ListTile(
-                title: const Text(
-                  'Per ounce',
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: Radio(
-                  value: CategoriesEnum.ikawa,
-                  groupValue: _type,
-                  onChanged: (CategoriesEnum value) {
-                    setState(() {
-                      _type = value;
-                    });
-                  },
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: 400,
-                  child: Divider(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              ListTile(
-                title: const Text(
-                  'Per Pound',
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: Radio(
-                  value: CategoriesEnum.drinks,
-                  groupValue: _type,
-                  onChanged: (CategoriesEnum value) {
-                    setState(() {
-                      _type = value;
-//                      final category = Category((a) => a..name = _type);
-//                      StoreProvider.of<AppState>(context)
-//                          .state
-//                          .rebuild((a) => a..category = category.toBuilder());
-                    });
-                  },
-                ),
-              ),
-              Container(
-                height: 20,
-              ),
+              getUnitsWidgets(vm.categories),
               Center(
                 child: SizedBox(
                   height: 50,

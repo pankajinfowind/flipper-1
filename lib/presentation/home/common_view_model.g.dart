@@ -16,6 +16,8 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final BuiltList<Unit> units;
   @override
+  final BuiltList<Category> categories;
+  @override
   final int tab;
   @override
   final Business currentBusiness;
@@ -38,6 +40,7 @@ class _$CommonViewModel extends CommonViewModel {
       this.hasSheet,
       this.hasHint,
       this.units,
+      this.categories,
       this.tab,
       this.currentBusiness,
       this.hasAction,
@@ -51,6 +54,9 @@ class _$CommonViewModel extends CommonViewModel {
     }
     if (hasSheet == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasSheet');
+    }
+    if (categories == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'categories');
     }
     if (hasAction == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasAction');
@@ -82,6 +88,7 @@ class _$CommonViewModel extends CommonViewModel {
         hasSheet == other.hasSheet &&
         hasHint == other.hasHint &&
         units == other.units &&
+        categories == other.categories &&
         tab == other.tab &&
         currentBusiness == other.currentBusiness &&
         hasAction == other.hasAction &&
@@ -102,10 +109,12 @@ class _$CommonViewModel extends CommonViewModel {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, hasUser.hashCode),
-                                            hasSheet.hashCode),
-                                        hasHint.hashCode),
-                                    units.hashCode),
+                                        $jc(
+                                            $jc($jc(0, hasUser.hashCode),
+                                                hasSheet.hashCode),
+                                            hasHint.hashCode),
+                                        units.hashCode),
+                                    categories.hashCode),
                                 tab.hashCode),
                             currentBusiness.hashCode),
                         hasAction.hashCode),
@@ -122,6 +131,7 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('hasSheet', hasSheet)
           ..add('hasHint', hasHint)
           ..add('units', units)
+          ..add('categories', categories)
           ..add('tab', tab)
           ..add('currentBusiness', currentBusiness)
           ..add('hasAction', hasAction)
@@ -152,6 +162,12 @@ class CommonViewModelBuilder
   ListBuilder<Unit> _units;
   ListBuilder<Unit> get units => _$this._units ??= new ListBuilder<Unit>();
   set units(ListBuilder<Unit> units) => _$this._units = units;
+
+  ListBuilder<Category> _categories;
+  ListBuilder<Category> get categories =>
+      _$this._categories ??= new ListBuilder<Category>();
+  set categories(ListBuilder<Category> categories) =>
+      _$this._categories = categories;
 
   int _tab;
   int get tab => _$this._tab;
@@ -192,6 +208,7 @@ class CommonViewModelBuilder
       _hasSheet = _$v.hasSheet;
       _hasHint = _$v.hasHint;
       _units = _$v.units?.toBuilder();
+      _categories = _$v.categories?.toBuilder();
       _tab = _$v.tab;
       _currentBusiness = _$v.currentBusiness?.toBuilder();
       _hasAction = _$v.hasAction;
@@ -227,6 +244,7 @@ class CommonViewModelBuilder
               hasSheet: hasSheet,
               hasHint: hasHint,
               units: _units?.build(),
+              categories: categories.build(),
               tab: tab,
               currentBusiness: _currentBusiness?.build(),
               hasAction: hasAction,
@@ -239,6 +257,8 @@ class CommonViewModelBuilder
       try {
         _$failedField = 'units';
         _units?.build();
+        _$failedField = 'categories';
+        categories.build();
 
         _$failedField = 'currentBusiness';
         _currentBusiness?.build();

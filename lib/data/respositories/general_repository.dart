@@ -40,4 +40,8 @@ class GeneralRepository {
         focused: unit.focused);
     return store.state.database.unitDao.insert(values);
   }
+
+  Future<List<CategoryTableData>> getCategories(Store<AppState> store) {
+    return store.state.database.categoryDao.getCategories();
+  }
 }

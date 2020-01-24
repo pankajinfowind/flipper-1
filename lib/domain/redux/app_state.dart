@@ -48,6 +48,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   BuiltList<Unit> get units;
 
+  BuiltList<Category> get categories;
+
   @nullable
   int get focusedUnit;
 
@@ -79,6 +81,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState.init() => AppState((a) => a
     ..database = Database()
     ..units = ListBuilder()
+    ..categories = ListBuilder()
     ..businesses = List<Business>()
     ..branches = List<Branch>());
 

@@ -10,6 +10,7 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, BusinessId>(_onBusinessId),
   TypedReducer<AppState, UnitR>(_onUnits),
   TypedReducer<AppState, UpdateUnitAction>(_onUpdateUnit),
+  TypedReducer<AppState, WithUnitId>(_withUnitId),
   TypedReducer<AppState, ResetAppAction>(_onResetAppAction),
   TypedReducer<AppState, CurrentTab>(_onSetTab),
 ];
@@ -19,7 +20,7 @@ AppState _onAppActions(AppState state, AppAction action) {
 
 AppState _onResetAppAction(AppState state, ResetAppAction action) {
   //TODO: should update the
-//  return state.rebuild((a) => a..units.update = null);
+  return state.rebuild((a) => a..action = null);
 }
 
 AppState _onUpdateUnit(AppState state, UpdateUnitAction action) {
@@ -58,4 +59,8 @@ AppState _onUnits(AppState state, UnitR action) {
 
 AppState _onSetTab(AppState state, CurrentTab action) {
   return state.rebuild((a) => a..tab = action.tab);
+}
+
+AppState _withUnitId(AppState state, WithUnitId action) {
+  return state.rebuild((a) => a..focusedUnit = action.unitId);
 }

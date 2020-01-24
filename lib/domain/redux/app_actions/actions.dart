@@ -10,6 +10,9 @@ class AppAction {
 }
 
 @immutable
+class PersistFocusedUnitAction {}
+
+@immutable
 class BusinessId {
   final int businessId;
 
@@ -20,6 +23,13 @@ class BusinessId {
 class UnitR {
   final List<Unit> units;
   UnitR(this.units);
+}
+
+@immutable
+class WithUnitId {
+  final int unitId;
+
+  WithUnitId({@required this.unitId});
 }
 
 @immutable

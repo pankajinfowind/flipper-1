@@ -14,6 +14,16 @@ class GeneralRepository {
     return store.state.database.tabsDao.updateTab(b);
   }
 
+  Future<bool> updateUnit(Store<AppState> store, Unit unit) {
+    final b = UnitTableData(
+        id: unit.id,
+        name: unit.name,
+        focused: unit.focused,
+        businessId: unit.businessId,
+        branchId: unit.branchId);
+    return store.state.database.unitDao.updateTab(b);
+  }
+
   Future<TabsTableData> getTab(Store<AppState> store) {
     return store.state.database.tabsDao.getTab();
   }
@@ -23,9 +33,11 @@ class GeneralRepository {
   }
 
   Future<int> insertUnit(Store<AppState> store, Unit unit) {
-
     var values = new UnitTableData(
-        name: unit.name, branchId: unit.branchId, businessId: unit.businessId,focused: unit.focused);
+        name: unit.name,
+        branchId: unit.branchId,
+        businessId: unit.businessId,
+        focused: unit.focused);
     return store.state.database.unitDao.insert(values);
   }
 }

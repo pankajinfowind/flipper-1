@@ -49,6 +49,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   BuiltList<Unit> get units;
 
   @nullable
+  int get focusedUnit;
+
+  @nullable
   Category get category;
 
   @nullable

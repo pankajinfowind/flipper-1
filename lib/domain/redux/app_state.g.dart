@@ -30,6 +30,8 @@ class _$AppState extends AppState {
   @override
   final BuiltList<Unit> units;
   @override
+  final int focusedUnit;
+  @override
   final Category category;
   @override
   final Permission permissions;
@@ -61,6 +63,7 @@ class _$AppState extends AppState {
       this.businessId,
       this.unit,
       this.units,
+      this.focusedUnit,
       this.category,
       this.permissions,
       this.branches,
@@ -97,6 +100,7 @@ class _$AppState extends AppState {
         businessId == other.businessId &&
         unit == other.unit &&
         units == other.units &&
+        focusedUnit == other.focusedUnit &&
         category == other.category &&
         permissions == other.permissions &&
         branches == other.branches &&
@@ -127,24 +131,18 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                user
-                                                                                    .hashCode),
-                                                                            userId
-                                                                                .hashCode),
-                                                                        currentActiveBusiness
-                                                                            .hashCode),
-                                                                    tab
-                                                                        .hashCode),
-                                                                nextActiveBusiness
-                                                                    .hashCode),
-                                                            sheet.hashCode),
-                                                        action.hashCode),
-                                                    price.hashCode),
-                                                businessId.hashCode),
-                                            unit.hashCode),
-                                        units.hashCode),
+                                                                            $jc($jc(0, user.hashCode),
+                                                                                userId.hashCode),
+                                                                            currentActiveBusiness.hashCode),
+                                                                        tab.hashCode),
+                                                                    nextActiveBusiness.hashCode),
+                                                                sheet.hashCode),
+                                                            action.hashCode),
+                                                        price.hashCode),
+                                                    businessId.hashCode),
+                                                unit.hashCode),
+                                            units.hashCode),
+                                        focusedUnit.hashCode),
                                     category.hashCode),
                                 permissions.hashCode),
                             branches.hashCode),
@@ -169,6 +167,7 @@ class _$AppState extends AppState {
           ..add('businessId', businessId)
           ..add('unit', unit)
           ..add('units', units)
+          ..add('focusedUnit', focusedUnit)
           ..add('category', category)
           ..add('permissions', permissions)
           ..add('branches', branches)
@@ -232,6 +231,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   ListBuilder<Unit> get units => _$this._units ??= new ListBuilder<Unit>();
   set units(ListBuilder<Unit> units) => _$this._units = units;
 
+  int _focusedUnit;
+  int get focusedUnit => _$this._focusedUnit;
+  set focusedUnit(int focusedUnit) => _$this._focusedUnit = focusedUnit;
+
   CategoryBuilder _category;
   CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
   set category(CategoryBuilder category) => _$this._category = category;
@@ -281,6 +284,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _businessId = _$v.businessId;
       _unit = _$v.unit?.toBuilder();
       _units = _$v.units?.toBuilder();
+      _focusedUnit = _$v.focusedUnit;
       _category = _$v.category?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
@@ -324,6 +328,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               businessId: businessId,
               unit: _unit?.build(),
               units: _units?.build(),
+              focusedUnit: focusedUnit,
               category: _category?.build(),
               permissions: _permissions?.build(),
               branches: branches,
@@ -354,6 +359,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _unit?.build();
         _$failedField = 'units';
         _units?.build();
+
         _$failedField = 'category';
         _category?.build();
         _$failedField = 'permissions';

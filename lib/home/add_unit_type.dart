@@ -31,6 +31,8 @@ class _AddUnitTypeState extends State<AddUnitType> {
             groupValue: unitsList[i].focused ? unitsList[i].id : 0,
             onChanged: (int value) {
               StoreProvider.of<AppState>(context)
+                  .dispatch(WithUnitId(unitId: value));
+              StoreProvider.of<AppState>(context)
                   .dispatch(UpdateUnitAction(unitId: value));
             },
           ),
@@ -59,6 +61,9 @@ class _AddUnitTypeState extends State<AddUnitType> {
             title: S.of(context).unityType,
             actionButton: FlatButton(
               onPressed: () {
+                StoreProvider.of<AppState>(context)
+                    .dispatch(PersistFocusedUnitAction());
+
                 StoreProvider.of<AppState>(context).dispatch(AppAction(
                     actions: AppActions((a) => a..name = "showLoader")));
               },

@@ -34,6 +34,8 @@ class _$AppState extends AppState {
   @override
   final int focusedUnit;
   @override
+  final int focusedCategoryId;
+  @override
   final Category category;
   @override
   final Permission permissions;
@@ -49,6 +51,10 @@ class _$AppState extends AppState {
   final Hint hint;
   @override
   final Database database;
+  @override
+  final String categoryName;
+  @override
+  final int tempCategoryId;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -67,6 +73,7 @@ class _$AppState extends AppState {
       this.units,
       this.categories,
       this.focusedUnit,
+      this.focusedCategoryId,
       this.category,
       this.permissions,
       this.branches,
@@ -74,7 +81,9 @@ class _$AppState extends AppState {
       this.branch,
       this.business,
       this.hint,
-      this.database})
+      this.database,
+      this.categoryName,
+      this.tempCategoryId})
       : super._() {
     if (categories == null) {
       throw new BuiltValueNullFieldError('AppState', 'categories');
@@ -108,6 +117,7 @@ class _$AppState extends AppState {
         units == other.units &&
         categories == other.categories &&
         focusedUnit == other.focusedUnit &&
+        focusedCategoryId == other.focusedCategoryId &&
         category == other.category &&
         permissions == other.permissions &&
         branches == other.branches &&
@@ -115,7 +125,9 @@ class _$AppState extends AppState {
         branch == other.branch &&
         business == other.business &&
         hint == other.hint &&
-        database == other.database;
+        database == other.database &&
+        categoryName == other.categoryName &&
+        tempCategoryId == other.tempCategoryId;
   }
 
   @override
@@ -138,26 +150,26 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, user.hashCode), userId.hashCode),
-                                                                                currentActiveBusiness.hashCode),
-                                                                            tab.hashCode),
-                                                                        nextActiveBusiness.hashCode),
-                                                                    sheet.hashCode),
-                                                                action.hashCode),
-                                                            price.hashCode),
-                                                        businessId.hashCode),
-                                                    unit.hashCode),
-                                                units.hashCode),
-                                            categories.hashCode),
-                                        focusedUnit.hashCode),
-                                    category.hashCode),
-                                permissions.hashCode),
-                            branches.hashCode),
-                        businesses.hashCode),
-                    branch.hashCode),
-                business.hashCode),
-            hint.hashCode),
-        database.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode),
+                                                                                sheet.hashCode),
+                                                                            action.hashCode),
+                                                                        price.hashCode),
+                                                                    businessId.hashCode),
+                                                                unit.hashCode),
+                                                            units.hashCode),
+                                                        categories.hashCode),
+                                                    focusedUnit.hashCode),
+                                                focusedCategoryId.hashCode),
+                                            category.hashCode),
+                                        permissions.hashCode),
+                                    branches.hashCode),
+                                businesses.hashCode),
+                            branch.hashCode),
+                        business.hashCode),
+                    hint.hashCode),
+                database.hashCode),
+            categoryName.hashCode),
+        tempCategoryId.hashCode));
   }
 
   @override
@@ -176,6 +188,7 @@ class _$AppState extends AppState {
           ..add('units', units)
           ..add('categories', categories)
           ..add('focusedUnit', focusedUnit)
+          ..add('focusedCategoryId', focusedCategoryId)
           ..add('category', category)
           ..add('permissions', permissions)
           ..add('branches', branches)
@@ -183,7 +196,9 @@ class _$AppState extends AppState {
           ..add('branch', branch)
           ..add('business', business)
           ..add('hint', hint)
-          ..add('database', database))
+          ..add('database', database)
+          ..add('categoryName', categoryName)
+          ..add('tempCategoryId', tempCategoryId))
         .toString();
   }
 }
@@ -249,6 +264,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   int get focusedUnit => _$this._focusedUnit;
   set focusedUnit(int focusedUnit) => _$this._focusedUnit = focusedUnit;
 
+  int _focusedCategoryId;
+  int get focusedCategoryId => _$this._focusedCategoryId;
+  set focusedCategoryId(int focusedCategoryId) =>
+      _$this._focusedCategoryId = focusedCategoryId;
+
   CategoryBuilder _category;
   CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
   set category(CategoryBuilder category) => _$this._category = category;
@@ -283,6 +303,15 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   Database get database => _$this._database;
   set database(Database database) => _$this._database = database;
 
+  String _categoryName;
+  String get categoryName => _$this._categoryName;
+  set categoryName(String categoryName) => _$this._categoryName = categoryName;
+
+  int _tempCategoryId;
+  int get tempCategoryId => _$this._tempCategoryId;
+  set tempCategoryId(int tempCategoryId) =>
+      _$this._tempCategoryId = tempCategoryId;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -300,6 +329,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _units = _$v.units?.toBuilder();
       _categories = _$v.categories?.toBuilder();
       _focusedUnit = _$v.focusedUnit;
+      _focusedCategoryId = _$v.focusedCategoryId;
       _category = _$v.category?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
@@ -308,6 +338,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _business = _$v.business?.toBuilder();
       _hint = _$v.hint?.toBuilder();
       _database = _$v.database;
+      _categoryName = _$v.categoryName;
+      _tempCategoryId = _$v.tempCategoryId;
       _$v = null;
     }
     return this;
@@ -345,6 +377,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               units: _units?.build(),
               categories: categories.build(),
               focusedUnit: focusedUnit,
+              focusedCategoryId: focusedCategoryId,
               category: _category?.build(),
               permissions: _permissions?.build(),
               branches: branches,
@@ -352,7 +385,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               branch: _branch?.build(),
               business: _business?.build(),
               hint: _hint?.build(),
-              database: database);
+              database: database,
+              categoryName: categoryName,
+              tempCategoryId: tempCategoryId);
     } catch (_) {
       String _$failedField;
       try {

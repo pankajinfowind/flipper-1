@@ -115,18 +115,19 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
       List<Category> categories = [];
 
+      //TODO: look for active business or branch and fire them in store so it can be found on the first launch.!
       categoryList.forEach((c) => {
             categories.add(Category((u) => u
               ..name = c.name
               ..focused = c.focused
-              ..businessId = u.businessId
-              ..branchId = u.branchId
+              ..businessId = u.businessId ?? 0
+              ..branchId = u.branchId ?? 0
               ..id = c.id))
           });
 
       store.dispatch(UnitR(units));
 
-      store.dispatch(UnitR(units));
+      store.dispatch(CategoryAction(categories));
 
       store.dispatch(OnBranchLoaded(branches: branches));
 

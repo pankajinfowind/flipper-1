@@ -5,7 +5,7 @@ import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
-import 'package:flipper/util/HexColor.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -19,29 +19,32 @@ class AddCategoryScreen extends StatefulWidget {
 }
 
 class _AddCategoryScreenState extends State<AddCategoryScreen> {
-  CategoriesEnum _type = CategoriesEnum.beverage;
-
   getUnitsWidgets(BuiltList<Category> categories) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < categories.length; i++) {
-      list.add(
-        ListTile(
-          title: Text(
-            'Per ' + categories[i].name,
-            style: TextStyle(color: Colors.black),
+      if (categories[i].name != "toBeModified") {
+        list.add(
+          ListTile(
+            title: Text(
+              categories[i].name,
+              style: TextStyle(color: Colors.black),
+            ),
+            trailing: Radio(
+              value: categories[i].id,
+              groupValue: categories[i].focused ? categories[i].id : 0,
+              onChanged: (int categoryId) {
+                StoreProvider.of<AppState>(context)
+                    .dispatch(WithCategoryId(categoryId: categoryId));
+                StoreProvider.of<AppState>(context)
+                    .dispatch(InvokePersistFocusedCategory());
+
+                StoreProvider.of<AppState>(context)
+                    .dispatch(UpdateCategoryAction(categoryId: categoryId));
+              },
+            ),
           ),
-          trailing: Radio(
-            value: categories[i].id,
-            groupValue: categories[i].focused ? categories[i].id : 0,
-            onChanged: (int value) {
-              //StoreProvider.of<AppState>(context)
-              //    .dispatch(WithUnitId(unitId: value));
-              //StoreProvider.of<AppState>(context)
-              //  .dispatch(UpdateUnitAction(unitId: value));
-            },
-          ),
-        ),
-      );
+        );
+      }
       list.add(Center(
         child: Container(
           width: 400,
@@ -77,31 +80,30 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                   ),
                 ),
               ),
-              getUnitsWidgets(vm.categories),
-              Center(
-                child: SizedBox(
-                  height: 50,
-                  width: 380,
-                  child: FlatButton(
-                    color: HexColor("#ecf0f1"),
-                    child: Text("Create Unit"),
-                    onPressed: () {},
+              GestureDetector(
+                onTap: () {
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(CreateEmptyTempCategoryAction());
+                  Router.navigator.pushNamed(Router.createCategoryInputScreen);
+                },
+                child: ListTile(
+                  title: Text("Create Category",
+                      style: TextStyle(color: Colors.black)),
+                  trailing: Wrap(
+                    children: <Widget>[Icon(Icons.arrow_forward_ios)],
                   ),
                 ),
               ),
-              Container(
-                height: 20,
-              ),
-              Text("Edit units and precision in items> Units"),
+              getUnitsWidgets(vm.categories),
               Visibility(
                 visible: false,
                 child: FlatButton(
                   child: Text("invisible button"),
-                  onPressed: vm.hasAction && vm.appAction.name == 'saveUnit'
-                      ? _handleFormSubmit()
+                  onPressed: vm.categoryName != null
+                      ? _handleCreateCategory(vm)
                       : null,
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -109,9 +111,9 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     );
   }
 
-  _handleFormSubmit() {
-    StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-
-    StoreProvider.of<AppState>(context).dispatch(CreateCategory());
+  _handleCreateCategory(CommonViewModel vm) {
+    //fire the event to create category
+    StoreProvider.of<AppState>(context).dispatch(
+        CreateCategoryFromAddItemScreenAction(categoryName: vm.categoryName));
   }
 }

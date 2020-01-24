@@ -54,6 +54,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   int get focusedUnit;
 
   @nullable
+  int get focusedCategoryId;
+
+  @nullable
   Category get category;
 
   @nullable
@@ -75,6 +78,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Hint get hint;
 
   Database get database;
+
+  @nullable
+  String get categoryName;
+
+  @nullable
+  int get tempCategoryId;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 

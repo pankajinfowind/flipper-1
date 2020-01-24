@@ -16,6 +16,7 @@ class SetActiveBusiness {
 
   SetActiveBusiness(this.businessId);
 }
+
 class RefreshBusinessList {
   final Business updatedBusiness;
 
@@ -32,18 +33,18 @@ class WithBusiness {
     return "CreateBusiness{CreateBusiness: $business}";
   }
 }
+
 @immutable
-class ActiveBusinessId{
+class ActiveBusinessAction {
   final Business bussiness;
-  ActiveBusinessId(this.bussiness);
+  ActiveBusinessAction(this.bussiness);
 }
 
 @immutable
-class NextActiveBussiness{
+class NextActiveBussiness {
   final Business bussiness;
   NextActiveBussiness(this.bussiness);
 }
-
 
 @immutable
 class OnBusinessLoaded {

@@ -31,6 +31,8 @@ class _$CommonViewModel extends CommonViewModel {
   final AppActions appAction;
   @override
   final Hint hint;
+  @override
+  final String categoryName;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -47,7 +49,8 @@ class _$CommonViewModel extends CommonViewModel {
       this.branches,
       this.businesses,
       this.appAction,
-      this.hint})
+      this.hint,
+      this.categoryName})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -95,7 +98,8 @@ class _$CommonViewModel extends CommonViewModel {
         branches == other.branches &&
         businesses == other.businesses &&
         appAction == other.appAction &&
-        hint == other.hint;
+        hint == other.hint &&
+        categoryName == other.categoryName;
   }
 
   @override
@@ -110,18 +114,20 @@ class _$CommonViewModel extends CommonViewModel {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, hasUser.hashCode),
-                                                hasSheet.hashCode),
-                                            hasHint.hashCode),
-                                        units.hashCode),
-                                    categories.hashCode),
-                                tab.hashCode),
-                            currentBusiness.hashCode),
-                        hasAction.hashCode),
-                    branches.hashCode),
-                businesses.hashCode),
-            appAction.hashCode),
-        hint.hashCode));
+                                            $jc(
+                                                $jc($jc(0, hasUser.hashCode),
+                                                    hasSheet.hashCode),
+                                                hasHint.hashCode),
+                                            units.hashCode),
+                                        categories.hashCode),
+                                    tab.hashCode),
+                                currentBusiness.hashCode),
+                            hasAction.hashCode),
+                        branches.hashCode),
+                    businesses.hashCode),
+                appAction.hashCode),
+            hint.hashCode),
+        categoryName.hashCode));
   }
 
   @override
@@ -138,7 +144,8 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('branches', branches)
           ..add('businesses', businesses)
           ..add('appAction', appAction)
-          ..add('hint', hint))
+          ..add('hint', hint)
+          ..add('categoryName', categoryName))
         .toString();
   }
 }
@@ -200,6 +207,10 @@ class CommonViewModelBuilder
   HintBuilder get hint => _$this._hint ??= new HintBuilder();
   set hint(HintBuilder hint) => _$this._hint = hint;
 
+  String _categoryName;
+  String get categoryName => _$this._categoryName;
+  set categoryName(String categoryName) => _$this._categoryName = categoryName;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -216,6 +227,7 @@ class CommonViewModelBuilder
       _businesses = _$v.businesses;
       _appAction = _$v.appAction?.toBuilder();
       _hint = _$v.hint?.toBuilder();
+      _categoryName = _$v.categoryName;
       _$v = null;
     }
     return this;
@@ -251,7 +263,8 @@ class CommonViewModelBuilder
               branches: branches,
               businesses: businesses,
               appAction: _appAction?.build(),
-              hint: hint.build());
+              hint: hint.build(),
+              categoryName: categoryName);
     } catch (_) {
       String _$failedField;
       try {

@@ -108,6 +108,6 @@ class _AddUnitTypeState extends State<AddUnitType> {
 
   _handleFormSubmit() {
     StoreProvider.of<AppState>(context).dispatch(ResetAppAction());
-    StoreProvider.of<AppState>(context).dispatch(CreateCategory());
+    StoreProvider.of<AppState>(context).dispatch(CreateUnit());
   }
 }

@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/model/category.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:redux/redux.dart';
 
@@ -9,8 +10,12 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, AppAction>(_onAppActions),
   TypedReducer<AppState, BusinessId>(_onBusinessId),
   TypedReducer<AppState, UnitR>(_onUnits),
+  TypedReducer<AppState, WithCategoryId>(_onCategoryFocusedChanged),
+  TypedReducer<AppState, CategoryNameAction>(_onCategoryName),
+  TypedReducer<AppState, TempCategoryIdAction>(_onTempCategoryId),
   TypedReducer<AppState, CategoryAction>(_onCategories),
   TypedReducer<AppState, UpdateUnitAction>(_onUpdateUnit),
+  TypedReducer<AppState, UpdateCategoryAction>(_onUpdateCategory),
   TypedReducer<AppState, WithUnitId>(_withUnitId),
   TypedReducer<AppState, ResetAppAction>(_onResetAppAction),
   TypedReducer<AppState, CurrentTab>(_onSetTab),
@@ -68,4 +73,41 @@ AppState _withUnitId(AppState state, WithUnitId action) {
 
 AppState _onCategories(AppState state, CategoryAction action) {
   return state.rebuild((a) => a..categories = ListBuilder(action.categories));
+}
+
+AppState _onCategoryName(AppState state, CategoryNameAction action) {
+  return state.rebuild((a) => a..categoryName = action.name);
+}
+
+AppState _onTempCategoryId(AppState state, TempCategoryIdAction action) {
+  return state.rebuild((a) => a..tempCategoryId = action.categoryId);
+}
+
+AppState _onCategoryFocusedChanged(AppState state, WithCategoryId action) {
+  return state.rebuild((a) => a..focusedCategoryId = action.categoryId);
+}
+
+AppState _onUpdateCategory(AppState state, action) {
+  List<Category> categories = [];
+  state.categories.forEach((u) => {
+        if (u.id == action.categoryId)
+          {
+            categories.add(Category((c) => c
+              ..focused = true
+              ..id = u.id
+              ..name = u.name
+              ..businessId = u.businessId
+              ..branchId = u.branchId))
+          }
+        else
+          {
+            categories.add(Category((c) => c
+              ..focused = false
+              ..id = u.id
+              ..name = u.name
+              ..businessId = u.businessId
+              ..branchId = u.branchId))
+          }
+      });
+  return state.rebuild((a) => a..categories = ListBuilder(categories));
 }

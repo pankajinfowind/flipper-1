@@ -64,6 +64,15 @@ class S {
       args: [],
     );
   }
+
+  String get createCategory {
+    return Intl.message(
+      'Create Category',
+      name: 'createCategory',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

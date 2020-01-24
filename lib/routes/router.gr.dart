@@ -22,6 +22,7 @@ import 'package:flipper/home/take_picture_screen.dart';
 import 'package:flipper/home/add_variation_screen.dart';
 import 'package:flipper/home/add_unit_type.dart';
 import 'package:flipper/home/add_category_screen.dart';
+import 'package:flipper/home/create_category_input_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -38,6 +39,7 @@ class Router {
   static const addVariationScreen = '/addVariationScreen';
   static const addUnitType = '/addUnitType';
   static const addCategoryScreen = '/addCategoryScreen';
+  static const createCategoryInputScreen = '/createCategoryInputScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -168,6 +170,16 @@ class Router {
         final typedArgs = args as Key;
         return MaterialPageRoute(
           builder: (_) => AddCategoryScreen(key: typedArgs),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.createCategoryInputScreen:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => CreateCategoryInputScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

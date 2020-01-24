@@ -25,14 +25,24 @@ abstract class CommonViewModel
 
   @nullable
   int get tab;
+
   @nullable
   Business get currentBusiness;
+
   bool get hasAction;
+
   List<Branch> get branches;
+
   List<Business> get businesses;
+
   @nullable
   AppActions get appAction;
+
   Hint get hint;
+
+  @nullable
+  String get categoryName;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -61,6 +71,7 @@ abstract class CommonViewModel
       ..businesses = store.state.businesses
       ..tab = store.state.tab
       ..units = store.state.units.toBuilder()
+      ..categoryName = store.state.categoryName
       ..categories = store.state.categories.toBuilder()
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()

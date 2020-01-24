@@ -2,5 +2,6 @@
     "save": "Sauver",
     "unityType": "Type d'unité",
     "category": "Catégorie",
-    "signup": "S'inscrire"
+    "signup": "S'inscrire",
+    "createCategory": "Create Category"
 }

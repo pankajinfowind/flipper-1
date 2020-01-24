@@ -98,8 +98,10 @@ class _BusinessListState extends State<BusinessList> {
         padding:
             const EdgeInsets.only(top: _Style.padding, right: _Style.padding),
         child: _GroupButton(data, (business) {
-          StoreProvider.of<AppState>(context).dispatch(NextActiveBussiness(business));
-          StoreProvider.of<AppState>(context).dispatch(SetActiveBusiness(business));
+          StoreProvider.of<AppState>(context)
+              .dispatch(NextActiveBussiness(business));
+          StoreProvider.of<AppState>(context)
+              .dispatch(SetActiveBusiness(business));
         }, onClick, hasNotification),
       ),
     );
@@ -184,13 +186,13 @@ class _GroupButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final _circleColor =
         HexColor("#f5a623"); //TODO: make this color comes from setting in v.2
-    final _groupText = business.abbreviation.substring(0,2).toUpperCase();
+    final _groupText = business.abbreviation.substring(0, 2).toUpperCase();
 
-    if(business.isActive){
-      StoreProvider.of<AppState>(context).dispatch(ActiveBusinessId(business));
+    if (business.isActive) {
+      StoreProvider.of<AppState>(context)
+          .dispatch(ActiveBusinessAction(business));
     }
     return Container(
-
       child: Row(
         children: <Widget>[
           ..._buildSelectionHighlight(business.isActive, _circleColor),

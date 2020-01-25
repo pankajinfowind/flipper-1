@@ -5,6 +5,7 @@ import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/unit.dart';
@@ -56,6 +57,9 @@ abstract class CommonViewModel
   @nullable
   FlipperColor get currentColor;
 
+  @nullable
+  Disable get currentDisable;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -90,6 +94,9 @@ abstract class CommonViewModel
       ..currentColor = store.state.currentColor == null
           ? null
           : store.state.currentColor.toBuilder()
+      ..currentDisable = store.state.currentDisable == null
+          ? null
+          : store.state.currentDisable.toBuilder()
       ..categories = store.state.categories.toBuilder()
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()

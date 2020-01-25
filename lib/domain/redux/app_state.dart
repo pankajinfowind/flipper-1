@@ -5,6 +5,7 @@ import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/permission.dart';
@@ -94,6 +95,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @nullable
   FlipperColor get currentColor;
+
+  @nullable
+  Disable get currentDisable;
 
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;

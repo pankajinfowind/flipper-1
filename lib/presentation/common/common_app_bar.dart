@@ -1,5 +1,6 @@
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
+import 'package:flipper/util/HexColor.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 
@@ -41,6 +42,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @Deprecated("_bottomSpacer will be removed soon")
   final double _bottomSpacer;
 
+  final bool _disabledButtonColor;
   const CommonAppBar({
     Widget action,
     Widget actionButton,
@@ -52,6 +54,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     double multi,
     double positioningActionButton,
     double bottomSpacer,
+    bool disabledButtonColor,
     Key key,
   })  : _additionalText = action,
         _actionButton = actionButton,
@@ -63,6 +66,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         _headerMultiplier = multi,
         _positioningActionButton = positioningActionButton,
         _bottomSpacer = bottomSpacer,
+        _disabledButtonColor = disabledButtonColor,
         super(key: key);
 
   @override
@@ -97,7 +101,10 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                     : SizedBox(
                         height: 52,
                         child: Container(
-                          color: Colors.blue,
+                          color: _disabledButtonColor != null &&
+                                  _disabledButtonColor
+                              ? HexColor("#b2bec3")
+                              : HexColor("#0984e3"),
                           child: _actionButton,
                         ),
                       ),

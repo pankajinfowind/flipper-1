@@ -7,6 +7,7 @@ import 'package:flipper/home/add_variation_screen.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/create_category_input_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
+import 'package:flipper/home/receive_stock.dart';
 import 'package:flipper/home/sale_screen.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/home/take_picture_screen.dart';
@@ -60,4 +61,7 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   CreateCategoryInputScreen createCategoryInputScreen;
+
+  @MaterialRoute(fullscreenDialog: true)
+  ReceiveStock receiveStock;
 }

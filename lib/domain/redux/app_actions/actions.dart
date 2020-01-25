@@ -1,5 +1,6 @@
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +120,13 @@ class CurrentColor {
   final FlipperColor color;
 
   const CurrentColor({@required this.color});
+}
+
+@immutable
+class CurrentDisable {
+  final Disable disable;
+
+  const CurrentDisable({@required this.disable});
 }
 
 @immutable

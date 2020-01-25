@@ -1,7 +1,7 @@
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
-import 'package:flipper/model/app_action.dart';
+import 'package:flipper/model/disable.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -25,6 +25,7 @@ class AddItemScreen extends StatefulWidget {
 
 class _AddItemScreenState extends State<AddItemScreen> {
   final TForm tForm = new TForm();
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CommonViewModel>(
@@ -34,11 +35,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
         return Scaffold(
           appBar: CommonAppBar(
             title: "Create Item",
+            disabledButtonColor: vm.currentDisable == null ||
+                vm.currentDisable.unDisable == 'none',
             actionButton: FlatButton(
-              onPressed: () {
-                StoreProvider.of<AppState>(context).dispatch(AppAction(
-                    actions: AppActions((a) => a..name = "showLoader")));
-              },
+              onPressed: vm.currentDisable != null &&
+                      vm.currentDisable.unDisable == "saveItem"
+                  ? _handleActionClick(context)
+                  : null,
               child: Text(
                 S.of(context).save,
                 textAlign: TextAlign.center,
@@ -76,7 +79,19 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       child: TextFormField(
                         style: TextStyle(color: Colors.black),
                         validator: Validators.isStringHasMoreChars,
-                        onSaved: (name) {},
+                        onChanged: (name) {
+                          if (name == '') {
+                            StoreProvider.of<AppState>(context).dispatch(
+                                CurrentDisable(
+                                    disable:
+                                        Disable((u) => u..unDisable = "none")));
+                            return;
+                          }
+                          StoreProvider.of<AppState>(context).dispatch(
+                              CurrentDisable(
+                                  disable: Disable(
+                                      (u) => u..unDisable = "saveItem")));
+                        },
                         decoration: InputDecoration(
                             hintText: "Name", focusColor: Colors.blue),
                       ),
@@ -193,10 +208,40 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
                         leading: Text("Stock"),
                         trailing: FlatButton(
-                          child: Text("Receive Stock"),
+                          child: Text(
+                            "Receive Stock",
+                            style: TextStyle(color: HexColor('#0984e3')),
+                          ),
                           onPressed: () {},
                         ),
                       ),
+                    ),
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: 90,
+                      width: 350,
+                      child: ListView(children: <Widget>[
+                        ListTile(
+                          leading: Icon(
+                            Icons.dehaze,
+                          ),
+                          subtitle: Text("Burger \nFrw 250"),
+                          trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                FlatButton(
+                                  child: Text(
+                                    "Receive stock",
+                                    style:
+                                        TextStyle(color: HexColor('#0984e3')),
+                                  ),
+                                  onPressed: () {},
+                                )
+                              ]),
+                          dense: true,
+                        )
+                      ]),
                     ),
                   ),
                   Center(
@@ -278,4 +323,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
 //    print(vm.);
     print(tForm.price);
   }
+}
+
+_handleActionClick(BuildContext context) {
+//  StoreProvider.of<AppState>(context)
+//      .dispatch(AppAction(actions: AppActions((a) => a..name = "showLoader")));
 }

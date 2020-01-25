@@ -115,6 +115,37 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
       List<Category> categories = [];
 
+      unitsList.forEach((c) => {
+            if (c.focused)
+              {
+                store.dispatch(
+                  CurrentUnit(
+                    unit: Unit((u) => u
+                      ..id = c.id
+                      ..name = c.name
+                      ..focused = c.focused
+                      ..businessId = c.businessId ?? 0
+                      ..branchId = c.branchId ?? 0),
+                  ),
+                )
+              }
+          });
+
+      categoryList.forEach((c) => {
+            if (c.focused)
+              {
+                store.dispatch(
+                  CurrentCategory(
+                    category: Category((u) => u
+                      ..id = c.id
+                      ..name = c.name
+                      ..focused = c.focused
+                      ..businessId = c.businessId ?? 0
+                      ..branchId = c.branchId ?? 0),
+                  ),
+                )
+              }
+          });
       //TODO: look for active business or branch and fire them in store so it can be found on the first launch.!
       categoryList.forEach((c) => {
             categories.add(Category((u) => u
@@ -125,6 +156,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..id = c.id))
           });
 
+      //set focused Unit
       store.dispatch(UnitR(units));
 
       store.dispatch(CategoryAction(categories));

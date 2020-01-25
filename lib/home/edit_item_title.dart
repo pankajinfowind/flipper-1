@@ -1,7 +1,11 @@
+import 'package:flipper/domain/redux/app_actions/actions.dart';
+import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class EditItemTitle extends StatefulWidget {
   EditItemTitle({Key key}) : super(key: key);
@@ -51,7 +55,7 @@ class _EditItemTitleState extends State<EditItemTitle> {
                                 fontSize: 22.0, color: Color(0xFFbdc6cf)),
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.yellow,
+                              fillColor: HexColor("#0984e3"),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
@@ -87,9 +91,14 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.red)),
-                      color: Colors.red,
-                      onPressed: () {},
+                          side: BorderSide(color: HexColor("#0984e3"))),
+                      color: HexColor("#0984e3"),
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#0984e3")));
+                      },
                       child: null,
                     ),
                   ),
@@ -98,10 +107,15 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.yellow)),
-                      color: Colors.yellow,
+                          side: BorderSide(color: HexColor("#d63031"))),
+                      color: HexColor("#d63031"),
                       child: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#d63031")));
+                      },
                     ),
                   ),
                   SizedBox(
@@ -109,10 +123,15 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.brown)),
-                      color: Colors.brown,
+                          side: BorderSide(color: HexColor("#e84393"))),
+                      color: HexColor("#e84393"),
                       child: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#e84393")));
+                      },
                     ),
                   ),
                   SizedBox(
@@ -120,10 +139,15 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.blue)),
-                      color: Colors.blue,
+                          side: BorderSide(color: HexColor("#2d3436"))),
+                      color: HexColor("#2d3436"),
                       child: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#2d3436")));
+                      },
                     ),
                   ),
                   SizedBox(
@@ -131,10 +155,15 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.purpleAccent)),
-                      color: Colors.purpleAccent,
+                          side: BorderSide(color: HexColor("#6c5ce7"))),
+                      color: HexColor("#6c5ce7"),
                       child: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#6c5ce7")));
+                      },
                     ),
                   ),
                   SizedBox(
@@ -142,10 +171,15 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.purple)),
-                      color: Colors.purple,
+                          side: BorderSide(color: HexColor("#74b9ff"))),
+                      color: HexColor("#74b9ff"),
                       child: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#74b9ff")));
+                      },
                     ),
                   ),
                   SizedBox(
@@ -153,10 +187,15 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black)),
-                      color: Colors.black,
+                          side: BorderSide(color: HexColor("#ff7675"))),
+                      color: HexColor("#ff7675"),
                       child: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#ff7675")));
+                      },
                     ),
                   ),
                   SizedBox(
@@ -164,10 +203,15 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     width: 120,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.blueAccent)),
-                      color: Colors.blueAccent,
+                          side: BorderSide(color: HexColor("#a29bfe"))),
+                      color: HexColor("#a29bfe"),
                       child: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                            CurrentColor(
+                                color: FlipperColor(
+                                    (c) => c..hexCode = "#a29bfe")));
+                      },
                     ),
                   ),
                 ],

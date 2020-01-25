@@ -5,6 +5,7 @@ import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:redux/redux.dart';
@@ -43,6 +44,18 @@ abstract class CommonViewModel
   @nullable
   String get categoryName;
 
+  @nullable
+  Category get category;
+
+  @nullable
+  Unit get currentUnit;
+
+  @nullable
+  Category get currentCategory;
+
+  @nullable
+  FlipperColor get currentColor;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -70,8 +83,13 @@ abstract class CommonViewModel
       ..hasAction = _hasAction(store)
       ..businesses = store.state.businesses
       ..tab = store.state.tab
+      ..currentUnit = store.state.currentUnit.toBuilder()
+      ..currentCategory = store.state.currentCategory.toBuilder()
       ..units = store.state.units.toBuilder()
       ..categoryName = store.state.categoryName
+      ..currentColor = store.state.currentColor == null
+          ? null
+          : store.state.currentColor.toBuilder()
       ..categories = store.state.categories.toBuilder()
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()

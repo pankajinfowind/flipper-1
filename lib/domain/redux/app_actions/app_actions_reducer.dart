@@ -10,6 +10,9 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, AppAction>(_onAppActions),
   TypedReducer<AppState, BusinessId>(_onBusinessId),
   TypedReducer<AppState, UnitR>(_onUnits),
+  TypedReducer<AppState, CurrentUnit>(_onCurrentUnit),
+  TypedReducer<AppState, CurrentColor>(_onCurrentColor),
+  TypedReducer<AppState, CurrentCategory>(_onCurrentCategory),
   TypedReducer<AppState, WithCategoryId>(_onCategoryFocusedChanged),
   TypedReducer<AppState, CategoryNameAction>(_onCategoryName),
   TypedReducer<AppState, TempCategoryIdAction>(_onTempCategoryId),
@@ -110,4 +113,16 @@ AppState _onUpdateCategory(AppState state, action) {
           }
       });
   return state.rebuild((a) => a..categories = ListBuilder(categories));
+}
+
+AppState _onCurrentUnit(AppState state, CurrentUnit action) {
+  return state.rebuild((a) => a..currentUnit = action.unit.toBuilder());
+}
+
+AppState _onCurrentCategory(AppState state, CurrentCategory action) {
+  return state.rebuild((a) => a..currentCategory = action.category.toBuilder());
+}
+
+AppState _onCurrentColor(AppState state, CurrentColor action) {
+  return state.rebuild((a) => a..currentColor = action.color.toBuilder());
 }

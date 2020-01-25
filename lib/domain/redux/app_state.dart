@@ -5,6 +5,7 @@ import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/permission.dart';
 import 'package:flipper/model/price.dart';
@@ -84,6 +85,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @nullable
   int get tempCategoryId;
+
+  @nullable
+  Unit get currentUnit;
+
+  @nullable
+  Category get currentCategory;
+
+  @nullable
+  FlipperColor get currentColor;
 
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;

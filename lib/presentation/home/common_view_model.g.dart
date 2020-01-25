@@ -33,6 +33,14 @@ class _$CommonViewModel extends CommonViewModel {
   final Hint hint;
   @override
   final String categoryName;
+  @override
+  final Category category;
+  @override
+  final Unit currentUnit;
+  @override
+  final Category currentCategory;
+  @override
+  final FlipperColor currentColor;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -50,7 +58,11 @@ class _$CommonViewModel extends CommonViewModel {
       this.businesses,
       this.appAction,
       this.hint,
-      this.categoryName})
+      this.categoryName,
+      this.category,
+      this.currentUnit,
+      this.currentCategory,
+      this.currentColor})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -99,7 +111,11 @@ class _$CommonViewModel extends CommonViewModel {
         businesses == other.businesses &&
         appAction == other.appAction &&
         hint == other.hint &&
-        categoryName == other.categoryName;
+        categoryName == other.categoryName &&
+        category == other.category &&
+        currentUnit == other.currentUnit &&
+        currentCategory == other.currentCategory &&
+        currentColor == other.currentColor;
   }
 
   @override
@@ -115,19 +131,33 @@ class _$CommonViewModel extends CommonViewModel {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, hasUser.hashCode),
-                                                    hasSheet.hashCode),
-                                                hasHint.hashCode),
-                                            units.hashCode),
-                                        categories.hashCode),
-                                    tab.hashCode),
-                                currentBusiness.hashCode),
-                            hasAction.hashCode),
-                        branches.hashCode),
-                    businesses.hashCode),
-                appAction.hashCode),
-            hint.hashCode),
-        categoryName.hashCode));
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        hasUser
+                                                                            .hashCode),
+                                                                    hasSheet
+                                                                        .hashCode),
+                                                                hasHint
+                                                                    .hashCode),
+                                                            units.hashCode),
+                                                        categories.hashCode),
+                                                    tab.hashCode),
+                                                currentBusiness.hashCode),
+                                            hasAction.hashCode),
+                                        branches.hashCode),
+                                    businesses.hashCode),
+                                appAction.hashCode),
+                            hint.hashCode),
+                        categoryName.hashCode),
+                    category.hashCode),
+                currentUnit.hashCode),
+            currentCategory.hashCode),
+        currentColor.hashCode));
   }
 
   @override
@@ -145,7 +175,11 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('businesses', businesses)
           ..add('appAction', appAction)
           ..add('hint', hint)
-          ..add('categoryName', categoryName))
+          ..add('categoryName', categoryName)
+          ..add('category', category)
+          ..add('currentUnit', currentUnit)
+          ..add('currentCategory', currentCategory)
+          ..add('currentColor', currentColor))
         .toString();
   }
 }
@@ -211,6 +245,26 @@ class CommonViewModelBuilder
   String get categoryName => _$this._categoryName;
   set categoryName(String categoryName) => _$this._categoryName = categoryName;
 
+  CategoryBuilder _category;
+  CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
+  set category(CategoryBuilder category) => _$this._category = category;
+
+  UnitBuilder _currentUnit;
+  UnitBuilder get currentUnit => _$this._currentUnit ??= new UnitBuilder();
+  set currentUnit(UnitBuilder currentUnit) => _$this._currentUnit = currentUnit;
+
+  CategoryBuilder _currentCategory;
+  CategoryBuilder get currentCategory =>
+      _$this._currentCategory ??= new CategoryBuilder();
+  set currentCategory(CategoryBuilder currentCategory) =>
+      _$this._currentCategory = currentCategory;
+
+  FlipperColorBuilder _currentColor;
+  FlipperColorBuilder get currentColor =>
+      _$this._currentColor ??= new FlipperColorBuilder();
+  set currentColor(FlipperColorBuilder currentColor) =>
+      _$this._currentColor = currentColor;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -228,6 +282,10 @@ class CommonViewModelBuilder
       _appAction = _$v.appAction?.toBuilder();
       _hint = _$v.hint?.toBuilder();
       _categoryName = _$v.categoryName;
+      _category = _$v.category?.toBuilder();
+      _currentUnit = _$v.currentUnit?.toBuilder();
+      _currentCategory = _$v.currentCategory?.toBuilder();
+      _currentColor = _$v.currentColor?.toBuilder();
       _$v = null;
     }
     return this;
@@ -264,7 +322,11 @@ class CommonViewModelBuilder
               businesses: businesses,
               appAction: _appAction?.build(),
               hint: hint.build(),
-              categoryName: categoryName);
+              categoryName: categoryName,
+              category: _category?.build(),
+              currentUnit: _currentUnit?.build(),
+              currentCategory: _currentCategory?.build(),
+              currentColor: _currentColor?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -280,6 +342,15 @@ class CommonViewModelBuilder
         _appAction?.build();
         _$failedField = 'hint';
         hint.build();
+
+        _$failedField = 'category';
+        _category?.build();
+        _$failedField = 'currentUnit';
+        _currentUnit?.build();
+        _$failedField = 'currentCategory';
+        _currentCategory?.build();
+        _$failedField = 'currentColor';
+        _currentColor?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

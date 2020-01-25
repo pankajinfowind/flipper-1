@@ -55,6 +55,12 @@ class _$AppState extends AppState {
   final String categoryName;
   @override
   final int tempCategoryId;
+  @override
+  final Unit currentUnit;
+  @override
+  final Category currentCategory;
+  @override
+  final FlipperColor currentColor;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -83,7 +89,10 @@ class _$AppState extends AppState {
       this.hint,
       this.database,
       this.categoryName,
-      this.tempCategoryId})
+      this.tempCategoryId,
+      this.currentUnit,
+      this.currentCategory,
+      this.currentColor})
       : super._() {
     if (categories == null) {
       throw new BuiltValueNullFieldError('AppState', 'categories');
@@ -127,7 +136,10 @@ class _$AppState extends AppState {
         hint == other.hint &&
         database == other.database &&
         categoryName == other.categoryName &&
-        tempCategoryId == other.tempCategoryId;
+        tempCategoryId == other.tempCategoryId &&
+        currentUnit == other.currentUnit &&
+        currentCategory == other.currentCategory &&
+        currentColor == other.currentColor;
   }
 
   @override
@@ -150,26 +162,26 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode),
-                                                                                sheet.hashCode),
-                                                                            action.hashCode),
-                                                                        price.hashCode),
-                                                                    businessId.hashCode),
-                                                                unit.hashCode),
-                                                            units.hashCode),
-                                                        categories.hashCode),
-                                                    focusedUnit.hashCode),
-                                                focusedCategoryId.hashCode),
-                                            category.hashCode),
-                                        permissions.hashCode),
-                                    branches.hashCode),
-                                businesses.hashCode),
-                            branch.hashCode),
-                        business.hashCode),
-                    hint.hashCode),
-                database.hashCode),
-            categoryName.hashCode),
-        tempCategoryId.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode),
+                                                                                businessId.hashCode),
+                                                                            unit.hashCode),
+                                                                        units.hashCode),
+                                                                    categories.hashCode),
+                                                                focusedUnit.hashCode),
+                                                            focusedCategoryId.hashCode),
+                                                        category.hashCode),
+                                                    permissions.hashCode),
+                                                branches.hashCode),
+                                            businesses.hashCode),
+                                        branch.hashCode),
+                                    business.hashCode),
+                                hint.hashCode),
+                            database.hashCode),
+                        categoryName.hashCode),
+                    tempCategoryId.hashCode),
+                currentUnit.hashCode),
+            currentCategory.hashCode),
+        currentColor.hashCode));
   }
 
   @override
@@ -198,7 +210,10 @@ class _$AppState extends AppState {
           ..add('hint', hint)
           ..add('database', database)
           ..add('categoryName', categoryName)
-          ..add('tempCategoryId', tempCategoryId))
+          ..add('tempCategoryId', tempCategoryId)
+          ..add('currentUnit', currentUnit)
+          ..add('currentCategory', currentCategory)
+          ..add('currentColor', currentColor))
         .toString();
   }
 }
@@ -312,6 +327,22 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set tempCategoryId(int tempCategoryId) =>
       _$this._tempCategoryId = tempCategoryId;
 
+  UnitBuilder _currentUnit;
+  UnitBuilder get currentUnit => _$this._currentUnit ??= new UnitBuilder();
+  set currentUnit(UnitBuilder currentUnit) => _$this._currentUnit = currentUnit;
+
+  CategoryBuilder _currentCategory;
+  CategoryBuilder get currentCategory =>
+      _$this._currentCategory ??= new CategoryBuilder();
+  set currentCategory(CategoryBuilder currentCategory) =>
+      _$this._currentCategory = currentCategory;
+
+  FlipperColorBuilder _currentColor;
+  FlipperColorBuilder get currentColor =>
+      _$this._currentColor ??= new FlipperColorBuilder();
+  set currentColor(FlipperColorBuilder currentColor) =>
+      _$this._currentColor = currentColor;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -340,6 +371,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _database = _$v.database;
       _categoryName = _$v.categoryName;
       _tempCategoryId = _$v.tempCategoryId;
+      _currentUnit = _$v.currentUnit?.toBuilder();
+      _currentCategory = _$v.currentCategory?.toBuilder();
+      _currentColor = _$v.currentColor?.toBuilder();
       _$v = null;
     }
     return this;
@@ -387,7 +421,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               hint: _hint?.build(),
               database: database,
               categoryName: categoryName,
-              tempCategoryId: tempCategoryId);
+              tempCategoryId: tempCategoryId,
+              currentUnit: _currentUnit?.build(),
+              currentCategory: _currentCategory?.build(),
+              currentColor: _currentColor?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -424,6 +461,13 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _business?.build();
         _$failedField = 'hint';
         _hint?.build();
+
+        _$failedField = 'currentUnit';
+        _currentUnit?.build();
+        _$failedField = 'currentCategory';
+        _currentCategory?.build();
+        _$failedField = 'currentColor';
+        _currentColor?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

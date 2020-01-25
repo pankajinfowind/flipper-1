@@ -1,5 +1,6 @@
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flutter/material.dart';
 
@@ -97,6 +98,27 @@ class CurrentTab {
   final int tab;
 
   const CurrentTab({@required this.tab});
+}
+
+@immutable
+class CurrentUnit {
+  final Unit unit;
+
+  const CurrentUnit({@required this.unit});
+}
+
+@immutable
+class CurrentCategory {
+  final Category category;
+
+  const CurrentCategory({@required this.category});
+}
+
+@immutable
+class CurrentColor {
+  final FlipperColor color;
+
+  const CurrentColor({@required this.color});
 }
 
 @immutable

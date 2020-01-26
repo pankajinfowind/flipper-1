@@ -1,4 +1,5 @@
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -24,15 +25,8 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
         return Scaffold(
           appBar: CommonAppBar(
             title: "Add Variation",
-            actionButton: FlatButton(
-              onPressed: () {},
-              child: Text(
-                "Save",
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            showActionButton: true,
+            actionButtonName: S.of(context).save,
             icon: Icons.close,
             multi: 3,
             bottomSpacer: 52,

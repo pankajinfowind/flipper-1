@@ -58,18 +58,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return Scaffold(
           appBar: CommonAppBar(
             title: "",
-            actionButton: FlatButton(
-              onPressed: () {
-                StoreProvider.of<AppState>(context).dispatch(AppAction(
-                    actions: AppActions((a) => a..name = "createBusiness")));
-              },
-              child: Text(
-                S.of(context).signup,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            showActionButton: true,
+            actionButtonName: S.of(context).signup,
+            onPressedCallback: () {
+              StoreProvider.of<AppState>(context).dispatch(AppAction(
+                  actions: AppActions((a) => a..name = "createBusiness")));
+            },
             icon: Icons.arrow_back,
             multi: 3,
             bottomSpacer: 120,

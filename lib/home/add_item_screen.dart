@@ -1,6 +1,7 @@
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
+import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
@@ -37,18 +38,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
             title: "Create Item",
             disabledButtonColor: vm.currentDisable == null ||
                 vm.currentDisable.unDisable == 'none',
-            actionButton: FlatButton(
-              onPressed: vm.currentDisable != null &&
-                      vm.currentDisable.unDisable == "saveItem"
-                  ? _handleActionClick(context)
-                  : null,
-              child: Text(
-                S.of(context).save,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            showActionButton: true,
+            onPressedCallback: () {
+              StoreProvider.of<AppState>(context).dispatch(AppAction(
+                  actions: AppActions((a) => a..name = "showLoader")));
+            },
+            actionButtonName: S.of(context).save,
             icon: Icons.close,
             multi: 3,
             bottomSpacer: 52,
@@ -320,12 +315,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
   _handleFormSubmit(CommonViewModel vm, TForm tForm) {
     print(vm.categoryName);
     print(vm.currentBusiness);
-//    print(vm.);
     print(tForm.price);
   }
-}
-
-_handleActionClick(BuildContext context) {
-//  StoreProvider.of<AppState>(context)
-//      .dispatch(AppAction(actions: AppActions((a) => a..name = "showLoader")));
 }

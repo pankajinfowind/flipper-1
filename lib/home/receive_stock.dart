@@ -1,4 +1,5 @@
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flutter/material.dart';
@@ -21,15 +22,8 @@ class _ReceiveStockState extends State<ReceiveStock> {
         return Scaffold(
           appBar: CommonAppBar(
             title: "Receive stock",
-            actionButton: FlatButton(
-              onPressed: () {},
-              child: Text(
-                "Save",
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            showActionButton: true,
+            actionButtonName: S.of(context).save,
             icon: Icons.close,
             multi: 3,
             bottomSpacer: 52,

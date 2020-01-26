@@ -59,21 +59,15 @@ class _AddUnitTypeState extends State<AddUnitType> {
         return Scaffold(
           appBar: CommonAppBar(
             title: S.of(context).unityType,
-            actionButton: FlatButton(
-              onPressed: () {
-                StoreProvider.of<AppState>(context)
-                    .dispatch(PersistFocusedUnitAction());
+            showActionButton: true,
+            actionButtonName: S.of(context).save,
+            onPressedCallback: () {
+              StoreProvider.of<AppState>(context)
+                  .dispatch(PersistFocusedUnitAction());
 
-                StoreProvider.of<AppState>(context).dispatch(AppAction(
-                    actions: AppActions((a) => a..name = "showLoader")));
-              },
-              child: Text(
-                S.of(context).save,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+              StoreProvider.of<AppState>(context).dispatch(AppAction(
+                  actions: AppActions((a) => a..name = "showLoader")));
+            },
             icon: Icons.close,
             multi: 3,
             bottomSpacer: 52,

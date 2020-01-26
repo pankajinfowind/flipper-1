@@ -37,22 +37,15 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
         return Scaffold(
           appBar: CommonAppBar(
             title: "",
-            actionButton: FlatButton(
-              onPressed: () {
-                StoreProvider.of<AppState>(context).dispatch(AppAction(
-                    actions: AppActions((a) => a..name = "createBusiness")));
-              },
-              child: Text(
-                "Create",
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            showActionButton: true,
+            actionButtonName: "Create",
+            onPressedCallback: () {
+              StoreProvider.of<AppState>(context).dispatch(AppAction(
+                  actions: AppActions((a) => a..name = "createBusiness")));
+            },
             icon: Icons.arrow_back,
             multi: 3,
             bottomSpacer: 120,
-            actionTitle: "Sign Up",
             action: Column(
               children: <Widget>[
                 Text("Let's get started"),

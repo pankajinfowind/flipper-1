@@ -1,8 +1,10 @@
+import 'package:built_collection/src/list.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/disable.dart';
+import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -36,12 +38,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
         return Scaffold(
           appBar: CommonAppBar(
             title: "Create Item",
-            disabledButtonColor: vm.currentDisable == null ||
+            disableButton: vm.currentDisable == null ||
                 vm.currentDisable.unDisable == 'none',
             showActionButton: true,
             onPressedCallback: () {
-              StoreProvider.of<AppState>(context).dispatch(AppAction(
-                  actions: AppActions((a) => a..name = "showLoader")));
+              StoreProvider.of<AppState>(context).dispatch(
+                AppAction(
+                  actions: AppActions((a) => a..name = "showLoader"),
+                ),
+              );
             },
             actionButtonName: S.of(context).save,
             icon: Icons.close,
@@ -85,7 +90,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           StoreProvider.of<AppState>(context).dispatch(
                               CurrentDisable(
                                   disable: Disable(
-                                      (u) => u..unDisable = "saveItem")));
+                                      (u) => u..unDisable = "itemName")));
                         },
                         decoration: InputDecoration(
                             hintText: "Name", focusColor: Colors.blue),
@@ -212,33 +217,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       ),
                     ),
                   ),
-                  Center(
-                    child: SizedBox(
-                      height: 90,
-                      width: 350,
-                      child: ListView(children: <Widget>[
-                        ListTile(
-                          leading: Icon(
-                            Icons.dehaze,
-                          ),
-                          subtitle: Text("Burger \nFrw 250"),
-                          trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                FlatButton(
-                                  child: Text(
-                                    "Receive stock",
-                                    style:
-                                        TextStyle(color: HexColor('#0984e3')),
-                                  ),
-                                  onPressed: () {},
-                                )
-                              ]),
-                          dense: true,
-                        )
-                      ]),
-                    ),
-                  ),
+                  vm.variations.length > 0
+                      ? _buildVariationsList(vm.variations)
+                      : Text(""),
                   Center(
                     child: SizedBox(
                       height: 50,
@@ -247,6 +228,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         color: HexColor("#ecf0f1"),
                         child: Text("Add Variation"),
                         onPressed: () {
+                          StoreProvider.of<AppState>(context).dispatch(
+                              CurrentDisable(
+                                  disable:
+                                      Disable((u) => u..unDisable = "none")));
                           Router.navigator.pushNamed(Router.addVariationScreen);
                         },
                       ),
@@ -316,5 +301,40 @@ class _AddItemScreenState extends State<AddItemScreen> {
     print(vm.categoryName);
     print(vm.currentBusiness);
     print(tForm.price);
+  }
+
+  _buildVariationsList(BuiltList<Variation> variations) {
+    List<Widget> list = new List<Widget>();
+    for (var i = 0; i < variations.length; i++) {
+      list.add(
+        Center(
+          child: SizedBox(
+            height: 90,
+            width: 350,
+            child: ListView(children: <Widget>[
+              ListTile(
+                leading: Icon(
+                  Icons.dehaze,
+                ),
+                subtitle:
+                    Text("${variations[i].name} \nRWF ${variations[i].price}"),
+                trailing:
+                    Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      "Receive stock",
+                      style: TextStyle(color: HexColor('#0984e3')),
+                    ),
+                    onPressed: () {},
+                  )
+                ]),
+                dense: true,
+              )
+            ]),
+          ),
+        ),
+      );
+    }
+    return Wrap(children: list);
   }
 }

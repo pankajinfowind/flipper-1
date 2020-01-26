@@ -17,7 +17,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @Deprecated("_bottomSpacer will be removed soon")
   final double _bottomSpacer;
   final Function _onPressedCallback;
-  final bool _disabledButtonColor;
+  final bool _disableButton;
   const CommonAppBar({
     Widget action,
     bool showActionButton,
@@ -25,7 +25,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     IconData icon,
     double multi,
     double bottomSpacer,
-    bool disabledButtonColor,
+    bool disableButton,
     Function onPressedCallback,
     String actionButtonName,
     Key key,
@@ -35,7 +35,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         _icon = icon,
         _headerMultiplier = multi,
         _bottomSpacer = bottomSpacer,
-        _disabledButtonColor = disabledButtonColor,
+        _disableButton = disableButton,
         _onPressedCallback = onPressedCallback,
         _actionButtonName = actionButtonName,
         super(key: key);
@@ -70,7 +70,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 trailing: _showActionButton == null || !_showActionButton
                     ? Text("")
                     : button(
-                        disabledButtonColor: _disabledButtonColor,
+                        disableButton: _disableButton,
                         onPressedCallback: _onPressedCallback,
                         buttonName: _actionButtonName ?? "",
                       ),

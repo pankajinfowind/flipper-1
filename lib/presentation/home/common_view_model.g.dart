@@ -43,6 +43,8 @@ class _$CommonViewModel extends CommonViewModel {
   final FlipperColor currentColor;
   @override
   final Disable currentDisable;
+  @override
+  final BuiltList<Variation> variations;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -65,7 +67,8 @@ class _$CommonViewModel extends CommonViewModel {
       this.currentUnit,
       this.currentCategory,
       this.currentColor,
-      this.currentDisable})
+      this.currentDisable,
+      this.variations})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -119,7 +122,8 @@ class _$CommonViewModel extends CommonViewModel {
         currentUnit == other.currentUnit &&
         currentCategory == other.currentCategory &&
         currentColor == other.currentColor &&
-        currentDisable == other.currentDisable;
+        currentDisable == other.currentDisable &&
+        variations == other.variations;
   }
 
   @override
@@ -142,29 +146,33 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            hasUser
+                                                                            $jc(
+                                                                                0,
+                                                                                hasUser
+                                                                                    .hashCode),
+                                                                            hasSheet
                                                                                 .hashCode),
-                                                                        hasSheet
+                                                                        hasHint
                                                                             .hashCode),
-                                                                    hasHint
+                                                                    units
                                                                         .hashCode),
-                                                                units.hashCode),
-                                                            categories
-                                                                .hashCode),
-                                                        tab.hashCode),
-                                                    currentBusiness.hashCode),
-                                                hasAction.hashCode),
-                                            branches.hashCode),
-                                        businesses.hashCode),
-                                    appAction.hashCode),
-                                hint.hashCode),
-                            categoryName.hashCode),
-                        category.hashCode),
-                    currentUnit.hashCode),
-                currentCategory.hashCode),
-            currentColor.hashCode),
-        currentDisable.hashCode));
+                                                                categories
+                                                                    .hashCode),
+                                                            tab.hashCode),
+                                                        currentBusiness
+                                                            .hashCode),
+                                                    hasAction.hashCode),
+                                                branches.hashCode),
+                                            businesses.hashCode),
+                                        appAction.hashCode),
+                                    hint.hashCode),
+                                categoryName.hashCode),
+                            category.hashCode),
+                        currentUnit.hashCode),
+                    currentCategory.hashCode),
+                currentColor.hashCode),
+            currentDisable.hashCode),
+        variations.hashCode));
   }
 
   @override
@@ -187,7 +195,8 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('currentUnit', currentUnit)
           ..add('currentCategory', currentCategory)
           ..add('currentColor', currentColor)
-          ..add('currentDisable', currentDisable))
+          ..add('currentDisable', currentDisable)
+          ..add('variations', variations))
         .toString();
   }
 }
@@ -279,6 +288,12 @@ class CommonViewModelBuilder
   set currentDisable(DisableBuilder currentDisable) =>
       _$this._currentDisable = currentDisable;
 
+  ListBuilder<Variation> _variations;
+  ListBuilder<Variation> get variations =>
+      _$this._variations ??= new ListBuilder<Variation>();
+  set variations(ListBuilder<Variation> variations) =>
+      _$this._variations = variations;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -301,6 +316,7 @@ class CommonViewModelBuilder
       _currentCategory = _$v.currentCategory?.toBuilder();
       _currentColor = _$v.currentColor?.toBuilder();
       _currentDisable = _$v.currentDisable?.toBuilder();
+      _variations = _$v.variations?.toBuilder();
       _$v = null;
     }
     return this;
@@ -342,7 +358,8 @@ class CommonViewModelBuilder
               currentUnit: _currentUnit?.build(),
               currentCategory: _currentCategory?.build(),
               currentColor: _currentColor?.build(),
-              currentDisable: _currentDisable?.build());
+              currentDisable: _currentDisable?.build(),
+              variations: _variations?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -369,6 +386,8 @@ class CommonViewModelBuilder
         _currentColor?.build();
         _$failedField = 'currentDisable';
         _currentDisable?.build();
+        _$failedField = 'variations';
+        _variations?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

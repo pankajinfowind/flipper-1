@@ -23,6 +23,7 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, ResetAppAction>(_onResetAppAction),
   TypedReducer<AppState, CurrentTab>(_onSetTab),
   TypedReducer<AppState, CurrentDisable>(_onDisable),
+  TypedReducer<AppState, VariationAction>(_onVariations),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
@@ -130,4 +131,8 @@ AppState _onCurrentColor(AppState state, CurrentColor action) {
 
 AppState _onDisable(AppState state, CurrentDisable action) {
   return state.rebuild((a) => a..currentDisable = action.disable.toBuilder());
+}
+
+AppState _onVariations(AppState state, VariationAction action) {
+  return state.rebuild((a) => a..variations = ListBuilder(action.variations));
 }

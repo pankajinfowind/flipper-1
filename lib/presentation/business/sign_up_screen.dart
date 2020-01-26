@@ -59,6 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           appBar: CommonAppBar(
             title: "",
             showActionButton: true,
+            disableButton: false,
             actionButtonName: S.of(context).signup,
             onPressedCallback: () {
               StoreProvider.of<AppState>(context).dispatch(AppAction(

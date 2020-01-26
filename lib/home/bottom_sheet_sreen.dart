@@ -14,6 +14,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
+        disableButton: false,
         title: "Add Note",
       ),
       body: Row(

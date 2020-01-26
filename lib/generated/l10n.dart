@@ -73,6 +73,69 @@ class S {
       args: [],
     );
   }
+
+  String get AddVariation {
+    return Intl.message(
+      'Add Variation',
+      name: 'AddVariation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get Price {
+    return Intl.message(
+      'Price',
+      name: 'Price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get SKU {
+    return Intl.message(
+      'SKU',
+      name: 'SKU',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get stock {
+    return Intl.message(
+      'Stock',
+      name: 'stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get leavePriceBlank {
+    return Intl.message(
+      'Leave the price blank to enter at the time of sale.',
+      name: 'leavePriceBlank',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get receiveStock {
+    return Intl.message(
+      'Receive Stock',
+      name: 'receiveStock',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

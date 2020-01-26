@@ -13,6 +13,7 @@ import 'package:flipper/model/price.dart';
 import 'package:flipper/model/sheet.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
+import 'package:flipper/model/variation.dart';
 
 part 'app_state.g.dart';
 
@@ -99,6 +100,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   Disable get currentDisable;
 
+  BuiltList<Variation> get variations;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 
@@ -106,6 +109,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..database = Database()
     ..units = ListBuilder()
     ..categories = ListBuilder()
+    ..variations = ListBuilder()
     ..businesses = List<Business>()
     ..branches = List<Branch>());
 

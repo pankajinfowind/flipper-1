@@ -37,6 +37,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
         return Scaffold(
           appBar: CommonAppBar(
             title: "",
+            disableButton: false,
             showActionButton: true,
             actionButtonName: "Create",
             onPressedCallback: () {

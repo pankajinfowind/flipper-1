@@ -35,6 +35,7 @@ class _DashBoardState extends State<DashBoard> {
           return SafeArea(
             child: Scaffold(
               appBar: CommonAppBar(
+                disableButton: true,
                 title: "Add Note",
               ),
               body: Container(

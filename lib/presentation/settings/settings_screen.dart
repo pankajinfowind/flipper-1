@@ -7,6 +7,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
+        disableButton: false,
         title: "Setting",
       ),
       body: ListView(

@@ -63,6 +63,8 @@ class _$AppState extends AppState {
   final FlipperColor currentColor;
   @override
   final Disable currentDisable;
+  @override
+  final BuiltList<Variation> variations;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -95,13 +97,17 @@ class _$AppState extends AppState {
       this.currentUnit,
       this.currentCategory,
       this.currentColor,
-      this.currentDisable})
+      this.currentDisable,
+      this.variations})
       : super._() {
     if (categories == null) {
       throw new BuiltValueNullFieldError('AppState', 'categories');
     }
     if (database == null) {
       throw new BuiltValueNullFieldError('AppState', 'database');
+    }
+    if (variations == null) {
+      throw new BuiltValueNullFieldError('AppState', 'variations');
     }
   }
 
@@ -143,7 +149,8 @@ class _$AppState extends AppState {
         currentUnit == other.currentUnit &&
         currentCategory == other.currentCategory &&
         currentColor == other.currentColor &&
-        currentDisable == other.currentDisable;
+        currentDisable == other.currentDisable &&
+        variations == other.variations;
   }
 
   @override
@@ -166,26 +173,26 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode),
-                                                                                unit.hashCode),
-                                                                            units.hashCode),
-                                                                        categories.hashCode),
-                                                                    focusedUnit.hashCode),
-                                                                focusedCategoryId.hashCode),
-                                                            category.hashCode),
-                                                        permissions.hashCode),
-                                                    branches.hashCode),
-                                                businesses.hashCode),
-                                            branch.hashCode),
-                                        business.hashCode),
-                                    hint.hashCode),
-                                database.hashCode),
-                            categoryName.hashCode),
-                        tempCategoryId.hashCode),
-                    currentUnit.hashCode),
-                currentCategory.hashCode),
-            currentColor.hashCode),
-        currentDisable.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode),
+                                                                                units.hashCode),
+                                                                            categories.hashCode),
+                                                                        focusedUnit.hashCode),
+                                                                    focusedCategoryId.hashCode),
+                                                                category.hashCode),
+                                                            permissions.hashCode),
+                                                        branches.hashCode),
+                                                    businesses.hashCode),
+                                                branch.hashCode),
+                                            business.hashCode),
+                                        hint.hashCode),
+                                    database.hashCode),
+                                categoryName.hashCode),
+                            tempCategoryId.hashCode),
+                        currentUnit.hashCode),
+                    currentCategory.hashCode),
+                currentColor.hashCode),
+            currentDisable.hashCode),
+        variations.hashCode));
   }
 
   @override
@@ -218,7 +225,8 @@ class _$AppState extends AppState {
           ..add('currentUnit', currentUnit)
           ..add('currentCategory', currentCategory)
           ..add('currentColor', currentColor)
-          ..add('currentDisable', currentDisable))
+          ..add('currentDisable', currentDisable)
+          ..add('variations', variations))
         .toString();
   }
 }
@@ -354,6 +362,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set currentDisable(DisableBuilder currentDisable) =>
       _$this._currentDisable = currentDisable;
 
+  ListBuilder<Variation> _variations;
+  ListBuilder<Variation> get variations =>
+      _$this._variations ??= new ListBuilder<Variation>();
+  set variations(ListBuilder<Variation> variations) =>
+      _$this._variations = variations;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -386,6 +400,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _currentCategory = _$v.currentCategory?.toBuilder();
       _currentColor = _$v.currentColor?.toBuilder();
       _currentDisable = _$v.currentDisable?.toBuilder();
+      _variations = _$v.variations?.toBuilder();
       _$v = null;
     }
     return this;
@@ -437,7 +452,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               currentUnit: _currentUnit?.build(),
               currentCategory: _currentCategory?.build(),
               currentColor: _currentColor?.build(),
-              currentDisable: _currentDisable?.build());
+              currentDisable: _currentDisable?.build(),
+              variations: variations.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -483,6 +499,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _currentColor?.build();
         _$failedField = 'currentDisable';
         _currentDisable?.build();
+        _$failedField = 'variations';
+        variations.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

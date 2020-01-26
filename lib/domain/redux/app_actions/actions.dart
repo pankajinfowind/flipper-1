@@ -3,6 +3,7 @@ import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/unit.dart';
+import 'package:flipper/model/variation.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -131,3 +132,10 @@ class CurrentDisable {
 
 @immutable
 class ResetAppAction {}
+
+@immutable
+class VariationAction {
+  final List<Variation> variations;
+
+  VariationAction({this.variations});
+}

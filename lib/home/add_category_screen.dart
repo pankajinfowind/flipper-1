@@ -24,23 +24,42 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     for (var i = 0; i < categories.length; i++) {
       if (categories[i].name != "toBeModified") {
         list.add(
-          ListTile(
-            title: Text(
-              categories[i].name,
-              style: TextStyle(color: Colors.black),
-            ),
-            trailing: Radio(
-              value: categories[i].id,
-              groupValue: categories[i].focused ? categories[i].id : 0,
-              onChanged: (int categoryId) {
-                StoreProvider.of<AppState>(context)
-                    .dispatch(WithCategoryId(categoryId: categoryId));
-                StoreProvider.of<AppState>(context)
-                    .dispatch(InvokePersistFocusedCategory());
+          GestureDetector(
+            onTap: () {
+              StoreProvider.of<AppState>(context)
+                  .dispatch(WithCategoryId(categoryId: categories[i].id));
+              StoreProvider.of<AppState>(context)
+                  .dispatch(InvokePersistFocusedCategory());
 
-                StoreProvider.of<AppState>(context)
-                    .dispatch(UpdateCategoryAction(categoryId: categoryId));
-              },
+              StoreProvider.of<AppState>(context)
+                  .dispatch(UpdateCategoryAction(categoryId: categories[i].id));
+
+              //todo: clean and remain with CurrentCategory store only
+              StoreProvider.of<AppState>(context)
+                  .dispatch(CurrentCategory(category: categories[i]));
+            },
+            child: ListTile(
+              title: Text(
+                categories[i].name,
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: Radio(
+                value: categories[i].id,
+                groupValue: categories[i].focused ? categories[i].id : 0,
+                onChanged: (int categoryId) {
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(WithCategoryId(categoryId: categoryId));
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(InvokePersistFocusedCategory());
+
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(UpdateCategoryAction(categoryId: categoryId));
+
+                  //todo: clean and remain with CurrentCategory store only
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(CurrentCategory(category: categories[i]));
+                },
+              ),
             ),
           ),
         );

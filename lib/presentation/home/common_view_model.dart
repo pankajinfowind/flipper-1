@@ -91,8 +91,12 @@ abstract class CommonViewModel
       ..hasAction = _hasAction(store)
       ..businesses = store.state.businesses
       ..tab = store.state.tab
-      ..currentUnit = store.state.currentUnit.toBuilder()
-      ..currentCategory = store.state.currentCategory.toBuilder()
+      ..currentUnit = store.state.currentUnit == null
+          ? null
+          : store.state.currentUnit.toBuilder()
+      ..currentCategory = store.state.currentCategory == null
+          ? null
+          : store.state.currentCategory.toBuilder()
       ..units = store.state.units.toBuilder()
       ..variations = store.state.variations.toBuilder()
       ..categoryName = store.state.categoryName

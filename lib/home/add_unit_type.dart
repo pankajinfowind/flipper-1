@@ -21,20 +21,34 @@ class _AddUnitTypeState extends State<AddUnitType> {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < unitsList.length; i++) {
       list.add(
-        ListTile(
-          title: Text(
-            'Per ' + unitsList[i].name,
-            style: TextStyle(color: Colors.black),
-          ),
-          trailing: Radio(
-            value: unitsList[i].id,
-            groupValue: unitsList[i].focused ? unitsList[i].id : 0,
-            onChanged: (int value) {
-              StoreProvider.of<AppState>(context)
-                  .dispatch(WithUnitId(unitId: value));
-              StoreProvider.of<AppState>(context)
-                  .dispatch(UpdateUnitAction(unitId: value));
-            },
+        GestureDetector(
+          onTap: () {
+            StoreProvider.of<AppState>(context)
+                .dispatch(WithUnitId(unitId: unitsList[i].id));
+            StoreProvider.of<AppState>(context)
+                .dispatch(UpdateUnitAction(unitId: unitsList[i].id));
+            //todo:clean this dups store
+            StoreProvider.of<AppState>(context)
+                .dispatch(CurrentUnit(unit: unitsList[i]));
+          },
+          child: ListTile(
+            title: Text(
+              'Per ' + unitsList[i].name,
+              style: TextStyle(color: Colors.black),
+            ),
+            trailing: Radio(
+              value: unitsList[i].id,
+              groupValue: unitsList[i].focused ? unitsList[i].id : 0,
+              onChanged: (int value) {
+                StoreProvider.of<AppState>(context)
+                    .dispatch(WithUnitId(unitId: value));
+                StoreProvider.of<AppState>(context)
+                    .dispatch(UpdateUnitAction(unitId: value));
+                //todo: clean and remain with CurrentUnit store only no need of dups
+                StoreProvider.of<AppState>(context)
+                    .dispatch(CurrentUnit(unit: unitsList[i]));
+              },
+            ),
           ),
         ),
       );
@@ -60,6 +74,7 @@ class _AddUnitTypeState extends State<AddUnitType> {
           appBar: CommonAppBar(
             title: S.of(context).unityType,
             showActionButton: true,
+            disableButton: false,
             actionButtonName: S.of(context).save,
             onPressedCallback: () {
               StoreProvider.of<AppState>(context)

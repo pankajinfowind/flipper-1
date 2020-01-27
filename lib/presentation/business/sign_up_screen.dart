@@ -39,9 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
     geolocator.getPositionStream(locationOptions).listen((Position location) {
-      setState(() {
-        position = location;
-      });
+      position = location; //todo: use store for managing the location changes.
     });
   }
 

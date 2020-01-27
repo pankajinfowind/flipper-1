@@ -186,12 +186,12 @@ class Router {
           fullscreenDialog: true,
         );
       case Router.receiveStock:
-        if (hasInvalidArgs<Key>(args)) {
-          return misTypedArgsRoute<Key>(args);
+        if (hasInvalidArgs<int>(args)) {
+          return misTypedArgsRoute<int>(args);
         }
-        final typedArgs = args as Key;
+        final typedArgs = args as int;
         return MaterialPageRoute(
-          builder: (_) => ReceiveStock(key: typedArgs),
+          builder: (_) => ReceiveStock(variationId: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

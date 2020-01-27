@@ -8,6 +8,8 @@ part of 'variation.dart';
 
 class _$Variation extends Variation {
   @override
+  final int id;
+  @override
   final String name;
   @override
   final String unityType;
@@ -22,8 +24,16 @@ class _$Variation extends Variation {
       (new VariationBuilder()..update(updates)).build();
 
   _$Variation._(
-      {this.name, this.unityType, this.price, this.stockValue, this.sku})
+      {this.id,
+      this.name,
+      this.unityType,
+      this.price,
+      this.stockValue,
+      this.sku})
       : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('Variation', 'id');
+    }
     if (name == null) {
       throw new BuiltValueNullFieldError('Variation', 'name');
     }
@@ -52,6 +62,7 @@ class _$Variation extends Variation {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Variation &&
+        id == other.id &&
         name == other.name &&
         unityType == other.unityType &&
         price == other.price &&
@@ -62,7 +73,11 @@ class _$Variation extends Variation {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, name.hashCode), unityType.hashCode), price.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, id.hashCode), name.hashCode),
+                    unityType.hashCode),
+                price.hashCode),
             stockValue.hashCode),
         sku.hashCode));
   }
@@ -70,6 +85,7 @@ class _$Variation extends Variation {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Variation')
+          ..add('id', id)
           ..add('name', name)
           ..add('unityType', unityType)
           ..add('price', price)
@@ -81,6 +97,10 @@ class _$Variation extends Variation {
 
 class VariationBuilder implements Builder<Variation, VariationBuilder> {
   _$Variation _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -106,6 +126,7 @@ class VariationBuilder implements Builder<Variation, VariationBuilder> {
 
   VariationBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _unityType = _$v.unityType;
       _price = _$v.price;
@@ -133,6 +154,7 @@ class VariationBuilder implements Builder<Variation, VariationBuilder> {
   _$Variation build() {
     final _$result = _$v ??
         new _$Variation._(
+            id: id,
             name: name,
             unityType: unityType,
             price: price,

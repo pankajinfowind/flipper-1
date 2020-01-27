@@ -201,22 +201,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       ),
                     ),
                   ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                        leading: Text("Stock"),
-                        trailing: FlatButton(
-                          child: Text(
-                            "Receive Stock",
-                            style: TextStyle(color: HexColor('#0984e3')),
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ),
-                  ),
                   vm.variations.length > 0
                       ? _buildVariationsList(vm.variations)
                       : Text(""),
@@ -322,10 +306,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                   FlatButton(
                     child: Text(
-                      "Receive stock",
+                      variations[i].stockValue == 0
+                          ? "Receive stock"
+                          : variations[i].stockValue.toString() + " in Stock",
                       style: TextStyle(color: HexColor('#0984e3')),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Router.navigator.pushNamed(Router.receiveStock,
+                          arguments: variations[i].id);
+                    },
                   )
                 ]),
                 dense: true,

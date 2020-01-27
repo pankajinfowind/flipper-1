@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
+import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
@@ -38,25 +41,59 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
             onPressedCallback: () {
               List<Variation> variatione = [];
               List<Variation> updateVariations = [];
+
+              //show saving loader and pop after
+              StoreProvider.of<AppState>(context).dispatch(
+                AppAction(
+                  actions: AppActions((a) => a..name = "showLoader"),
+                ),
+              );
+
               if (vm.variations.length > 0) {
-                vm.variations.forEach((v) => {updateVariations.add(v)});
-                updateVariations.add(Variation((v) => v
+                vm.variations.forEach((v) => {
+                      updateVariations.add(v),
+                      updateVariations.add(
+                        Variation(
+                          (v) => v
+                            ..id = new Random().nextInt(100) + 1
+                            ..name = name
+                            ..price = price
+                            ..stockValue = 0
+                            ..unityType = vm.currentUnit.name
+                            ..sku = sku,
+                        ),
+                      )
+                    });
+
+                StoreProvider.of<AppState>(context)
+                    .dispatch(VariationAction(variations: updateVariations));
+
+                StoreProvider.of<AppState>(context).dispatch(
+                  AppAction(
+                    actions: AppActions((a) => a..name = "none"),
+                  ),
+                );
+                Router.navigator.pop();
+                return;
+              } else {
+                var variation = Variation((v) => v
+                  ..id = new Random().nextInt(100) + 1
                   ..name = name
                   ..price = price
                   ..stockValue = 0
                   ..unityType = vm.currentUnit.name
-                  ..sku = sku));
-                StoreProvider.of<AppState>(context)
-                    .dispatch(VariationAction(variations: updateVariations));
-              } else {
-                variatione.add(Variation((v) => v
-                  ..name = name
-                  ..price = price
-                  ..stockValue = 0
-                  ..unityType = vm.currentUnit.name //todo:get this from store
-                  ..sku = sku));
+                  ..sku = sku);
+
+                variatione.add(variation);
+
                 StoreProvider.of<AppState>(context)
                     .dispatch(VariationAction(variations: variatione));
+                StoreProvider.of<AppState>(context).dispatch(
+                  AppAction(
+                    actions: AppActions((a) => a..name = "none"),
+                  ),
+                );
+                Router.navigator.pop();
               }
             },
             icon: Icons.close,

@@ -10,5 +10,6 @@
     "SKU": "SKU",
     "stock":"Stock",
     "leavePriceBlank": "Leave the price blank to enter at the time of sale.",
-    "receiveStock": "Receive Stock"
+    "receiveStock": "Receive Stock",
+    "addStock": "Add Stock"
 }

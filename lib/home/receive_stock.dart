@@ -43,7 +43,7 @@ class _ReceiveStockState extends State<ReceiveStock> {
                     style: TextStyle(color: Colors.black),
                     onChanged: (count) {
                       List<Variation> updateVariations = [];
-                      //loop all variation if we have a match update the match and broadcast new values
+
                       for (var i = 0; i < vm.variations.length; i++) {
                         if (widget.variationId == vm.variations[i].id) {
                           updateVariations.add(Variation((v) => v

@@ -62,24 +62,10 @@ class WithUnitId {
 class InvokePersistFocusedCategory {}
 
 @immutable
-class WithCategoryId {
-  final int categoryId;
-
-  WithCategoryId({@required this.categoryId});
-}
-
-@immutable
 class UpdateUnitAction {
   final int unitId;
 
   UpdateUnitAction({@required this.unitId});
-}
-
-@immutable
-class UpdateCategoryAction {
-  final int categoryId;
-
-  UpdateCategoryAction({@required this.categoryId});
 }
 
 @immutable

@@ -31,6 +31,7 @@ void Function(Store<AppState> store,
         CreateCategoryFromAddItemScreenAction action, NextDispatcher next)
     _createCategoryRegular(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
+  //todo:
   return (store, action, next) async {
     if (store.state.tempCategoryId != null &&
         store.state.categoryName != null &&
@@ -44,12 +45,14 @@ void Function(Store<AppState> store,
       List<Category> categories = [];
 
       categoryList.forEach((c) => {
-            categories.add(Category((u) => u
-              ..name = c.name
-              ..focused = c.focused
-              ..businessId = u.businessId ?? 0
-              ..branchId = u.branchId ?? 0
-              ..id = c.id))
+            categories.add(Category(
+              (u) => u
+                ..name = c.name
+                ..focused = c.focused
+                ..businessId = u.businessId ?? 0
+                ..branchId = u.branchId ?? 0
+                ..id = c.id,
+            ))
           });
 
       store.dispatch(CategoryAction(categories));
@@ -78,13 +81,13 @@ void Function(Store<AppState> store, InvokePersistFocusedCategory action,
     _persistCategoryFocused(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
-    if (store.state.focusedCategoryId != null) {
+    if (store.state.currentCategory.id != null) {
       store.state.categories.forEach((u) => {
-            if (u.id == store.state.focusedCategoryId)
+            if (u.id == store.state.currentCategory.id)
               {
                 generalRepository.updateCategory(
                     store,
-                    store.state.focusedCategoryId,
+                    store.state.currentCategory.id,
                     null,
                     store.state.currentActiveBusiness,
                     focused: true)
@@ -93,7 +96,7 @@ void Function(Store<AppState> store, InvokePersistFocusedCategory action,
               {
                 generalRepository.updateCategory(
                   store,
-                  store.state.focusedCategoryId,
+                  store.state.currentCategory.id,
                   null,
                   store.state.currentActiveBusiness,
                   focused: false,

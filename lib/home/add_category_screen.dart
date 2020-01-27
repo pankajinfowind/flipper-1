@@ -27,16 +27,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           GestureDetector(
             onTap: () {
               StoreProvider.of<AppState>(context)
-                  .dispatch(WithCategoryId(categoryId: categories[i].id));
+                  .dispatch(CurrentCategory(category: categories[i]));
+
               StoreProvider.of<AppState>(context)
                   .dispatch(InvokePersistFocusedCategory());
-
-              StoreProvider.of<AppState>(context)
-                  .dispatch(UpdateCategoryAction(categoryId: categories[i].id));
-
-              //todo: clean and remain with CurrentCategory store only
-              StoreProvider.of<AppState>(context)
-                  .dispatch(CurrentCategory(category: categories[i]));
             },
             child: ListTile(
               title: Text(
@@ -48,16 +42,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                 groupValue: categories[i].focused ? categories[i].id : 0,
                 onChanged: (int categoryId) {
                   StoreProvider.of<AppState>(context)
-                      .dispatch(WithCategoryId(categoryId: categoryId));
+                      .dispatch(CurrentCategory(category: categories[i]));
+
                   StoreProvider.of<AppState>(context)
                       .dispatch(InvokePersistFocusedCategory());
-
-                  StoreProvider.of<AppState>(context)
-                      .dispatch(UpdateCategoryAction(categoryId: categoryId));
-
-                  //todo: clean and remain with CurrentCategory store only
-                  StoreProvider.of<AppState>(context)
-                      .dispatch(CurrentCategory(category: categories[i]));
                 },
               ),
             ),
@@ -84,6 +72,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
       builder: (context, vm) {
         return Scaffold(
           appBar: CommonAppBar(
+            showActionButton: false,
             title: S.of(context).category,
             icon: Icons.close,
             multi: 3,

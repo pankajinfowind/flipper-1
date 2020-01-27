@@ -12,18 +12,16 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, UnitR>(_onUnits),
   TypedReducer<AppState, CurrentUnit>(_onCurrentUnit),
   TypedReducer<AppState, CurrentColor>(_onCurrentColor),
-  TypedReducer<AppState, CurrentCategory>(_onCurrentCategory),
-  TypedReducer<AppState, WithCategoryId>(_onCategoryFocusedChanged),
   TypedReducer<AppState, CategoryNameAction>(_onCategoryName),
   TypedReducer<AppState, TempCategoryIdAction>(_onTempCategoryId),
   TypedReducer<AppState, CategoryAction>(_onCategories),
   TypedReducer<AppState, UpdateUnitAction>(_onUpdateUnit),
-  TypedReducer<AppState, UpdateCategoryAction>(_onUpdateCategory),
   TypedReducer<AppState, WithUnitId>(_withUnitId),
   TypedReducer<AppState, ResetAppAction>(_onResetAppAction),
   TypedReducer<AppState, CurrentTab>(_onSetTab),
   TypedReducer<AppState, CurrentDisable>(_onDisable),
   TypedReducer<AppState, VariationAction>(_onVariations),
+  TypedReducer<AppState, CurrentCategory>(_onCurrentCategory),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
@@ -88,14 +86,12 @@ AppState _onTempCategoryId(AppState state, TempCategoryIdAction action) {
   return state.rebuild((a) => a..tempCategoryId = action.categoryId);
 }
 
-AppState _onCategoryFocusedChanged(AppState state, WithCategoryId action) {
-  return state.rebuild((a) => a..focusedCategoryId = action.categoryId);
-}
+AppState _onCurrentCategory(AppState state, CurrentCategory action) {
+  state.rebuild((a) => a..currentCategory = action.category.toBuilder());
 
-AppState _onUpdateCategory(AppState state, action) {
   List<Category> categories = [];
   state.categories.forEach((u) => {
-        if (u.id == action.categoryId)
+        if (u.id == action.category.id)
           {
             categories.add(Category((c) => c
               ..focused = true
@@ -119,10 +115,6 @@ AppState _onUpdateCategory(AppState state, action) {
 
 AppState _onCurrentUnit(AppState state, CurrentUnit action) {
   return state.rebuild((a) => a..currentUnit = action.unit.toBuilder());
-}
-
-AppState _onCurrentCategory(AppState state, CurrentCategory action) {
-  return state.rebuild((a) => a..currentCategory = action.category.toBuilder());
 }
 
 AppState _onCurrentColor(AppState state, CurrentColor action) {

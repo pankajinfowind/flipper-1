@@ -34,8 +34,6 @@ class _$AppState extends AppState {
   @override
   final int focusedUnit;
   @override
-  final int focusedCategoryId;
-  @override
   final Category category;
   @override
   final Permission permissions;
@@ -83,7 +81,6 @@ class _$AppState extends AppState {
       this.units,
       this.categories,
       this.focusedUnit,
-      this.focusedCategoryId,
       this.category,
       this.permissions,
       this.branches,
@@ -135,7 +132,6 @@ class _$AppState extends AppState {
         units == other.units &&
         categories == other.categories &&
         focusedUnit == other.focusedUnit &&
-        focusedCategoryId == other.focusedCategoryId &&
         category == other.category &&
         permissions == other.permissions &&
         branches == other.branches &&
@@ -173,11 +169,11 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode),
-                                                                                units.hashCode),
-                                                                            categories.hashCode),
-                                                                        focusedUnit.hashCode),
-                                                                    focusedCategoryId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode),
+                                                                                unit.hashCode),
+                                                                            units.hashCode),
+                                                                        categories.hashCode),
+                                                                    focusedUnit.hashCode),
                                                                 category.hashCode),
                                                             permissions.hashCode),
                                                         branches.hashCode),
@@ -211,7 +207,6 @@ class _$AppState extends AppState {
           ..add('units', units)
           ..add('categories', categories)
           ..add('focusedUnit', focusedUnit)
-          ..add('focusedCategoryId', focusedCategoryId)
           ..add('category', category)
           ..add('permissions', permissions)
           ..add('branches', branches)
@@ -291,11 +286,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   int _focusedUnit;
   int get focusedUnit => _$this._focusedUnit;
   set focusedUnit(int focusedUnit) => _$this._focusedUnit = focusedUnit;
-
-  int _focusedCategoryId;
-  int get focusedCategoryId => _$this._focusedCategoryId;
-  set focusedCategoryId(int focusedCategoryId) =>
-      _$this._focusedCategoryId = focusedCategoryId;
 
   CategoryBuilder _category;
   CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
@@ -385,7 +375,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _units = _$v.units?.toBuilder();
       _categories = _$v.categories?.toBuilder();
       _focusedUnit = _$v.focusedUnit;
-      _focusedCategoryId = _$v.focusedCategoryId;
       _category = _$v.category?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
       _branches = _$v.branches;
@@ -438,7 +427,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               units: _units?.build(),
               categories: categories.build(),
               focusedUnit: focusedUnit,
-              focusedCategoryId: focusedCategoryId,
               category: _category?.build(),
               permissions: _permissions?.build(),
               branches: branches,

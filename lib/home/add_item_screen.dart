@@ -3,6 +3,7 @@ import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/app_action.dart';
+import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
@@ -17,6 +18,7 @@ class TForm {
   String price;
   String sku;
   String description;
+  String name;
 }
 
 class AddItemScreen extends StatefulWidget {
@@ -28,6 +30,8 @@ class AddItemScreen extends StatefulWidget {
 
 class _AddItemScreenState extends State<AddItemScreen> {
   final TForm tForm = new TForm();
+
+  Category _currentCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +91,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                         Disable((u) => u..unDisable = "none")));
                             return;
                           }
+                          tForm.name = name;
                           StoreProvider.of<AppState>(context).dispatch(
                               CurrentDisable(
                                   disable: Disable(
@@ -109,9 +114,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           leading: Text("Category"),
                           trailing: Wrap(
                             children: <Widget>[
-                              Text(vm.currentCategory != null
-                                  ? vm.currentCategory.name
-                                  : "Select Category"),
+                              vm.categories.length == 0
+                                  ? Text("Select category")
+                                  : categorySelector(vm),
                               Icon(Icons.arrow_forward_ios)
                             ],
                           ),
@@ -178,6 +183,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     child: Container(
                       width: 300,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         style: TextStyle(color: Colors.black),
                         validator: Validators.isStringHasMoreChars,
                         onSaved: (name) {},
@@ -281,14 +287,29 @@ class _AddItemScreenState extends State<AddItemScreen> {
     );
   }
 
+  Text categorySelector(CommonViewModel vm) {
+    Text text;
+    for (var i = 0; i < vm.categories.length; i++) {
+      if (vm.categories[i].focused) {
+        _currentCategory = vm.categories[i];
+        text = Text(vm.categories[i].name);
+        return text;
+      } else {
+        text = Text("Select Category");
+      }
+    }
+    return text;
+  }
+
   _handleFormSubmit(CommonViewModel vm, TForm tForm) {
-    print(vm.categoryName);
-    print(vm.currentBusiness);
-    print(tForm.price);
-    print(vm.variations);
-    print(vm.currentCategory);
-    print(vm.currentUnit);
-    print(tForm.description);
+    StoreProvider.of<AppState>(context).dispatch(SaveItemAction(
+        business: vm.currentBusiness,
+        name: tForm.name,
+        description: tForm.description,
+        price: tForm.price,
+        variations: vm.variations.toList(),
+        category: _currentCategory,
+        unit: vm.currentUnit));
   }
 
   _buildVariationsList(BuiltList<Variation> variations) {
@@ -327,6 +348,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
           ),
         ),
       );
+    }
+    if (list.length == 0) {
+      return Container();
     }
     return Wrap(children: list);
   }

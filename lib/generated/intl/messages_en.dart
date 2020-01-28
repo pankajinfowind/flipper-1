@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "AddVariation" : MessageLookupByLibrary.simpleMessage("Add Variation"),
     "Price" : MessageLookupByLibrary.simpleMessage("Price"),
     "SKU" : MessageLookupByLibrary.simpleMessage("SKU"),
+    "addStock" : MessageLookupByLibrary.simpleMessage("Add Stock"),
     "category" : MessageLookupByLibrary.simpleMessage("Category"),
     "createCategory" : MessageLookupByLibrary.simpleMessage("Create Category"),
     "leavePriceBlank" : MessageLookupByLibrary.simpleMessage("Leave the price blank to enter at the time of sale."),

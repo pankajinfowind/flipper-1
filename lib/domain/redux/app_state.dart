@@ -89,9 +89,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Unit get currentUnit;
 
   @nullable
-  Category get currentCategory;
-
-  @nullable
   FlipperColor get currentColor;
 
   @nullable

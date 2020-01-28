@@ -173,6 +173,23 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..isActive = b.isActive
               ..name = b.name))
           });
+
+      //setActive branch.
+      for (var i = 0; i < branch.length; i++) {
+        if (branch[i].isActive) {
+          store.dispatch(
+            OnCurrentBranchAction(
+              branch: Branch((b) => b
+                ..id = branch[i].id
+                ..name = branch[i].name
+                ..isActive = branch[i].isActive
+                ..description = "desc"),
+            ),
+          );
+        }
+      }
+      //end setting active branch.
+
       //set current active business to be used throughout the entire app transaction
       for (var i = 0; i < businesses.length; i++) {
         if (businesses[i].isActive) {

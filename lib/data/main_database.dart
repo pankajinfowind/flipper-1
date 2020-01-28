@@ -7,8 +7,10 @@ import 'package:flipper/data/category_table.dart';
 import 'package:flipper/data/dao/branch_dao.dart';
 import 'package:flipper/data/dao/business_dao.dart';
 import 'package:flipper/data/dao/category_dao.dart';
+import 'package:flipper/data/dao/item_dao.dart';
 import 'package:flipper/data/dao/tab_dao.dart';
 import 'package:flipper/data/dao/unit_dao.dart';
+import 'package:flipper/data/dao/variation_dao.dart';
 import 'package:flipper/data/item_table.dart';
 import 'package:flipper/data/price_table.dart';
 import 'package:flipper/data/stock_tabble.dart';
@@ -16,6 +18,7 @@ import 'package:flipper/data/tabs.dart';
 import 'package:flipper/data/token.dart';
 import 'package:flipper/data/unit_table.dart';
 import 'package:flipper/data/user.dart';
+import 'package:flipper/data/variation_table.dart';
 import 'package:moor/moor.dart';
 import 'package:moor_ffi/moor_ffi.dart';
 import 'package:path/path.dart' as p;
@@ -41,7 +44,6 @@ LazyDatabase _openConnection() {
 @UseMoor(tables: [
   UserTable,
   UnitTable,
-  ItemTable,
   TokenTable,
   BusinessUserTable,
   TabsTable,
@@ -49,7 +51,9 @@ LazyDatabase _openConnection() {
   CategoryTable,
   BranchTable,
   StockTable,
-  PriceTable
+  PriceTable,
+  ItemTable,
+  VariationTable
 ], daos: [
   UserDao,
   TokenDao,
@@ -57,7 +61,9 @@ LazyDatabase _openConnection() {
   BusinessDao,
   BranchDao,
   CategoryDao,
-  TabsDao
+  TabsDao,
+  VariationDao,
+  ItemDao
 ])
 class Database extends _$Database {
   Database() : super(_openConnection());

@@ -12,7 +12,7 @@ abstract class Branch implements Built<Branch, BranchBuilder> {
   String get description;
 
   @nullable
-  bool get isCurrentFocused;
+  bool get isActive;
 
   @nullable
   String get location;

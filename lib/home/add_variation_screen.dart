@@ -42,13 +42,6 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
               List<Variation> variatione = [];
               List<Variation> updateVariations = [];
 
-              //show saving loader and pop after
-              StoreProvider.of<AppState>(context).dispatch(
-                AppAction(
-                  actions: AppActions((a) => a..name = "showLoader"),
-                ),
-              );
-
               if (vm.variations.length > 0) {
                 vm.variations.forEach((v) => {
                       updateVariations.add(v),
@@ -60,7 +53,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                             ..price = price
                             ..stockValue = 0
                             ..unityType = vm.currentUnit.name
-                            ..sku = sku,
+                            ..sku = sku ?? 'null',
                         ),
                       )
                     });
@@ -68,21 +61,18 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                 StoreProvider.of<AppState>(context)
                     .dispatch(VariationAction(variations: updateVariations));
 
-                StoreProvider.of<AppState>(context).dispatch(
-                  AppAction(
-                    actions: AppActions((a) => a..name = "none"),
-                  ),
-                );
                 Router.navigator.pop();
                 return;
               } else {
-                var variation = Variation((v) => v
-                  ..id = new Random().nextInt(100) + 1
-                  ..name = name
-                  ..price = price
-                  ..stockValue = 0
-                  ..unityType = vm.currentUnit.name
-                  ..sku = sku);
+                var variation = Variation(
+                  (v) => v
+                    ..id = new Random().nextInt(100) + 1
+                    ..name = name
+                    ..price = price
+                    ..stockValue = 0
+                    ..unityType = vm.currentUnit.name
+                    ..sku = sku ?? 'null',
+                );
 
                 variatione.add(variation);
 

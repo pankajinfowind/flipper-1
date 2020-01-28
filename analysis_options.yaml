@@ -1,3 +1,5 @@
 analyzer:
     plugins:
       - moor
+    exclude:
+      - "**/*.g.dart"

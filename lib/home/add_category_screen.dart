@@ -40,13 +40,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
               trailing: Radio(
                 value: categories[i].id,
                 groupValue: categories[i].focused ? categories[i].id : 0,
-                onChanged: (int categoryId) {
-                  StoreProvider.of<AppState>(context)
-                      .dispatch(CurrentCategory(category: categories[i]));
-
-                  StoreProvider.of<AppState>(context)
-                      .dispatch(InvokePersistFocusedCategory());
-                },
+                onChanged: (int categoryId) {},
               ),
             ),
           ),

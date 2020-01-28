@@ -723,242 +723,6 @@ class $UnitTableTable extends UnitTable
   }
 }
 
-class ItemTableData extends DataClass implements Insertable<ItemTableData> {
-  final int id;
-  final String name;
-  final int categoryId;
-  final int businessId;
-  ItemTableData(
-      {@required this.id,
-      @required this.name,
-      this.categoryId,
-      this.businessId});
-  factory ItemTableData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
-    final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    return ItemTableData(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      categoryId: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}category_id']),
-      businessId: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
-    );
-  }
-  factory ItemTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return ItemTableData(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      categoryId: serializer.fromJson<int>(json['categoryId']),
-      businessId: serializer.fromJson<int>(json['businessId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson(
-      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-      'categoryId': serializer.toJson<int>(categoryId),
-      'businessId': serializer.toJson<int>(businessId),
-    };
-  }
-
-  @override
-  ItemTableCompanion createCompanion(bool nullToAbsent) {
-    return ItemTableCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
-      categoryId: categoryId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(categoryId),
-      businessId: businessId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(businessId),
-    );
-  }
-
-  ItemTableData copyWith(
-          {int id, String name, int categoryId, int businessId}) =>
-      ItemTableData(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        categoryId: categoryId ?? this.categoryId,
-        businessId: businessId ?? this.businessId,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('ItemTableData(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('categoryId: $categoryId, ')
-          ..write('businessId: $businessId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(name.hashCode, $mrjc(categoryId.hashCode, businessId.hashCode))));
-  @override
-  bool operator ==(dynamic other) =>
-      identical(this, other) ||
-      (other is ItemTableData &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.categoryId == this.categoryId &&
-          other.businessId == this.businessId);
-}
-
-class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
-  final Value<int> id;
-  final Value<String> name;
-  final Value<int> categoryId;
-  final Value<int> businessId;
-  const ItemTableCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.categoryId = const Value.absent(),
-    this.businessId = const Value.absent(),
-  });
-  ItemTableCompanion.insert({
-    this.id = const Value.absent(),
-    @required String name,
-    this.categoryId = const Value.absent(),
-    this.businessId = const Value.absent(),
-  }) : name = Value(name);
-  ItemTableCompanion copyWith(
-      {Value<int> id,
-      Value<String> name,
-      Value<int> categoryId,
-      Value<int> businessId}) {
-    return ItemTableCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      categoryId: categoryId ?? this.categoryId,
-      businessId: businessId ?? this.businessId,
-    );
-  }
-}
-
-class $ItemTableTable extends ItemTable
-    with TableInfo<$ItemTableTable, ItemTableData> {
-  final GeneratedDatabase _db;
-  final String _alias;
-  $ItemTableTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
-  final VerificationMeta _nameMeta = const VerificationMeta('name');
-  GeneratedTextColumn _name;
-  @override
-  GeneratedTextColumn get name => _name ??= _constructName();
-  GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn(
-      'name',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _categoryIdMeta = const VerificationMeta('categoryId');
-  GeneratedIntColumn _categoryId;
-  @override
-  GeneratedIntColumn get categoryId => _categoryId ??= _constructCategoryId();
-  GeneratedIntColumn _constructCategoryId() {
-    return GeneratedIntColumn('category_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES category_table(id)');
-  }
-
-  final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
-  GeneratedIntColumn _businessId;
-  @override
-  GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
-  GeneratedIntColumn _constructBusinessId() {
-    return GeneratedIntColumn('business_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES business_table(id)');
-  }
-
-  @override
-  List<GeneratedColumn> get $columns => [id, name, categoryId, businessId];
-  @override
-  $ItemTableTable get asDslTable => this;
-  @override
-  String get $tableName => _alias ?? 'item_table';
-  @override
-  final String actualTableName = 'item_table';
-  @override
-  VerificationContext validateIntegrity(ItemTableCompanion d,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
-    } else if (id.isRequired && isInserting) {
-      context.missing(_idMeta);
-    }
-    if (d.name.present) {
-      context.handle(
-          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
-    } else if (name.isRequired && isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (d.categoryId.present) {
-      context.handle(_categoryIdMeta,
-          categoryId.isAcceptableValue(d.categoryId.value, _categoryIdMeta));
-    } else if (categoryId.isRequired && isInserting) {
-      context.missing(_categoryIdMeta);
-    }
-    if (d.businessId.present) {
-      context.handle(_businessIdMeta,
-          businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
-    } else if (businessId.isRequired && isInserting) {
-      context.missing(_businessIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ItemTableData map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return ItemTableData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(ItemTableCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.name.present) {
-      map['name'] = Variable<String, StringType>(d.name.value);
-    }
-    if (d.categoryId.present) {
-      map['category_id'] = Variable<int, IntType>(d.categoryId.value);
-    }
-    if (d.businessId.present) {
-      map['business_id'] = Variable<int, IntType>(d.businessId.value);
-    }
-    return map;
-  }
-
-  @override
-  $ItemTableTable createAlias(String alias) {
-    return $ItemTableTable(_db, alias);
-  }
-}
-
 class TokenTableData extends DataClass implements Insertable<TokenTableData> {
   final int id;
   final String token;
@@ -1726,8 +1490,8 @@ class CategoryTableData extends DataClass
       {@required this.id,
       @required this.focused,
       @required this.name,
-      this.businessId,
-      this.branchId});
+      @required this.businessId,
+      @required this.branchId});
   factory CategoryTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -1841,10 +1605,12 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.id = const Value.absent(),
     @required bool focused,
     @required String name,
-    this.businessId = const Value.absent(),
-    this.branchId = const Value.absent(),
+    @required int businessId,
+    @required int branchId,
   })  : focused = Value(focused),
-        name = Value(name);
+        name = Value(name),
+        businessId = Value(businessId),
+        branchId = Value(branchId);
   CategoryTableCompanion copyWith(
       {Value<int> id,
       Value<bool> focused,
@@ -1904,7 +1670,7 @@ class $CategoryTableTable extends CategoryTable
   @override
   GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
   GeneratedIntColumn _constructBusinessId() {
-    return GeneratedIntColumn('business_id', $tableName, true,
+    return GeneratedIntColumn('business_id', $tableName, false,
         $customConstraints: 'NULL REFERENCES business_table(id)');
   }
 
@@ -1913,7 +1679,7 @@ class $CategoryTableTable extends CategoryTable
   @override
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
-    return GeneratedIntColumn('branch_id', $tableName, true,
+    return GeneratedIntColumn('branch_id', $tableName, false,
         $customConstraints: 'NULL REFERENCES branch_table(id)');
   }
 
@@ -2000,16 +1766,21 @@ class $CategoryTableTable extends CategoryTable
 class BranchTableData extends DataClass implements Insertable<BranchTableData> {
   final int id;
   final String name;
-  BranchTableData({@required this.id, @required this.name});
+  final bool isActive;
+  BranchTableData(
+      {@required this.id, @required this.name, @required this.isActive});
   factory BranchTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
     return BranchTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      isActive:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_active']),
     );
   }
   factory BranchTableData.fromJson(Map<String, dynamic> json,
@@ -2017,6 +1788,7 @@ class BranchTableData extends DataClass implements Insertable<BranchTableData> {
     return BranchTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
     );
   }
   @override
@@ -2025,6 +1797,7 @@ class BranchTableData extends DataClass implements Insertable<BranchTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'isActive': serializer.toJson<bool>(isActive),
     };
   }
 
@@ -2033,47 +1806,60 @@ class BranchTableData extends DataClass implements Insertable<BranchTableData> {
     return BranchTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      isActive: isActive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isActive),
     );
   }
 
-  BranchTableData copyWith({int id, String name}) => BranchTableData(
+  BranchTableData copyWith({int id, String name, bool isActive}) =>
+      BranchTableData(
         id: id ?? this.id,
         name: name ?? this.name,
+        isActive: isActive ?? this.isActive,
       );
   @override
   String toString() {
     return (StringBuffer('BranchTableData(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('isActive: $isActive')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, isActive.hashCode)));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is BranchTableData &&
           other.id == this.id &&
-          other.name == this.name);
+          other.name == this.name &&
+          other.isActive == this.isActive);
 }
 
 class BranchTableCompanion extends UpdateCompanion<BranchTableData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<bool> isActive;
   const BranchTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.isActive = const Value.absent(),
   });
   BranchTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
+    this.isActive = const Value.absent(),
   }) : name = Value(name);
-  BranchTableCompanion copyWith({Value<int> id, Value<String> name}) {
+  BranchTableCompanion copyWith(
+      {Value<int> id, Value<String> name, Value<bool> isActive}) {
     return BranchTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      isActive: isActive ?? this.isActive,
     );
   }
 }
@@ -2104,8 +1890,17 @@ class $BranchTableTable extends BranchTable
     );
   }
 
+  final VerificationMeta _isActiveMeta = const VerificationMeta('isActive');
+  GeneratedBoolColumn _isActive;
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  GeneratedBoolColumn get isActive => _isActive ??= _constructIsActive();
+  GeneratedBoolColumn _constructIsActive() {
+    return GeneratedBoolColumn('is_active', $tableName, false,
+        defaultValue: Constant(false));
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name, isActive];
   @override
   $BranchTableTable get asDslTable => this;
   @override
@@ -2127,6 +1922,12 @@ class $BranchTableTable extends BranchTable
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
     }
+    if (d.isActive.present) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableValue(d.isActive.value, _isActiveMeta));
+    } else if (isActive.isRequired && isInserting) {
+      context.missing(_isActiveMeta);
+    }
     return context;
   }
 
@@ -2146,6 +1947,9 @@ class $BranchTableTable extends BranchTable
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.isActive.present) {
+      map['is_active'] = Variable<bool, BoolType>(d.isActive.value);
     }
     return map;
   }
@@ -2586,14 +2390,495 @@ class $PriceTableTable extends PriceTable
   }
 }
 
+class ItemTableData extends DataClass implements Insertable<ItemTableData> {
+  final int id;
+  final String name;
+  final int categoryId;
+  final int businessId;
+  final int variationId;
+  ItemTableData(
+      {@required this.id,
+      @required this.name,
+      @required this.categoryId,
+      @required this.businessId,
+      @required this.variationId});
+  factory ItemTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return ItemTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      categoryId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}category_id']),
+      businessId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
+      variationId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}variation_id']),
+    );
+  }
+  factory ItemTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return ItemTableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      categoryId: serializer.fromJson<int>(json['categoryId']),
+      businessId: serializer.fromJson<int>(json['businessId']),
+      variationId: serializer.fromJson<int>(json['variationId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'categoryId': serializer.toJson<int>(categoryId),
+      'businessId': serializer.toJson<int>(businessId),
+      'variationId': serializer.toJson<int>(variationId),
+    };
+  }
+
+  @override
+  ItemTableCompanion createCompanion(bool nullToAbsent) {
+    return ItemTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      categoryId: categoryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(categoryId),
+      businessId: businessId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(businessId),
+      variationId: variationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(variationId),
+    );
+  }
+
+  ItemTableData copyWith(
+          {int id,
+          String name,
+          int categoryId,
+          int businessId,
+          int variationId}) =>
+      ItemTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        categoryId: categoryId ?? this.categoryId,
+        businessId: businessId ?? this.businessId,
+        variationId: variationId ?? this.variationId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ItemTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('businessId: $businessId, ')
+          ..write('variationId: $variationId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          name.hashCode,
+          $mrjc(categoryId.hashCode,
+              $mrjc(businessId.hashCode, variationId.hashCode)))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is ItemTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.categoryId == this.categoryId &&
+          other.businessId == this.businessId &&
+          other.variationId == this.variationId);
+}
+
+class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> categoryId;
+  final Value<int> businessId;
+  final Value<int> variationId;
+  const ItemTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.businessId = const Value.absent(),
+    this.variationId = const Value.absent(),
+  });
+  ItemTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required String name,
+    @required int categoryId,
+    @required int businessId,
+    @required int variationId,
+  })  : name = Value(name),
+        categoryId = Value(categoryId),
+        businessId = Value(businessId),
+        variationId = Value(variationId);
+  ItemTableCompanion copyWith(
+      {Value<int> id,
+      Value<String> name,
+      Value<int> categoryId,
+      Value<int> businessId,
+      Value<int> variationId}) {
+    return ItemTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      categoryId: categoryId ?? this.categoryId,
+      businessId: businessId ?? this.businessId,
+      variationId: variationId ?? this.variationId,
+    );
+  }
+}
+
+class $ItemTableTable extends ItemTable
+    with TableInfo<$ItemTableTable, ItemTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $ItemTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _categoryIdMeta = const VerificationMeta('categoryId');
+  GeneratedIntColumn _categoryId;
+  @override
+  GeneratedIntColumn get categoryId => _categoryId ??= _constructCategoryId();
+  GeneratedIntColumn _constructCategoryId() {
+    return GeneratedIntColumn('category_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES category_table(id)');
+  }
+
+  final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
+  GeneratedIntColumn _businessId;
+  @override
+  GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
+  GeneratedIntColumn _constructBusinessId() {
+    return GeneratedIntColumn('business_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES business_table(id)');
+  }
+
+  final VerificationMeta _variationIdMeta =
+      const VerificationMeta('variationId');
+  GeneratedIntColumn _variationId;
+  @override
+  GeneratedIntColumn get variationId =>
+      _variationId ??= _constructVariationId();
+  GeneratedIntColumn _constructVariationId() {
+    return GeneratedIntColumn('variation_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES variation_table(id)');
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, categoryId, businessId, variationId];
+  @override
+  $ItemTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'item_table';
+  @override
+  final String actualTableName = 'item_table';
+  @override
+  VerificationContext validateIntegrity(ItemTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.name.present) {
+      context.handle(
+          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+    } else if (name.isRequired && isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (d.categoryId.present) {
+      context.handle(_categoryIdMeta,
+          categoryId.isAcceptableValue(d.categoryId.value, _categoryIdMeta));
+    } else if (categoryId.isRequired && isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (d.businessId.present) {
+      context.handle(_businessIdMeta,
+          businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
+    } else if (businessId.isRequired && isInserting) {
+      context.missing(_businessIdMeta);
+    }
+    if (d.variationId.present) {
+      context.handle(_variationIdMeta,
+          variationId.isAcceptableValue(d.variationId.value, _variationIdMeta));
+    } else if (variationId.isRequired && isInserting) {
+      context.missing(_variationIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return ItemTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(ItemTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.name.present) {
+      map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.categoryId.present) {
+      map['category_id'] = Variable<int, IntType>(d.categoryId.value);
+    }
+    if (d.businessId.present) {
+      map['business_id'] = Variable<int, IntType>(d.businessId.value);
+    }
+    if (d.variationId.present) {
+      map['variation_id'] = Variable<int, IntType>(d.variationId.value);
+    }
+    return map;
+  }
+
+  @override
+  $ItemTableTable createAlias(String alias) {
+    return $ItemTableTable(_db, alias);
+  }
+}
+
+class VariationTableData extends DataClass
+    implements Insertable<VariationTableData> {
+  final int id;
+  final String name;
+  final int branchId;
+  VariationTableData(
+      {@required this.id, @required this.name, @required this.branchId});
+  factory VariationTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return VariationTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      branchId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
+    );
+  }
+  factory VariationTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return VariationTableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      branchId: serializer.fromJson<int>(json['branchId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'branchId': serializer.toJson<int>(branchId),
+    };
+  }
+
+  @override
+  VariationTableCompanion createCompanion(bool nullToAbsent) {
+    return VariationTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      branchId: branchId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(branchId),
+    );
+  }
+
+  VariationTableData copyWith({int id, String name, int branchId}) =>
+      VariationTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        branchId: branchId ?? this.branchId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('VariationTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('branchId: $branchId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, branchId.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is VariationTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.branchId == this.branchId);
+}
+
+class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> branchId;
+  const VariationTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.branchId = const Value.absent(),
+  });
+  VariationTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required String name,
+    @required int branchId,
+  })  : name = Value(name),
+        branchId = Value(branchId);
+  VariationTableCompanion copyWith(
+      {Value<int> id, Value<String> name, Value<int> branchId}) {
+    return VariationTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      branchId: branchId ?? this.branchId,
+    );
+  }
+}
+
+class $VariationTableTable extends VariationTable
+    with TableInfo<$VariationTableTable, VariationTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $VariationTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
+  GeneratedIntColumn _branchId;
+  @override
+  GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
+  GeneratedIntColumn _constructBranchId() {
+    return GeneratedIntColumn('branch_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES branch_table(id)');
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name, branchId];
+  @override
+  $VariationTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'variation_table';
+  @override
+  final String actualTableName = 'variation_table';
+  @override
+  VerificationContext validateIntegrity(VariationTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.name.present) {
+      context.handle(
+          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+    } else if (name.isRequired && isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (d.branchId.present) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableValue(d.branchId.value, _branchIdMeta));
+    } else if (branchId.isRequired && isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VariationTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return VariationTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(VariationTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.name.present) {
+      map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.branchId.present) {
+      map['branch_id'] = Variable<int, IntType>(d.branchId.value);
+    }
+    return map;
+  }
+
+  @override
+  $VariationTableTable createAlias(String alias) {
+    return $VariationTableTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $UserTableTable _userTable;
   $UserTableTable get userTable => _userTable ??= $UserTableTable(this);
   $UnitTableTable _unitTable;
   $UnitTableTable get unitTable => _unitTable ??= $UnitTableTable(this);
-  $ItemTableTable _itemTable;
-  $ItemTableTable get itemTable => _itemTable ??= $ItemTableTable(this);
   $TokenTableTable _tokenTable;
   $TokenTableTable get tokenTable => _tokenTable ??= $TokenTableTable(this);
   $BusinessUserTableTable _businessUserTable;
@@ -2613,6 +2898,11 @@ abstract class _$Database extends GeneratedDatabase {
   $StockTableTable get stockTable => _stockTable ??= $StockTableTable(this);
   $PriceTableTable _priceTable;
   $PriceTableTable get priceTable => _priceTable ??= $PriceTableTable(this);
+  $ItemTableTable _itemTable;
+  $ItemTableTable get itemTable => _itemTable ??= $ItemTableTable(this);
+  $VariationTableTable _variationTable;
+  $VariationTableTable get variationTable =>
+      _variationTable ??= $VariationTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
@@ -2627,11 +2917,15 @@ abstract class _$Database extends GeneratedDatabase {
   CategoryDao get categoryDao => _categoryDao ??= CategoryDao(this as Database);
   TabsDao _tabsDao;
   TabsDao get tabsDao => _tabsDao ??= TabsDao(this as Database);
+  VariationDao _variationDao;
+  VariationDao get variationDao =>
+      _variationDao ??= VariationDao(this as Database);
+  ItemDao _itemDao;
+  ItemDao get itemDao => _itemDao ??= ItemDao(this as Database);
   @override
   List<TableInfo> get allTables => [
         userTable,
         unitTable,
-        itemTable,
         tokenTable,
         businessUserTable,
         tabsTable,
@@ -2639,6 +2933,8 @@ abstract class _$Database extends GeneratedDatabase {
         categoryTable,
         branchTable,
         stockTable,
-        priceTable
+        priceTable,
+        itemTable,
+        variationTable
       ];
 }

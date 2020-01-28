@@ -136,6 +136,15 @@ class S {
       args: [],
     );
   }
+
+  String get addStock {
+    return Intl.message(
+      'Add Stock',
+      name: 'addStock',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

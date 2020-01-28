@@ -14,7 +14,7 @@ class _$Branch extends Branch {
   @override
   final String description;
   @override
-  final bool isCurrentFocused;
+  final bool isActive;
   @override
   final String location;
 
@@ -22,11 +22,7 @@ class _$Branch extends Branch {
       (new BranchBuilder()..update(updates)).build();
 
   _$Branch._(
-      {this.id,
-      this.name,
-      this.description,
-      this.isCurrentFocused,
-      this.location})
+      {this.id, this.name, this.description, this.isActive, this.location})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('Branch', 'name');
@@ -47,7 +43,7 @@ class _$Branch extends Branch {
         id == other.id &&
         name == other.name &&
         description == other.description &&
-        isCurrentFocused == other.isCurrentFocused &&
+        isActive == other.isActive &&
         location == other.location;
   }
 
@@ -55,7 +51,7 @@ class _$Branch extends Branch {
   int get hashCode {
     return $jf($jc(
         $jc($jc($jc($jc(0, id.hashCode), name.hashCode), description.hashCode),
-            isCurrentFocused.hashCode),
+            isActive.hashCode),
         location.hashCode));
   }
 
@@ -65,7 +61,7 @@ class _$Branch extends Branch {
           ..add('id', id)
           ..add('name', name)
           ..add('description', description)
-          ..add('isCurrentFocused', isCurrentFocused)
+          ..add('isActive', isActive)
           ..add('location', location))
         .toString();
   }
@@ -86,10 +82,9 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   String get description => _$this._description;
   set description(String description) => _$this._description = description;
 
-  bool _isCurrentFocused;
-  bool get isCurrentFocused => _$this._isCurrentFocused;
-  set isCurrentFocused(bool isCurrentFocused) =>
-      _$this._isCurrentFocused = isCurrentFocused;
+  bool _isActive;
+  bool get isActive => _$this._isActive;
+  set isActive(bool isActive) => _$this._isActive = isActive;
 
   String _location;
   String get location => _$this._location;
@@ -102,7 +97,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
       _id = _$v.id;
       _name = _$v.name;
       _description = _$v.description;
-      _isCurrentFocused = _$v.isCurrentFocused;
+      _isActive = _$v.isActive;
       _location = _$v.location;
       _$v = null;
     }
@@ -129,7 +124,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
             id: id,
             name: name,
             description: description,
-            isCurrentFocused: isCurrentFocused,
+            isActive: isActive,
             location: location);
     replace(_$result);
     return _$result;

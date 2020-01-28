@@ -1,4 +1,3 @@
-import 'package:flipper/data/branch.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/data/tabs.dart';
 import 'package:moor/moor.dart';
@@ -25,10 +24,10 @@ class TabsDao extends DatabaseAccessor<Database> with _$TabsDaoMixin {
 
   Future<TabsTableData> getTab() {
     return (select(db.tabsTable)
-      ..orderBy(
-          [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
-      ..where((t) => t.id.equals(1))
-      ..limit(1))
+          ..orderBy(
+              [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
+          ..where((t) => t.id.equals(1))
+          ..limit(1))
         .getSingle();
   }
 }

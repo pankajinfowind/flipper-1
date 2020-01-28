@@ -5,7 +5,8 @@ import 'package:redux/redux.dart';
 
 class BranchRepository {
   Future<int> insert(Store<AppState> store, Branch b) {
-    var branch = new BranchTableData(name: b.name);
+    // ignore: missing_required_param
+    var branch = new BranchTableData(name: b.name, isActive: b.isActive);
     return store.state.database.branchDao.insert(branch);
   }
 

@@ -1,4 +1,3 @@
-
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,12 @@ class OnSetBranchHint {
   const OnSetBranchHint({@required this.branch});
 }
 
+@immutable
+class OnCurrentBranchAction {
+  final Branch branch;
+
+  const OnCurrentBranchAction({@required this.branch});
+}
 
 @immutable
 class OnBranchLoaded {

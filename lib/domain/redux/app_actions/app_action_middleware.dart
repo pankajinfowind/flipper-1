@@ -24,6 +24,8 @@ List<Middleware<AppState>> AppActionMiddleware(
         _persistCategoryFocused(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, CreateEmptyTempCategoryAction>(
         _createTempCategory(navigatorKey, generalRepository)),
+    TypedMiddleware<AppState, SaveItemAction>(
+        _createItemInStore(navigatorKey, generalRepository)),
   ];
 }
 
@@ -80,29 +82,28 @@ void Function(Store<AppState> store, InvokePersistFocusedCategory action,
     _persistCategoryFocused(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
-    if (store.state.currentCategory.id != null) {
-      store.state.categories.forEach((u) => {
-            if (u.id == store.state.currentCategory.id)
-              {
-                generalRepository.updateCategory(
-                    store,
-                    store.state.currentCategory.id,
-                    null,
-                    store.state.currentActiveBusiness,
-                    focused: true)
-              }
-            else
-              {
-                generalRepository.updateCategory(
-                  store,
-                  store.state.currentCategory.id,
-                  null,
-                  store.state.currentActiveBusiness,
-                  focused: false,
-                )
-              }
-          });
-    }
+    store.state.categories.forEach((u) => {
+          if (u.focused)
+            {
+              generalRepository.updateCategory(
+                store,
+                u.id,
+                null,
+                store.state.currentActiveBusiness,
+                focused: true,
+              )
+            }
+          else
+            {
+              generalRepository.updateCategory(
+                store,
+                u.id,
+                null,
+                store.state.currentActiveBusiness,
+                focused: false,
+              )
+            }
+        });
   };
 }
 
@@ -162,5 +163,20 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         await generalRepository.insertTabs(store, store.state.tab);
       }
     }
+  };
+}
+
+void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
+    _createItemInStore(GlobalKey<NavigatorState> navigatorKey,
+        GeneralRepository generalRepository) {
+  return (store, action, next) async {
+    next(action);
+
+    print(action.price);
+    print(action.variations);
+    print(action.description);
+    print(action.category);
+    print(action.business);
+    print(action.unit);
   };
 }

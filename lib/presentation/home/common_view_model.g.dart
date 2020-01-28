@@ -38,8 +38,6 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final Unit currentUnit;
   @override
-  final Category currentCategory;
-  @override
   final FlipperColor currentColor;
   @override
   final Disable currentDisable;
@@ -65,7 +63,6 @@ class _$CommonViewModel extends CommonViewModel {
       this.categoryName,
       this.category,
       this.currentUnit,
-      this.currentCategory,
       this.currentColor,
       this.currentDisable,
       this.variations})
@@ -120,7 +117,6 @@ class _$CommonViewModel extends CommonViewModel {
         categoryName == other.categoryName &&
         category == other.category &&
         currentUnit == other.currentUnit &&
-        currentCategory == other.currentCategory &&
         currentColor == other.currentColor &&
         currentDisable == other.currentDisable &&
         variations == other.variations;
@@ -146,30 +142,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                hasUser
-                                                                                    .hashCode),
-                                                                            hasSheet
+                                                                            0,
+                                                                            hasUser
                                                                                 .hashCode),
-                                                                        hasHint
+                                                                        hasSheet
                                                                             .hashCode),
-                                                                    units
+                                                                    hasHint
                                                                         .hashCode),
-                                                                categories
-                                                                    .hashCode),
-                                                            tab.hashCode),
-                                                        currentBusiness
-                                                            .hashCode),
-                                                    hasAction.hashCode),
-                                                branches.hashCode),
-                                            businesses.hashCode),
-                                        appAction.hashCode),
-                                    hint.hashCode),
-                                categoryName.hashCode),
-                            category.hashCode),
-                        currentUnit.hashCode),
-                    currentCategory.hashCode),
+                                                                units.hashCode),
+                                                            categories
+                                                                .hashCode),
+                                                        tab.hashCode),
+                                                    currentBusiness.hashCode),
+                                                hasAction.hashCode),
+                                            branches.hashCode),
+                                        businesses.hashCode),
+                                    appAction.hashCode),
+                                hint.hashCode),
+                            categoryName.hashCode),
+                        category.hashCode),
+                    currentUnit.hashCode),
                 currentColor.hashCode),
             currentDisable.hashCode),
         variations.hashCode));
@@ -193,7 +185,6 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('categoryName', categoryName)
           ..add('category', category)
           ..add('currentUnit', currentUnit)
-          ..add('currentCategory', currentCategory)
           ..add('currentColor', currentColor)
           ..add('currentDisable', currentDisable)
           ..add('variations', variations))
@@ -270,12 +261,6 @@ class CommonViewModelBuilder
   UnitBuilder get currentUnit => _$this._currentUnit ??= new UnitBuilder();
   set currentUnit(UnitBuilder currentUnit) => _$this._currentUnit = currentUnit;
 
-  CategoryBuilder _currentCategory;
-  CategoryBuilder get currentCategory =>
-      _$this._currentCategory ??= new CategoryBuilder();
-  set currentCategory(CategoryBuilder currentCategory) =>
-      _$this._currentCategory = currentCategory;
-
   FlipperColorBuilder _currentColor;
   FlipperColorBuilder get currentColor =>
       _$this._currentColor ??= new FlipperColorBuilder();
@@ -313,7 +298,6 @@ class CommonViewModelBuilder
       _categoryName = _$v.categoryName;
       _category = _$v.category?.toBuilder();
       _currentUnit = _$v.currentUnit?.toBuilder();
-      _currentCategory = _$v.currentCategory?.toBuilder();
       _currentColor = _$v.currentColor?.toBuilder();
       _currentDisable = _$v.currentDisable?.toBuilder();
       _variations = _$v.variations?.toBuilder();
@@ -356,7 +340,6 @@ class CommonViewModelBuilder
               categoryName: categoryName,
               category: _category?.build(),
               currentUnit: _currentUnit?.build(),
-              currentCategory: _currentCategory?.build(),
               currentColor: _currentColor?.build(),
               currentDisable: _currentDisable?.build(),
               variations: _variations?.build());
@@ -380,8 +363,6 @@ class CommonViewModelBuilder
         _category?.build();
         _$failedField = 'currentUnit';
         _currentUnit?.build();
-        _$failedField = 'currentCategory';
-        _currentCategory?.build();
         _$failedField = 'currentColor';
         _currentColor?.build();
         _$failedField = 'currentDisable';

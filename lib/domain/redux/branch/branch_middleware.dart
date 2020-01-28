@@ -67,7 +67,9 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         BranchRepository branchRepo, GeneralRepository generalRepository) {
   return (store, action, next) async {
     if (store.state.branch != null) {
-      final branch = Branch((b) => b..name = store.state.branch.name);
+      final branch = Branch((b) => b
+        ..name = store.state.branch.name
+        ..isActive = true);
       final branchId = await branchRepo.insert(store, branch);
       //TODO: use the setUnits emitted progress on settingUpProgress screen.
       //getting up the default units
@@ -112,3 +114,5 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     }
   };
 }
+
+//on create branch remember to fire the created branch as current branch

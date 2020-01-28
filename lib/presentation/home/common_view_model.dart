@@ -53,9 +53,6 @@ abstract class CommonViewModel
   Unit get currentUnit;
 
   @nullable
-  Category get currentCategory;
-
-  @nullable
   FlipperColor get currentColor;
 
   @nullable
@@ -94,9 +91,6 @@ abstract class CommonViewModel
       ..currentUnit = store.state.currentUnit == null
           ? null
           : store.state.currentUnit.toBuilder()
-      ..currentCategory = store.state.currentCategory == null
-          ? null
-          : store.state.currentCategory.toBuilder()
       ..units = store.state.units.toBuilder()
       ..variations = store.state.variations.toBuilder()
       ..categoryName = store.state.categoryName

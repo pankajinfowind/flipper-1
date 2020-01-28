@@ -1,4 +1,5 @@
 import 'package:flipper/model/app_action.dart';
+import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
@@ -124,4 +125,24 @@ class VariationAction {
   final List<Variation> variations;
 
   VariationAction({this.variations});
+}
+
+@immutable
+class SaveItemAction {
+  final Business business;
+  final String price;
+  final List<Variation> variations;
+  final Category category;
+  final String description;
+  final String name;
+  final Unit unit;
+
+  SaveItemAction(
+      {this.business,
+      this.price,
+      this.variations,
+      this.category,
+      this.description,
+      this.name,
+      this.unit});
 }

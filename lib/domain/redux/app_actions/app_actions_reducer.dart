@@ -87,8 +87,6 @@ AppState _onTempCategoryId(AppState state, TempCategoryIdAction action) {
 }
 
 AppState _onCurrentCategory(AppState state, CurrentCategory action) {
-  state.rebuild((a) => a..currentCategory = action.category.toBuilder());
-
   List<Category> categories = [];
   state.categories.forEach((u) => {
         if (u.id == action.category.id)

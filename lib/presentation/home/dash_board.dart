@@ -29,36 +29,6 @@ class _DashBoardState extends State<DashBoard> {
     _sideOpenController = ValueNotifier<bool>(false);
   }
 
-  void _showBottomSheet() {
-    _scaffoldKey.currentState
-        .showBottomSheet((context) {
-          return SafeArea(
-            child: Scaffold(
-              appBar: CommonAppBar(
-                disableButton: true,
-                title: "Add Note",
-              ),
-              body: Container(
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextFormField(
-                        decoration:
-                            InputDecoration(hintText: 'Enter a search term'),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        })
-        .closed
-        .whenComplete(() {
-          StoreProvider.of<AppState>(context).dispatch(OnBottomSheetClosed());
-        });
-  }
-
   @override
   void dispose() {
     super.dispose();

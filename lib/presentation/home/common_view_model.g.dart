@@ -42,7 +42,11 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final Disable currentDisable;
   @override
+  final Branch currentBranch;
+  @override
   final BuiltList<Variation> variations;
+  @override
+  final BuiltList<Item> items;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -65,7 +69,9 @@ class _$CommonViewModel extends CommonViewModel {
       this.currentUnit,
       this.currentColor,
       this.currentDisable,
-      this.variations})
+      this.currentBranch,
+      this.variations,
+      this.items})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -87,6 +93,9 @@ class _$CommonViewModel extends CommonViewModel {
     }
     if (hint == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hint');
+    }
+    if (items == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'items');
     }
   }
 
@@ -119,7 +128,9 @@ class _$CommonViewModel extends CommonViewModel {
         currentUnit == other.currentUnit &&
         currentColor == other.currentColor &&
         currentDisable == other.currentDisable &&
-        variations == other.variations;
+        currentBranch == other.currentBranch &&
+        variations == other.variations &&
+        items == other.items;
   }
 
   @override
@@ -142,29 +153,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            hasUser
-                                                                                .hashCode),
-                                                                        hasSheet
-                                                                            .hashCode),
-                                                                    hasHint
-                                                                        .hashCode),
-                                                                units.hashCode),
-                                                            categories
-                                                                .hashCode),
-                                                        tab.hashCode),
-                                                    currentBusiness.hashCode),
-                                                hasAction.hashCode),
-                                            branches.hashCode),
-                                        businesses.hashCode),
-                                    appAction.hashCode),
-                                hint.hashCode),
-                            categoryName.hashCode),
-                        category.hashCode),
-                    currentUnit.hashCode),
-                currentColor.hashCode),
-            currentDisable.hashCode),
-        variations.hashCode));
+                                                                            $jc($jc(0, hasUser.hashCode),
+                                                                                hasSheet.hashCode),
+                                                                            hasHint.hashCode),
+                                                                        units.hashCode),
+                                                                    categories.hashCode),
+                                                                tab.hashCode),
+                                                            currentBusiness.hashCode),
+                                                        hasAction.hashCode),
+                                                    branches.hashCode),
+                                                businesses.hashCode),
+                                            appAction.hashCode),
+                                        hint.hashCode),
+                                    categoryName.hashCode),
+                                category.hashCode),
+                            currentUnit.hashCode),
+                        currentColor.hashCode),
+                    currentDisable.hashCode),
+                currentBranch.hashCode),
+            variations.hashCode),
+        items.hashCode));
   }
 
   @override
@@ -187,7 +195,9 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('currentUnit', currentUnit)
           ..add('currentColor', currentColor)
           ..add('currentDisable', currentDisable)
-          ..add('variations', variations))
+          ..add('currentBranch', currentBranch)
+          ..add('variations', variations)
+          ..add('items', items))
         .toString();
   }
 }
@@ -273,11 +283,21 @@ class CommonViewModelBuilder
   set currentDisable(DisableBuilder currentDisable) =>
       _$this._currentDisable = currentDisable;
 
+  BranchBuilder _currentBranch;
+  BranchBuilder get currentBranch =>
+      _$this._currentBranch ??= new BranchBuilder();
+  set currentBranch(BranchBuilder currentBranch) =>
+      _$this._currentBranch = currentBranch;
+
   ListBuilder<Variation> _variations;
   ListBuilder<Variation> get variations =>
       _$this._variations ??= new ListBuilder<Variation>();
   set variations(ListBuilder<Variation> variations) =>
       _$this._variations = variations;
+
+  ListBuilder<Item> _items;
+  ListBuilder<Item> get items => _$this._items ??= new ListBuilder<Item>();
+  set items(ListBuilder<Item> items) => _$this._items = items;
 
   CommonViewModelBuilder();
 
@@ -300,7 +320,9 @@ class CommonViewModelBuilder
       _currentUnit = _$v.currentUnit?.toBuilder();
       _currentColor = _$v.currentColor?.toBuilder();
       _currentDisable = _$v.currentDisable?.toBuilder();
+      _currentBranch = _$v.currentBranch?.toBuilder();
       _variations = _$v.variations?.toBuilder();
+      _items = _$v.items?.toBuilder();
       _$v = null;
     }
     return this;
@@ -342,7 +364,9 @@ class CommonViewModelBuilder
               currentUnit: _currentUnit?.build(),
               currentColor: _currentColor?.build(),
               currentDisable: _currentDisable?.build(),
-              variations: _variations?.build());
+              currentBranch: _currentBranch?.build(),
+              variations: _variations?.build(),
+              items: items.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -367,8 +391,12 @@ class CommonViewModelBuilder
         _currentColor?.build();
         _$failedField = 'currentDisable';
         _currentDisable?.build();
+        _$failedField = 'currentBranch';
+        _currentBranch?.build();
         _$failedField = 'variations';
         _variations?.build();
+        _$failedField = 'items';
+        items.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

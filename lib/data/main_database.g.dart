@@ -2394,13 +2394,15 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
   final int id;
   final String name;
   final int categoryId;
-  final int businessId;
+  final int branchId;
+  final int unitId;
   final int variationId;
   ItemTableData(
       {@required this.id,
       @required this.name,
       @required this.categoryId,
-      @required this.businessId,
+      @required this.branchId,
+      @required this.unitId,
       @required this.variationId});
   factory ItemTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -2413,8 +2415,10 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       categoryId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}category_id']),
-      businessId: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
+      branchId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
+      unitId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}unit_id']),
       variationId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}variation_id']),
     );
@@ -2425,7 +2429,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       categoryId: serializer.fromJson<int>(json['categoryId']),
-      businessId: serializer.fromJson<int>(json['businessId']),
+      branchId: serializer.fromJson<int>(json['branchId']),
+      unitId: serializer.fromJson<int>(json['unitId']),
       variationId: serializer.fromJson<int>(json['variationId']),
     );
   }
@@ -2436,7 +2441,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'categoryId': serializer.toJson<int>(categoryId),
-      'businessId': serializer.toJson<int>(businessId),
+      'branchId': serializer.toJson<int>(branchId),
+      'unitId': serializer.toJson<int>(unitId),
       'variationId': serializer.toJson<int>(variationId),
     };
   }
@@ -2449,9 +2455,11 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       categoryId: categoryId == null && nullToAbsent
           ? const Value.absent()
           : Value(categoryId),
-      businessId: businessId == null && nullToAbsent
+      branchId: branchId == null && nullToAbsent
           ? const Value.absent()
-          : Value(businessId),
+          : Value(branchId),
+      unitId:
+          unitId == null && nullToAbsent ? const Value.absent() : Value(unitId),
       variationId: variationId == null && nullToAbsent
           ? const Value.absent()
           : Value(variationId),
@@ -2462,13 +2470,15 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           {int id,
           String name,
           int categoryId,
-          int businessId,
+          int branchId,
+          int unitId,
           int variationId}) =>
       ItemTableData(
         id: id ?? this.id,
         name: name ?? this.name,
         categoryId: categoryId ?? this.categoryId,
-        businessId: businessId ?? this.businessId,
+        branchId: branchId ?? this.branchId,
+        unitId: unitId ?? this.unitId,
         variationId: variationId ?? this.variationId,
       );
   @override
@@ -2477,7 +2487,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('categoryId: $categoryId, ')
-          ..write('businessId: $businessId, ')
+          ..write('branchId: $branchId, ')
+          ..write('unitId: $unitId, ')
           ..write('variationId: $variationId')
           ..write(')'))
         .toString();
@@ -2488,8 +2499,10 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       id.hashCode,
       $mrjc(
           name.hashCode,
-          $mrjc(categoryId.hashCode,
-              $mrjc(businessId.hashCode, variationId.hashCode)))));
+          $mrjc(
+              categoryId.hashCode,
+              $mrjc(branchId.hashCode,
+                  $mrjc(unitId.hashCode, variationId.hashCode))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -2497,7 +2510,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           other.id == this.id &&
           other.name == this.name &&
           other.categoryId == this.categoryId &&
-          other.businessId == this.businessId &&
+          other.branchId == this.branchId &&
+          other.unitId == this.unitId &&
           other.variationId == this.variationId);
 }
 
@@ -2505,36 +2519,42 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
   final Value<int> id;
   final Value<String> name;
   final Value<int> categoryId;
-  final Value<int> businessId;
+  final Value<int> branchId;
+  final Value<int> unitId;
   final Value<int> variationId;
   const ItemTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.categoryId = const Value.absent(),
-    this.businessId = const Value.absent(),
+    this.branchId = const Value.absent(),
+    this.unitId = const Value.absent(),
     this.variationId = const Value.absent(),
   });
   ItemTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
     @required int categoryId,
-    @required int businessId,
+    @required int branchId,
+    @required int unitId,
     @required int variationId,
   })  : name = Value(name),
         categoryId = Value(categoryId),
-        businessId = Value(businessId),
+        branchId = Value(branchId),
+        unitId = Value(unitId),
         variationId = Value(variationId);
   ItemTableCompanion copyWith(
       {Value<int> id,
       Value<String> name,
       Value<int> categoryId,
-      Value<int> businessId,
+      Value<int> branchId,
+      Value<int> unitId,
       Value<int> variationId}) {
     return ItemTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       categoryId: categoryId ?? this.categoryId,
-      businessId: businessId ?? this.businessId,
+      branchId: branchId ?? this.branchId,
+      unitId: unitId ?? this.unitId,
       variationId: variationId ?? this.variationId,
     );
   }
@@ -2575,13 +2595,22 @@ class $ItemTableTable extends ItemTable
         $customConstraints: 'NULL REFERENCES category_table(id)');
   }
 
-  final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
-  GeneratedIntColumn _businessId;
+  final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
+  GeneratedIntColumn _branchId;
   @override
-  GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
-  GeneratedIntColumn _constructBusinessId() {
-    return GeneratedIntColumn('business_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES business_table(id)');
+  GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
+  GeneratedIntColumn _constructBranchId() {
+    return GeneratedIntColumn('branch_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES branch_table(id)');
+  }
+
+  final VerificationMeta _unitIdMeta = const VerificationMeta('unitId');
+  GeneratedIntColumn _unitId;
+  @override
+  GeneratedIntColumn get unitId => _unitId ??= _constructUnitId();
+  GeneratedIntColumn _constructUnitId() {
+    return GeneratedIntColumn('unit_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES unit_table(id)');
   }
 
   final VerificationMeta _variationIdMeta =
@@ -2597,7 +2626,7 @@ class $ItemTableTable extends ItemTable
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, categoryId, businessId, variationId];
+      [id, name, categoryId, branchId, unitId, variationId];
   @override
   $ItemTableTable get asDslTable => this;
   @override
@@ -2625,11 +2654,17 @@ class $ItemTableTable extends ItemTable
     } else if (categoryId.isRequired && isInserting) {
       context.missing(_categoryIdMeta);
     }
-    if (d.businessId.present) {
-      context.handle(_businessIdMeta,
-          businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
-    } else if (businessId.isRequired && isInserting) {
-      context.missing(_businessIdMeta);
+    if (d.branchId.present) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableValue(d.branchId.value, _branchIdMeta));
+    } else if (branchId.isRequired && isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    if (d.unitId.present) {
+      context.handle(
+          _unitIdMeta, unitId.isAcceptableValue(d.unitId.value, _unitIdMeta));
+    } else if (unitId.isRequired && isInserting) {
+      context.missing(_unitIdMeta);
     }
     if (d.variationId.present) {
       context.handle(_variationIdMeta,
@@ -2660,8 +2695,11 @@ class $ItemTableTable extends ItemTable
     if (d.categoryId.present) {
       map['category_id'] = Variable<int, IntType>(d.categoryId.value);
     }
-    if (d.businessId.present) {
-      map['business_id'] = Variable<int, IntType>(d.businessId.value);
+    if (d.branchId.present) {
+      map['branch_id'] = Variable<int, IntType>(d.branchId.value);
+    }
+    if (d.unitId.present) {
+      map['unit_id'] = Variable<int, IntType>(d.unitId.value);
     }
     if (d.variationId.present) {
       map['variation_id'] = Variable<int, IntType>(d.variationId.value);

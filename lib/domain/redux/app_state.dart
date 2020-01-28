@@ -8,6 +8,7 @@ import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
+import 'package:flipper/model/item.dart';
 import 'package:flipper/model/permission.dart';
 import 'package:flipper/model/price.dart';
 import 'package:flipper/model/sheet.dart';
@@ -96,6 +97,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   BuiltList<Variation> get variations;
 
+  BuiltList<Item> get items;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 
@@ -104,6 +107,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..units = ListBuilder()
     ..categories = ListBuilder()
     ..variations = ListBuilder()
+    ..items = ListBuilder()
     ..businesses = List<Business>()
     ..branches = List<Branch>());
 

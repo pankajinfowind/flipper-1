@@ -7,6 +7,7 @@ class UnitTable extends Table {
 
   BoolColumn get focused => boolean()();
 
+  //todo: delete businessId asp no need here
   IntColumn get businessId =>
       integer().customConstraint('NULL REFERENCES business_table(id)')();
 

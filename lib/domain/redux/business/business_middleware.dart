@@ -43,9 +43,11 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       List<Business> businesses = [];
 
       businessList.forEach((b) => {
-            businesses.add(Business((bu) => bu
-              ..name = b.name
-              ..id = b.id))
+            businesses.add(
+              Business((bu) => bu
+                ..name = b.name
+                ..id = b.id),
+            )
           });
 
       store.dispatch(BusinessId(businessId));

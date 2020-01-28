@@ -41,7 +41,11 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
             onPressedCallback: () {
               List<Variation> variatione = [];
               List<Variation> updateVariations = [];
-
+              StoreProvider.of<AppState>(context).dispatch(
+                AppAction(
+                  actions: AppActions((a) => a..name = "none"),
+                ),
+              );
               if (vm.variations.length > 0) {
                 vm.variations.forEach((v) => {
                       updateVariations.add(v),

@@ -67,9 +67,11 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         BranchRepository branchRepo, GeneralRepository generalRepository) {
   return (store, action, next) async {
     if (store.state.branch != null) {
-      final branch = Branch((b) => b
-        ..name = store.state.branch.name
-        ..isActive = true);
+      final branch = Branch(
+        (b) => b
+          ..name = store.state.branch.name
+          ..isActive = true,
+      );
       final branchId = await branchRepo.insert(store, branch);
       //TODO: use the setUnits emitted progress on settingUpProgress screen.
       //getting up the default units
@@ -79,7 +81,11 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     } else {
       //we are creating a branch from signup make is be like the same as business name.
       store.dispatch(ResetAppAction());
-      final branch = Branch((b) => b..name = store.state.business.name);
+      final branch = Branch(
+        (b) => b
+          ..name = store.state.business.name
+          ..isActive = true,
+      );
 
       final branchId = await branchRepo.insert(store, branch);
       setUnits(store, branchId, generalRepository);

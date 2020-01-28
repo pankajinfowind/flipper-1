@@ -9,6 +9,7 @@ import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
@@ -68,6 +69,8 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
     TabsTableData tab = await generalRepository.getTab(store);
 
+    List<ItemTableData> items = await generalRepository.getItems(store);
+
     List<UnitTableData> unitsList = await generalRepository.getUnits(store);
 
     List<CategoryTableData> categoryList =
@@ -114,7 +117,23 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           });
 
       List<Category> categories = [];
+      List<Item> itemList = [];
 
+      items.forEach(
+        (i) => itemList.add(
+          Item(
+            (v) => v
+              ..name = i.name
+              ..branchId = i.branchId
+              ..unitId = i.unitId
+              ..id = i.id
+              ..variantId = i.variationId
+              ..categoryId = i.categoryId,
+          ),
+        ),
+      );
+
+      store.dispatch(ItemLoaded(items: itemList));
       unitsList.forEach((c) => {
             if (c.focused)
               {
@@ -146,7 +165,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
                 )
               }
           });
-      //TODO: look for active business or branch and fire them in store so it can be found on the first launch.!
+
       categoryList.forEach((c) => {
             categories.add(Category((u) => u
               ..name = c.name

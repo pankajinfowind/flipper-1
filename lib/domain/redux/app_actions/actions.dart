@@ -1,8 +1,10 @@
 import 'package:flipper/model/app_action.dart';
+import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
+import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:flutter/material.dart';
@@ -130,6 +132,7 @@ class VariationAction {
 @immutable
 class SaveItemAction {
   final Business business;
+  final Branch branch;
   final String price;
   final List<Variation> variations;
   final Category category;
@@ -139,10 +142,18 @@ class SaveItemAction {
 
   SaveItemAction(
       {this.business,
+      this.branch,
       this.price,
       this.variations,
       this.category,
       this.description,
       this.name,
       this.unit});
+}
+
+@immutable
+class ItemLoaded{
+  final List<Item> items;
+
+  ItemLoaded({this.items});
 }

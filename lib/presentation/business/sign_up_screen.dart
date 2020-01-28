@@ -182,14 +182,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ..isActive = true
       ..type = BusinessType.NORMAL);
 
-    User user = User((user) => user
-      ..email = tBusiness.email
-      ..status = "online"
-      ..bearerToken = "none"
-      ..refreshToken = "none"
-      ..isCurrentAuthenticated = true
-      ..avatar = "avatarFromYegobox"
-      ..username = "userNameFromYegobox");
+    //TODO: get the info should be filled in form from yegobox i.e we don't have password field here.
+    User user = User(
+      (user) => user
+        ..email = tBusiness.email
+        ..status = "online"
+        ..bearerToken = "none"
+        ..refreshToken = "none"
+        ..isCurrentAuthenticated = true
+        ..avatar = tBusiness.name
+        ..username = tBusiness.name,
+    );
     StoreProvider.of<AppState>(context).dispatch(WithUser(user));
     StoreProvider.of<AppState>(context).dispatch(CreateUser(user));
     StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));

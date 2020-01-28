@@ -288,6 +288,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
   }
 
   Text categorySelector(CommonViewModel vm) {
+    //TODO: ensure that atleast we have one category focused
     Text text;
     for (var i = 0; i < vm.categories.length; i++) {
       if (vm.categories[i].focused) {
@@ -307,9 +308,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
         name: tForm.name,
         description: tForm.description,
         price: tForm.price,
+        branch: vm.currentBranch,
         variations: vm.variations.toList(),
         category: _currentCategory,
         unit: vm.currentUnit));
+    //TODO: wait a dispatched event from middleware so we can go home.
+    //Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
   }
 
   _buildVariationsList(BuiltList<Variation> variations) {

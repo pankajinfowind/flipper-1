@@ -10,22 +10,6 @@ class GeneralRepository {
     return store.state.database.tabsDao.insert(tab);
   }
 
-  Future<int> insertCategory(Store<AppState> store, int businessId) async {
-    //TODO: set branchId to the active one got when login or signup it should be switchable as business does
-    var tab = new CategoryTableData(
-        businessId: businessId,
-        branchId: 1,
-        focused: false,
-        name: "toBeModified");
-    CategoryTableData existingCategory =
-        await store.state.database.categoryDao.getCategoryName("toBeModified");
-    if (existingCategory == null) {
-      return store.state.database.categoryDao.insert(tab);
-    } else {
-      return existingCategory.id;
-    }
-  }
-
   Future<bool> updateCategory(Store<AppState> store, int categoryId,
       String categoryName, Business business,
       {bool focused = false}) async {
@@ -80,5 +64,33 @@ class GeneralRepository {
 
   Future<List<CategoryTableData>> getCategories(Store<AppState> store) {
     return store.state.database.categoryDao.getCategories();
+  }
+
+  Future<int> insertCategory(Store<AppState> store, int businessId) async {
+    //TODO: set branchId to the active one got when login or signup it should be switchable as business does
+    var tab = new CategoryTableData(
+        businessId: businessId,
+        branchId: 1,
+        focused: false,
+        name: "toBeModified");
+    CategoryTableData existingCategory =
+        await store.state.database.categoryDao.getCategoryName("toBeModified");
+    if (existingCategory == null) {
+      return store.state.database.categoryDao.insert(tab);
+    } else {
+      return existingCategory.id;
+    }
+  }
+
+  Future<int> insertItem(Store<AppState> store, ItemTableData data) {
+    return store.state.database.itemDao.insert(data);
+  }
+
+  Future<int> insertVariant(Store<AppState> store, VariationTableData data) {
+    return store.state.database.variationDao.insert(data);
+  }
+
+  Future<List<ItemTableData>> getItems(Store<AppState> store) {
+    return store.state.database.itemDao.getItems();
   }
 }

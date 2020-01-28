@@ -22,6 +22,7 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, CurrentDisable>(_onDisable),
   TypedReducer<AppState, VariationAction>(_onVariations),
   TypedReducer<AppState, CurrentCategory>(_onCurrentCategory),
+  TypedReducer<AppState, ItemLoaded>(_onItemLoaded),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
@@ -131,4 +132,8 @@ AppState _onDisable(AppState state, CurrentDisable action) {
 
 AppState _onVariations(AppState state, VariationAction action) {
   return state.rebuild((a) => a..variations = ListBuilder(action.variations));
+}
+
+AppState _onItemLoaded(AppState state, ItemLoaded action) {
+  return state.rebuild((a) => a..items = ListBuilder(action.items));
 }

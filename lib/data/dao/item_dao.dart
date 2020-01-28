@@ -21,4 +21,7 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
     // can not be used together with where.
     return update(db.itemTable).replace(entry);
   }
+
+  Future<List<ItemTableData>> getItems() =>
+      select(db.itemTable).get();
 }

@@ -8,6 +8,7 @@ import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
+import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:redux/redux.dart';
@@ -59,7 +60,12 @@ abstract class CommonViewModel
   Disable get currentDisable;
 
   @nullable
+  Branch get currentBranch;
+
+  @nullable
   BuiltList<Variation> get variations;
+
+  BuiltList<Item> get items;
 
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
@@ -86,8 +92,11 @@ abstract class CommonViewModel
       ..hasUser = _hasUser(store)
       ..hasSheet = _hasSheet(store)
       ..hasAction = _hasAction(store)
+      ..currentBranch =
+          store.state.branch == null ? null : store.state.branch.toBuilder()
       ..businesses = store.state.businesses
       ..tab = store.state.tab
+      ..items = store.state.items.toBuilder()
       ..currentUnit = store.state.currentUnit == null
           ? null
           : store.state.currentUnit.toBuilder()

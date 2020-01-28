@@ -171,12 +171,31 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         GeneralRepository generalRepository) {
   return (store, action, next) async {
     next(action);
+    for (var i = 0; i < action.variations.length; i++) {
+      // insert variation and get last id to save the item then
+      final variationId = await generalRepository.insertVariant(
+        store,
+        // ignore: missing_required_param
+        VariationTableData(
+          name: action.variations[i].name,
+          branchId: action.branch.id,
+        ),
+      );
 
-    print(action.price);
-    print(action.variations);
-    print(action.description);
-    print(action.category);
-    print(action.business);
-    print(action.unit);
+      //insert item
+      final item = await generalRepository.insertItem(
+        store,
+        // ignore: missing_required_param
+        ItemTableData(
+            name: action.name,
+            categoryId: action.category.id,
+            unitId: action.unit.id,
+            branchId: action.branch.id,
+            variationId: variationId),
+      );
+      if (item is int) {
+        print("inserted the item:" + item.toString());
+      }
+    }
   };
 }

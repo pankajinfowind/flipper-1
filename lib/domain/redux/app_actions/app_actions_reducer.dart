@@ -93,21 +93,27 @@ AppState _onCurrentCategory(AppState state, CurrentCategory action) {
   state.categories.forEach((u) => {
         if (u.id == action.category.id)
           {
-            categories.add(Category((c) => c
-              ..focused = true
-              ..id = u.id
-              ..name = u.name
-              ..businessId = u.businessId
-              ..branchId = u.branchId))
+            categories.add(
+              Category(
+                (c) => c
+                  ..focused = true
+                  ..id = u.id
+                  ..name = u.name
+                  ..businessId = u.businessId
+                  ..branchId = u.branchId,
+              ),
+            )
           }
         else
           {
-            categories.add(Category((c) => c
-              ..focused = false
-              ..id = u.id
-              ..name = u.name
-              ..businessId = u.businessId
-              ..branchId = u.branchId))
+            categories.add(
+              Category((c) => c
+                ..focused = false
+                ..id = u.id
+                ..name = u.name
+                ..businessId = u.businessId
+                ..branchId = u.branchId),
+            ),
           }
       });
   return state.rebuild((a) => a..categories = ListBuilder(categories));

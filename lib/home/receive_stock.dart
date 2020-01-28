@@ -4,6 +4,7 @@ import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -26,6 +27,9 @@ class _ReceiveStockState extends State<ReceiveStock> {
           appBar: CommonAppBar(
             disableButton: false,
             title: "Receive stock",
+            onPressedCallback: () {
+              Router.navigator.pop();
+            },
             showActionButton: true,
             actionButtonName: S.of(context).save,
             icon: Icons.close,
@@ -38,6 +42,7 @@ class _ReceiveStockState extends State<ReceiveStock> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     textDirection: TextDirection.rtl,
                     autofocus: true,
                     style: TextStyle(color: Colors.black),
@@ -46,13 +51,15 @@ class _ReceiveStockState extends State<ReceiveStock> {
 
                       for (var i = 0; i < vm.variations.length; i++) {
                         if (widget.variationId == vm.variations[i].id) {
-                          updateVariations.add(Variation((v) => v
-                            ..id = vm.variations[i].id
-                            ..name = vm.variations[i].name
-                            ..stockValue = int.parse(count)
-                            ..sku = vm.variations[i].sku
-                            ..price = vm.variations[i].price
-                            ..unityType = vm.variations[i].unityType));
+                          updateVariations.add(
+                            Variation((v) => v
+                              ..id = vm.variations[i].id
+                              ..name = vm.variations[i].name
+                              ..stockValue = int.parse(count)
+                              ..sku = vm.variations[i].sku
+                              ..price = vm.variations[i].price
+                              ..unityType = vm.variations[i].unityType),
+                          );
                         } else {
                           updateVariations.add(vm.variations[i]);
                         }
@@ -61,7 +68,9 @@ class _ReceiveStockState extends State<ReceiveStock> {
                           VariationAction(variations: updateVariations));
                     },
                     decoration: InputDecoration(
-                        hintText: "Add Stock", focusColor: Colors.blue),
+                      hintText: "Add Stock",
+                      focusColor: Colors.blue,
+                    ),
                   ),
                   Container(
                     height: 20,

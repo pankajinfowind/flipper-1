@@ -285,6 +285,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
     print(vm.categoryName);
     print(vm.currentBusiness);
     print(tForm.price);
+    print(vm.variations);
+    print(vm.currentCategory);
+    print(vm.currentUnit);
+    print(tForm.description);
   }
 
   _buildVariationsList(BuiltList<Variation> variations) {

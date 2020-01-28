@@ -170,6 +170,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                       child: Container(
                         width: 300,
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           style: TextStyle(color: Colors.black),
                           validator: Validators.isStringHasMoreChars,
                           onChanged: (_price) {

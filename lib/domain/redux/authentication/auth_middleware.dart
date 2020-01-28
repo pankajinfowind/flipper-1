@@ -173,6 +173,27 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..isActive = b.isActive
               ..name = b.name))
           });
+      //set current active business to be used throughout the entire app transaction
+      for (var i = 0; i < businesses.length; i++) {
+        if (businesses[i].isActive) {
+          store.dispatch(
+            ActiveBusinessAction(
+              Business(
+                (b) => b
+                  ..id = businesses[i].id
+                  ..isActive = businesses[i].isActive
+                  ..name = businesses[i].name
+                  ..type = BusinessType.NORMAL
+                  ..hexColor = "#e74c3c"
+                  ..abbreviation = businesses[i].abbreviation
+                  ..image = "image_null",
+              ),
+            ),
+          );
+        }
+      }
+      //end of setting current active business.
+
       store.dispatch(OnBusinessLoaded(business: businessList));
       final currentTab = tab == null ? 0 : tab.tab;
       store.dispatch(CurrentTab(tab: currentTab));

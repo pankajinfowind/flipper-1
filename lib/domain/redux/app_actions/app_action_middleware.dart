@@ -31,7 +31,6 @@ void Function(Store<AppState> store,
         CreateCategoryFromAddItemScreenAction action, NextDispatcher next)
     _createCategoryRegular(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
-  //todo:
   return (store, action, next) async {
     if (store.state.tempCategoryId != null &&
         store.state.categoryName != null &&

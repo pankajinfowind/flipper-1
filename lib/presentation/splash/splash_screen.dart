@@ -22,23 +22,14 @@ class _SplashScreenState extends State<SplashScreen> {
           body: Wrap(
             children: <Widget>[
               AspectRatio(
-                aspectRatio: 2 / 2,
+                aspectRatio: 2 / 3,
                 child: Container(
                   color: HexColor("#955be9"),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 80,
-                      ),
-                      Container(
-                        color: Colors.white,
-                        height: 60,
-                        child: Image.asset("assets/graphics/logo.png"),
-                      ),
-                      Container(
-                        height: 40,
-                      )
-                    ],
+                  child: Center(
+                    child: Container(
+                      height: 60,
+                      child: Image.asset("assets/graphics/logo.png"),
+                    ),
                   ),
                 ),
               ),
@@ -46,19 +37,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 aspectRatio: 2 / 2,
                 child: Container(
                   color: HexColor("#955be9"),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 10,
-                      ),
-                    ],
-                  ),
                 ),
               )
             ],

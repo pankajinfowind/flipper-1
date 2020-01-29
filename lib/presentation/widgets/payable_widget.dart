@@ -1,4 +1,5 @@
 import 'package:flipper/util/HexColor.dart';
+import 'package:flipper/util/flitter_color.dart';
 import 'package:flutter/material.dart';
 
 class PayableWidget extends StatelessWidget {
@@ -7,21 +8,21 @@ class PayableWidget extends StatelessWidget {
     return Container(
       width: 380,
       height: 60,
-      color: HexColor("#4bcffa"),
+      color: HexColor(FlipperColors.blue),
       child: Row(
         children: <Widget>[
           SizedBox(width: 40),
           SizedBox(
             height: 120,
             child: FlatButton(
-              color: HexColor("#4bcffa"),
+              color: HexColor(FlipperColors.blue),
               onPressed: () {},
               child: Text(
                 "Tickets",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: "Heboo-Regular"),
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
@@ -29,14 +30,14 @@ class PayableWidget extends StatelessWidget {
           SizedBox(
             height: 120,
             child: FlatButton(
-              color: HexColor("#4bcffa"),
+              color: HexColor(FlipperColors.blue),
               onPressed: () {},
               child: Text(
                 "Charge Frw0.00",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: "Heboo-Regular"),
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
             ),
           )

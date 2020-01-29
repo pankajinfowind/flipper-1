@@ -32,7 +32,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
         return Scaffold(
-          appBar: CommonAppBar(
+          appBar: new CommonAppBar(
             title: "Add Variation",
             showActionButton: true,
             disableButton: vm.currentDisable == null ||

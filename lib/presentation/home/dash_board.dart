@@ -1,11 +1,7 @@
-import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
-import 'package:flipper/domain/redux/bottom_sheet/bottom_sheet_actions.dart';
 import 'package:flipper/home/homescreen.dart';
 import 'package:flipper/home/slide_out_screen.dart';
-import 'package:flipper/home/widget/loader.dart';
 import 'package:flipper/presentation/branch/event/event_details.dart';
-import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,28 +55,30 @@ class _DashBoardState extends State<DashBoard> {
                 (_) => Router.navigator.pushNamed(Router.bottom));
           }
           if (vm.hasAction && vm.appAction.name == "showLoader") {
-            WidgetsBinding.instance.addPostFrameCallback((_) => {
-                  showDialog<void>(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext dialogContext) {
-                      return Dialog(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Loader(
-                            radius: 60.0,
-                            dotRadius: 6.0,
-                          ),
-                        ),
-                      );
-                    },
-                  ).whenComplete(() => {
-                        StoreProvider.of<AppState>(context)
-                            .dispatch(ResetAppAction())
-                      })
-                });
+//            WidgetsBinding.instance.addPostFrameCallback((_) =>
+//            {
+//                  showDialog<void>(
+//                    context: context,
+//                    barrierDismissible: false,
+//                    builder: (BuildContext dialogContext) {
+//                      return Dialog(
+//                        backgroundColor: Colors.transparent,
+//                        elevation: 0,
+//                        child: Material(
+//                          type: MaterialType.transparency,
+//                          child: Loader(
+//                            radius: 60.0,
+//                            dotRadius: 6.0,
+//                          ),
+//                        ),
+//                      );
+//                    },
+//                  ).whenComplete(() => {
+//                        StoreProvider.of<AppState>(context)
+//                            .dispatch(ResetAppAction())
+//                      })
+//                }
+//                );
           }
           return we;
         }

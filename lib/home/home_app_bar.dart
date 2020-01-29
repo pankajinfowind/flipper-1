@@ -1,4 +1,3 @@
-import 'package:flipper/routes/router.gr.dart';
 import "package:flutter/material.dart";
 
 import '../theme.dart';
@@ -23,39 +22,17 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             _hamburger(),
             SizedBox(
               height: 120,
+              width: 120,
             ),
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  child: FlatButton(
-                    onPressed: () {
-                      Router.navigator.pushNamed(Router.saleScreen);
-                    },
-                    child: Text(
-                      "No sale",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontFamily: "Heboo-Regular"),
-                    ),
-                  ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "No sale",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
                 ),
-                Container(
-                  width: 120,
-                ),
-                SizedBox(
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Split",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontFamily: "Heboo-Regular"),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
           ],
         ),

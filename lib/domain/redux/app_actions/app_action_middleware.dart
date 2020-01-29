@@ -6,6 +6,7 @@ import 'package:flipper/model/category.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/routes/router.gr.dart';
+import 'package:flipper/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
@@ -71,7 +72,6 @@ void Function(Store<AppState> store, CreateEmptyTempCategoryAction action,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
     if (store.state.currentActiveBusiness != null) {
-      //TODO: it temp exist return it otherwise createIt.
       final categoryId = await generalRepository.insertCategory(
           store, store.state.currentActiveBusiness.id);
       store.dispatch(TempCategoryIdAction(categoryId: categoryId));
@@ -216,8 +216,8 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
           ),
         );
         store.dispatch(ItemLoaded(items: itemList));
+        Logger.d("Sussessfully created an item");
         Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
-        print("inserted the item:" + item.toString());
       }
     }
   };

@@ -232,7 +232,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         }
       }
       //end of setting current active business.
-
+      Logger.d("Successfully loaded app");
       store.dispatch(OnBusinessLoaded(business: businessList));
       final currentTab = tab == null ? 0 : tab.tab;
       store.dispatch(CurrentTab(tab: currentTab));

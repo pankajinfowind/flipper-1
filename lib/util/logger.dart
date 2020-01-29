@@ -44,11 +44,11 @@ class Logger {
     StackTrace s,
   }) {
     _clients.forEach((c) => c.onLog(
-      level: LogLevel.warning,
-      message: message,
-      e: e,
-      s: s,
-    ));
+          level: LogLevel.warning,
+          message: message,
+          e: e,
+          s: s,
+        ));
   }
 
   /// Error level logs
@@ -60,11 +60,11 @@ class Logger {
     @required StackTrace s,
   }) {
     _clients.forEach((c) => c.onLog(
-      level: LogLevel.error,
-      message: message,
-      e: e,
-      s: s,
-    ));
+          level: LogLevel.error,
+          message: message,
+          e: e,
+          s: s,
+        ));
   }
 
   static addClient(LoggerClient client) {

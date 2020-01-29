@@ -42,7 +42,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       builder: (context, vm) {
         return Scaffold(
           appBar: CommonAppBar(
-            title: "Create Item",
+            title: S.of(context).createItem,
             disableButton: vm.currentDisable == null ||
                 vm.currentDisable.unDisable == 'none',
             showActionButton: true,
@@ -77,7 +77,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           : HexColor("#00cec9"),
                     ),
                   ),
-                  Text("New Item"),
+                  Text(S.of(context).newItem),
                   Center(
                     child: Container(
                       width: 300,
@@ -112,11 +112,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         },
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                          leading: Text("Category"),
+                          leading: Text(S.of(context).category),
                           trailing: Wrap(
                             children: <Widget>[
                               vm.categories.length == 0
-                                  ? Text("Select category")
+                                  ? Text(S.of(context).selectCategory)
                                   : categorySelector(vm),
                               Icon(Icons.arrow_forward_ios)
                             ],
@@ -139,7 +139,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   Center(
                     child: Container(
                       width: 300,
-                      child: Text("PRICE AND INVENTORY"),
+                      child: Text(S.of(context).priceAndInventory),
                     ),
                   ),
                   Center(
@@ -159,12 +159,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         },
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                          leading: Text("Unit Type"),
+                          leading: Text(S.of(context).unityType),
                           trailing: Wrap(
                             children: <Widget>[
                               Text(vm.currentUnit != null
                                   ? vm.currentUnit.name
-                                  : "Per Item"),
+                                  : S.of(context).perItem),
                               Icon(Icons.arrow_forward_ios)
                             ],
                           ),
@@ -192,7 +192,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           tForm.price = price;
                         },
                         decoration: InputDecoration(
-                            hintText: "Price", focusColor: Colors.blue),
+                            hintText: S.of(context).price,
+                            focusColor: Colors.blue),
                       ),
                     ),
                   ),
@@ -217,7 +218,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       width: 280,
                       child: FlatButton(
                         color: HexColor("#ecf0f1"),
-                        child: Text("Add Variation"),
+                        child: Text(S.of(context).addVariation),
                         onPressed: () {
                           StoreProvider.of<AppState>(context).dispatch(
                               CurrentDisable(
@@ -242,7 +243,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   Container(
                     height: 4,
                   ),
-                  Text("Leave the price blank to enter at the time of sale."),
+                  Text(S.of(context).leavePriceBlank),
                   Center(
                     child: Container(
                       width: 300,
@@ -262,7 +263,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           tForm.description = description;
                         },
                         decoration: InputDecoration(
-                            hintText: "Description", focusColor: Colors.blue),
+                            hintText: S.of(context).description,
+                            focusColor: Colors.blue),
                       ),
                     ),
                   ),
@@ -295,7 +297,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         text = Text(vm.categories[i].name);
         return text;
       } else {
-        text = Text("Select Category");
+        text = Text(S.of(context).selectCategory);
       }
     }
     return text;
@@ -349,9 +351,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   FlatButton(
                     child: Text(
                       variations[i].stockValue == 0
-                          ? "Receive stock"
-                          : variations[i].stockValue.toString() + " in Stock",
-                      style: TextStyle(color: HexColor('#0984e3')),
+                          ? S.of(context).receiveStock
+                          : variations[i].stockValue.toString() +
+                              S.of(context).inStock,
+                      style: TextStyle(color: HexColor(FlipperColors.blueText)),
                     ),
                     onPressed: () {
                       Router.navigator.pushNamed(Router.receiveStock,

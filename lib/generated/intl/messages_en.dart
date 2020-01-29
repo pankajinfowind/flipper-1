@@ -21,20 +21,28 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "AddVariation" : MessageLookupByLibrary.simpleMessage("Add Variation"),
-    "Price" : MessageLookupByLibrary.simpleMessage("Price"),
-    "SKU" : MessageLookupByLibrary.simpleMessage("SKU"),
     "addStock" : MessageLookupByLibrary.simpleMessage("Add Stock"),
+    "addVariation" : MessageLookupByLibrary.simpleMessage("Add Variation"),
     "category" : MessageLookupByLibrary.simpleMessage("Category"),
     "createCategory" : MessageLookupByLibrary.simpleMessage("Create Category"),
+    "createItem" : MessageLookupByLibrary.simpleMessage("Create Item"),
     "createNew" : MessageLookupByLibrary.simpleMessage("Create new"),
+    "description" : MessageLookupByLibrary.simpleMessage("Description"),
+    "inStock" : MessageLookupByLibrary.simpleMessage("in Stock"),
     "leavePriceBlank" : MessageLookupByLibrary.simpleMessage("Leave the price blank to enter at the time of sale."),
     "name" : MessageLookupByLibrary.simpleMessage("Name"),
+    "newItem" : MessageLookupByLibrary.simpleMessage("New Item"),
+    "perItem" : MessageLookupByLibrary.simpleMessage("Per Item"),
+    "price" : MessageLookupByLibrary.simpleMessage("Price"),
+    "priceAndInventory" : MessageLookupByLibrary.simpleMessage("PRICE AND INVENTORY"),
     "receiveStock" : MessageLookupByLibrary.simpleMessage("Receive Stock"),
     "reedeemRewards" : MessageLookupByLibrary.simpleMessage("Reedeem Rewards"),
+    "sKU" : MessageLookupByLibrary.simpleMessage("SKU"),
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
+    "selectCategory" : MessageLookupByLibrary.simpleMessage("Select Category"),
     "signup" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "stock" : MessageLookupByLibrary.simpleMessage("Stock"),
-    "unityType" : MessageLookupByLibrary.simpleMessage("Unit Type")
+    "unityType" : MessageLookupByLibrary.simpleMessage("Unit Type"),
+    "unity_type" : MessageLookupByLibrary.simpleMessage("Unit Type")
   };
 }

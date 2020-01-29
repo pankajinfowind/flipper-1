@@ -15,6 +15,7 @@ import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
 import 'package:flipper/routes/router.gr.dart';
+import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/logger.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -223,7 +224,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
                   ..isActive = businesses[i].isActive
                   ..name = businesses[i].name
                   ..type = BusinessType.NORMAL
-                  ..hexColor = "#e74c3c"
+                  ..hexColor = FlipperColors.defaultBusinessColor
                   ..abbreviation = businesses[i].abbreviation
                   ..image = "image_null",
               ),
@@ -232,7 +233,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         }
       }
       //end of setting current active business.
-      Logger.d("Successfully loaded app");
+      Logger.d("Successfully loaded the app");
       store.dispatch(OnBusinessLoaded(business: businessList));
       final currentTab = tab == null ? 0 : tab.tab;
       store.dispatch(CurrentTab(tab: currentTab));

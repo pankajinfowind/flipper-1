@@ -33,7 +33,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
       builder: (context, vm) {
         return Scaffold(
           appBar: new CommonAppBar(
-            title: "Add Variation",
+            title: S.of(context).addVariation,
             showActionButton: true,
             disableButton: vm.currentDisable == null ||
                 vm.currentDisable.unDisable == 'none',
@@ -156,7 +156,8 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                                         u..unDisable = "variationName")));
                           },
                           decoration: InputDecoration(
-                              hintText: "Name", focusColor: Colors.blue),
+                              hintText: S.of(context).name,
+                              focusColor: Colors.blue),
                         ),
                       ),
                     ),
@@ -173,7 +174,8 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                             }
                           },
                           decoration: InputDecoration(
-                              hintText: "Price", focusColor: Colors.blue),
+                              hintText: S.of(context).price,
+                              focusColor: Colors.blue),
                         ),
                       ),
                     ),
@@ -189,7 +191,8 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                             }
                           },
                           decoration: InputDecoration(
-                              hintText: "SKU", focusColor: HexColor("#0984e3")),
+                              hintText: S.of(context).sKU,
+                              focusColor: HexColor("#0984e3")),
                         ),
                       ),
                     ),
@@ -200,7 +203,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
                           leading: Text("Stock"),
                           trailing: FlatButton(
-                            child: Text("Receive Stock",
+                            child: Text(S.of(context).receiveStock,
                                 style: TextStyle(color: HexColor('#0984e3'))),
                             onPressed: () {
                               Router.navigator.pushNamed(Router.receiveStock);
@@ -209,7 +212,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                         ),
                       ),
                     ),
-                    Text("Leave the price blank to enter at the time of sale.")
+                    Text(S.of(context).leavePriceBlank)
                   ],
                 )
               ],

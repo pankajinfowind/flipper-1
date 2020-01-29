@@ -56,6 +56,15 @@ class S {
     );
   }
 
+  String get createItem {
+    return Intl.message(
+      'Create Item',
+      name: 'createItem',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get signup {
     return Intl.message(
       'Sign up',
@@ -74,10 +83,10 @@ class S {
     );
   }
 
-  String get AddVariation {
+  String get addVariation {
     return Intl.message(
       'Add Variation',
-      name: 'AddVariation',
+      name: 'addVariation',
       desc: '',
       args: [],
     );
@@ -92,19 +101,19 @@ class S {
     );
   }
 
-  String get Price {
+  String get price {
     return Intl.message(
       'Price',
-      name: 'Price',
+      name: 'price',
       desc: '',
       args: [],
     );
   }
 
-  String get SKU {
+  String get sKU {
     return Intl.message(
       'SKU',
-      name: 'SKU',
+      name: 'sKU',
       desc: '',
       args: [],
     );
@@ -159,6 +168,69 @@ class S {
     return Intl.message(
       'Create new',
       name: 'createNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newItem {
+    return Intl.message(
+      'New Item',
+      name: 'newItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectCategory {
+    return Intl.message(
+      'Select Category',
+      name: 'selectCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get priceAndInventory {
+    return Intl.message(
+      'PRICE AND INVENTORY',
+      name: 'priceAndInventory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get unity_type {
+    return Intl.message(
+      'Unit Type',
+      name: 'unity_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get perItem {
+    return Intl.message(
+      'Per Item',
+      name: 'perItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get inStock {
+    return Intl.message(
+      'in Stock',
+      name: 'inStock',
       desc: '',
       args: [],
     );

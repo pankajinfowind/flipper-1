@@ -83,8 +83,9 @@ class _BranchListState extends State<BranchList> {
                   semanticsLabel: 'Pos',
                 ),
                 title: GestureDetector(
-                  onTap: (){
-                    Router.navigator.pushNamed(Router.dashboard); //pos on dashboard.
+                  onTap: () {
+                    Router.navigator
+                        .pushNamed(Router.dashboard); //pos on dashboard.
                   },
                   child: Text(
                     "Pos",

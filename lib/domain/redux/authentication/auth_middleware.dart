@@ -9,6 +9,7 @@ import 'package:flipper/domain/redux/business/business_actions.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
@@ -93,10 +94,11 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ..avatar = user.avatar
         ..email = user.email);
 
-      Branch hint = Branch((b) => b
-        ..id = branch[0].id
+      Hint hint = Hint((b) => b
+        ..type = HintType.Branch
         ..name = branch[0].name);
-      store.dispatch(OnSetBranchHint(branch: hint));
+
+      store.dispatch(OnHintLoaded(hint: hint));
 
       List<Branch> branches = [];
       branch.forEach((b) => {

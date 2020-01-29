@@ -129,6 +129,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..branchId = i.branchId
               ..unitId = i.unitId
               ..id = i.id
+              ..color = i.color
               ..variantId = i.variationId
               ..categoryId = i.categoryId,
           ),

@@ -2393,6 +2393,7 @@ class $PriceTableTable extends PriceTable
 class ItemTableData extends DataClass implements Insertable<ItemTableData> {
   final int id;
   final String name;
+  final String color;
   final int categoryId;
   final int branchId;
   final int unitId;
@@ -2400,6 +2401,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
   ItemTableData(
       {@required this.id,
       @required this.name,
+      @required this.color,
       @required this.categoryId,
       @required this.branchId,
       @required this.unitId,
@@ -2413,6 +2415,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
     return ItemTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      color:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
       categoryId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}category_id']),
       branchId:
@@ -2428,6 +2432,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
     return ItemTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      color: serializer.fromJson<String>(json['color']),
       categoryId: serializer.fromJson<int>(json['categoryId']),
       branchId: serializer.fromJson<int>(json['branchId']),
       unitId: serializer.fromJson<int>(json['unitId']),
@@ -2440,6 +2445,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'color': serializer.toJson<String>(color),
       'categoryId': serializer.toJson<int>(categoryId),
       'branchId': serializer.toJson<int>(branchId),
       'unitId': serializer.toJson<int>(unitId),
@@ -2452,6 +2458,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
     return ItemTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      color:
+          color == null && nullToAbsent ? const Value.absent() : Value(color),
       categoryId: categoryId == null && nullToAbsent
           ? const Value.absent()
           : Value(categoryId),
@@ -2469,6 +2477,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
   ItemTableData copyWith(
           {int id,
           String name,
+          String color,
           int categoryId,
           int branchId,
           int unitId,
@@ -2476,6 +2485,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       ItemTableData(
         id: id ?? this.id,
         name: name ?? this.name,
+        color: color ?? this.color,
         categoryId: categoryId ?? this.categoryId,
         branchId: branchId ?? this.branchId,
         unitId: unitId ?? this.unitId,
@@ -2486,6 +2496,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
     return (StringBuffer('ItemTableData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('color: $color, ')
           ..write('categoryId: $categoryId, ')
           ..write('branchId: $branchId, ')
           ..write('unitId: $unitId, ')
@@ -2500,15 +2511,18 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       $mrjc(
           name.hashCode,
           $mrjc(
-              categoryId.hashCode,
-              $mrjc(branchId.hashCode,
-                  $mrjc(unitId.hashCode, variationId.hashCode))))));
+              color.hashCode,
+              $mrjc(
+                  categoryId.hashCode,
+                  $mrjc(branchId.hashCode,
+                      $mrjc(unitId.hashCode, variationId.hashCode)))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is ItemTableData &&
           other.id == this.id &&
           other.name == this.name &&
+          other.color == this.color &&
           other.categoryId == this.categoryId &&
           other.branchId == this.branchId &&
           other.unitId == this.unitId &&
@@ -2518,6 +2532,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
 class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String> color;
   final Value<int> categoryId;
   final Value<int> branchId;
   final Value<int> unitId;
@@ -2525,6 +2540,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
   const ItemTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.color = const Value.absent(),
     this.categoryId = const Value.absent(),
     this.branchId = const Value.absent(),
     this.unitId = const Value.absent(),
@@ -2533,11 +2549,13 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
   ItemTableCompanion.insert({
     this.id = const Value.absent(),
     @required String name,
+    @required String color,
     @required int categoryId,
     @required int branchId,
     @required int unitId,
     @required int variationId,
   })  : name = Value(name),
+        color = Value(color),
         categoryId = Value(categoryId),
         branchId = Value(branchId),
         unitId = Value(unitId),
@@ -2545,6 +2563,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
   ItemTableCompanion copyWith(
       {Value<int> id,
       Value<String> name,
+      Value<String> color,
       Value<int> categoryId,
       Value<int> branchId,
       Value<int> unitId,
@@ -2552,6 +2571,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     return ItemTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      color: color ?? this.color,
       categoryId: categoryId ?? this.categoryId,
       branchId: branchId ?? this.branchId,
       unitId: unitId ?? this.unitId,
@@ -2581,6 +2601,18 @@ class $ItemTableTable extends ItemTable
   GeneratedTextColumn _constructName() {
     return GeneratedTextColumn(
       'name',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _colorMeta = const VerificationMeta('color');
+  GeneratedTextColumn _color;
+  @override
+  GeneratedTextColumn get color => _color ??= _constructColor();
+  GeneratedTextColumn _constructColor() {
+    return GeneratedTextColumn(
+      'color',
       $tableName,
       false,
     );
@@ -2626,7 +2658,7 @@ class $ItemTableTable extends ItemTable
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, categoryId, branchId, unitId, variationId];
+      [id, name, color, categoryId, branchId, unitId, variationId];
   @override
   $ItemTableTable get asDslTable => this;
   @override
@@ -2647,6 +2679,12 @@ class $ItemTableTable extends ItemTable
           _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
+    }
+    if (d.color.present) {
+      context.handle(
+          _colorMeta, color.isAcceptableValue(d.color.value, _colorMeta));
+    } else if (color.isRequired && isInserting) {
+      context.missing(_colorMeta);
     }
     if (d.categoryId.present) {
       context.handle(_categoryIdMeta,
@@ -2691,6 +2729,9 @@ class $ItemTableTable extends ItemTable
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.color.present) {
+      map['color'] = Variable<String, StringType>(d.color.value);
     }
     if (d.categoryId.present) {
       map['category_id'] = Variable<int, IntType>(d.categoryId.value);

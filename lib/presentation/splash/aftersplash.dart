@@ -92,7 +92,7 @@ class AfterSplash extends StatelessWidget {
                       child: FlatButton(
                         color: Colors.blue,
                         child: Text(
-                          "Learn about Flipper",
+                          "Learn about Flipper.",
                           style: TextStyle(color: Colors.black54, fontSize: 20),
                         ),
                       ),

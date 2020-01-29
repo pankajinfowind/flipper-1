@@ -139,6 +139,7 @@ class SaveItemAction {
   final String description;
   final String name;
   final Unit unit;
+  final String color;
 
   SaveItemAction(
       {this.business,
@@ -148,11 +149,12 @@ class SaveItemAction {
       this.category,
       this.description,
       this.name,
-      this.unit});
+      this.unit,
+      this.color});
 }
 
 @immutable
-class ItemLoaded{
+class ItemLoaded {
   final List<Item> items;
 
   ItemLoaded({this.items});

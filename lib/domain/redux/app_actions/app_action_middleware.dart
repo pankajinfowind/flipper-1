@@ -3,7 +3,9 @@ import 'package:flipper/data/respositories/general_repository.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
@@ -171,6 +173,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         GeneralRepository generalRepository) {
   return (store, action, next) async {
     next(action);
+
     for (var i = 0; i < action.variations.length; i++) {
       // insert variation and get last id to save the item then
       final variationId = await generalRepository.insertVariant(
@@ -190,10 +193,30 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
             name: action.name,
             categoryId: action.category.id,
             unitId: action.unit.id,
+            color: action.color,
             branchId: action.branch.id,
             variationId: variationId),
       );
       if (item is int) {
+        List<ItemTableData> items = await generalRepository.getItems(store);
+        List<Item> itemList = [];
+
+        items.forEach(
+          (i) => itemList.add(
+            Item(
+              (v) => v
+                ..name = i.name
+                ..branchId = i.branchId
+                ..unitId = i.unitId
+                ..id = i.id
+                ..color = i.color
+                ..variantId = i.variationId
+                ..categoryId = i.categoryId,
+            ),
+          ),
+        );
+        store.dispatch(ItemLoaded(items: itemList));
+        Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
         print("inserted the item:" + item.toString());
       }
     }

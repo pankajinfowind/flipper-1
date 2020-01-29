@@ -10,6 +10,7 @@ import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
+import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -48,7 +49,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
             onPressedCallback: () {
               StoreProvider.of<AppState>(context).dispatch(
                 AppAction(
-                  actions: AppActions((a) => a..name = "showLoader"),
+                  actions: AppActions((a) => a..name = "saveItem"),
                 ),
               );
             },
@@ -268,10 +269,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   Visibility(
                     visible: false,
                     child: FlatButton(
-                      onPressed:
-                          vm.hasAction && vm.appAction.name == 'showLoader'
-                              ? _handleFormSubmit(vm, tForm)
-                              : null,
+                      onPressed: vm.hasAction && vm.appAction.name == 'saveItem'
+                          ? _handleFormSubmit(vm, tForm)
+                          : null,
                       child: null,
                     ),
                   ),
@@ -302,17 +302,31 @@ class _AddItemScreenState extends State<AddItemScreen> {
   }
 
   _handleFormSubmit(CommonViewModel vm, TForm tForm) {
-     StoreProvider.of<AppState>(context).dispatch(SaveItemAction(
-         business: vm.currentBusiness,
-         name: tForm.name,
-         description: tForm.description,
-         price: tForm.price,
-         branch: vm.currentBranch,
-         variations: vm.variations.toList(),
-         category: _currentCategory,
-         unit: vm.currentUnit));
-    //TODO: wait a dispatched event from middleware so we can go home.
-    Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
+    if (tForm.name == null) {
+      print('name can not be null');
+      return; // a toast
+    }
+    StoreProvider.of<AppState>(context).dispatch(
+      SaveItemAction(
+          business: vm.currentBusiness,
+          name: tForm.name,
+          description: tForm.description,
+          price: tForm.price,
+          branch: vm.currentBranch,
+          color: vm.currentColor == null
+              ? FlipperColors.blue
+              : vm.currentColor.hexCode,
+          variations: vm.variations.toList(),
+          category: _currentCategory,
+          unit: vm.currentUnit),
+    );
+
+    StoreProvider.of<AppState>(context).dispatch(
+      AppAction(
+        actions: AppActions((a) => a..name = "null"),
+      ),
+    );
+    return;
   }
 
   _buildVariationsList(BuiltList<Variation> variations) {

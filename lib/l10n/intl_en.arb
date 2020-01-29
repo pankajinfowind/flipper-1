@@ -4,12 +4,14 @@
     "category": "Category",
     "signup": "Sign up",
     "createCategory": "Create Category",
-    "AddVariation":"Add Variation",
+    "AddVariation": "Add Variation",
     "name": "Name",
     "Price": "Price",
     "SKU": "SKU",
-    "stock":"Stock",
+    "stock": "Stock",
     "leavePriceBlank": "Leave the price blank to enter at the time of sale.",
     "receiveStock": "Receive Stock",
-    "addStock": "Add Stock"
+    "addStock": "Add Stock",
+    "reedeemRewards": "Reedeem Rewards",
+    "createNew": "Create new"
 }

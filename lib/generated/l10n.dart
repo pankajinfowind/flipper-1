@@ -145,6 +145,24 @@ class S {
       args: [],
     );
   }
+
+  String get reedeemRewards {
+    return Intl.message(
+      'Reedeem Rewards',
+      name: 'reedeemRewards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get createNew {
+    return Intl.message(
+      'Create new',
+      name: 'createNew',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

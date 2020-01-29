@@ -10,6 +10,8 @@ class _$Item extends Item {
   @override
   final String name;
   @override
+  final String color;
+  @override
   final int id;
   @override
   final int branchId;
@@ -25,6 +27,7 @@ class _$Item extends Item {
 
   _$Item._(
       {this.name,
+      this.color,
       this.id,
       this.branchId,
       this.categoryId,
@@ -33,6 +36,9 @@ class _$Item extends Item {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('Item', 'name');
+    }
+    if (color == null) {
+      throw new BuiltValueNullFieldError('Item', 'color');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('Item', 'id');
@@ -63,6 +69,7 @@ class _$Item extends Item {
     if (identical(other, this)) return true;
     return other is Item &&
         name == other.name &&
+        color == other.color &&
         id == other.id &&
         branchId == other.branchId &&
         categoryId == other.categoryId &&
@@ -74,7 +81,11 @@ class _$Item extends Item {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc($jc(0, name.hashCode), id.hashCode), branchId.hashCode),
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, name.hashCode), color.hashCode),
+                        id.hashCode),
+                    branchId.hashCode),
                 categoryId.hashCode),
             unitId.hashCode),
         variantId.hashCode));
@@ -84,6 +95,7 @@ class _$Item extends Item {
   String toString() {
     return (newBuiltValueToStringHelper('Item')
           ..add('name', name)
+          ..add('color', color)
           ..add('id', id)
           ..add('branchId', branchId)
           ..add('categoryId', categoryId)
@@ -99,6 +111,10 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _color;
+  String get color => _$this._color;
+  set color(String color) => _$this._color = color;
 
   int _id;
   int get id => _$this._id;
@@ -125,6 +141,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   ItemBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _color = _$v.color;
       _id = _$v.id;
       _branchId = _$v.branchId;
       _categoryId = _$v.categoryId;
@@ -153,6 +170,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
     final _$result = _$v ??
         new _$Item._(
             name: name,
+            color: color,
             id: id,
             branchId: branchId,
             categoryId: categoryId,

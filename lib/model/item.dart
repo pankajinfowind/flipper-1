@@ -4,6 +4,7 @@ part 'item.g.dart';
 
 abstract class Item implements Built<Item, ItemBuilder> {
   String get name;
+  String get color;
   int get id;
   int get branchId;
   int get categoryId;

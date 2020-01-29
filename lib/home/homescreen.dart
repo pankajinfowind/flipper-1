@@ -33,38 +33,43 @@ class _HomeScreenState extends State<HomeScreen> {
       initialIndex: widget.vm.tab,
       length: 2,
       child: Scaffold(
-        key: _scaffoldKey,
-        appBar: HomeAppBar(
-          scaffoldKey: _scaffoldKey,
-          sideOpenController: widget.sideOpenController,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.credit_card),
-              title: Text('POS'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.library_books),
-              title: Text('ITEMS'),
-            ),
-          ],
-          selectedItemColor: Colors.amber[800],
-          onTap: (num) {
-            StoreProvider.of<AppState>(context).dispatch(CurrentTab(tab: num));
-            StoreProvider.of<AppState>(context)
-                .dispatch(OnSetTab()); //persist tab
-          },
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            Poswidget(),
-            ProductScreen(),
-          ],
-        ),
-        drawer: FlipperDrawer(
-          vm: widget.vm,
+        body: Scaffold(
+          extendBody: true,
+          key: _scaffoldKey,
+          appBar: HomeAppBar(
+            scaffoldKey: _scaffoldKey,
+            sideOpenController: widget.sideOpenController,
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.white,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.credit_card),
+                title: Text('POS'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.library_books),
+                title: Text('ITEMS'),
+              ),
+            ],
+            selectedItemColor: Colors.amber[800],
+            currentIndex: widget.vm.tab,
+            onTap: (num) {
+              StoreProvider.of<AppState>(context)
+                  .dispatch(CurrentTab(tab: num));
+              StoreProvider.of<AppState>(context)
+                  .dispatch(OnSetTab()); //persist tab
+            },
+          ),
+          body: TabBarView(
+            children: <Widget>[
+              Poswidget(),
+              ProductScreen(),
+            ],
+          ),
+          drawer: FlipperDrawer(
+            vm: widget.vm,
+          ),
         ),
       ),
     );

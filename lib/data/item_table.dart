@@ -3,6 +3,7 @@ import 'package:moor/moor.dart';
 class ItemTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
+  TextColumn get color => text()();
 
   IntColumn get categoryId =>
       integer().customConstraint('NULL REFERENCES category_table(id)')();

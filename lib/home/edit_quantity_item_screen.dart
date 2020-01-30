@@ -45,8 +45,19 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
                 dense: true,
                 title: Center(
                   child: Container(
-                    width: 40,
+                    width: 80,
                     child: TextField(
+                      textDirection: TextDirection.rtl,
+                      onChanged: (count) {
+                        //todo: work on entering count from keyboard right now it is messing around with other inputs
+                        // StoreProvider.of<AppState>(context).dispatch(
+                        //   IncrementAction(
+                        //     increment: vm.currentIncrement == null
+                        //         ? 0 + int.parse(count)
+                        //         : vm.currentIncrement + int.parse(count),
+                        //   ),
+                        // );
+                      },
                       controller: TextEditingController(
                         text: vm.currentIncrement == null
                             ? "1"
@@ -88,7 +99,10 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
                           print(vm.currentIncrement);
                           StoreProvider.of<AppState>(context).dispatch(
                             IncrementAction(
-                                increment: vm.currentSales[i].count + 1),
+                              increment: vm.currentIncrement == null
+                                  ? 0 + 1
+                                  : vm.currentIncrement + 1,
+                            ),
                           );
                           items.add(
                             Item(
@@ -120,12 +134,15 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
                     if (vm.currentSales.length > 0) {
                       for (var i = 0; i < vm.currentSales.length; i++) {
                         if (vm.currentSales[i].id == widget.item.id) {
-                          if (vm.currentSales[i].count - 1 == -1) {
+                          if (vm.currentIncrement - 1 == -1) {
                             return;
                           }
                           StoreProvider.of<AppState>(context).dispatch(
                             IncrementAction(
-                                increment: vm.currentSales[i].count - 1),
+                              increment: vm.currentIncrement == null
+                                  ? 0
+                                  : vm.currentIncrement - 1,
+                            ),
                           );
                           items.add(
                             Item(

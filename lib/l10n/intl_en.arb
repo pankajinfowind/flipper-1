@@ -21,5 +21,8 @@
     "unity_type": "Unit Type",
     "perItem": "Per Item",
     "description": "Description",
-    "inStock": "in Stock"
+    "inStock": "in Stock",
+    "add": "Add",
+    "quantity": "Quantity",
+    "notes": "Notes"
 }

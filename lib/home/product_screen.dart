@@ -4,6 +4,7 @@ import 'package:flipper/home/widget/create_options_widget.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/presentation/widgets/payable_widget.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';
@@ -40,24 +41,31 @@ List<Widget> getItems(List<Item> itemList, context) {
 
   for (var i = 0; i < itemList.length; i++) {
     list.add(
-      ListTile(
-        contentPadding: EdgeInsets.all(0),
-        leading: Container(
-          width: 50,
-          color: HexColor(itemList[i].color),
-          child: FlatButton(
-            child: Text(
-              itemList[i].name.length > 2
-                  ? itemList[i].name.substring(0, 2)
-                  : itemList[i].name,
-              style: TextStyle(color: Colors.white),
+      GestureDetector(
+        onLongPress: () {
+          //todo play a small vibration to indicate the action.
+          Router.navigator.pushNamed(Router.editQuantityItemScreen,
+              arguments: EditQuantityItemScreenArguments(item: itemList[i]));
+        },
+        child: ListTile(
+          contentPadding: EdgeInsets.all(0),
+          leading: Container(
+            width: 50,
+            color: HexColor(itemList[i].color),
+            child: FlatButton(
+              child: Text(
+                itemList[i].name.length > 2
+                    ? itemList[i].name.substring(0, 2)
+                    : itemList[i].name,
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
-        ),
-        title: Text(
-          itemList[i].name,
-          style: TextStyle(color: Colors.black),
+          title: Text(
+            itemList[i].name,
+            style: TextStyle(color: Colors.black),
+          ),
         ),
       ),
     );

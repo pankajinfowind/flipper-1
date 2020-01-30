@@ -173,7 +173,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         GeneralRepository generalRepository) {
   return (store, action, next) async {
     next(action);
-    //TODO: in v2 clean code duplication.
+    //todo: in v2 clean code duplication.
     if (action.variations.length == 0) {
       //atleast make sure we do have one variant per item
       final variantId = await generalRepository.insertVariant(
@@ -185,7 +185,8 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         ),
       );
       await generalRepository.insertHistory(store, variantId, 0);
-
+      //todo: change save the variant with respective price price is saved per variant.
+      //todo: should save item description too
       final item = await generalRepository.insertItem(
         store,
         // ignore: missing_required_param

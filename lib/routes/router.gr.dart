@@ -24,6 +24,8 @@ import 'package:flipper/home/add_unit_type.dart';
 import 'package:flipper/home/add_category_screen.dart';
 import 'package:flipper/home/create_category_input_screen.dart';
 import 'package:flipper/home/receive_stock.dart';
+import 'package:flipper/home/edit_quantity_item_screen.dart';
+import 'package:flipper/model/item.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -42,6 +44,7 @@ class Router {
   static const addCategoryScreen = '/addCategoryScreen';
   static const createCategoryInputScreen = '/createCategoryInputScreen';
   static const receiveStock = '/receiveStock';
+  static const editQuantityItemScreen = '/editQuantityItemScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -195,8 +198,31 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
+      case Router.editQuantityItemScreen:
+        if (hasInvalidArgs<EditQuantityItemScreenArguments>(args)) {
+          return misTypedArgsRoute<EditQuantityItemScreenArguments>(args);
+        }
+        final typedArgs = args as EditQuantityItemScreenArguments ??
+            EditQuantityItemScreenArguments();
+        return MaterialPageRoute(
+          builder: (_) =>
+              EditQuantityItemScreen(key: typedArgs.key, item: typedArgs.item),
+          settings: settings,
+          fullscreenDialog: true,
+        );
       default:
         return unknownRoutePage(settings.name);
     }
   }
+}
+
+//**************************************************************************
+// Arguments holder classes
+//***************************************************************************
+
+//EditQuantityItemScreen arguments holder class
+class EditQuantityItemScreenArguments {
+  final Key key;
+  final Item item;
+  EditQuantityItemScreenArguments({this.key, this.item});
 }

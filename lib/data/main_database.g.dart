@@ -3086,7 +3086,7 @@ class $HistoryTableTable extends HistoryTable
   GeneratedIntColumn get variantId => _variantId ??= _constructVariantId();
   GeneratedIntColumn _constructVariantId() {
     return GeneratedIntColumn('variant_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES variant_table(id)');
+        $customConstraints: 'NULL REFERENCES variation_table(id)');
   }
 
   @override

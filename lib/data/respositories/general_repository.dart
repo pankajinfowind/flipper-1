@@ -90,6 +90,12 @@ class GeneralRepository {
     return store.state.database.variationDao.insert(data);
   }
 
+  Future<int> insertHistory(Store<AppState> store, int variantId, int count) {
+    return store.state.database.historyDao
+        // ignore: missing_required_param
+        .insert(HistoryTableData(count: count, variantId: variantId));
+  }
+
   Future<List<ItemTableData>> getItems(Store<AppState> store) {
     return store.state.database.itemDao.getItems();
   }

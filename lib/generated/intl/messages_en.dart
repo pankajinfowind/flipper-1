@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "add" : MessageLookupByLibrary.simpleMessage("Add"),
     "addStock" : MessageLookupByLibrary.simpleMessage("Add Stock"),
     "addVariation" : MessageLookupByLibrary.simpleMessage("Add Variation"),
     "category" : MessageLookupByLibrary.simpleMessage("Category"),
@@ -32,9 +33,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "leavePriceBlank" : MessageLookupByLibrary.simpleMessage("Leave the price blank to enter at the time of sale."),
     "name" : MessageLookupByLibrary.simpleMessage("Name"),
     "newItem" : MessageLookupByLibrary.simpleMessage("New Item"),
+    "notes" : MessageLookupByLibrary.simpleMessage("Notes"),
     "perItem" : MessageLookupByLibrary.simpleMessage("Per Item"),
     "price" : MessageLookupByLibrary.simpleMessage("Price"),
     "priceAndInventory" : MessageLookupByLibrary.simpleMessage("PRICE AND INVENTORY"),
+    "quantity" : MessageLookupByLibrary.simpleMessage("Quantity"),
     "receiveStock" : MessageLookupByLibrary.simpleMessage("Receive Stock"),
     "reedeemRewards" : MessageLookupByLibrary.simpleMessage("Reedeem Rewards"),
     "sKU" : MessageLookupByLibrary.simpleMessage("SKU"),

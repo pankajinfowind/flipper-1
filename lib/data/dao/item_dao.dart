@@ -1,4 +1,3 @@
-import 'package:flipper/data/dao/UserBusiness.dart';
 import 'package:flipper/data/dao/item_variation.dart';
 import 'package:flipper/data/item_table.dart';
 import 'package:flipper/data/main_database.dart';
@@ -24,29 +23,32 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
     return update(db.itemTable).replace(entry);
   }
 
-  //todo: combine item and variation in one query.
-  // Future<List<ItemVariation>> getItemss() {
-  //   return (select(db.itemTable)
-  //         ..orderBy(
-  //           ([
-  //             (t) => OrderingTerm(expression: t.id, mode: OrderingMode.asc),
-  //             (t) => OrderingTerm(expression: t.id),
-  //           ]),
-  //         ))
-  //       .join(
-  //         [
-  //           leftOuterJoin(db.itemTable,
-  //               db.variationTable.branchId.equalsExp(db.itemTable.branchId)),
-  //         ],
-  //       )
-  //       .map(
-  //         (row) => ItemVariation(
-  //           item: row.readTable(itemTable),
-  //           variation: row.readTable(variationTable),
-  //         ),
-  //       )
-  //       .get();
-  // }
+  Future<List<ItemVariation>> getItemVariations() {
+    return (select(itemTable)
+          ..orderBy(
+            ([
+              (t) => OrderingTerm(expression: t.id, mode: OrderingMode.asc),
+            ]),
+          ))
+        .join(
+      [
+        leftOuterJoin(variationTable,
+            db.variationTable.branchId.equalsExp(db.itemTable.branchId)),
+      ],
+    )
+        // .where(
+        //   and(
+        //     itemTable.branchId.equals(branchId),
+        //     variationTable.branchId.equals(branchId),
+        //   ),
+        // )
+        .map((row) {
+      final items = row.readTable(itemTable);
+      final variations = row.readTable(variationTable);
+
+      return ItemVariation(items: items, variations: variations);
+    }).get();
+  }
 
   Future<List<ItemTableData>> getItems() => select(db.itemTable).get();
 }

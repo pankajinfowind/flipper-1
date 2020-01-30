@@ -27,7 +27,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       this.refreshToken,
       @required this.email,
       this.avatar,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory UserTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -368,7 +368,7 @@ class $UserTableTable extends UserTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -538,7 +538,7 @@ class UnitTableData extends DataClass implements Insertable<UnitTableData> {
       @required this.focused,
       @required this.businessId,
       @required this.branchId,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory UnitTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -777,7 +777,7 @@ class $UnitTableTable extends UnitTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -899,7 +899,7 @@ class TokenTableData extends DataClass implements Insertable<TokenTableData> {
   TokenTableData(
       {@required this.id,
       @required this.token,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory TokenTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -1047,7 +1047,7 @@ class $TokenTableTable extends TokenTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -1144,7 +1144,7 @@ class BusinessUserTableData extends DataClass
       {@required this.id,
       this.userId,
       this.businessId,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory BusinessUserTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -1321,7 +1321,7 @@ class $BusinessUserTableTable extends BusinessUserTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -1422,8 +1422,7 @@ class TabsTableData extends DataClass implements Insertable<TabsTableData> {
   final int tab;
   final DateTime createdAt;
   final DateTime updatedAt;
-  TabsTableData(
-      {@required this.id, this.tab, @required this.createdAt, this.updatedAt});
+  TabsTableData({@required this.id, this.tab, this.createdAt, this.updatedAt});
   factory TabsTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -1567,7 +1566,7 @@ class $TabsTableTable extends TabsTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -1665,7 +1664,7 @@ class BusinessTableData extends DataClass
       @required this.name,
       this.abbreviation,
       @required this.isActive,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory BusinessTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -1876,7 +1875,7 @@ class $BusinessTableTable extends BusinessTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -1998,7 +1997,7 @@ class CategoryTableData extends DataClass
       @required this.name,
       @required this.businessId,
       @required this.branchId,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory CategoryTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -2237,7 +2236,7 @@ class $CategoryTableTable extends CategoryTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -2361,7 +2360,7 @@ class BranchTableData extends DataClass implements Insertable<BranchTableData> {
       {@required this.id,
       @required this.name,
       @required this.isActive,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory BranchTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -2540,7 +2539,7 @@ class $BranchTableTable extends BranchTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -2648,7 +2647,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
       @required this.value,
       this.itemId,
       this.businessId,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory StockTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -2854,7 +2853,7 @@ class $StockTableTable extends StockTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -2969,7 +2968,7 @@ class PriceTableData extends DataClass implements Insertable<PriceTableData> {
       {@required this.id,
       @required this.value,
       this.categoryId,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory PriceTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -3149,7 +3148,7 @@ class $PriceTableTable extends PriceTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -3249,6 +3248,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
   final int id;
   final String name;
   final String color;
+  final String description;
   final int categoryId;
   final int branchId;
   final int unitId;
@@ -3259,11 +3259,12 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       {@required this.id,
       @required this.name,
       @required this.color,
+      @required this.description,
       @required this.categoryId,
       @required this.branchId,
       @required this.unitId,
       @required this.variationId,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory ItemTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -3277,6 +3278,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       color:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
+      description: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}description']),
       categoryId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}category_id']),
       branchId:
@@ -3297,6 +3300,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       color: serializer.fromJson<String>(json['color']),
+      description: serializer.fromJson<String>(json['description']),
       categoryId: serializer.fromJson<int>(json['categoryId']),
       branchId: serializer.fromJson<int>(json['branchId']),
       unitId: serializer.fromJson<int>(json['unitId']),
@@ -3312,6 +3316,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'color': serializer.toJson<String>(color),
+      'description': serializer.toJson<String>(description),
       'categoryId': serializer.toJson<int>(categoryId),
       'branchId': serializer.toJson<int>(branchId),
       'unitId': serializer.toJson<int>(unitId),
@@ -3328,6 +3333,9 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
       color:
           color == null && nullToAbsent ? const Value.absent() : Value(color),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
       categoryId: categoryId == null && nullToAbsent
           ? const Value.absent()
           : Value(categoryId),
@@ -3352,6 +3360,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           {int id,
           String name,
           String color,
+          String description,
           int categoryId,
           int branchId,
           int unitId,
@@ -3362,6 +3371,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
         id: id ?? this.id,
         name: name ?? this.name,
         color: color ?? this.color,
+        description: description ?? this.description,
         categoryId: categoryId ?? this.categoryId,
         branchId: branchId ?? this.branchId,
         unitId: unitId ?? this.unitId,
@@ -3375,6 +3385,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('color: $color, ')
+          ..write('description: $description, ')
           ..write('categoryId: $categoryId, ')
           ..write('branchId: $branchId, ')
           ..write('unitId: $unitId, ')
@@ -3393,15 +3404,17 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           $mrjc(
               color.hashCode,
               $mrjc(
-                  categoryId.hashCode,
+                  description.hashCode,
                   $mrjc(
-                      branchId.hashCode,
+                      categoryId.hashCode,
                       $mrjc(
-                          unitId.hashCode,
+                          branchId.hashCode,
                           $mrjc(
-                              variationId.hashCode,
-                              $mrjc(createdAt.hashCode,
-                                  updatedAt.hashCode)))))))));
+                              unitId.hashCode,
+                              $mrjc(
+                                  variationId.hashCode,
+                                  $mrjc(createdAt.hashCode,
+                                      updatedAt.hashCode))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -3409,6 +3422,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           other.id == this.id &&
           other.name == this.name &&
           other.color == this.color &&
+          other.description == this.description &&
           other.categoryId == this.categoryId &&
           other.branchId == this.branchId &&
           other.unitId == this.unitId &&
@@ -3421,6 +3435,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> color;
+  final Value<String> description;
   final Value<int> categoryId;
   final Value<int> branchId;
   final Value<int> unitId;
@@ -3431,6 +3446,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.color = const Value.absent(),
+    this.description = const Value.absent(),
     this.categoryId = const Value.absent(),
     this.branchId = const Value.absent(),
     this.unitId = const Value.absent(),
@@ -3442,6 +3458,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     this.id = const Value.absent(),
     @required String name,
     @required String color,
+    @required String description,
     @required int categoryId,
     @required int branchId,
     @required int unitId,
@@ -3450,6 +3467,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     this.updatedAt = const Value.absent(),
   })  : name = Value(name),
         color = Value(color),
+        description = Value(description),
         categoryId = Value(categoryId),
         branchId = Value(branchId),
         unitId = Value(unitId),
@@ -3458,6 +3476,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
       {Value<int> id,
       Value<String> name,
       Value<String> color,
+      Value<String> description,
       Value<int> categoryId,
       Value<int> branchId,
       Value<int> unitId,
@@ -3468,6 +3487,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
       id: id ?? this.id,
       name: name ?? this.name,
       color: color ?? this.color,
+      description: description ?? this.description,
       categoryId: categoryId ?? this.categoryId,
       branchId: branchId ?? this.branchId,
       unitId: unitId ?? this.unitId,
@@ -3516,6 +3536,20 @@ class $ItemTableTable extends ItemTable
     );
   }
 
+  final VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  GeneratedTextColumn _description;
+  @override
+  GeneratedTextColumn get description =>
+      _description ??= _constructDescription();
+  GeneratedTextColumn _constructDescription() {
+    return GeneratedTextColumn(
+      'description',
+      $tableName,
+      false,
+    );
+  }
+
   final VerificationMeta _categoryIdMeta = const VerificationMeta('categoryId');
   GeneratedIntColumn _categoryId;
   @override
@@ -3559,7 +3593,7 @@ class $ItemTableTable extends ItemTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -3580,6 +3614,7 @@ class $ItemTableTable extends ItemTable
         id,
         name,
         color,
+        description,
         categoryId,
         branchId,
         unitId,
@@ -3613,6 +3648,12 @@ class $ItemTableTable extends ItemTable
           _colorMeta, color.isAcceptableValue(d.color.value, _colorMeta));
     } else if (color.isRequired && isInserting) {
       context.missing(_colorMeta);
+    }
+    if (d.description.present) {
+      context.handle(_descriptionMeta,
+          description.isAcceptableValue(d.description.value, _descriptionMeta));
+    } else if (description.isRequired && isInserting) {
+      context.missing(_descriptionMeta);
     }
     if (d.categoryId.present) {
       context.handle(_categoryIdMeta,
@@ -3673,6 +3714,9 @@ class $ItemTableTable extends ItemTable
     if (d.color.present) {
       map['color'] = Variable<String, StringType>(d.color.value);
     }
+    if (d.description.present) {
+      map['description'] = Variable<String, StringType>(d.description.value);
+    }
     if (d.categoryId.present) {
       map['category_id'] = Variable<int, IntType>(d.categoryId.value);
     }
@@ -3715,7 +3759,7 @@ class VariationTableData extends DataClass
       @required this.branchId,
       @required this.count,
       @required this.price,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory VariationTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -3952,7 +3996,7 @@ class $VariationTableTable extends VariationTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 
@@ -4077,7 +4121,7 @@ class HistoryTableData extends DataClass
       {@required this.id,
       @required this.count,
       @required this.variantId,
-      @required this.createdAt,
+      this.createdAt,
       this.updatedAt});
   factory HistoryTableData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
@@ -4256,7 +4300,7 @@ class $HistoryTableTable extends HistoryTable
   @override
   GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn('created_at', $tableName, false,
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
         defaultValue: currentDateAndTime);
   }
 

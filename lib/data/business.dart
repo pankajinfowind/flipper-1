@@ -6,6 +6,7 @@ class BusinessTable extends Table {
   TextColumn get abbreviation => text().nullable()();
   BoolColumn get isActive => boolean().withDefault(Constant(false))();
 
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt =>
+      dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();
 }

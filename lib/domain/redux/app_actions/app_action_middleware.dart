@@ -182,6 +182,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         VariationTableData(
           name: "Regular",
           price: 0,
+          count: 0,
           branchId: action.branch.id,
         ),
       );
@@ -192,12 +193,14 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         store,
         // ignore: missing_required_param
         ItemTableData(
-            name: action.name,
-            categoryId: action.category.id,
-            unitId: action.unit.id,
-            color: action.color,
-            branchId: action.branch.id,
-            variationId: variantId),
+          name: action.name,
+          categoryId: action.category.id,
+          description: action.description,
+          unitId: action.unit.id,
+          color: action.color,
+          branchId: action.branch.id,
+          variationId: variantId,
+        ),
       );
       if (item is int) {
         List<ItemTableData> items = await generalRepository.getItems(store);
@@ -242,6 +245,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         // ignore: missing_required_param
         ItemTableData(
             name: action.name,
+            description: action.description,
             categoryId: action.category.id,
             unitId: action.unit.id,
             color: action.color,

@@ -7,7 +7,7 @@ class UserBusiness {
   final UserTable user;
 
   UserBusiness({
-     @required this.business,
-     @required this.user,
+    @required this.business,
+    @required this.user,
   });
 }

@@ -1,9 +1,11 @@
 import 'package:moor/moor.dart';
 
+// @DataClassName("items")
 class ItemTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
   TextColumn get color => text()();
+  TextColumn get description => text()();
 
   IntColumn get categoryId =>
       integer().customConstraint('NULL REFERENCES category_table(id)')();
@@ -16,6 +18,8 @@ class ItemTable extends Table {
   IntColumn get variationId =>
       integer().customConstraint('NULL REFERENCES variation_table(id)')();
 
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  // DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt =>
+      dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();
 }

@@ -10,6 +10,7 @@ class UserTable extends Table {
   TextColumn get email => text()();
   TextColumn get avatar => text().nullable()();
 
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt =>
+      dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();
 }

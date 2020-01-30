@@ -1,3 +1,4 @@
+import 'package:flipper/data/dao/item_variation.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/data/respositories/branch_repository.dart';
 import 'package:flipper/data/respositories/business_repository.dart';
@@ -77,6 +78,9 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     List<CategoryTableData> categoryList =
         await generalRepository.getCategories(store);
 
+    List<ItemVariation> itemsVariations =
+        await generalRepository.getItemVariation(store);
+
     List<BranchTableData> branch = await branchRepository.getBranches(store);
 
     List<BusinessTableData> businesses =
@@ -86,13 +90,15 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       Router.navigator.pushNamed(Router.afterSplash);
       return;
     } else {
-      final _user = User((u) => u
-        ..bearerToken = user.bearerToken
-        ..username = user.username
-        ..refreshToken = user.refreshToken
-        ..status = user.status
-        ..avatar = user.avatar
-        ..email = user.email);
+      final _user = User(
+        (u) => u
+          ..bearerToken = user.bearerToken
+          ..username = user.username
+          ..refreshToken = user.refreshToken
+          ..status = user.status
+          ..avatar = user.avatar
+          ..email = user.email,
+      );
 
       Hint hint = Hint((b) => b
         ..type = HintType.Branch
@@ -136,18 +142,22 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ),
       );
 
+      // print(itemsVariations.single.variation);
+
       store.dispatch(ItemLoaded(items: itemList));
       unitsList.forEach((c) => {
             if (c.focused)
               {
                 store.dispatch(
                   CurrentUnit(
-                    unit: Unit((u) => u
-                      ..id = c.id
-                      ..name = c.name
-                      ..focused = c.focused
-                      ..businessId = c.businessId ?? 0
-                      ..branchId = c.branchId ?? 0),
+                    unit: Unit(
+                      (u) => u
+                        ..id = c.id
+                        ..name = c.name
+                        ..focused = c.focused
+                        ..businessId = c.businessId ?? 0
+                        ..branchId = c.branchId ?? 0,
+                    ),
                   ),
                 )
               }
@@ -158,12 +168,14 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               {
                 store.dispatch(
                   CurrentCategory(
-                    category: Category((u) => u
-                      ..id = c.id
-                      ..name = c.name
-                      ..focused = c.focused
-                      ..businessId = c.businessId ?? 0
-                      ..branchId = c.branchId ?? 0),
+                    category: Category(
+                      (u) => u
+                        ..id = c.id
+                        ..name = c.name
+                        ..focused = c.focused
+                        ..businessId = c.businessId ?? 0
+                        ..branchId = c.branchId ?? 0,
+                    ),
                   ),
                 )
               }

@@ -1,3 +1,4 @@
+import 'package:flipper/data/dao/item_variation.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/business.dart';
@@ -6,6 +7,7 @@ import 'package:redux/redux.dart';
 
 class GeneralRepository {
   Future<int> insertTabs(Store<AppState> store, int value) {
+    //ignore:missing_required_param
     var tab = new TabsTableData(tab: value, id: 1);
     return store.state.database.tabsDao.insert(tab);
   }
@@ -19,29 +21,34 @@ class GeneralRepository {
     if (cat == null) {
       return false;
     }
+    //ignore:missing_required_param
     final updated = CategoryTableData(
       name: categoryName ?? cat.name,
       id: cat.id,
       focused: focused ?? true,
       businessId: cat.businessId,
       branchId: cat.branchId,
+      updatedAt: DateTime.now(),
     );
 
     return store.state.database.categoryDao.updateCategory(updated);
   }
 
   Future<bool> updateTab(Store<AppState> store, int value) {
+    //ignore:missing_required_param
     final b = TabsTableData(id: 1, tab: value);
     return store.state.database.tabsDao.updateTab(b);
   }
 
   Future<bool> updateUnit(Store<AppState> store, Unit unit) {
+    //ignore:missing_required_param
     final b = UnitTableData(
-        id: unit.id,
-        name: unit.name,
-        focused: unit.focused,
-        businessId: unit.businessId,
-        branchId: unit.branchId);
+      id: unit.id,
+      name: unit.name,
+      focused: unit.focused,
+      businessId: unit.businessId,
+      branchId: unit.branchId,
+    );
     return store.state.database.unitDao.updateTab(b);
   }
 
@@ -54,6 +61,7 @@ class GeneralRepository {
   }
 
   Future<int> insertUnit(Store<AppState> store, Unit unit) {
+    //ignore:missing_required_param
     var values = new UnitTableData(
         name: unit.name,
         branchId: unit.branchId,
@@ -72,6 +80,7 @@ class GeneralRepository {
         businessId: businessId,
         branchId: 1,
         focused: false,
+        createdAt: DateTime.now(),
         name: "toBeModified");
     CategoryTableData existingCategory =
         await store.state.database.categoryDao.getCategoryName("toBeModified");
@@ -98,5 +107,9 @@ class GeneralRepository {
 
   Future<List<ItemTableData>> getItems(Store<AppState> store) {
     return store.state.database.itemDao.getItems();
+  }
+
+  Future<List<ItemVariation>> getItemVariation(Store<AppState> store) {
+    return store.state.database.itemDao.getItemVariations();
   }
 }

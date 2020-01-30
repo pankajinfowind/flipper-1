@@ -91,7 +91,6 @@ class AfterSplash extends StatelessWidget {
                       width: 380,
                       height: 60,
                       child: FlatButton(
-                        color: Colors.blue,
                         child: Text(
                           S.of(context).learnaboutFlipper,
                           style: TextStyle(color: Colors.black54, fontSize: 20),

@@ -8,4 +8,5 @@ part of 'item_dao.dart';
 
 mixin _$ItemDaoMixin on DatabaseAccessor<Database> {
   $ItemTableTable get itemTable => db.itemTable;
+  $VariationTableTable get variationTable => db.variationTable;
 }

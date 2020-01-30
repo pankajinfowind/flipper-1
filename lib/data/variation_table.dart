@@ -8,6 +8,7 @@ class VariationTable extends Table {
 
   IntColumn get count => integer()();
   IntColumn get price => integer()();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt =>
+      dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();
 }

@@ -23,13 +23,15 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, VariationAction>(_onVariations),
   TypedReducer<AppState, CurrentCategory>(_onCurrentCategory),
   TypedReducer<AppState, ItemLoaded>(_onItemLoaded),
+  TypedReducer<AppState, CurrentSaleAction>(_onCurrentSale),
+  TypedReducer<AppState, IncrementAction>(_onIncrement),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
 }
 
 AppState _onResetAppAction(AppState state, ResetAppAction action) {
-  //TODO: should update the
+  //todo: should update the
   return state.rebuild((a) => a..action = null);
 }
 
@@ -136,4 +138,12 @@ AppState _onVariations(AppState state, VariationAction action) {
 
 AppState _onItemLoaded(AppState state, ItemLoaded action) {
   return state.rebuild((a) => a..items = ListBuilder(action.items));
+}
+
+AppState _onCurrentSale(AppState state, CurrentSaleAction action) {
+  return state.rebuild((a) => a..currentSales = ListBuilder(action.items));
+}
+
+AppState _onIncrement(AppState state, IncrementAction action) {
+  return state.rebuild((a) => a..currentIncrement = action.increment);
 }

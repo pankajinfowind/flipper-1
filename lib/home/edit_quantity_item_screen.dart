@@ -5,6 +5,7 @@ import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flipper/domain/redux/app_actions/actions.dart';
 
 class EditQuantityItemScreen extends StatefulWidget {
   final Item item;
@@ -15,6 +16,8 @@ class EditQuantityItemScreen extends StatefulWidget {
 }
 
 class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
+  final incrementController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CommonViewModel>(
@@ -43,21 +46,109 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
                 title: Center(
                   child: Container(
                     width: 40,
-                    child: TextFormField(
+                    child: TextField(
+                      controller: TextEditingController(
+                        text: vm.currentIncrement == null
+                            ? "1"
+                            : vm.currentIncrement.toString(),
+                      ),
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
-                      initialValue: "1",
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ),
                 leading: IconButton(
                   icon: Icon(Icons.add),
-                  onPressed: () {},
+                  onPressed: () {
+                    List<Item> items = [];
+                    if (vm.currentSales.length == 0) {
+                      items.add(
+                        Item(
+                          (b) => b
+                            ..id = widget.item.id
+                            ..name = widget.item.name
+                            ..branchId = widget.item.branchId
+                            ..unitId = widget.item.unitId
+                            ..variantId = widget.item.variantId
+                            ..categoryId = widget.item.categoryId
+                            ..color = widget.item.color
+                            ..count = 1,
+                        ),
+                      );
+                      StoreProvider.of<AppState>(context).dispatch(
+                        CurrentSaleAction(items: items),
+                      );
+                      StoreProvider.of<AppState>(context).dispatch(
+                        IncrementAction(increment: 1),
+                      );
+                    } else {
+                      for (var i = 0; i < vm.currentSales.length; i++) {
+                        if (vm.currentSales[i].id == widget.item.id) {
+                          print(vm.currentIncrement);
+                          StoreProvider.of<AppState>(context).dispatch(
+                            IncrementAction(
+                                increment: vm.currentSales[i].count + 1),
+                          );
+                          items.add(
+                            Item(
+                              (b) => b
+                                ..id = widget.item.id
+                                ..name = widget.item.name
+                                ..branchId = widget.item.branchId
+                                ..unitId = widget.item.unitId
+                                ..variantId = widget.item.variantId
+                                ..categoryId = widget.item.categoryId
+                                ..color = widget.item.color
+                                ..count = vm.currentIncrement,
+                            ),
+                          );
+                        } else {
+                          items.add(vm.currentSales[i]);
+                        }
+                      }
+                      StoreProvider.of<AppState>(context).dispatch(
+                        CurrentSaleAction(items: items),
+                      );
+                    }
+                  },
                 ),
                 trailing: IconButton(
                   icon: Icon(Icons.remove),
-                  onPressed: () {},
+                  onPressed: () {
+                    List<Item> items = [];
+                    if (vm.currentSales.length > 0) {
+                      for (var i = 0; i < vm.currentSales.length; i++) {
+                        if (vm.currentSales[i].id == widget.item.id) {
+                          if (vm.currentSales[i].count - 1 == -1) {
+                            return;
+                          }
+                          StoreProvider.of<AppState>(context).dispatch(
+                            IncrementAction(
+                                increment: vm.currentSales[i].count - 1),
+                          );
+                          items.add(
+                            Item(
+                              (b) => b
+                                ..id = widget.item.id
+                                ..name = widget.item.name
+                                ..branchId = widget.item.branchId
+                                ..unitId = widget.item.unitId
+                                ..variantId = widget.item.variantId
+                                ..categoryId = widget.item.categoryId
+                                ..color = widget.item.color
+                                ..count = vm.currentIncrement,
+                            ),
+                          );
+                        } else {
+                          items.add(vm.currentSales[i]);
+                        }
+                      }
+                      StoreProvider.of<AppState>(context).dispatch(
+                        CurrentSaleAction(items: items),
+                      );
+                    }
+                  },
                 ),
               ),
               Padding(

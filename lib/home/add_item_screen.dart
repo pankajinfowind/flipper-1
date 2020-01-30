@@ -221,9 +221,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         child: Text(S.of(context).addVariation),
                         onPressed: () {
                           StoreProvider.of<AppState>(context).dispatch(
-                              CurrentDisable(
-                                  disable:
-                                      Disable((u) => u..unDisable = "none")));
+                            CurrentDisable(
+                              disable: Disable((u) => u..unDisable = "none"),
+                            ),
+                          );
                           Router.navigator.pushNamed(Router.addVariationScreen);
                         },
                       ),

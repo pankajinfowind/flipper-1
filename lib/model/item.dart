@@ -10,6 +10,9 @@ abstract class Item implements Built<Item, ItemBuilder> {
   int get categoryId;
   int get unitId;
   int get variantId;
+
+  @nullable
+  int get count;
   Item._();
   factory Item([void Function(ItemBuilder) updates]) = _$Item;
 }

@@ -21,6 +21,8 @@ class _$Item extends Item {
   final int unitId;
   @override
   final int variantId;
+  @override
+  final int count;
 
   factory _$Item([void Function(ItemBuilder) updates]) =>
       (new ItemBuilder()..update(updates)).build();
@@ -32,7 +34,8 @@ class _$Item extends Item {
       this.branchId,
       this.categoryId,
       this.unitId,
-      this.variantId})
+      this.variantId,
+      this.count})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('Item', 'name');
@@ -74,7 +77,8 @@ class _$Item extends Item {
         branchId == other.branchId &&
         categoryId == other.categoryId &&
         unitId == other.unitId &&
-        variantId == other.variantId;
+        variantId == other.variantId &&
+        count == other.count;
   }
 
   @override
@@ -83,12 +87,14 @@ class _$Item extends Item {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, name.hashCode), color.hashCode),
-                        id.hashCode),
-                    branchId.hashCode),
-                categoryId.hashCode),
-            unitId.hashCode),
-        variantId.hashCode));
+                    $jc(
+                        $jc($jc($jc(0, name.hashCode), color.hashCode),
+                            id.hashCode),
+                        branchId.hashCode),
+                    categoryId.hashCode),
+                unitId.hashCode),
+            variantId.hashCode),
+        count.hashCode));
   }
 
   @override
@@ -100,7 +106,8 @@ class _$Item extends Item {
           ..add('branchId', branchId)
           ..add('categoryId', categoryId)
           ..add('unitId', unitId)
-          ..add('variantId', variantId))
+          ..add('variantId', variantId)
+          ..add('count', count))
         .toString();
   }
 }
@@ -136,6 +143,10 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   int get variantId => _$this._variantId;
   set variantId(int variantId) => _$this._variantId = variantId;
 
+  int _count;
+  int get count => _$this._count;
+  set count(int count) => _$this._count = count;
+
   ItemBuilder();
 
   ItemBuilder get _$this {
@@ -147,6 +158,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
       _categoryId = _$v.categoryId;
       _unitId = _$v.unitId;
       _variantId = _$v.variantId;
+      _count = _$v.count;
       _$v = null;
     }
     return this;
@@ -175,7 +187,8 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
             branchId: branchId,
             categoryId: categoryId,
             unitId: unitId,
-            variantId: variantId);
+            variantId: variantId,
+            count: count);
     replace(_$result);
     return _$result;
   }

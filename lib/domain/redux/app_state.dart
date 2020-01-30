@@ -97,7 +97,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   BuiltList<Variation> get variations;
 
+  BuiltList<Item> get currentSales;
+
   BuiltList<Item> get items;
+
+  @nullable
+  int get currentIncrement;
 
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
@@ -106,6 +111,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..database = Database()
     ..units = ListBuilder()
     ..categories = ListBuilder()
+    ..currentSales = ListBuilder()
     ..variations = ListBuilder()
     ..items = ListBuilder()
     ..businesses = List<Business>()

@@ -141,16 +141,17 @@ class SaveItemAction {
   final Unit unit;
   final String color;
 
-  SaveItemAction(
-      {this.business,
-      this.branch,
-      this.price,
-      this.variations,
-      this.category,
-      this.description,
-      this.name,
-      this.unit,
-      this.color});
+  SaveItemAction({
+    this.business,
+    this.branch,
+    this.price,
+    this.variations,
+    this.category,
+    this.description,
+    this.name,
+    this.unit,
+    this.color,
+  });
 }
 
 @immutable
@@ -158,4 +159,18 @@ class ItemLoaded {
   final List<Item> items;
 
   ItemLoaded({this.items});
+}
+
+@immutable
+class CurrentSaleAction {
+  final List<Item> items;
+
+  CurrentSaleAction({this.items});
+}
+
+@immutable
+class IncrementAction {
+  final int increment;
+
+  IncrementAction({this.increment});
 }

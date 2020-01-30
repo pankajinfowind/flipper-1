@@ -62,10 +62,15 @@ abstract class CommonViewModel
   @nullable
   Branch get currentBranch;
 
+  BuiltList<Item> get currentSales;
+
   @nullable
   BuiltList<Variation> get variations;
 
   BuiltList<Item> get items;
+
+  @nullable
+  int get currentIncrement;
 
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
@@ -96,6 +101,10 @@ abstract class CommonViewModel
           store.state.branch == null ? null : store.state.branch.toBuilder()
       ..businesses = store.state.businesses
       ..tab = store.state.tab
+      ..currentIncrement = store.state.currentIncrement
+      ..currentSales = store.state.currentSales == null
+          ? null
+          : store.state.currentSales.toBuilder()
       ..items = store.state.items.toBuilder()
       ..currentUnit = store.state.currentUnit == null
           ? null

@@ -173,6 +173,52 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         GeneralRepository generalRepository) {
   return (store, action, next) async {
     next(action);
+    //TODO: in v2 clean code duplication.
+    if (action.variations.length == 0) {
+      //atleast make sure we do have one variant per item
+      final variantId = await generalRepository.insertVariant(
+        store,
+        // ignore: missing_required_param
+        VariationTableData(
+          name: "Regular",
+          branchId: action.branch.id,
+        ),
+      );
+      await generalRepository.insertHistory(store, variantId, 0);
+
+      final item = await generalRepository.insertItem(
+        store,
+        // ignore: missing_required_param
+        ItemTableData(
+            name: action.name,
+            categoryId: action.category.id,
+            unitId: action.unit.id,
+            color: action.color,
+            branchId: action.branch.id,
+            variationId: variantId),
+      );
+      if (item is int) {
+        List<ItemTableData> items = await generalRepository.getItems(store);
+        List<Item> itemList = [];
+
+        items.forEach(
+          (i) => itemList.add(
+            Item(
+              (v) => v
+                ..name = i.name
+                ..branchId = i.branchId
+                ..unitId = i.unitId
+                ..id = i.id
+                ..color = i.color
+                ..variantId = i.variationId
+                ..categoryId = i.categoryId,
+            ),
+          ),
+        );
+        store.dispatch(ItemLoaded(items: itemList));
+        Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
+      }
+    }
 
     for (var i = 0; i < action.variations.length; i++) {
       // insert variation and get last id to save the item then
@@ -184,7 +230,8 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
           branchId: action.branch.id,
         ),
       );
-
+      await generalRepository.insertHistory(
+          store, variationId, action.variations[i].stockValue);
       //insert item
       final item = await generalRepository.insertItem(
         store,
@@ -216,7 +263,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
           ),
         );
         store.dispatch(ItemLoaded(items: itemList));
-        Logger.d("Sussessfully created an item");
+        // Logger.d("Sussessfully created an item");
         Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
       }
     }

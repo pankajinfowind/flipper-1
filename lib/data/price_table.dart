@@ -6,4 +6,7 @@ class PriceTable extends Table {
   IntColumn get categoryId => integer()
       .nullable()
       .customConstraint('NULL REFERENCES category_table(id)')();
+
+  // DateTimeColumn get createdAt => currentDateAndTime;
+  // DateTimeColumn get updatedAt => currentDateAndTime;
 }

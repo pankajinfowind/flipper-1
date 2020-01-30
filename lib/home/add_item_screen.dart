@@ -310,17 +310,18 @@ class _AddItemScreenState extends State<AddItemScreen> {
     }
     StoreProvider.of<AppState>(context).dispatch(
       SaveItemAction(
-          business: vm.currentBusiness,
-          name: tForm.name,
-          description: tForm.description,
-          price: tForm.price,
-          branch: vm.currentBranch,
-          color: vm.currentColor == null
-              ? FlipperColors.blue
-              : vm.currentColor.hexCode,
-          variations: vm.variations.toList(),
-          category: _currentCategory,
-          unit: vm.currentUnit),
+        business: vm.currentBusiness,
+        name: tForm.name,
+        description: tForm.description,
+        price: tForm.price,
+        branch: vm.currentBranch,
+        color: vm.currentColor == null
+            ? FlipperColors.blue
+            : vm.currentColor.hexCode,
+        variations: vm.variations.toList(),
+        category: _currentCategory,
+        unit: vm.currentUnit,
+      ),
     );
 
     StoreProvider.of<AppState>(context).dispatch(

@@ -5,4 +5,7 @@ class VariationTable extends Table {
   TextColumn get name => text()();
   IntColumn get branchId =>
       integer().customConstraint('NULL REFERENCES branch_table(id)')();
+
+  // DateTimeColumn get createdAt => currentDateAndTime;
+  // DateTimeColumn get updatedAt => currentDateAndTime;
 }

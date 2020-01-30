@@ -6,6 +6,10 @@ class BusinessUserTable extends Table {
   IntColumn get userId =>
       integer().nullable().customConstraint('NULL REFERENCES user_table(id)')();
 
-  IntColumn get businessId =>
-      integer().nullable().customConstraint('NULL REFERENCES business_table(id)')();
+  IntColumn get businessId => integer()
+      .nullable()
+      .customConstraint('NULL REFERENCES business_table(id)')();
+
+  // DateTimeColumn get createdAt => currentDateAndTime;
+  // DateTimeColumn get updatedAt => currentDateAndTime;
 }

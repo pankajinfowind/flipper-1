@@ -2952,6 +2952,204 @@ class $VariationTableTable extends VariationTable
   }
 }
 
+class HistoryTableData extends DataClass
+    implements Insertable<HistoryTableData> {
+  final int id;
+  final int count;
+  final int variantId;
+  HistoryTableData(
+      {@required this.id, @required this.count, @required this.variantId});
+  factory HistoryTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return HistoryTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      count: intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
+      variantId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}variant_id']),
+    );
+  }
+  factory HistoryTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return HistoryTableData(
+      id: serializer.fromJson<int>(json['id']),
+      count: serializer.fromJson<int>(json['count']),
+      variantId: serializer.fromJson<int>(json['variantId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'count': serializer.toJson<int>(count),
+      'variantId': serializer.toJson<int>(variantId),
+    };
+  }
+
+  @override
+  HistoryTableCompanion createCompanion(bool nullToAbsent) {
+    return HistoryTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      count:
+          count == null && nullToAbsent ? const Value.absent() : Value(count),
+      variantId: variantId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(variantId),
+    );
+  }
+
+  HistoryTableData copyWith({int id, int count, int variantId}) =>
+      HistoryTableData(
+        id: id ?? this.id,
+        count: count ?? this.count,
+        variantId: variantId ?? this.variantId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('HistoryTableData(')
+          ..write('id: $id, ')
+          ..write('count: $count, ')
+          ..write('variantId: $variantId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(count.hashCode, variantId.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is HistoryTableData &&
+          other.id == this.id &&
+          other.count == this.count &&
+          other.variantId == this.variantId);
+}
+
+class HistoryTableCompanion extends UpdateCompanion<HistoryTableData> {
+  final Value<int> id;
+  final Value<int> count;
+  final Value<int> variantId;
+  const HistoryTableCompanion({
+    this.id = const Value.absent(),
+    this.count = const Value.absent(),
+    this.variantId = const Value.absent(),
+  });
+  HistoryTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required int count,
+    @required int variantId,
+  })  : count = Value(count),
+        variantId = Value(variantId);
+  HistoryTableCompanion copyWith(
+      {Value<int> id, Value<int> count, Value<int> variantId}) {
+    return HistoryTableCompanion(
+      id: id ?? this.id,
+      count: count ?? this.count,
+      variantId: variantId ?? this.variantId,
+    );
+  }
+}
+
+class $HistoryTableTable extends HistoryTable
+    with TableInfo<$HistoryTableTable, HistoryTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $HistoryTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _countMeta = const VerificationMeta('count');
+  GeneratedIntColumn _count;
+  @override
+  GeneratedIntColumn get count => _count ??= _constructCount();
+  GeneratedIntColumn _constructCount() {
+    return GeneratedIntColumn(
+      'count',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _variantIdMeta = const VerificationMeta('variantId');
+  GeneratedIntColumn _variantId;
+  @override
+  GeneratedIntColumn get variantId => _variantId ??= _constructVariantId();
+  GeneratedIntColumn _constructVariantId() {
+    return GeneratedIntColumn('variant_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES variant_table(id)');
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, count, variantId];
+  @override
+  $HistoryTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'history_table';
+  @override
+  final String actualTableName = 'history_table';
+  @override
+  VerificationContext validateIntegrity(HistoryTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.count.present) {
+      context.handle(
+          _countMeta, count.isAcceptableValue(d.count.value, _countMeta));
+    } else if (count.isRequired && isInserting) {
+      context.missing(_countMeta);
+    }
+    if (d.variantId.present) {
+      context.handle(_variantIdMeta,
+          variantId.isAcceptableValue(d.variantId.value, _variantIdMeta));
+    } else if (variantId.isRequired && isInserting) {
+      context.missing(_variantIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  HistoryTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return HistoryTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(HistoryTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.count.present) {
+      map['count'] = Variable<int, IntType>(d.count.value);
+    }
+    if (d.variantId.present) {
+      map['variant_id'] = Variable<int, IntType>(d.variantId.value);
+    }
+    return map;
+  }
+
+  @override
+  $HistoryTableTable createAlias(String alias) {
+    return $HistoryTableTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $UserTableTable _userTable;
@@ -2982,6 +3180,9 @@ abstract class _$Database extends GeneratedDatabase {
   $VariationTableTable _variationTable;
   $VariationTableTable get variationTable =>
       _variationTable ??= $VariationTableTable(this);
+  $HistoryTableTable _historyTable;
+  $HistoryTableTable get historyTable =>
+      _historyTable ??= $HistoryTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
@@ -3001,6 +3202,8 @@ abstract class _$Database extends GeneratedDatabase {
       _variationDao ??= VariationDao(this as Database);
   ItemDao _itemDao;
   ItemDao get itemDao => _itemDao ??= ItemDao(this as Database);
+  HistoryDao _historyDao;
+  HistoryDao get historyDao => _historyDao ??= HistoryDao(this as Database);
   @override
   List<TableInfo> get allTables => [
         userTable,
@@ -3014,6 +3217,7 @@ abstract class _$Database extends GeneratedDatabase {
         stockTable,
         priceTable,
         itemTable,
-        variationTable
+        variationTable,
+        historyTable
       ];
 }

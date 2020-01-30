@@ -9,4 +9,7 @@ class UserTable extends Table {
   TextColumn get refreshToken => text().nullable()();
   TextColumn get email => text()();
   TextColumn get avatar => text().nullable()();
+
+  // DateTimeColumn get createdAt => currentDateAndTime;
+  // DateTimeColumn get updatedAt => currentDateAndTime;
 }

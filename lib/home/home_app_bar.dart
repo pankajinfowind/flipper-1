@@ -1,4 +1,8 @@
+import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/generated/l10n.dart';
+import 'package:flipper/presentation/home/common_view_model.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../theme.dart';
 
@@ -13,30 +17,41 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      child: Container(
-        height: AppTheme.appBarSize,
-        child: Row(
-          children: <Widget>[
-            _hamburger(),
-            SizedBox(
-              height: 120,
-              width: 120,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                "No sale",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
+    return StoreConnector<AppState, CommonViewModel>(
+      distinct: true,
+      converter: CommonViewModel.fromStore,
+      builder: (context, vm) {
+        return SafeArea(
+          top: true,
+          child: Container(
+            height: AppTheme.appBarSize,
+            child: Row(
+              children: <Widget>[
+                _hamburger(),
+                SizedBox(
+                  height: 120,
+                  width: vm.currentSales.length == 0 ? 120 : 80,
                 ),
-              ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    vm.currentSales.length == 0
+                        ? S.of(context).noSale
+                        : S.of(context).currentSale +
+                            "[" +
+                            vm.currentSales.length.toString() +
+                            "]",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

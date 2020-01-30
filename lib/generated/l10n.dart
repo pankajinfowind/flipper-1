@@ -262,6 +262,24 @@ class S {
       args: [],
     );
   }
+
+  String get noSale {
+    return Intl.message(
+      'No Sale',
+      name: 'noSale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get currentSale {
+    return Intl.message(
+      'Current Sale',
+      name: 'currentSale',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

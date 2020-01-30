@@ -24,5 +24,7 @@
     "inStock": "in Stock",
     "add": "Add",
     "quantity": "Quantity",
-    "notes": "Notes"
+    "notes": "Notes",
+    "noSale": "No Sale",
+    "currentSale": "Current Sale"
 }

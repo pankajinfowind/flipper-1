@@ -6,7 +6,6 @@ class HistoryTable extends Table {
 
   IntColumn get variantId =>
       integer().customConstraint('NULL REFERENCES variation_table(id)')();
-  //TODO: work on saving crated at and updated at time later.
-  // DateTimeColumn get createdAt => currentDateAndTime;
-  // DateTimeColumn get updatedAt => currentDateAndTime;
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
 }

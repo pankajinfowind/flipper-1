@@ -5,6 +5,6 @@ class BranchTable extends Table {
   TextColumn get name => text()();
   BoolColumn get isActive => boolean().withDefault(Constant(false))();
 
-  // DateTimeColumn get createdAt => currentDateAndTime;
-  // DateTimeColumn get updatedAt => currentDateAndTime;
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
 }

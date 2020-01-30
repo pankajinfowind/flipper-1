@@ -13,6 +13,6 @@ class CategoryTable extends Table {
   IntColumn get branchId =>
       integer().customConstraint('NULL REFERENCES branch_table(id)')();
 
-  // DateTimeColumn get createdAt => currentDateAndTime;
-  // DateTimeColumn get updatedAt => currentDateAndTime;
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
 }

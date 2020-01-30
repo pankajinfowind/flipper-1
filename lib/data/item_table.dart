@@ -16,6 +16,6 @@ class ItemTable extends Table {
   IntColumn get variationId =>
       integer().customConstraint('NULL REFERENCES variation_table(id)')();
 
-  // DateTimeColumn get createdAt => currentDateAndTime;
-  // DateTimeColumn get updatedAt => currentDateAndTime;
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
 }

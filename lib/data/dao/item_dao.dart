@@ -1,10 +1,12 @@
+import 'package:flipper/data/dao/UserBusiness.dart';
+import 'package:flipper/data/dao/item_variation.dart';
 import 'package:flipper/data/item_table.dart';
 import 'package:flipper/data/main_database.dart';
+import 'package:flipper/data/variation_table.dart';
 import 'package:moor/moor.dart';
-
 part 'item_dao.g.dart';
 
-@UseDao(tables: [ItemTable])
+@UseDao(tables: [ItemTable, VariationTable])
 class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
   final Database db;
 
@@ -22,6 +24,29 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
     return update(db.itemTable).replace(entry);
   }
 
-  Future<List<ItemTableData>> getItems() =>
-      select(db.itemTable).get();
+  //todo: combine item and variation in one query.
+  // Future<List<ItemVariation>> getItemss() {
+  //   return (select(db.itemTable)
+  //         ..orderBy(
+  //           ([
+  //             (t) => OrderingTerm(expression: t.id, mode: OrderingMode.asc),
+  //             (t) => OrderingTerm(expression: t.id),
+  //           ]),
+  //         ))
+  //       .join(
+  //         [
+  //           leftOuterJoin(db.itemTable,
+  //               db.variationTable.branchId.equalsExp(db.itemTable.branchId)),
+  //         ],
+  //       )
+  //       .map(
+  //         (row) => ItemVariation(
+  //           item: row.readTable(itemTable),
+  //           variation: row.readTable(variationTable),
+  //         ),
+  //       )
+  //       .get();
+  // }
+
+  Future<List<ItemTableData>> getItems() => select(db.itemTable).get();
 }

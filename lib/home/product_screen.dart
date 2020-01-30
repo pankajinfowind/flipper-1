@@ -57,7 +57,9 @@ List<Widget> getItems(List<Item> itemList, context) {
                 itemList[i].name.length > 2
                     ? itemList[i].name.substring(0, 2)
                     : itemList[i].name,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
               onPressed: () {},
             ),

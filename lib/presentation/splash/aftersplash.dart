@@ -1,3 +1,4 @@
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import "package:flutter/material.dart";
@@ -26,11 +27,11 @@ class AfterSplash extends StatelessWidget {
                     height: 40,
                   ),
                   Text(
-                    "Flipper Point of Sale",
+                    S.of(context).flipperPointofSale,
                     style: TextStyle(color: Colors.white, fontSize: 40),
                   ),
                   Text(
-                    "Interact and  grow your business",
+                    S.of(context).interactandgrowyourbusiness,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )
                 ],
@@ -53,12 +54,11 @@ class AfterSplash extends StatelessWidget {
                       height: 60,
                       child: FlatButton(
                         onPressed: () {
-                          Router.navigator
-                              .pushNamed(Router.signUpScreen);
+                          Router.navigator.pushNamed(Router.signUpScreen);
                         },
                         color: Colors.blue,
                         child: Text(
-                          "Create Account",
+                          S.of(context).createAccount,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -75,9 +75,10 @@ class AfterSplash extends StatelessWidget {
                       child: OutlineButton(
                         color: Colors.blue,
                         child: Text(
-                          "Sign in",
+                          S.of(context).signIn,
                           style: TextStyle(color: Colors.blue),
                         ),
+                        onPressed: () {},
                       ),
                     ),
                   ),
@@ -92,9 +93,10 @@ class AfterSplash extends StatelessWidget {
                       child: FlatButton(
                         color: Colors.blue,
                         child: Text(
-                          "Learn about Flipper.",
+                          S.of(context).learnaboutFlipper,
                           style: TextStyle(color: Colors.black54, fontSize: 20),
                         ),
+                        onPressed: () {},
                       ),
                     ),
                   )

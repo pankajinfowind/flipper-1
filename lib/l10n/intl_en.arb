@@ -15,6 +15,7 @@
     "addStock": "Add Stock",
     "reedeemRewards": "Reedeem Rewards",
     "createNew": "Create new",
+    "createAccount": "Create new",
     "newItem": "New Item",
     "selectCategory": "Select Category",
     "priceAndInventory": "PRICE AND INVENTORY",
@@ -26,5 +27,9 @@
     "quantity": "Quantity",
     "notes": "Notes",
     "noSale": "No Sale",
-    "currentSale": "Current Sale"
+    "currentSale": "Current Sale",
+    "flipperPointofSale": "Flipper Point of Sale",
+    "interactandgrowyourbusiness": "Interact and  grow your business",
+    "signIn": "Sign in",
+    "learnaboutFlipper": "Learn about Flipper."
 }

@@ -173,6 +173,15 @@ class S {
     );
   }
 
+  String get createAccount {
+    return Intl.message(
+      'Create new',
+      name: 'createAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get newItem {
     return Intl.message(
       'New Item',
@@ -276,6 +285,42 @@ class S {
     return Intl.message(
       'Current Sale',
       name: 'currentSale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get flipperPointofSale {
+    return Intl.message(
+      'Flipper Point of Sale',
+      name: 'flipperPointofSale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get interactandgrowyourbusiness {
+    return Intl.message(
+      'Interact and  grow your business',
+      name: 'interactandgrowyourbusiness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get signIn {
+    return Intl.message(
+      'Sign in',
+      name: 'signIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get learnaboutFlipper {
+    return Intl.message(
+      'Learn about Flipper.',
+      name: 'learnaboutFlipper',
       desc: '',
       args: [],
     );

@@ -67,7 +67,7 @@ class GeneralRepository {
   }
 
   Future<int> insertCategory(Store<AppState> store, int businessId) async {
-    //TODO: set branchId to the active one got when login or signup it should be switchable as business does
+    //ignore: missing_required_param
     var tab = new CategoryTableData(
         businessId: businessId,
         branchId: 1,

@@ -181,6 +181,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         // ignore: missing_required_param
         VariationTableData(
           name: "Regular",
+          price: 0,
           branchId: action.branch.id,
         ),
       );
@@ -228,6 +229,8 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         // ignore: missing_required_param
         VariationTableData(
           name: action.variations[i].name,
+          price: int.parse(action.price),
+          count: action.variations[i].stockValue,
           branchId: action.branch.id,
         ),
       );

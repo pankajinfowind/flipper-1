@@ -22,4 +22,11 @@ class VariationDao extends DatabaseAccessor<Database> with _$VariationDaoMixin {
     return update(db.variationTable).replace(entry);
   }
 
+  Future<List<VariationTableData>> getItemVariations(int itemId) {
+    return (select(db.variationTable)
+          ..orderBy(
+              [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
+          ..where((t) => t.itemId.equals(itemId)))
+        .get();
+  }
 }

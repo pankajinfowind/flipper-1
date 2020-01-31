@@ -223,6 +223,6 @@ class Router {
 //EditQuantityItemScreen arguments holder class
 class EditQuantityItemScreenArguments {
   final Key key;
-  final Item item;
+  final List<Item> item;
   EditQuantityItemScreenArguments({this.key, this.item});
 }

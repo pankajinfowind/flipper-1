@@ -8,7 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 
 class EditQuantityItemScreen extends StatefulWidget {
-  final Item item;
+  final List<Item> item;
   EditQuantityItemScreen({Key key, this.item}) : super(key: key);
 
   @override
@@ -20,170 +20,178 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, CommonViewModel>(
-      distinct: true,
-      converter: CommonViewModel.fromStore,
-      builder: (context, vm) {
-        return Scaffold(
-          appBar: CommonAppBar(
-            disableButton: false,
-            showActionButton: true,
-            actionButtonName: S.of(context).add,
-            title: widget.item.name + " 200 RWF",
-            onPressedCallback: () {
-              //todo: go ahead and insert the new quantity to a sale.
-            },
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Text(S.of(context).quantity),
-              ),
-              ListTile(
-                dense: true,
-                title: Center(
-                  child: Container(
-                    width: 80,
-                    child: TextField(
-                      textDirection: TextDirection.rtl,
-                      onChanged: (count) {
-                        //todo: work on entering count from keyboard right now it is messing around with other inputs
-                        // StoreProvider.of<AppState>(context).dispatch(
-                        //   IncrementAction(
-                        //     increment: vm.currentIncrement == null
-                        //         ? 0 + int.parse(count)
-                        //         : vm.currentIncrement + int.parse(count),
-                        //   ),
-                        // );
-                      },
-                      controller: TextEditingController(
-                        text: vm.currentIncrement == null
-                            ? "1"
-                            : vm.currentIncrement.toString(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
+    return widget.item.length == 1
+        ? StoreConnector<AppState, CommonViewModel>(
+            distinct: true,
+            converter: CommonViewModel.fromStore,
+            builder: (context, vm) {
+              //get variants given itemIt
+
+              return Scaffold(
+                appBar: CommonAppBar(
+                  disableButton: false,
+                  showActionButton: true,
+                  actionButtonName: S.of(context).add,
+                  title: widget.item[0].name + " ${widget.item[0].price} RWF",
+                  onPressedCallback: () {
+                    //todo: go ahead and insert the new quantity to a sale.
+                  },
+                ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(S.of(context).quantity),
                     ),
-                  ),
-                ),
-                leading: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    List<Item> items = [];
-                    if (vm.currentSales.length == 0) {
-                      items.add(
-                        Item(
-                          (b) => b
-                            ..id = widget.item.id
-                            ..name = widget.item.name
-                            ..branchId = widget.item.branchId
-                            ..unitId = widget.item.unitId
-                            ..variantId = widget.item.variantId
-                            ..categoryId = widget.item.categoryId
-                            ..color = widget.item.color
-                            ..count = 1,
+                    ListTile(
+                      dense: true,
+                      title: Center(
+                        child: Container(
+                          width: 80,
+                          child: TextField(
+                            textDirection: TextDirection.rtl,
+                            onChanged: (count) {
+                              //todo: work on entering count from keyboard right now it is messing around with other inputs
+                              // StoreProvider.of<AppState>(context).dispatch(
+                              //   IncrementAction(
+                              //     increment: vm.currentIncrement == null
+                              //         ? 0 + int.parse(count)
+                              //         : vm.currentIncrement + int.parse(count),
+                              //   ),
+                              // );
+                            },
+                            controller: TextEditingController(
+                              text: vm.currentIncrement == null
+                                  ? "1"
+                                  : vm.currentIncrement.toString(),
+                            ),
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
-                      );
-                      StoreProvider.of<AppState>(context).dispatch(
-                        CurrentSaleAction(items: items),
-                      );
-                      StoreProvider.of<AppState>(context).dispatch(
-                        IncrementAction(increment: 1),
-                      );
-                    } else {
-                      for (var i = 0; i < vm.currentSales.length; i++) {
-                        if (vm.currentSales[i].id == widget.item.id) {
-                          print(vm.currentIncrement);
-                          StoreProvider.of<AppState>(context).dispatch(
-                            IncrementAction(
-                              increment: vm.currentIncrement == null
-                                  ? 0 + 1
-                                  : vm.currentIncrement + 1,
-                            ),
-                          );
-                          items.add(
-                            Item(
-                              (b) => b
-                                ..id = widget.item.id
-                                ..name = widget.item.name
-                                ..branchId = widget.item.branchId
-                                ..unitId = widget.item.unitId
-                                ..variantId = widget.item.variantId
-                                ..categoryId = widget.item.categoryId
-                                ..color = widget.item.color
-                                ..count = vm.currentIncrement,
-                            ),
-                          );
-                        } else {
-                          items.add(vm.currentSales[i]);
-                        }
-                      }
-                      StoreProvider.of<AppState>(context).dispatch(
-                        CurrentSaleAction(items: items),
-                      );
-                    }
-                  },
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.remove),
-                  onPressed: () {
-                    List<Item> items = [];
-                    if (vm.currentSales.length > 0) {
-                      for (var i = 0; i < vm.currentSales.length; i++) {
-                        if (vm.currentSales[i].id == widget.item.id) {
-                          if (vm.currentIncrement - 1 == -1) {
-                            return;
+                      ),
+                      leading: IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () {
+                          setPayableAmount(context, "decrement");
+                          List<Item> items = [];
+                          if (vm.currentSales.length > 0) {
+                            for (var i = 0; i < vm.currentSales.length; i++) {
+                              if (vm.currentSales[i].id == widget.item[0].id) {
+                                if (vm.currentIncrement - 1 == -1) {
+                                  return;
+                                }
+                                StoreProvider.of<AppState>(context).dispatch(
+                                  IncrementAction(
+                                    increment: vm.currentIncrement == null
+                                        ? 0
+                                        : vm.currentIncrement - 1,
+                                  ),
+                                );
+                                items.add(
+                                  Item(
+                                    (b) => b
+                                      ..id = widget.item[0].id
+                                      ..name = widget.item[0].name
+                                      ..branchId = widget.item[0].branchId
+                                      ..unitId = widget.item[0].unitId
+                                      ..categoryId = widget.item[0].categoryId
+                                      ..color = widget.item[0].color
+                                      ..count = vm.currentIncrement,
+                                  ),
+                                );
+                              } else {
+                                items.add(vm.currentSales[i]);
+                              }
+                            }
+                            StoreProvider.of<AppState>(context).dispatch(
+                              CurrentSaleAction(items: items),
+                            );
                           }
-                          StoreProvider.of<AppState>(context).dispatch(
-                            IncrementAction(
-                              increment: vm.currentIncrement == null
-                                  ? 0
-                                  : vm.currentIncrement - 1,
-                            ),
-                          );
-                          items.add(
-                            Item(
-                              (b) => b
-                                ..id = widget.item.id
-                                ..name = widget.item.name
-                                ..branchId = widget.item.branchId
-                                ..unitId = widget.item.unitId
-                                ..variantId = widget.item.variantId
-                                ..categoryId = widget.item.categoryId
-                                ..color = widget.item.color
-                                ..count = vm.currentIncrement,
-                            ),
-                          );
-                        } else {
-                          items.add(vm.currentSales[i]);
-                        }
-                      }
-                      StoreProvider.of<AppState>(context).dispatch(
-                        CurrentSaleAction(items: items),
-                      );
-                    }
-                  },
+                        },
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          List<Item> items = [];
+                          if (vm.currentSales.length == 0) {
+                            items.add(
+                              Item(
+                                (b) => b
+                                  ..id = widget.item[0].id
+                                  ..name = widget.item[0].name
+                                  ..branchId = widget.item[0].branchId
+                                  ..unitId = widget.item[0].unitId
+                                  ..categoryId = widget.item[0].categoryId
+                                  ..color = widget.item[0].color
+                                  ..count = 1,
+                              ),
+                            );
+                            StoreProvider.of<AppState>(context).dispatch(
+                              CurrentSaleAction(items: items),
+                            );
+                            StoreProvider.of<AppState>(context).dispatch(
+                              IncrementAction(increment: 1),
+                            );
+                          } else {
+                            for (var i = 0; i < vm.currentSales.length; i++) {
+                              if (vm.currentSales[i].id == widget.item[0].id) {
+                                print(vm.currentIncrement);
+                                StoreProvider.of<AppState>(context).dispatch(
+                                  IncrementAction(
+                                    increment: vm.currentIncrement == null
+                                        ? 0 + 1
+                                        : vm.currentIncrement + 1,
+                                  ),
+                                );
+                                items.add(
+                                  Item(
+                                    (b) => b
+                                      ..id = widget.item[0].id
+                                      ..name = widget.item[0].name
+                                      ..branchId = widget.item[0].branchId
+                                      ..unitId = widget.item[0].unitId
+                                      ..categoryId = widget.item[0].categoryId
+                                      ..color = widget.item[0].color
+                                      ..count = vm.currentIncrement,
+                                  ),
+                                );
+                              } else {
+                                items.add(vm.currentSales[i]);
+                              }
+                            }
+                            StoreProvider.of<AppState>(context).dispatch(
+                              CurrentSaleAction(items: items),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(S.of(context).notes),
+                    ),
+                    Container(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                          "Description here should come from item object too."),
+                    )
+                  ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Text(S.of(context).notes),
-              ),
-              Container(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child:
-                    Text("Description here should come from item object too."),
-              )
-            ],
-          ),
-        );
-      },
-    );
+              );
+            },
+          )
+        : Container(
+            child: Text("create ui for multiple variations "),
+          );
   }
+}
+
+void setPayableAmount(BuildContext context, String s) {
+  print("increase payable");
 }

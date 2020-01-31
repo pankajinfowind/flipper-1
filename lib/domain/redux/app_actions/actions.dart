@@ -179,3 +179,10 @@ class SwitchCategory {
 
   SwitchCategory({this.category});
 }
+
+@immutable
+class NeedItemVariation {
+  final int itemId;
+
+  NeedItemVariation({this.itemId});
+}

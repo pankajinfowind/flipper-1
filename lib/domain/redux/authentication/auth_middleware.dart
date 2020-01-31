@@ -136,7 +136,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..unitId = i.unitId
               ..id = i.id
               ..color = i.color
-              ..variantId = i.variationId
               ..categoryId = i.categoryId,
           ),
         ),

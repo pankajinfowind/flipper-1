@@ -3,6 +3,7 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/unit.dart';
+import 'package:flipper/model/variation.dart';
 import 'package:redux/redux.dart';
 
 class GeneralRepository {
@@ -111,5 +112,10 @@ class GeneralRepository {
 
   Future<List<ItemVariation>> getItemVariation(Store<AppState> store) {
     return store.state.database.itemDao.getItemVariations();
+  }
+
+  Future<List<VariationTableData>> getVariations(
+      {Store<AppState> store, int itemId}) {
+    return store.state.database.variationDao.getItemVariations(itemId);
   }
 }

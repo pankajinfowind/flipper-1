@@ -14,6 +14,8 @@ class _$Item extends Item {
   @override
   final int id;
   @override
+  final int price;
+  @override
   final int branchId;
   @override
   final int categoryId;
@@ -29,6 +31,7 @@ class _$Item extends Item {
       {this.name,
       this.color,
       this.id,
+      this.price,
       this.branchId,
       this.categoryId,
       this.unitId,
@@ -37,20 +40,11 @@ class _$Item extends Item {
     if (name == null) {
       throw new BuiltValueNullFieldError('Item', 'name');
     }
-    if (color == null) {
-      throw new BuiltValueNullFieldError('Item', 'color');
-    }
     if (id == null) {
       throw new BuiltValueNullFieldError('Item', 'id');
     }
     if (branchId == null) {
       throw new BuiltValueNullFieldError('Item', 'branchId');
-    }
-    if (categoryId == null) {
-      throw new BuiltValueNullFieldError('Item', 'categoryId');
-    }
-    if (unitId == null) {
-      throw new BuiltValueNullFieldError('Item', 'unitId');
     }
   }
 
@@ -68,6 +62,7 @@ class _$Item extends Item {
         name == other.name &&
         color == other.color &&
         id == other.id &&
+        price == other.price &&
         branchId == other.branchId &&
         categoryId == other.categoryId &&
         unitId == other.unitId &&
@@ -80,8 +75,10 @@ class _$Item extends Item {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, name.hashCode), color.hashCode),
-                        id.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, name.hashCode), color.hashCode),
+                            id.hashCode),
+                        price.hashCode),
                     branchId.hashCode),
                 categoryId.hashCode),
             unitId.hashCode),
@@ -94,6 +91,7 @@ class _$Item extends Item {
           ..add('name', name)
           ..add('color', color)
           ..add('id', id)
+          ..add('price', price)
           ..add('branchId', branchId)
           ..add('categoryId', categoryId)
           ..add('unitId', unitId)
@@ -116,6 +114,10 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
+
+  int _price;
+  int get price => _$this._price;
+  set price(int price) => _$this._price = price;
 
   int _branchId;
   int get branchId => _$this._branchId;
@@ -140,6 +142,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
       _name = _$v.name;
       _color = _$v.color;
       _id = _$v.id;
+      _price = _$v.price;
       _branchId = _$v.branchId;
       _categoryId = _$v.categoryId;
       _unitId = _$v.unitId;
@@ -169,6 +172,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
             name: name,
             color: color,
             id: id,
+            price: price,
             branchId: branchId,
             categoryId: categoryId,
             unitId: unitId,

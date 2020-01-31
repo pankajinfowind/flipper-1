@@ -5,6 +5,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
+import 'package:flipper/model/variation.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
@@ -30,6 +31,8 @@ List<Middleware<AppState>> AppActionMiddleware(
         _createItemInStore(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SwitchCategory>(
         _switchCategory(navigatorKey, generalRepository)),
+    TypedMiddleware<AppState, NeedItemVariation>(
+        _needItemVariation(navigatorKey, generalRepository)),
   ];
 }
 
@@ -312,5 +315,32 @@ void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
       }
     }
     store.dispatch(CategoryAction(categories));
+  };
+}
+
+void Function(
+        Store<AppState> store, NeedItemVariation action, NextDispatcher next)
+    _needItemVariation(GlobalKey<NavigatorState> navigatorKey,
+        GeneralRepository generalRepository) {
+  return (store, action, next) async {
+    next(action);
+
+    List<VariationTableData> variations = await generalRepository.getVariations(
+        store: store, itemId: action.itemId);
+
+    List<Item> items = [];
+    for (var i = 0; i < variations.length; i++) {
+      items.add(
+        Item((b) => b
+          ..id = variations[i].id
+          ..name = variations[i].name
+          ..count = variations[i].count
+          ..price = variations[i].price
+          ..branchId = variations[i].branchId),
+      );
+    }
+    print(items);
+    Router.navigator.pushNamed(Router.editQuantityItemScreen,
+        arguments: EditQuantityItemScreenArguments(item: items));
   };
 }

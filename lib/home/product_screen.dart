@@ -1,3 +1,4 @@
+import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/home/widget/create_options_widget.dart';
@@ -44,8 +45,9 @@ List<Widget> getItems(List<Item> itemList, context) {
       GestureDetector(
         onLongPress: () {
           //todo play a small vibration to indicate the action.
-          Router.navigator.pushNamed(Router.editQuantityItemScreen,
-              arguments: EditQuantityItemScreenArguments(item: itemList[i]));
+          //send store to request more information then from that store navigate with all info we need
+          StoreProvider.of<AppState>(context)
+              .dispatch(NeedItemVariation(itemId: itemList[i].id));
         },
         child: ListTile(
           contentPadding: EdgeInsets.all(0),

@@ -8,6 +8,7 @@ abstract class Variation implements Built<Variation, VariationBuilder> {
   String get unityType;
   String get price;
   int get stockValue;
+  int get itemId;
   String get sku;
   Variation._();
 

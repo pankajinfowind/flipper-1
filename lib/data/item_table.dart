@@ -15,9 +15,6 @@ class ItemTable extends Table {
   IntColumn get unitId =>
       integer().customConstraint('NULL REFERENCES unit_table(id)')();
 
-  IntColumn get variationId =>
-      integer().customConstraint('NULL REFERENCES variation_table(id)')();
-
   // DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();

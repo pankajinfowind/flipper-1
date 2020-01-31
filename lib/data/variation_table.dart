@@ -6,6 +6,9 @@ class VariationTable extends Table {
   IntColumn get branchId =>
       integer().customConstraint('NULL REFERENCES branch_table(id)')();
 
+  IntColumn get itemId =>
+      integer().customConstraint('NULL REFERENCES item_table(id)')();
+
   IntColumn get count => integer()();
   IntColumn get price => integer()();
   DateTimeColumn get createdAt =>

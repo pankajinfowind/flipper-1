@@ -177,6 +177,18 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
     //todo: in v2 clean code duplication.
     if (action.variations.length == 0) {
       //atleast make sure we do have one variant per item
+      final item = await generalRepository.insertItem(
+        store,
+        // ignore: missing_required_param
+        ItemTableData(
+            name: action.name,
+            categoryId: action.category.id,
+            description: action.description,
+            unitId: action.unit.id,
+            color: action.color,
+            branchId: action.branch.id),
+      );
+
       final variantId = await generalRepository.insertVariant(
         store,
         // ignore: missing_required_param
@@ -184,25 +196,14 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
           name: "Regular",
           price: 0,
           count: 0,
+          itemId: item,
           branchId: action.branch.id,
         ),
       );
       await generalRepository.insertHistory(store, variantId, 0);
       //todo: change save the variant with respective price price is saved per variant.
       //todo: should save item description too
-      final item = await generalRepository.insertItem(
-        store,
-        // ignore: missing_required_param
-        ItemTableData(
-          name: action.name,
-          categoryId: action.category.id,
-          description: action.description,
-          unitId: action.unit.id,
-          color: action.color,
-          branchId: action.branch.id,
-          variationId: variantId,
-        ),
-      );
+
       if (item is int) {
         List<ItemTableData> items = await generalRepository.getItems(store);
         List<Item> itemList = [];
@@ -216,7 +217,6 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
                 ..unitId = i.unitId
                 ..id = i.id
                 ..color = i.color
-                ..variantId = i.variationId
                 ..categoryId = i.categoryId,
             ),
           ),
@@ -226,37 +226,38 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
       }
     }
 
+    //insert item
+    final item = await generalRepository.insertItem(
+      store,
+      // ignore: missing_required_param
+      ItemTableData(
+        name: action.name,
+        description: action.description,
+        categoryId: action.category.id,
+        unitId: action.unit.id,
+        color: action.color,
+        branchId: action.branch.id,
+      ),
+    );
     for (var i = 0; i < action.variations.length; i++) {
       // insert variation and get last id to save the item then
+
       final variationId = await generalRepository.insertVariant(
         store,
         // ignore: missing_required_param
         VariationTableData(
-          name: action.variations[i].name,
-          price: int.parse(action.price),
-          count: action.variations[i].stockValue,
-          branchId: action.branch.id,
-        ),
+            name: action.variations[i].name,
+            price: int.parse(action.price),
+            count: action.variations[i].stockValue,
+            branchId: action.branch.id,
+            itemId: item),
       );
       await generalRepository.insertHistory(
           store, variationId, action.variations[i].stockValue);
-      //insert item
-      final item = await generalRepository.insertItem(
-        store,
-        // ignore: missing_required_param
-        ItemTableData(
-            name: action.name,
-            description: action.description,
-            categoryId: action.category.id,
-            unitId: action.unit.id,
-            color: action.color,
-            branchId: action.branch.id,
-            variationId: variationId),
-      );
+
       if (item is int) {
         List<ItemTableData> items = await generalRepository.getItems(store);
         List<Item> itemList = [];
-
         items.forEach(
           (i) => itemList.add(
             Item(
@@ -266,7 +267,6 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
                 ..unitId = i.unitId
                 ..id = i.id
                 ..color = i.color
-                ..variantId = i.variationId
                 ..categoryId = i.categoryId,
             ),
           ),

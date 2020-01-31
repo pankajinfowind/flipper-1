@@ -18,6 +18,8 @@ class _$Variation extends Variation {
   @override
   final int stockValue;
   @override
+  final int itemId;
+  @override
   final String sku;
 
   factory _$Variation([void Function(VariationBuilder) updates]) =>
@@ -29,6 +31,7 @@ class _$Variation extends Variation {
       this.unityType,
       this.price,
       this.stockValue,
+      this.itemId,
       this.sku})
       : super._() {
     if (id == null) {
@@ -45,6 +48,9 @@ class _$Variation extends Variation {
     }
     if (stockValue == null) {
       throw new BuiltValueNullFieldError('Variation', 'stockValue');
+    }
+    if (itemId == null) {
+      throw new BuiltValueNullFieldError('Variation', 'itemId');
     }
     if (sku == null) {
       throw new BuiltValueNullFieldError('Variation', 'sku');
@@ -67,6 +73,7 @@ class _$Variation extends Variation {
         unityType == other.unityType &&
         price == other.price &&
         stockValue == other.stockValue &&
+        itemId == other.itemId &&
         sku == other.sku;
   }
 
@@ -75,10 +82,12 @@ class _$Variation extends Variation {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, id.hashCode), name.hashCode),
-                    unityType.hashCode),
-                price.hashCode),
-            stockValue.hashCode),
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), name.hashCode),
+                        unityType.hashCode),
+                    price.hashCode),
+                stockValue.hashCode),
+            itemId.hashCode),
         sku.hashCode));
   }
 
@@ -90,6 +99,7 @@ class _$Variation extends Variation {
           ..add('unityType', unityType)
           ..add('price', price)
           ..add('stockValue', stockValue)
+          ..add('itemId', itemId)
           ..add('sku', sku))
         .toString();
   }
@@ -118,6 +128,10 @@ class VariationBuilder implements Builder<Variation, VariationBuilder> {
   int get stockValue => _$this._stockValue;
   set stockValue(int stockValue) => _$this._stockValue = stockValue;
 
+  int _itemId;
+  int get itemId => _$this._itemId;
+  set itemId(int itemId) => _$this._itemId = itemId;
+
   String _sku;
   String get sku => _$this._sku;
   set sku(String sku) => _$this._sku = sku;
@@ -131,6 +145,7 @@ class VariationBuilder implements Builder<Variation, VariationBuilder> {
       _unityType = _$v.unityType;
       _price = _$v.price;
       _stockValue = _$v.stockValue;
+      _itemId = _$v.itemId;
       _sku = _$v.sku;
       _$v = null;
     }
@@ -159,6 +174,7 @@ class VariationBuilder implements Builder<Variation, VariationBuilder> {
             unityType: unityType,
             price: price,
             stockValue: stockValue,
+            itemId: itemId,
             sku: sku);
     replace(_$result);
     return _$result;

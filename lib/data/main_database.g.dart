@@ -3252,7 +3252,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
   final int categoryId;
   final int branchId;
   final int unitId;
-  final int variationId;
   final DateTime createdAt;
   final DateTime updatedAt;
   ItemTableData(
@@ -3263,7 +3262,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       @required this.categoryId,
       @required this.branchId,
       @required this.unitId,
-      @required this.variationId,
       this.createdAt,
       this.updatedAt});
   factory ItemTableData.fromData(
@@ -3286,8 +3284,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
       unitId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}unit_id']),
-      variationId: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}variation_id']),
       createdAt: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
       updatedAt: dateTimeType
@@ -3304,7 +3300,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       categoryId: serializer.fromJson<int>(json['categoryId']),
       branchId: serializer.fromJson<int>(json['branchId']),
       unitId: serializer.fromJson<int>(json['unitId']),
-      variationId: serializer.fromJson<int>(json['variationId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -3320,7 +3315,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       'categoryId': serializer.toJson<int>(categoryId),
       'branchId': serializer.toJson<int>(branchId),
       'unitId': serializer.toJson<int>(unitId),
-      'variationId': serializer.toJson<int>(variationId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -3344,9 +3338,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           : Value(branchId),
       unitId:
           unitId == null && nullToAbsent ? const Value.absent() : Value(unitId),
-      variationId: variationId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(variationId),
       createdAt: createdAt == null && nullToAbsent
           ? const Value.absent()
           : Value(createdAt),
@@ -3364,7 +3355,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           int categoryId,
           int branchId,
           int unitId,
-          int variationId,
           DateTime createdAt,
           DateTime updatedAt}) =>
       ItemTableData(
@@ -3375,7 +3365,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
         categoryId: categoryId ?? this.categoryId,
         branchId: branchId ?? this.branchId,
         unitId: unitId ?? this.unitId,
-        variationId: variationId ?? this.variationId,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -3389,7 +3378,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           ..write('categoryId: $categoryId, ')
           ..write('branchId: $branchId, ')
           ..write('unitId: $unitId, ')
-          ..write('variationId: $variationId, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -3411,10 +3399,8 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
                           branchId.hashCode,
                           $mrjc(
                               unitId.hashCode,
-                              $mrjc(
-                                  variationId.hashCode,
-                                  $mrjc(createdAt.hashCode,
-                                      updatedAt.hashCode))))))))));
+                              $mrjc(createdAt.hashCode,
+                                  updatedAt.hashCode)))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -3426,7 +3412,6 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
           other.categoryId == this.categoryId &&
           other.branchId == this.branchId &&
           other.unitId == this.unitId &&
-          other.variationId == this.variationId &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -3439,7 +3424,6 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
   final Value<int> categoryId;
   final Value<int> branchId;
   final Value<int> unitId;
-  final Value<int> variationId;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   const ItemTableCompanion({
@@ -3450,7 +3434,6 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     this.categoryId = const Value.absent(),
     this.branchId = const Value.absent(),
     this.unitId = const Value.absent(),
-    this.variationId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
@@ -3462,7 +3445,6 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     @required int categoryId,
     @required int branchId,
     @required int unitId,
-    @required int variationId,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   })  : name = Value(name),
@@ -3470,8 +3452,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
         description = Value(description),
         categoryId = Value(categoryId),
         branchId = Value(branchId),
-        unitId = Value(unitId),
-        variationId = Value(variationId);
+        unitId = Value(unitId);
   ItemTableCompanion copyWith(
       {Value<int> id,
       Value<String> name,
@@ -3480,7 +3461,6 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
       Value<int> categoryId,
       Value<int> branchId,
       Value<int> unitId,
-      Value<int> variationId,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt}) {
     return ItemTableCompanion(
@@ -3491,7 +3471,6 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
       categoryId: categoryId ?? this.categoryId,
       branchId: branchId ?? this.branchId,
       unitId: unitId ?? this.unitId,
-      variationId: variationId ?? this.variationId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -3577,17 +3556,6 @@ class $ItemTableTable extends ItemTable
         $customConstraints: 'NULL REFERENCES unit_table(id)');
   }
 
-  final VerificationMeta _variationIdMeta =
-      const VerificationMeta('variationId');
-  GeneratedIntColumn _variationId;
-  @override
-  GeneratedIntColumn get variationId =>
-      _variationId ??= _constructVariationId();
-  GeneratedIntColumn _constructVariationId() {
-    return GeneratedIntColumn('variation_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES variation_table(id)');
-  }
-
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
   GeneratedDateTimeColumn _createdAt;
   @override
@@ -3618,7 +3586,6 @@ class $ItemTableTable extends ItemTable
         categoryId,
         branchId,
         unitId,
-        variationId,
         createdAt,
         updatedAt
       ];
@@ -3673,12 +3640,6 @@ class $ItemTableTable extends ItemTable
     } else if (unitId.isRequired && isInserting) {
       context.missing(_unitIdMeta);
     }
-    if (d.variationId.present) {
-      context.handle(_variationIdMeta,
-          variationId.isAcceptableValue(d.variationId.value, _variationIdMeta));
-    } else if (variationId.isRequired && isInserting) {
-      context.missing(_variationIdMeta);
-    }
     if (d.createdAt.present) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableValue(d.createdAt.value, _createdAtMeta));
@@ -3726,9 +3687,6 @@ class $ItemTableTable extends ItemTable
     if (d.unitId.present) {
       map['unit_id'] = Variable<int, IntType>(d.unitId.value);
     }
-    if (d.variationId.present) {
-      map['variation_id'] = Variable<int, IntType>(d.variationId.value);
-    }
     if (d.createdAt.present) {
       map['created_at'] = Variable<DateTime, DateTimeType>(d.createdAt.value);
     }
@@ -3749,6 +3707,7 @@ class VariationTableData extends DataClass
   final int id;
   final String name;
   final int branchId;
+  final int itemId;
   final int count;
   final int price;
   final DateTime createdAt;
@@ -3757,6 +3716,7 @@ class VariationTableData extends DataClass
       {@required this.id,
       @required this.name,
       @required this.branchId,
+      @required this.itemId,
       @required this.count,
       @required this.price,
       this.createdAt,
@@ -3773,6 +3733,8 @@ class VariationTableData extends DataClass
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       branchId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
+      itemId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}item_id']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
       price: intType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
       createdAt: dateTimeType
@@ -3787,6 +3749,7 @@ class VariationTableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       branchId: serializer.fromJson<int>(json['branchId']),
+      itemId: serializer.fromJson<int>(json['itemId']),
       count: serializer.fromJson<int>(json['count']),
       price: serializer.fromJson<int>(json['price']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -3800,6 +3763,7 @@ class VariationTableData extends DataClass
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'branchId': serializer.toJson<int>(branchId),
+      'itemId': serializer.toJson<int>(itemId),
       'count': serializer.toJson<int>(count),
       'price': serializer.toJson<int>(price),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -3815,6 +3779,8 @@ class VariationTableData extends DataClass
       branchId: branchId == null && nullToAbsent
           ? const Value.absent()
           : Value(branchId),
+      itemId:
+          itemId == null && nullToAbsent ? const Value.absent() : Value(itemId),
       count:
           count == null && nullToAbsent ? const Value.absent() : Value(count),
       price:
@@ -3832,6 +3798,7 @@ class VariationTableData extends DataClass
           {int id,
           String name,
           int branchId,
+          int itemId,
           int count,
           int price,
           DateTime createdAt,
@@ -3840,6 +3807,7 @@ class VariationTableData extends DataClass
         id: id ?? this.id,
         name: name ?? this.name,
         branchId: branchId ?? this.branchId,
+        itemId: itemId ?? this.itemId,
         count: count ?? this.count,
         price: price ?? this.price,
         createdAt: createdAt ?? this.createdAt,
@@ -3851,6 +3819,7 @@ class VariationTableData extends DataClass
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('branchId: $branchId, ')
+          ..write('itemId: $itemId, ')
           ..write('count: $count, ')
           ..write('price: $price, ')
           ..write('createdAt: $createdAt, ')
@@ -3867,9 +3836,11 @@ class VariationTableData extends DataClass
           $mrjc(
               branchId.hashCode,
               $mrjc(
-                  count.hashCode,
-                  $mrjc(price.hashCode,
-                      $mrjc(createdAt.hashCode, updatedAt.hashCode)))))));
+                  itemId.hashCode,
+                  $mrjc(
+                      count.hashCode,
+                      $mrjc(price.hashCode,
+                          $mrjc(createdAt.hashCode, updatedAt.hashCode))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -3877,6 +3848,7 @@ class VariationTableData extends DataClass
           other.id == this.id &&
           other.name == this.name &&
           other.branchId == this.branchId &&
+          other.itemId == this.itemId &&
           other.count == this.count &&
           other.price == this.price &&
           other.createdAt == this.createdAt &&
@@ -3887,6 +3859,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
   final Value<int> id;
   final Value<String> name;
   final Value<int> branchId;
+  final Value<int> itemId;
   final Value<int> count;
   final Value<int> price;
   final Value<DateTime> createdAt;
@@ -3895,6 +3868,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.branchId = const Value.absent(),
+    this.itemId = const Value.absent(),
     this.count = const Value.absent(),
     this.price = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -3904,18 +3878,21 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
     this.id = const Value.absent(),
     @required String name,
     @required int branchId,
+    @required int itemId,
     @required int count,
     @required int price,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   })  : name = Value(name),
         branchId = Value(branchId),
+        itemId = Value(itemId),
         count = Value(count),
         price = Value(price);
   VariationTableCompanion copyWith(
       {Value<int> id,
       Value<String> name,
       Value<int> branchId,
+      Value<int> itemId,
       Value<int> count,
       Value<int> price,
       Value<DateTime> createdAt,
@@ -3924,6 +3901,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
       id: id ?? this.id,
       name: name ?? this.name,
       branchId: branchId ?? this.branchId,
+      itemId: itemId ?? this.itemId,
       count: count ?? this.count,
       price: price ?? this.price,
       createdAt: createdAt ?? this.createdAt,
@@ -3965,6 +3943,15 @@ class $VariationTableTable extends VariationTable
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, false,
         $customConstraints: 'NULL REFERENCES branch_table(id)');
+  }
+
+  final VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  GeneratedIntColumn _itemId;
+  @override
+  GeneratedIntColumn get itemId => _itemId ??= _constructItemId();
+  GeneratedIntColumn _constructItemId() {
+    return GeneratedIntColumn('item_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES item_table(id)');
   }
 
   final VerificationMeta _countMeta = const VerificationMeta('count');
@@ -4014,7 +4001,7 @@ class $VariationTableTable extends VariationTable
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, branchId, count, price, createdAt, updatedAt];
+      [id, name, branchId, itemId, count, price, createdAt, updatedAt];
   @override
   $VariationTableTable get asDslTable => this;
   @override
@@ -4041,6 +4028,12 @@ class $VariationTableTable extends VariationTable
           branchId.isAcceptableValue(d.branchId.value, _branchIdMeta));
     } else if (branchId.isRequired && isInserting) {
       context.missing(_branchIdMeta);
+    }
+    if (d.itemId.present) {
+      context.handle(
+          _itemIdMeta, itemId.isAcceptableValue(d.itemId.value, _itemIdMeta));
+    } else if (itemId.isRequired && isInserting) {
+      context.missing(_itemIdMeta);
     }
     if (d.count.present) {
       context.handle(
@@ -4088,6 +4081,9 @@ class $VariationTableTable extends VariationTable
     }
     if (d.branchId.present) {
       map['branch_id'] = Variable<int, IntType>(d.branchId.value);
+    }
+    if (d.itemId.present) {
+      map['item_id'] = Variable<int, IntType>(d.itemId.value);
     }
     if (d.count.present) {
       map['count'] = Variable<int, IntType>(d.count.value);

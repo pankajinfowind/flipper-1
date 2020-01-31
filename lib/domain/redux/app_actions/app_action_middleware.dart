@@ -6,7 +6,6 @@ import 'package:flipper/model/category.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/routes/router.gr.dart';
-import 'package:flipper/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
@@ -29,6 +28,8 @@ List<Middleware<AppState>> AppActionMiddleware(
         _createTempCategory(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SaveItemAction>(
         _createItemInStore(navigatorKey, generalRepository)),
+    TypedMiddleware<AppState, SwitchCategory>(
+        _switchCategory(navigatorKey, generalRepository)),
   ];
 }
 
@@ -85,14 +86,14 @@ void Function(Store<AppState> store, InvokePersistFocusedCategory action,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
     store.state.categories.forEach((u) => {
-          if (u.focused)
+          if (u.id == action.category.id)
             {
               generalRepository.updateCategory(
                 store,
                 u.id,
                 null,
                 store.state.currentActiveBusiness,
-                focused: true,
+                focused: action.category.focused == null ? true : !u.focused,
               )
             }
           else
@@ -275,5 +276,41 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
       }
     }
+  };
+}
+
+void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
+    _switchCategory(GlobalKey<NavigatorState> navigatorKey,
+        GeneralRepository generalRepository) {
+  return (store, action, next) async {
+    next(action);
+
+    List<Category> categories = [];
+    for (var i = 0; i < store.state.categories.length; i++) {
+      if (store.state.categories[i].id == action.category.id) {
+        categories.add(
+          Category(
+            (c) => c
+              ..focused = action.category.focused == null
+                  ? true
+                  : !action.category.focused
+              ..id = store.state.categories[i].id
+              ..name = store.state.categories[i].name
+              ..businessId = store.state.categories[i].businessId
+              ..branchId = store.state.categories[i].branchId,
+          ),
+        );
+      } else {
+        categories.add(
+          Category((c) => c
+            ..focused = false
+            ..id = store.state.categories[i].id
+            ..name = store.state.categories[i].name
+            ..businessId = store.state.categories[i].businessId
+            ..branchId = store.state.categories[i].branchId),
+        );
+      }
+    }
+    store.dispatch(CategoryAction(categories));
   };
 }

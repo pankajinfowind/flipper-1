@@ -142,7 +142,8 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ),
       );
 
-      // print(itemsVariations.single.variation);
+      // print(itemsVariations.single.items);
+      // print(itemsVariations.single.variations);
 
       store.dispatch(ItemLoaded(items: itemList));
       unitsList.forEach((c) => {
@@ -151,24 +152,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
                 store.dispatch(
                   CurrentUnit(
                     unit: Unit(
-                      (u) => u
-                        ..id = c.id
-                        ..name = c.name
-                        ..focused = c.focused
-                        ..businessId = c.businessId ?? 0
-                        ..branchId = c.branchId ?? 0,
-                    ),
-                  ),
-                )
-              }
-          });
-
-      categoryList.forEach((c) => {
-            if (c.focused)
-              {
-                store.dispatch(
-                  CurrentCategory(
-                    category: Category(
                       (u) => u
                         ..id = c.id
                         ..name = c.name

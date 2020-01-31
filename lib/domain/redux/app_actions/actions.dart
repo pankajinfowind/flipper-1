@@ -62,7 +62,12 @@ class WithUnitId {
   WithUnitId({@required this.unitId});
 }
 
-class InvokePersistFocusedCategory {}
+@immutable
+class InvokePersistFocusedCategory {
+  final Category category;
+
+  InvokePersistFocusedCategory({this.category});
+}
 
 @immutable
 class UpdateUnitAction {
@@ -96,13 +101,6 @@ class CurrentUnit {
   final Unit unit;
 
   const CurrentUnit({@required this.unit});
-}
-
-@immutable
-class CurrentCategory {
-  final Category category;
-
-  const CurrentCategory({@required this.category});
 }
 
 @immutable
@@ -173,4 +171,11 @@ class IncrementAction {
   final int increment;
 
   IncrementAction({this.increment});
+}
+
+@immutable
+class SwitchCategory {
+  final category;
+
+  SwitchCategory({this.category});
 }

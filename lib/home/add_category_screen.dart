@@ -27,10 +27,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           GestureDetector(
             onTap: () {
               StoreProvider.of<AppState>(context)
-                  .dispatch(CurrentCategory(category: categories[i]));
+                  .dispatch(SwitchCategory(category: categories[i]));
 
-              StoreProvider.of<AppState>(context)
-                  .dispatch(InvokePersistFocusedCategory());
+              StoreProvider.of<AppState>(context).dispatch(
+                  InvokePersistFocusedCategory(category: categories[i]));
             },
             child: ListTile(
               title: Text(

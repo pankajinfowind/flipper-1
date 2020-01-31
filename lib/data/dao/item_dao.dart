@@ -35,14 +35,7 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
         leftOuterJoin(variationTable,
             db.variationTable.branchId.equalsExp(db.itemTable.branchId)),
       ],
-    )
-        // .where(
-        //   and(
-        //     itemTable.branchId.equals(branchId),
-        //     variationTable.branchId.equals(branchId),
-        //   ),
-        // )
-        .map((row) {
+    ).map((row) {
       final items = row.readTable(itemTable);
       final variations = row.readTable(variationTable);
 

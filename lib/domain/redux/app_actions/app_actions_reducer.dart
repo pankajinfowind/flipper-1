@@ -21,7 +21,6 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, CurrentTab>(_onSetTab),
   TypedReducer<AppState, CurrentDisable>(_onDisable),
   TypedReducer<AppState, VariationAction>(_onVariations),
-  TypedReducer<AppState, CurrentCategory>(_onCurrentCategory),
   TypedReducer<AppState, ItemLoaded>(_onItemLoaded),
   TypedReducer<AppState, CurrentSaleAction>(_onCurrentSale),
   TypedReducer<AppState, IncrementAction>(_onIncrement),
@@ -87,37 +86,6 @@ AppState _onCategoryName(AppState state, CategoryNameAction action) {
 
 AppState _onTempCategoryId(AppState state, TempCategoryIdAction action) {
   return state.rebuild((a) => a..tempCategoryId = action.categoryId);
-}
-
-AppState _onCurrentCategory(AppState state, CurrentCategory action) {
-  List<Category> categories = [];
-  state.categories.forEach((u) => {
-        if (u.id == action.category.id)
-          {
-            categories.add(
-              Category(
-                (c) => c
-                  ..focused = true
-                  ..id = u.id
-                  ..name = u.name
-                  ..businessId = u.businessId
-                  ..branchId = u.branchId,
-              ),
-            )
-          }
-        else
-          {
-            categories.add(
-              Category((c) => c
-                ..focused = false
-                ..id = u.id
-                ..name = u.name
-                ..businessId = u.businessId
-                ..branchId = u.branchId),
-            ),
-          }
-      });
-  return state.rebuild((a) => a..categories = ListBuilder(categories));
 }
 
 AppState _onCurrentUnit(AppState state, CurrentUnit action) {

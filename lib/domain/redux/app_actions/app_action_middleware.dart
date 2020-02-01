@@ -43,6 +43,19 @@ void Function(Store<AppState> store,
     if (store.state.tempCategoryId != null &&
         store.state.categoryName != null &&
         store.state.branch != null) {
+      //set other category to false so we can only have one focused category.
+      List<CategoryTableData> categoriesL =
+          await generalRepository.getCategories(store);
+      for (var i = 0; i < categoriesL.length; i++) {
+        await generalRepository.updateCategory(
+          store,
+          categoriesL[i].id,
+          categoriesL[i].name,
+          store.state.branch.id,
+          focused: false,
+        );
+      }
+
       await generalRepository.updateCategory(
         store,
         store.state.tempCategoryId,
@@ -320,7 +333,7 @@ void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
         );
       }
     }
-    //print(action.category);
+    //print(categories);
     store.dispatch(CategoryAction(categories));
   };
 }

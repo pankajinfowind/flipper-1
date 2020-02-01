@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class EditQuantityItemScreen extends StatefulWidget {
-  final List<Item> item;
-  EditQuantityItemScreen({Key key, this.item}) : super(key: key);
+  EditQuantityItemScreen({Key key}) : super(key: key);
 
   @override
   _EditQuantityItemScreenState createState() => _EditQuantityItemScreenState();
@@ -24,14 +23,14 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
         distinct: true,
         converter: CommonViewModel.fromStore,
         builder: (context, vm) {
-          print(widget.item);
-          return widget.item.length == 1
+          print(vm.itemVariations);
+          return vm.itemVariations == 1
               ? SellSingleItem(
-                  item: widget.item,
+                  item: vm.itemVariations.toList(),
                   vm: vm,
                 )
               : SellMultipleItems(
-                  items: widget.item,
+                  items: vm.itemVariations.toList(),
                   vm: vm,
                 );
         });

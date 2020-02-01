@@ -379,9 +379,8 @@ void Function(
           ..branchId = variations[i].branchId),
       );
     }
-
-    Router.navigator.pushNamed(Router.editQuantityItemScreen,
-        arguments: EditQuantityItemScreenArguments(item: items));
+    store.dispatch(ItemsVariation(items: items));
+    Router.navigator.pushNamed(Router.editQuantityItemScreen);
   };
 }
 

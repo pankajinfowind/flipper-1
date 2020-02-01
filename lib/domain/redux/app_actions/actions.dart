@@ -193,3 +193,10 @@ class SwitchVariation {
 
   SwitchVariation({this.item});
 }
+
+@immutable
+class ItemsVariation {
+  final List<Item> items;
+
+  ItemsVariation({this.items});
+}

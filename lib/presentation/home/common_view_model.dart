@@ -67,6 +67,9 @@ abstract class CommonViewModel
   @nullable
   BuiltList<Variation> get variations;
 
+  @nullable
+  BuiltList<Item> get itemVariations;
+
   BuiltList<Item> get items;
 
   @nullable
@@ -111,6 +114,7 @@ abstract class CommonViewModel
           : store.state.currentUnit.toBuilder()
       ..units = store.state.units.toBuilder()
       ..variations = store.state.variations.toBuilder()
+      ..itemVariations = store.state.itemVariations.toBuilder()
       ..categoryName = store.state.categoryName
       ..currentColor = store.state.currentColor == null
           ? null

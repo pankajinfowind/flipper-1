@@ -97,6 +97,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   BuiltList<Variation> get variations;
 
+  BuiltList<Item> get itemVariations;
+
   BuiltList<Item> get currentSales;
 
   BuiltList<Item> get items;
@@ -113,6 +115,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..categories = ListBuilder()
     ..currentSales = ListBuilder()
     ..variations = ListBuilder()
+    ..itemVariations = ListBuilder()
     ..items = ListBuilder()
     ..businesses = List<Business>()
     ..branches = List<Branch>());

@@ -1,6 +1,5 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flipper/domain/redux/app_state.dart';
-import 'package:flipper/model/category.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:redux/redux.dart';
 
@@ -24,6 +23,7 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, ItemLoaded>(_onItemLoaded),
   TypedReducer<AppState, CurrentSaleAction>(_onCurrentSale),
   TypedReducer<AppState, IncrementAction>(_onIncrement),
+  TypedReducer<AppState, ItemsVariation>(_onItemsVariation),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
@@ -113,4 +113,8 @@ AppState _onCurrentSale(AppState state, CurrentSaleAction action) {
 
 AppState _onIncrement(AppState state, IncrementAction action) {
   return state.rebuild((a) => a..currentIncrement = action.increment);
+}
+
+AppState _onItemsVariation(AppState state, ItemsVariation action) {
+  return state.rebuild((a) => a..itemVariations = ListBuilder(action.items));
 }

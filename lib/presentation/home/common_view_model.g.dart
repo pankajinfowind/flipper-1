@@ -48,6 +48,8 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final BuiltList<Variation> variations;
   @override
+  final BuiltList<Item> itemVariations;
+  @override
   final BuiltList<Item> items;
   @override
   final int currentIncrement;
@@ -76,6 +78,7 @@ class _$CommonViewModel extends CommonViewModel {
       this.currentBranch,
       this.currentSales,
       this.variations,
+      this.itemVariations,
       this.items,
       this.currentIncrement})
       : super._() {
@@ -140,6 +143,7 @@ class _$CommonViewModel extends CommonViewModel {
         currentBranch == other.currentBranch &&
         currentSales == other.currentSales &&
         variations == other.variations &&
+        itemVariations == other.itemVariations &&
         items == other.items &&
         currentIncrement == other.currentIncrement;
   }
@@ -164,24 +168,24 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode),
-                                                                                units.hashCode),
-                                                                            categories.hashCode),
-                                                                        tab.hashCode),
-                                                                    currentBusiness.hashCode),
-                                                                hasAction.hashCode),
-                                                            branches.hashCode),
-                                                        businesses.hashCode),
-                                                    appAction.hashCode),
-                                                hint.hashCode),
-                                            categoryName.hashCode),
-                                        category.hashCode),
-                                    currentUnit.hashCode),
-                                currentColor.hashCode),
-                            currentDisable.hashCode),
-                        currentBranch.hashCode),
-                    currentSales.hashCode),
-                variations.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode),
+                                                                                categories.hashCode),
+                                                                            tab.hashCode),
+                                                                        currentBusiness.hashCode),
+                                                                    hasAction.hashCode),
+                                                                branches.hashCode),
+                                                            businesses.hashCode),
+                                                        appAction.hashCode),
+                                                    hint.hashCode),
+                                                categoryName.hashCode),
+                                            category.hashCode),
+                                        currentUnit.hashCode),
+                                    currentColor.hashCode),
+                                currentDisable.hashCode),
+                            currentBranch.hashCode),
+                        currentSales.hashCode),
+                    variations.hashCode),
+                itemVariations.hashCode),
             items.hashCode),
         currentIncrement.hashCode));
   }
@@ -209,6 +213,7 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('currentBranch', currentBranch)
           ..add('currentSales', currentSales)
           ..add('variations', variations)
+          ..add('itemVariations', itemVariations)
           ..add('items', items)
           ..add('currentIncrement', currentIncrement))
         .toString();
@@ -314,6 +319,12 @@ class CommonViewModelBuilder
   set variations(ListBuilder<Variation> variations) =>
       _$this._variations = variations;
 
+  ListBuilder<Item> _itemVariations;
+  ListBuilder<Item> get itemVariations =>
+      _$this._itemVariations ??= new ListBuilder<Item>();
+  set itemVariations(ListBuilder<Item> itemVariations) =>
+      _$this._itemVariations = itemVariations;
+
   ListBuilder<Item> _items;
   ListBuilder<Item> get items => _$this._items ??= new ListBuilder<Item>();
   set items(ListBuilder<Item> items) => _$this._items = items;
@@ -347,6 +358,7 @@ class CommonViewModelBuilder
       _currentBranch = _$v.currentBranch?.toBuilder();
       _currentSales = _$v.currentSales?.toBuilder();
       _variations = _$v.variations?.toBuilder();
+      _itemVariations = _$v.itemVariations?.toBuilder();
       _items = _$v.items?.toBuilder();
       _currentIncrement = _$v.currentIncrement;
       _$v = null;
@@ -393,6 +405,7 @@ class CommonViewModelBuilder
               currentBranch: _currentBranch?.build(),
               currentSales: currentSales.build(),
               variations: _variations?.build(),
+              itemVariations: _itemVariations?.build(),
               items: items.build(),
               currentIncrement: currentIncrement);
     } catch (_) {
@@ -425,6 +438,8 @@ class CommonViewModelBuilder
         currentSales.build();
         _$failedField = 'variations';
         _variations?.build();
+        _$failedField = 'itemVariations';
+        _itemVariations?.build();
         _$failedField = 'items';
         items.build();
       } catch (e) {

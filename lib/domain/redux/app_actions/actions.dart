@@ -160,10 +160,10 @@ class ItemLoaded {
 }
 
 @immutable
-class CurrentSaleAction {
+class AddItemToCartAction {
   final List<Item> items;
 
-  CurrentSaleAction({this.items});
+  AddItemToCartAction({this.items});
 }
 
 @immutable

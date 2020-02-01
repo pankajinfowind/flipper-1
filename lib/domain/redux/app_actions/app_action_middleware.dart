@@ -391,29 +391,32 @@ void Function(
   return (store, action, next) async {
     next(action);
 
-    List<Item> categories = [];
-    for (var i = 0; i < store.state.items.length; i++) {
-      if (store.state.items[i].id == action.item.id) {
-        categories.add(
+    List<Item> itemsVariations = [];
+    for (var i = 0; i < store.state.itemVariations.length; i++) {
+      if (store.state.itemVariations[i].id == action.item.id) {
+        itemsVariations.add(
           Item(
             (c) => c
-              ..isActive
-              ..id = store.state.items[i].id
-              ..name = store.state.items[i].name
+              ..isActive = true
+              ..price = store.state.itemVariations[i].price
+              ..id = store.state.itemVariations[i].id
+              ..name = store.state.itemVariations[i].name
               ..branchId = store.state.branch.id,
           ),
         );
       } else {
-        categories.add(
+        itemsVariations.add(
           Item(
             (c) => c
-              ..isActive = store.state.items[i].isActive
-              ..id = store.state.items[i].id
-              ..name = store.state.items[i].name
+              ..isActive = false
+              ..id = store.state.itemVariations[i].id
+              ..price = store.state.itemVariations[i].price
+              ..name = store.state.itemVariations[i].name
               ..branchId = store.state.branch.id,
           ),
         );
       }
     }
+    store.dispatch(ItemsVariation(items: itemsVariations));
   };
 }

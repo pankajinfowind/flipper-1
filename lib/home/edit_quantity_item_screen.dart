@@ -158,7 +158,7 @@ class controlSaleWidget extends StatelessWidget {
               }
             }
             StoreProvider.of<AppState>(context).dispatch(
-              CurrentSaleAction(items: items),
+              AddItemToCartAction(items: items),
             );
           }
         },
@@ -181,7 +181,7 @@ class controlSaleWidget extends StatelessWidget {
               ),
             );
             StoreProvider.of<AppState>(context).dispatch(
-              CurrentSaleAction(items: items),
+              AddItemToCartAction(items: items),
             );
             StoreProvider.of<AppState>(context).dispatch(
               IncrementAction(increment: 1),
@@ -214,7 +214,7 @@ class controlSaleWidget extends StatelessWidget {
               }
             }
             StoreProvider.of<AppState>(context).dispatch(
-              CurrentSaleAction(items: items),
+              AddItemToCartAction(items: items),
             );
           }
         },
@@ -275,7 +275,13 @@ class SellMultipleItems extends StatelessWidget {
     for (var i = 0; i < items.length; i++) {
       list.add(
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            StoreProvider.of<AppState>(context).dispatch(
+              SwitchVariation(
+                item: items[i],
+              ),
+            );
+          },
           child: ListTile(
             contentPadding: EdgeInsets.fromLTRB(20, 20, 40, 10),
             dense: false,

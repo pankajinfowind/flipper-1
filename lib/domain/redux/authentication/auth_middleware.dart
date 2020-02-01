@@ -108,9 +108,13 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
       List<Branch> branches = [];
       branch.forEach((b) => {
-            branches.add(Branch((bu) => bu
-              ..name = b.name
-              ..id = b.id))
+            branches.add(
+              Branch(
+                (bu) => bu
+                  ..name = b.name
+                  ..id = b.id,
+              ),
+            )
           });
 
       List<Unit> units = [];
@@ -164,12 +168,15 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           });
 
       categoryList.forEach((c) => {
-            categories.add(Category((u) => u
-              ..name = c.name
-              ..focused = c.focused
-              ..businessId = u.businessId ?? 0
-              ..branchId = u.branchId ?? 0
-              ..id = c.id))
+            categories.add(
+              Category(
+                (u) => u
+                  ..name = c.name
+                  ..focused = c.focused
+                  ..branchId = u.branchId ?? 0
+                  ..id = c.id,
+              ),
+            )
           });
 
       //set focused Unit
@@ -183,11 +190,15 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
       List<Business> businessList = [];
       businesses.forEach((b) => {
-            businessList.add(Business((bu) => bu
-              ..id = b.id
-              ..abbreviation = b.name
-              ..isActive = b.isActive
-              ..name = b.name))
+            businessList.add(
+              Business(
+                (bu) => bu
+                  ..id = b.id
+                  ..abbreviation = b.name
+                  ..isActive = b.isActive
+                  ..name = b.name,
+              ),
+            )
           });
 
       //setActive branch.
@@ -195,11 +206,13 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         if (branch[i].isActive) {
           store.dispatch(
             OnCurrentBranchAction(
-              branch: Branch((b) => b
-                ..id = branch[i].id
-                ..name = branch[i].name
-                ..isActive = branch[i].isActive
-                ..description = "desc"),
+              branch: Branch(
+                (b) => b
+                  ..id = branch[i].id
+                  ..name = branch[i].name
+                  ..isActive = branch[i].isActive
+                  ..description = "desc",
+              ),
             ),
           );
         }
@@ -226,7 +239,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         }
       }
       //end of setting current active business.
-//      Logger.d("Successfully loaded the app");
+      //Logger.d("Successfully loaded the app");
       store.dispatch(OnBusinessLoaded(business: businessList));
       final currentTab = tab == null ? 0 : tab.tab;
       store.dispatch(CurrentTab(tab: currentTab));

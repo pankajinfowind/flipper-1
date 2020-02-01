@@ -1,7 +1,7 @@
 import 'package:flipper/data/dao/item_variation.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
-import 'package:flipper/model/business.dart';
+
 import 'package:flipper/model/unit.dart';
 import 'package:redux/redux.dart';
 
@@ -12,8 +12,8 @@ class GeneralRepository {
     return store.state.database.tabsDao.insert(tab);
   }
 
-  Future<bool> updateCategory(Store<AppState> store, int categoryId,
-      String categoryName, Business business,
+  Future<bool> updateCategory(
+      Store<AppState> store, int categoryId, String categoryName, int branchId,
       {bool focused}) async {
     final cat =
         await store.state.database.categoryDao.getCategoryById(categoryId);
@@ -26,8 +26,7 @@ class GeneralRepository {
       name: categoryName ?? cat.name,
       id: cat.id,
       focused: focused,
-      businessId: cat.businessId,
-      branchId: cat.branchId,
+      branchId: branchId,
       updatedAt: DateTime.now(),
     );
 
@@ -74,14 +73,14 @@ class GeneralRepository {
     return store.state.database.categoryDao.getCategories();
   }
 
-  Future<int> insertCategory(Store<AppState> store, int businessId) async {
+  Future<int> insertCategory(Store<AppState> store, {int branchId}) async {
     //ignore: missing_required_param
     var tab = new CategoryTableData(
-        businessId: businessId,
-        branchId: 1,
-        focused: false,
-        createdAt: DateTime.now(),
-        name: "toBeModified");
+      branchId: branchId,
+      focused: false,
+      createdAt: DateTime.now(),
+      name: "toBeModified",
+    );
     CategoryTableData existingCategory =
         await store.state.database.categoryDao.getCategoryName("toBeModified");
     if (existingCategory == null) {

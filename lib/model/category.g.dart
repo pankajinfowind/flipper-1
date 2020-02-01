@@ -12,8 +12,6 @@ class _$Category extends Category {
   @override
   final int id;
   @override
-  final int businessId;
-  @override
   final bool focused;
   @override
   final int branchId;
@@ -21,17 +19,12 @@ class _$Category extends Category {
   factory _$Category([void Function(CategoryBuilder) updates]) =>
       (new CategoryBuilder()..update(updates)).build();
 
-  _$Category._(
-      {this.name, this.id, this.businessId, this.focused, this.branchId})
-      : super._() {
+  _$Category._({this.name, this.id, this.focused, this.branchId}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('Category', 'name');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('Category', 'id');
-    }
-    if (businessId == null) {
-      throw new BuiltValueNullFieldError('Category', 'businessId');
     }
     if (focused == null) {
       throw new BuiltValueNullFieldError('Category', 'focused');
@@ -54,7 +47,6 @@ class _$Category extends Category {
     return other is Category &&
         name == other.name &&
         id == other.id &&
-        businessId == other.businessId &&
         focused == other.focused &&
         branchId == other.branchId;
   }
@@ -62,8 +54,7 @@ class _$Category extends Category {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, name.hashCode), id.hashCode), businessId.hashCode),
-            focused.hashCode),
+        $jc($jc($jc(0, name.hashCode), id.hashCode), focused.hashCode),
         branchId.hashCode));
   }
 
@@ -72,7 +63,6 @@ class _$Category extends Category {
     return (newBuiltValueToStringHelper('Category')
           ..add('name', name)
           ..add('id', id)
-          ..add('businessId', businessId)
           ..add('focused', focused)
           ..add('branchId', branchId))
         .toString();
@@ -90,10 +80,6 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
 
-  int _businessId;
-  int get businessId => _$this._businessId;
-  set businessId(int businessId) => _$this._businessId = businessId;
-
   bool _focused;
   bool get focused => _$this._focused;
   set focused(bool focused) => _$this._focused = focused;
@@ -108,7 +94,6 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
     if (_$v != null) {
       _name = _$v.name;
       _id = _$v.id;
-      _businessId = _$v.businessId;
       _focused = _$v.focused;
       _branchId = _$v.branchId;
       _$v = null;
@@ -133,11 +118,7 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
   _$Category build() {
     final _$result = _$v ??
         new _$Category._(
-            name: name,
-            id: id,
-            businessId: businessId,
-            focused: focused,
-            branchId: branchId);
+            name: name, id: id, focused: focused, branchId: branchId);
     replace(_$result);
     return _$result;
   }

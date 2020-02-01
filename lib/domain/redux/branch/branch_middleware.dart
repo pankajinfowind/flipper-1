@@ -53,13 +53,13 @@ void setUnits(store, branchId, GeneralRepository generalRepository) async {
 
   await generalRepository.insertUnit(store, item);
 
-  //TODO: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
+  //toto: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
   await generalRepository.insertUnit(store, kg);
-  //TODO: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
+  //todo: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
   await generalRepository.insertUnit(store, ounce);
-  //TODO: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
+  //todo: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
   await generalRepository.insertUnit(store, pound);
-  //TODO: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
+  //todo: by setting each fire the progress to be used on SettingUpApplicationScreen as we set up each.. 25%
 }
 
 void Function(Store<AppState> store, dynamic action, NextDispatcher next)
@@ -73,7 +73,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           ..isActive = true,
       );
       final branchId = await branchRepo.insert(store, branch);
-      //TODO: use the setUnits emitted progress on settingUpProgress screen.
+      //todo: use the setUnits emitted progress on settingUpProgress screen.
       //getting up the default units
       setUnits(store, branchId, generalRepository);
       //update store will all the thing we need and set all default values we want here
@@ -109,7 +109,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         store.dispatch(OnHintLoaded(hint: _hint));
         //store.dispatch(ResetAppAction());
       } else {
-        //TODO: get the branch that is set as hint
+        //todo: get the branch that is set as hint
         if (store.state.branch == null) {
           final _hint = Hint((h) => h
             ..name = branches[0].name

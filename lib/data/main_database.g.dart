@@ -1987,7 +1987,6 @@ class CategoryTableData extends DataClass
   final int id;
   final bool focused;
   final String name;
-  final int businessId;
   final int branchId;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -1995,7 +1994,6 @@ class CategoryTableData extends DataClass
       {@required this.id,
       @required this.focused,
       @required this.name,
-      @required this.businessId,
       @required this.branchId,
       this.createdAt,
       this.updatedAt});
@@ -2012,8 +2010,6 @@ class CategoryTableData extends DataClass
       focused:
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}focused']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      businessId: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}business_id']),
       branchId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
       createdAt: dateTimeType
@@ -2028,7 +2024,6 @@ class CategoryTableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       focused: serializer.fromJson<bool>(json['focused']),
       name: serializer.fromJson<String>(json['name']),
-      businessId: serializer.fromJson<int>(json['businessId']),
       branchId: serializer.fromJson<int>(json['branchId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -2041,7 +2036,6 @@ class CategoryTableData extends DataClass
       'id': serializer.toJson<int>(id),
       'focused': serializer.toJson<bool>(focused),
       'name': serializer.toJson<String>(name),
-      'businessId': serializer.toJson<int>(businessId),
       'branchId': serializer.toJson<int>(branchId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
@@ -2056,9 +2050,6 @@ class CategoryTableData extends DataClass
           ? const Value.absent()
           : Value(focused),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
-      businessId: businessId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(businessId),
       branchId: branchId == null && nullToAbsent
           ? const Value.absent()
           : Value(branchId),
@@ -2075,7 +2066,6 @@ class CategoryTableData extends DataClass
           {int id,
           bool focused,
           String name,
-          int businessId,
           int branchId,
           DateTime createdAt,
           DateTime updatedAt}) =>
@@ -2083,7 +2073,6 @@ class CategoryTableData extends DataClass
         id: id ?? this.id,
         focused: focused ?? this.focused,
         name: name ?? this.name,
-        businessId: businessId ?? this.businessId,
         branchId: branchId ?? this.branchId,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -2094,7 +2083,6 @@ class CategoryTableData extends DataClass
           ..write('id: $id, ')
           ..write('focused: $focused, ')
           ..write('name: $name, ')
-          ..write('businessId: $businessId, ')
           ..write('branchId: $branchId, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -2109,10 +2097,8 @@ class CategoryTableData extends DataClass
           focused.hashCode,
           $mrjc(
               name.hashCode,
-              $mrjc(
-                  businessId.hashCode,
-                  $mrjc(branchId.hashCode,
-                      $mrjc(createdAt.hashCode, updatedAt.hashCode)))))));
+              $mrjc(branchId.hashCode,
+                  $mrjc(createdAt.hashCode, updatedAt.hashCode))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -2120,7 +2106,6 @@ class CategoryTableData extends DataClass
           other.id == this.id &&
           other.focused == this.focused &&
           other.name == this.name &&
-          other.businessId == this.businessId &&
           other.branchId == this.branchId &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
@@ -2130,7 +2115,6 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   final Value<int> id;
   final Value<bool> focused;
   final Value<String> name;
-  final Value<int> businessId;
   final Value<int> branchId;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -2138,7 +2122,6 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.id = const Value.absent(),
     this.focused = const Value.absent(),
     this.name = const Value.absent(),
-    this.businessId = const Value.absent(),
     this.branchId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -2147,19 +2130,16 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.id = const Value.absent(),
     @required bool focused,
     @required String name,
-    @required int businessId,
     @required int branchId,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   })  : focused = Value(focused),
         name = Value(name),
-        businessId = Value(businessId),
         branchId = Value(branchId);
   CategoryTableCompanion copyWith(
       {Value<int> id,
       Value<bool> focused,
       Value<String> name,
-      Value<int> businessId,
       Value<int> branchId,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt}) {
@@ -2167,7 +2147,6 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
       id: id ?? this.id,
       focused: focused ?? this.focused,
       name: name ?? this.name,
-      businessId: businessId ?? this.businessId,
       branchId: branchId ?? this.branchId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -2213,15 +2192,6 @@ class $CategoryTableTable extends CategoryTable
     );
   }
 
-  final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
-  GeneratedIntColumn _businessId;
-  @override
-  GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
-  GeneratedIntColumn _constructBusinessId() {
-    return GeneratedIntColumn('business_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES business_table(id)');
-  }
-
   final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
   GeneratedIntColumn _branchId;
   @override
@@ -2254,7 +2224,7 @@ class $CategoryTableTable extends CategoryTable
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, focused, name, businessId, branchId, createdAt, updatedAt];
+      [id, focused, name, branchId, createdAt, updatedAt];
   @override
   $CategoryTableTable get asDslTable => this;
   @override
@@ -2281,12 +2251,6 @@ class $CategoryTableTable extends CategoryTable
           _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
-    }
-    if (d.businessId.present) {
-      context.handle(_businessIdMeta,
-          businessId.isAcceptableValue(d.businessId.value, _businessIdMeta));
-    } else if (businessId.isRequired && isInserting) {
-      context.missing(_businessIdMeta);
     }
     if (d.branchId.present) {
       context.handle(_branchIdMeta,
@@ -2328,9 +2292,6 @@ class $CategoryTableTable extends CategoryTable
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
-    }
-    if (d.businessId.present) {
-      map['business_id'] = Variable<int, IntType>(d.businessId.value);
     }
     if (d.branchId.present) {
       map['branch_id'] = Variable<int, IntType>(d.branchId.value);

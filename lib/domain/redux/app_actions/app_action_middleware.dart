@@ -42,12 +42,12 @@ void Function(Store<AppState> store,
   return (store, action, next) async {
     if (store.state.tempCategoryId != null &&
         store.state.categoryName != null &&
-        store.state.currentActiveBusiness != null) {
+        store.state.branch != null) {
       await generalRepository.updateCategory(
         store,
         store.state.tempCategoryId,
         store.state.categoryName,
-        store.state.currentActiveBusiness,
+        store.state.branch.id,
         focused: true,
       );
 
@@ -61,8 +61,7 @@ void Function(Store<AppState> store,
               (u) => u
                 ..name = c.name
                 ..focused = c.focused
-                ..businessId = u.businessId
-                ..branchId = u.branchId
+                ..branchId = store.state.branch.id
                 ..id = c.id,
             ))
           });
@@ -79,9 +78,11 @@ void Function(Store<AppState> store, CreateEmptyTempCategoryAction action,
     _createTempCategory(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
-    if (store.state.currentActiveBusiness != null) {
+    if (store.state.branch != null) {
       final categoryId = await generalRepository.insertCategory(
-          store, store.state.currentActiveBusiness.id);
+        store,
+        branchId: store.state.branch.id, //currentActiveBranch
+      );
       store.dispatch(TempCategoryIdAction(categoryId: categoryId));
     }
   };
@@ -99,7 +100,7 @@ void Function(Store<AppState> store, InvokePersistFocusedCategory action,
                 store,
                 u.id,
                 null,
-                store.state.currentActiveBusiness,
+                store.state.branch.id,
                 focused: true,
               )
             }
@@ -109,7 +110,7 @@ void Function(Store<AppState> store, InvokePersistFocusedCategory action,
                 store,
                 u.id,
                 null,
-                store.state.currentActiveBusiness,
+                store.state.branch.id,
                 focused: false,
               )
             }
@@ -304,8 +305,7 @@ void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
               ..focused = true
               ..id = store.state.categories[i].id
               ..name = store.state.categories[i].name
-              ..businessId = store.state.categories[i].businessId
-              ..branchId = store.state.categories[i].branchId,
+              ..branchId = store.state.branch.id,
           ),
         );
       } else {
@@ -315,12 +315,12 @@ void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
               ..focused = false
               ..id = store.state.categories[i].id
               ..name = store.state.categories[i].name
-              ..businessId = store.state.categories[i].businessId
-              ..branchId = store.state.categories[i].branchId,
+              ..branchId = store.state.branch.id,
           ),
         );
       }
     }
+    //print(action.category);
     store.dispatch(CategoryAction(categories));
   };
 }
@@ -346,7 +346,7 @@ void Function(
           ..branchId = variations[i].branchId),
       );
     }
-    print(items);
+
     Router.navigator.pushNamed(Router.editQuantityItemScreen,
         arguments: EditQuantityItemScreenArguments(item: items));
   };

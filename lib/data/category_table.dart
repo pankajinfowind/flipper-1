@@ -7,9 +7,6 @@ class CategoryTable extends Table {
 
   TextColumn get name => text()();
 
-  IntColumn get businessId =>
-      integer().customConstraint('NULL REFERENCES business_table(id)')();
-
   IntColumn get branchId =>
       integer().customConstraint('NULL REFERENCES branch_table(id)')();
 

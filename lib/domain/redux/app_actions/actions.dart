@@ -182,9 +182,9 @@ class SwitchCategory {
 
 @immutable
 class NeedItemVariation {
-  final int itemId;
+  final Item item;
 
-  NeedItemVariation({this.itemId});
+  NeedItemVariation({this.item});
 }
 
 @immutable
@@ -199,4 +199,11 @@ class ItemsVariation {
   final List<Item> items;
 
   ItemsVariation({this.items});
+}
+
+@immutable
+class CurrentActiveSaleItem {
+  final Item item;
+
+  CurrentActiveSaleItem({this.item});
 }

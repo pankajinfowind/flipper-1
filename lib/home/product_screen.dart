@@ -5,7 +5,6 @@ import 'package:flipper/home/widget/create_options_widget.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/presentation/widgets/payable_widget.dart';
-import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';
@@ -47,7 +46,7 @@ List<Widget> getItems(List<Item> itemList, context) {
           //todo play a small vibration to indicate the action.
           //send store to request more information then from that store navigate with all info we need
           StoreProvider.of<AppState>(context)
-              .dispatch(NeedItemVariation(itemId: itemList[i].id));
+              .dispatch(NeedItemVariation(item: itemList[i]));
         },
         child: ListTile(
           contentPadding: EdgeInsets.all(0),

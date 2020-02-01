@@ -64,6 +64,8 @@ class _$AppState extends AppState {
   @override
   final BuiltList<Item> itemVariations;
   @override
+  final Item currentActiveSaleItem;
+  @override
   final BuiltList<Item> currentSales;
   @override
   final BuiltList<Item> items;
@@ -102,6 +104,7 @@ class _$AppState extends AppState {
       this.currentDisable,
       this.variations,
       this.itemVariations,
+      this.currentActiveSaleItem,
       this.currentSales,
       this.items,
       this.currentIncrement})
@@ -165,6 +168,7 @@ class _$AppState extends AppState {
         currentDisable == other.currentDisable &&
         variations == other.variations &&
         itemVariations == other.itemVariations &&
+        currentActiveSaleItem == other.currentActiveSaleItem &&
         currentSales == other.currentSales &&
         items == other.items &&
         currentIncrement == other.currentIncrement;
@@ -190,23 +194,23 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), units.hashCode), categories.hashCode),
-                                                                                focusedUnit.hashCode),
-                                                                            category.hashCode),
-                                                                        permissions.hashCode),
-                                                                    branches.hashCode),
-                                                                businesses.hashCode),
-                                                            branch.hashCode),
-                                                        business.hashCode),
-                                                    hint.hashCode),
-                                                database.hashCode),
-                                            categoryName.hashCode),
-                                        tempCategoryId.hashCode),
-                                    currentUnit.hashCode),
-                                currentColor.hashCode),
-                            currentDisable.hashCode),
-                        variations.hashCode),
-                    itemVariations.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), units.hashCode), categories.hashCode), focusedUnit.hashCode),
+                                                                                category.hashCode),
+                                                                            permissions.hashCode),
+                                                                        branches.hashCode),
+                                                                    businesses.hashCode),
+                                                                branch.hashCode),
+                                                            business.hashCode),
+                                                        hint.hashCode),
+                                                    database.hashCode),
+                                                categoryName.hashCode),
+                                            tempCategoryId.hashCode),
+                                        currentUnit.hashCode),
+                                    currentColor.hashCode),
+                                currentDisable.hashCode),
+                            variations.hashCode),
+                        itemVariations.hashCode),
+                    currentActiveSaleItem.hashCode),
                 currentSales.hashCode),
             items.hashCode),
         currentIncrement.hashCode));
@@ -243,6 +247,7 @@ class _$AppState extends AppState {
           ..add('currentDisable', currentDisable)
           ..add('variations', variations)
           ..add('itemVariations', itemVariations)
+          ..add('currentActiveSaleItem', currentActiveSaleItem)
           ..add('currentSales', currentSales)
           ..add('items', items)
           ..add('currentIncrement', currentIncrement))
@@ -382,6 +387,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set itemVariations(ListBuilder<Item> itemVariations) =>
       _$this._itemVariations = itemVariations;
 
+  ItemBuilder _currentActiveSaleItem;
+  ItemBuilder get currentActiveSaleItem =>
+      _$this._currentActiveSaleItem ??= new ItemBuilder();
+  set currentActiveSaleItem(ItemBuilder currentActiveSaleItem) =>
+      _$this._currentActiveSaleItem = currentActiveSaleItem;
+
   ListBuilder<Item> _currentSales;
   ListBuilder<Item> get currentSales =>
       _$this._currentSales ??= new ListBuilder<Item>();
@@ -429,6 +440,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _currentDisable = _$v.currentDisable?.toBuilder();
       _variations = _$v.variations?.toBuilder();
       _itemVariations = _$v.itemVariations?.toBuilder();
+      _currentActiveSaleItem = _$v.currentActiveSaleItem?.toBuilder();
       _currentSales = _$v.currentSales?.toBuilder();
       _items = _$v.items?.toBuilder();
       _currentIncrement = _$v.currentIncrement;
@@ -484,6 +496,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               currentDisable: _currentDisable?.build(),
               variations: variations.build(),
               itemVariations: itemVariations.build(),
+              currentActiveSaleItem: _currentActiveSaleItem?.build(),
               currentSales: currentSales.build(),
               items: items.build(),
               currentIncrement: currentIncrement);
@@ -534,6 +547,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         variations.build();
         _$failedField = 'itemVariations';
         itemVariations.build();
+        _$failedField = 'currentActiveSaleItem';
+        _currentActiveSaleItem?.build();
         _$failedField = 'currentSales';
         currentSales.build();
         _$failedField = 'items';

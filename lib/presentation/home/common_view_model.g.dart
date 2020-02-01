@@ -53,6 +53,8 @@ class _$CommonViewModel extends CommonViewModel {
   final BuiltList<Item> items;
   @override
   final int currentIncrement;
+  @override
+  final Item currentActiveSaleItem;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -80,7 +82,8 @@ class _$CommonViewModel extends CommonViewModel {
       this.variations,
       this.itemVariations,
       this.items,
-      this.currentIncrement})
+      this.currentIncrement,
+      this.currentActiveSaleItem})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -145,7 +148,8 @@ class _$CommonViewModel extends CommonViewModel {
         variations == other.variations &&
         itemVariations == other.itemVariations &&
         items == other.items &&
-        currentIncrement == other.currentIncrement;
+        currentIncrement == other.currentIncrement &&
+        currentActiveSaleItem == other.currentActiveSaleItem;
   }
 
   @override
@@ -168,26 +172,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode),
-                                                                                categories.hashCode),
-                                                                            tab.hashCode),
-                                                                        currentBusiness.hashCode),
-                                                                    hasAction.hashCode),
-                                                                branches.hashCode),
-                                                            businesses.hashCode),
-                                                        appAction.hashCode),
-                                                    hint.hashCode),
-                                                categoryName.hashCode),
-                                            category.hashCode),
-                                        currentUnit.hashCode),
-                                    currentColor.hashCode),
-                                currentDisable.hashCode),
-                            currentBranch.hashCode),
-                        currentSales.hashCode),
-                    variations.hashCode),
-                itemVariations.hashCode),
-            items.hashCode),
-        currentIncrement.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode),
+                                                                                tab.hashCode),
+                                                                            currentBusiness.hashCode),
+                                                                        hasAction.hashCode),
+                                                                    branches.hashCode),
+                                                                businesses.hashCode),
+                                                            appAction.hashCode),
+                                                        hint.hashCode),
+                                                    categoryName.hashCode),
+                                                category.hashCode),
+                                            currentUnit.hashCode),
+                                        currentColor.hashCode),
+                                    currentDisable.hashCode),
+                                currentBranch.hashCode),
+                            currentSales.hashCode),
+                        variations.hashCode),
+                    itemVariations.hashCode),
+                items.hashCode),
+            currentIncrement.hashCode),
+        currentActiveSaleItem.hashCode));
   }
 
   @override
@@ -215,7 +219,8 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('variations', variations)
           ..add('itemVariations', itemVariations)
           ..add('items', items)
-          ..add('currentIncrement', currentIncrement))
+          ..add('currentIncrement', currentIncrement)
+          ..add('currentActiveSaleItem', currentActiveSaleItem))
         .toString();
   }
 }
@@ -334,6 +339,12 @@ class CommonViewModelBuilder
   set currentIncrement(int currentIncrement) =>
       _$this._currentIncrement = currentIncrement;
 
+  ItemBuilder _currentActiveSaleItem;
+  ItemBuilder get currentActiveSaleItem =>
+      _$this._currentActiveSaleItem ??= new ItemBuilder();
+  set currentActiveSaleItem(ItemBuilder currentActiveSaleItem) =>
+      _$this._currentActiveSaleItem = currentActiveSaleItem;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -361,6 +372,7 @@ class CommonViewModelBuilder
       _itemVariations = _$v.itemVariations?.toBuilder();
       _items = _$v.items?.toBuilder();
       _currentIncrement = _$v.currentIncrement;
+      _currentActiveSaleItem = _$v.currentActiveSaleItem?.toBuilder();
       _$v = null;
     }
     return this;
@@ -407,7 +419,8 @@ class CommonViewModelBuilder
               variations: _variations?.build(),
               itemVariations: _itemVariations?.build(),
               items: items.build(),
-              currentIncrement: currentIncrement);
+              currentIncrement: currentIncrement,
+              currentActiveSaleItem: _currentActiveSaleItem?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -442,6 +455,9 @@ class CommonViewModelBuilder
         _itemVariations?.build();
         _$failedField = 'items';
         items.build();
+
+        _$failedField = 'currentActiveSaleItem';
+        _currentActiveSaleItem?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

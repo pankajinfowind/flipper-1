@@ -99,6 +99,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   BuiltList<Item> get itemVariations;
 
+  @nullable
+  Item get currentActiveSaleItem;
+
   BuiltList<Item> get currentSales;
 
   BuiltList<Item> get items;

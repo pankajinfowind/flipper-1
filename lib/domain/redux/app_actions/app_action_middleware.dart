@@ -365,7 +365,7 @@ void Function(
     next(action);
 
     List<VariationTableData> variations = await generalRepository.getVariations(
-        store: store, itemId: action.itemId);
+        store: store, itemId: action.item.id);
 
     List<Item> items = [];
     for (var i = 0; i < variations.length; i++) {
@@ -379,6 +379,7 @@ void Function(
           ..branchId = variations[i].branchId),
       );
     }
+    store.dispatch(CurrentActiveSaleItem(item: action.item));
     store.dispatch(ItemsVariation(items: items));
     Router.navigator.pushNamed(Router.editQuantityItemScreen);
   };

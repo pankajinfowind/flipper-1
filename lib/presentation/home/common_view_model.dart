@@ -74,6 +74,8 @@ abstract class CommonViewModel
 
   @nullable
   int get currentIncrement;
+  @nullable
+  Item get currentActiveSaleItem;
 
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
@@ -112,6 +114,9 @@ abstract class CommonViewModel
       ..currentUnit = store.state.currentUnit == null
           ? null
           : store.state.currentUnit.toBuilder()
+      ..currentActiveSaleItem = store.state.currentActiveSaleItem == null
+          ? null
+          : store.state.currentActiveSaleItem.toBuilder()
       ..units = store.state.units.toBuilder()
       ..variations = store.state.variations.toBuilder()
       ..itemVariations = store.state.itemVariations.toBuilder()

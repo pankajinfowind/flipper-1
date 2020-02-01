@@ -226,11 +226,10 @@ class controlSaleWidget extends StatelessWidget {
 class SellMultipleItems extends StatelessWidget {
   final List<Item> items;
   final CommonViewModel vm;
-  const SellMultipleItems({
-    Key key,
-    this.items,
-    this.vm,
-  }) : super(key: key);
+
+  final Item activeItem;
+  const SellMultipleItems({Key key, this.items, this.vm, this.activeItem})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +238,11 @@ class SellMultipleItems extends StatelessWidget {
         disableButton: false,
         showActionButton: true,
         actionButtonName: S.of(context).add,
-        title: "name",
+        title: vm.currentActiveSaleItem == null
+            ? null
+            : vm.currentActiveSaleItem.name +
+                " FRW " +
+                vm.currentActiveSaleItem.price.toString(),
         onPressedCallback: () {
           //todo: go ahead and insert the new quantity to a sale.
         },
@@ -273,6 +276,19 @@ class SellMultipleItems extends StatelessWidget {
     );
     print(items);
     for (var i = 0; i < items.length; i++) {
+      if (items[i].isActive) {
+        StoreProvider.of<AppState>(context).dispatch(
+          CurrentActiveSaleItem(
+            item: Item(
+              (ui) => ui
+                ..id = items[i].id
+                ..name = vm.currentActiveSaleItem.name
+                ..branchId = items[i].branchId
+                ..price = items[i].price,
+            ),
+          ),
+        );
+      }
       list.add(
         GestureDetector(
           onTap: () {

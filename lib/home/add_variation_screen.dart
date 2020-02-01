@@ -68,7 +68,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                 Router.navigator.pop();
                 return;
               } else {
-                var variation = Variation(
+                variatione.add(Variation(
                   (v) => v
                     ..id = new Random().nextInt(100) + 1
                     ..name = name
@@ -76,17 +76,11 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                     ..stockValue = 0
                     ..unityType = vm.currentUnit.name
                     ..sku = sku ?? 'null',
-                );
-
-                variatione.add(variation);
+                ));
 
                 StoreProvider.of<AppState>(context)
                     .dispatch(VariationAction(variations: variatione));
-                StoreProvider.of<AppState>(context).dispatch(
-                  AppAction(
-                    actions: AppActions((a) => a..name = "none"),
-                  ),
-                );
+
                 Router.navigator.pop();
               }
             },

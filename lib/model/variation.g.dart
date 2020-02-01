@@ -49,9 +49,6 @@ class _$Variation extends Variation {
     if (stockValue == null) {
       throw new BuiltValueNullFieldError('Variation', 'stockValue');
     }
-    if (itemId == null) {
-      throw new BuiltValueNullFieldError('Variation', 'itemId');
-    }
     if (sku == null) {
       throw new BuiltValueNullFieldError('Variation', 'sku');
     }

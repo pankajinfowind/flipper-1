@@ -22,6 +22,8 @@ class _$Item extends Item {
   @override
   final int unitId;
   @override
+  final String description;
+  @override
   final int count;
 
   factory _$Item([void Function(ItemBuilder) updates]) =>
@@ -35,6 +37,7 @@ class _$Item extends Item {
       this.branchId,
       this.categoryId,
       this.unitId,
+      this.description,
       this.count})
       : super._() {
     if (name == null) {
@@ -66,6 +69,7 @@ class _$Item extends Item {
         branchId == other.branchId &&
         categoryId == other.categoryId &&
         unitId == other.unitId &&
+        description == other.description &&
         count == other.count;
   }
 
@@ -76,12 +80,14 @@ class _$Item extends Item {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, name.hashCode), color.hashCode),
-                            id.hashCode),
-                        price.hashCode),
-                    branchId.hashCode),
-                categoryId.hashCode),
-            unitId.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, name.hashCode), color.hashCode),
+                                id.hashCode),
+                            price.hashCode),
+                        branchId.hashCode),
+                    categoryId.hashCode),
+                unitId.hashCode),
+            description.hashCode),
         count.hashCode));
   }
 
@@ -95,6 +101,7 @@ class _$Item extends Item {
           ..add('branchId', branchId)
           ..add('categoryId', categoryId)
           ..add('unitId', unitId)
+          ..add('description', description)
           ..add('count', count))
         .toString();
   }
@@ -131,6 +138,10 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   int get unitId => _$this._unitId;
   set unitId(int unitId) => _$this._unitId = unitId;
 
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
   int _count;
   int get count => _$this._count;
   set count(int count) => _$this._count = count;
@@ -146,6 +157,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
       _branchId = _$v.branchId;
       _categoryId = _$v.categoryId;
       _unitId = _$v.unitId;
+      _description = _$v.description;
       _count = _$v.count;
       _$v = null;
     }
@@ -176,6 +188,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
             branchId: branchId,
             categoryId: categoryId,
             unitId: unitId,
+            description: description,
             count: count);
     replace(_$result);
     return _$result;

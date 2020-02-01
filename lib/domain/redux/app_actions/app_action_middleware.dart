@@ -5,7 +5,6 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
-import 'package:flipper/model/variation.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
@@ -44,8 +43,13 @@ void Function(Store<AppState> store,
     if (store.state.tempCategoryId != null &&
         store.state.categoryName != null &&
         store.state.currentActiveBusiness != null) {
-      await generalRepository.updateCategory(store, store.state.tempCategoryId,
-          store.state.categoryName, store.state.currentActiveBusiness);
+      await generalRepository.updateCategory(
+        store,
+        store.state.tempCategoryId,
+        store.state.categoryName,
+        store.state.currentActiveBusiness,
+        focused: true,
+      );
 
       List<CategoryTableData> categoryList =
           await generalRepository.getCategories(store);
@@ -57,8 +61,8 @@ void Function(Store<AppState> store,
               (u) => u
                 ..name = c.name
                 ..focused = c.focused
-                ..businessId = u.businessId ?? 0
-                ..branchId = u.branchId ?? 0
+                ..businessId = u.businessId
+                ..branchId = u.branchId
                 ..id = c.id,
             ))
           });
@@ -96,7 +100,7 @@ void Function(Store<AppState> store, InvokePersistFocusedCategory action,
                 u.id,
                 null,
                 store.state.currentActiveBusiness,
-                focused: action.category.focused == null ? true : !u.focused,
+                focused: true,
               )
             }
           else
@@ -184,12 +188,13 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         store,
         // ignore: missing_required_param
         ItemTableData(
-            name: action.name,
-            categoryId: action.category.id,
-            description: action.description,
-            unitId: action.unit.id,
-            color: action.color,
-            branchId: action.branch.id),
+          name: action.name,
+          categoryId: action.category.id,
+          description: action.description,
+          unitId: action.unit.id,
+          color: action.color,
+          branchId: action.branch.id,
+        ),
       );
 
       final variantId = await generalRepository.insertVariant(
@@ -227,6 +232,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         store.dispatch(ItemLoaded(items: itemList));
         Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
       }
+      return;
     }
 
     //insert item
@@ -249,11 +255,12 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
         store,
         // ignore: missing_required_param
         VariationTableData(
-            name: action.variations[i].name,
-            price: int.parse(action.price),
-            count: action.variations[i].stockValue,
-            branchId: action.branch.id,
-            itemId: item),
+          name: action.variations[i].name,
+          price: int.parse(action.price),
+          count: action.variations[i].stockValue,
+          branchId: action.branch.id,
+          itemId: item,
+        ),
       );
       await generalRepository.insertHistory(
           store, variationId, action.variations[i].stockValue);
@@ -294,9 +301,7 @@ void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
         categories.add(
           Category(
             (c) => c
-              ..focused = action.category.focused == null
-                  ? true
-                  : !action.category.focused
+              ..focused = true
               ..id = store.state.categories[i].id
               ..name = store.state.categories[i].name
               ..businessId = store.state.categories[i].businessId
@@ -305,12 +310,14 @@ void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
         );
       } else {
         categories.add(
-          Category((c) => c
-            ..focused = false
-            ..id = store.state.categories[i].id
-            ..name = store.state.categories[i].name
-            ..businessId = store.state.categories[i].businessId
-            ..branchId = store.state.categories[i].branchId),
+          Category(
+            (c) => c
+              ..focused = false
+              ..id = store.state.categories[i].id
+              ..name = store.state.categories[i].name
+              ..businessId = store.state.categories[i].businessId
+              ..branchId = store.state.categories[i].branchId,
+          ),
         );
       }
     }

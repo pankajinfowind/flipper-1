@@ -3,7 +3,6 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/unit.dart';
-import 'package:flipper/model/variation.dart';
 import 'package:redux/redux.dart';
 
 class GeneralRepository {
@@ -15,7 +14,7 @@ class GeneralRepository {
 
   Future<bool> updateCategory(Store<AppState> store, int categoryId,
       String categoryName, Business business,
-      {bool focused = false}) async {
+      {bool focused}) async {
     final cat =
         await store.state.database.categoryDao.getCategoryById(categoryId);
 
@@ -26,7 +25,7 @@ class GeneralRepository {
     final updated = CategoryTableData(
       name: categoryName ?? cat.name,
       id: cat.id,
-      focused: focused ?? true,
+      focused: focused,
       businessId: cat.businessId,
       branchId: cat.branchId,
       updatedAt: DateTime.now(),

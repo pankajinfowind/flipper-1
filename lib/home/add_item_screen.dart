@@ -309,6 +309,14 @@ class _AddItemScreenState extends State<AddItemScreen> {
       print('name can not be null');
       return; // a toast
     }
+    if (_currentCategory == null) {
+      print("category should be set");
+      return;
+    }
+    if (vm.currentBranch == null) {
+      print("branch should be set");
+      return;
+    }
     StoreProvider.of<AppState>(context).dispatch(
       SaveItemAction(
         business: vm.currentBusiness,

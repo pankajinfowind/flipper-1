@@ -91,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: TextFormField(
                           style: TextStyle(color: Colors.black),
                           validator: Validators.isStringHasMoreChars,
-                          onSaved: (name) {
+                          onChanged: (name) {
                             tBusiness.name = name;
                           },
                           decoration: InputDecoration(
@@ -112,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                             return null;
                           },
-                          onSaved: (email) {
+                          onChanged: (email) {
                             tBusiness.email = email;
                           },
                           decoration: InputDecoration(hintText: "Email"),
@@ -127,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           obscureText: true,
                           style: TextStyle(color: Colors.black),
                           validator: Validators.isStringHasMoreChars,
-                          onSaved: (password) {
+                          onChanged: (password) {
                             tBusiness.password = password;
                           },
                           decoration: InputDecoration(hintText: "Password"),
@@ -173,29 +173,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
   _handleFormSubmit() {
     StoreProvider.of<AppState>(context).dispatch(
         AppAction(actions: AppActions((a) => a..name = "showLoader")));
+    if (_formKey.currentState == null) {
+      //todo:should show atoast.
+      return;
+    }
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-    }
-    Business business = Business((b) => b
-      ..name = tBusiness.name
-      ..abbreviation = tBusiness.name.substring(0, 2).toLowerCase()
-      ..isActive = true
-      ..type = BusinessType.NORMAL);
+      Business business = Business((b) => b
+        ..name = tBusiness.name
+        ..abbreviation = tBusiness.name.substring(0, 2).toLowerCase()
+        ..isActive = true
+        ..type = BusinessType.NORMAL);
 
-    //TODO: get the info should be filled in form from yegobox i.e we don't have password field here.
-    User user = User(
-      (user) => user
-        ..email = tBusiness.email
-        ..status = "online"
-        ..bearerToken = "none"
-        ..refreshToken = "none"
-        ..isCurrentAuthenticated = true
-        ..avatar = tBusiness.name
-        ..username = tBusiness.name,
-    );
-    StoreProvider.of<AppState>(context).dispatch(WithUser(user));
-    StoreProvider.of<AppState>(context).dispatch(CreateUser(user));
-    StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
-    StoreProvider.of<AppState>(context).dispatch(CreateBusinessOnSignUp());
+      //todo: get the info should be filled in form from yegobox i.e we don't have password field here.
+      User user = User(
+        (user) => user
+          ..email = tBusiness.email
+          ..status = "online"
+          ..bearerToken = "none"
+          ..refreshToken = "none"
+          ..isCurrentAuthenticated = true
+          ..avatar = tBusiness.name
+          ..username = tBusiness.name,
+      );
+      StoreProvider.of<AppState>(context).dispatch(WithUser(user));
+      StoreProvider.of<AppState>(context).dispatch(CreateUser(user));
+      StoreProvider.of<AppState>(context).dispatch(WithBusiness(business));
+      StoreProvider.of<AppState>(context).dispatch(CreateBusinessOnSignUp());
+    }
   }
 }

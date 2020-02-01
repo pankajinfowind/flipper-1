@@ -17,7 +17,7 @@ class AddUnitType extends StatefulWidget {
 }
 
 class _AddUnitTypeState extends State<AddUnitType> {
-  Widget getUnitsWidgets(BuiltList<Unit> unitsList) {
+  Widget _getUnitsWidgets(BuiltList<Unit> unitsList) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < unitsList.length; i++) {
       list.add(
@@ -97,7 +97,7 @@ class _AddUnitTypeState extends State<AddUnitType> {
                   ),
                 ),
               ),
-              getUnitsWidgets(vm.units),
+              _getUnitsWidgets(vm.units),
               Text("Edit units and precision in items> Units"),
               Visibility(
                 visible: false,

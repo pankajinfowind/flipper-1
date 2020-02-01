@@ -35,7 +35,6 @@ AppState _onResetAppAction(AppState state, ResetAppAction action) {
 }
 
 AppState _onUpdateUnit(AppState state, UpdateUnitAction action) {
-  //Logger.d(action.unitId.toString()); todo: fix the proper logger asap
   List<Unit> updatedUnits = [];
   state.units.forEach((u) => {
         if (u.id == action.unitId)

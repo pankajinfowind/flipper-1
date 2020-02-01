@@ -19,18 +19,20 @@ class AddCategoryScreen extends StatefulWidget {
 }
 
 class _AddCategoryScreenState extends State<AddCategoryScreen> {
-  getUnitsWidgets(BuiltList<Category> categories) {
+  _getCategoriesWidgets(BuiltList<Category> categories) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < categories.length; i++) {
       if (categories[i].name != "toBeModified") {
         list.add(
           GestureDetector(
             onTap: () {
-              StoreProvider.of<AppState>(context)
-                  .dispatch(SwitchCategory(category: categories[i]));
+              StoreProvider.of<AppState>(context).dispatch(
+                SwitchCategory(category: categories[i]),
+              );
 
               StoreProvider.of<AppState>(context).dispatch(
-                  InvokePersistFocusedCategory(category: categories[i]));
+                InvokePersistFocusedCategory(category: categories[i]),
+              );
             },
             child: ListTile(
               title: Text(
@@ -84,8 +86,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  StoreProvider.of<AppState>(context)
-                      .dispatch(CreateEmptyTempCategoryAction());
+                  StoreProvider.of<AppState>(context).dispatch(
+                    CategoryNameAction(name: null),
+                  );
+                  StoreProvider.of<AppState>(context).dispatch(
+                    CreateEmptyTempCategoryAction(),
+                  );
                   Router.navigator.pushNamed(Router.createCategoryInputScreen);
                 },
                 child: ListTile(
@@ -96,7 +102,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                   ),
                 ),
               ),
-              getUnitsWidgets(vm.categories),
+              _getCategoriesWidgets(vm.categories),
               Visibility(
                 visible: false,
                 child: FlatButton(
@@ -116,6 +122,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   _handleCreateCategory(CommonViewModel vm) {
     //fire the event to create category
     StoreProvider.of<AppState>(context).dispatch(
-        CreateCategoryFromAddItemScreenAction(categoryName: vm.categoryName));
+      CreateCategoryFromAddItemScreenAction(categoryName: vm.categoryName),
+    );
   }
 }

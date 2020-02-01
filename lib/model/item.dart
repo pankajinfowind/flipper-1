@@ -18,6 +18,8 @@ abstract class Item implements Built<Item, ItemBuilder> {
   int get unitId;
 
   @nullable
+  String get description;
+  @nullable
   int get count;
   Item._();
   factory Item([void Function(ItemBuilder) updates]) = _$Item;

@@ -3669,6 +3669,7 @@ class VariationTableData extends DataClass
   final String name;
   final int branchId;
   final int itemId;
+  final bool isActive;
   final int count;
   final int price;
   final DateTime createdAt;
@@ -3678,6 +3679,7 @@ class VariationTableData extends DataClass
       @required this.name,
       @required this.branchId,
       @required this.itemId,
+      @required this.isActive,
       @required this.count,
       @required this.price,
       this.createdAt,
@@ -3688,6 +3690,7 @@ class VariationTableData extends DataClass
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
     return VariationTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
@@ -3696,6 +3699,8 @@ class VariationTableData extends DataClass
           intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
       itemId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}item_id']),
+      isActive:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_active']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
       price: intType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
       createdAt: dateTimeType
@@ -3711,6 +3716,7 @@ class VariationTableData extends DataClass
       name: serializer.fromJson<String>(json['name']),
       branchId: serializer.fromJson<int>(json['branchId']),
       itemId: serializer.fromJson<int>(json['itemId']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
       count: serializer.fromJson<int>(json['count']),
       price: serializer.fromJson<int>(json['price']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -3725,6 +3731,7 @@ class VariationTableData extends DataClass
       'name': serializer.toJson<String>(name),
       'branchId': serializer.toJson<int>(branchId),
       'itemId': serializer.toJson<int>(itemId),
+      'isActive': serializer.toJson<bool>(isActive),
       'count': serializer.toJson<int>(count),
       'price': serializer.toJson<int>(price),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -3742,6 +3749,9 @@ class VariationTableData extends DataClass
           : Value(branchId),
       itemId:
           itemId == null && nullToAbsent ? const Value.absent() : Value(itemId),
+      isActive: isActive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isActive),
       count:
           count == null && nullToAbsent ? const Value.absent() : Value(count),
       price:
@@ -3760,6 +3770,7 @@ class VariationTableData extends DataClass
           String name,
           int branchId,
           int itemId,
+          bool isActive,
           int count,
           int price,
           DateTime createdAt,
@@ -3769,6 +3780,7 @@ class VariationTableData extends DataClass
         name: name ?? this.name,
         branchId: branchId ?? this.branchId,
         itemId: itemId ?? this.itemId,
+        isActive: isActive ?? this.isActive,
         count: count ?? this.count,
         price: price ?? this.price,
         createdAt: createdAt ?? this.createdAt,
@@ -3781,6 +3793,7 @@ class VariationTableData extends DataClass
           ..write('name: $name, ')
           ..write('branchId: $branchId, ')
           ..write('itemId: $itemId, ')
+          ..write('isActive: $isActive, ')
           ..write('count: $count, ')
           ..write('price: $price, ')
           ..write('createdAt: $createdAt, ')
@@ -3799,9 +3812,13 @@ class VariationTableData extends DataClass
               $mrjc(
                   itemId.hashCode,
                   $mrjc(
-                      count.hashCode,
-                      $mrjc(price.hashCode,
-                          $mrjc(createdAt.hashCode, updatedAt.hashCode))))))));
+                      isActive.hashCode,
+                      $mrjc(
+                          count.hashCode,
+                          $mrjc(
+                              price.hashCode,
+                              $mrjc(createdAt.hashCode,
+                                  updatedAt.hashCode)))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -3810,6 +3827,7 @@ class VariationTableData extends DataClass
           other.name == this.name &&
           other.branchId == this.branchId &&
           other.itemId == this.itemId &&
+          other.isActive == this.isActive &&
           other.count == this.count &&
           other.price == this.price &&
           other.createdAt == this.createdAt &&
@@ -3821,6 +3839,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
   final Value<String> name;
   final Value<int> branchId;
   final Value<int> itemId;
+  final Value<bool> isActive;
   final Value<int> count;
   final Value<int> price;
   final Value<DateTime> createdAt;
@@ -3830,6 +3849,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
     this.name = const Value.absent(),
     this.branchId = const Value.absent(),
     this.itemId = const Value.absent(),
+    this.isActive = const Value.absent(),
     this.count = const Value.absent(),
     this.price = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -3840,6 +3860,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
     @required String name,
     @required int branchId,
     @required int itemId,
+    this.isActive = const Value.absent(),
     @required int count,
     @required int price,
     this.createdAt = const Value.absent(),
@@ -3854,6 +3875,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
       Value<String> name,
       Value<int> branchId,
       Value<int> itemId,
+      Value<bool> isActive,
       Value<int> count,
       Value<int> price,
       Value<DateTime> createdAt,
@@ -3863,6 +3885,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
       name: name ?? this.name,
       branchId: branchId ?? this.branchId,
       itemId: itemId ?? this.itemId,
+      isActive: isActive ?? this.isActive,
       count: count ?? this.count,
       price: price ?? this.price,
       createdAt: createdAt ?? this.createdAt,
@@ -3915,6 +3938,15 @@ class $VariationTableTable extends VariationTable
         $customConstraints: 'NULL REFERENCES item_table(id)');
   }
 
+  final VerificationMeta _isActiveMeta = const VerificationMeta('isActive');
+  GeneratedBoolColumn _isActive;
+  @override
+  GeneratedBoolColumn get isActive => _isActive ??= _constructIsActive();
+  GeneratedBoolColumn _constructIsActive() {
+    return GeneratedBoolColumn('is_active', $tableName, false,
+        defaultValue: Constant(false));
+  }
+
   final VerificationMeta _countMeta = const VerificationMeta('count');
   GeneratedIntColumn _count;
   @override
@@ -3961,8 +3993,17 @@ class $VariationTableTable extends VariationTable
   }
 
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, branchId, itemId, count, price, createdAt, updatedAt];
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        branchId,
+        itemId,
+        isActive,
+        count,
+        price,
+        createdAt,
+        updatedAt
+      ];
   @override
   $VariationTableTable get asDslTable => this;
   @override
@@ -3995,6 +4036,12 @@ class $VariationTableTable extends VariationTable
           _itemIdMeta, itemId.isAcceptableValue(d.itemId.value, _itemIdMeta));
     } else if (itemId.isRequired && isInserting) {
       context.missing(_itemIdMeta);
+    }
+    if (d.isActive.present) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableValue(d.isActive.value, _isActiveMeta));
+    } else if (isActive.isRequired && isInserting) {
+      context.missing(_isActiveMeta);
     }
     if (d.count.present) {
       context.handle(
@@ -4045,6 +4092,9 @@ class $VariationTableTable extends VariationTable
     }
     if (d.itemId.present) {
       map['item_id'] = Variable<int, IntType>(d.itemId.value);
+    }
+    if (d.isActive.present) {
+      map['is_active'] = Variable<bool, BoolType>(d.isActive.value);
     }
     if (d.count.present) {
       map['count'] = Variable<int, IntType>(d.count.value);

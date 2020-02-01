@@ -11,6 +11,9 @@ abstract class Item implements Built<Item, ItemBuilder> {
   @nullable
   int get price;
 
+  @nullable
+  bool get isActive;
+
   int get branchId;
   @nullable
   int get categoryId;

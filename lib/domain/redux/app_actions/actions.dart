@@ -186,3 +186,10 @@ class NeedItemVariation {
 
   NeedItemVariation({this.itemId});
 }
+
+@immutable
+class SwitchVariation {
+  final Item item;
+
+  SwitchVariation({this.item});
+}

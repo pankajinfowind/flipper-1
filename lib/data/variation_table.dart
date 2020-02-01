@@ -9,6 +9,7 @@ class VariationTable extends Table {
   IntColumn get itemId =>
       integer().customConstraint('NULL REFERENCES item_table(id)')();
 
+  BoolColumn get isActive => boolean().withDefault(Constant(false))();
   IntColumn get count => integer()();
   IntColumn get price => integer()();
   DateTimeColumn get createdAt =>

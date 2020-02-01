@@ -16,6 +16,8 @@ class _$Item extends Item {
   @override
   final int price;
   @override
+  final bool isActive;
+  @override
   final int branchId;
   @override
   final int categoryId;
@@ -34,6 +36,7 @@ class _$Item extends Item {
       this.color,
       this.id,
       this.price,
+      this.isActive,
       this.branchId,
       this.categoryId,
       this.unitId,
@@ -66,6 +69,7 @@ class _$Item extends Item {
         color == other.color &&
         id == other.id &&
         price == other.price &&
+        isActive == other.isActive &&
         branchId == other.branchId &&
         categoryId == other.categoryId &&
         unitId == other.unitId &&
@@ -81,9 +85,11 @@ class _$Item extends Item {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, name.hashCode), color.hashCode),
-                                id.hashCode),
-                            price.hashCode),
+                            $jc(
+                                $jc($jc($jc(0, name.hashCode), color.hashCode),
+                                    id.hashCode),
+                                price.hashCode),
+                            isActive.hashCode),
                         branchId.hashCode),
                     categoryId.hashCode),
                 unitId.hashCode),
@@ -98,6 +104,7 @@ class _$Item extends Item {
           ..add('color', color)
           ..add('id', id)
           ..add('price', price)
+          ..add('isActive', isActive)
           ..add('branchId', branchId)
           ..add('categoryId', categoryId)
           ..add('unitId', unitId)
@@ -125,6 +132,10 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   int _price;
   int get price => _$this._price;
   set price(int price) => _$this._price = price;
+
+  bool _isActive;
+  bool get isActive => _$this._isActive;
+  set isActive(bool isActive) => _$this._isActive = isActive;
 
   int _branchId;
   int get branchId => _$this._branchId;
@@ -154,6 +165,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
       _color = _$v.color;
       _id = _$v.id;
       _price = _$v.price;
+      _isActive = _$v.isActive;
       _branchId = _$v.branchId;
       _categoryId = _$v.categoryId;
       _unitId = _$v.unitId;
@@ -185,6 +197,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
             color: color,
             id: id,
             price: price,
+            isActive: isActive,
             branchId: branchId,
             categoryId: categoryId,
             unitId: unitId,

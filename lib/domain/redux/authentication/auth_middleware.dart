@@ -145,9 +145,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ),
       );
 
-      // print(itemsVariations.single.items);
-      // print(itemsVariations.single.variations);
-
       store.dispatch(ItemLoaded(items: itemList));
       unitsList.forEach((c) => {
             if (c.focused)

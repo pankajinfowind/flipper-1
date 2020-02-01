@@ -274,33 +274,35 @@ class SellMultipleItems extends StatelessWidget {
     );
     print(items);
     for (var i = 0; i < items.length; i++) {
-      list.add(Container(
-        width: 30,
-        child: ListTile(
-          contentPadding: EdgeInsets.fromLTRB(20, 20, 40, 10),
-          dense: false,
-          title: Align(
-            alignment: Alignment.topRight,
-            child: Text(
-              "FRW " + items[i].price.toString(),
+      list.add(
+        GestureDetector(
+          onTap: () {},
+          child: ListTile(
+            contentPadding: EdgeInsets.fromLTRB(20, 20, 40, 10),
+            dense: false,
+            title: Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                "FRW " + items[i].price.toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            leading: Text(
+              items[i].name,
               style: TextStyle(
                 color: Colors.black,
               ),
             ),
-          ),
-          leading: Text(
-            items[i].name,
-            style: TextStyle(
-              color: Colors.black,
+            trailing: Radio(
+              value: items[i].id,
+              groupValue: items[i].isActive ? items[i].id : 0,
+              onChanged: (int categoryId) {},
             ),
           ),
-          trailing: Radio(
-            value: 1,
-            groupValue: 1,
-            onChanged: (int categoryId) {},
-          ),
         ),
-      ));
+      );
     }
     //at the end add control ui
     list.add(controlSaleWidget(vm: vm, item: items));

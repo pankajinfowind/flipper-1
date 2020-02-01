@@ -30,6 +30,8 @@ List<Middleware<AppState>> AppActionMiddleware(
         _createItemInStore(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SwitchCategory>(
         _switchCategory(navigatorKey, generalRepository)),
+    TypedMiddleware<AppState, SwitchVariation>(
+        _switchVariation(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, NeedItemVariation>(
         _needItemVariation(navigatorKey, generalRepository)),
   ];
@@ -219,6 +221,7 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
           price: 0,
           count: 0,
           itemId: item,
+          isActive: true,
           branchId: action.branch.id,
         ),
       );
@@ -264,18 +267,34 @@ void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
     );
     for (var i = 0; i < action.variations.length; i++) {
       // insert variation and get last id to save the item then
+      //if i=0 then set the variant active=true
+      var variationId;
+      if (i == 0) {
+        variationId = await generalRepository.insertVariant(
+          store,
+          // ignore: missing_required_param
+          VariationTableData(
+              name: action.variations[i].name,
+              price: int.parse(action.price),
+              count: action.variations[i].stockValue,
+              branchId: action.branch.id,
+              itemId: item,
+              isActive: true),
+        );
+      } else {
+        variationId = await generalRepository.insertVariant(
+          store,
+          // ignore: missing_required_param
+          VariationTableData(
+              name: action.variations[i].name,
+              price: int.parse(action.price),
+              count: action.variations[i].stockValue,
+              branchId: action.branch.id,
+              itemId: item,
+              isActive: false),
+        );
+      }
 
-      final variationId = await generalRepository.insertVariant(
-        store,
-        // ignore: missing_required_param
-        VariationTableData(
-          name: action.variations[i].name,
-          price: int.parse(action.price),
-          count: action.variations[i].stockValue,
-          branchId: action.branch.id,
-          itemId: item,
-        ),
-      );
       await generalRepository.insertHistory(
           store, variationId, action.variations[i].stockValue);
 
@@ -354,6 +373,7 @@ void Function(
         Item((b) => b
           ..id = variations[i].id
           ..name = variations[i].name
+          ..isActive = variations[i].isActive
           ..count = variations[i].count
           ..price = variations[i].price
           ..branchId = variations[i].branchId),
@@ -362,5 +382,39 @@ void Function(
 
     Router.navigator.pushNamed(Router.editQuantityItemScreen,
         arguments: EditQuantityItemScreenArguments(item: items));
+  };
+}
+
+void Function(
+        Store<AppState> store, SwitchVariation action, NextDispatcher next)
+    _switchVariation(GlobalKey<NavigatorState> navigatorKey,
+        GeneralRepository generalRepository) {
+  return (store, action, next) async {
+    next(action);
+
+    List<Item> categories = [];
+    for (var i = 0; i < store.state.items.length; i++) {
+      if (store.state.items[i].id == action.item.id) {
+        categories.add(
+          Item(
+            (c) => c
+              ..isActive
+              ..id = store.state.items[i].id
+              ..name = store.state.items[i].name
+              ..branchId = store.state.branch.id,
+          ),
+        );
+      } else {
+        categories.add(
+          Item(
+            (c) => c
+              ..isActive = store.state.items[i].isActive
+              ..id = store.state.items[i].id
+              ..name = store.state.items[i].name
+              ..branchId = store.state.branch.id,
+          ),
+        );
+      }
+    }
   };
 }

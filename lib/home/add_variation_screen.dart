@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
-import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
@@ -41,11 +40,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
             onPressedCallback: () {
               List<Variation> variatione = [];
               List<Variation> updateVariations = [];
-              StoreProvider.of<AppState>(context).dispatch(
-                AppAction(
-                  actions: AppActions((a) => a..name = "none"),
-                ),
-              );
+
               if (vm.variations.length > 0) {
                 vm.variations.forEach((v) => {
                       updateVariations.add(v),

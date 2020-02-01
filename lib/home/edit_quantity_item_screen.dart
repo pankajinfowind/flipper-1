@@ -271,7 +271,9 @@ class SellMultipleItems extends StatelessWidget {
     list.add(
       ListTile(
         contentPadding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-        leading: Text("CHOOSE ONE"),
+        leading: Text(vm.currentActiveSaleItem == null
+            ? "CHOOSE ONE"
+            : vm.currentActiveSaleItem.name + " CHOOSE ONE"),
       ),
     );
     print(items);

@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:redux/redux.dart";
@@ -11,7 +12,7 @@ configureLogger() {
     Logger.addClient(DebugLoggerClient());
   } else {
     // Pass all uncaught errors from the framework to Crashlytics.
-    // FlutterError.onError = Crashlytics.instance.recordFlutterError;
+    FlutterError.onError = Crashlytics.instance.recordFlutterError;
     Logger.addClient(CrashlyticsLoggerClient());
   }
 }
@@ -138,42 +139,37 @@ class DebugLoggerClient implements LoggerClient {
 /// Logger that reports to Crashlytics/Firebase
 class CrashlyticsLoggerClient implements LoggerClient {
   @override
-  onLog({LogLevel level, String message, e, StackTrace s}) {
-    // TODO: implement onLog
-    return null;
+  onLog({
+    LogLevel level,
+    String message,
+    dynamic e,
+    StackTrace s,
+  }) {
+    final instance = Crashlytics.instance;
+    switch (level) {
+      case LogLevel.debug:
+        instance.log("[DEBUG] $message");
+        if (e != null) {
+          instance.log(e.toString());
+          instance.log(s ?? StackTrace.current.toString());
+        }
+        break;
+      case LogLevel.warning:
+        instance.log("[WARNING] $message");
+        if (e != null) {
+          instance.log(e.toString());
+          instance.log(s ?? StackTrace.current.toString());
+        }
+        break;
+      case LogLevel.error:
+        instance.log("[ERROR] $message");
+        // Always report a non-fatal for errors
+        if (e != null) {
+          instance.recordError(e, s);
+        } else {
+          instance.recordError(Exception(message), s);
+        }
+        break;
+    }
   }
-  // @override
-  // onLog({
-  //   LogLevel level,
-  //   String message,
-  //   dynamic e,
-  //   StackTrace s,
-  // }) {
-  //   final instance = Crashlytics.instance;
-  //   switch (level) {
-  //     case LogLevel.debug:
-  //       instance.log("[DEBUG] $message");
-  //       if (e != null) {
-  //         instance.log(e.toString());
-  //         instance.log(s ?? StackTrace.current.toString());
-  //       }
-  //       break;
-  //     case LogLevel.warning:
-  //       instance.log("[WARNING] $message");
-  //       if (e != null) {
-  //         instance.log(e.toString());
-  //         instance.log(s ?? StackTrace.current.toString());
-  //       }
-  //       break;
-  //     case LogLevel.error:
-  //       instance.log("[ERROR] $message");
-  //       // Always report a non-fatal for errors
-  //       if (e != null) {
-  //         instance.recordError(e, s);
-  //       } else {
-  //         instance.recordError(Exception(message), s);
-  //       }
-  //       break;
-  //   }
-  // }
 }

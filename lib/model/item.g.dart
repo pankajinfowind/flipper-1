@@ -18,6 +18,8 @@ class _$Item extends Item {
   @override
   final bool isActive;
   @override
+  final int quantity;
+  @override
   final int branchId;
   @override
   final int categoryId;
@@ -37,6 +39,7 @@ class _$Item extends Item {
       this.id,
       this.price,
       this.isActive,
+      this.quantity,
       this.branchId,
       this.categoryId,
       this.unitId,
@@ -70,6 +73,7 @@ class _$Item extends Item {
         id == other.id &&
         price == other.price &&
         isActive == other.isActive &&
+        quantity == other.quantity &&
         branchId == other.branchId &&
         categoryId == other.categoryId &&
         unitId == other.unitId &&
@@ -86,10 +90,14 @@ class _$Item extends Item {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc($jc(0, name.hashCode), color.hashCode),
-                                    id.hashCode),
-                                price.hashCode),
-                            isActive.hashCode),
+                                $jc(
+                                    $jc(
+                                        $jc($jc(0, name.hashCode),
+                                            color.hashCode),
+                                        id.hashCode),
+                                    price.hashCode),
+                                isActive.hashCode),
+                            quantity.hashCode),
                         branchId.hashCode),
                     categoryId.hashCode),
                 unitId.hashCode),
@@ -105,6 +113,7 @@ class _$Item extends Item {
           ..add('id', id)
           ..add('price', price)
           ..add('isActive', isActive)
+          ..add('quantity', quantity)
           ..add('branchId', branchId)
           ..add('categoryId', categoryId)
           ..add('unitId', unitId)
@@ -137,6 +146,10 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   bool get isActive => _$this._isActive;
   set isActive(bool isActive) => _$this._isActive = isActive;
 
+  int _quantity;
+  int get quantity => _$this._quantity;
+  set quantity(int quantity) => _$this._quantity = quantity;
+
   int _branchId;
   int get branchId => _$this._branchId;
   set branchId(int branchId) => _$this._branchId = branchId;
@@ -166,6 +179,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
       _id = _$v.id;
       _price = _$v.price;
       _isActive = _$v.isActive;
+      _quantity = _$v.quantity;
       _branchId = _$v.branchId;
       _categoryId = _$v.categoryId;
       _unitId = _$v.unitId;
@@ -198,6 +212,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
             id: id,
             price: price,
             isActive: isActive,
+            quantity: quantity,
             branchId: branchId,
             categoryId: categoryId,
             unitId: unitId,

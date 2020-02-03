@@ -23,7 +23,6 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
         distinct: true,
         converter: CommonViewModel.fromStore,
         builder: (context, vm) {
-          print(vm.itemVariations);
           return vm.itemVariations == 1
               ? SellSingleItem(
                   item: vm.itemVariations.toList(),
@@ -241,8 +240,12 @@ class SellMultipleItems extends StatelessWidget {
         title: vm.currentActiveSaleItem == null
             ? null
             : vm.currentActiveSaleItem.name +
-                " FRW " +
-                vm.currentActiveSaleItem.price.toString(),
+                " RWF " +
+                (vm.currentActiveSaleItem.price *
+                        (vm.currentIncrement == null || vm.currentIncrement == 0
+                            ? 1
+                            : vm.currentIncrement))
+                    .toString(),
         onPressedCallback: () {
           //todo: go ahead and insert the new quantity to a sale.
         },
@@ -276,7 +279,6 @@ class SellMultipleItems extends StatelessWidget {
             : vm.currentActiveSaleItem.name + " CHOOSE ONE"),
       ),
     );
-    print(items);
     for (var i = 0; i < items.length; i++) {
       if (items[i].isActive) {
         StoreProvider.of<AppState>(context).dispatch(
@@ -285,6 +287,9 @@ class SellMultipleItems extends StatelessWidget {
               (ui) => ui
                 ..id = items[i].id
                 ..name = vm.currentActiveSaleItem.name
+                ..categoryId = items[i].categoryId
+                ..unitId = items[i].unitId
+                ..color = items[i].color
                 ..branchId = items[i].branchId
                 ..price = items[i].price,
             ),

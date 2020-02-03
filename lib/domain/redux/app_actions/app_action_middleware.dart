@@ -375,6 +375,9 @@ void Function(
           ..name = variations[i].name
           ..isActive = variations[i].isActive
           ..count = variations[i].count
+          ..color = action.item.color
+          ..unitId = action.item.unitId
+          ..categoryId = action.item.categoryId
           ..price = variations[i].price
           ..branchId = variations[i].branchId),
       );

@@ -4,6 +4,7 @@ import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -253,7 +254,8 @@ class SellMultipleItems extends StatelessWidget {
                             : vm.currentIncrement))
                     .toString(),
         onPressedCallback: () {
-          //todo: go ahead and insert the new quantity to a sale.
+          //todo: show animation like square that item has been added to the current sale
+          Router.navigator.pop();
         },
       ),
       body: Column(

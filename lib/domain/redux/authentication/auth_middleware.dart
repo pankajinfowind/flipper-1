@@ -237,9 +237,13 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       }
       //end of setting current active business.
       //Logger.d("Successfully loaded the app");
-      store.dispatch(OnBusinessLoaded(business: businessList));
+      store.dispatch(
+        OnBusinessLoaded(business: businessList),
+      );
       final currentTab = tab == null ? 0 : tab.tab;
-      store.dispatch(CurrentTab(tab: currentTab));
+      store.dispatch(
+        CurrentTab(tab: currentTab),
+      );
       //branch
       if (businesses.length == 0) {
         Router.navigator.pushNamed(Router.signUpScreen);

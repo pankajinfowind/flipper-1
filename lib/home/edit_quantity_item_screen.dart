@@ -52,7 +52,13 @@ class SellSingleItem extends StatelessWidget {
         disableButton: false,
         showActionButton: true,
         actionButtonName: S.of(context).add,
-        title: item[0].name + " ${item[0].price} RWF",
+        title: "RWF " +
+            item[0].name +
+            (item[0].price *
+                    (vm.currentIncrement == null || vm.currentIncrement == 0
+                        ? 1
+                        : vm.currentIncrement))
+                .toString(),
         onPressedCallback: () {
           //todo: go ahead and insert the new quantity to a sale.
         },
@@ -229,7 +235,7 @@ class SellMultipleItems extends StatelessWidget {
   final Item activeItem;
   const SellMultipleItems({Key key, this.items, this.vm, this.activeItem})
       : super(key: key);
-
+  //todo: move the currency to settings table so it can be changed.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

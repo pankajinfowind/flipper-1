@@ -248,9 +248,7 @@ class SellMultipleItems extends StatelessWidget {
             ? null
             : vm.currentActiveSaleItem.name +
                 " RWF " +
-                ((vm.currentActiveSaleItem == null
-                            ? 1
-                            : vm.currentActiveSaleItem.price) *
+                (vm.currentActiveSaleItem.price *
                         (vm.currentIncrement == null || vm.currentIncrement == 0
                             ? 1
                             : vm.currentIncrement))

@@ -79,9 +79,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     List<CategoryTableData> categoryList =
         await generalRepository.getCategories(store);
 
-    List<ItemVariation> itemsVariations =
-        await generalRepository.getItemVariation(store);
-
     List<BranchTableData> branch = await branchRepository.getBranches(store);
 
     List<BusinessTableData> businesses =
@@ -141,6 +138,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
               ..unitId = i.unitId
               ..id = i.id
               ..color = i.color
+              ..price = 0
               ..categoryId = i.categoryId,
           ),
         ),

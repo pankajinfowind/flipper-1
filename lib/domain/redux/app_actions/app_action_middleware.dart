@@ -382,7 +382,19 @@ void Function(
           ..branchId = variations[i].branchId),
       );
     }
-    store.dispatch(CurrentActiveSaleItem(item: action.item));
+    store.dispatch(
+      CurrentActiveSaleItem(
+        item: Item((b) => b
+              ..id = action.item.id
+              ..color = action.item.color
+              ..branchId = action.item.branchId
+              ..name = action.item.name
+              ..categoryId = action.item.categoryId
+              ..unitId = action.item.unitId
+              ..price = 0 //set to zero will be changed on edit quantity.
+            ),
+      ),
+    );
     store.dispatch(ItemsVariation(items: items));
     Router.navigator.pushNamed(Router.editQuantityItemScreen);
   };

@@ -248,12 +248,12 @@ class SellMultipleItems extends StatelessWidget {
             ? null
             : vm.currentActiveSaleItem.name +
                 " RWF " +
-                (vm.currentActiveSaleItem.price ??
-                        1 *
-                            (vm.currentIncrement == null ||
-                                    vm.currentIncrement == 0
-                                ? 1
-                                : vm.currentIncrement))
+                ((vm.currentActiveSaleItem == null
+                            ? 1
+                            : vm.currentActiveSaleItem.price) *
+                        (vm.currentIncrement == null || vm.currentIncrement == 0
+                            ? 1
+                            : vm.currentIncrement))
                     .toString(),
         onPressedCallback: () {
           //todo: show animation like square that item has been added to the current sale

@@ -136,11 +136,11 @@ class controlSaleWidget extends StatelessWidget {
                 if (vm.currentIncrement - 1 == -1) {
                   return;
                 }
+                var incrementor = vm.currentIncrement - 1;
                 StoreProvider.of<AppState>(context).dispatch(
                   IncrementAction(
-                    increment: vm.currentIncrement == null
-                        ? 0
-                        : vm.currentIncrement - 1,
+                    increment:
+                        vm.currentIncrement == null ? 0 : incrementor - 1,
                   ),
                 );
                 cartItems.add(
@@ -152,7 +152,7 @@ class controlSaleWidget extends StatelessWidget {
                       ..unitId = vm.itemVariations[i].unitId
                       ..categoryId = vm.itemVariations[i].categoryId
                       ..color = vm.itemVariations[i].color
-                      ..count = vm.currentIncrement,
+                      ..count = incrementor,
                   ),
                 );
               }
@@ -169,11 +169,10 @@ class controlSaleWidget extends StatelessWidget {
           List<Item> cartItems = [];
           for (var i = 0; i < vm.itemVariations.length; i++) {
             if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
+              var incrementor = vm.currentIncrement + 1;
               StoreProvider.of<AppState>(context).dispatch(
                 IncrementAction(
-                  increment: vm.currentIncrement == null
-                      ? 0 + 1
-                      : vm.currentIncrement + 1,
+                  increment: vm.currentIncrement == null ? 0 + 1 : incrementor,
                 ),
               );
               cartItems.add(
@@ -185,7 +184,7 @@ class controlSaleWidget extends StatelessWidget {
                     ..unitId = vm.itemVariations[i].unitId
                     ..categoryId = vm.itemVariations[i].categoryId
                     ..color = vm.itemVariations[i].color
-                    ..count = vm.currentIncrement,
+                    ..count = incrementor,
                 ),
               );
             }

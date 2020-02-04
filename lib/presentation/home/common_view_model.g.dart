@@ -57,6 +57,10 @@ class _$CommonViewModel extends CommonViewModel {
   final Item currentActiveSaleItem;
   @override
   final Database database;
+  @override
+  final BuiltList<Cart> carts;
+  @override
+  final int cartQuantities;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -86,7 +90,9 @@ class _$CommonViewModel extends CommonViewModel {
       this.items,
       this.currentIncrement,
       this.currentActiveSaleItem,
-      this.database})
+      this.database,
+      this.carts,
+      this.cartQuantities})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -117,6 +123,9 @@ class _$CommonViewModel extends CommonViewModel {
     }
     if (database == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'database');
+    }
+    if (carts == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'carts');
     }
   }
 
@@ -156,7 +165,9 @@ class _$CommonViewModel extends CommonViewModel {
         items == other.items &&
         currentIncrement == other.currentIncrement &&
         currentActiveSaleItem == other.currentActiveSaleItem &&
-        database == other.database;
+        database == other.database &&
+        carts == other.carts &&
+        cartQuantities == other.cartQuantities;
   }
 
   @override
@@ -179,26 +190,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode),
-                                                                                currentBusiness.hashCode),
-                                                                            hasAction.hashCode),
-                                                                        branches.hashCode),
-                                                                    businesses.hashCode),
-                                                                appAction.hashCode),
-                                                            hint.hashCode),
-                                                        categoryName.hashCode),
-                                                    category.hashCode),
-                                                currentUnit.hashCode),
-                                            currentColor.hashCode),
-                                        currentDisable.hashCode),
-                                    currentBranch.hashCode),
-                                cartItems.hashCode),
-                            variations.hashCode),
-                        itemVariations.hashCode),
-                    items.hashCode),
-                currentIncrement.hashCode),
-            currentActiveSaleItem.hashCode),
-        database.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode),
+                                                                                branches.hashCode),
+                                                                            businesses.hashCode),
+                                                                        appAction.hashCode),
+                                                                    hint.hashCode),
+                                                                categoryName.hashCode),
+                                                            category.hashCode),
+                                                        currentUnit.hashCode),
+                                                    currentColor.hashCode),
+                                                currentDisable.hashCode),
+                                            currentBranch.hashCode),
+                                        cartItems.hashCode),
+                                    variations.hashCode),
+                                itemVariations.hashCode),
+                            items.hashCode),
+                        currentIncrement.hashCode),
+                    currentActiveSaleItem.hashCode),
+                database.hashCode),
+            carts.hashCode),
+        cartQuantities.hashCode));
   }
 
   @override
@@ -228,7 +239,9 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('items', items)
           ..add('currentIncrement', currentIncrement)
           ..add('currentActiveSaleItem', currentActiveSaleItem)
-          ..add('database', database))
+          ..add('database', database)
+          ..add('carts', carts)
+          ..add('cartQuantities', cartQuantities))
         .toString();
   }
 }
@@ -356,6 +369,15 @@ class CommonViewModelBuilder
   Database get database => _$this._database;
   set database(Database database) => _$this._database = database;
 
+  ListBuilder<Cart> _carts;
+  ListBuilder<Cart> get carts => _$this._carts ??= new ListBuilder<Cart>();
+  set carts(ListBuilder<Cart> carts) => _$this._carts = carts;
+
+  int _cartQuantities;
+  int get cartQuantities => _$this._cartQuantities;
+  set cartQuantities(int cartQuantities) =>
+      _$this._cartQuantities = cartQuantities;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -385,6 +407,8 @@ class CommonViewModelBuilder
       _currentIncrement = _$v.currentIncrement;
       _currentActiveSaleItem = _$v.currentActiveSaleItem?.toBuilder();
       _database = _$v.database;
+      _carts = _$v.carts?.toBuilder();
+      _cartQuantities = _$v.cartQuantities;
       _$v = null;
     }
     return this;
@@ -433,7 +457,9 @@ class CommonViewModelBuilder
               items: items.build(),
               currentIncrement: currentIncrement,
               currentActiveSaleItem: _currentActiveSaleItem?.build(),
-              database: database);
+              database: database,
+              carts: carts.build(),
+              cartQuantities: cartQuantities);
     } catch (_) {
       String _$failedField;
       try {
@@ -471,6 +497,9 @@ class CommonViewModelBuilder
 
         _$failedField = 'currentActiveSaleItem';
         _currentActiveSaleItem?.build();
+
+        _$failedField = 'carts';
+        carts.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

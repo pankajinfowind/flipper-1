@@ -5,6 +5,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/cart.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
@@ -80,6 +81,11 @@ abstract class CommonViewModel
 
   Database get database;
 
+  BuiltList<Cart> get carts;
+
+  @nullable
+  int get cartQuantities;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -138,6 +144,8 @@ abstract class CommonViewModel
           : store.state.currentActiveBusiness.toBuilder()
       ..database = store.state.database
       ..hint = _hasHint(store) == null ? null : store.state.hint.toBuilder()
+      ..carts = store.state.carts.toBuilder()
+      ..cartQuantities = store.state.cartQuantities
       ..branches = store.state.branches);
   }
 }

@@ -215,6 +215,13 @@ class SaveCart {}
 @immutable
 class Carts {
   final List<Cart> carts;
-  final int length;
-  Carts({this.carts, this.length});
+  final int quantity;
+  Carts({this.carts, this.quantity});
+}
+
+@immutable
+class CartQuantity {
+  final int quantity;
+
+  CartQuantity({this.quantity});
 }

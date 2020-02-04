@@ -44,13 +44,15 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 }
             });
 
+        StoreProvider.of<AppState>(context).dispatch(
+          Carts(carts: carts),
+        );
         for (var i = 0; i < carts.length; i++) {
           quantity += carts[i].count;
         }
         StoreProvider.of<AppState>(context).dispatch(
-          Carts(carts: carts, length: quantity),
+          CartQuantity(quantity: quantity),
         );
-
         return SafeArea(
           top: true,
           child: Container(
@@ -65,11 +67,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    vm.cartItems.length == 0
+                    vm.carts.length == 0
                         ? S.of(context).noSale
                         : S.of(context).currentSale +
                             "[" +
-                            vm.cartItems.length.toString() +
+                            vm.cartQuantities.toString() +
                             "]",
                     style: TextStyle(
                       color: Colors.black,

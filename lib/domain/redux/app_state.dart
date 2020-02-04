@@ -112,6 +112,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   BuiltList<Cart> get carts;
 
+  @nullable
+  int get cartQuantities;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 

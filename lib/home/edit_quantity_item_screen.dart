@@ -129,7 +129,7 @@ class controlSaleWidget extends StatelessWidget {
         icon: Icon(Icons.remove),
         onPressed: () {
           setPayableAmount(context, "decrement");
-          List<Item> items = [];
+          List<Item> cartItems = [];
           if (vm.cartItems.length > 0) {
             for (var i = 0; i < vm.cartItems.length; i++) {
               if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
@@ -143,7 +143,7 @@ class controlSaleWidget extends StatelessWidget {
                         : vm.currentIncrement - 1,
                   ),
                 );
-                items.add(
+                cartItems.add(
                   Item(
                     (b) => b
                       ..id = vm.itemVariations[i].id
@@ -158,7 +158,7 @@ class controlSaleWidget extends StatelessWidget {
               }
             }
             StoreProvider.of<AppState>(context).dispatch(
-              AddItemToCartAction(cartItems: items),
+              AddItemToCartAction(cartItems: cartItems),
             );
           }
         },
@@ -166,7 +166,6 @@ class controlSaleWidget extends StatelessWidget {
       trailing: IconButton(
         icon: Icon(Icons.add),
         onPressed: () {
-          // Logger.w(vm.itemVariations.toString());
           List<Item> cartItems = [];
           for (var i = 0; i < vm.itemVariations.length; i++) {
             if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
@@ -191,6 +190,7 @@ class controlSaleWidget extends StatelessWidget {
               );
             }
           }
+
           StoreProvider.of<AppState>(context).dispatch(
             AddItemToCartAction(cartItems: cartItems),
           );

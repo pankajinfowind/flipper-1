@@ -42,12 +42,14 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     stream: vm.database.cartDao.getCarts(),
                     builder:
                         (context, AsyncSnapshot<List<CartTableData>> snapshot) {
+                      var quantity =
+                          snapshot.data.fold(0, (a, b) => a + b.count);
                       return Text(
                         snapshot.data.length == 0
                             ? S.of(context).noSale
                             : S.of(context).currentSale +
                                 "[" +
-                                snapshot.data.length.toString() +
+                                quantity.toString() +
                                 "]",
                         style: TextStyle(
                           color: Colors.black,

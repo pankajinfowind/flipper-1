@@ -458,5 +458,6 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
         parentName: store.state.cartItems[0].parentName,
       ),
     );
+    Router.navigator.pop();
   };
 }

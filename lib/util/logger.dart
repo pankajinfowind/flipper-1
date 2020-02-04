@@ -95,7 +95,6 @@ abstract class LoggerClient {
 
 /// Debug logger that just prints to console
 class DebugLoggerClient implements LoggerClient {
-  //  static final dateFormat = DateFormat.yMd('en_US').parse("HH:mm:ss.SSS");
   static final dateFormat = DateFormat("HH:mm:ss.SSS", "en_US");
   String _timestamp() {
     return dateFormat.format(DateTime.now());

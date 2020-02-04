@@ -42,6 +42,10 @@ List<Widget> getItems(List<Item> itemList, context) {
   for (var i = 0; i < itemList.length; i++) {
     list.add(
       GestureDetector(
+        onTap: () {
+          StoreProvider.of<AppState>(context)
+              .dispatch(NeedItemVariation(item: itemList[i]));
+        },
         onLongPress: () {
           //todo play a small vibration to indicate the action.
           //send store to request more information then from that store navigate with all info we need

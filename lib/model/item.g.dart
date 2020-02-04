@@ -8,6 +8,8 @@ part of 'item.dart';
 
 class _$Item extends Item {
   @override
+  final String parentName;
+  @override
   final String name;
   @override
   final String color;
@@ -34,7 +36,8 @@ class _$Item extends Item {
       (new ItemBuilder()..update(updates)).build();
 
   _$Item._(
-      {this.name,
+      {this.parentName,
+      this.name,
       this.color,
       this.id,
       this.price,
@@ -68,6 +71,7 @@ class _$Item extends Item {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Item &&
+        parentName == other.parentName &&
         name == other.name &&
         color == other.color &&
         id == other.id &&
@@ -92,7 +96,9 @@ class _$Item extends Item {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, name.hashCode),
+                                        $jc(
+                                            $jc($jc(0, parentName.hashCode),
+                                                name.hashCode),
                                             color.hashCode),
                                         id.hashCode),
                                     price.hashCode),
@@ -108,6 +114,7 @@ class _$Item extends Item {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Item')
+          ..add('parentName', parentName)
           ..add('name', name)
           ..add('color', color)
           ..add('id', id)
@@ -125,6 +132,10 @@ class _$Item extends Item {
 
 class ItemBuilder implements Builder<Item, ItemBuilder> {
   _$Item _$v;
+
+  String _parentName;
+  String get parentName => _$this._parentName;
+  set parentName(String parentName) => _$this._parentName = parentName;
 
   String _name;
   String get name => _$this._name;
@@ -174,6 +185,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
 
   ItemBuilder get _$this {
     if (_$v != null) {
+      _parentName = _$v.parentName;
       _name = _$v.name;
       _color = _$v.color;
       _id = _$v.id;
@@ -207,6 +219,7 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   _$Item build() {
     final _$result = _$v ??
         new _$Item._(
+            parentName: parentName,
             name: name,
             color: color,
             id: id,

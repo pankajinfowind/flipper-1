@@ -128,7 +128,6 @@ class controlSaleWidget extends StatelessWidget {
       leading: IconButton(
         icon: Icon(Icons.remove),
         onPressed: () {
-          setPayableAmount(context, "decrement");
           List<Item> cartItems = [];
           if (vm.cartItems.length > 0) {
             for (var i = 0; i < vm.cartItems.length; i++) {
@@ -150,6 +149,7 @@ class controlSaleWidget extends StatelessWidget {
                       ..name = vm.itemVariations[i].name
                       ..branchId = vm.itemVariations[i].branchId
                       ..unitId = vm.itemVariations[i].unitId
+                      ..parentName = vm.currentActiveSaleItem.name
                       ..categoryId = vm.itemVariations[i].categoryId
                       ..color = vm.itemVariations[i].color
                       ..count = incrementor,
@@ -170,6 +170,7 @@ class controlSaleWidget extends StatelessWidget {
           for (var i = 0; i < vm.itemVariations.length; i++) {
             if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
               var incrementor = vm.currentIncrement + 1;
+
               StoreProvider.of<AppState>(context).dispatch(
                 IncrementAction(
                   increment: vm.currentIncrement == null ? 0 + 1 : incrementor,
@@ -182,6 +183,7 @@ class controlSaleWidget extends StatelessWidget {
                     ..name = vm.itemVariations[i].name
                     ..branchId = vm.itemVariations[i].branchId
                     ..unitId = vm.itemVariations[i].unitId
+                    ..parentName = vm.currentActiveSaleItem.name
                     ..categoryId = vm.itemVariations[i].categoryId
                     ..color = vm.itemVariations[i].color
                     ..count = incrementor,
@@ -225,7 +227,8 @@ class SellMultipleItems extends StatelessWidget {
                     .toString(),
         onPressedCallback: () {
           //todo: show animation like square that item has been added to the current sale
-          Router.navigator.pop();
+          _saveCart(vm);
+          // Router.navigator.pop();
         },
       ),
       body: Column(
@@ -259,6 +262,25 @@ class SellMultipleItems extends StatelessWidget {
     );
     for (var i = 0; i < items.length; i++) {
       if (items[i].isActive) {
+        List<Item> cartItems = [];
+        cartItems.add(
+          Item(
+            (updated) => updated
+              ..count = vm.currentIncrement == null ? 1 : vm.currentIncrement
+              ..id = items[i].id
+              ..parentName = items[i].parentName
+              ..branchId = items[i].branchId
+              ..name = items[i].name,
+          ),
+        );
+        StoreProvider.of<AppState>(context).dispatch(
+          AddItemToCartAction(cartItems: cartItems),
+        );
+        StoreProvider.of<AppState>(context).dispatch(
+          IncrementAction(
+            increment: vm.currentIncrement == null ? 1 : vm.currentIncrement,
+          ),
+        );
         StoreProvider.of<AppState>(context).dispatch(
           CurrentActiveSaleItem(
             item: Item(
@@ -282,6 +304,20 @@ class SellMultipleItems extends StatelessWidget {
                 item: items[i],
               ),
             );
+            List<Item> cartItems = [];
+            cartItems.add(
+              Item(
+                (updated) => updated
+                  ..count = vm.currentIncrement
+                  ..id = items[i].id
+                  ..parentName = items[i].parentName
+                  ..branchId = items[i].branchId
+                  ..name = items[i].name,
+              ),
+            );
+            StoreProvider.of<AppState>(context).dispatch(
+              AddItemToCartAction(cartItems: cartItems),
+            );
           },
           child: ListTile(
             contentPadding: EdgeInsets.fromLTRB(20, 20, 40, 10),
@@ -304,7 +340,7 @@ class SellMultipleItems extends StatelessWidget {
             trailing: Radio(
               value: items[i].id,
               groupValue: items[i].isActive ? items[i].id : 0,
-              onChanged: (int categoryId) {},
+              onChanged: (int item) {},
             ),
           ),
         ),
@@ -314,8 +350,8 @@ class SellMultipleItems extends StatelessWidget {
     list.add(controlSaleWidget(vm: vm));
     return list;
   }
-}
 
-void setPayableAmount(BuildContext context, String s) {
-  print("increase payable");
+  void _saveCart(CommonViewModel vm) {
+    //save the current cartItem;
+  }
 }

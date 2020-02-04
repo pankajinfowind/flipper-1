@@ -3,6 +3,9 @@ import 'package:built_value/built_value.dart';
 part 'item.g.dart';
 
 abstract class Item implements Built<Item, ItemBuilder> {
+  @nullable
+  String get parentName;
+
   String get name;
   @nullable
   String get color;

@@ -21,22 +21,19 @@ export class CurrentUser {
   }
 
   public userLoggedIn() {
-    return this.model.select(Tables.user).where('active', true).first<User>();
+    return this.model.active<User>(Tables.user);
   }
 
   public userHasBusiness() {
-    return this.model.select(Tables.business)
-      .where('active', true).first<Business>();
+    return this.model.active<Business>(Tables.business);
   }
 
   public activeMenu() {
-    return this.model.select(Tables.menu)
-      .where('active', true).first<Menu>();
+    return this.model.active<Menu>(Tables.menu);
   }
 
   public userById(id: number) {
-    return this.model.select(Tables.user)
-      .where('id', id).first<User>();
+    return this.model.find<User>(Tables.user, id);
   }
 
   public insertUser(user: User) {

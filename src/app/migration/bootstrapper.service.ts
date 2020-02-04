@@ -24,7 +24,7 @@ export class Bootstrapper {
   private insertDefaultData<T>(menus: T[], table: string, type = '') {
     menus.forEach(m => {
       const menu: any = m;
-      const finded = this.model.select(table).where('name', menu.name).first<T>();
+      const finded = this.model.findByFirst(table,'name', menu.name);
       if (!finded) {
         if (type === 'types') {
           const created: any = this.model.create(table, [{ name: menu.name }]);
@@ -54,8 +54,7 @@ export class Bootstrapper {
       this.injector.get(APP_CONFIG).forEach(config => {
         if (config.database.name && config.database.engine) {
           this.schema.createDb(config.database.name, config.database.engine);
-          if (config.tables.length > 0) {
-
+          if (config.tables && config.tables.length > 0) {
             config.tables.forEach(table => {
 
               if (table.query && table.name) {

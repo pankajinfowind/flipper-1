@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MenuEntries, MainModelService, Tables, Business, Branch, Menu } from '@enexus/flipper-components';
-import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
+import { Router } from '@angular/router';
 import { CurrentUser } from '../../core/guards/current-user';
 
 
@@ -15,9 +15,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   entry: MenuEntries = null;
   userToggledMenu: boolean;
-  business: Business[] = [];
-  branches: Branch[] = [];
-  menus: Branch[] = [];
 
   set entries(value: MenuEntries) {
     this.entry = value;
@@ -32,25 +29,12 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   loadMenusEntries() {
-    this.business = [];
-    this.branches = [];
-    this.menus = [];
-
-    this.model.loadAll<Business>(Tables.business).forEach(business => {
-      this.business.push(business as Business);
-    });
-    this.model.filters<Business>(Tables.branch, 'businessId', this.model.active<Business>(Tables.business).id as any).forEach(branch => {
-      this.branches.push(branch as Business);
-    });
-    this.model.loadAll<Business>(Tables.menu).forEach(menu => {
-      this.menus.push(menu as Menu);
-    });
 
     this.entries = {
-      businesses: this.business,
+      businesses: this.model.loadAll<Business>(Tables.business),
       user: this.currentUser.userLoggedIn(),
-      branches: this.branches,
-      menu: this.menus
+      branches: this.model.filters<Branch>(Tables.branch, 'businessId', this.model.active<Business>(Tables.business).id),
+      menu: this.model.loadAll<Menu>(Tables.menu)
     };
 
   }
@@ -67,7 +51,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   displaySwitchedBusiness(event: Business) {
 
     const activatedBusiness: Business = this.currentUser.userHasBusiness();
-
     activatedBusiness.active = false;
     event.active = true;
 
@@ -100,10 +83,12 @@ export class AdminComponent implements OnInit, OnDestroy {
       activatedMenu.active = false;
     }
 
+    if(updatedMenu && activatedMenu) {
+  this.activateOrDesactived<Menu>(Tables.menu, updatedMenu, updatedMenu.id);
+  this.activateOrDesactived<Menu>(Tables.menu, activatedMenu, activatedMenu.id);
+  this.router.navigate([event.router]);
+}
 
-    this.activateOrDesactived<Menu>(Tables.menu, updatedMenu, updatedMenu.id);
-    this.activateOrDesactived<Menu>(Tables.menu, activatedMenu, activatedMenu.id);
 
-    this.router.navigate([event.router]);
   }
 }

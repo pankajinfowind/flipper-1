@@ -17,6 +17,7 @@ import 'package:flipper/model/user.dart';
 import 'package:flipper/routes.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/flitter_color.dart';
+import 'package:flipper/util/logger.dart';
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:redux/redux.dart";
@@ -236,7 +237,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         }
       }
       //end of setting current active business.
-      //Logger.d("Successfully loaded the app");
+      Logger.d("Successfully loaded the app");
       store.dispatch(
         OnBusinessLoaded(business: businessList),
       );
@@ -268,7 +269,7 @@ void Function(
       await userRepository.logOut();
       store.dispatch(OnLogoutSuccess());
     } catch (e) {
-//      Logger.w("Failed logout", e: e);
+      Logger.w("Failed logout", e: e);
       store.dispatch(OnLogoutFail(e));
     }
   };

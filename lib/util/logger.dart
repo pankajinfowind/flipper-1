@@ -3,7 +3,6 @@ import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:redux/redux.dart";
 import "package:intl/intl.dart";
-// import "package:firebase_crashlytics/firebase_crashlytics.dart";
 
 /// Run this before starting app
 configureLogger() {
@@ -96,8 +95,8 @@ abstract class LoggerClient {
 
 /// Debug logger that just prints to console
 class DebugLoggerClient implements LoggerClient {
-  static final dateFormat = DateFormat("HH:mm:ss.SSS");
-
+  //  static final dateFormat = DateFormat.yMd('en_US').parse("HH:mm:ss.SSS");
+  static final dateFormat = DateFormat("HH:mm:ss.SSS", "en_US");
   String _timestamp() {
     return dateFormat.format(DateTime.now());
   }

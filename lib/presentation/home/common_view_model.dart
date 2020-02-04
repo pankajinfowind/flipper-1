@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
@@ -77,6 +78,8 @@ abstract class CommonViewModel
   @nullable
   Item get currentActiveSaleItem;
 
+  Database get database;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -133,6 +136,7 @@ abstract class CommonViewModel
       ..currentBusiness = store.state.currentActiveBusiness == null
           ? null
           : store.state.currentActiveBusiness.toBuilder()
+      ..database = store.state.database
       ..hint = _hasHint(store) == null ? null : store.state.hint.toBuilder()
       ..branches = store.state.branches);
   }

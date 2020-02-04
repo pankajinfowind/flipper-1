@@ -116,4 +116,27 @@ class GeneralRepository {
       {Store<AppState> store, int itemId}) {
     return store.state.database.variationDao.getItemVariations(itemId);
   }
+
+  Stream<List<CartTableData>> getCarts(Store<AppState> store) {
+    return store.state.database.cartDao.getCarts();
+  }
+
+  Future<bool> insertOrUpdateCart(
+      Store<AppState> store, CartTableData data) async {
+    //if item with the same variationId exist update content
+    CartTableData existingCart = await store.state.database.cartDao
+        .getExistingCartItem(data.variationId);
+    if (existingCart == null) {
+      store.state.database.cartDao.insert(data);
+      return true;
+    } else {
+      store.state.database.cartDao.updateCart(
+        data.copyWith(
+          id: existingCart.id,
+          count: existingCart.count,
+        ),
+      );
+      return true;
+    }
+  }
 }

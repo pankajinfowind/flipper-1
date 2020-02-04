@@ -55,6 +55,8 @@ class _$CommonViewModel extends CommonViewModel {
   final int currentIncrement;
   @override
   final Item currentActiveSaleItem;
+  @override
+  final Database database;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -83,7 +85,8 @@ class _$CommonViewModel extends CommonViewModel {
       this.itemVariations,
       this.items,
       this.currentIncrement,
-      this.currentActiveSaleItem})
+      this.currentActiveSaleItem,
+      this.database})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -111,6 +114,9 @@ class _$CommonViewModel extends CommonViewModel {
     }
     if (items == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'items');
+    }
+    if (database == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'database');
     }
   }
 
@@ -149,7 +155,8 @@ class _$CommonViewModel extends CommonViewModel {
         itemVariations == other.itemVariations &&
         items == other.items &&
         currentIncrement == other.currentIncrement &&
-        currentActiveSaleItem == other.currentActiveSaleItem;
+        currentActiveSaleItem == other.currentActiveSaleItem &&
+        database == other.database;
   }
 
   @override
@@ -172,26 +179,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode),
-                                                                                tab.hashCode),
-                                                                            currentBusiness.hashCode),
-                                                                        hasAction.hashCode),
-                                                                    branches.hashCode),
-                                                                businesses.hashCode),
-                                                            appAction.hashCode),
-                                                        hint.hashCode),
-                                                    categoryName.hashCode),
-                                                category.hashCode),
-                                            currentUnit.hashCode),
-                                        currentColor.hashCode),
-                                    currentDisable.hashCode),
-                                currentBranch.hashCode),
-                            cartItems.hashCode),
-                        variations.hashCode),
-                    itemVariations.hashCode),
-                items.hashCode),
-            currentIncrement.hashCode),
-        currentActiveSaleItem.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode),
+                                                                                currentBusiness.hashCode),
+                                                                            hasAction.hashCode),
+                                                                        branches.hashCode),
+                                                                    businesses.hashCode),
+                                                                appAction.hashCode),
+                                                            hint.hashCode),
+                                                        categoryName.hashCode),
+                                                    category.hashCode),
+                                                currentUnit.hashCode),
+                                            currentColor.hashCode),
+                                        currentDisable.hashCode),
+                                    currentBranch.hashCode),
+                                cartItems.hashCode),
+                            variations.hashCode),
+                        itemVariations.hashCode),
+                    items.hashCode),
+                currentIncrement.hashCode),
+            currentActiveSaleItem.hashCode),
+        database.hashCode));
   }
 
   @override
@@ -220,7 +227,8 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('itemVariations', itemVariations)
           ..add('items', items)
           ..add('currentIncrement', currentIncrement)
-          ..add('currentActiveSaleItem', currentActiveSaleItem))
+          ..add('currentActiveSaleItem', currentActiveSaleItem)
+          ..add('database', database))
         .toString();
   }
 }
@@ -344,6 +352,10 @@ class CommonViewModelBuilder
   set currentActiveSaleItem(ItemBuilder currentActiveSaleItem) =>
       _$this._currentActiveSaleItem = currentActiveSaleItem;
 
+  Database _database;
+  Database get database => _$this._database;
+  set database(Database database) => _$this._database = database;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -372,6 +384,7 @@ class CommonViewModelBuilder
       _items = _$v.items?.toBuilder();
       _currentIncrement = _$v.currentIncrement;
       _currentActiveSaleItem = _$v.currentActiveSaleItem?.toBuilder();
+      _database = _$v.database;
       _$v = null;
     }
     return this;
@@ -419,7 +432,8 @@ class CommonViewModelBuilder
               itemVariations: _itemVariations?.build(),
               items: items.build(),
               currentIncrement: currentIncrement,
-              currentActiveSaleItem: _currentActiveSaleItem?.build());
+              currentActiveSaleItem: _currentActiveSaleItem?.build(),
+              database: database);
     } catch (_) {
       String _$failedField;
       try {

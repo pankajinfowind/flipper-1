@@ -4,7 +4,6 @@ import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
-import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -227,7 +226,7 @@ class SellMultipleItems extends StatelessWidget {
                     .toString(),
         onPressedCallback: () {
           //todo: show animation like square that item has been added to the current sale
-          _saveCart(vm);
+          _saveCart(vm, context);
           // Router.navigator.pop();
         },
       ),
@@ -262,20 +261,6 @@ class SellMultipleItems extends StatelessWidget {
     );
     for (var i = 0; i < items.length; i++) {
       if (items[i].isActive) {
-        List<Item> cartItems = [];
-        cartItems.add(
-          Item(
-            (updated) => updated
-              ..count = vm.currentIncrement == null ? 1 : vm.currentIncrement
-              ..id = items[i].id
-              ..parentName = items[i].parentName
-              ..branchId = items[i].branchId
-              ..name = items[i].name,
-          ),
-        );
-        StoreProvider.of<AppState>(context).dispatch(
-          AddItemToCartAction(cartItems: cartItems),
-        );
         StoreProvider.of<AppState>(context).dispatch(
           IncrementAction(
             increment: vm.currentIncrement == null ? 1 : vm.currentIncrement,
@@ -294,6 +279,20 @@ class SellMultipleItems extends StatelessWidget {
                 ..price = items[i].price,
             ),
           ),
+        );
+        List<Item> cartItems = [];
+        cartItems.add(
+          Item(
+            (updated) => updated
+              ..count = vm.currentIncrement == null ? 1 : vm.currentIncrement
+              ..id = items[i].id
+              ..parentName = vm.currentActiveSaleItem.name
+              ..branchId = items[i].branchId
+              ..name = items[i].name,
+          ),
+        );
+        StoreProvider.of<AppState>(context).dispatch(
+          AddItemToCartAction(cartItems: cartItems),
         );
       }
       list.add(
@@ -351,7 +350,8 @@ class SellMultipleItems extends StatelessWidget {
     return list;
   }
 
-  void _saveCart(CommonViewModel vm) {
+  void _saveCart(CommonViewModel vm, context) {
     //save the current cartItem;
+    StoreProvider.of<AppState>(context).dispatch(SaveCart());
   }
 }

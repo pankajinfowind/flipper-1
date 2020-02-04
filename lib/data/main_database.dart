@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flipper/data/branch.dart';
 import 'package:flipper/data/business.dart';
 import 'package:flipper/data/business_user.dart';
+import 'package:flipper/data/cart.dart';
 import 'package:flipper/data/category_table.dart';
 import 'package:flipper/data/dao/branch_dao.dart';
 import 'package:flipper/data/dao/business_dao.dart';
+import 'package:flipper/data/dao/cart_dao.dart';
 import 'package:flipper/data/dao/category_dao.dart';
 import 'package:flipper/data/dao/history_dao.dart';
 import 'package:flipper/data/dao/item_dao.dart';
@@ -56,7 +58,8 @@ LazyDatabase _openConnection() {
   PriceTable,
   ItemTable,
   VariationTable,
-  HistoryTable
+  HistoryTable,
+  CartTable
 ], daos: [
   UserDao,
   TokenDao,
@@ -67,7 +70,8 @@ LazyDatabase _openConnection() {
   TabsDao,
   VariationDao,
   ItemDao,
-  HistoryDao
+  HistoryDao,
+  CartDao
 ])
 class Database extends _$Database {
   Database() : super(_openConnection());

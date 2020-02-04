@@ -207,3 +207,6 @@ class CurrentActiveSaleItem {
 
   CurrentActiveSaleItem({this.item});
 }
+
+@immutable
+class SaveCart {}

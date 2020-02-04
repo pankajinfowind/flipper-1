@@ -4403,6 +4403,428 @@ class $HistoryTableTable extends HistoryTable
   }
 }
 
+class CartTableData extends DataClass implements Insertable<CartTableData> {
+  final int id;
+  final int branchId;
+  final int count;
+  final int variationId;
+  final String parentName;
+  final String variationName;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  CartTableData(
+      {@required this.id,
+      this.branchId,
+      @required this.count,
+      this.variationId,
+      @required this.parentName,
+      @required this.variationName,
+      this.createdAt,
+      this.updatedAt});
+  factory CartTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    return CartTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      branchId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
+      count: intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
+      variationId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}variation_id']),
+      parentName: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}parent_name']),
+      variationName: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}variation_name']),
+      createdAt: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
+      updatedAt: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}updated_at']),
+    );
+  }
+  factory CartTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return CartTableData(
+      id: serializer.fromJson<int>(json['id']),
+      branchId: serializer.fromJson<int>(json['branchId']),
+      count: serializer.fromJson<int>(json['count']),
+      variationId: serializer.fromJson<int>(json['variationId']),
+      parentName: serializer.fromJson<String>(json['parentName']),
+      variationName: serializer.fromJson<String>(json['variationName']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'branchId': serializer.toJson<int>(branchId),
+      'count': serializer.toJson<int>(count),
+      'variationId': serializer.toJson<int>(variationId),
+      'parentName': serializer.toJson<String>(parentName),
+      'variationName': serializer.toJson<String>(variationName),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  @override
+  CartTableCompanion createCompanion(bool nullToAbsent) {
+    return CartTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      branchId: branchId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(branchId),
+      count:
+          count == null && nullToAbsent ? const Value.absent() : Value(count),
+      variationId: variationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(variationId),
+      parentName: parentName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentName),
+      variationName: variationName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(variationName),
+      createdAt: createdAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdAt),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
+    );
+  }
+
+  CartTableData copyWith(
+          {int id,
+          int branchId,
+          int count,
+          int variationId,
+          String parentName,
+          String variationName,
+          DateTime createdAt,
+          DateTime updatedAt}) =>
+      CartTableData(
+        id: id ?? this.id,
+        branchId: branchId ?? this.branchId,
+        count: count ?? this.count,
+        variationId: variationId ?? this.variationId,
+        parentName: parentName ?? this.parentName,
+        variationName: variationName ?? this.variationName,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CartTableData(')
+          ..write('id: $id, ')
+          ..write('branchId: $branchId, ')
+          ..write('count: $count, ')
+          ..write('variationId: $variationId, ')
+          ..write('parentName: $parentName, ')
+          ..write('variationName: $variationName, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          branchId.hashCode,
+          $mrjc(
+              count.hashCode,
+              $mrjc(
+                  variationId.hashCode,
+                  $mrjc(
+                      parentName.hashCode,
+                      $mrjc(variationName.hashCode,
+                          $mrjc(createdAt.hashCode, updatedAt.hashCode))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is CartTableData &&
+          other.id == this.id &&
+          other.branchId == this.branchId &&
+          other.count == this.count &&
+          other.variationId == this.variationId &&
+          other.parentName == this.parentName &&
+          other.variationName == this.variationName &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class CartTableCompanion extends UpdateCompanion<CartTableData> {
+  final Value<int> id;
+  final Value<int> branchId;
+  final Value<int> count;
+  final Value<int> variationId;
+  final Value<String> parentName;
+  final Value<String> variationName;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  const CartTableCompanion({
+    this.id = const Value.absent(),
+    this.branchId = const Value.absent(),
+    this.count = const Value.absent(),
+    this.variationId = const Value.absent(),
+    this.parentName = const Value.absent(),
+    this.variationName = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  });
+  CartTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.branchId = const Value.absent(),
+    @required int count,
+    this.variationId = const Value.absent(),
+    @required String parentName,
+    @required String variationName,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  })  : count = Value(count),
+        parentName = Value(parentName),
+        variationName = Value(variationName);
+  CartTableCompanion copyWith(
+      {Value<int> id,
+      Value<int> branchId,
+      Value<int> count,
+      Value<int> variationId,
+      Value<String> parentName,
+      Value<String> variationName,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt}) {
+    return CartTableCompanion(
+      id: id ?? this.id,
+      branchId: branchId ?? this.branchId,
+      count: count ?? this.count,
+      variationId: variationId ?? this.variationId,
+      parentName: parentName ?? this.parentName,
+      variationName: variationName ?? this.variationName,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+
+class $CartTableTable extends CartTable
+    with TableInfo<$CartTableTable, CartTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CartTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
+  GeneratedIntColumn _branchId;
+  @override
+  GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
+  GeneratedIntColumn _constructBranchId() {
+    return GeneratedIntColumn('branch_id', $tableName, true,
+        $customConstraints: 'NULL REFERENCES branch_table(id)');
+  }
+
+  final VerificationMeta _countMeta = const VerificationMeta('count');
+  GeneratedIntColumn _count;
+  @override
+  GeneratedIntColumn get count => _count ??= _constructCount();
+  GeneratedIntColumn _constructCount() {
+    return GeneratedIntColumn(
+      'count',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _variationIdMeta =
+      const VerificationMeta('variationId');
+  GeneratedIntColumn _variationId;
+  @override
+  GeneratedIntColumn get variationId =>
+      _variationId ??= _constructVariationId();
+  GeneratedIntColumn _constructVariationId() {
+    return GeneratedIntColumn('variation_id', $tableName, true,
+        $customConstraints: 'NULL REFERENCES variation_table(id)');
+  }
+
+  final VerificationMeta _parentNameMeta = const VerificationMeta('parentName');
+  GeneratedTextColumn _parentName;
+  @override
+  GeneratedTextColumn get parentName => _parentName ??= _constructParentName();
+  GeneratedTextColumn _constructParentName() {
+    return GeneratedTextColumn(
+      'parent_name',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _variationNameMeta =
+      const VerificationMeta('variationName');
+  GeneratedTextColumn _variationName;
+  @override
+  GeneratedTextColumn get variationName =>
+      _variationName ??= _constructVariationName();
+  GeneratedTextColumn _constructVariationName() {
+    return GeneratedTextColumn(
+      'variation_name',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
+  GeneratedDateTimeColumn _createdAt;
+  @override
+  GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
+  GeneratedDateTimeColumn _constructCreatedAt() {
+    return GeneratedDateTimeColumn('created_at', $tableName, true,
+        defaultValue: currentDateAndTime);
+  }
+
+  final VerificationMeta _updatedAtMeta = const VerificationMeta('updatedAt');
+  GeneratedDateTimeColumn _updatedAt;
+  @override
+  GeneratedDateTimeColumn get updatedAt => _updatedAt ??= _constructUpdatedAt();
+  GeneratedDateTimeColumn _constructUpdatedAt() {
+    return GeneratedDateTimeColumn(
+      'updated_at',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        branchId,
+        count,
+        variationId,
+        parentName,
+        variationName,
+        createdAt,
+        updatedAt
+      ];
+  @override
+  $CartTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'cart_table';
+  @override
+  final String actualTableName = 'cart_table';
+  @override
+  VerificationContext validateIntegrity(CartTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.branchId.present) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableValue(d.branchId.value, _branchIdMeta));
+    } else if (branchId.isRequired && isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    if (d.count.present) {
+      context.handle(
+          _countMeta, count.isAcceptableValue(d.count.value, _countMeta));
+    } else if (count.isRequired && isInserting) {
+      context.missing(_countMeta);
+    }
+    if (d.variationId.present) {
+      context.handle(_variationIdMeta,
+          variationId.isAcceptableValue(d.variationId.value, _variationIdMeta));
+    } else if (variationId.isRequired && isInserting) {
+      context.missing(_variationIdMeta);
+    }
+    if (d.parentName.present) {
+      context.handle(_parentNameMeta,
+          parentName.isAcceptableValue(d.parentName.value, _parentNameMeta));
+    } else if (parentName.isRequired && isInserting) {
+      context.missing(_parentNameMeta);
+    }
+    if (d.variationName.present) {
+      context.handle(
+          _variationNameMeta,
+          variationName.isAcceptableValue(
+              d.variationName.value, _variationNameMeta));
+    } else if (variationName.isRequired && isInserting) {
+      context.missing(_variationNameMeta);
+    }
+    if (d.createdAt.present) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableValue(d.createdAt.value, _createdAtMeta));
+    } else if (createdAt.isRequired && isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (d.updatedAt.present) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableValue(d.updatedAt.value, _updatedAtMeta));
+    } else if (updatedAt.isRequired && isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CartTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return CartTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(CartTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.branchId.present) {
+      map['branch_id'] = Variable<int, IntType>(d.branchId.value);
+    }
+    if (d.count.present) {
+      map['count'] = Variable<int, IntType>(d.count.value);
+    }
+    if (d.variationId.present) {
+      map['variation_id'] = Variable<int, IntType>(d.variationId.value);
+    }
+    if (d.parentName.present) {
+      map['parent_name'] = Variable<String, StringType>(d.parentName.value);
+    }
+    if (d.variationName.present) {
+      map['variation_name'] =
+          Variable<String, StringType>(d.variationName.value);
+    }
+    if (d.createdAt.present) {
+      map['created_at'] = Variable<DateTime, DateTimeType>(d.createdAt.value);
+    }
+    if (d.updatedAt.present) {
+      map['updated_at'] = Variable<DateTime, DateTimeType>(d.updatedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  $CartTableTable createAlias(String alias) {
+    return $CartTableTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $UserTableTable _userTable;
@@ -4436,6 +4858,8 @@ abstract class _$Database extends GeneratedDatabase {
   $HistoryTableTable _historyTable;
   $HistoryTableTable get historyTable =>
       _historyTable ??= $HistoryTableTable(this);
+  $CartTableTable _cartTable;
+  $CartTableTable get cartTable => _cartTable ??= $CartTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
@@ -4457,6 +4881,8 @@ abstract class _$Database extends GeneratedDatabase {
   ItemDao get itemDao => _itemDao ??= ItemDao(this as Database);
   HistoryDao _historyDao;
   HistoryDao get historyDao => _historyDao ??= HistoryDao(this as Database);
+  CartDao _cartDao;
+  CartDao get cartDao => _cartDao ??= CartDao(this as Database);
   @override
   List<TableInfo> get allTables => [
         userTable,
@@ -4471,6 +4897,7 @@ abstract class _$Database extends GeneratedDatabase {
         priceTable,
         itemTable,
         variationTable,
-        historyTable
+        historyTable,
+        cartTable
       ];
 }

@@ -367,6 +367,7 @@ void Function(
     List<VariationTableData> variations = await generalRepository.getVariations(
         store: store, itemId: action.item.id);
 
+    //variants
     List<Item> items = [];
     for (var i = 0; i < variations.length; i++) {
       items.add(
@@ -382,6 +383,7 @@ void Function(
           ..branchId = variations[i].branchId),
       );
     }
+    //the top parent variant item that stands for other sub variants.
     store.dispatch(
       CurrentActiveSaleItem(
         item: Item((b) => b

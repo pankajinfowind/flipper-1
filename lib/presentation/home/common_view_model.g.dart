@@ -44,7 +44,7 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final Branch currentBranch;
   @override
-  final BuiltList<Item> currentSales;
+  final BuiltList<Item> cartItems;
   @override
   final BuiltList<Variation> variations;
   @override
@@ -78,7 +78,7 @@ class _$CommonViewModel extends CommonViewModel {
       this.currentColor,
       this.currentDisable,
       this.currentBranch,
-      this.currentSales,
+      this.cartItems,
       this.variations,
       this.itemVariations,
       this.items,
@@ -106,8 +106,8 @@ class _$CommonViewModel extends CommonViewModel {
     if (hint == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hint');
     }
-    if (currentSales == null) {
-      throw new BuiltValueNullFieldError('CommonViewModel', 'currentSales');
+    if (cartItems == null) {
+      throw new BuiltValueNullFieldError('CommonViewModel', 'cartItems');
     }
     if (items == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'items');
@@ -144,7 +144,7 @@ class _$CommonViewModel extends CommonViewModel {
         currentColor == other.currentColor &&
         currentDisable == other.currentDisable &&
         currentBranch == other.currentBranch &&
-        currentSales == other.currentSales &&
+        cartItems == other.cartItems &&
         variations == other.variations &&
         itemVariations == other.itemVariations &&
         items == other.items &&
@@ -186,7 +186,7 @@ class _$CommonViewModel extends CommonViewModel {
                                         currentColor.hashCode),
                                     currentDisable.hashCode),
                                 currentBranch.hashCode),
-                            currentSales.hashCode),
+                            cartItems.hashCode),
                         variations.hashCode),
                     itemVariations.hashCode),
                 items.hashCode),
@@ -215,7 +215,7 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('currentColor', currentColor)
           ..add('currentDisable', currentDisable)
           ..add('currentBranch', currentBranch)
-          ..add('currentSales', currentSales)
+          ..add('cartItems', cartItems)
           ..add('variations', variations)
           ..add('itemVariations', itemVariations)
           ..add('items', items)
@@ -312,11 +312,10 @@ class CommonViewModelBuilder
   set currentBranch(BranchBuilder currentBranch) =>
       _$this._currentBranch = currentBranch;
 
-  ListBuilder<Item> _currentSales;
-  ListBuilder<Item> get currentSales =>
-      _$this._currentSales ??= new ListBuilder<Item>();
-  set currentSales(ListBuilder<Item> currentSales) =>
-      _$this._currentSales = currentSales;
+  ListBuilder<Item> _cartItems;
+  ListBuilder<Item> get cartItems =>
+      _$this._cartItems ??= new ListBuilder<Item>();
+  set cartItems(ListBuilder<Item> cartItems) => _$this._cartItems = cartItems;
 
   ListBuilder<Variation> _variations;
   ListBuilder<Variation> get variations =>
@@ -367,7 +366,7 @@ class CommonViewModelBuilder
       _currentColor = _$v.currentColor?.toBuilder();
       _currentDisable = _$v.currentDisable?.toBuilder();
       _currentBranch = _$v.currentBranch?.toBuilder();
-      _currentSales = _$v.currentSales?.toBuilder();
+      _cartItems = _$v.cartItems?.toBuilder();
       _variations = _$v.variations?.toBuilder();
       _itemVariations = _$v.itemVariations?.toBuilder();
       _items = _$v.items?.toBuilder();
@@ -415,7 +414,7 @@ class CommonViewModelBuilder
               currentColor: _currentColor?.build(),
               currentDisable: _currentDisable?.build(),
               currentBranch: _currentBranch?.build(),
-              currentSales: currentSales.build(),
+              cartItems: cartItems.build(),
               variations: _variations?.build(),
               itemVariations: _itemVariations?.build(),
               items: items.build(),
@@ -447,8 +446,8 @@ class CommonViewModelBuilder
         _currentDisable?.build();
         _$failedField = 'currentBranch';
         _currentBranch?.build();
-        _$failedField = 'currentSales';
-        currentSales.build();
+        _$failedField = 'cartItems';
+        cartItems.build();
         _$failedField = 'variations';
         _variations?.build();
         _$failedField = 'itemVariations';

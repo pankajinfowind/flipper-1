@@ -102,7 +102,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   Item get currentActiveSaleItem;
 
-  BuiltList<Item> get currentSales;
+  BuiltList<Item> get cartItems;
 
   BuiltList<Item> get items;
 
@@ -116,7 +116,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..database = Database()
     ..units = ListBuilder()
     ..categories = ListBuilder()
-    ..currentSales = ListBuilder()
+    ..cartItems = ListBuilder()
     ..variations = ListBuilder()
     ..itemVariations = ListBuilder()
     ..items = ListBuilder()

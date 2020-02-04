@@ -5,6 +5,7 @@ import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
+import 'package:flipper/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -26,11 +27,11 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
         builder: (context, vm) {
           return vm.itemVariations == 1
               ? SellSingleItem(
-                  item: vm.itemVariations.toList(),
+                  allSellableVariations: vm.itemVariations.toList(),
                   vm: vm,
                 )
               : SellMultipleItems(
-                  items: vm.itemVariations.toList(),
+                  variations: vm.itemVariations.toList(),
                   vm: vm,
                 );
         });
@@ -38,11 +39,11 @@ class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
 }
 
 class SellSingleItem extends StatelessWidget {
-  final List<Item> item;
+  final List<Item> allSellableVariations;
   final CommonViewModel vm;
   const SellSingleItem({
     Key key,
-    this.item,
+    this.allSellableVariations,
     this.vm,
   }) : super(key: key);
 
@@ -54,8 +55,8 @@ class SellSingleItem extends StatelessWidget {
         showActionButton: true,
         actionButtonName: S.of(context).add,
         title: "RWF " +
-            item[0].name +
-            (item[0].price *
+            allSellableVariations[0].name +
+            (allSellableVariations[0].price *
                     (vm.currentIncrement == null || vm.currentIncrement == 0
                         ? 1
                         : vm.currentIncrement))
@@ -71,7 +72,7 @@ class SellSingleItem extends StatelessWidget {
             padding: const EdgeInsets.all(18.0),
             child: Text(S.of(context).quantity),
           ),
-          controlSaleWidget(vm: vm, item: item),
+          controlSaleWidget(vm: vm),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Text(S.of(context).notes),
@@ -81,7 +82,7 @@ class SellSingleItem extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(18.0),
-            child: Text(item[0].description),
+            child: Text(allSellableVariations[0].description),
           )
         ],
       ),
@@ -90,17 +91,13 @@ class SellSingleItem extends StatelessWidget {
 }
 
 class controlSaleWidget extends StatelessWidget {
-  const controlSaleWidget({
-    Key key,
-    @required this.vm,
-    @required this.item,
-  }) : super(key: key);
+  const controlSaleWidget({Key key, @required this.vm}) : super(key: key);
 
   final CommonViewModel vm;
-  final List<Item> item;
 
   @override
   Widget build(BuildContext context) {
+    // print(vm.currentSales);
     return ListTile(
       dense: true,
       title: Center(
@@ -136,7 +133,7 @@ class controlSaleWidget extends StatelessWidget {
           List<Item> items = [];
           if (vm.currentSales.length > 0) {
             for (var i = 0; i < vm.currentSales.length; i++) {
-              if (vm.currentSales[i].id == item[0].id) {
+              if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
                 if (vm.currentIncrement - 1 == -1) {
                   return;
                 }
@@ -150,17 +147,15 @@ class controlSaleWidget extends StatelessWidget {
                 items.add(
                   Item(
                     (b) => b
-                      ..id = item[0].id
-                      ..name = item[0].name
-                      ..branchId = item[0].branchId
-                      ..unitId = item[0].unitId
-                      ..categoryId = item[0].categoryId
-                      ..color = item[0].color
+                      ..id = vm.itemVariations[i].id
+                      ..name = vm.itemVariations[i].name
+                      ..branchId = vm.itemVariations[i].branchId
+                      ..unitId = vm.itemVariations[i].unitId
+                      ..categoryId = vm.itemVariations[i].categoryId
+                      ..color = vm.itemVariations[i].color
                       ..count = vm.currentIncrement,
                   ),
                 );
-              } else {
-                items.add(vm.currentSales[i]);
               }
             }
             StoreProvider.of<AppState>(context).dispatch(
@@ -172,57 +167,36 @@ class controlSaleWidget extends StatelessWidget {
       trailing: IconButton(
         icon: Icon(Icons.add),
         onPressed: () {
+          // Logger.w(vm.itemVariations.toString());
           List<Item> items = [];
-          if (vm.currentSales.length == 0) {
-            items.add(
-              Item(
-                (b) => b
-                  ..id = item[0].id
-                  ..name = item[0].name
-                  ..branchId = item[0].branchId
-                  ..unitId = item[0].unitId
-                  ..categoryId = item[0].categoryId
-                  ..color = item[0].color
-                  ..count = 1,
-              ),
-            );
-            StoreProvider.of<AppState>(context).dispatch(
-              AddItemToCartAction(items: items),
-            );
-            StoreProvider.of<AppState>(context).dispatch(
-              IncrementAction(increment: 1),
-            );
-          } else {
-            for (var i = 0; i < vm.currentSales.length; i++) {
-              if (vm.currentSales[i].id == item[0].id) {
-                print(vm.currentIncrement);
-                StoreProvider.of<AppState>(context).dispatch(
-                  IncrementAction(
-                    increment: vm.currentIncrement == null
-                        ? 0 + 1
-                        : vm.currentIncrement + 1,
-                  ),
-                );
-                items.add(
-                  Item(
-                    (b) => b
-                      ..id = item[0].id
-                      ..name = item[0].name
-                      ..branchId = item[0].branchId
-                      ..unitId = item[0].unitId
-                      ..categoryId = item[0].categoryId
-                      ..color = item[0].color
-                      ..count = vm.currentIncrement,
-                  ),
-                );
-              } else {
-                items.add(vm.currentSales[i]);
-              }
+          for (var i = 0; i < vm.itemVariations.length; i++) {
+            Logger.w(vm.currentActiveSaleItem.id.toString());
+            Logger.w(vm.itemVariations[i].id.toString());
+            if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
+              StoreProvider.of<AppState>(context).dispatch(
+                IncrementAction(
+                  increment: vm.currentIncrement == null
+                      ? 0 + 1
+                      : vm.currentIncrement + 1,
+                ),
+              );
+              items.add(
+                Item(
+                  (b) => b
+                    ..id = vm.itemVariations[i].id
+                    ..name = vm.itemVariations[i].name
+                    ..branchId = vm.itemVariations[i].branchId
+                    ..unitId = vm.itemVariations[i].unitId
+                    ..categoryId = vm.itemVariations[i].categoryId
+                    ..color = vm.itemVariations[i].color
+                    ..count = vm.currentIncrement,
+                ),
+              );
             }
-            StoreProvider.of<AppState>(context).dispatch(
-              AddItemToCartAction(items: items),
-            );
           }
+          StoreProvider.of<AppState>(context).dispatch(
+            AddItemToCartAction(items: items),
+          );
         },
       ),
     );
@@ -230,11 +204,11 @@ class controlSaleWidget extends StatelessWidget {
 }
 
 class SellMultipleItems extends StatelessWidget {
-  final List<Item> items;
+  final List<Item> variations;
   final CommonViewModel vm;
 
   final Item activeItem;
-  const SellMultipleItems({Key key, this.items, this.vm, this.activeItem})
+  const SellMultipleItems({Key key, this.variations, this.vm, this.activeItem})
       : super(key: key);
   //todo: move the currency to settings table so it can be changed.
   @override
@@ -261,7 +235,7 @@ class SellMultipleItems extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: _itemsList(context, items),
+            child: _itemsList(context, variations),
           )
         ],
       ),
@@ -341,7 +315,7 @@ class SellMultipleItems extends StatelessWidget {
       );
     }
     //at the end add control ui
-    list.add(controlSaleWidget(vm: vm, item: items));
+    list.add(controlSaleWidget(vm: vm));
     return list;
   }
 }

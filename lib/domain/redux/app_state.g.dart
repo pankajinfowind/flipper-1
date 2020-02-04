@@ -66,7 +66,7 @@ class _$AppState extends AppState {
   @override
   final Item currentActiveSaleItem;
   @override
-  final BuiltList<Item> currentSales;
+  final BuiltList<Item> cartItems;
   @override
   final BuiltList<Item> items;
   @override
@@ -105,7 +105,7 @@ class _$AppState extends AppState {
       this.variations,
       this.itemVariations,
       this.currentActiveSaleItem,
-      this.currentSales,
+      this.cartItems,
       this.items,
       this.currentIncrement})
       : super._() {
@@ -121,8 +121,8 @@ class _$AppState extends AppState {
     if (itemVariations == null) {
       throw new BuiltValueNullFieldError('AppState', 'itemVariations');
     }
-    if (currentSales == null) {
-      throw new BuiltValueNullFieldError('AppState', 'currentSales');
+    if (cartItems == null) {
+      throw new BuiltValueNullFieldError('AppState', 'cartItems');
     }
     if (items == null) {
       throw new BuiltValueNullFieldError('AppState', 'items');
@@ -169,7 +169,7 @@ class _$AppState extends AppState {
         variations == other.variations &&
         itemVariations == other.itemVariations &&
         currentActiveSaleItem == other.currentActiveSaleItem &&
-        currentSales == other.currentSales &&
+        cartItems == other.cartItems &&
         items == other.items &&
         currentIncrement == other.currentIncrement;
   }
@@ -211,7 +211,7 @@ class _$AppState extends AppState {
                             variations.hashCode),
                         itemVariations.hashCode),
                     currentActiveSaleItem.hashCode),
-                currentSales.hashCode),
+                cartItems.hashCode),
             items.hashCode),
         currentIncrement.hashCode));
   }
@@ -248,7 +248,7 @@ class _$AppState extends AppState {
           ..add('variations', variations)
           ..add('itemVariations', itemVariations)
           ..add('currentActiveSaleItem', currentActiveSaleItem)
-          ..add('currentSales', currentSales)
+          ..add('cartItems', cartItems)
           ..add('items', items)
           ..add('currentIncrement', currentIncrement))
         .toString();
@@ -393,11 +393,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set currentActiveSaleItem(ItemBuilder currentActiveSaleItem) =>
       _$this._currentActiveSaleItem = currentActiveSaleItem;
 
-  ListBuilder<Item> _currentSales;
-  ListBuilder<Item> get currentSales =>
-      _$this._currentSales ??= new ListBuilder<Item>();
-  set currentSales(ListBuilder<Item> currentSales) =>
-      _$this._currentSales = currentSales;
+  ListBuilder<Item> _cartItems;
+  ListBuilder<Item> get cartItems =>
+      _$this._cartItems ??= new ListBuilder<Item>();
+  set cartItems(ListBuilder<Item> cartItems) => _$this._cartItems = cartItems;
 
   ListBuilder<Item> _items;
   ListBuilder<Item> get items => _$this._items ??= new ListBuilder<Item>();
@@ -441,7 +440,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _variations = _$v.variations?.toBuilder();
       _itemVariations = _$v.itemVariations?.toBuilder();
       _currentActiveSaleItem = _$v.currentActiveSaleItem?.toBuilder();
-      _currentSales = _$v.currentSales?.toBuilder();
+      _cartItems = _$v.cartItems?.toBuilder();
       _items = _$v.items?.toBuilder();
       _currentIncrement = _$v.currentIncrement;
       _$v = null;
@@ -497,7 +496,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               variations: variations.build(),
               itemVariations: itemVariations.build(),
               currentActiveSaleItem: _currentActiveSaleItem?.build(),
-              currentSales: currentSales.build(),
+              cartItems: cartItems.build(),
               items: items.build(),
               currentIncrement: currentIncrement);
     } catch (_) {
@@ -549,8 +548,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         itemVariations.build();
         _$failedField = 'currentActiveSaleItem';
         _currentActiveSaleItem?.build();
-        _$failedField = 'currentSales';
-        currentSales.build();
+        _$failedField = 'cartItems';
+        cartItems.build();
         _$failedField = 'items';
         items.build();
       } catch (e) {

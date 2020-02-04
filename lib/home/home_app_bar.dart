@@ -1,4 +1,4 @@
-import 'package:flipper/domain/redux/app_actions/actions.dart';
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/cart.dart';
@@ -24,35 +24,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
         List<Cart> carts = [];
-        var quantity;
-        vm.database.cartDao.getCarts().listen((cart) => {
-              for (var i = 0; i < cart.length; i++)
-                {
-                  carts.add(
-                    Cart(
-                      (c) => c
-                        ..id = cart[i].id
-                        ..variationId = cart[i].variationId
-                        ..count = cart[i].count
-                        ..variationName = cart[i].variationName
-                        ..createdAt = cart[i].createdAt ?? DateTime.now()
-                        ..updatedAt = cart[i].updatedAt
-                        ..branchId = cart[i].branchId
-                        ..parentName = cart[i].parentName,
-                    ),
-                  )
-                }
-            });
 
-        StoreProvider.of<AppState>(context).dispatch(
-          Carts(carts: carts),
-        );
-        for (var i = 0; i < carts.length; i++) {
-          quantity += carts[i].count;
-        }
-        StoreProvider.of<AppState>(context).dispatch(
-          CartQuantity(quantity: quantity),
-        );
         return SafeArea(
           top: true,
           child: Container(
@@ -62,21 +34,27 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 _hamburger(),
                 SizedBox(
                   height: 120,
-                  width: vm.cartItems.length == 0 ? 120 : 80,
+                  width: 80,
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    vm.carts.length == 0
-                        ? S.of(context).noSale
-                        : S.of(context).currentSale +
-                            "[" +
-                            vm.cartQuantities.toString() +
-                            "]",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
+                  child: StreamBuilder(
+                    stream: vm.database.cartDao.getCarts(),
+                    builder:
+                        (context, AsyncSnapshot<List<CartTableData>> snapshot) {
+                      return Text(
+                        snapshot.data.length == 0
+                            ? S.of(context).noSale
+                            : S.of(context).currentSale +
+                                "[" +
+                                snapshot.data.length.toString() +
+                                "]",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

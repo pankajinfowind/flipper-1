@@ -30,16 +30,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 _hamburger(),
                 SizedBox(
                   height: 120,
-                  width: vm.currentSales.length == 0 ? 120 : 80,
+                  width: vm.cartItems.length == 0 ? 120 : 80,
                 ),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    vm.currentSales.length == 0
+                    vm.cartItems.length == 0
                         ? S.of(context).noSale
                         : S.of(context).currentSale +
                             "[" +
-                            vm.currentSales.length.toString() +
+                            vm.cartItems.length.toString() +
                             "]",
                     style: TextStyle(
                       color: Colors.black,

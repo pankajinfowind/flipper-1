@@ -131,8 +131,8 @@ class controlSaleWidget extends StatelessWidget {
         onPressed: () {
           setPayableAmount(context, "decrement");
           List<Item> items = [];
-          if (vm.currentSales.length > 0) {
-            for (var i = 0; i < vm.currentSales.length; i++) {
+          if (vm.cartItems.length > 0) {
+            for (var i = 0; i < vm.cartItems.length; i++) {
               if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
                 if (vm.currentIncrement - 1 == -1) {
                   return;
@@ -159,7 +159,7 @@ class controlSaleWidget extends StatelessWidget {
               }
             }
             StoreProvider.of<AppState>(context).dispatch(
-              AddItemToCartAction(items: items),
+              AddItemToCartAction(cartItems: items),
             );
           }
         },
@@ -168,10 +168,8 @@ class controlSaleWidget extends StatelessWidget {
         icon: Icon(Icons.add),
         onPressed: () {
           // Logger.w(vm.itemVariations.toString());
-          List<Item> items = [];
+          List<Item> cartItems = [];
           for (var i = 0; i < vm.itemVariations.length; i++) {
-            Logger.w(vm.currentActiveSaleItem.id.toString());
-            Logger.w(vm.itemVariations[i].id.toString());
             if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
               StoreProvider.of<AppState>(context).dispatch(
                 IncrementAction(
@@ -180,7 +178,7 @@ class controlSaleWidget extends StatelessWidget {
                       : vm.currentIncrement + 1,
                 ),
               );
-              items.add(
+              cartItems.add(
                 Item(
                   (b) => b
                     ..id = vm.itemVariations[i].id
@@ -195,7 +193,7 @@ class controlSaleWidget extends StatelessWidget {
             }
           }
           StoreProvider.of<AppState>(context).dispatch(
-            AddItemToCartAction(items: items),
+            AddItemToCartAction(cartItems: cartItems),
           );
         },
       ),

@@ -109,7 +109,7 @@ AppState _onItemLoaded(AppState state, ItemLoaded action) {
 }
 
 AppState _onCurrentSale(AppState state, AddItemToCartAction action) {
-  return state.rebuild((a) => a..cartItems = ListBuilder(action.items));
+  return state.rebuild((a) => a..cartItems = ListBuilder(action.cartItems));
 }
 
 AppState _onIncrement(AppState state, IncrementAction action) {

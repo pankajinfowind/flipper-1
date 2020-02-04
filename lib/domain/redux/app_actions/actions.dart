@@ -161,9 +161,9 @@ class ItemLoaded {
 
 @immutable
 class AddItemToCartAction {
-  final List<Item> items;
+  final List<Item> cartItems;
 
-  AddItemToCartAction({this.items});
+  AddItemToCartAction({this.cartItems});
 }
 
 @immutable

@@ -21,6 +21,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
+        print(vm.cartItems);
         return SafeArea(
           top: true,
           child: Container(

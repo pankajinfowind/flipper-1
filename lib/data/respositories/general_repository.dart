@@ -127,13 +127,18 @@ class GeneralRepository {
     CartTableData existingCart = await store.state.database.cartDao
         .getExistingCartItem(data.variationId);
     if (existingCart == null) {
-      store.state.database.cartDao.insert(data);
+      store.state.database.cartDao.insert(
+        data.copyWith(
+          createdAt: DateTime.now(),
+        ),
+      );
       return true;
     } else {
       store.state.database.cartDao.updateCart(
         data.copyWith(
           id: existingCart.id,
           count: existingCart.count,
+          updatedAt: DateTime.now(),
         ),
       );
       return true;

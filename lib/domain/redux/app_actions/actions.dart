@@ -1,6 +1,7 @@
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/cart.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
@@ -210,3 +211,10 @@ class CurrentActiveSaleItem {
 
 @immutable
 class SaveCart {}
+
+@immutable
+class Carts {
+  final List<Cart> carts;
+  final int length;
+  Carts({this.carts, this.length});
+}

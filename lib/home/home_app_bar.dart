@@ -1,5 +1,7 @@
+import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
+import 'package:flipper/model/cart.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_redux/flutter_redux.dart';
@@ -21,6 +23,34 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
+        List<Cart> carts = [];
+        var quantity;
+        vm.database.cartDao.getCarts().listen((cart) => {
+              for (var i = 0; i < cart.length; i++)
+                {
+                  carts.add(
+                    Cart(
+                      (c) => c
+                        ..id = cart[i].id
+                        ..variationId = cart[i].variationId
+                        ..count = cart[i].count
+                        ..variationName = cart[i].variationName
+                        ..createdAt = cart[i].createdAt ?? DateTime.now()
+                        ..updatedAt = cart[i].updatedAt
+                        ..branchId = cart[i].branchId
+                        ..parentName = cart[i].parentName,
+                    ),
+                  )
+                }
+            });
+
+        for (var i = 0; i < carts.length; i++) {
+          quantity += carts[i].count;
+        }
+        StoreProvider.of<AppState>(context).dispatch(
+          Carts(carts: carts, length: quantity),
+        );
+
         return SafeArea(
           top: true,
           child: Container(

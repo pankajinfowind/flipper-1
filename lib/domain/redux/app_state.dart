@@ -4,6 +4,7 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/model/app_action.dart';
 import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
+import 'package:flipper/model/cart.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
@@ -109,12 +110,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   int get currentIncrement;
 
+  BuiltList<Cart> get carts;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 
   factory AppState.init() => AppState((a) => a
     ..database = Database()
     ..units = ListBuilder()
+    ..carts = ListBuilder()
     ..categories = ListBuilder()
     ..cartItems = ListBuilder()
     ..variations = ListBuilder()

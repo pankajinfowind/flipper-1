@@ -172,10 +172,7 @@ void Function(Store<AppState> store, PersistFocusedUnitAction action,
 void Function(Store<AppState> store, CreateUnit action, NextDispatcher next)
     _createCategory(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
-  return (store, action, next) {
-    print(store.state.currentActiveBusiness);
-    print(store.state.category);
-  };
+  return (store, action, next) {};
 }
 
 void Function(Store<AppState> store, dynamic action, NextDispatcher next)
@@ -354,7 +351,7 @@ void Function(Store<AppState> store, SwitchCategory action, NextDispatcher next)
         );
       }
     }
-    //print(categories);
+
     store.dispatch(CategoryAction(categories));
   };
 }

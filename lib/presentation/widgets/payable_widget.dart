@@ -41,6 +41,8 @@ class PayableWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 40),
+                  //todo: on crick of the charge should record active order as status=completed,
+                  //todo: clean carts so it does not appear
                   SizedBox(
                     height: 120,
                     child: FlatButton(

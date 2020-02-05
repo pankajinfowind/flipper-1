@@ -1,6 +1,7 @@
 import 'package:flipper/data/cart.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:moor/moor.dart';
+
 part 'cart_dao.g.dart';
 
 @UseDao(tables: [CartTable])
@@ -12,6 +13,7 @@ class CartDao extends DatabaseAccessor<Database> with _$CartDaoMixin {
   Future insert(Insertable<CartTableData> cart) =>
       into(db.cartTable).insert(cart);
 
+  //todo: should get carts by orderId so we avoid showing old carts
   Stream<List<CartTableData>> getCarts() => select(db.cartTable).watch();
 
   Future<CartTableData> getExistingCartItem(int variationId) {

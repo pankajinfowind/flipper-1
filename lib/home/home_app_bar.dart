@@ -1,7 +1,6 @@
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
-import 'package:flipper/model/cart.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
 import "package:flutter/material.dart";
@@ -24,8 +23,6 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
-        List<Cart> carts = [];
-
         return SafeArea(
           top: true,
           child: Container(
@@ -43,7 +40,6 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     stream: vm.database.cartDao.getCarts(),
                     builder:
                         (context, AsyncSnapshot<List<CartTableData>> snapshot) {
-                      print(snapshot.data);
                       var quantity = snapshot.data == null
                           ? 0
                           : snapshot.data.fold(0, (a, b) => a + b.count);

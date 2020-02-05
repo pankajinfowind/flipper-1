@@ -4407,6 +4407,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
   final int id;
   final int branchId;
   final int count;
+  final int orderId;
   final int price;
   final int variationId;
   final String parentName;
@@ -4415,10 +4416,11 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
   final DateTime updatedAt;
   CartTableData(
       {@required this.id,
-      this.branchId,
+      @required this.branchId,
       @required this.count,
+      @required this.orderId,
       @required this.price,
-      this.variationId,
+      @required this.variationId,
       @required this.parentName,
       @required this.variationName,
       this.createdAt,
@@ -4435,6 +4437,8 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
       branchId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
+      orderId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}order_id']),
       price: intType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
       variationId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}variation_id']),
@@ -4454,6 +4458,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
       id: serializer.fromJson<int>(json['id']),
       branchId: serializer.fromJson<int>(json['branchId']),
       count: serializer.fromJson<int>(json['count']),
+      orderId: serializer.fromJson<int>(json['orderId']),
       price: serializer.fromJson<int>(json['price']),
       variationId: serializer.fromJson<int>(json['variationId']),
       parentName: serializer.fromJson<String>(json['parentName']),
@@ -4469,6 +4474,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
       'id': serializer.toJson<int>(id),
       'branchId': serializer.toJson<int>(branchId),
       'count': serializer.toJson<int>(count),
+      'orderId': serializer.toJson<int>(orderId),
       'price': serializer.toJson<int>(price),
       'variationId': serializer.toJson<int>(variationId),
       'parentName': serializer.toJson<String>(parentName),
@@ -4487,6 +4493,9 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           : Value(branchId),
       count:
           count == null && nullToAbsent ? const Value.absent() : Value(count),
+      orderId: orderId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(orderId),
       price:
           price == null && nullToAbsent ? const Value.absent() : Value(price),
       variationId: variationId == null && nullToAbsent
@@ -4511,6 +4520,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           {int id,
           int branchId,
           int count,
+          int orderId,
           int price,
           int variationId,
           String parentName,
@@ -4521,6 +4531,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
         id: id ?? this.id,
         branchId: branchId ?? this.branchId,
         count: count ?? this.count,
+        orderId: orderId ?? this.orderId,
         price: price ?? this.price,
         variationId: variationId ?? this.variationId,
         parentName: parentName ?? this.parentName,
@@ -4534,6 +4545,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           ..write('id: $id, ')
           ..write('branchId: $branchId, ')
           ..write('count: $count, ')
+          ..write('orderId: $orderId, ')
           ..write('price: $price, ')
           ..write('variationId: $variationId, ')
           ..write('parentName: $parentName, ')
@@ -4552,15 +4564,17 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           $mrjc(
               count.hashCode,
               $mrjc(
-                  price.hashCode,
+                  orderId.hashCode,
                   $mrjc(
-                      variationId.hashCode,
+                      price.hashCode,
                       $mrjc(
-                          parentName.hashCode,
+                          variationId.hashCode,
                           $mrjc(
-                              variationName.hashCode,
-                              $mrjc(createdAt.hashCode,
-                                  updatedAt.hashCode)))))))));
+                              parentName.hashCode,
+                              $mrjc(
+                                  variationName.hashCode,
+                                  $mrjc(createdAt.hashCode,
+                                      updatedAt.hashCode))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -4568,6 +4582,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           other.id == this.id &&
           other.branchId == this.branchId &&
           other.count == this.count &&
+          other.orderId == this.orderId &&
           other.price == this.price &&
           other.variationId == this.variationId &&
           other.parentName == this.parentName &&
@@ -4580,6 +4595,7 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
   final Value<int> id;
   final Value<int> branchId;
   final Value<int> count;
+  final Value<int> orderId;
   final Value<int> price;
   final Value<int> variationId;
   final Value<String> parentName;
@@ -4590,6 +4606,7 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
     this.id = const Value.absent(),
     this.branchId = const Value.absent(),
     this.count = const Value.absent(),
+    this.orderId = const Value.absent(),
     this.price = const Value.absent(),
     this.variationId = const Value.absent(),
     this.parentName = const Value.absent(),
@@ -4599,22 +4616,27 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
   });
   CartTableCompanion.insert({
     this.id = const Value.absent(),
-    this.branchId = const Value.absent(),
+    @required int branchId,
     @required int count,
+    @required int orderId,
     @required int price,
-    this.variationId = const Value.absent(),
+    @required int variationId,
     @required String parentName,
     @required String variationName,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
-  })  : count = Value(count),
+  })  : branchId = Value(branchId),
+        count = Value(count),
+        orderId = Value(orderId),
         price = Value(price),
+        variationId = Value(variationId),
         parentName = Value(parentName),
         variationName = Value(variationName);
   CartTableCompanion copyWith(
       {Value<int> id,
       Value<int> branchId,
       Value<int> count,
+      Value<int> orderId,
       Value<int> price,
       Value<int> variationId,
       Value<String> parentName,
@@ -4625,6 +4647,7 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
       id: id ?? this.id,
       branchId: branchId ?? this.branchId,
       count: count ?? this.count,
+      orderId: orderId ?? this.orderId,
       price: price ?? this.price,
       variationId: variationId ?? this.variationId,
       parentName: parentName ?? this.parentName,
@@ -4654,7 +4677,7 @@ class $CartTableTable extends CartTable
   @override
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
-    return GeneratedIntColumn('branch_id', $tableName, true,
+    return GeneratedIntColumn('branch_id', $tableName, false,
         $customConstraints: 'NULL REFERENCES branch_table(id)');
   }
 
@@ -4668,6 +4691,15 @@ class $CartTableTable extends CartTable
       $tableName,
       false,
     );
+  }
+
+  final VerificationMeta _orderIdMeta = const VerificationMeta('orderId');
+  GeneratedIntColumn _orderId;
+  @override
+  GeneratedIntColumn get orderId => _orderId ??= _constructOrderId();
+  GeneratedIntColumn _constructOrderId() {
+    return GeneratedIntColumn('order_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES order_table(id)');
   }
 
   final VerificationMeta _priceMeta = const VerificationMeta('price');
@@ -4689,7 +4721,7 @@ class $CartTableTable extends CartTable
   GeneratedIntColumn get variationId =>
       _variationId ??= _constructVariationId();
   GeneratedIntColumn _constructVariationId() {
-    return GeneratedIntColumn('variation_id', $tableName, true,
+    return GeneratedIntColumn('variation_id', $tableName, false,
         $customConstraints: 'NULL REFERENCES variation_table(id)');
   }
 
@@ -4745,6 +4777,7 @@ class $CartTableTable extends CartTable
         id,
         branchId,
         count,
+        orderId,
         price,
         variationId,
         parentName,
@@ -4778,6 +4811,12 @@ class $CartTableTable extends CartTable
           _countMeta, count.isAcceptableValue(d.count.value, _countMeta));
     } else if (count.isRequired && isInserting) {
       context.missing(_countMeta);
+    }
+    if (d.orderId.present) {
+      context.handle(_orderIdMeta,
+          orderId.isAcceptableValue(d.orderId.value, _orderIdMeta));
+    } else if (orderId.isRequired && isInserting) {
+      context.missing(_orderIdMeta);
     }
     if (d.price.present) {
       context.handle(
@@ -4840,6 +4879,9 @@ class $CartTableTable extends CartTable
     if (d.count.present) {
       map['count'] = Variable<int, IntType>(d.count.value);
     }
+    if (d.orderId.present) {
+      map['order_id'] = Variable<int, IntType>(d.orderId.value);
+    }
     if (d.price.present) {
       map['price'] = Variable<int, IntType>(d.price.value);
     }
@@ -4865,6 +4907,924 @@ class $CartTableTable extends CartTable
   @override
   $CartTableTable createAlias(String alias) {
     return $CartTableTable(_db, alias);
+  }
+}
+
+class OrderTableData extends DataClass implements Insertable<OrderTableData> {
+  final int id;
+  final int userId;
+  final int branchId;
+  final int orderNUmber;
+  final int supplierId;
+  final int subTotal;
+  final int supplierInvoiceNumber;
+  final DateTime deliverDate;
+  final int taxRate;
+  final int taxAmount;
+  final int discountRate;
+  final int discountAmount;
+  final int cashReceived;
+  final int saleTotal;
+  final int customerSaving;
+  final int paymentId;
+  final String orderNote;
+  final String status;
+  final int customerChangeDue;
+  OrderTableData(
+      {@required this.id,
+      @required this.userId,
+      @required this.branchId,
+      this.orderNUmber,
+      this.supplierId,
+      this.subTotal,
+      this.supplierInvoiceNumber,
+      this.deliverDate,
+      this.taxRate,
+      this.taxAmount,
+      this.discountRate,
+      this.discountAmount,
+      this.cashReceived,
+      this.saleTotal,
+      this.customerSaving,
+      this.paymentId,
+      this.orderNote,
+      @required this.status,
+      this.customerChangeDue});
+  factory OrderTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return OrderTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      userId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
+      branchId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
+      orderNUmber: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}order_n_umber']),
+      supplierId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}supplier_id']),
+      subTotal:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}sub_total']),
+      supplierInvoiceNumber: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}supplier_invoice_number']),
+      deliverDate: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}deliver_date']),
+      taxRate:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}tax_rate']),
+      taxAmount:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}tax_amount']),
+      discountRate: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}discount_rate']),
+      discountAmount: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}discount_amount']),
+      cashReceived: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}cash_received']),
+      saleTotal:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}sale_total']),
+      customerSaving: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}customer_saving']),
+      paymentId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}payment_id']),
+      orderNote: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}order_note']),
+      status:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}status']),
+      customerChangeDue: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}customer_change_due']),
+    );
+  }
+  factory OrderTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return OrderTableData(
+      id: serializer.fromJson<int>(json['id']),
+      userId: serializer.fromJson<int>(json['userId']),
+      branchId: serializer.fromJson<int>(json['branchId']),
+      orderNUmber: serializer.fromJson<int>(json['orderNUmber']),
+      supplierId: serializer.fromJson<int>(json['supplierId']),
+      subTotal: serializer.fromJson<int>(json['subTotal']),
+      supplierInvoiceNumber:
+          serializer.fromJson<int>(json['supplierInvoiceNumber']),
+      deliverDate: serializer.fromJson<DateTime>(json['deliverDate']),
+      taxRate: serializer.fromJson<int>(json['taxRate']),
+      taxAmount: serializer.fromJson<int>(json['taxAmount']),
+      discountRate: serializer.fromJson<int>(json['discountRate']),
+      discountAmount: serializer.fromJson<int>(json['discountAmount']),
+      cashReceived: serializer.fromJson<int>(json['cashReceived']),
+      saleTotal: serializer.fromJson<int>(json['saleTotal']),
+      customerSaving: serializer.fromJson<int>(json['customerSaving']),
+      paymentId: serializer.fromJson<int>(json['paymentId']),
+      orderNote: serializer.fromJson<String>(json['orderNote']),
+      status: serializer.fromJson<String>(json['status']),
+      customerChangeDue: serializer.fromJson<int>(json['customerChangeDue']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'userId': serializer.toJson<int>(userId),
+      'branchId': serializer.toJson<int>(branchId),
+      'orderNUmber': serializer.toJson<int>(orderNUmber),
+      'supplierId': serializer.toJson<int>(supplierId),
+      'subTotal': serializer.toJson<int>(subTotal),
+      'supplierInvoiceNumber': serializer.toJson<int>(supplierInvoiceNumber),
+      'deliverDate': serializer.toJson<DateTime>(deliverDate),
+      'taxRate': serializer.toJson<int>(taxRate),
+      'taxAmount': serializer.toJson<int>(taxAmount),
+      'discountRate': serializer.toJson<int>(discountRate),
+      'discountAmount': serializer.toJson<int>(discountAmount),
+      'cashReceived': serializer.toJson<int>(cashReceived),
+      'saleTotal': serializer.toJson<int>(saleTotal),
+      'customerSaving': serializer.toJson<int>(customerSaving),
+      'paymentId': serializer.toJson<int>(paymentId),
+      'orderNote': serializer.toJson<String>(orderNote),
+      'status': serializer.toJson<String>(status),
+      'customerChangeDue': serializer.toJson<int>(customerChangeDue),
+    };
+  }
+
+  @override
+  OrderTableCompanion createCompanion(bool nullToAbsent) {
+    return OrderTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      branchId: branchId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(branchId),
+      orderNUmber: orderNUmber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(orderNUmber),
+      supplierId: supplierId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(supplierId),
+      subTotal: subTotal == null && nullToAbsent
+          ? const Value.absent()
+          : Value(subTotal),
+      supplierInvoiceNumber: supplierInvoiceNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(supplierInvoiceNumber),
+      deliverDate: deliverDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deliverDate),
+      taxRate: taxRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxRate),
+      taxAmount: taxAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxAmount),
+      discountRate: discountRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountRate),
+      discountAmount: discountAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountAmount),
+      cashReceived: cashReceived == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cashReceived),
+      saleTotal: saleTotal == null && nullToAbsent
+          ? const Value.absent()
+          : Value(saleTotal),
+      customerSaving: customerSaving == null && nullToAbsent
+          ? const Value.absent()
+          : Value(customerSaving),
+      paymentId: paymentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(paymentId),
+      orderNote: orderNote == null && nullToAbsent
+          ? const Value.absent()
+          : Value(orderNote),
+      status:
+          status == null && nullToAbsent ? const Value.absent() : Value(status),
+      customerChangeDue: customerChangeDue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(customerChangeDue),
+    );
+  }
+
+  OrderTableData copyWith(
+          {int id,
+          int userId,
+          int branchId,
+          int orderNUmber,
+          int supplierId,
+          int subTotal,
+          int supplierInvoiceNumber,
+          DateTime deliverDate,
+          int taxRate,
+          int taxAmount,
+          int discountRate,
+          int discountAmount,
+          int cashReceived,
+          int saleTotal,
+          int customerSaving,
+          int paymentId,
+          String orderNote,
+          String status,
+          int customerChangeDue}) =>
+      OrderTableData(
+        id: id ?? this.id,
+        userId: userId ?? this.userId,
+        branchId: branchId ?? this.branchId,
+        orderNUmber: orderNUmber ?? this.orderNUmber,
+        supplierId: supplierId ?? this.supplierId,
+        subTotal: subTotal ?? this.subTotal,
+        supplierInvoiceNumber:
+            supplierInvoiceNumber ?? this.supplierInvoiceNumber,
+        deliverDate: deliverDate ?? this.deliverDate,
+        taxRate: taxRate ?? this.taxRate,
+        taxAmount: taxAmount ?? this.taxAmount,
+        discountRate: discountRate ?? this.discountRate,
+        discountAmount: discountAmount ?? this.discountAmount,
+        cashReceived: cashReceived ?? this.cashReceived,
+        saleTotal: saleTotal ?? this.saleTotal,
+        customerSaving: customerSaving ?? this.customerSaving,
+        paymentId: paymentId ?? this.paymentId,
+        orderNote: orderNote ?? this.orderNote,
+        status: status ?? this.status,
+        customerChangeDue: customerChangeDue ?? this.customerChangeDue,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('OrderTableData(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('branchId: $branchId, ')
+          ..write('orderNUmber: $orderNUmber, ')
+          ..write('supplierId: $supplierId, ')
+          ..write('subTotal: $subTotal, ')
+          ..write('supplierInvoiceNumber: $supplierInvoiceNumber, ')
+          ..write('deliverDate: $deliverDate, ')
+          ..write('taxRate: $taxRate, ')
+          ..write('taxAmount: $taxAmount, ')
+          ..write('discountRate: $discountRate, ')
+          ..write('discountAmount: $discountAmount, ')
+          ..write('cashReceived: $cashReceived, ')
+          ..write('saleTotal: $saleTotal, ')
+          ..write('customerSaving: $customerSaving, ')
+          ..write('paymentId: $paymentId, ')
+          ..write('orderNote: $orderNote, ')
+          ..write('status: $status, ')
+          ..write('customerChangeDue: $customerChangeDue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          userId.hashCode,
+          $mrjc(
+              branchId.hashCode,
+              $mrjc(
+                  orderNUmber.hashCode,
+                  $mrjc(
+                      supplierId.hashCode,
+                      $mrjc(
+                          subTotal.hashCode,
+                          $mrjc(
+                              supplierInvoiceNumber.hashCode,
+                              $mrjc(
+                                  deliverDate.hashCode,
+                                  $mrjc(
+                                      taxRate.hashCode,
+                                      $mrjc(
+                                          taxAmount.hashCode,
+                                          $mrjc(
+                                              discountRate.hashCode,
+                                              $mrjc(
+                                                  discountAmount.hashCode,
+                                                  $mrjc(
+                                                      cashReceived.hashCode,
+                                                      $mrjc(
+                                                          saleTotal.hashCode,
+                                                          $mrjc(
+                                                              customerSaving
+                                                                  .hashCode,
+                                                              $mrjc(
+                                                                  paymentId
+                                                                      .hashCode,
+                                                                  $mrjc(
+                                                                      orderNote
+                                                                          .hashCode,
+                                                                      $mrjc(
+                                                                          status
+                                                                              .hashCode,
+                                                                          customerChangeDue
+                                                                              .hashCode)))))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is OrderTableData &&
+          other.id == this.id &&
+          other.userId == this.userId &&
+          other.branchId == this.branchId &&
+          other.orderNUmber == this.orderNUmber &&
+          other.supplierId == this.supplierId &&
+          other.subTotal == this.subTotal &&
+          other.supplierInvoiceNumber == this.supplierInvoiceNumber &&
+          other.deliverDate == this.deliverDate &&
+          other.taxRate == this.taxRate &&
+          other.taxAmount == this.taxAmount &&
+          other.discountRate == this.discountRate &&
+          other.discountAmount == this.discountAmount &&
+          other.cashReceived == this.cashReceived &&
+          other.saleTotal == this.saleTotal &&
+          other.customerSaving == this.customerSaving &&
+          other.paymentId == this.paymentId &&
+          other.orderNote == this.orderNote &&
+          other.status == this.status &&
+          other.customerChangeDue == this.customerChangeDue);
+}
+
+class OrderTableCompanion extends UpdateCompanion<OrderTableData> {
+  final Value<int> id;
+  final Value<int> userId;
+  final Value<int> branchId;
+  final Value<int> orderNUmber;
+  final Value<int> supplierId;
+  final Value<int> subTotal;
+  final Value<int> supplierInvoiceNumber;
+  final Value<DateTime> deliverDate;
+  final Value<int> taxRate;
+  final Value<int> taxAmount;
+  final Value<int> discountRate;
+  final Value<int> discountAmount;
+  final Value<int> cashReceived;
+  final Value<int> saleTotal;
+  final Value<int> customerSaving;
+  final Value<int> paymentId;
+  final Value<String> orderNote;
+  final Value<String> status;
+  final Value<int> customerChangeDue;
+  const OrderTableCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.branchId = const Value.absent(),
+    this.orderNUmber = const Value.absent(),
+    this.supplierId = const Value.absent(),
+    this.subTotal = const Value.absent(),
+    this.supplierInvoiceNumber = const Value.absent(),
+    this.deliverDate = const Value.absent(),
+    this.taxRate = const Value.absent(),
+    this.taxAmount = const Value.absent(),
+    this.discountRate = const Value.absent(),
+    this.discountAmount = const Value.absent(),
+    this.cashReceived = const Value.absent(),
+    this.saleTotal = const Value.absent(),
+    this.customerSaving = const Value.absent(),
+    this.paymentId = const Value.absent(),
+    this.orderNote = const Value.absent(),
+    this.status = const Value.absent(),
+    this.customerChangeDue = const Value.absent(),
+  });
+  OrderTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required int userId,
+    @required int branchId,
+    this.orderNUmber = const Value.absent(),
+    this.supplierId = const Value.absent(),
+    this.subTotal = const Value.absent(),
+    this.supplierInvoiceNumber = const Value.absent(),
+    this.deliverDate = const Value.absent(),
+    this.taxRate = const Value.absent(),
+    this.taxAmount = const Value.absent(),
+    this.discountRate = const Value.absent(),
+    this.discountAmount = const Value.absent(),
+    this.cashReceived = const Value.absent(),
+    this.saleTotal = const Value.absent(),
+    this.customerSaving = const Value.absent(),
+    this.paymentId = const Value.absent(),
+    this.orderNote = const Value.absent(),
+    this.status = const Value.absent(),
+    this.customerChangeDue = const Value.absent(),
+  })  : userId = Value(userId),
+        branchId = Value(branchId);
+  OrderTableCompanion copyWith(
+      {Value<int> id,
+      Value<int> userId,
+      Value<int> branchId,
+      Value<int> orderNUmber,
+      Value<int> supplierId,
+      Value<int> subTotal,
+      Value<int> supplierInvoiceNumber,
+      Value<DateTime> deliverDate,
+      Value<int> taxRate,
+      Value<int> taxAmount,
+      Value<int> discountRate,
+      Value<int> discountAmount,
+      Value<int> cashReceived,
+      Value<int> saleTotal,
+      Value<int> customerSaving,
+      Value<int> paymentId,
+      Value<String> orderNote,
+      Value<String> status,
+      Value<int> customerChangeDue}) {
+    return OrderTableCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      branchId: branchId ?? this.branchId,
+      orderNUmber: orderNUmber ?? this.orderNUmber,
+      supplierId: supplierId ?? this.supplierId,
+      subTotal: subTotal ?? this.subTotal,
+      supplierInvoiceNumber:
+          supplierInvoiceNumber ?? this.supplierInvoiceNumber,
+      deliverDate: deliverDate ?? this.deliverDate,
+      taxRate: taxRate ?? this.taxRate,
+      taxAmount: taxAmount ?? this.taxAmount,
+      discountRate: discountRate ?? this.discountRate,
+      discountAmount: discountAmount ?? this.discountAmount,
+      cashReceived: cashReceived ?? this.cashReceived,
+      saleTotal: saleTotal ?? this.saleTotal,
+      customerSaving: customerSaving ?? this.customerSaving,
+      paymentId: paymentId ?? this.paymentId,
+      orderNote: orderNote ?? this.orderNote,
+      status: status ?? this.status,
+      customerChangeDue: customerChangeDue ?? this.customerChangeDue,
+    );
+  }
+}
+
+class $OrderTableTable extends OrderTable
+    with TableInfo<$OrderTableTable, OrderTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $OrderTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  GeneratedIntColumn _userId;
+  @override
+  GeneratedIntColumn get userId => _userId ??= _constructUserId();
+  GeneratedIntColumn _constructUserId() {
+    return GeneratedIntColumn('user_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES user_table(id)');
+  }
+
+  final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
+  GeneratedIntColumn _branchId;
+  @override
+  GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
+  GeneratedIntColumn _constructBranchId() {
+    return GeneratedIntColumn('branch_id', $tableName, false,
+        $customConstraints: 'NULL REFERENCES branch_table(id)');
+  }
+
+  final VerificationMeta _orderNUmberMeta =
+      const VerificationMeta('orderNUmber');
+  GeneratedIntColumn _orderNUmber;
+  @override
+  GeneratedIntColumn get orderNUmber =>
+      _orderNUmber ??= _constructOrderNUmber();
+  GeneratedIntColumn _constructOrderNUmber() {
+    return GeneratedIntColumn(
+      'order_n_umber',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _supplierIdMeta = const VerificationMeta('supplierId');
+  GeneratedIntColumn _supplierId;
+  @override
+  GeneratedIntColumn get supplierId => _supplierId ??= _constructSupplierId();
+  GeneratedIntColumn _constructSupplierId() {
+    return GeneratedIntColumn(
+      'supplier_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _subTotalMeta = const VerificationMeta('subTotal');
+  GeneratedIntColumn _subTotal;
+  @override
+  GeneratedIntColumn get subTotal => _subTotal ??= _constructSubTotal();
+  GeneratedIntColumn _constructSubTotal() {
+    return GeneratedIntColumn(
+      'sub_total',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _supplierInvoiceNumberMeta =
+      const VerificationMeta('supplierInvoiceNumber');
+  GeneratedIntColumn _supplierInvoiceNumber;
+  @override
+  GeneratedIntColumn get supplierInvoiceNumber =>
+      _supplierInvoiceNumber ??= _constructSupplierInvoiceNumber();
+  GeneratedIntColumn _constructSupplierInvoiceNumber() {
+    return GeneratedIntColumn(
+      'supplier_invoice_number',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _deliverDateMeta =
+      const VerificationMeta('deliverDate');
+  GeneratedDateTimeColumn _deliverDate;
+  @override
+  GeneratedDateTimeColumn get deliverDate =>
+      _deliverDate ??= _constructDeliverDate();
+  GeneratedDateTimeColumn _constructDeliverDate() {
+    return GeneratedDateTimeColumn(
+      'deliver_date',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _taxRateMeta = const VerificationMeta('taxRate');
+  GeneratedIntColumn _taxRate;
+  @override
+  GeneratedIntColumn get taxRate => _taxRate ??= _constructTaxRate();
+  GeneratedIntColumn _constructTaxRate() {
+    return GeneratedIntColumn(
+      'tax_rate',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _taxAmountMeta = const VerificationMeta('taxAmount');
+  GeneratedIntColumn _taxAmount;
+  @override
+  GeneratedIntColumn get taxAmount => _taxAmount ??= _constructTaxAmount();
+  GeneratedIntColumn _constructTaxAmount() {
+    return GeneratedIntColumn(
+      'tax_amount',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _discountRateMeta =
+      const VerificationMeta('discountRate');
+  GeneratedIntColumn _discountRate;
+  @override
+  GeneratedIntColumn get discountRate =>
+      _discountRate ??= _constructDiscountRate();
+  GeneratedIntColumn _constructDiscountRate() {
+    return GeneratedIntColumn(
+      'discount_rate',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _discountAmountMeta =
+      const VerificationMeta('discountAmount');
+  GeneratedIntColumn _discountAmount;
+  @override
+  GeneratedIntColumn get discountAmount =>
+      _discountAmount ??= _constructDiscountAmount();
+  GeneratedIntColumn _constructDiscountAmount() {
+    return GeneratedIntColumn(
+      'discount_amount',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cashReceivedMeta =
+      const VerificationMeta('cashReceived');
+  GeneratedIntColumn _cashReceived;
+  @override
+  GeneratedIntColumn get cashReceived =>
+      _cashReceived ??= _constructCashReceived();
+  GeneratedIntColumn _constructCashReceived() {
+    return GeneratedIntColumn(
+      'cash_received',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _saleTotalMeta = const VerificationMeta('saleTotal');
+  GeneratedIntColumn _saleTotal;
+  @override
+  GeneratedIntColumn get saleTotal => _saleTotal ??= _constructSaleTotal();
+  GeneratedIntColumn _constructSaleTotal() {
+    return GeneratedIntColumn(
+      'sale_total',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _customerSavingMeta =
+      const VerificationMeta('customerSaving');
+  GeneratedIntColumn _customerSaving;
+  @override
+  GeneratedIntColumn get customerSaving =>
+      _customerSaving ??= _constructCustomerSaving();
+  GeneratedIntColumn _constructCustomerSaving() {
+    return GeneratedIntColumn(
+      'customer_saving',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _paymentIdMeta = const VerificationMeta('paymentId');
+  GeneratedIntColumn _paymentId;
+  @override
+  GeneratedIntColumn get paymentId => _paymentId ??= _constructPaymentId();
+  GeneratedIntColumn _constructPaymentId() {
+    return GeneratedIntColumn(
+      'payment_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _orderNoteMeta = const VerificationMeta('orderNote');
+  GeneratedTextColumn _orderNote;
+  @override
+  GeneratedTextColumn get orderNote => _orderNote ??= _constructOrderNote();
+  GeneratedTextColumn _constructOrderNote() {
+    return GeneratedTextColumn(
+      'order_note',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _statusMeta = const VerificationMeta('status');
+  GeneratedTextColumn _status;
+  @override
+  GeneratedTextColumn get status => _status ??= _constructStatus();
+  GeneratedTextColumn _constructStatus() {
+    return GeneratedTextColumn('status', $tableName, false,
+        defaultValue: Constant("draft"));
+  }
+
+  final VerificationMeta _customerChangeDueMeta =
+      const VerificationMeta('customerChangeDue');
+  GeneratedIntColumn _customerChangeDue;
+  @override
+  GeneratedIntColumn get customerChangeDue =>
+      _customerChangeDue ??= _constructCustomerChangeDue();
+  GeneratedIntColumn _constructCustomerChangeDue() {
+    return GeneratedIntColumn(
+      'customer_change_due',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        userId,
+        branchId,
+        orderNUmber,
+        supplierId,
+        subTotal,
+        supplierInvoiceNumber,
+        deliverDate,
+        taxRate,
+        taxAmount,
+        discountRate,
+        discountAmount,
+        cashReceived,
+        saleTotal,
+        customerSaving,
+        paymentId,
+        orderNote,
+        status,
+        customerChangeDue
+      ];
+  @override
+  $OrderTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'order_table';
+  @override
+  final String actualTableName = 'order_table';
+  @override
+  VerificationContext validateIntegrity(OrderTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.userId.present) {
+      context.handle(
+          _userIdMeta, userId.isAcceptableValue(d.userId.value, _userIdMeta));
+    } else if (userId.isRequired && isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (d.branchId.present) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableValue(d.branchId.value, _branchIdMeta));
+    } else if (branchId.isRequired && isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    if (d.orderNUmber.present) {
+      context.handle(_orderNUmberMeta,
+          orderNUmber.isAcceptableValue(d.orderNUmber.value, _orderNUmberMeta));
+    } else if (orderNUmber.isRequired && isInserting) {
+      context.missing(_orderNUmberMeta);
+    }
+    if (d.supplierId.present) {
+      context.handle(_supplierIdMeta,
+          supplierId.isAcceptableValue(d.supplierId.value, _supplierIdMeta));
+    } else if (supplierId.isRequired && isInserting) {
+      context.missing(_supplierIdMeta);
+    }
+    if (d.subTotal.present) {
+      context.handle(_subTotalMeta,
+          subTotal.isAcceptableValue(d.subTotal.value, _subTotalMeta));
+    } else if (subTotal.isRequired && isInserting) {
+      context.missing(_subTotalMeta);
+    }
+    if (d.supplierInvoiceNumber.present) {
+      context.handle(
+          _supplierInvoiceNumberMeta,
+          supplierInvoiceNumber.isAcceptableValue(
+              d.supplierInvoiceNumber.value, _supplierInvoiceNumberMeta));
+    } else if (supplierInvoiceNumber.isRequired && isInserting) {
+      context.missing(_supplierInvoiceNumberMeta);
+    }
+    if (d.deliverDate.present) {
+      context.handle(_deliverDateMeta,
+          deliverDate.isAcceptableValue(d.deliverDate.value, _deliverDateMeta));
+    } else if (deliverDate.isRequired && isInserting) {
+      context.missing(_deliverDateMeta);
+    }
+    if (d.taxRate.present) {
+      context.handle(_taxRateMeta,
+          taxRate.isAcceptableValue(d.taxRate.value, _taxRateMeta));
+    } else if (taxRate.isRequired && isInserting) {
+      context.missing(_taxRateMeta);
+    }
+    if (d.taxAmount.present) {
+      context.handle(_taxAmountMeta,
+          taxAmount.isAcceptableValue(d.taxAmount.value, _taxAmountMeta));
+    } else if (taxAmount.isRequired && isInserting) {
+      context.missing(_taxAmountMeta);
+    }
+    if (d.discountRate.present) {
+      context.handle(
+          _discountRateMeta,
+          discountRate.isAcceptableValue(
+              d.discountRate.value, _discountRateMeta));
+    } else if (discountRate.isRequired && isInserting) {
+      context.missing(_discountRateMeta);
+    }
+    if (d.discountAmount.present) {
+      context.handle(
+          _discountAmountMeta,
+          discountAmount.isAcceptableValue(
+              d.discountAmount.value, _discountAmountMeta));
+    } else if (discountAmount.isRequired && isInserting) {
+      context.missing(_discountAmountMeta);
+    }
+    if (d.cashReceived.present) {
+      context.handle(
+          _cashReceivedMeta,
+          cashReceived.isAcceptableValue(
+              d.cashReceived.value, _cashReceivedMeta));
+    } else if (cashReceived.isRequired && isInserting) {
+      context.missing(_cashReceivedMeta);
+    }
+    if (d.saleTotal.present) {
+      context.handle(_saleTotalMeta,
+          saleTotal.isAcceptableValue(d.saleTotal.value, _saleTotalMeta));
+    } else if (saleTotal.isRequired && isInserting) {
+      context.missing(_saleTotalMeta);
+    }
+    if (d.customerSaving.present) {
+      context.handle(
+          _customerSavingMeta,
+          customerSaving.isAcceptableValue(
+              d.customerSaving.value, _customerSavingMeta));
+    } else if (customerSaving.isRequired && isInserting) {
+      context.missing(_customerSavingMeta);
+    }
+    if (d.paymentId.present) {
+      context.handle(_paymentIdMeta,
+          paymentId.isAcceptableValue(d.paymentId.value, _paymentIdMeta));
+    } else if (paymentId.isRequired && isInserting) {
+      context.missing(_paymentIdMeta);
+    }
+    if (d.orderNote.present) {
+      context.handle(_orderNoteMeta,
+          orderNote.isAcceptableValue(d.orderNote.value, _orderNoteMeta));
+    } else if (orderNote.isRequired && isInserting) {
+      context.missing(_orderNoteMeta);
+    }
+    if (d.status.present) {
+      context.handle(
+          _statusMeta, status.isAcceptableValue(d.status.value, _statusMeta));
+    } else if (status.isRequired && isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (d.customerChangeDue.present) {
+      context.handle(
+          _customerChangeDueMeta,
+          customerChangeDue.isAcceptableValue(
+              d.customerChangeDue.value, _customerChangeDueMeta));
+    } else if (customerChangeDue.isRequired && isInserting) {
+      context.missing(_customerChangeDueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  OrderTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return OrderTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(OrderTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.userId.present) {
+      map['user_id'] = Variable<int, IntType>(d.userId.value);
+    }
+    if (d.branchId.present) {
+      map['branch_id'] = Variable<int, IntType>(d.branchId.value);
+    }
+    if (d.orderNUmber.present) {
+      map['order_n_umber'] = Variable<int, IntType>(d.orderNUmber.value);
+    }
+    if (d.supplierId.present) {
+      map['supplier_id'] = Variable<int, IntType>(d.supplierId.value);
+    }
+    if (d.subTotal.present) {
+      map['sub_total'] = Variable<int, IntType>(d.subTotal.value);
+    }
+    if (d.supplierInvoiceNumber.present) {
+      map['supplier_invoice_number'] =
+          Variable<int, IntType>(d.supplierInvoiceNumber.value);
+    }
+    if (d.deliverDate.present) {
+      map['deliver_date'] =
+          Variable<DateTime, DateTimeType>(d.deliverDate.value);
+    }
+    if (d.taxRate.present) {
+      map['tax_rate'] = Variable<int, IntType>(d.taxRate.value);
+    }
+    if (d.taxAmount.present) {
+      map['tax_amount'] = Variable<int, IntType>(d.taxAmount.value);
+    }
+    if (d.discountRate.present) {
+      map['discount_rate'] = Variable<int, IntType>(d.discountRate.value);
+    }
+    if (d.discountAmount.present) {
+      map['discount_amount'] = Variable<int, IntType>(d.discountAmount.value);
+    }
+    if (d.cashReceived.present) {
+      map['cash_received'] = Variable<int, IntType>(d.cashReceived.value);
+    }
+    if (d.saleTotal.present) {
+      map['sale_total'] = Variable<int, IntType>(d.saleTotal.value);
+    }
+    if (d.customerSaving.present) {
+      map['customer_saving'] = Variable<int, IntType>(d.customerSaving.value);
+    }
+    if (d.paymentId.present) {
+      map['payment_id'] = Variable<int, IntType>(d.paymentId.value);
+    }
+    if (d.orderNote.present) {
+      map['order_note'] = Variable<String, StringType>(d.orderNote.value);
+    }
+    if (d.status.present) {
+      map['status'] = Variable<String, StringType>(d.status.value);
+    }
+    if (d.customerChangeDue.present) {
+      map['customer_change_due'] =
+          Variable<int, IntType>(d.customerChangeDue.value);
+    }
+    return map;
+  }
+
+  @override
+  $OrderTableTable createAlias(String alias) {
+    return $OrderTableTable(_db, alias);
   }
 }
 
@@ -4903,6 +5863,8 @@ abstract class _$Database extends GeneratedDatabase {
       _historyTable ??= $HistoryTableTable(this);
   $CartTableTable _cartTable;
   $CartTableTable get cartTable => _cartTable ??= $CartTableTable(this);
+  $OrderTableTable _orderTable;
+  $OrderTableTable get orderTable => _orderTable ??= $OrderTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
@@ -4926,6 +5888,8 @@ abstract class _$Database extends GeneratedDatabase {
   HistoryDao get historyDao => _historyDao ??= HistoryDao(this as Database);
   CartDao _cartDao;
   CartDao get cartDao => _cartDao ??= CartDao(this as Database);
+  OrderDao _orderDao;
+  OrderDao get orderDao => _orderDao ??= OrderDao(this as Database);
   @override
   List<TableInfo> get allTables => [
         userTable,
@@ -4941,6 +5905,7 @@ abstract class _$Database extends GeneratedDatabase {
         itemTable,
         variationTable,
         historyTable,
-        cartTable
+        cartTable,
+        orderTable
       ];
 }

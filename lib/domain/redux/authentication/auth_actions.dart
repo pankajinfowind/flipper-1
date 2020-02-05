@@ -1,7 +1,6 @@
 import "dart:async";
 
-import 'package:flipper/model/branch.dart';
-import 'package:flipper/model/hint.dart';
+import 'package:flipper/model/order.dart';
 import 'package:flipper/model/user.dart';
 import "package:meta/meta.dart";
 
@@ -18,9 +17,6 @@ class LogIn {
   LogIn({this.email, this.password, Completer completer})
       : completer = completer ?? Completer();
 }
-
-
-
 
 @immutable
 class OnAuthenticated {
@@ -65,4 +61,11 @@ class OnLogoutFail {
   String toString() {
     return "OnLogoutFail{There was an error logging in: $error}";
   }
+}
+
+@immutable
+class OrderCreated {
+  final Order order;
+
+  OrderCreated({this.order});
 }

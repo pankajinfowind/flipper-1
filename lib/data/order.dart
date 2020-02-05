@@ -1,0 +1,25 @@
+import 'package:moor/moor.dart';
+
+class OrderTable extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get userId =>
+      integer().customConstraint('NULL REFERENCES user_table(id)')();
+  IntColumn get branchId =>
+      integer().customConstraint('NULL REFERENCES branch_table(id)')();
+  IntColumn get orderNUmber => integer().nullable()();
+  IntColumn get supplierId => integer().nullable()();
+  IntColumn get subTotal => integer().nullable()();
+  IntColumn get supplierInvoiceNumber => integer().nullable()();
+  DateTimeColumn get deliverDate => dateTime().nullable()();
+  IntColumn get taxRate => integer().nullable()();
+  IntColumn get taxAmount => integer().nullable()();
+  IntColumn get discountRate => integer().nullable()();
+  IntColumn get discountAmount => integer().nullable()();
+  IntColumn get cashReceived => integer().nullable()();
+  IntColumn get saleTotal => integer().nullable()();
+  IntColumn get customerSaving => integer().nullable()();
+  IntColumn get paymentId => integer().nullable()();
+  TextColumn get orderNote => text().nullable()();
+  TextColumn get status => text().withDefault(Constant("draft"))();
+  IntColumn get customerChangeDue => integer().nullable()();
+}

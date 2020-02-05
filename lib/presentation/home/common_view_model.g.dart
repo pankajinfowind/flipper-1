@@ -61,6 +61,8 @@ class _$CommonViewModel extends CommonViewModel {
   final BuiltList<Cart> carts;
   @override
   final int cartQuantities;
+  @override
+  final Order order;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -92,7 +94,8 @@ class _$CommonViewModel extends CommonViewModel {
       this.currentActiveSaleItem,
       this.database,
       this.carts,
-      this.cartQuantities})
+      this.cartQuantities,
+      this.order})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -167,7 +170,8 @@ class _$CommonViewModel extends CommonViewModel {
         currentActiveSaleItem == other.currentActiveSaleItem &&
         database == other.database &&
         carts == other.carts &&
-        cartQuantities == other.cartQuantities;
+        cartQuantities == other.cartQuantities &&
+        order == other.order;
   }
 
   @override
@@ -190,26 +194,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode),
-                                                                                branches.hashCode),
-                                                                            businesses.hashCode),
-                                                                        appAction.hashCode),
-                                                                    hint.hashCode),
-                                                                categoryName.hashCode),
-                                                            category.hashCode),
-                                                        currentUnit.hashCode),
-                                                    currentColor.hashCode),
-                                                currentDisable.hashCode),
-                                            currentBranch.hashCode),
-                                        cartItems.hashCode),
-                                    variations.hashCode),
-                                itemVariations.hashCode),
-                            items.hashCode),
-                        currentIncrement.hashCode),
-                    currentActiveSaleItem.hashCode),
-                database.hashCode),
-            carts.hashCode),
-        cartQuantities.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode),
+                                                                                businesses.hashCode),
+                                                                            appAction.hashCode),
+                                                                        hint.hashCode),
+                                                                    categoryName.hashCode),
+                                                                category.hashCode),
+                                                            currentUnit.hashCode),
+                                                        currentColor.hashCode),
+                                                    currentDisable.hashCode),
+                                                currentBranch.hashCode),
+                                            cartItems.hashCode),
+                                        variations.hashCode),
+                                    itemVariations.hashCode),
+                                items.hashCode),
+                            currentIncrement.hashCode),
+                        currentActiveSaleItem.hashCode),
+                    database.hashCode),
+                carts.hashCode),
+            cartQuantities.hashCode),
+        order.hashCode));
   }
 
   @override
@@ -241,7 +245,8 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('currentActiveSaleItem', currentActiveSaleItem)
           ..add('database', database)
           ..add('carts', carts)
-          ..add('cartQuantities', cartQuantities))
+          ..add('cartQuantities', cartQuantities)
+          ..add('order', order))
         .toString();
   }
 }
@@ -378,6 +383,10 @@ class CommonViewModelBuilder
   set cartQuantities(int cartQuantities) =>
       _$this._cartQuantities = cartQuantities;
 
+  OrderBuilder _order;
+  OrderBuilder get order => _$this._order ??= new OrderBuilder();
+  set order(OrderBuilder order) => _$this._order = order;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -409,6 +418,7 @@ class CommonViewModelBuilder
       _database = _$v.database;
       _carts = _$v.carts?.toBuilder();
       _cartQuantities = _$v.cartQuantities;
+      _order = _$v.order?.toBuilder();
       _$v = null;
     }
     return this;
@@ -459,7 +469,8 @@ class CommonViewModelBuilder
               currentActiveSaleItem: _currentActiveSaleItem?.build(),
               database: database,
               carts: carts.build(),
-              cartQuantities: cartQuantities);
+              cartQuantities: cartQuantities,
+              order: _order?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -500,6 +511,9 @@ class CommonViewModelBuilder
 
         _$failedField = 'carts';
         carts.build();
+
+        _$failedField = 'order';
+        _order?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

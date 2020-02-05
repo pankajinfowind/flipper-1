@@ -11,6 +11,7 @@ import 'package:flipper/model/business.dart';
 import 'package:flipper/model/category.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/item.dart';
+import 'package:flipper/model/order.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -66,6 +67,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       return;
     }
 
+    //end of streaming new order to part of apps's store
     UserTableData user = await userRepository.checkAuth(store);
 
     TabsTableData tab = await generalRepository.getTab(store);
@@ -88,6 +90,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     } else {
       final _user = User(
         (u) => u
+          ..id = user.id
           ..bearerToken = user.bearerToken
           ..username = user.username
           ..refreshToken = user.refreshToken
@@ -213,6 +216,41 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       }
       //end setting active branch.
 
+      //start by creating a draft order it it does not exist
+      OrderTableData order =
+          await generalRepository.createDraftOrderOrReturnExistingOne(store);
+      //broadcast order to be used later when creating a sale
+      if (order != null) {
+        store.dispatch(
+          OrderCreated(
+            order: Order(
+              (o) => o
+                ..status = order.status
+                ..id = order.id
+                ..userId = user.id
+                ..branchId = order.branchId
+                ..orderNote = order.orderNote
+                ..orderNUmber = order.orderNUmber
+                ..supplierId = order.supplierId
+                ..subTotal = order.subTotal
+                ..discountAmount = order.discountAmount
+                ..supplierInvoiceNumber = order.supplierInvoiceNumber
+                ..deliverDate = order.deliverDate
+                ..discountRate = order.discountRate
+                ..taxRate = order.taxRate
+                ..taxAmount = order.taxAmount
+                ..cashReceived = order.cashReceived
+                ..saleTotal = order.saleTotal
+                ..userId = order.userId
+                ..customerSaving = order.customerSaving
+                ..paymentId = order.paymentId
+                ..orderNote = order.orderNote
+                ..status = order.status
+                ..customerChangeDue = order.customerChangeDue,
+            ),
+          ),
+        );
+      }
       //set current active business to be used throughout the entire app transaction
       for (var i = 0; i < businesses.length; i++) {
         if (businesses[i].isActive) {

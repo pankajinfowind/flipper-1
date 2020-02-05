@@ -11,11 +11,13 @@ import 'package:flipper/data/dao/cart_dao.dart';
 import 'package:flipper/data/dao/category_dao.dart';
 import 'package:flipper/data/dao/history_dao.dart';
 import 'package:flipper/data/dao/item_dao.dart';
+import 'package:flipper/data/dao/order_dao.dart';
 import 'package:flipper/data/dao/tab_dao.dart';
 import 'package:flipper/data/dao/unit_dao.dart';
 import 'package:flipper/data/dao/variation_dao.dart';
 import 'package:flipper/data/item_history_table.dart';
 import 'package:flipper/data/item_table.dart';
+import 'package:flipper/data/order.dart';
 import 'package:flipper/data/price_table.dart';
 import 'package:flipper/data/stock_tabble.dart';
 import 'package:flipper/data/tabs.dart';
@@ -59,7 +61,8 @@ LazyDatabase _openConnection() {
   ItemTable,
   VariationTable,
   HistoryTable,
-  CartTable
+  CartTable,
+  OrderTable
 ], daos: [
   UserDao,
   TokenDao,
@@ -71,7 +74,8 @@ LazyDatabase _openConnection() {
   VariationDao,
   ItemDao,
   HistoryDao,
-  CartDao
+  CartDao,
+  OrderDao
 ])
 class Database extends _$Database {
   Database() : super(_openConnection());

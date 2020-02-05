@@ -75,6 +75,8 @@ class _$AppState extends AppState {
   final BuiltList<Cart> carts;
   @override
   final int cartQuantities;
+  @override
+  final Order order;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -113,7 +115,8 @@ class _$AppState extends AppState {
       this.items,
       this.currentIncrement,
       this.carts,
-      this.cartQuantities})
+      this.cartQuantities,
+      this.order})
       : super._() {
     if (categories == null) {
       throw new BuiltValueNullFieldError('AppState', 'categories');
@@ -182,7 +185,8 @@ class _$AppState extends AppState {
         items == other.items &&
         currentIncrement == other.currentIncrement &&
         carts == other.carts &&
-        cartQuantities == other.cartQuantities;
+        cartQuantities == other.cartQuantities &&
+        order == other.order;
   }
 
   @override
@@ -205,26 +209,26 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), units.hashCode), categories.hashCode), focusedUnit.hashCode), category.hashCode), permissions.hashCode),
-                                                                                branches.hashCode),
-                                                                            businesses.hashCode),
-                                                                        branch.hashCode),
-                                                                    business.hashCode),
-                                                                hint.hashCode),
-                                                            database.hashCode),
-                                                        categoryName.hashCode),
-                                                    tempCategoryId.hashCode),
-                                                currentUnit.hashCode),
-                                            currentColor.hashCode),
-                                        currentDisable.hashCode),
-                                    variations.hashCode),
-                                itemVariations.hashCode),
-                            currentActiveSaleItem.hashCode),
-                        cartItems.hashCode),
-                    items.hashCode),
-                currentIncrement.hashCode),
-            carts.hashCode),
-        cartQuantities.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), units.hashCode), categories.hashCode), focusedUnit.hashCode), category.hashCode), permissions.hashCode), branches.hashCode),
+                                                                                businesses.hashCode),
+                                                                            branch.hashCode),
+                                                                        business.hashCode),
+                                                                    hint.hashCode),
+                                                                database.hashCode),
+                                                            categoryName.hashCode),
+                                                        tempCategoryId.hashCode),
+                                                    currentUnit.hashCode),
+                                                currentColor.hashCode),
+                                            currentDisable.hashCode),
+                                        variations.hashCode),
+                                    itemVariations.hashCode),
+                                currentActiveSaleItem.hashCode),
+                            cartItems.hashCode),
+                        items.hashCode),
+                    currentIncrement.hashCode),
+                carts.hashCode),
+            cartQuantities.hashCode),
+        order.hashCode));
   }
 
   @override
@@ -263,7 +267,8 @@ class _$AppState extends AppState {
           ..add('items', items)
           ..add('currentIncrement', currentIncrement)
           ..add('carts', carts)
-          ..add('cartQuantities', cartQuantities))
+          ..add('cartQuantities', cartQuantities)
+          ..add('order', order))
         .toString();
   }
 }
@@ -429,6 +434,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set cartQuantities(int cartQuantities) =>
       _$this._cartQuantities = cartQuantities;
 
+  OrderBuilder _order;
+  OrderBuilder get order => _$this._order ??= new OrderBuilder();
+  set order(OrderBuilder order) => _$this._order = order;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -467,6 +476,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _currentIncrement = _$v.currentIncrement;
       _carts = _$v.carts?.toBuilder();
       _cartQuantities = _$v.cartQuantities;
+      _order = _$v.order?.toBuilder();
       _$v = null;
     }
     return this;
@@ -524,7 +534,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               items: items.build(),
               currentIncrement: currentIncrement,
               carts: carts.build(),
-              cartQuantities: cartQuantities);
+              cartQuantities: cartQuantities,
+              order: _order?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -581,6 +592,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
         _$failedField = 'carts';
         carts.build();
+
+        _$failedField = 'order';
+        _order?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

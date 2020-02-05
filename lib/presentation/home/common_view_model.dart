@@ -11,6 +11,7 @@ import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/item.dart';
+import 'package:flipper/model/order.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:redux/redux.dart';
@@ -86,6 +87,9 @@ abstract class CommonViewModel
   @nullable
   int get cartQuantities;
 
+  @nullable
+  Order get order;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -146,6 +150,7 @@ abstract class CommonViewModel
       ..hint = _hasHint(store) == null ? null : store.state.hint.toBuilder()
       ..carts = store.state.carts.toBuilder()
       ..cartQuantities = store.state.cartQuantities
+      ..order = store.state.order == null ? null : store.state.order.toBuilder()
       ..branches = store.state.branches);
   }
 }

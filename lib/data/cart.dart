@@ -8,6 +8,8 @@ class CartTable extends Table {
 
   IntColumn get count => integer()();
 
+  IntColumn get price => integer()();
+
   IntColumn get variationId => integer()
       .nullable()
       .customConstraint('NULL REFERENCES variation_table(id)')();

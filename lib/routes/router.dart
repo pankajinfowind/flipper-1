@@ -5,6 +5,7 @@ import 'package:flipper/home/add_item_screen.dart';
 import 'package:flipper/home/add_unit_type.dart';
 import 'package:flipper/home/add_variation_screen.dart';
 import 'package:flipper/home/bottom_sheet_sreen.dart';
+import 'package:flipper/home/cart/cart_details_screen.dart';
 import 'package:flipper/home/create_category_input_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/edit_quantity_item_screen.dart';
@@ -15,6 +16,7 @@ import 'package:flipper/home/take_picture_screen.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
 import 'package:flipper/presentation/business/sign_up_screen.dart';
 import 'package:flipper/presentation/home/dash_board.dart';
+import 'package:flipper/presentation/login/login_screen.dart';
 import 'package:flipper/presentation/splash/aftersplash.dart';
 import 'package:flipper/presentation/splash/splash_screen.dart';
 
@@ -68,4 +70,9 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   EditQuantityItemScreen editQuantityItemScreen;
+
+  @MaterialRoute(fullscreenDialog: true)
+  CartDetailsScreen cartDetailsScreen;
+
+  LoginScreen login;
 }

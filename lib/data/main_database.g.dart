@@ -4407,6 +4407,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
   final int id;
   final int branchId;
   final int count;
+  final int price;
   final int variationId;
   final String parentName;
   final String variationName;
@@ -4416,6 +4417,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
       {@required this.id,
       this.branchId,
       @required this.count,
+      @required this.price,
       this.variationId,
       @required this.parentName,
       @required this.variationName,
@@ -4433,6 +4435,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
       branchId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}branch_id']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
+      price: intType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
       variationId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}variation_id']),
       parentName: stringType
@@ -4451,6 +4454,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
       id: serializer.fromJson<int>(json['id']),
       branchId: serializer.fromJson<int>(json['branchId']),
       count: serializer.fromJson<int>(json['count']),
+      price: serializer.fromJson<int>(json['price']),
       variationId: serializer.fromJson<int>(json['variationId']),
       parentName: serializer.fromJson<String>(json['parentName']),
       variationName: serializer.fromJson<String>(json['variationName']),
@@ -4465,6 +4469,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
       'id': serializer.toJson<int>(id),
       'branchId': serializer.toJson<int>(branchId),
       'count': serializer.toJson<int>(count),
+      'price': serializer.toJson<int>(price),
       'variationId': serializer.toJson<int>(variationId),
       'parentName': serializer.toJson<String>(parentName),
       'variationName': serializer.toJson<String>(variationName),
@@ -4482,6 +4487,8 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           : Value(branchId),
       count:
           count == null && nullToAbsent ? const Value.absent() : Value(count),
+      price:
+          price == null && nullToAbsent ? const Value.absent() : Value(price),
       variationId: variationId == null && nullToAbsent
           ? const Value.absent()
           : Value(variationId),
@@ -4504,6 +4511,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           {int id,
           int branchId,
           int count,
+          int price,
           int variationId,
           String parentName,
           String variationName,
@@ -4513,6 +4521,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
         id: id ?? this.id,
         branchId: branchId ?? this.branchId,
         count: count ?? this.count,
+        price: price ?? this.price,
         variationId: variationId ?? this.variationId,
         parentName: parentName ?? this.parentName,
         variationName: variationName ?? this.variationName,
@@ -4525,6 +4534,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           ..write('id: $id, ')
           ..write('branchId: $branchId, ')
           ..write('count: $count, ')
+          ..write('price: $price, ')
           ..write('variationId: $variationId, ')
           ..write('parentName: $parentName, ')
           ..write('variationName: $variationName, ')
@@ -4542,11 +4552,15 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           $mrjc(
               count.hashCode,
               $mrjc(
-                  variationId.hashCode,
+                  price.hashCode,
                   $mrjc(
-                      parentName.hashCode,
-                      $mrjc(variationName.hashCode,
-                          $mrjc(createdAt.hashCode, updatedAt.hashCode))))))));
+                      variationId.hashCode,
+                      $mrjc(
+                          parentName.hashCode,
+                          $mrjc(
+                              variationName.hashCode,
+                              $mrjc(createdAt.hashCode,
+                                  updatedAt.hashCode)))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -4554,6 +4568,7 @@ class CartTableData extends DataClass implements Insertable<CartTableData> {
           other.id == this.id &&
           other.branchId == this.branchId &&
           other.count == this.count &&
+          other.price == this.price &&
           other.variationId == this.variationId &&
           other.parentName == this.parentName &&
           other.variationName == this.variationName &&
@@ -4565,6 +4580,7 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
   final Value<int> id;
   final Value<int> branchId;
   final Value<int> count;
+  final Value<int> price;
   final Value<int> variationId;
   final Value<String> parentName;
   final Value<String> variationName;
@@ -4574,6 +4590,7 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
     this.id = const Value.absent(),
     this.branchId = const Value.absent(),
     this.count = const Value.absent(),
+    this.price = const Value.absent(),
     this.variationId = const Value.absent(),
     this.parentName = const Value.absent(),
     this.variationName = const Value.absent(),
@@ -4584,18 +4601,21 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
     this.id = const Value.absent(),
     this.branchId = const Value.absent(),
     @required int count,
+    @required int price,
     this.variationId = const Value.absent(),
     @required String parentName,
     @required String variationName,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   })  : count = Value(count),
+        price = Value(price),
         parentName = Value(parentName),
         variationName = Value(variationName);
   CartTableCompanion copyWith(
       {Value<int> id,
       Value<int> branchId,
       Value<int> count,
+      Value<int> price,
       Value<int> variationId,
       Value<String> parentName,
       Value<String> variationName,
@@ -4605,6 +4625,7 @@ class CartTableCompanion extends UpdateCompanion<CartTableData> {
       id: id ?? this.id,
       branchId: branchId ?? this.branchId,
       count: count ?? this.count,
+      price: price ?? this.price,
       variationId: variationId ?? this.variationId,
       parentName: parentName ?? this.parentName,
       variationName: variationName ?? this.variationName,
@@ -4644,6 +4665,18 @@ class $CartTableTable extends CartTable
   GeneratedIntColumn _constructCount() {
     return GeneratedIntColumn(
       'count',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _priceMeta = const VerificationMeta('price');
+  GeneratedIntColumn _price;
+  @override
+  GeneratedIntColumn get price => _price ??= _constructPrice();
+  GeneratedIntColumn _constructPrice() {
+    return GeneratedIntColumn(
+      'price',
       $tableName,
       false,
     );
@@ -4712,6 +4745,7 @@ class $CartTableTable extends CartTable
         id,
         branchId,
         count,
+        price,
         variationId,
         parentName,
         variationName,
@@ -4744,6 +4778,12 @@ class $CartTableTable extends CartTable
           _countMeta, count.isAcceptableValue(d.count.value, _countMeta));
     } else if (count.isRequired && isInserting) {
       context.missing(_countMeta);
+    }
+    if (d.price.present) {
+      context.handle(
+          _priceMeta, price.isAcceptableValue(d.price.value, _priceMeta));
+    } else if (price.isRequired && isInserting) {
+      context.missing(_priceMeta);
     }
     if (d.variationId.present) {
       context.handle(_variationIdMeta,
@@ -4799,6 +4839,9 @@ class $CartTableTable extends CartTable
     }
     if (d.count.present) {
       map['count'] = Variable<int, IntType>(d.count.value);
+    }
+    if (d.price.present) {
+      map['price'] = Variable<int, IntType>(d.price.value);
     }
     if (d.variationId.present) {
       map['variation_id'] = Variable<int, IntType>(d.variationId.value);

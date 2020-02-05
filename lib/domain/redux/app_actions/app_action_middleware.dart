@@ -454,6 +454,7 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
         branchId: store.state.cartItems[0].branchId,
         count: store.state.cartItems[0].count,
         variationName: store.state.cartItems[0].name,
+        price: store.state.cartItems[0].price,
         variationId: store.state.cartItems[0].id,
         parentName: store.state.cartItems[0].parentName,
       ),

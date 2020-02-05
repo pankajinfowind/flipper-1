@@ -146,6 +146,7 @@ class controlSaleWidget extends StatelessWidget {
                     (b) => b
                       ..id = vm.itemVariations[i].id
                       ..name = vm.itemVariations[i].name
+                      ..price = vm.itemVariations[i].price
                       ..branchId = vm.itemVariations[i].branchId
                       ..unitId = vm.itemVariations[i].unitId
                       ..parentName = vm.currentActiveSaleItem.name
@@ -182,6 +183,7 @@ class controlSaleWidget extends StatelessWidget {
                     ..name = vm.itemVariations[i].name
                     ..branchId = vm.itemVariations[i].branchId
                     ..unitId = vm.itemVariations[i].unitId
+                    ..price = vm.itemVariations[i].price
                     ..parentName = vm.currentActiveSaleItem.name
                     ..categoryId = vm.itemVariations[i].categoryId
                     ..color = vm.itemVariations[i].color
@@ -274,6 +276,7 @@ class SellMultipleItems extends StatelessWidget {
                 ..name = vm.currentActiveSaleItem.name
                 ..categoryId = items[i].categoryId
                 ..unitId = items[i].unitId
+                ..price = items[i].price
                 ..color = items[i].color
                 ..branchId = items[i].branchId
                 ..price = items[i].price,
@@ -286,6 +289,7 @@ class SellMultipleItems extends StatelessWidget {
             (updated) => updated
               ..count = vm.currentIncrement == null ? 1 : vm.currentIncrement
               ..id = items[i].id
+              ..price = items[i].price
               ..parentName = vm.currentActiveSaleItem.name
               ..branchId = items[i].branchId
               ..name = items[i].name,
@@ -309,6 +313,7 @@ class SellMultipleItems extends StatelessWidget {
                 (updated) => updated
                   ..count = vm.currentIncrement
                   ..id = items[i].id
+                  ..price = items[i].price
                   ..parentName = items[i].parentName
                   ..branchId = items[i].branchId
                   ..name = items[i].name,

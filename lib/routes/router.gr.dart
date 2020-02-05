@@ -25,6 +25,8 @@ import 'package:flipper/home/add_category_screen.dart';
 import 'package:flipper/home/create_category_input_screen.dart';
 import 'package:flipper/home/receive_stock.dart';
 import 'package:flipper/home/edit_quantity_item_screen.dart';
+import 'package:flipper/home/cart/cart_details_screen.dart';
+import 'package:flipper/presentation/login/login_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -44,6 +46,8 @@ class Router {
   static const createCategoryInputScreen = '/createCategoryInputScreen';
   static const receiveStock = '/receiveStock';
   static const editQuantityItemScreen = '/editQuantityItemScreen';
+  static const cartDetailsScreen = '/cartDetailsScreen';
+  static const login = '/login';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -207,8 +211,36 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
+      case Router.cartDetailsScreen:
+        if (hasInvalidArgs<CartDetailsScreenArguments>(args)) {
+          return misTypedArgsRoute<CartDetailsScreenArguments>(args);
+        }
+        final typedArgs =
+            args as CartDetailsScreenArguments ?? CartDetailsScreenArguments();
+        return MaterialPageRoute(
+          builder: (_) =>
+              CartDetailsScreen(key: typedArgs.key, carts: typedArgs.carts),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.login:
+        return MaterialPageRoute(
+          builder: (_) => LoginScreen(),
+          settings: settings,
+        );
       default:
         return unknownRoutePage(settings.name);
     }
   }
+}
+
+//**************************************************************************
+// Arguments holder classes
+//***************************************************************************
+
+//CartDetailsScreen arguments holder class
+class CartDetailsScreenArguments {
+  final Key key;
+  final List<dynamic> carts;
+  CartDetailsScreenArguments({this.key, this.carts});
 }

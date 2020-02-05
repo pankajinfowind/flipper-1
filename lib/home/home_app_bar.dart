@@ -3,6 +3,7 @@ import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/cart.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
+import 'package:flipper/routes/router.gr.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -34,7 +35,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 _hamburger(),
                 SizedBox(
                   height: 120,
-                  width: 80,
+                  width: 60,
                 ),
                 Align(
                   alignment: Alignment.center,
@@ -42,18 +43,30 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     stream: vm.database.cartDao.getCarts(),
                     builder:
                         (context, AsyncSnapshot<List<CartTableData>> snapshot) {
-                      var quantity =
-                          snapshot.data.fold(0, (a, b) => a + b.count);
-                      return Text(
-                        snapshot.data.length == 0
-                            ? S.of(context).noSale
-                            : S.of(context).currentSale +
-                                "[" +
-                                quantity.toString() +
-                                "]",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
+                      print(snapshot.data);
+                      var quantity = snapshot.data == null
+                          ? 0
+                          : snapshot.data.fold(0, (a, b) => a + b.count);
+                      return FlatButton(
+                        onPressed: () {
+                          Router.navigator.pushNamed(
+                            Router.cartDetailsScreen,
+                            arguments: CartDetailsScreenArguments(
+                              carts: snapshot.data,
+                            ),
+                          );
+                        },
+                        child: Text(
+                          snapshot.data == null
+                              ? S.of(context).noSale
+                              : S.of(context).currentSale +
+                                  "[" +
+                                  quantity.toString() +
+                                  "]",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 19,
+                          ),
                         ),
                       );
                     },

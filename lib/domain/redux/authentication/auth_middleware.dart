@@ -1,4 +1,3 @@
-import 'package:flipper/data/dao/item_variation.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/data/respositories/branch_repository.dart';
 import 'package:flipper/data/respositories/business_repository.dart';
@@ -14,7 +13,6 @@ import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
-import 'package:flipper/routes.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/logger.dart';
@@ -63,7 +61,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
   return (store, action, next) async {
     next(action);
     if (userRepository.checkAuth(store) == null) {
-      navigatorKey.currentState.pushReplacementNamed(Routes.login);
+      Router.navigator.pushNamed(Router.login);
       store.dispatch(Unauthenticated);
       return;
     }

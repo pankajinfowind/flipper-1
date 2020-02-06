@@ -146,6 +146,10 @@ class GeneralRepository {
     }
   }
 
+  Future<bool> updateOrder(Store<AppState> store, OrderTableData order) async {
+    return await store.state.database.orderDao.updateOrder(order);
+  }
+
   Future<OrderTableData> createDraftOrderOrReturnExistingOne(
       Store<AppState> store) async {
     OrderTableData order =

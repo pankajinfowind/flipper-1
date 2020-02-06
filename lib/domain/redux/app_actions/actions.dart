@@ -227,4 +227,9 @@ class CartQuantity {
 }
 
 @immutable
-class SavePayment {}
+class SavePayment {
+  final String note;
+  final int cashReceived;
+
+  SavePayment({this.note, this.cashReceived});
+}

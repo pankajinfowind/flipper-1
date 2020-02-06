@@ -49,8 +49,8 @@ class PayableWidget extends StatelessWidget {
                     child: FlatButton(
                       color: HexColor(FlipperColors.blue),
                       onPressed: () {
-                        StoreProvider.of<AppState>(context)
-                            .dispatch(SavePayment());
+                        StoreProvider.of<AppState>(context).dispatch(
+                            SavePayment(note: "note", cashReceived: payable));
                       },
                       child: Text(
                         "Charge Frw " + payable.toString(),

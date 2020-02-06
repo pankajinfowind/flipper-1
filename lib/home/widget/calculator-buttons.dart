@@ -20,7 +20,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -36,7 +36,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -52,7 +52,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -68,7 +68,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -84,7 +84,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -100,7 +100,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -116,7 +116,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -132,7 +132,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -148,7 +148,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -164,7 +164,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -180,7 +180,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,
@@ -196,7 +196,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.1,
+                  width: 0.2,
                 ),
               ),
               padding: padding,

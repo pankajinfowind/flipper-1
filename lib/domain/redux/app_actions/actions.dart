@@ -225,3 +225,6 @@ class CartQuantity {
 
   CartQuantity({this.quantity});
 }
+
+@immutable
+class SavePayment {}

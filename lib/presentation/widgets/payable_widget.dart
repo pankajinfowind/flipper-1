@@ -1,4 +1,5 @@
 import 'package:flipper/data/main_database.dart';
+import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
@@ -18,7 +19,7 @@ class PayableWidget extends StatelessWidget {
           height: 60,
           color: HexColor(FlipperColors.blue),
           child: StreamBuilder(
-            stream: vm.database.cartDao.getCarts(),
+            stream: vm.database.cartDao.getCarts(vm.order.id),
             builder: (context, AsyncSnapshot<List<CartTableData>> snapshot) {
               var payable = snapshot.data == null
                   ? 0
@@ -47,7 +48,10 @@ class PayableWidget extends StatelessWidget {
                     height: 120,
                     child: FlatButton(
                       color: HexColor(FlipperColors.blue),
-                      onPressed: () {},
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context)
+                            .dispatch(SavePayment());
+                      },
                       child: Text(
                         "Charge Frw " + payable.toString(),
                         style: TextStyle(

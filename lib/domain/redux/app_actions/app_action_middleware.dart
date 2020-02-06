@@ -36,6 +36,8 @@ List<Middleware<AppState>> AppActionMiddleware(
         _needItemVariation(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SaveCart>(
         _saveCart(navigatorKey, generalRepository)),
+    TypedMiddleware<AppState, SavePayment>(
+        _savePayment(navigatorKey, generalRepository)),
   ];
 }
 
@@ -459,5 +461,15 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
     );
 
     Router.navigator.pop();
+  };
+}
+
+void Function(Store<AppState> store, SavePayment action, NextDispatcher next)
+    _savePayment(GlobalKey<NavigatorState> navigatorKey,
+        GeneralRepository generalRepository) {
+  return (store, action, next) async {
+    next(action);
+
+    //
   };
 }

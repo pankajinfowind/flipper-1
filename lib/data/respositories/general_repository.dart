@@ -119,7 +119,7 @@ class GeneralRepository {
   }
 
   Stream<List<CartTableData>> getCarts(Store<AppState> store) {
-    return store.state.database.cartDao.getCarts();
+    return store.state.database.cartDao.getCarts(store.state.order.id);
   }
 
   Future<bool> insertOrUpdateCart(
@@ -180,9 +180,8 @@ class GeneralRepository {
       ));
       return order;
     } else {
-      int orderId = await store.state.database.orderDao.insert(
+      await store.state.database.orderDao.insert(
         //ignore: missing_required_param
-
         OrderTableData(
           status: "draft",
           branchId: store.state.branch.id,

@@ -82,11 +82,9 @@ class _HomeScreenState extends State<HomeScreen>
               } else {
                 _nextPage(-1);
               }
-              // _nextPage(num);
               StoreProvider.of<AppState>(context)
                   .dispatch(CurrentTab(tab: num));
-              StoreProvider.of<AppState>(context)
-                  .dispatch(OnSetTab()); //persist tab
+              StoreProvider.of<AppState>(context).dispatch(OnSetTab());
             },
           ),
           body: TabBarView(

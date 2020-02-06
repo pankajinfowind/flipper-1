@@ -31,5 +31,8 @@
     "flipperPointofSale": "Flipper Point of Sale",
     "interactandgrowyourbusiness": "Interact and  grow your business",
     "signIn": "Sign in",
-    "learnaboutFlipper": "Learn about Flipper."
+    "learnaboutFlipper": "Learn about Flipper.",
+    "youNeedCategoryOfYourProduct": "You need to provide category for your product",
+    "youNeedNameOfYourProduct": "You need to provide name for your product",
+    "branchError": "Branch from which you operate in should be set, try to logout and log in again."
 }

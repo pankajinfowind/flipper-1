@@ -325,6 +325,33 @@ class S {
       args: [],
     );
   }
+
+  String get youNeedCategoryOfYourProduct {
+    return Intl.message(
+      'You need to provide category for your product',
+      name: 'youNeedCategoryOfYourProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get youNeedNameOfYourProduct {
+    return Intl.message(
+      'You need to provide name for your product',
+      name: 'youNeedNameOfYourProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get branchError {
+    return Intl.message(
+      'Branch from which you operate in should be set, try to logout and log in again.',
+      name: 'branchError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
     "addStock" : MessageLookupByLibrary.simpleMessage("Add Stock"),
     "addVariation" : MessageLookupByLibrary.simpleMessage("Add Variation"),
+    "branchError" : MessageLookupByLibrary.simpleMessage("Branch from which you operate in should be set, try to logout and log in again."),
     "category" : MessageLookupByLibrary.simpleMessage("Category"),
     "createAccount" : MessageLookupByLibrary.simpleMessage("Create new"),
     "createCategory" : MessageLookupByLibrary.simpleMessage("Create Category"),
@@ -53,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "signup" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "stock" : MessageLookupByLibrary.simpleMessage("Stock"),
     "unityType" : MessageLookupByLibrary.simpleMessage("Unit Type"),
-    "unity_type" : MessageLookupByLibrary.simpleMessage("Unit Type")
+    "unity_type" : MessageLookupByLibrary.simpleMessage("Unit Type"),
+    "youNeedCategoryOfYourProduct" : MessageLookupByLibrary.simpleMessage("You need to provide category for your product"),
+    "youNeedNameOfYourProduct" : MessageLookupByLibrary.simpleMessage("You need to provide name for your product")
   };
 }

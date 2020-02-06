@@ -77,11 +77,8 @@ class _HomeScreenState extends State<HomeScreen>
             selectedItemColor: Colors.amber[800],
             currentIndex: widget.vm.tab,
             onTap: (num) {
-              if (num == 0) {
-                _nextPage(1);
-              } else {
-                _nextPage(-1);
-              }
+              _nextPage(num == 0 ? -1 : 1);
+
               StoreProvider.of<AppState>(context)
                   .dispatch(CurrentTab(tab: num));
               StoreProvider.of<AppState>(context).dispatch(OnSetTab());

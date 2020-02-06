@@ -14,6 +14,7 @@ import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class TForm {
   String price;
@@ -306,15 +307,36 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   _handleFormSubmit(CommonViewModel vm, TForm tForm) {
     if (tForm.name == null) {
-      print('name can not be null');
+      Fluttertoast.showToast(
+          msg: S.of(context).youNeedNameOfYourProduct,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       return; // a toast
     }
     if (_currentCategory == null) {
-      print("category should be set");
+      Fluttertoast.showToast(
+          msg: S.of(context).youNeedCategoryOfYourProduct,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       return;
     }
     if (vm.currentBranch == null) {
-      print("branch should be set");
+      Fluttertoast.showToast(
+          msg: S.of(context).branchError,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       return;
     }
     StoreProvider.of<AppState>(context).dispatch(

@@ -1,25 +1,10 @@
-import 'package:flipper/home/widget/calculator-button.dart';
-import 'package:flipper/home/widget/calculator.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorButtons extends StatelessWidget {
-  CalculatorButtons({@required this.onTap});
-
-  final CalculatorButtonTapCallback onTap;
-  final calculatorButtonRows = [
-    ['7', '8', '9', Calculations.DIVIDE],
-    ['4', '5', '6', Calculations.MULTIPLY],
-    ['1', '2', '3', Calculations.SUBTRACT],
-    [Calculations.PERIOD, '0', '00', Calculations.ADD],
-    [Calculations.CLEAR, Calculations.EQUAL]
-  ];
-
   @override
   Widget build(BuildContext context) {
-    List<Widget> rowButtons = [];
-    double padWidth = 137.1;
-    double spacing = 15;
-    final padding = EdgeInsets.fromLTRB(55, 30, 20, 20);
+    double padWidth = 136.6;
+    final padding = EdgeInsets.fromLTRB(55, 25, 20, 20);
     final style = TextStyle(fontSize: 40, fontFamily: "Heebo-Thin");
 
     return Wrap(
@@ -34,8 +19,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.8,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -50,8 +35,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -66,8 +51,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -76,17 +61,14 @@ class CalculatorButtons extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: spacing,
-        ),
-        SizedBox(
           width: padWidth,
           child: InkWell(
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -101,8 +83,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -117,8 +99,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -127,17 +109,14 @@ class CalculatorButtons extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: spacing,
-        ),
-        SizedBox(
           width: padWidth,
           child: InkWell(
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -152,8 +131,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -168,8 +147,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -178,17 +157,14 @@ class CalculatorButtons extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: spacing,
-        ),
-        SizedBox(
           width: padWidth,
           child: InkWell(
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -203,8 +179,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,
@@ -219,8 +195,8 @@ class CalculatorButtons extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  width: 0.5,
+                  color: Colors.black,
+                  width: 0.1,
                 ),
               ),
               padding: padding,

@@ -15,12 +15,12 @@ class KeyPadWidget extends StatefulWidget {
 class _KeyPadWidgetState extends State<KeyPadWidget> {
   @override
   Widget build(BuildContext context) {
-    var moneyFormat =
-        new MoneyMaskedTextController(leftSymbol: '\$', decimalSeparator: ".");
-    moneyFormat.updateValue(0);
+    var moneyFormat = new MoneyMaskedTextController(
+        leftSymbol: '\RWF', decimalSeparator: ".");
+    moneyFormat.updateValue(500);
 
     return Scaffold(
-      body:  Wrap(
+      body: Wrap(
         children: <Widget>[
           Align(
             child: PayableWidget(),
@@ -31,9 +31,10 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
             child: ListTile(
               trailing: FlatButton(
                 child: Text(
-                  "Frw 500",
-                  style: TextStyle(color: HexColor("#95a5a6")),
-                ), onPressed: () {},
+                  moneyFormat.text,
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                onPressed: () {},
               ),
               leading: FlatButton(
                 onPressed: () {
@@ -46,13 +47,9 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
               ),
             ),
           ),
-          CalculatorButtons(
-            onTap: _onPress,
-          )
+          CalculatorButtons()
         ],
       ),
     );
   }
-
-  void _onPress({String buttonText}) {}
 }

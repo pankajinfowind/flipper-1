@@ -7,8 +7,14 @@ void main() {
   configureLogger();
   //todo:this might cause the error please review this.
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
+  //     .copyWith(systemNavigationBarColor: Colors.white));
+  // SystemChrome.
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(FlipperApp());
 }
 

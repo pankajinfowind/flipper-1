@@ -27,21 +27,21 @@ class PayableWidget extends StatelessWidget {
               return Row(
                 children: <Widget>[
                   SizedBox(width: 40),
-                  SizedBox(
-                    height: 120,
-                    child: FlatButton(
-                      color: HexColor(FlipperColors.blue),
-                      onPressed: () {},
-                      child: Text(
-                        "Tickets",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 40),
+                  // SizedBox(
+                  //   height: 120,
+                  //   child: FlatButton(
+                  //     color: HexColor(FlipperColors.blue),
+                  //     onPressed: () {},
+                  //     child: Text(
+                  //       "Tickets",
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //         fontSize: 20,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(width: 70),
                   //todo: on crick of the charge should record active order as status=completed,
                   //todo: clean carts so it does not appear
                   SizedBox(

@@ -24,13 +24,34 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _nextPage(int delta) {
+    final int newIndex = _tabController.index + delta;
+    if (newIndex < 0 || newIndex >= _tabController.length) return;
+    _tabController.animateTo(newIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: widget.vm.tab,
+      initialIndex: 1,
       length: 2,
       child: Scaffold(
         body: Scaffold(
@@ -42,9 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Colors.white,
+            elevation: 0,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.credit_card),
+                icon: Icon(Icons.keyboard),
                 title: Text('POS'),
               ),
               BottomNavigationBarItem(
@@ -55,6 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
             selectedItemColor: Colors.amber[800],
             currentIndex: widget.vm.tab,
             onTap: (num) {
+              if (num == 0) {
+                _nextPage(1);
+              } else {
+                _nextPage(-1);
+              }
+              // _nextPage(num);
               StoreProvider.of<AppState>(context)
                   .dispatch(CurrentTab(tab: num));
               StoreProvider.of<AppState>(context)
@@ -62,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           body: TabBarView(
+            controller: _tabController,
             children: <Widget>[
               Poswidget(),
               ProductScreen(),

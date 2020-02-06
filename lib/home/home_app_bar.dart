@@ -53,7 +53,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                           );
                         },
                         child: Text(
-                          snapshot.data == null
+                          snapshot.data == null || quantity == 0
                               ? S.of(context).noSale
                               : S.of(context).currentSale +
                                   "[" +

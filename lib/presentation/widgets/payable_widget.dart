@@ -5,11 +5,16 @@ import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class PayableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var payable = new MoneyMaskedTextController(
+        leftSymbol: '\RWF ', decimalSeparator: ".");
+    payable.updateValue(0);
+
     return StoreConnector<AppState, CommonViewModel>(
       distinct: true,
       converter: CommonViewModel.fromStore,
@@ -21,12 +26,14 @@ class PayableWidget extends StatelessWidget {
           child: StreamBuilder(
             stream: vm.database.cartDao.getCarts(vm.order.id),
             builder: (context, AsyncSnapshot<List<CartTableData>> snapshot) {
-              var payable = snapshot.data == null
+              int v = snapshot.data == null
                   ? 0
                   : snapshot.data.fold(0, (a, b) => a + (b.count * b.price));
+
+              payable.updateValue(v.toDouble());
               return Row(
                 children: <Widget>[
-                  SizedBox(width: 40),
+                  SizedBox(width: 10),
                   // SizedBox(
                   //   height: 120,
                   //   child: FlatButton(
@@ -47,19 +54,36 @@ class PayableWidget extends StatelessWidget {
                   SizedBox(
                     height: 120,
                     child: FlatButton(
-                      color: HexColor(FlipperColors.blue),
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            SavePayment(note: "note", cashReceived: payable));
-                      },
-                      child: Text(
-                        "Charge Frw " + payable.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
+                        color: HexColor(FlipperColors.blue),
+                        onPressed: () {
+                          StoreProvider.of<AppState>(context).dispatch(
+                            SavePayment(
+                              note: "note",
+                              cashReceived: 0,
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Charge",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              payable.text,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            )
+                          ],
+                        )),
                   )
                 ],
               );

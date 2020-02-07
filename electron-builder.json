@@ -32,26 +32,15 @@
     "icon":"dist/assets/icon/win/icon.ico",
     "legalTrademarks": "(c) 2020 flipper.rw",
      "publisherName": "Flipper Litd",
-    "target": ["nsis"],
-    "arch": [
-      "x64",
-      "ia32"
-    ]
+    "target": ["nsis,portable"]
   },
   "mac": {
-    "legalTrademarks": "(c) 2020 flipper.rw",
-    "publisherName": "Flipper Litd",
     "icon":"dist/assets/icon/mac/icon.icns",
     "target": [
-      "pkg",
-      "dmg",
-      "zip",
-      "mas"
+      "dmg","zip"
     ]
   },
   "linux": {
-    "legalTrademarks": "(c) 2020 flipper.rw",
-    "publisherName": "Flipper Litd",
     "icon":"dist/assets/icon/linux/icon.png",
     "target": [
       "AppImage",

@@ -56,7 +56,9 @@ class CreateOptionsWidget extends StatelessWidget {
                       "Dismiss",
                       style: AppTheme.dismiss,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Router.navigator.pop();
+                    },
                   ),
                 ),
               )

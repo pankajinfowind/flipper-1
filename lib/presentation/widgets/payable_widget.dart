@@ -44,20 +44,25 @@ class PayableWidget extends StatelessWidget {
                       },
                       child: Row(
                         children: <Widget>[
-                          Center(
-                            child: Text(
-                              "Charge  ",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            payable.text,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(85, 0, 0, 0),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  "Charge  ",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 28,
+                                  ),
+                                ),
+                                Text(
+                                  payable.text,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                )
+                              ],
                             ),
                           )
                         ],

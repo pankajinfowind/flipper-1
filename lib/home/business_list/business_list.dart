@@ -18,7 +18,7 @@ class BusinessList extends StatefulWidget {
 }
 
 class _BusinessListState extends State<BusinessList> {
-  bool _calendarSelected = false;
+  bool _businessSelected = false;
 
   _buildFirstSectionFlipperLogo(BuildContext context) {
     return Container(
@@ -27,19 +27,20 @@ class _BusinessListState extends State<BusinessList> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Container(
-                child: Row(children: <Widget>[
-              ..._buildSelectionHighlight(_calendarSelected, Colors.white),
-              _selectableListItem(
-                  userIcon: Text(widget.vm.user.username.length > 2
-                      ? widget.vm.user.username.substring(0, 1).toUpperCase()
-                      : widget.vm.user.username.toUpperCase()),
-                  isSquareShape: _calendarSelected,
-                  action: () {
-                    setState(() {
-                      _calendarSelected = true;
-                    });
-                  }),
-            ])),
+              child: Row(children: <Widget>[
+                // ..._buildSelectionHighlight(_businessSelected, Colors.white),
+                _selectableListItem(
+                    userIcon: Text(widget.vm.user.username.length > 2
+                        ? widget.vm.user.username.substring(0, 1).toUpperCase()
+                        : widget.vm.user.username.toUpperCase()),
+                    isSquareShape: _businessSelected,
+                    action: () {
+                      setState(() {
+                        _businessSelected = true;
+                      });
+                    }),
+              ]),
+            ),
             Padding(
               padding: EdgeInsets.only(
                 top: _Style.padding,

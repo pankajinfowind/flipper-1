@@ -11,6 +11,7 @@ import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/item.dart';
+import 'package:flipper/model/key_pad.dart';
 import 'package:flipper/model/order.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
@@ -94,6 +95,9 @@ abstract class CommonViewModel
   @nullable
   User get user;
 
+  @nullable
+  KeyPad get keypad;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -156,6 +160,8 @@ abstract class CommonViewModel
       ..cartQuantities = store.state.cartQuantities
       ..order = store.state.order == null ? null : store.state.order.toBuilder()
       ..user = store.state.user == null ? null : store.state.user.toBuilder()
+      ..keypad =
+          store.state.keypad == null ? null : store.state.keypad.toBuilder()
       ..branches = store.state.branches);
   }
 }

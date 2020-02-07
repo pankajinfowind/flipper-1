@@ -43,7 +43,7 @@ dependencies:
   flutter_circular_chart: ^0.1.0
   fluttertoast: ^3.1.3
   #  pusher_websocket_flutter: ^0.1.1
-  #  vibration: 1.2.2 #error
+  vibration: 1.2.3
   #   Redux dependencies
   redux: ^3.0.0
   #fluttercouch:

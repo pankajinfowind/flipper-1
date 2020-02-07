@@ -9,28 +9,30 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var moneyFormat = new MoneyMaskedTextController(leftSymbol: '\$');
-    //TODO: The change should be updated
-    moneyFormat.updateValue(500);
+
+    moneyFormat.updateValue(0);
+    //use storeconnector here and get the value broadcasted from store append each at the end of queue
 
     return Column(children: <Widget>[
       Container(
         width: 350,
         child: TextField(
-            style: TextStyle(
-              fontSize: 25.0,
-              color: Colors.blueAccent,
-            ),
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                prefixIcon: Icon(Icons.search),
-                hintText: "Search product",
-                border: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.blueAccent, width: 0.0),
-                    borderRadius: BorderRadius.circular(0.0)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 0.0),
-                    borderRadius: BorderRadius.circular(0.0)))),
+          style: TextStyle(
+            fontSize: 25.0,
+            color: Colors.blueAccent,
+          ),
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            prefixIcon: Icon(Icons.search),
+            hintText: "Search product",
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueAccent, width: 0.0),
+                borderRadius: BorderRadius.circular(0.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white, width: 0.0),
+                borderRadius: BorderRadius.circular(0.0)),
+          ),
+        ),
       ),
       SizedBox(
         height: 10,

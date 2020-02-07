@@ -27,6 +27,8 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, CurrentActiveSaleItem>(_onCurrentSaleItem),
   TypedReducer<AppState, Carts>(_onCarts),
   TypedReducer<AppState, CartQuantity>(_onCartQuantity),
+  TypedReducer<AppState, KayPadAction>(_onKeyPad),
+  TypedReducer<AppState, CleanKeyPad>(_onCleanKeyPad),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
@@ -133,4 +135,12 @@ AppState _onCarts(AppState state, Carts action) {
 
 AppState _onCartQuantity(AppState state, CartQuantity action) {
   return state.rebuild((a) => a..cartQuantities = action.quantity);
+}
+
+AppState _onKeyPad(AppState state, KayPadAction action) {
+  return state.rebuild((a) => a..keypad = action.keyPad.toBuilder());
+}
+
+AppState _onCleanKeyPad(AppState state, CleanKeyPad action) {
+  return state.rebuild((a) => a..keypad = null);
 }

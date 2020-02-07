@@ -10,6 +10,7 @@ import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/item.dart';
+import 'package:flipper/model/key_pad.dart';
 import 'package:flipper/model/order.dart';
 import 'package:flipper/model/permission.dart';
 import 'package:flipper/model/price.dart';
@@ -117,6 +118,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   int get cartQuantities;
   @nullable
   Order get order;
+
+  @nullable
+  KeyPad get keypad;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 

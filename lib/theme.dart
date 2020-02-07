@@ -11,7 +11,7 @@ class AppTheme {
   static const fontFamilyPoppinsRegular = "Poppins-Regular";
   static const fontFamilyEdmondsansRegular = "Edmondsans-Regular";
   static const fontFamilyEdmondsansMedium = "Edmondsans-Medium";
-  static const fontFamilyEdmondsansBold = "Edmondsans-Bold";
+  static const fontFamilyHeeboThin = "Heebo-Thin";
 
   static const colorDarkBlue = Color.fromRGBO(23, 38, 157, 1.0);
   static const colorDarkBlueFont = Color.fromRGBO(4, 24, 138, 1.0);
@@ -38,15 +38,20 @@ class AppTheme {
       accentColor: Colors.black,
       textTheme: TextTheme(
           body1: TextStyle(
-        color: Colors.black,
+        // color: Colors.black,
+        color: Color.fromRGBO(0, 0, 0, 0.8),
+        fontSize: 15,
+        fontStyle: FontStyle.normal,
+
+        fontWeight: FontWeight.bold,
         fontFamily: fontFamily,
-      )), //TODO: customize later
+      )), //todo: customize later
       canvasColor: HexColor("#130f1f"), //this affect the
     );
   }
 
 // HexColor("#130f1f")
-  static const fontFamily = "Heboo-Regular";
+  static const fontFamily = "Heebo-Thin";
 
   /// Calendar
 
@@ -54,7 +59,7 @@ class AppTheme {
     return theme.textTheme.headline.copyWith(
       color: colorDarkBlue,
       fontSize: 16,
-      fontFamily: fontFamilyEdmondsansBold,
+      fontFamily: fontFamilyHeeboThin,
     );
   }
 
@@ -84,60 +89,10 @@ class AppTheme {
 
   ///
 
-  static TextStyle get eventIconMemberTitle {
-    return theme.textTheme.headline.copyWith(
-      color: Colors.white,
-      fontSize: 11,
-      fontFamily: fontFamilyEdmondsansBold,
-    );
-  }
-
-  static TextStyle get eventIconTitle {
-    return theme.textTheme.headline.copyWith(
-      color: colorDarkBlueFont,
-      fontSize: 11,
-      fontFamily: fontFamilyEdmondsansBold,
-    );
-  }
-
-  static TextStyle get eventIconMemberSubTitle {
-    return theme.textTheme.headline.copyWith(
-      color: Colors.white,
-      fontSize: 8,
-      height: 0.7,
-      fontFamily: fontFamilyEdmondsansBold,
-    );
-  }
-
-  static TextStyle get eventIconSubTitle {
-    return theme.textTheme.headline.copyWith(
-      color: colorDarkBlueFont,
-      fontSize: 8,
-      height: 0.7,
-      fontFamily: fontFamilyEdmondsansBold,
-    );
-  }
-
-  static TextStyle get channelTitle {
-    return theme.textTheme.headline.copyWith(
-      color: Colors.black,
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansBold,
-    );
-  }
-
-  static TextStyle get channelSubTitle {
-    return TextStyle(
-      color: AppTheme.colorTextDisabled,
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansRegular,
-    );
-  }
-
   static get circleMenuAbbreviationText {
     return TextStyle(
       fontSize: 16 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansBold,
+      fontFamily: fontFamilyHeeboThin,
       color: colorTextEnabled,
     );
   }
@@ -146,7 +101,7 @@ class AppTheme {
     return theme.textTheme.headline.copyWith(
       color: colorDarkBlueFont,
       fontSize: 24,
-      fontFamily: fontFamilyEdmondsansBold,
+      fontFamily: fontFamilyHeeboThin,
     );
   }
 
@@ -154,24 +109,7 @@ class AppTheme {
     return theme.textTheme.headline.copyWith(
       color: colorDarkBlueFont,
       fontSize: 16,
-      fontFamily: fontFamilyEdmondsansBold,
-    );
-  }
-
-  static TextStyle get circleSectionChannelTitle {
-    return theme.textTheme.headline.copyWith(
-      color: colorDarkBlue,
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansMedium,
-    );
-  }
-
-  static TextStyle get circleSectionTitle {
-    return theme.textTheme.headline.copyWith(
-      color: colorDarkBlueFont.withOpacity(0.4),
-      fontSize: 12,
-      letterSpacing: 1,
-      fontFamily: fontFamilyEdmondsansBold,
+      fontFamily: fontFamilyHeeboThin,
     );
   }
 
@@ -192,74 +130,10 @@ class AppTheme {
     );
   }
 
-  static TextStyle get notificationBody {
-    return theme.textTheme.body1.copyWith(
-      color: Colors.white,
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansRegular,
-    );
-  }
-
   static TextStyle get buttonTextStyle {
     return TextStyle(
       fontSize: 16 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansBold,
-    );
-  }
-
-  static TextStyle get buttonMediumTextStyle {
-    return TextStyle(
-      fontSize: 16 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansMedium,
-    );
-  }
-
-  static TextStyle get inputHintTextStyle {
-    return TextStyle(
-      fontSize: 16 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansRegular,
-      color: colorTextDisabled,
-    );
-  }
-
-  static TextStyle get inputTextStyle {
-    return TextStyle(
-      fontSize: 16 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansRegular,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get optionTextStyle {
-    return TextStyle(
-      fontSize: 20,
-      fontFamily: fontFamilyEdmondsansMedium,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get messageAuthorNameTextStyle {
-    return TextStyle(
-      fontSize: 16 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansBold,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get messageTimestampTextStyle {
-    return TextStyle(
-      fontSize: 12 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansRegular,
-      color: colorTextDisabled,
-    );
-  }
-
-  static TextStyle get messageTextStyle {
-    return TextStyle(
-      fontSize: 16 * pixelMultiplier,
-      height: 1.5,
-      fontFamily: fontFamilyEdmondsansRegular,
-      color: colorTextEnabled,
+      fontFamily: fontFamilyHeeboThin,
     );
   }
 
@@ -282,7 +156,7 @@ class AppTheme {
   static get emojiReactionTextStyle {
     return TextStyle(
       fontSize: 12 * pixelMultiplier,
-      fontFamily: fontFamilyEdmondsansBold,
+      fontFamily: fontFamilyHeeboThin,
       color: colorTextEnabled,
     );
   }
@@ -290,23 +164,7 @@ class AppTheme {
   static TextStyle get appBarTitleTextStyle {
     return TextStyle(
       fontSize: 20,
-      fontFamily: fontFamilyEdmondsansMedium,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get headerBarSale {
-    return TextStyle(
-      fontSize: 13,
-      fontFamily: fontFamilyEdmondsansMedium,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get appBarTitle2TextStyle {
-    return TextStyle(
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansMedium,
+      fontFamily: fontFamilyHeeboThin,
       color: colorTextEnabled,
     );
   }
@@ -322,7 +180,7 @@ class AppTheme {
   static TextStyle get appBarActionTextStyle {
     return TextStyle(
       fontSize: 16,
-      fontFamily: fontFamilyEdmondsansBold,
+      fontFamily: fontFamilyHeeboThin,
       color: colorTextEnabled,
     );
   }
@@ -330,99 +188,9 @@ class AppTheme {
   static TextStyle get appBarActionDisabledTextStyle {
     return TextStyle(
       fontSize: 16,
-      fontFamily: fontFamilyEdmondsansBold,
+      fontFamily: fontFamilyHeeboThin,
       color: colorTextDisabled,
     );
-  }
-
-  static TextStyle get inputMediumTextStyle {
-    return TextStyle(
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansMedium,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get switchTitleTextStyle {
-    return TextStyle(
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansMedium,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get switchSubtitleTextStyle {
-    return TextStyle(
-      fontSize: 12,
-      fontFamily: fontFamilyEdmondsansMedium,
-      color: colorGrey128,
-    );
-  }
-
-  static TextStyle get topicDetailsNameTextStyle {
-    return TextStyle(
-      fontSize: 24,
-      fontFamily: fontFamilyEdmondsansBold,
-      color: colorDarkBlueFont,
-    );
-  }
-
-  static TextStyle get topicDetailsDescriptionTextStyle {
-    return TextStyle(
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansRegular,
-      color: colorDarkBlueFont,
-    );
-  }
-
-  static TextStyle get topicDetailsTabTextStyle {
-    return TextStyle(
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansBold,
-      color: colorDarkBlueFont,
-    );
-  }
-
-  static TextStyle get topicDetailsItemTextStyle {
-    return TextStyle(
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansBold,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get topicDetailsItemSubtitleTextStyle {
-    return TextStyle(
-      fontSize: 16,
-      fontFamily: fontFamilyEdmondsansRegular,
-      color: colorTextEnabled,
-    );
-  }
-
-  static TextStyle get dialogRsvpTextStyle {
-    return TextStyle(
-      fontFamily: AppTheme.fontFamilyEdmondsansBold,
-      fontSize: 16,
-    );
-  }
-
-  static TextStyle get plusManyPicturesTextStyle {
-    return TextStyle(
-      fontFamily: AppTheme.fontFamilyPoppinsRegular,
-      fontSize: 32,
-    );
-  }
-
-  static TextStyle get dialogRsvpYesTextStyle {
-    return dialogRsvpTextStyle.apply(color: AppTheme.colorMintGreen);
-  }
-
-  static TextStyle get dialogRsvpMaybeTextStyle {
-    return dialogRsvpTextStyle.apply(color: AppTheme.colorDarkBlue);
-  }
-
-  static TextStyle get dialogRsvpNoTextStyle {
-    return dialogRsvpTextStyle.apply(color: AppTheme.colorRed);
   }
 
   static InputDecorationTheme get inputDecorationEmptyTheme {

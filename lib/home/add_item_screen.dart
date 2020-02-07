@@ -83,7 +83,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     child: Container(
                       width: 300,
                       child: TextFormField(
-                        style: TextStyle(color: Colors.black),
                         validator: Validators.isStringHasMoreChars,
                         onChanged: (name) {
                           if (name == '') {
@@ -186,7 +185,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       width: 300,
                       child: TextFormField(
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.black),
                         validator: Validators.isStringHasMoreChars,
                         onSaved: (name) {},
                         onChanged: (price) {
@@ -202,7 +200,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     child: Container(
                       width: 300,
                       child: TextFormField(
-                        style: TextStyle(color: Colors.black),
                         validator: Validators.isStringHasMoreChars,
                         onSaved: (name) {},
                         decoration: InputDecoration(
@@ -258,7 +255,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     child: Container(
                       width: 300,
                       child: TextFormField(
-                        style: TextStyle(color: Colors.black),
                         validator: Validators.isStringHasMoreChars,
                         onSaved: (name) {},
                         onChanged: (description) {
@@ -386,7 +382,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           ? S.of(context).receiveStock
                           : variations[i].stockValue.toString() +
                               S.of(context).inStock,
-                      style: TextStyle(color: HexColor(FlipperColors.blueText)),
                     ),
                     onPressed: () {
                       Router.navigator.pushNamed(Router.receiveStock,

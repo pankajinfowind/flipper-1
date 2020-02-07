@@ -118,7 +118,7 @@ class _InAppNotificationWidgetState extends State<InAppNotificationWidget>
                     Text(
                       "${widget._vm.inAppNotification.userName}: ${widget._vm.inAppNotification.message}",
                       overflow: TextOverflow.ellipsis,
-                      style: AppTheme.notificationBody,
+                      // style: AppTheme.notificationBody,
                     )
                   ],
                 ),

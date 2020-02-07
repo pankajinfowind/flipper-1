@@ -62,14 +62,15 @@ class _FlipperAppState extends State<FlipperApp> {
     return StoreProvider(
       store: store,
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [S.delegate],
-          supportedLocales: S.delegate.supportedLocales,
-          title: "Flipper",
-          theme: AppTheme.theme,
-          navigatorKey: Router.navigatorKey,
-          initialRoute: Router.splashScreen,
-          onGenerateRoute: Router.onGenerateRoute),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [S.delegate],
+        supportedLocales: S.delegate.supportedLocales,
+        title: "Flipper",
+        theme: AppTheme.theme,
+        navigatorKey: Router.navigatorKey,
+        initialRoute: Router.splashScreen,
+        onGenerateRoute: Router.onGenerateRoute,
+      ),
     );
   }
 }

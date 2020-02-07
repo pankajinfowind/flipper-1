@@ -10,7 +10,6 @@ import 'package:flipper/home/create_category_input_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/edit_quantity_item_screen.dart';
 import 'package:flipper/home/receive_stock.dart';
-import 'package:flipper/home/sale_screen.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/home/take_picture_screen.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
@@ -29,8 +28,8 @@ class $Router {
   AfterSplash afterSplash;
   @MaterialRoute(fullscreenDialog: true)
   BottomSheetScreen bottom;
-  @MaterialRoute(fullscreenDialog: true)
-  SaleScreen saleScreen;
+  // @MaterialRoute(fullscreenDialog: true)
+  // SaleScreen saleScreen;
 
   @MaterialRoute(fullscreenDialog: true)
   SettingUpApplicationScreen settingUpApplicationScreen;

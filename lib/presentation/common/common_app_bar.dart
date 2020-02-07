@@ -65,7 +65,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                     : Text(
                         _title,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.black),
+                        style: AppTheme.appBarTitleTextStyle,
                       ),
                 trailing: _showActionButton == null || !_showActionButton
                     ? Text("")

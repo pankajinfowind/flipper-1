@@ -30,7 +30,9 @@ class _BusinessListState extends State<BusinessList> {
                 child: Row(children: <Widget>[
               ..._buildSelectionHighlight(_calendarSelected, Colors.white),
               _selectableListItem(
-                  icon: Image.asset("assets/graphics/drawer/events.png"),
+                  userIcon: Text(widget.vm.user.username.length > 2
+                      ? widget.vm.user.username.substring(0, 1).toUpperCase()
+                      : widget.vm.user.username.toUpperCase()),
                   isSquareShape: _calendarSelected,
                   action: () {
                     setState(() {
@@ -60,9 +62,9 @@ class _BusinessListState extends State<BusinessList> {
             _Style.defaultPadding,
             _GroupSettingsButton(
                 Image.asset("assets/graphics/drawer/create_topic.png"), () {
-              //TODO: fix overflow when loading more than 7 businesses for now we are not alloing user to create more than2 business
+              //todo: fix overflow when loading more than 7 businesses for now we are not alloing user to create more than2 business
               if (widget.vm.businesses.length >= 3) {
-                //TODO:show a toast here that we can not create additional business...
+                //todo:show a toast here that we can not create additional business...
                 return;
               }
               Router.navigator.pushNamed(Router.createBusiness);
@@ -154,8 +156,8 @@ class _GroupSettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: _Style.circleButtonWidth,
-        height: _Style.circleButtonWidth,
+        width: _Style.flipperButtonWidth,
+        height: _Style.flipperButtonWidth,
         child: FittedBox(
             fit: BoxFit.cover,
             child: FlatButton(
@@ -214,15 +216,15 @@ class _GroupButton extends StatelessWidget {
 _selectableListItem({
   Color color = Colors.white,
   String text = "",
-  Image icon,
+  Widget userIcon,
   Function action,
   bool updateIndicatorVisible = false,
   bool isSquareShape = false,
 }) {
   return AnimatedContainer(
     duration: Duration(milliseconds: 100),
-    width: _Style.circleButtonWidth,
-    height: _Style.circleButtonWidth,
+    width: _Style.flipperButtonWidth,
+    height: _Style.flipperButtonWidth,
     decoration: BoxDecoration(
       color: color,
       borderRadius:
@@ -232,15 +234,14 @@ _selectableListItem({
       overflow: Overflow.visible,
       children: <Widget>[
         InkWell(
-          child: Center(
-              child: Container(
-            alignment: Alignment(0, 0.2),
-            width: _Style.circleButtonWidth,
-            height: _Style.circleButtonWidth,
-            child: icon == null
+          child: Container(
+            alignment: Alignment(0, 0),
+            width: _Style.flipperButtonWidth,
+            height: _Style.flipperButtonWidth,
+            child: userIcon == null
                 ? Text(text, style: AppTheme.circleMenuAbbreviationText)
-                : icon,
-          )),
+                : userIcon,
+          ),
           onTap: action,
         ),
         Visibility(
@@ -269,7 +270,7 @@ List<Widget> _buildSelectionHighlight(isSelected, circleColor) {
             bottomRight: Radius.circular(_Style.circleHighlightBorderRadius)),
         child: Container(
           width: _Style.circleHighlightWidth,
-          height: _Style.circleButtonWidth,
+          height: _Style.flipperButtonWidth,
           color: circleColor,
         ));
     widgets.add(highlight);
@@ -285,7 +286,7 @@ List<Widget> _buildSelectionHighlight(isSelected, circleColor) {
 
 class _Style {
   static const listWidth = 72.0;
-  static const circleButtonWidth = 44.0;
+  static const flipperButtonWidth = 44.0;
 
   static const circleHighlightWidth = 4.0;
   static const circleHighlightBorderRadius = 10.0;

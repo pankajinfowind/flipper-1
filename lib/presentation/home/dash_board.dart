@@ -40,6 +40,7 @@ class _DashBoardState extends State<DashBoard> {
       builder: (context, vm) {
         if (vm.hasUser) {
           final we = Scaffold(
+            backgroundColor: Colors.black,
             key: _scaffoldKey,
             body: SlideOutScreen(
               main: HomeScreen(

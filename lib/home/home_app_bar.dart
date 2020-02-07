@@ -25,50 +25,51 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (context, vm) {
         return SafeArea(
           top: true,
-          child: Container(
-            height: AppTheme.appBarSize,
-            child: Row(
-              children: <Widget>[
-                _hamburger(),
-                SizedBox(
-                  height: 120,
-                  width: 60,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: StreamBuilder(
-                    stream: vm.database.cartDao.getCarts(vm.order.id),
-                    builder:
-                        (context, AsyncSnapshot<List<CartTableData>> snapshot) {
-                      var quantity = snapshot.data == null
-                          ? 0
-                          : snapshot.data.fold(0, (a, b) => a + b.count);
-                      return FlatButton(
-                        onPressed: () {
-                          Router.navigator.pushNamed(
-                            Router.cartDetailsScreen,
-                            arguments: CartDetailsScreenArguments(
-                              carts: snapshot.data,
+          child: Center(
+            child: Container(
+              height: AppTheme.appBarSize,
+              child: Row(
+                children: <Widget>[
+                  _hamburger(),
+                  Align(
+                    alignment: Alignment.center,
+                    child: StreamBuilder(
+                      stream: vm.database.cartDao.getCarts(vm.order.id),
+                      builder: (context,
+                          AsyncSnapshot<List<CartTableData>> snapshot) {
+                        var quantity = snapshot.data == null
+                            ? 0
+                            : snapshot.data.fold(0, (a, b) => a + b.count);
+                        return FlatButton(
+                          onPressed: () {
+                            Router.navigator.pushNamed(
+                              Router.cartDetailsScreen,
+                              arguments: CartDetailsScreenArguments(
+                                carts: snapshot.data,
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
+                            child: Text(
+                              snapshot.data == null || quantity == 0
+                                  ? S.of(context).noSale
+                                  : S.of(context).currentSale +
+                                      "[" +
+                                      quantity.toString() +
+                                      "]",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 19,
+                              ),
                             ),
-                          );
-                        },
-                        child: Text(
-                          snapshot.data == null || quantity == 0
-                              ? S.of(context).noSale
-                              : S.of(context).currentSale +
-                                  "[" +
-                                  quantity.toString() +
-                                  "]",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 19,
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

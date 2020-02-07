@@ -130,6 +130,30 @@ class AppTheme {
     );
   }
 
+  static TextStyle get createItem {
+    return theme.textTheme.body1.copyWith(
+      color: Colors.white,
+      fontSize: 16 * pixelMultiplier,
+      fontFamily: fontFamilyHeeboThin,
+    );
+  }
+
+  static TextStyle get createDiscount {
+    return theme.textTheme.body1.copyWith(
+      color: Colors.black,
+      fontSize: 16 * pixelMultiplier,
+      fontFamily: fontFamilyHeeboThin,
+    );
+  }
+
+  static TextStyle get dismiss {
+    return theme.textTheme.body1.copyWith(
+      color: Colors.black,
+      fontSize: 16 * pixelMultiplier,
+      fontFamily: fontFamilyHeeboThin,
+    );
+  }
+
   static TextStyle get buttonTextStyle {
     return TextStyle(
       fontSize: 16 * pixelMultiplier,

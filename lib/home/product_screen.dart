@@ -4,7 +4,6 @@ import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/home/widget/create_options_widget.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
-import 'package:flipper/presentation/widgets/payable_widget.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';

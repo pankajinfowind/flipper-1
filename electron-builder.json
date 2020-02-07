@@ -1,40 +1,62 @@
 {
+  "appId": "com.flipper",
   "productName": "Flipper",
   "directories": {
     "output": "release/"
   },
-    "files": [
-        "**/*",
-        "!**/*.ts",
-        "!*.code-workspace",
-        "!LICENSE.md",
-        "!package.json",
-        "!package-lock.json",
-        "!src/",
-        "!e2e/",
-        "!hooks/",
-        "!angular.json",
-        "!_config.yml",
-        "!karma.conf.js",
-        "!tsconfig.json",
-        "!tslint.json"
-    ],
+  "publish": {
+    "provider": "github",
+    "owner": "yegobox",
+    "repo": "flipper",
+    "vPrefixedTagName": true
+  },
+  "files": [
+    "**/*",
+    "!*.ts",
+    "!*.code-workspace",
+    "!LICENSE.md",
+    "!package.json",
+    "!package-lock.json",
+    "!src/",
+    "!e2e/",
+    "!hooks/",
+    "!.angular-cli.json",
+    "!_config.yml",
+    "!karma.conf.js",
+    "!tsconfig.json",
+    "!tslint.json"
+    
+  ],
   "win": {
-    "icon": "dist",
-    "target": [
-      "portable"
+    "asar": true,
+    "icon":"dist/assets/icon/win/icon.ico",
+    "legalTrademarks": "(c) 2020 flipper.rw",
+     "publisherName": "Flipper Litd",
+    "target": ["nsis"],
+    "arch": [
+      "x64",
+      "ia32"
     ]
   },
   "mac": {
-    "icon": "dist",
+    "legalTrademarks": "(c) 2020 flipper.rw",
+    "publisherName": "Flipper Litd",
+    "icon":"dist/assets/icon/mac/icon.icns",
     "target": [
-      "dmg"
+      "pkg",
+      "dmg",
+      "zip",
+      "mas"
     ]
   },
   "linux": {
-    "icon": "dist",
+    "legalTrademarks": "(c) 2020 flipper.rw",
+    "publisherName": "Flipper Litd",
+    "icon":"dist/assets/icon/linux/icon.png",
     "target": [
-      "AppImage"
+      "AppImage",
+      "deb",
+      "tar.xz"
     ]
   }
 }

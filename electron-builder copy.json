@@ -1,0 +1,54 @@
+{
+  "appId": "com.flipper",
+  "productName": "Flipper",
+  "copyright": "Copyright © 2020 Yegobox",
+  "directories": {
+    "output": "release/"
+  },
+    "files": [
+        "**/*",
+        "!**/*.ts",
+        "!*.code-workspace",
+        "!LICENSE.md",
+        "!package.json",
+        "!package-lock.json",
+        "!src/",
+        "!e2e/",
+        "!hooks/",
+        "!angular.json",
+        "!_config.yml",
+        "!karma.conf.js",
+        "!tsconfig.json",
+        "!tslint.json"
+    ],
+  "win": {
+    "asar": true,
+    "icon":"dist/assets/icon/win/icon.ico",
+    "legalTrademarks": "(c) 2020 flipper.rw",
+     "publisherName": "Flipper Litd",
+    "target": [
+      "portable",
+      "nsis",
+      "nsis-web"
+    ]
+  },
+  "mac": {
+    "icon":"dist/assets/icon/mac/icon.icns",
+    "category": "public.app-category.utilities",
+    "entitlements": "build/entitlements.mac.plist",
+    "target": [
+      "pkg",
+      "dmg",
+      "zip",
+      "mas"
+    ]
+  },
+  "linux": {
+    "icon":"dist/assets/icon/linux/icon.png",
+    "target": [
+      "AppImage",
+      "deb",
+      "tar.xz"
+    ]
+  }
+}

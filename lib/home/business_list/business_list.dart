@@ -188,7 +188,7 @@ class _GroupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _circleColor =
-        HexColor("#f5a623"); //TODO: make this color comes from setting in v.2
+        HexColor("#f5a623"); //todo: make this color comes from setting in v.2
     final _groupText = business.abbreviation.substring(0, 2).toUpperCase();
 
     if (business.isActive) {
@@ -252,8 +252,12 @@ _selectableListItem({
             right: -2,
             height: _Style.circleUnreadIndicatorWidth,
             width: _Style.circleUnreadIndicatorWidth,
-            child: Image.asset(
-              "assets/graphics/update_indicator_darkgreen.png",
+            child: ClipOval(
+              child: Container(
+                color: HexColor("#44bd32"),
+                height: 20.0, // height of the button
+                width: 20.0, // width of the button
+              ),
             ),
           ),
         ),

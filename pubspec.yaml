@@ -119,7 +119,6 @@ flutter:
     - assets/graphics/input/icon_add_content.png
     - assets/graphics/updates_indicator.png
     - assets/graphics/updates_indicator_white.png
-    - assets/graphics/update_indicator_darkgreen.png
     - assets/graphics/drawer/create_topic.png
     - assets/graphics/drawer/account.png
     - assets/graphics/drawer/settings.png

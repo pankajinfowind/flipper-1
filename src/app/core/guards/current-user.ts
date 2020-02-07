@@ -47,11 +47,9 @@ export class CurrentUser {
 
 
   public getRedirectUri(): string {
-    let uri = this.activeMenu().route;
-    if (this.redirectUri) {
-      uri = this.redirectUri;
-      this.redirectUri = null;
-    }
+    let uri = null;
+    uri = this.redirectUri;
+    this.redirectUri = null;
     return uri;
   }
 

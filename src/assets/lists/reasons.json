@@ -1,35 +1,40 @@
 [
 	
-	{
-		"name": "Stock Canceled",
-		"value": "Canceled"
-	},
+	
 	{
 		"name": "Stock Received",
 		"value": "Received"
 	},
 	{
-		"name": "Stock Lost",
+		"name": "Lost",
 		"value": "Lost"
 	},
 	{
-		"name": "Stock Damaged",
+		"name":"Thief",
+		"value": "Thief"
+	},
+	{
+		"name": "Damaged",
 		"value": "Damaged"
 	},
 	{
-		"name": "Stock Re-counted",
+		"name": "Inventory Re-counted",
 		"value": "Re-counted"
 	},
 	{
-		"name": "Stock Restocked",
+		"name": "Restocked Return",
 		"value": "Restocked"
 	},
 	{
-		"name": "Stock Sold",
+		"name": "Sold",
 		"value": "Sold"
 	},
 	{
-		"name": "Stock Transferred",
+		"name": "Transferred",
 		"value": "Transferred"
+	},
+	{
+		"name": "Canceled",
+		"value": "Canceled"
 	}
 ]

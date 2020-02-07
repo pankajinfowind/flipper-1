@@ -10,5 +10,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   constructor(public electronService: ElectronService,private translate: TranslateService) {
              this.translate.setDefaultLang('en');
+             console.log('am herrr');
     }
 }

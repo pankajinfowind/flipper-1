@@ -54,6 +54,7 @@ font-family: 'Roboto', 'Heebo', sans-serif!important;
                               supported by Chrome, Opera and Firefox */
 }
 
+
 :host {
   @include block-filler();
   @include compact-table();
@@ -419,6 +420,11 @@ button {
   background: 0px 0px;
   border-color: rgb(4, 160, 74) !important;
 }
+.button--dark {
+  color: rgb(27, 29, 28) !important;
+  background: 0px 0px;
+  border-color: rgb(27, 29, 28) !important;
+}
 
 .button--destructive {
   color: rgb(217, 43, 43);
@@ -527,10 +533,4 @@ button {
 }
 .selectBackground{
   background:  #d4eaf5!important;;
-}
-
-
-.row .column-lg .search-card .kbd-hotkeys-button .svg-icon-keyboard{
-  position: relative;
-   bottom: 0!important;
 }

@@ -50,6 +50,10 @@ init() {
   this.hasDraftOrder();
   this.newOrder();
   this.loadVariants();
+  if(this.currentOrder) {
+    this.getOrderDetails(this.currentOrder.id);
+  }
+
 }
   generateCode(): string {
     return this.date.getSeconds() + this.date.getHours() + this.date.getDay() + '' +
@@ -92,24 +96,25 @@ init() {
         const orderDetails: OrderDetails[] = [];
         this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId)
         .forEach(details => {
-
-          const variant: Variant = this.model.find<Variant>(Tables.variants, details.variantId);
-
-          const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
-          .andWhere('branchId', this.defaultBranch.id).first<Stock>();
-
-          const product: Product = this.model.find<Product>(Tables.products, variant.productId);
-          if (stock) {
-            details.stock = stock;
-          }
-          if (variant) {
-            details.variant = variant;
-          }
-          if (product) {
-            details.product = product;
+          let stock: Stock=null;
+          let variant: Variant=null;
+          let product: Product =null;
+          variant = this.model.find<Variant>(Tables.variants, details.variantId);
+          if(variant) {
+             stock = this.query.select(Tables.stocks).where('variantId', variant.id)
+            .andWhere('branchId', this.defaultBranch.id).first<Stock>();
           }
 
-          orderDetails.push(details);
+          if(variant) {
+            product = this.model.find<Product>(Tables.products, variant.productId);
+          }
+
+          details.stock = stock;
+          details.variant = variant;
+          details.product = product;
+
+
+          orderDetails.unshift(details);
         });
         return orderDetails;
       }
@@ -143,14 +148,14 @@ init() {
                       discount: 0,
                       markup: 0
                     };
-              this.variants.push(variation);
-              // if (!stock.canTrackingStock) {
-              //   this.variants.push(variation);
-              //  } else {
-              //       if (stock.canTrackingStock && stock.currentStock > 0) {
-              //             this.variants.push(variation);
-              //       }
-              //  }
+
+              if (!stock.canTrackingStock) {
+                this.variants.push(variation);
+               } else {
+                    if (stock.canTrackingStock && stock.currentStock > 0) {
+                          this.variants.push(variation);
+                    }
+               }
 
             });
          }
@@ -168,7 +173,8 @@ init() {
       filterByValue(arrayOfObject: Variant[], term: any) {
         const query = term.toString().toLowerCase();
         return arrayOfObject.filter((v, i) => {
-          if (v.name.toString().toLowerCase().indexOf(query) >= 0 || v.SKU.toString().toLowerCase().indexOf(query) >= 0
+          if (v.name.toString().toLowerCase().indexOf(query) >= 0
+           ||  v.SKU.toString().toLowerCase().indexOf(query) >= 0
            ||  v.productName.toString().toLowerCase().indexOf(query) >= 0
            ||  v.priceVariant && v.priceVariant.retailPrice.toString().toLowerCase().indexOf(query) >= 0 ) {
             return true;
@@ -202,7 +208,8 @@ init() {
       }
 
 
-      public addToCart(variant: Variant) {
+      public addToCart(event: any) {
+        const variant: Variant=event.variant;
         const orderDetails: OrderDetails = {
           price: variant.priceVariant.retailPrice,
           variantName: variant.name,
@@ -211,7 +218,7 @@ init() {
           stockId: variant.stock.id,
           unit: variant.unit,
           SKU: variant.SKU,
-          quantity: 1,
+          quantity: event.quantity,
           variantId: variant.id,
           orderId: this.setCurrentOrder.id,
           subTotal: variant.priceVariant.retailPrice,
@@ -230,9 +237,9 @@ init() {
          this.createStockHistory();
          this.currentOrder.isDraft = false;
          this.currentOrder.status = STATUS.COMPLETE;
-         this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
-
          this.model.update<Order>(Tables.order, this.currentOrder, this.currentOrder.id);
+         this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
+         this.currentOrder = null;
          this.init();
 
         }
@@ -244,16 +251,14 @@ init() {
         const orderDetails: OrderDetails[] = this.getOrderDetails(this.currentOrder.id);
         if (orderDetails.length) {
           orderDetails.forEach(details => {
-
-            const stock=details;
-            if (stock.stock && stock.stock.id > 0) {
+            if (details.canTrackStock && details.stockId > 0) {
               this.model.create<StockHistory>(Tables.stockHistory, {
-                orderId: stock.orderId,
-                variantId: stock.variantId,
-                variantName: stock.variantName,
-                stockId: stock.stock.id,
+                orderId: details.orderId,
+                variantId: details.variantId,
+                variantName: details.variantName,
+                stockId: details.stockId,
                 reason: 'Sold',
-                quantity: stock.quantity,
+                quantity: details.quantity,
                 isDraft: false,
                 isPreviously: false,
                 syncedOnline: false,
@@ -262,21 +267,18 @@ init() {
                 updatedAt: new Date()
                });
 
-              this.updateStock(stock);
-            } else {
-              console.log('no stock found');
+              this.updateStock(details);
             }
 
           });
-        } else {
-console.log('no order details');
         }
 
       }
       updateStock(stockDetails: OrderDetails) {
-        if (stockDetails.stock && stockDetails.stock.id) {
-          stockDetails.stock.currentStock = stockDetails.stock.currentStock - stockDetails.quantity;
-          this.model.update<Stock>(Tables.stocks, stockDetails.stock, stockDetails.stock.id);
+        const stock: Stock = this.model.find<Stock>(Tables.stocks, stockDetails.stockId);
+        if (stock) {
+          stock.currentStock = stock.currentStock - stockDetails.quantity;
+          this.model.update<Stock>(Tables.stocks, stock, stock.id);
         }
 
       }

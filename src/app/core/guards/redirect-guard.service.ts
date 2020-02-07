@@ -15,7 +15,9 @@ import { MainModelService, Menu, Tables } from '@enexus/flipper-components';
   providedIn: 'root'
 })
 export class RedirectGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private model: MainModelService, private router: Router) {
+  redirected=false;
+  constructor(private currentUser: CurrentUser,
+              private model: MainModelService, private router: Router) {
 
   }
 
@@ -32,17 +34,39 @@ export class RedirectGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private handle(url: string) {
-
-    this.findDefaultMenu();
+    this.currentUser.redirectUri = url;
+    this.activeMenu();
+    if(!this.redirected) {
+      this.redirectByMenuRouterSetted(url);
+    }
     return true;
   }
 
-  findDefaultMenu() {
-    if(!this.model.active<Menu>(Tables.menu)) {
-      const menu=this.model.loadAll<Menu>(Tables.menu)[0];
-      menu.active=true;
-      this.model.update<Menu>(Tables.menu,menu,menu.id);
-      this.router.navigate([menu.route]);
+  redirectByMenuRouterSetted(url) {
+    const activeMenu=this.model.active<Menu>(Tables.menu);
+    let router=null;
+    if(!activeMenu || activeMenu===undefined) {
+      router=url;
+    } else {
+      router=activeMenu.route;
     }
+    if(router) {
+      this.redirected=true;
+      return this.router.navigate([router]);
+    }
+   //
   }
+   activeMenu() {
+     const activemenu=this.model.active<Menu>(Tables.menu);
+     if(!activemenu || activemenu===undefined) {
+          const menu=this.model.loadAll<Menu>(Tables.menu);
+          if(menu.length > 0) {
+            const m=menu[0];
+            m.active=true;
+            this.model.update<Menu>(Tables.menu,m,m.id);
+          }
+        }
+
+   }
+
 }

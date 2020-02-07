@@ -1,5 +1,5 @@
 import 'package:flipper/home/widget/calculator-buttons.dart';
-import 'package:flipper/presentation/widgets/payable_widget.dart';
+
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +22,6 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
     return Scaffold(
       body: Wrap(
         children: <Widget>[
-          Align(
-            child: PayableWidget(),
-          ),
           Container(
             width: MediaQuery.of(context).size.width,
             color: Colors.white30,

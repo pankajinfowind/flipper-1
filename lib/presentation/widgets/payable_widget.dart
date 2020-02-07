@@ -20,8 +20,7 @@ class PayableWidget extends StatelessWidget {
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
         return Container(
-          width: 380,
-          height: 60,
+          height: 66,
           color: HexColor(FlipperColors.blue),
           child: StreamBuilder(
             stream: vm.database.cartDao.getCarts(vm.order.id),
@@ -33,58 +32,36 @@ class PayableWidget extends StatelessWidget {
               payable.updateValue(v.toDouble());
               return Row(
                 children: <Widget>[
-                  SizedBox(width: 10),
-                  // SizedBox(
-                  //   height: 120,
-                  //   child: FlatButton(
-                  //     color: HexColor(FlipperColors.blue),
-                  //     onPressed: () {},
-                  //     child: Text(
-                  //       "Tickets",
-                  //       style: TextStyle(
-                  //         color: Colors.white,
-                  //         fontSize: 20,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  SizedBox(width: 70),
-                  //todo: on crick of the charge should record active order as status=completed,
-                  //todo: clean carts so it does not appear
-                  SizedBox(
-                    height: 120,
-                    child: FlatButton(
-                        color: HexColor(FlipperColors.blue),
-                        onPressed: () {
-                          StoreProvider.of<AppState>(context).dispatch(
-                            SavePayment(
-                              note: "note",
-                              cashReceived: 0,
-                            ),
-                          );
-                        },
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              "Charge",
+                  FlatButton(
+                      color: HexColor(FlipperColors.blue),
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                          SavePayment(
+                            note: "note",
+                            cashReceived: 0,
+                          ),
+                        );
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              "Charge  ",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
                               ),
                             ),
-                            SizedBox(
-                              width: 20,
+                          ),
+                          Text(
+                            payable.text,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
                             ),
-                            Text(
-                              payable.text,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            )
-                          ],
-                        )),
-                  )
+                          )
+                        ],
+                      ))
                 ],
               );
             },

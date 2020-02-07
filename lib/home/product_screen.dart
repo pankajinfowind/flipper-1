@@ -115,9 +115,6 @@ class _ProductScreenState extends State<ProductScreen> {
         return Scaffold(
           body: Column(
             children: <Widget>[
-              Align(
-                child: PayableWidget(),
-              ),
               Center(
                 //search form.
                 child: Form(

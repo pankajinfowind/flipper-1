@@ -24,3 +24,11 @@ void main() {
 //       e: e,
 //       s: StackTrace.current,
 //     );
+
+// TabBarView(
+//             controller: _tabController,
+//             children: <Widget>[
+//               Poswidget(),
+//               ProductScreen(),
+//             ],
+//           )

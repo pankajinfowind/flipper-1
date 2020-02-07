@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 class CalculatorButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double padWidth = 136.6;
-    final padding = EdgeInsets.fromLTRB(55, 25, 20, 20);
+    double padWidth = 136.99;
+    final padding = EdgeInsets.fromLTRB(55, 21, 20, 20);
     final style = TextStyle(fontSize: 40, fontFamily: "Heebo-Thin");
 
     return Wrap(
       children: <Widget>[
-        SizedBox(
-          height: 20,
-        ),
         SizedBox(
           width: padWidth,
           child: InkWell(
@@ -20,7 +17,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -36,7 +33,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -52,7 +49,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -68,7 +65,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -84,7 +81,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -100,7 +97,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -116,7 +113,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -132,7 +129,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -148,7 +145,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -164,7 +161,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -180,7 +177,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,
@@ -196,7 +193,7 @@ class CalculatorButtons extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
-                  width: 0.2,
+                  width: 0.3,
                 ),
               ),
               padding: padding,

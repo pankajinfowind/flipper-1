@@ -119,6 +119,7 @@ class controlSaleWidget extends StatelessWidget {
         ),
       ),
       leading: IconButton(
+        enableFeedback: false,
         icon: Icon(Icons.remove),
         onPressed: () {
           List<Item> cartItems = [];
@@ -156,6 +157,7 @@ class controlSaleWidget extends StatelessWidget {
         },
       ),
       trailing: IconButton(
+        enableFeedback: false,
         icon: Icon(Icons.add),
         onPressed: () {
           List<Item> cartItems = [];

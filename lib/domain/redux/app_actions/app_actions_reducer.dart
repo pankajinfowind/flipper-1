@@ -29,6 +29,11 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, CartQuantity>(_onCartQuantity),
   TypedReducer<AppState, KayPadAction>(_onKeyPad),
   TypedReducer<AppState, CleanKeyPad>(_onCleanKeyPad),
+
+  //move this to cleaner reducer
+  TypedReducer<AppState, CleanVariation>(_onCleanVariation),
+  TypedReducer<AppState, CleanAppActions>(_onCleanAppAction),
+  TypedReducer<AppState, CleanCurrentColor>(_onCleanCurrentColor),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
@@ -143,4 +148,16 @@ AppState _onKeyPad(AppState state, KayPadAction action) {
 
 AppState _onCleanKeyPad(AppState state, CleanKeyPad action) {
   return state.rebuild((a) => a..keypad = null);
+}
+
+AppState _onCleanVariation(AppState state, CleanVariation action) {
+  return state.rebuild((a) => a..variations = null);
+}
+
+AppState _onCleanAppAction(AppState state, CleanAppActions action) {
+  return state.rebuild((a) => a..action = null);
+}
+
+AppState _onCleanCurrentColor(AppState state, CleanCurrentColor action) {
+  return state.rebuild((a) => a..currentColor = null);
 }

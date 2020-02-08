@@ -243,3 +243,9 @@ class KayPadAction {
 }
 
 class CleanKeyPad {}
+
+class CleanVariation {}
+
+class CleanAppActions {}
+
+class CleanCurrentColor {}

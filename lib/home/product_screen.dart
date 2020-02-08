@@ -78,6 +78,11 @@ List<Widget> getItems(List<Item> itemList, context) {
   }
   list.add(GestureDetector(
     onTap: () {
+      //clearn state first
+      StoreProvider.of<AppState>(context).dispatch(CleanVariation());
+      StoreProvider.of<AppState>(context).dispatch(CleanAppActions());
+      StoreProvider.of<AppState>(context).dispatch(CleanCurrentColor());
+      //end of cleaning app state.
       showDialog(
           context: context,
           builder: (BuildContext context) {

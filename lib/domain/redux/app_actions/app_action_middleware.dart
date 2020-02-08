@@ -385,6 +385,7 @@ void Function(
           ..branchId = variations[i].branchId),
       );
     }
+
     //the top parent variant item that stands for other sub variants.
     store.dispatch(
       CurrentActiveSaleItem(

@@ -249,3 +249,5 @@ class CleanVariation {}
 class CleanAppActions {}
 
 class CleanCurrentColor {}
+
+class CleanCartItem {}

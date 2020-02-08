@@ -4,6 +4,7 @@ import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
+import 'package:flipper/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -105,13 +106,6 @@ class controlSaleWidget extends StatelessWidget {
             textDirection: TextDirection.rtl,
             onChanged: (count) {
               //todo: work on entering count from keyboard right now it is messing around with other inputs
-              // StoreProvider.of<AppState>(context).dispatch(
-              //   IncrementAction(
-              //     increment: vm.currentIncrement == null
-              //         ? 0 + int.parse(count)
-              //         : vm.currentIncrement + int.parse(count),
-              //   ),
-              // );
             },
             controller: TextEditingController(
               text: vm.currentIncrement == null
@@ -130,6 +124,8 @@ class controlSaleWidget extends StatelessWidget {
           List<Item> cartItems = [];
           if (vm.cartItems.length > 0) {
             for (var i = 0; i < vm.cartItems.length; i++) {
+              Logger.d(vm.cartItems.toString());
+              // Logger.d(vm.currentActiveSaleItem.id.toString());
               if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
                 if (vm.currentIncrement - 1 == -1) {
                   return;
@@ -137,8 +133,7 @@ class controlSaleWidget extends StatelessWidget {
                 var incrementor = vm.currentIncrement - 1;
                 StoreProvider.of<AppState>(context).dispatch(
                   IncrementAction(
-                    increment:
-                        vm.currentIncrement == null ? 0 : incrementor - 1,
+                    increment: vm.currentIncrement == null ? 0 : incrementor,
                   ),
                 );
                 cartItems.add(
@@ -157,9 +152,6 @@ class controlSaleWidget extends StatelessWidget {
                 );
               }
             }
-            StoreProvider.of<AppState>(context).dispatch(
-              AddItemToCartAction(cartItems: cartItems),
-            );
           }
         },
       ),
@@ -192,10 +184,6 @@ class controlSaleWidget extends StatelessWidget {
               );
             }
           }
-
-          StoreProvider.of<AppState>(context).dispatch(
-            AddItemToCartAction(cartItems: cartItems),
-          );
         },
       ),
     );
@@ -261,6 +249,7 @@ class SellMultipleItems extends StatelessWidget {
             : vm.currentActiveSaleItem.name + " CHOOSE ONE"),
       ),
     );
+
     for (var i = 0; i < items.length; i++) {
       if (items[i].isActive) {
         StoreProvider.of<AppState>(context).dispatch(
@@ -295,8 +284,9 @@ class SellMultipleItems extends StatelessWidget {
               ..name = items[i].name,
           ),
         );
+
         StoreProvider.of<AppState>(context).dispatch(
-          AddItemToCartAction(cartItems: cartItems),
+          AddItemToCartAction(cartItems: items),
         );
       }
       list.add(
@@ -305,6 +295,19 @@ class SellMultipleItems extends StatelessWidget {
             StoreProvider.of<AppState>(context).dispatch(
               SwitchVariation(
                 item: items[i],
+              ),
+            );
+            CurrentActiveSaleItem(
+              item: Item(
+                (ui) => ui
+                  ..id = items[i].id
+                  ..name = vm.currentActiveSaleItem.name
+                  ..categoryId = items[i].categoryId
+                  ..unitId = items[i].unitId
+                  ..price = items[i].price
+                  ..color = items[i].color
+                  ..branchId = items[i].branchId
+                  ..price = items[i].price,
               ),
             );
             List<Item> cartItems = [];
@@ -318,9 +321,6 @@ class SellMultipleItems extends StatelessWidget {
                   ..branchId = items[i].branchId
                   ..name = items[i].name,
               ),
-            );
-            StoreProvider.of<AppState>(context).dispatch(
-              AddItemToCartAction(cartItems: cartItems),
             );
           },
           child: ListTile(

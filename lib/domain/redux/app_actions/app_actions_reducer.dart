@@ -34,6 +34,7 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, CleanVariation>(_onCleanVariation),
   TypedReducer<AppState, CleanAppActions>(_onCleanAppAction),
   TypedReducer<AppState, CleanCurrentColor>(_onCleanCurrentColor),
+  // TypedReducer<AppState, CleanCartItem>(_onCleanCartItem),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());

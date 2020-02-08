@@ -281,6 +281,15 @@ class S {
     );
   }
 
+  String get costPrice {
+    return Intl.message(
+      'Cost Price',
+      name: 'costPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get currentSale {
     return Intl.message(
       'Current Sale',

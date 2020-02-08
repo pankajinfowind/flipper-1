@@ -9,6 +9,7 @@ import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
+import 'package:flipper/theme.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';
@@ -83,6 +84,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     child: Container(
                       width: 300,
                       child: TextFormField(
+                        style: TextStyle(
+                            color: Colors.black), //todo: move this to app theme
                         validator: Validators.isStringHasMoreChars,
                         onChanged: (name) {
                           if (name == '') {
@@ -99,7 +102,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                       (u) => u..unDisable = "itemName")));
                         },
                         decoration: InputDecoration(
-                            hintText: "Name", focusColor: Colors.blue),
+                            hintText: "Name", focusColor: Colors.black),
                       ),
                     ),
                   ),
@@ -186,12 +189,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         validator: Validators.isStringHasMoreChars,
+                        style: TextStyle(color: Colors.black),
                         onSaved: (name) {},
                         onChanged: (price) {
                           tForm.price = price;
                         },
                         decoration: InputDecoration(
-                            hintText: S.of(context).price,
+                            hintText: S.of(context).costPrice,
                             focusColor: Colors.blue),
                       ),
                     ),
@@ -200,6 +204,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     child: Container(
                       width: 300,
                       child: TextFormField(
+                        style: TextStyle(color: Colors.black),
                         validator: Validators.isStringHasMoreChars,
                         onSaved: (name) {},
                         decoration: InputDecoration(
@@ -213,8 +218,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   Center(
                     child: SizedBox(
                       height: 50,
-                      width: 280,
-                      child: FlatButton(
+                      width: 340,
+                      child: OutlineButton(
                         color: HexColor("#ecf0f1"),
                         child: Text(S.of(context).addVariation),
                         onPressed: () {
@@ -228,41 +233,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 4,
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: Divider(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 4,
-                  ),
-                  Text(S.of(context).leavePriceBlank),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: Divider(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
                   Center(
                     child: Container(
                       width: 300,
                       child: TextFormField(
                         validator: Validators.isStringHasMoreChars,
-                        onSaved: (name) {},
+                        style: TextStyle(color: Colors.black),
                         onChanged: (description) {
                           tForm.description = description;
                         },
-                        decoration: InputDecoration(
-                            hintText: S.of(context).description,
-                            focusColor: Colors.blue),
                       ),
                     ),
                   ),
@@ -306,7 +285,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       Fluttertoast.showToast(
           msg: S.of(context).youNeedNameOfYourProduct,
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIos: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
@@ -317,7 +296,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       Fluttertoast.showToast(
           msg: S.of(context).youNeedCategoryOfYourProduct,
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIos: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
@@ -326,9 +305,21 @@ class _AddItemScreenState extends State<AddItemScreen> {
     }
     if (vm.currentBranch == null) {
       Fluttertoast.showToast(
-          msg: S.of(context).branchError,
+        msg: S.of(context).branchError,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+    if (tForm.description == null) {
+      Fluttertoast.showToast(
+          msg: "Pleaseprovide description for your item",
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIos: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
@@ -399,6 +390,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
     if (list.length == 0) {
       return Container();
     }
-    return Wrap(children: list);
+    return Column(children: list);
   }
 }

@@ -66,7 +66,6 @@ dependencies:
   #  pinch_zoom_image: ^0.2.5
   # TODO: the flutter_platform_widgets: 0.20.3-beta.1 is the only version mathing beta channel please do not change
   flutter_platform_widgets: 0.20.3-beta.1
-
   flutter_linkify: ^2.1.0
   #  built_collection: ^4.2.2
   # The following adds the Cupertino Icons font to your application.

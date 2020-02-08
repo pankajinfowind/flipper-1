@@ -11,7 +11,7 @@ class AppTheme {
   static const fontFamilyPoppinsRegular = "Poppins-Regular";
   static const fontFamilyEdmondsansRegular = "Edmondsans-Regular";
   static const fontFamilyEdmondsansMedium = "Edmondsans-Medium";
-  static const fontFamilyHeeboThin = "Heebo-Thin";
+  static const fontFamilyHeeboThin = "Heboo-Regular";
 
   static const colorDarkBlue = Color.fromRGBO(23, 38, 157, 1.0);
   static const colorDarkBlueFont = Color.fromRGBO(4, 24, 138, 1.0);
@@ -34,19 +34,17 @@ class AppTheme {
 
   static ThemeData get theme {
     return ThemeData.light().copyWith(
-      primaryColor: Colors.black,
-      accentColor: Colors.black,
+      // primaryColor: Colors.red,
+      accentColor: HexColor("#1e3799"),
       textTheme: TextTheme(
           body1: TextStyle(
-        // color: Colors.black,
-        color: Color.fromRGBO(0, 0, 0, 0.8),
-        fontSize: 15,
-        fontStyle: FontStyle.normal,
-
-        fontWeight: FontWeight.bold,
-        fontFamily: fontFamily,
-      )), //todo: customize later
-      canvasColor: HexColor("#130f1f"), //this affect the
+              color: Colors.black,
+              // color: Color.fromRGBO(0, 0, 0, 0.8),
+              fontSize: 15,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.bold,
+              fontFamily: fontFamily)), //todo: customize later
+      // canvasColor: HexColor("#130f1f"), //this affect the
     );
   }
 
@@ -174,6 +172,14 @@ class AppTheme {
       fontSize: 12 * pixelMultiplier,
       fontFamily: fontFamilyEdmondsansMedium,
       color: colorTextDisabled,
+    );
+  }
+
+  static get inputColor {
+    return TextStyle(
+      fontSize: 16,
+      // fontFamily: fontFamilyHeeboThin,
+      color: Colors.black,
     );
   }
 

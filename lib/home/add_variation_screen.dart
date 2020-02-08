@@ -49,7 +49,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                           (v) => v
                             ..id = new Random().nextInt(100) + 1
                             ..name = name
-                            ..price = price
+                            ..price = price ?? "0"
                             ..stockValue = 0
                             ..unityType = vm.currentUnit.name
                             ..sku = sku ?? 'null',
@@ -67,7 +67,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                   (v) => v
                     ..id = new Random().nextInt(100) + 1
                     ..name = name
-                    ..price = price
+                    ..price = price ?? "0"
                     ..stockValue = 0
                     ..unityType = vm.currentUnit.name
                     ..sku = sku ?? 'null',
@@ -185,22 +185,22 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                         ),
                       ),
                     ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                          leading: Text("Stock"),
-                          trailing: FlatButton(
-                            child: Text(S.of(context).receiveStock,
-                                style: TextStyle(color: HexColor('#0984e3'))),
-                            onPressed: () {
-                              Router.navigator.pushNamed(Router.receiveStock);
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Center(
+                    //   child: Container(
+                    //     width: 300,
+                    //     child: ListTile(
+                    //       contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
+                    //       leading: Text("Stock"),
+                    //       trailing: FlatButton(
+                    //         child: Text(S.of(context).receiveStock,
+                    //             style: TextStyle(color: HexColor('#0984e3'))),
+                    //         onPressed: () {
+                    //           Router.navigator.pushNamed(Router.receiveStock);
+                    //         },
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Text(S.of(context).leavePriceBlank)
                   ],
                 )

@@ -3,7 +3,7 @@
 $app-scrollbar-size: 10px;
 $app-scrollbar-track-color: mat-color($app-background, 800);
 $app-scrollbar-buttons-color: mat-color($app-background, 700);
-$app-scrollbar-hover-color: mat-color($app-primary);
+$app-scrollbar-hover-color: #211a36;//mat-color($app-primary);
 
 ::-webkit-scrollbar {
   width: $app-scrollbar-size;

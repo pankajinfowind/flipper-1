@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeInAnimation, CalculateTotalClassPipe, Order, Variant,
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
-   Product,OrderDetails,StockHistory } from '@enexus/flipper-components';
+   Product,OrderDetails,StockHistory, Business } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
 @Component({
@@ -41,7 +41,7 @@ export class PosComponent  {
   private seTheVariantFiltered: Variant[] = [];
   public collectCashCompleted: object = {};
 
-  public currency = 'RWF';
+  public currency =  this.model.active<Business>(Tables.business)? this.model.active<Business>(Tables.business).currency:'RWF';
   private setCurrentOrder: Order;
 
   date = new Date();
@@ -251,7 +251,8 @@ init() {
         const orderDetails: OrderDetails[] = this.getOrderDetails(this.currentOrder.id);
         if (orderDetails.length) {
           orderDetails.forEach(details => {
-            if (details.canTrackStock && details.stockId > 0) {
+           
+            if (details.stockId > 0 || (details.stock && details.stock.canTrackingStock)) {
               this.model.create<StockHistory>(Tables.stockHistory, {
                 orderId: details.orderId,
                 variantId: details.variantId,
@@ -275,7 +276,16 @@ init() {
 
       }
       updateStock(stockDetails: OrderDetails) {
-        const stock: Stock = this.model.find<Stock>(Tables.stocks, stockDetails.stockId);
+        let stockId=0;
+        if(stockDetails.stockId && stockDetails.stockId > 0){
+          stockId=stockDetails.stockId;
+        }else if(stockDetails.stock && stockDetails.stock.id){
+          stockId=stockDetails.stock.id;
+        }else{
+          stockId=0;
+        }
+       
+        const stock: Stock = this.model.find<Stock>(Tables.stocks, stockId);
         if (stock) {
           stock.currentStock = stock.currentStock - stockDetails.quantity;
           this.model.update<Stock>(Tables.stocks, stock, stock.id);

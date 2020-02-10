@@ -1,0 +1,16 @@
+<div  @insertTrans>
+
+  <mat-sidenav-container  class="mat-sidenav-container">
+
+    <mat-sidenav [opened]="openOrderDetails"  [mode]="'side'" position="end" class="right-sidebar">
+      <app-transaction-details [order]="selectRow" (closeOrderDetailsEmit)="closeOrderDetails($event)" [currency]="myCurrency"></app-transaction-details>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="mt-2 ml-2 mr-2 mb-3">
+          <app-list-transactions (selectedRowEmit)="selectedRow($event)" (currencyEmit)="currency($event)"></app-list-transactions>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,23 @@
+.mat-sidenav-container {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    bottom: 0;
+ 
+    .right-sidebar {
+        position: fixed;
+        box-shadow: 0 2px 8px rgba(0,0,0,.15), 0 4px 24px rgba(0,0,0,.15);
+        z-index: 601;
+        display: flex;
+        flex-flow: column;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 500px;
+        border-left: 1px solid #d5d9dc;
+        background-color: #fff;
+
+    }
+
+}

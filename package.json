@@ -108,7 +108,7 @@
     "@angular/material": "~8.2.3",
     "@enexus/flipper-color": "0.0.3",
     "@enexus/flipper-components": "0.0.29",
-    "@enexus/flipper-dashboard": "0.0.4",
+    "@enexus/flipper-dashboard": "0.0.5",
     "@enexus/flipper-dialog": "0.0.7",
     "@enexus/flipper-event": "0.0.2",
     "@enexus/flipper-file-upload": "0.0.1",

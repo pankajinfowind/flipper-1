@@ -38,6 +38,11 @@ const routes: Routes = [
         canLoad: [AuthGuard,RedirectGuard]
       },
       {
+        path: 'transactions',
+        loadChildren: () => import('./../transactions/transactions.module').then(m => m.TransactionsModule),
+        canLoad: [AuthGuard,RedirectGuard]
+      },
+      {
         path: '**',
         component: PageNotFoundComponent
       }

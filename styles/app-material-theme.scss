@@ -14,7 +14,7 @@ $app-accent: mat-palette($mat-green);
 $app-info: mat-palette($mat-light-blue);
 $app-success: mat-palette($mat-light-green);
 $app-error: mat-palette($mat-deep-orange);
-$app-background: mat-palette($mat-light-green);
+$app-background: mat-palette($mat-gray);
 
 // The warn palette is optional (defaults to red).
 $app-warn: mat-palette($mat-amber);
@@ -49,25 +49,25 @@ $app-dark: mat-color($app-background, 100);
 
 
 $theme-foreground: (
-  base:              gray,
-  divider:           $white-12-opacity,
-  dividers:          $white-12-opacity,
+  base:              #211a36,
+  divider:           rgba(200, 200, 200, 0.38),
+  dividers:          rgba(200, 200, 200, 0.38),
   disabled:          rgba(200, 200, 200, 0.38),
   disabled-button:   rgba(200, 200, 200, 0.38),
   disabled-text:     rgba(200, 200, 200, 0.38),
   hint-text:         rgba(200, 200, 200, 0.38),
   secondary-text:    rgba(200, 200, 200, 0.54),
-  icon:              rgba(200, 200, 200, 0.54),
-  icons:             rgba(200, 200 , 200, 0.54),
-  text:              rgba(27, 26, 26, 0.87),
+  icon:              #211a36,
+  icons:             #211a36,
+  text:              #211a36,
   slider-min:        rgba(200, 200, 200, 0.87),
   slider-off:        rgba(200, 200, 200, 0.26),
   slider-off-active: rgba(200, 200, 200, 0.38),
 );
 
 $theme-background: (
-  status-bar: map_get($mat-grey, 300),
-  app-bar:    map_get($mat-grey, 100),
+  status-bar: #211a36,//map_get($mat-grey, 300),
+  app-bar:    #211a36,//map_get($mat-grey, 100),
   background: map_get($mat-grey, 50),
   hover:      rgba(200, 200, 200, 0.04), // TODO(kara): check style with Material Design UX
   card:       white,

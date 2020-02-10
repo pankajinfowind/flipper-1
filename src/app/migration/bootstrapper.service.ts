@@ -12,6 +12,14 @@ export class Bootstrapper {
   protected schema: Schema;
   protected model: ModelService;
 
+   otherMenus:Menu[]=[{
+    name: 'Transactions',
+    icon: 'transaction.svg',
+    route: 'admin/transactions',
+    active: false,
+    isSetting: false,
+}];
+
   constructor(protected injector: Injector) {
     this.schema = this.injector.get(Schema);
     this.model = this.injector.get(ModelService);
@@ -49,6 +57,7 @@ export class Bootstrapper {
 
 
 
+
   public bootstrap(data?: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.injector.get(APP_CONFIG).forEach(config => {
@@ -66,6 +75,7 @@ export class Bootstrapper {
                 if (table.name === 'menu') {
                   if (config.defaultMenu.length > 0) {
                     this.insertDefaultData<Menu>(config.defaultMenu as Menu[], myTable);
+                    this.insertDefaultData<Menu>(this.otherMenus as Menu[], myTable);
                   }
                 }
 

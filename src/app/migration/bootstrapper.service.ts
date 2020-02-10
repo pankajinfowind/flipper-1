@@ -12,7 +12,7 @@ export class Bootstrapper {
   protected schema: Schema;
   protected model: ModelService;
 
-   otherMenus:Menu[]=[{
+   otherMenus: Menu[]=[{
     name: 'Transactions',
     icon: 'transaction.svg',
     route: 'admin/transactions',

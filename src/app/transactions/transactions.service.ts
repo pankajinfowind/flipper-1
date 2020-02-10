@@ -9,7 +9,7 @@ import { ModelService } from '@enexus/flipper-offline-database';
 export class TransactionsService {
   public transactionSubject: BehaviorSubject<Order[]>;
   private readonly transactionMap = new Map<string, Order>();
-  public branch:Branch | null;
+  public branch: Branch | null;
   public currency =  this.model.active<Business>(Tables.business)? this.model.active<Business>(Tables.business).currency:'RWF';
   constructor(private query: ModelService, private model: MainModelService) {
     this.transactionSubject = new BehaviorSubject([]);
@@ -18,10 +18,11 @@ export class TransactionsService {
 
    public loadAllTransactions(): Observable<Order[]> {
     const data: Order[] = [];
-   
-   this.query.queries<Order>(Tables.order, `branchId=${this.branch.id} AND orderType='sales' AND status='complete'`).forEach(d => {
+
+    this.query.queries<Order>(Tables.order, `branchId=${this.branch.id} AND orderType='sales' AND status='complete'`).
+    forEach(d => {
       d.orderItems=this.loadOrderDetails(d.id).length > 0?this.loadOrderDetails(d.id):[];
-      d['branch']=this.model.find<Branch>(Tables.branch,d.branchId);
+      d.branch=this.model.find<Branch>(Tables.branch,d.branchId);
       data.push(d as Order);
     });
 
@@ -35,8 +36,7 @@ export class TransactionsService {
     return this.transactionMap.get(id);
   }
 
-  loadOrderDetails(orderId:number){
-    
+  loadOrderDetails(orderId: number) {
     return this.model.filters<OrderDetails>(Tables.orderDetails,'orderId',orderId);
   }
 }

@@ -251,7 +251,7 @@ init() {
         const orderDetails: OrderDetails[] = this.getOrderDetails(this.currentOrder.id);
         if (orderDetails.length) {
           orderDetails.forEach(details => {
-           
+
             if (details.stockId > 0 || (details.stock && details.stock.canTrackingStock)) {
               this.model.create<StockHistory>(Tables.stockHistory, {
                 orderId: details.orderId,
@@ -277,14 +277,14 @@ init() {
       }
       updateStock(stockDetails: OrderDetails) {
         let stockId=0;
-        if(stockDetails.stockId && stockDetails.stockId > 0){
+        if(stockDetails.stockId && stockDetails.stockId > 0) {
           stockId=stockDetails.stockId;
-        }else if(stockDetails.stock && stockDetails.stock.id){
+        } else if(stockDetails.stock && stockDetails.stock.id) {
           stockId=stockDetails.stock.id;
-        }else{
+        } else {
           stockId=0;
         }
-       
+
         const stock: Stock = this.model.find<Stock>(Tables.stocks, stockId);
         if (stock) {
           stock.currentStock = stock.currentStock - stockDetails.quantity;

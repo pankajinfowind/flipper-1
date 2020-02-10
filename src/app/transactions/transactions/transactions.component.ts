@@ -13,10 +13,10 @@ import { fadeInAnimation, Order } from '@enexus/flipper-components';
   ],
 })
 export class TransactionsComponent implements OnInit {
-  openOrderDetails: boolean = false;
+  openOrderDetails = false;
 
   selectRow: Order | null;
-  public myCurrency: string = 'RWF';
+  public myCurrency = 'RWF';
   constructor() { }
 
   ngOnInit() {

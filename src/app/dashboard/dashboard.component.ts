@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { DashBoardEntries, fadeInAnimation, MainModelService, Business, Tables, Stock, Branch, CalculateTotalClassPipe, RoundNumberPipe, Order, OrderDetails, Variant, Product } from '@enexus/flipper-components';
+import { DashBoardEntries, fadeInAnimation, MainModelService, Business, Tables, Stock,
+  Branch, CalculateTotalClassPipe, RoundNumberPipe, Order, OrderDetails,
+   Variant, Product } from '@enexus/flipper-components';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { ModelService } from '@enexus/flipper-offline-database';
 
@@ -14,31 +16,31 @@ import { ModelService } from '@enexus/flipper-offline-database';
   ],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
- 
+
 
   dashboardEntries: DashBoardEntries;
 
 
   public branch: Branch | null;
-  public totalStore: number = 0.00;
-  public netProfit: number = 0.00;
-  public grossProfits: number = 0.00;
-  public totalRevenue: number = 0.00;
+  public totalStore = 0.00;
+  public netProfit = 0.00;
+  public grossProfits = 0.00;
+  public totalRevenue = 0.00;
 
   public topSoldItem = [];
   public lowStockItem=[];
   public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
   constructor(private totalPipe: CalculateTotalClassPipe,
-    private radomNumberPipe: RoundNumberPipe,
-    private query: ModelService, private model: MainModelService) {
+              private radomNumberPipe: RoundNumberPipe,
+              private query: ModelService, private model: MainModelService) {
     this.branch = this.model.active<Branch>(Tables.branch);
     this.totalStore = this.getStockValue();
     this.netProfit = this.getNetProfit();
     this.totalRevenue = this.getTotalRevenues();
     this.grossProfits = this.getGrossProfit();
     this.topSoldItem = this.topSoldItems();
-   
-    
+
+
     this.lowStockItem = this.getLowStocks();
 
   }
@@ -135,8 +137,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     return this.totalPipe.transform(stocks, 'supplyPrice');
   }
 
-  totalRevenues(){
-    const sales:Order[] =this.sales();
+  totalRevenues() {
+    const sales: Order[] =this.sales();
     return this.totalPipe.transform(sales, 'subTotal');
   }
   getTotalRevenues() {
@@ -151,23 +153,23 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     return this.query.queries<Order>(Tables.order, ` branchId=${this.branch.id} AND orderType='sales' AND status='complete'`);
   }
 
-  getLowStocks(){
+  getLowStocks() {
     const lowStocks=[];
-    const stocks:Stock[]=this.query.queries<Stock>(Tables.stocks, ` branchId=${this.branch.id} AND canTrackingStock=true  ORDER BY currentStock ASC`);
-    stocks.forEach((stock,i)=>{
-      if(i < 6){
-        if(stock.lowStock && stock.currentStock < stock.lowStock){
+    const stocks: Stock[]=this.query.queries<Stock>(Tables.stocks, ` branchId=${this.branch.id} AND canTrackingStock=true  ORDER BY currentStock ASC`);
+    stocks.forEach((stock,i)=> {
+      if(i < 6) {
+        if(stock.lowStock && stock.currentStock < stock.lowStock) {
           const variant=this.model.find<Variant>(Tables.variants,stock.variantId);
           const product=this.model.find<Product>(Tables.products,variant.productId);
           lowStocks.push({
             id: stock.id,
-            name: variant.name=='Regular'?product.name:variant.name,
+            name: variant.name==='Regular'?product.name:variant.name,
             updatedAt: stock.updatedAt,
             currentStock: stock.currentStock
           });
         }
       }
-     
+
     });
     return lowStocks;
   }
@@ -180,7 +182,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.loadOrderDetails(sale.id).forEach(orderDetails => {
             if (orderDetails.stockId > 0) {
               const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
-              stocks.push({ retailPrice: orderDetails.quantity * stock.retailPrice, supplyPrice: orderDetails.quantity * stock.supplyPrice });
+              stocks.push({ retailPrice: orderDetails.quantity * stock.retailPrice,
+                supplyPrice: orderDetails.quantity * stock.supplyPrice });
             }
           });
         }

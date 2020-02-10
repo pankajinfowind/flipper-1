@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { CalculateTotalClassPipe, Order } from '@enexus/flipper-components';
 import { Subscription } from 'rxjs';
@@ -9,9 +9,9 @@ import { TransactionsService } from '../transactions.service';
   templateUrl: './list-transactions.component.html',
   styleUrls: ['./list-transactions.component.scss']
 })
-export class ListTransactionsComponent implements OnInit {
+export class ListTransactionsComponent implements OnInit,OnDestroy {
 
- 
+
   readonly displayedColumns: string[] = ['orderNumber', 'details', 'subTotal', 'createdAt'];
   loading = true;
   dataSource: MatTableDataSource<Order>;
@@ -23,7 +23,7 @@ export class ListTransactionsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   private subscription: Subscription;
-  public currency:string='RWF';
+  public currency='RWF';
   searching: string;
   @Input('applySearch')
   set applySearch(value: string) {
@@ -35,7 +35,7 @@ export class ListTransactionsComponent implements OnInit {
     return this.searching;
   }
 
-  grandTotal:number=0;
+  grandTotal=0;
 
 
   constructor(private totalPipe: CalculateTotalClassPipe, public transaction: TransactionsService) {
@@ -46,7 +46,7 @@ export class ListTransactionsComponent implements OnInit {
 
    ngOnInit() {
      this.currency=this.transaction.currency;
-    this.refresh();
+     this.refresh();
   }
 
   ngOnDestroy() {
@@ -72,7 +72,7 @@ export class ListTransactionsComponent implements OnInit {
   }
 
 
-doSelect(row:Order){
+doSelect(row: Order) {
 this.selectedRow=row;
 this.selectedRowEmit.emit(row);
 this.currencyEmit.emit(this.currency);
@@ -85,7 +85,7 @@ this.currencyEmit.emit(this.currency);
     this.loading = false;
   }
 
-  getGrandTotal(){
+  getGrandTotal() {
     return this.totalPipe.transform(this.dataSource.data, 'subTotal');
   }
 

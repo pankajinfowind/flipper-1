@@ -45,8 +45,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
         ),
         trailing: Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-          child: Text("RWF " +
-              carts.fold(0, (a, b) => a + (b.price * b.count)).toString()),
+          child: Text("RWF " + (carts[i].price * carts[i].count).toString()),
         ),
       ));
     }

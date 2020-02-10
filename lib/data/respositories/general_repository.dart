@@ -138,7 +138,6 @@ class GeneralRepository {
       store.state.database.cartDao.updateCart(
         data.copyWith(
           id: existingCart.id,
-          count: existingCart.count,
           updatedAt: DateTime.now(),
         ),
       );

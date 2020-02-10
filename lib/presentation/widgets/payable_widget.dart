@@ -25,6 +25,8 @@ class PayableWidget extends StatelessWidget {
           child: StreamBuilder(
             stream: vm.database.cartDao.getCarts(vm.order.id),
             builder: (context, AsyncSnapshot<List<CartTableData>> snapshot) {
+              // print(snapshot.data);
+              // print(vm.order.id);
               int cashReceived = snapshot.data == null
                   ? 0
                   : snapshot.data.fold(0, (a, b) => a + (b.count * b.price));

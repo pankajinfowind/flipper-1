@@ -449,9 +449,9 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
   return (store, action, next) async {
     next(action);
 
-    print(store.state.cartItem);
     await generalRepository.insertOrUpdateCart(
       store,
+
       //ignore: missing_required_param
       CartTableData(
         branchId: store.state.cartItem.branchId,

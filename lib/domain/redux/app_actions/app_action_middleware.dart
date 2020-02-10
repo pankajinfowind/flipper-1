@@ -464,7 +464,7 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
       ),
     );
 
-    Router.navigator.pop();
+    Router.navigator.maybePop();
   };
 }
 

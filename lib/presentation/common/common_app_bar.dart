@@ -52,12 +52,13 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 contentPadding: EdgeInsets.symmetric(horizontal: 0.5),
                 leading: GestureDetector(
                   onTap: () {
-                    //assume that this button always closes the current page!
+                    //close the page.
                     Router.navigator.pop();
                   },
                   child: Icon(
                     _icon ?? Icons.close,
-                    size: 30,
+                    color: Colors.black,
+                    size: 20,
                   ),
                 ),
                 title: _title == null
@@ -82,7 +83,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
               Expanded(
                 child: Divider(
                   color: Colors
-                      .black, //TODO: tweak this divider so it can be visible
+                      .black, //todo: tweak this divider so it can be visible
                 ),
               )
             ],

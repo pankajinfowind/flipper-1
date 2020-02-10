@@ -15,6 +15,7 @@ class EditItemTitle extends StatefulWidget {
 }
 
 class _EditItemTitleState extends State<EditItemTitle> {
+  bool showCheck_1 = false;
   @override
   void initState() {
     super.initState();
@@ -86,21 +87,47 @@ class _EditItemTitleState extends State<EditItemTitle> {
               alignment: Alignment.topLeft,
               child: Wrap(
                 children: <Widget>[
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#0984e3"))),
-                      color: HexColor("#0984e3"),
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#0984e3")));
-                      },
-                      child: null,
-                    ),
+                  //todo: apply this to other part if it does work
+                  Stack(
+                    fit: StackFit.expand,
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      //on click of this SizedBox set the view check to true so we can show check from this stack
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showCheck_1 = !showCheck_1;
+                          });
+                        },
+                        child: SizedBox(
+                          height: 80,
+                          width: 120,
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                color: HexColor("#0984e3"),
+                              ),
+                            ),
+                            color: HexColor("#0984e3"),
+                            onPressed: () {
+                              StoreProvider.of<AppState>(context).dispatch(
+                                CurrentColor(
+                                  color: FlipperColor(
+                                      (c) => c..hexCode = "#0984e3"),
+                                ),
+                              );
+                            },
+                            child: null,
+                          ),
+                        ),
+                      ),
+                      showCheck_1
+                          ? IconButton(
+                              icon: Icon(Icons.check),
+                              onPressed: () {},
+                            )
+                          : Container()
+                    ],
                   ),
                   SizedBox(
                     height: 80,

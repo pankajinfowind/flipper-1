@@ -17,8 +17,7 @@ class CartDao extends DatabaseAccessor<Database> with _$CartDaoMixin {
     return (select(db.cartTable)
           ..orderBy(
               [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
-          ..where((t) => t.orderId.equals(orderId))
-          ..limit(1))
+          ..where((t) => t.orderId.equals(orderId)))
         .watch();
   }
 

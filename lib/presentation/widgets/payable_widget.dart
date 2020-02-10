@@ -12,7 +12,7 @@ class PayableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var payable = new MoneyMaskedTextController(
-        leftSymbol: '\RWF ', decimalSeparator: ".");
+        leftSymbol: '\RWF ', decimalSeparator: ".", thousandSeparator: ",");
     payable.updateValue(0);
 
     return StoreConnector<AppState, CommonViewModel>(

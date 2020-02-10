@@ -17,18 +17,3 @@ void main() {
   ]);
   runApp(FlipperApp());
 }
-
-//sample codes.
-//  Logger.e(
-//       "Couldn't mark read status for user: $userId ",
-//       e: e,
-//       s: StackTrace.current,
-//     );
-
-// TabBarView(
-//             controller: _tabController,
-//             children: <Widget>[
-//               Poswidget(),
-//               ProductScreen(),
-//             ],
-//           )

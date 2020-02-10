@@ -50,7 +50,6 @@ void Function(Store<AppState> store,
     if (store.state.tempCategoryId != null &&
         store.state.categoryName != null &&
         store.state.branch != null) {
-      //set other category to false so we can only have one focused category.
       List<CategoryTableData> categoriesL =
           await generalRepository.getCategories(store);
       for (var i = 0; i < categoriesL.length; i++) {
@@ -373,16 +372,18 @@ void Function(
     List<Item> items = [];
     for (var i = 0; i < variations.length; i++) {
       items.add(
-        Item((b) => b
-          ..id = variations[i].id
-          ..name = variations[i].name
-          ..isActive = variations[i].isActive
-          ..count = variations[i].count
-          ..color = action.item.color
-          ..unitId = action.item.unitId
-          ..categoryId = action.item.categoryId
-          ..price = variations[i].price
-          ..branchId = variations[i].branchId),
+        Item(
+          (b) => b
+            ..id = variations[i].id
+            ..name = variations[i].name
+            ..isActive = variations[i].isActive
+            ..count = variations[i].count
+            ..color = action.item.color
+            ..unitId = action.item.unitId
+            ..categoryId = action.item.categoryId
+            ..price = variations[i].price
+            ..branchId = variations[i].branchId,
+        ),
       );
     }
 

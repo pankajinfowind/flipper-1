@@ -27,13 +27,7 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
             leftSymbol: '\RWF', decimalSeparator: ".", thousandSeparator: ",");
 
         double cleanValue = 0;
-        if (vm.keypad != null) {
-          cleanValue = vm.keypad.amount.toDouble();
-          if (vm.keypad.amount.toDouble() == 1111111111.0) {
-            print("it is time to change");
-            cleanValue = 999999.99;
-          }
-        }
+        cleanValue = vm.keypad == null ? 0 : vm.keypad.amount.toDouble();
         moneyFormat
             .updateValue(vm.keypad == null ? 0.00 : cleanValue.toDouble());
 

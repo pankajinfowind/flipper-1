@@ -67,7 +67,8 @@ abstract class CommonViewModel
   @nullable
   Branch get currentBranch;
 
-  BuiltList<Item> get cartItems;
+  @nullable
+  Item get cartItem;
 
   @nullable
   BuiltList<Variation> get variations;
@@ -128,9 +129,8 @@ abstract class CommonViewModel
       ..businesses = store.state.businesses
       ..tab = store.state.tab
       ..currentIncrement = store.state.currentIncrement
-      ..cartItems = store.state.cartItems == null
-          ? null
-          : store.state.cartItems.toBuilder()
+      ..cartItem =
+          store.state.cartItem == null ? null : store.state.cartItem.toBuilder()
       ..items = store.state.items.toBuilder()
       ..currentUnit = store.state.currentUnit == null
           ? null

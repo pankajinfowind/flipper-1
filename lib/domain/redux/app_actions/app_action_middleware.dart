@@ -449,18 +449,18 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
   return (store, action, next) async {
     next(action);
 
+    print(store.state.cartItem);
     await generalRepository.insertOrUpdateCart(
       store,
       //ignore: missing_required_param
       CartTableData(
-        //we take store.state.cartItems[0] because we have to have one item at time
-        branchId: store.state.cartItems[0].branchId,
-        count: store.state.cartItems[0].count, //todo: this might error
-        variationName: store.state.cartItems[0].name,
+        branchId: store.state.cartItem.branchId,
+        count: store.state.currentIncrement,
+        variationName: store.state.cartItem.name,
         orderId: store.state.order.id,
-        price: store.state.cartItems[0].price,
-        variationId: store.state.cartItems[0].id,
-        parentName: store.state.cartItems[0].parentName,
+        price: store.state.cartItem.price,
+        variationId: store.state.cartItem.id,
+        parentName: store.state.cartItem.parentName,
       ),
     );
 

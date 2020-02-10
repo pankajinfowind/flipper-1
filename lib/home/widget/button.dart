@@ -22,14 +22,14 @@ class _KeyPadButtonsState extends State<KeyPadButtons> {
         return Container(
           child: Container(
               child: Wrap(
-            children: _getItems(vm),
+            children: _buildButtons(vm),
           )),
         );
       },
     );
   }
 
-  List<Widget> _getItems(CommonViewModel vm) {
+  List<Widget> _buildButtons(CommonViewModel vm) {
     List<int> list = new List<int>();
     list.addAll([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
     List<Widget> widget = new List<Widget>();
@@ -37,21 +37,21 @@ class _KeyPadButtonsState extends State<KeyPadButtons> {
     for (var i = 1; i < list.length; i++) {
       widget.add(
         SingleKey(
-          i: i.toString(),
+          keypadValue: i.toString(),
           vm: vm,
         ),
       );
     }
     widget.add(SingleKey(
-      i: "0",
+      keypadValue: "0",
       vm: vm,
     ));
     widget.add(SingleKey(
-      i: "C",
+      keypadValue: "C",
       vm: vm,
     ));
     widget.add(SingleKey(
-      i: "+",
+      keypadValue: "+",
       vm: vm,
     ));
     return widget;
@@ -61,11 +61,11 @@ class _KeyPadButtonsState extends State<KeyPadButtons> {
 class SingleKey extends StatelessWidget {
   const SingleKey({
     Key key,
-    @required this.i,
+    @required this.keypadValue,
     this.vm,
   }) : super(key: key);
 
-  final String i;
+  final String keypadValue;
   final CommonViewModel vm;
   @override
   Widget build(BuildContext context) {
@@ -74,12 +74,24 @@ class SingleKey extends StatelessWidget {
       child: InkWell(
         enableFeedback: false,
         onTap: () async {
+          if (keypadValue == "C") {
+            StoreProvider.of<AppState>(context).dispatch(CleanKeyPad());
+            return;
+          }
+          if (keypadValue == "+") {
+            //create order if does not exist createaction from appMiddleware for it
+            //push into cart items and dispatch SaveCart
+            //save carts
+            //add to sale and clear the keypad
+            StoreProvider.of<AppState>(context).dispatch(CleanKeyPad());
+            return;
+          }
           StoreProvider.of<AppState>(context).dispatch(
             KayPadAction(
               keyPad: KeyPad((k) => k
                 ..amount = vm.keypad == null
-                    ? 1
-                    : int.parse(vm.keypad.amount.toString() + "1")
+                    ? int.parse(keypadValue)
+                    : int.parse(vm.keypad.amount.toString() + keypadValue)
                 ..note = "note"),
             ),
           );
@@ -92,7 +104,7 @@ class SingleKey extends StatelessWidget {
             ),
           ),
           padding: EdgeInsets.fromLTRB(55, 21, 20, 20),
-          child: Text(i.toString(),
+          child: Text(keypadValue.toString(),
               style: TextStyle(fontSize: 40, fontFamily: "Heebo-Thin")),
         ),
       ),

@@ -148,7 +148,9 @@ class _EditItemTitleState extends State<EditItemTitle> {
       "#ff7675",
       "#a29bfe"
     ];
+
     for (var i = 0; i < 8; i++) {
+      //register a store for each and handle them later.
       stacks.add(
         Stack(
           alignment: Alignment.center,
@@ -158,21 +160,32 @@ class _EditItemTitleState extends State<EditItemTitle> {
               width: 120,
               child: FlatButton(
                 shape: RoundedRectangleBorder(
-                    side: BorderSide(color: HexColor(colors[i]))),
+                  side: BorderSide(
+                    color: HexColor(colors[i]),
+                  ),
+                ),
                 color: HexColor(colors[i]),
                 child: null,
                 onPressed: () {
-                  StoreProvider.of<AppState>(context).dispatch(CurrentColor(
-                      color: FlipperColor((c) => c..hexCode = colors[i])));
+                  StoreProvider.of<AppState>(context).dispatch(
+                    CurrentColor(
+                      color: FlipperColor((c) => c..hexCode = colors[i]),
+                    ),
+                  );
                 },
               ),
             ),
-            IconButton(
-              alignment: Alignment.center,
-              icon: Icon(Icons.check),
-              color: Colors.white,
-              onPressed: () {},
-            )
+            true
+                ? IconButton(
+                    alignment: Alignment.center,
+                    icon: Icon(Icons.check),
+                    color: Colors.white,
+                    onPressed: () {},
+                  )
+                : Visibility(
+                    visible: false,
+                    child: Text(""),
+                  )
           ],
         ),
       );

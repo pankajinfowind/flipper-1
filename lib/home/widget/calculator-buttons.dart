@@ -40,8 +40,8 @@ class CalculatorButtons extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.black,
-                      width: 0.3,
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      width: 0.5,
                     ),
                   ),
                   padding: padding,

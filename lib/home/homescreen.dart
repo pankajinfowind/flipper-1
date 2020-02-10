@@ -38,12 +38,6 @@ class _HomeScreenState extends State<HomeScreen>
     _tabController = TabController(vsync: this, length: 2);
   }
 
-  // @override
-  // void dispose() {
-  //   _tabController.dispose();
-  //   super.dispose();
-  // }
-
   void _nextPage(int delta) {
     final int newIndex = _tabController.index + delta;
     if (newIndex < 0 || newIndex >= _tabController.length) return;

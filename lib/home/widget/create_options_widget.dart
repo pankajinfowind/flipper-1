@@ -1,4 +1,3 @@
-import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
 import 'package:flipper/util/HexColor.dart';

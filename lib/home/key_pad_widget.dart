@@ -1,4 +1,5 @@
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/home/widget/button.dart';
 import 'package:flipper/home/widget/calculator-buttons.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 
@@ -61,7 +62,8 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
                   ),
                 ),
               ),
-              CalculatorButtons()
+              // CalculatorButtons()
+              KeyVutton() //todo: rename it better.
             ],
           ),
         );

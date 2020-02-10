@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/model/flipper_color.dart';
@@ -15,7 +17,6 @@ class EditItemTitle extends StatefulWidget {
 }
 
 class _EditItemTitleState extends State<EditItemTitle> {
-  bool showCheck_1 = false;
   @override
   void initState() {
     super.initState();
@@ -86,162 +87,7 @@ class _EditItemTitleState extends State<EditItemTitle> {
             child: Align(
               alignment: Alignment.topLeft,
               child: Wrap(
-                children: <Widget>[
-                  //todo: apply this to other part if it does work
-                  Stack(
-                    fit: StackFit.expand,
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      //on click of this SizedBox set the view check to true so we can show check from this stack
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            showCheck_1 = !showCheck_1;
-                          });
-                        },
-                        child: SizedBox(
-                          height: 80,
-                          width: 120,
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                color: HexColor("#0984e3"),
-                              ),
-                            ),
-                            color: HexColor("#0984e3"),
-                            onPressed: () {
-                              StoreProvider.of<AppState>(context).dispatch(
-                                CurrentColor(
-                                  color: FlipperColor(
-                                      (c) => c..hexCode = "#0984e3"),
-                                ),
-                              );
-                            },
-                            child: null,
-                          ),
-                        ),
-                      ),
-                      showCheck_1
-                          ? IconButton(
-                              icon: Icon(Icons.check),
-                              onPressed: () {},
-                            )
-                          : Container()
-                    ],
-                  ),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#d63031"))),
-                      color: HexColor("#d63031"),
-                      child: null,
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#d63031")));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#e84393"))),
-                      color: HexColor("#e84393"),
-                      child: null,
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#e84393")));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#2d3436"))),
-                      color: HexColor("#2d3436"),
-                      child: null,
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#2d3436")));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#6c5ce7"))),
-                      color: HexColor("#6c5ce7"),
-                      child: null,
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#6c5ce7")));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#74b9ff"))),
-                      color: HexColor("#74b9ff"),
-                      child: null,
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#74b9ff")));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#ff7675"))),
-                      color: HexColor("#ff7675"),
-                      child: null,
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#ff7675")));
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: HexColor("#a29bfe"))),
-                      color: HexColor("#a29bfe"),
-                      child: null,
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            CurrentColor(
-                                color: FlipperColor(
-                                    (c) => c..hexCode = "#a29bfe")));
-                      },
-                    ),
-                  ),
-                ],
+                children: buildStack(context),
               ),
             ),
           ),
@@ -288,5 +134,50 @@ class _EditItemTitleState extends State<EditItemTitle> {
         ],
       ),
     );
+  }
+
+  List<Widget> buildStack(BuildContext context) {
+    List<Widget> stacks = new List<Widget>();
+    List<String> colors = [
+      "#d63031",
+      "#0984e3",
+      "#e84393",
+      "#2d3436",
+      "#6c5ce7",
+      "#74b9ff",
+      "#ff7675",
+      "#a29bfe"
+    ];
+    for (var i = 0; i < 8; i++) {
+      stacks.add(
+        Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 80,
+              width: 120,
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(color: HexColor(colors[i]))),
+                color: HexColor(colors[i]),
+                child: null,
+                onPressed: () {
+                  StoreProvider.of<AppState>(context).dispatch(CurrentColor(
+                      color: FlipperColor((c) => c..hexCode = colors[i])));
+                },
+              ),
+            ),
+            IconButton(
+              alignment: Alignment.center,
+              icon: Icon(Icons.check),
+              color: Colors.white,
+              onPressed: () {},
+            )
+          ],
+        ),
+      );
+    }
+
+    return stacks;
   }
 }

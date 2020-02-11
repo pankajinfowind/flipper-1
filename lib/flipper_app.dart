@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flipper/data/respositories/branch_repository.dart';
 import 'package:flipper/data/respositories/general_repository.dart';
 import 'package:flipper/domain/redux/app_actions/app_action_middleware.dart';
@@ -21,6 +22,7 @@ import 'domain/redux/app_reducer.dart';
 import 'domain/redux/authentication/auth_actions.dart';
 import 'domain/redux/authentication/auth_middleware.dart';
 import 'domain/redux/branch/branch_middleware.dart';
+import 'domain/redux/push/push_middleware.dart';
 
 class FlipperApp extends StatefulWidget {
   FlipperApp({Key key}) : super(key: key);
@@ -34,6 +36,9 @@ class _FlipperAppState extends State<FlipperApp> {
   static FirebaseAnalyticsObserver observer =
       new FirebaseAnalyticsObserver(analytics: analytics);
   Store<AppState> store;
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   static final _navigatorKey = GlobalKey<NavigatorState>();
   final userRepo = UserRepository();
   final businessRepo = BusinessRepository();
@@ -51,8 +56,11 @@ class _FlipperAppState extends State<FlipperApp> {
         ..addAll(permissionMiddleware(_navigatorKey))
         ..addAll(AppActionMiddleware(_navigatorKey, generalRepo))
         ..addAll(userMiddleware(userRepo, _navigatorKey))
-        ..addAll(
-            createBranchMiddleware(_navigatorKey, branchRepo, generalRepo)),
+        ..addAll(createBranchMiddleware(_navigatorKey, branchRepo, generalRepo))
+        ..addAll(createPushMiddleware(
+          userRepo,
+          _firebaseMessaging,
+        )),
     );
     store.dispatch(
       VerifyAuthenticationState(),

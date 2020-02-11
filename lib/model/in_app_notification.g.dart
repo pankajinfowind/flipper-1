@@ -8,37 +8,15 @@ part of 'in_app_notification.dart';
 
 class _$InAppNotification extends InAppNotification {
   @override
-  final String groupId;
-  @override
-  final String groupName;
-  @override
-  final String userName;
-  @override
   final String message;
-  @override
-  final Branch channel;
 
   factory _$InAppNotification(
           [void Function(InAppNotificationBuilder) updates]) =>
       (new InAppNotificationBuilder()..update(updates)).build();
 
-  _$InAppNotification._(
-      {this.groupId, this.groupName, this.userName, this.message, this.channel})
-      : super._() {
-    if (groupId == null) {
-      throw new BuiltValueNullFieldError('InAppNotification', 'groupId');
-    }
-    if (groupName == null) {
-      throw new BuiltValueNullFieldError('InAppNotification', 'groupName');
-    }
-    if (userName == null) {
-      throw new BuiltValueNullFieldError('InAppNotification', 'userName');
-    }
+  _$InAppNotification._({this.message}) : super._() {
     if (message == null) {
       throw new BuiltValueNullFieldError('InAppNotification', 'message');
-    }
-    if (channel == null) {
-      throw new BuiltValueNullFieldError('InAppNotification', 'channel');
     }
   }
 
@@ -53,32 +31,18 @@ class _$InAppNotification extends InAppNotification {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is InAppNotification &&
-        groupId == other.groupId &&
-        groupName == other.groupName &&
-        userName == other.userName &&
-        message == other.message &&
-        channel == other.channel;
+    return other is InAppNotification && message == other.message;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, groupId.hashCode), groupName.hashCode),
-                userName.hashCode),
-            message.hashCode),
-        channel.hashCode));
+    return $jf($jc(0, message.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InAppNotification')
-          ..add('groupId', groupId)
-          ..add('groupName', groupName)
-          ..add('userName', userName)
-          ..add('message', message)
-          ..add('channel', channel))
+          ..add('message', message))
         .toString();
   }
 }
@@ -87,35 +51,15 @@ class InAppNotificationBuilder
     implements Builder<InAppNotification, InAppNotificationBuilder> {
   _$InAppNotification _$v;
 
-  String _groupId;
-  String get groupId => _$this._groupId;
-  set groupId(String groupId) => _$this._groupId = groupId;
-
-  String _groupName;
-  String get groupName => _$this._groupName;
-  set groupName(String groupName) => _$this._groupName = groupName;
-
-  String _userName;
-  String get userName => _$this._userName;
-  set userName(String userName) => _$this._userName = userName;
-
   String _message;
   String get message => _$this._message;
   set message(String message) => _$this._message = message;
-
-  BranchBuilder _channel;
-  BranchBuilder get channel => _$this._channel ??= new BranchBuilder();
-  set channel(BranchBuilder channel) => _$this._channel = channel;
 
   InAppNotificationBuilder();
 
   InAppNotificationBuilder get _$this {
     if (_$v != null) {
-      _groupId = _$v.groupId;
-      _groupName = _$v.groupName;
-      _userName = _$v.userName;
       _message = _$v.message;
-      _channel = _$v.channel?.toBuilder();
       _$v = null;
     }
     return this;
@@ -136,26 +80,7 @@ class InAppNotificationBuilder
 
   @override
   _$InAppNotification build() {
-    _$InAppNotification _$result;
-    try {
-      _$result = _$v ??
-          new _$InAppNotification._(
-              groupId: groupId,
-              groupName: groupName,
-              userName: userName,
-              message: message,
-              channel: channel.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'channel';
-        channel.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'InAppNotification', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ?? new _$InAppNotification._(message: message);
     replace(_$result);
     return _$result;
   }

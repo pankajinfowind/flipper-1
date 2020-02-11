@@ -79,6 +79,8 @@ class SingleKey extends StatelessWidget {
             return;
           }
           if (keypadValue == "+") {
+            print(vm.customCategory);
+            print(vm.customUnit);
             //create order if does not exist createaction from appMiddleware for it
             //push into cart items and dispatch SaveCart
             //save carts

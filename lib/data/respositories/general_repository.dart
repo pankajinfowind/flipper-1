@@ -73,7 +73,7 @@ class GeneralRepository {
           branchId: unit.branchId,
           businessId: unit.businessId,
           focused: unit.focused);
-      return store.state.database.unitDao.insert(values);
+      store.state.database.unitDao.insert(values);
     }
 
     store.dispatch(
@@ -81,6 +81,9 @@ class GeneralRepository {
         unit: Unit(
           (u) => u
             ..name = unitData.name
+            ..focused = false
+            ..businessId = unitData.businessId
+            ..branchId = unitData.branchId
             ..id = unitData.id,
         ),
       ),

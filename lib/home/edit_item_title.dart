@@ -63,7 +63,9 @@ class _EditItemTitleState extends State<EditItemTitle> {
                                     fontSize: 22.0, color: Color(0xFFbdc6cf)),
                                 decoration: InputDecoration(
                                   filled: true,
-                                  fillColor: HexColor("#0984e3"),
+                                  fillColor: HexColor(vm.currentColor == null
+                                      ? "#0984e3"
+                                      : vm.currentColor.hexCode),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),

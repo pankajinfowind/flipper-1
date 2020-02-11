@@ -5,7 +5,7 @@ class AppTheme {
   static const pixelMultiplier = 1.0;
   static const appMargin = 12.0 * pixelMultiplier;
   static const avatarSize = 36.0 * pixelMultiplier;
-  static const appBarSize = 64.0;
+  static const appBarSize = 44.0;
 
   static const fontFamilyPoppinsExtraBold = "Poppins-ExtraBold";
   static const fontFamilyPoppinsRegular = "Poppins-Regular";

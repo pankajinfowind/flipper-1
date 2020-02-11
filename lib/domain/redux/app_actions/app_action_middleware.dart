@@ -37,6 +37,8 @@ List<Middleware<AppState>> AppActionMiddleware(
         _needItemVariation(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SaveCart>(
         _saveCart(navigatorKey, generalRepository)),
+    TypedMiddleware<AppState, SaveCartCustom>(
+        _saveCartCustom(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SavePayment>(
         _savePayment(navigatorKey, generalRepository)),
   ];
@@ -440,6 +442,29 @@ void Function(
       }
     }
     store.dispatch(ItemsVariation(items: itemsVariations));
+  };
+}
+
+void Function(Store<AppState> store, SaveCartCustom action, NextDispatcher next)
+    _saveCartCustom(GlobalKey<NavigatorState> navigatorKey,
+        GeneralRepository generalRepository) {
+  return (store, action, next) async {
+    next(action);
+    await generalRepository.insertOrUpdateCart(
+      store,
+      //ignore: missing_required_param
+      CartTableData(
+        branchId: store.state.cartItem.branchId,
+        count: store.state.currentIncrement == null
+            ? 1
+            : store.state.currentIncrement,
+        variationName: store.state.cartItem.name,
+        orderId: store.state.order.id,
+        price: store.state.cartItem.price,
+        variationId: store.state.cartItem.id,
+        parentName: store.state.cartItem.parentName,
+      ),
+    );
   };
 }
 

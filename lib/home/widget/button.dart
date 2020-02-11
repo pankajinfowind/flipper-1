@@ -80,22 +80,38 @@ class SingleKey extends StatelessWidget {
             return;
           }
           if (keypadValue == "+") {
-            _addCustomItemToCart(context);
+            Item cartItem = Item(
+              (b) => b
+                ..id = vm.customItem.id
+                ..name = vm.customItem.name
+                ..branchId = vm.customItem.branchId
+                ..unitId = vm.customItem.unitId
+                ..price = 200 //todo: change this
+                ..parentName = vm.customItem.name
+                ..categoryId = vm.customItem.categoryId
+                ..color = vm.customItem.color
+                ..count = 1,
+            );
+
+            StoreProvider.of<AppState>(context).dispatch(
+              AddItemToCartAction(cartItem: cartItem),
+            );
+            StoreProvider.of<AppState>(context).dispatch(SaveCartCustom());
             //push into cart items and dispatch SaveCart
             //save carts
             //add to sale and clear the keypad
-            StoreProvider.of<AppState>(context).dispatch(CleanKeyPad());
-            return;
+            // StoreProvider.of<AppState>(context).dispatch(CleanKeyPad());
+          } else {
+            StoreProvider.of<AppState>(context).dispatch(
+              KayPadAction(
+                keyPad: KeyPad((k) => k
+                  ..amount = vm.keypad == null
+                      ? int.parse(keypadValue)
+                      : int.parse(vm.keypad.amount.toString() + keypadValue)
+                  ..note = "note"),
+              ),
+            );
           }
-          StoreProvider.of<AppState>(context).dispatch(
-            KayPadAction(
-              keyPad: KeyPad((k) => k
-                ..amount = vm.keypad == null
-                    ? int.parse(keypadValue)
-                    : int.parse(vm.keypad.amount.toString() + keypadValue)
-                ..note = "note"),
-            ),
-          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -110,25 +126,5 @@ class SingleKey extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _addCustomItemToCart(BuildContext context) {
-    Item cartItem = Item(
-      (b) => b
-        ..id = vm.customItem.id
-        ..name = vm.customItem.name
-        ..branchId = vm.customItem.branchId
-        ..unitId = vm.customItem.unitId
-        ..price = 200 //todo: change this
-        ..parentName = vm.customItem.name
-        ..categoryId = vm.customItem.categoryId
-        ..color = vm.customItem.color
-        ..count = 1,
-    );
-
-    StoreProvider.of<AppState>(context).dispatch(
-      AddItemToCartAction(cartItem: cartItem),
-    );
-    StoreProvider.of<AppState>(context).dispatch(SaveCart());
   }
 }

@@ -272,3 +272,5 @@ class CustomItem {
 
   CustomItem({this.item});
 }
+
+class SaveCartCustom{}

@@ -100,7 +100,7 @@ class SingleKey extends StatelessWidget {
             //push into cart items and dispatch SaveCart
             //save carts
             //add to sale and clear the keypad
-            // StoreProvider.of<AppState>(context).dispatch(CleanKeyPad());
+            StoreProvider.of<AppState>(context).dispatch(CleanKeyPad());
           } else {
             StoreProvider.of<AppState>(context).dispatch(
               KayPadAction(

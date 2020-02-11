@@ -4,6 +4,7 @@ import 'package:flipper/model/item.dart';
 import 'package:flipper/model/key_pad.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class KeyPadButtons extends StatefulWidget {
@@ -75,6 +76,7 @@ class SingleKey extends StatelessWidget {
       child: InkWell(
         enableFeedback: false,
         onTap: () async {
+          HapticFeedback.vibrate();
           if (keypadValue == "C") {
             StoreProvider.of<AppState>(context).dispatch(CleanKeyPad());
             return;

@@ -155,7 +155,7 @@ class _EditItemTitleState extends State<EditItemTitle> {
         Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            SizedBox(
+            Container(
               height: 80,
               width: 120,
               child: FlatButton(
@@ -180,7 +180,13 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     alignment: Alignment.center,
                     icon: Icon(Icons.check),
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      StoreProvider.of<AppState>(context).dispatch(
+                        CurrentColor(
+                          color: FlipperColor((c) => c..hexCode = colors[i]),
+                        ),
+                      );
+                    },
                   )
                 : Visibility(
                     visible: false,

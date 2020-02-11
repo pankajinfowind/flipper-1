@@ -13,7 +13,7 @@
             </h2>
 
             <div class="detail-blade__header-datetime detail-blade__header-data">
-              {{order.createdAt | date:'date'}} {{order.createdAt | date:'mediumTime'}}
+              {{order.createdAt | date}} {{order.createdAt | date:'mediumTime'}}
               <!-- Feb. 5, 2020 11:33 am -->
             </div>
 
@@ -147,7 +147,7 @@
                     </div>
                     <div class="erow">
                       <div class="col">
-                        {{order.createdAt | date:'date'}} {{order.createdAt | date:'mediumTime'}}
+                        {{order.createdAt | date}} {{order.createdAt | date:'mediumTime'}}
                       </div>
 
                       <div class="row">

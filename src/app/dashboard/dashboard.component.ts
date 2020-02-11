@@ -39,8 +39,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.totalRevenue = this.getTotalRevenues();
     this.grossProfits = this.getGrossProfit();
     this.topSoldItem = this.topSoldItems();
-
-
     this.lowStockItem = this.getLowStocks();
 
   }
@@ -51,7 +49,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.netProfit = this.getNetProfit();
     this.grossProfits = this.getGrossProfit();
     this.lowStockItem = this.getLowStocks();
-
+    this.topSoldItem = this.topSoldItems();
   }
 
   ngAfterViewInit(): void {
@@ -60,45 +58,32 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.netProfit = this.getNetProfit();
     this.grossProfits = this.getGrossProfit();
     this.lowStockItem = this.getLowStocks();
+    this.topSoldItem = this.topSoldItems();
   }
 
   topSoldItems() {
-    const soldItems = [{
-      id: 1,
-      name: 'Mineral Water',
-      updatedAt: 'Updated 5m ago',
-      items: 100,
-      total: 5000
-    },
-    {
-      id: 2,
-      name: 'Salt',
-      updatedAt: 'Updated 5m ago',
-      items: 100,
-      total: 5000
-    },
-    {
-      id: 3,
-      name: 'Vinegar',
-      updatedAt: 'Updated 5m ago',
-      items: 100,
-      total: 5000
-    },
-    {
-      id: 4,
-      name: 'Blueband',
-      updatedAt: 'Updated 5m ago',
-      items: 100,
-      total: 5000
-    },{
-      id: 5,
-      name: 'Blueband',
-      updatedAt: 'Updated 5m ago',
-      items: 100,
-      total: 5000
-    }
-    ];
-    return soldItems;
+    const topSolds=[];
+    if(this.sales().length > 0) {
+      this.sales().forEach(sale=> {
+        if(this.topSoldsItem(sale.id).length > 0) {
+          this.topSoldsItem(sale.id).forEach((item: OrderDetails,i)=> {
+            if(item.quantity) {
+              const x= {
+                id: i+1,
+                name: item.variantName,
+                updatedAt: 'Updated 5m ago',
+                items: item.quantity,
+                total: item.subTotal
+              };
+              topSolds.push(x);
+            }
+
+          });
+        }
+      });
+   }
+
+    return topSolds;
   }
 
 
@@ -194,5 +179,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   loadOrderDetails(orderId: number) {
     return this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId);
+  }
+
+  topSoldsItem(orderId: number): OrderDetails[] {
+    return this.query.row<OrderDetails>(Tables.orderDetails, `id,variantName,sum(quantity) as quantity,sum(subTotal) as subTotal`
+    ,` id!='undefined' AND orderId=${orderId} GROUP BY variantName ORDER BY quantity DESC `);
   }
 }

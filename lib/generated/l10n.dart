@@ -326,6 +326,15 @@ class S {
     );
   }
 
+  String get commingSoon {
+    return Intl.message(
+      'Comming soon',
+      name: 'commingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get learnaboutFlipper {
     return Intl.message(
       'Learn about Flipper.',

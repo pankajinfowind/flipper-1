@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addVariation" : MessageLookupByLibrary.simpleMessage("Add Variation"),
     "branchError" : MessageLookupByLibrary.simpleMessage("Branch from which you operate in should be set, try to logout and log in again."),
     "category" : MessageLookupByLibrary.simpleMessage("Category"),
+    "commingSoon" : MessageLookupByLibrary.simpleMessage("Comming soon"),
     "costPrice" : MessageLookupByLibrary.simpleMessage("Cost Price"),
     "createAccount" : MessageLookupByLibrary.simpleMessage("Create new"),
     "createCategory" : MessageLookupByLibrary.simpleMessage("Create Category"),

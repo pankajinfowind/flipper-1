@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
@@ -10,6 +11,7 @@ import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class EditItemTitle extends StatefulWidget {
   EditItemTitle({Key key}) : super(key: key);
@@ -121,10 +123,20 @@ class _EditItemTitleState extends State<EditItemTitle> {
                       SizedBox(
                         height: 50,
                         width: 180,
-                        child: FlatButton(
+                        child: OutlineButton(
                           color: HexColor("#ecf0f1"),
                           child: Text("Choose Photo"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Fluttertoast.showToast(
+                              msg: S.of(context).commingSoon,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          },
                         ),
                       ),
                       Container(
@@ -133,12 +145,21 @@ class _EditItemTitleState extends State<EditItemTitle> {
                       SizedBox(
                         height: 50,
                         width: 180,
-                        child: FlatButton(
+                        child: OutlineButton(
                           color: HexColor("#ecf0f1"),
                           child: Text("Take Photo"),
                           onPressed: () {
-                            Router.navigator
-                                .pushNamed(Router.takePictureScreen);
+                            Fluttertoast.showToast(
+                              msg: S.of(context).commingSoon,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            // Router.navigator
+                            //     .pushNamed(Router.takePictureScreen);
                           },
                         ),
                       )

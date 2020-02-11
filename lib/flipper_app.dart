@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flipper/data/respositories/branch_repository.dart';
 import 'package:flipper/data/respositories/general_repository.dart';
 import 'package:flipper/domain/redux/app_actions/app_action_middleware.dart';
@@ -28,6 +30,9 @@ class FlipperApp extends StatefulWidget {
 }
 
 class _FlipperAppState extends State<FlipperApp> {
+  static FirebaseAnalytics analytics = new FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      new FirebaseAnalyticsObserver(analytics: analytics);
   Store<AppState> store;
   static final _navigatorKey = GlobalKey<NavigatorState>();
   final userRepo = UserRepository();
@@ -62,6 +67,7 @@ class _FlipperAppState extends State<FlipperApp> {
     return StoreProvider(
       store: store,
       child: MaterialApp(
+        navigatorObservers: <NavigatorObserver>[observer],
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [S.delegate],
         supportedLocales: S.delegate.supportedLocales,

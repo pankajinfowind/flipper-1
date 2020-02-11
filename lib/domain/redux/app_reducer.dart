@@ -19,5 +19,4 @@ final appReducer = combineReducers<AppState>([
   ...branchReducers
 ]);
 // ignore: missing_return
-AppState _null(AppState state, OnProductLoaded action) {
-}
+AppState _null(AppState state, OnProductLoaded action) {}

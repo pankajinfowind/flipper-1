@@ -173,6 +173,11 @@ class _EditItemTitleState extends State<EditItemTitle> {
                 color: HexColor(colors[i].name),
                 child: null,
                 onPressed: () {
+                  //reset all other color to not selected
+                  for (var y = 0; y < colors.length; y++) {
+                    vm.database.colorDao
+                        .updateColor(colors[y].copyWith(isActive: false));
+                  }
                   vm.database.colorDao.updateColor(
                       colors[i].copyWith(isActive: !colors[i].isActive));
                   StoreProvider.of<AppState>(context).dispatch(
@@ -189,6 +194,11 @@ class _EditItemTitleState extends State<EditItemTitle> {
                     icon: Icon(Icons.check),
                     color: Colors.white,
                     onPressed: () {
+                      //reset all other color to not selected
+                      for (var y = 0; y < colors.length; y++) {
+                        vm.database.colorDao
+                            .updateColor(colors[y].copyWith(isActive: false));
+                      }
                       vm.database.colorDao.updateColor(
                           colors[i].copyWith(isActive: !colors[i].isActive));
                       StoreProvider.of<AppState>(context).dispatch(

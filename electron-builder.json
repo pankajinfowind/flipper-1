@@ -1,5 +1,4 @@
 {
-  "appId": "com.flipper",
   "productName": "Flipper",
   "directories": {
     "output": "release/"

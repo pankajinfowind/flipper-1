@@ -33,5 +33,5 @@ export class TransactionDetailsComponent implements OnInit {
     this.closeOrderDetailsEmit.emit(false);
   }
 
- 
+
 }

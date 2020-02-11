@@ -58,7 +58,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Icon(
                     _icon ?? Icons.close,
                     color: Colors.black,
-                    size: 20,
+                    size: 30,
                   ),
                 ),
                 title: _title == null

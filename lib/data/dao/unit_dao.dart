@@ -19,6 +19,11 @@ class UnitDao extends DatabaseAccessor<Database> with _$UnitDaoMixin {
     return update(db.unitTable).replace(entry);
   }
 
+  Future<UnitTableData> getExistingUnit(String name) {
+    return (select(db.unitTable)..where((t) => t.name.equals(name)))
+        .getSingle();
+  }
+
   Future insert(Insertable<UnitTableData> units) =>
       into(db.unitTable).insert(units);
 

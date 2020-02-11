@@ -9,6 +9,7 @@ abstract class Unit implements Built<Unit, UnitBuilder> {
   @nullable
   int get businessId;
   int get branchId;
+  @nullable
   int get id;
   Unit._();
 

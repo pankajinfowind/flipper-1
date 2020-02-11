@@ -1,9 +1,12 @@
 import 'package:flipper/data/dao/item_variation.dart';
 import 'package:flipper/data/main_database.dart';
+import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/authentication/auth_actions.dart';
+import 'package:flipper/model/category.dart';
 import 'package:flipper/model/order.dart';
 import 'package:flipper/model/unit.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 class GeneralRepository {
@@ -60,23 +63,65 @@ class GeneralRepository {
     return store.state.database.unitDao.getUnits();
   }
 
-  Future<int> insertUnit(Store<AppState> store, Unit unit) {
-    //ignore:missing_required_param
-    var values = new UnitTableData(
-        name: unit.name,
-        branchId: unit.branchId,
-        businessId: unit.businessId,
-        focused: unit.focused);
-    return store.state.database.unitDao.insert(values);
+  Future<int> insertUnit(Store<AppState> store, Unit unit) async {
+    UnitTableData unitData =
+        await store.state.database.unitDao.getExistingUnit(unit.name);
+    if (unitData == null) {
+      //ignore:missing_required_param
+      var values = new UnitTableData(
+          name: unit.name,
+          branchId: unit.branchId,
+          businessId: unit.businessId,
+          focused: unit.focused);
+      return store.state.database.unitDao.insert(values);
+    }
+
+    store.dispatch(
+      CustomUnit(
+        unit: Unit(
+          (u) => u
+            ..name = unitData.name
+            ..id = unitData.id,
+        ),
+      ),
+    );
+
+    return unitData.id;
+    //broadcast custom unit
   }
 
   Future<List<CategoryTableData>> getCategories(Store<AppState> store) {
     return store.state.database.categoryDao.getCategories();
   }
 
+  Future<int> insertCustomCategory(
+      Store<AppState> store, CategoryTableData category) async {
+    CategoryTableData categoryData =
+        await store.state.database.categoryDao.getCategoryName(category.name);
+    if (categoryData == null) {
+      return store.state.database.categoryDao
+          .insert(category.copyWith(createdAt: DateTime.now()));
+    }
+
+    store.dispatch(
+      CustomCategory(
+        category: Category(
+          (u) => u
+            ..name = categoryData.name
+            ..focused = categoryData.focused
+            ..branchId = categoryData.branchId
+            ..id = categoryData.id,
+        ),
+      ),
+    );
+
+    return categoryData.id;
+    //broadcast custom unit
+  }
+
   Future<int> insertCategory(Store<AppState> store, {int branchId}) async {
     //ignore: missing_required_param
-    var tab = new CategoryTableData(
+    var category = new CategoryTableData(
       branchId: branchId,
       focused: false,
       createdAt: DateTime.now(),
@@ -85,7 +130,7 @@ class GeneralRepository {
     CategoryTableData existingCategory =
         await store.state.database.categoryDao.getCategoryName("toBeModified");
     if (existingCategory == null) {
-      return store.state.database.categoryDao.insert(tab);
+      return store.state.database.categoryDao.insert(category);
     } else {
       return existingCategory.id;
     }

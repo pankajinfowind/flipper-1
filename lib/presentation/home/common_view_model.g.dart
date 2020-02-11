@@ -67,6 +67,10 @@ class _$CommonViewModel extends CommonViewModel {
   final User user;
   @override
   final KeyPad keypad;
+  @override
+  final Unit customUnit;
+  @override
+  final Category customCategory;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -101,7 +105,9 @@ class _$CommonViewModel extends CommonViewModel {
       this.cartQuantities,
       this.order,
       this.user,
-      this.keypad})
+      this.keypad,
+      this.customUnit,
+      this.customCategory})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -176,7 +182,9 @@ class _$CommonViewModel extends CommonViewModel {
         cartQuantities == other.cartQuantities &&
         order == other.order &&
         user == other.user &&
-        keypad == other.keypad;
+        keypad == other.keypad &&
+        customUnit == other.customUnit &&
+        customCategory == other.customCategory;
   }
 
   @override
@@ -199,26 +207,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode),
-                                                                                hint.hashCode),
-                                                                            categoryName.hashCode),
-                                                                        category.hashCode),
-                                                                    currentUnit.hashCode),
-                                                                currentColor.hashCode),
-                                                            currentDisable.hashCode),
-                                                        currentBranch.hashCode),
-                                                    cartItem.hashCode),
-                                                variations.hashCode),
-                                            itemVariations.hashCode),
-                                        items.hashCode),
-                                    currentIncrement.hashCode),
-                                currentActiveSaleItem.hashCode),
-                            database.hashCode),
-                        carts.hashCode),
-                    cartQuantities.hashCode),
-                order.hashCode),
-            user.hashCode),
-        keypad.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode), hint.hashCode), categoryName.hashCode),
+                                                                                category.hashCode),
+                                                                            currentUnit.hashCode),
+                                                                        currentColor.hashCode),
+                                                                    currentDisable.hashCode),
+                                                                currentBranch.hashCode),
+                                                            cartItem.hashCode),
+                                                        variations.hashCode),
+                                                    itemVariations.hashCode),
+                                                items.hashCode),
+                                            currentIncrement.hashCode),
+                                        currentActiveSaleItem.hashCode),
+                                    database.hashCode),
+                                carts.hashCode),
+                            cartQuantities.hashCode),
+                        order.hashCode),
+                    user.hashCode),
+                keypad.hashCode),
+            customUnit.hashCode),
+        customCategory.hashCode));
   }
 
   @override
@@ -253,7 +261,9 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('cartQuantities', cartQuantities)
           ..add('order', order)
           ..add('user', user)
-          ..add('keypad', keypad))
+          ..add('keypad', keypad)
+          ..add('customUnit', customUnit)
+          ..add('customCategory', customCategory))
         .toString();
   }
 }
@@ -401,6 +411,16 @@ class CommonViewModelBuilder
   KeyPadBuilder get keypad => _$this._keypad ??= new KeyPadBuilder();
   set keypad(KeyPadBuilder keypad) => _$this._keypad = keypad;
 
+  UnitBuilder _customUnit;
+  UnitBuilder get customUnit => _$this._customUnit ??= new UnitBuilder();
+  set customUnit(UnitBuilder customUnit) => _$this._customUnit = customUnit;
+
+  CategoryBuilder _customCategory;
+  CategoryBuilder get customCategory =>
+      _$this._customCategory ??= new CategoryBuilder();
+  set customCategory(CategoryBuilder customCategory) =>
+      _$this._customCategory = customCategory;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -435,6 +455,8 @@ class CommonViewModelBuilder
       _order = _$v.order?.toBuilder();
       _user = _$v.user?.toBuilder();
       _keypad = _$v.keypad?.toBuilder();
+      _customUnit = _$v.customUnit?.toBuilder();
+      _customCategory = _$v.customCategory?.toBuilder();
       _$v = null;
     }
     return this;
@@ -488,7 +510,9 @@ class CommonViewModelBuilder
               cartQuantities: cartQuantities,
               order: _order?.build(),
               user: _user?.build(),
-              keypad: _keypad?.build());
+              keypad: _keypad?.build(),
+              customUnit: _customUnit?.build(),
+              customCategory: _customCategory?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -536,6 +560,10 @@ class CommonViewModelBuilder
         _user?.build();
         _$failedField = 'keypad';
         _keypad?.build();
+        _$failedField = 'customUnit';
+        _customUnit?.build();
+        _$failedField = 'customCategory';
+        _customCategory?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

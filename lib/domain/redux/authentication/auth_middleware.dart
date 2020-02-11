@@ -214,7 +214,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           );
         }
       }
-      //end setting active branch.
 
       //start by creating a draft order it it does not exist
       OrderTableData order =
@@ -278,6 +277,24 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       final currentTab = tab == null ? 0 : tab.tab;
       store.dispatch(
         CurrentTab(tab: currentTab),
+      );
+
+      //end setting active branch.
+      //create custom category if does not exist
+      await generalRepository.insertCustomCategory(
+        store,
+        //ignore: missing_required_param
+        CategoryTableData(
+            branchId: store.state.branch.id, focused: false, name: 'custom'),
+      );
+      //crate custom unit if does not exist
+      await generalRepository.insertUnit(
+        store,
+        Unit((u) => u
+          ..name = "custom"
+          ..businessId = store.state.currentActiveBusiness.id
+          ..branchId = store.state.branch.id
+          ..focused = false),
       );
       //branch
       if (businesses.length == 0) {

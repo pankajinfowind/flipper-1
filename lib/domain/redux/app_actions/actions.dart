@@ -251,3 +251,17 @@ class CleanAppActions {}
 class CleanCurrentColor {}
 
 class CleanCartItem {}
+
+@immutable
+class CustomUnit {
+  final Unit unit;
+
+  CustomUnit({this.unit});
+}
+
+@immutable
+class CustomCategory {
+  final Category category;
+
+  CustomCategory({this.category});
+}

@@ -99,6 +99,12 @@ abstract class CommonViewModel
   @nullable
   KeyPad get keypad;
 
+  @nullable
+  Unit get customUnit;
+
+  @nullable
+  Category get customCategory;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -162,6 +168,12 @@ abstract class CommonViewModel
       ..user = store.state.user == null ? null : store.state.user.toBuilder()
       ..keypad =
           store.state.keypad == null ? null : store.state.keypad.toBuilder()
+      ..customCategory = store.state.customCategory == null
+          ? null
+          : store.state.customCategory.toBuilder()
+      ..customUnit = store.state.customUnit == null
+          ? null
+          : store.state.customUnit.toBuilder()
       ..branches = store.state.branches);
   }
 }

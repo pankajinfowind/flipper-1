@@ -32,9 +32,6 @@ class _$Unit extends Unit {
     if (branchId == null) {
       throw new BuiltValueNullFieldError('Unit', 'branchId');
     }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('Unit', 'id');
-    }
   }
 
   @override

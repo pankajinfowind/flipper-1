@@ -63,32 +63,32 @@ class _BranchListState extends State<BranchList> {
                 height: 46,
               ),
               _BranchItem(),
-              ListTile(
-                leading: SvgPicture.asset(
-                  "assets/graphics/analytics.svg",
-                  semanticsLabel: 'Analytics',
-                ),
-                title: Text(
-                  "Analytics",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: _Style.fontFamily,
-                      fontSize: 18),
-                ),
-                dense: true,
-              ),
+              // ListTile(
+              //   leading: SvgPicture.asset(
+              //     "assets/graphics/analytics.svg",
+              //     semanticsLabel: 'Analytics',
+              //   ),
+              //   title: Text(
+              //     "Analytics",
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontFamily: _Style.fontFamily,
+              //         fontSize: 18),
+              //   ),
+              //   dense: true,
+              // ),
               ListTile(
                 leading: SvgPicture.asset(
                   "assets/graphics/credit-card.svg",
-                  semanticsLabel: 'Pos',
+                  semanticsLabel: 'Checkout',
                 ),
                 title: GestureDetector(
                   onTap: () {
                     Router.navigator
-                        .pushNamed(Router.dashboard); //pos on dashboard.
+                        .pushNamed(Router.dashboard); //Checkout on dashboard.
                   },
                   child: Text(
-                    "Pos",
+                    "Checkout",
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: _Style.fontFamily,
@@ -97,50 +97,50 @@ class _BranchListState extends State<BranchList> {
                 ),
                 dense: true,
               ),
-              ListTile(
-                leading: SvgPicture.asset(
-                  "assets/graphics/grid.svg",
-                  semanticsLabel: 'Inventory',
-                ),
-                title: Text(
-                  "Inventory",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: _Style.fontFamily,
-                      fontSize: 18),
-                ),
-                dense: true,
-              ),
-              ListTile(
-                leading: SvgPicture.asset(
-                  "assets/graphics/navigation.svg",
-                  semanticsLabel: 'Inventory Count',
-                ),
-                title: Text(
-                  "Inventory Count",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: _Style.fontFamily,
-                      fontSize: 18),
-                ),
-                dense: true,
-              ),
-              ListTile(
-                leading: SvgPicture.asset(
-                  "assets/graphics/refresh.svg",
-                  semanticsLabel: 'Orders',
-                ),
-                title: Text(
-                  "Orders",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: _Style.fontFamily,
-                      fontSize: 18),
-                ),
-                dense: true,
-              ),
+              // ListTile(
+              //   leading: SvgPicture.asset(
+              //     "assets/graphics/grid.svg",
+              //     semanticsLabel: 'Inventory',
+              //   ),
+              //   title: Text(
+              //     "Inventory",
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontFamily: _Style.fontFamily,
+              //         fontSize: 18),
+              //   ),
+              //   dense: true,
+              // ),
+              // ListTile(
+              //   leading: SvgPicture.asset(
+              //     "assets/graphics/navigation.svg",
+              //     semanticsLabel: 'Inventory Count',
+              //   ),
+              //   title: Text(
+              //     "Inventory Count",
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontFamily: _Style.fontFamily,
+              //         fontSize: 18),
+              //   ),
+              //   dense: true,
+              // ),
+              // ListTile(
+              //   leading: SvgPicture.asset(
+              //     "assets/graphics/refresh.svg",
+              //     semanticsLabel: 'Orders',
+              //   ),
+              //   title: Text(
+              //     "Orders",
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontFamily: _Style.fontFamily,
+              //         fontSize: 18),
+              //   ),
+              //   dense: true,
+              // ),
               SizedBox(
-                height: 300,
+                height: 495,
               ),
               Container(
                 width: 237,
@@ -149,7 +149,7 @@ class _BranchListState extends State<BranchList> {
                 child: ListTile(
                   leading: SvgPicture.asset(
                     "assets/graphics/settings.svg",
-                    semanticsLabel: 'Pos',
+                    semanticsLabel: 'Checkout',
                   ),
                   title: Text(
                     "Settings",

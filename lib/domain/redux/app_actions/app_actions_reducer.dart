@@ -34,7 +34,8 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, CleanVariation>(_onCleanVariation),
   TypedReducer<AppState, CleanAppActions>(_onCleanAppAction),
   TypedReducer<AppState, CleanCurrentColor>(_onCleanCurrentColor),
-  // TypedReducer<AppState, CleanCartItem>(_onCleanCartItem),
+  TypedReducer<AppState, CustomUnit>(_onCustomUnit),
+  TypedReducer<AppState, CustomCategory>(_onCustomCategory),
 ];
 AppState _onAppActions(AppState state, AppAction action) {
   return state.rebuild((a) => a..action = action.actions.toBuilder());
@@ -162,4 +163,12 @@ AppState _onCleanAppAction(AppState state, CleanAppActions action) {
 
 AppState _onCleanCurrentColor(AppState state, CleanCurrentColor action) {
   return state.rebuild((a) => a..currentColor = null);
+}
+
+AppState _onCustomUnit(AppState state, CustomUnit action) {
+  return state.rebuild((a) => a..customUnit = action.unit.toBuilder());
+}
+
+AppState _onCustomCategory(AppState state, CustomCategory action) {
+  return state.rebuild((a) => a..customCategory = action.category.toBuilder());
 }

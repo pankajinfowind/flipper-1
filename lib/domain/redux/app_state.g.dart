@@ -28,6 +28,10 @@ class _$AppState extends AppState {
   @override
   final Unit unit;
   @override
+  final Unit customUnit;
+  @override
+  final Category customCategory;
+  @override
   final BuiltList<Unit> units;
   @override
   final BuiltList<Category> categories;
@@ -94,6 +98,8 @@ class _$AppState extends AppState {
       this.price,
       this.businessId,
       this.unit,
+      this.customUnit,
+      this.customCategory,
       this.units,
       this.categories,
       this.focusedUnit,
@@ -162,6 +168,8 @@ class _$AppState extends AppState {
         price == other.price &&
         businessId == other.businessId &&
         unit == other.unit &&
+        customUnit == other.customUnit &&
+        customCategory == other.customCategory &&
         units == other.units &&
         categories == other.categories &&
         focusedUnit == other.focusedUnit &&
@@ -210,7 +218,7 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), units.hashCode), categories.hashCode), focusedUnit.hashCode), category.hashCode), permissions.hashCode), branches.hashCode), businesses.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), customUnit.hashCode), customCategory.hashCode), units.hashCode), categories.hashCode), focusedUnit.hashCode), category.hashCode), permissions.hashCode), branches.hashCode), businesses.hashCode),
                                                                                 branch.hashCode),
                                                                             business.hashCode),
                                                                         hint.hashCode),
@@ -245,6 +253,8 @@ class _$AppState extends AppState {
           ..add('price', price)
           ..add('businessId', businessId)
           ..add('unit', unit)
+          ..add('customUnit', customUnit)
+          ..add('customCategory', customCategory)
           ..add('units', units)
           ..add('categories', categories)
           ..add('focusedUnit', focusedUnit)
@@ -321,6 +331,16 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   UnitBuilder _unit;
   UnitBuilder get unit => _$this._unit ??= new UnitBuilder();
   set unit(UnitBuilder unit) => _$this._unit = unit;
+
+  UnitBuilder _customUnit;
+  UnitBuilder get customUnit => _$this._customUnit ??= new UnitBuilder();
+  set customUnit(UnitBuilder customUnit) => _$this._customUnit = customUnit;
+
+  CategoryBuilder _customCategory;
+  CategoryBuilder get customCategory =>
+      _$this._customCategory ??= new CategoryBuilder();
+  set customCategory(CategoryBuilder customCategory) =>
+      _$this._customCategory = customCategory;
 
   ListBuilder<Unit> _units;
   ListBuilder<Unit> get units => _$this._units ??= new ListBuilder<Unit>();
@@ -457,6 +477,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _price = _$v.price?.toBuilder();
       _businessId = _$v.businessId;
       _unit = _$v.unit?.toBuilder();
+      _customUnit = _$v.customUnit?.toBuilder();
+      _customCategory = _$v.customCategory?.toBuilder();
       _units = _$v.units?.toBuilder();
       _categories = _$v.categories?.toBuilder();
       _focusedUnit = _$v.focusedUnit;
@@ -517,6 +539,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               price: _price?.build(),
               businessId: businessId,
               unit: _unit?.build(),
+              customUnit: _customUnit?.build(),
+              customCategory: _customCategory?.build(),
               units: _units?.build(),
               categories: categories.build(),
               focusedUnit: focusedUnit,
@@ -563,6 +587,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
         _$failedField = 'unit';
         _unit?.build();
+        _$failedField = 'customUnit';
+        _customUnit?.build();
+        _$failedField = 'customCategory';
+        _customCategory?.build();
         _$failedField = 'units';
         _units?.build();
         _$failedField = 'categories';

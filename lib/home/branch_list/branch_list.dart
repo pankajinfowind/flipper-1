@@ -37,7 +37,7 @@ class _BranchListState extends State<BranchList> {
                 ),
                 Text(
                   b.name,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
               ],
             ),

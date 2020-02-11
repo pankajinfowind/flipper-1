@@ -177,6 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   _handleFormSubmit() {
     StoreProvider.of<AppState>(context).dispatch(
         AppAction(actions: AppActions((a) => a..name = "showLoader")));
+
     if (_formKey.currentState == null) {
       //todo:should show atoast.
       return;

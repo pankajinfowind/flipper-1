@@ -177,68 +177,69 @@ class _EditItemTitleState extends State<EditItemTitle> {
   List<Widget> buildStack(
       BuildContext context, List<ColorTableData> colors, CommonViewModel vm) {
     List<Widget> stacks = new List<Widget>();
-
-    for (var i = 0; i < colors.length; i++) {
-      //register a store for each and handle them later.
-      stacks.add(
-        Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Container(
-              height: 80,
-              width: 120,
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: HexColor(colors[i].name),
-                  ),
-                ),
-                color: HexColor(colors[i].name),
-                child: null,
-                onPressed: () {
-                  //reset all other color to not selected
-                  for (var y = 0; y < colors.length; y++) {
-                    vm.database.colorDao
-                        .updateColor(colors[y].copyWith(isActive: false));
-                  }
-                  vm.database.colorDao.updateColor(
-                      colors[i].copyWith(isActive: !colors[i].isActive));
-                  StoreProvider.of<AppState>(context).dispatch(
-                    CurrentColor(
-                      color: FlipperColor((c) => c..hexCode = colors[i].name),
+    if (colors != null) {
+      for (var i = 0; i < colors.length; i++) {
+        //register a store for each and handle them later.
+        stacks.add(
+          Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Container(
+                height: 80,
+                width: 120,
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: HexColor(colors[i].name),
                     ),
-                  );
-                },
+                  ),
+                  color: HexColor(colors[i].name),
+                  child: null,
+                  onPressed: () {
+                    //reset all other color to not selected
+                    for (var y = 0; y < colors.length; y++) {
+                      vm.database.colorDao
+                          .updateColor(colors[y].copyWith(isActive: false));
+                    }
+                    vm.database.colorDao.updateColor(
+                        colors[i].copyWith(isActive: !colors[i].isActive));
+                    StoreProvider.of<AppState>(context).dispatch(
+                      CurrentColor(
+                        color: FlipperColor((c) => c..hexCode = colors[i].name),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-            colors[i].isActive
-                ? IconButton(
-                    alignment: Alignment.center,
-                    icon: Icon(Icons.check),
-                    color: Colors.white,
-                    onPressed: () {
-                      //reset all other color to not selected
-                      for (var y = 0; y < colors.length; y++) {
-                        vm.database.colorDao
-                            .updateColor(colors[y].copyWith(isActive: false));
-                      }
-                      vm.database.colorDao.updateColor(
-                          colors[i].copyWith(isActive: !colors[i].isActive));
-                      StoreProvider.of<AppState>(context).dispatch(
-                        CurrentColor(
-                          color:
-                              FlipperColor((c) => c..hexCode = colors[i].name),
-                        ),
-                      );
-                    },
-                  )
-                : Visibility(
-                    visible: false,
-                    child: Text(""),
-                  )
-          ],
-        ),
-      );
+              colors[i].isActive
+                  ? IconButton(
+                      alignment: Alignment.center,
+                      icon: Icon(Icons.check),
+                      color: Colors.white,
+                      onPressed: () {
+                        //reset all other color to not selected
+                        for (var y = 0; y < colors.length; y++) {
+                          vm.database.colorDao
+                              .updateColor(colors[y].copyWith(isActive: false));
+                        }
+                        vm.database.colorDao.updateColor(
+                            colors[i].copyWith(isActive: !colors[i].isActive));
+                        StoreProvider.of<AppState>(context).dispatch(
+                          CurrentColor(
+                            color: FlipperColor(
+                                (c) => c..hexCode = colors[i].name),
+                          ),
+                        );
+                      },
+                    )
+                  : Visibility(
+                      visible: false,
+                      child: Text(""),
+                    )
+            ],
+          ),
+        );
+      }
     }
 
     return stacks;

@@ -27,20 +27,21 @@ class _FlipperDrawerState extends State<FlipperDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        elevation: 0,
-        child: Container(
-          color: HexColor("#211a36"),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              BusinessList(
-                vm: widget.vm,
-              ),
-              BranchList(
-                vm: widget.vm,
-              )
-            ],
-          ),
-        ));
+      elevation: 0,
+      child: Container(
+        color: HexColor("#211a36"),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            BusinessList(
+              vm: widget.vm,
+            ),
+            BranchList(
+              vm: widget.vm,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

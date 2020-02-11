@@ -6,6 +6,7 @@ import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
+import 'package:flipper/util/logger.dart';
 import 'package:flipper/util/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -39,42 +40,44 @@ List<Widget> getItems(List<Item> itemList, context) {
   );
 
   for (var i = 0; i < itemList.length; i++) {
-    list.add(
-      GestureDetector(
-        onTap: () {
-          StoreProvider.of<AppState>(context)
-              .dispatch(NeedItemVariation(item: itemList[i]));
-        },
-        onLongPress: () {
-          //todo play a small vibration to indicate the action.
-          //send store to request more information then from that store navigate with all info we need
-          StoreProvider.of<AppState>(context)
-              .dispatch(NeedItemVariation(item: itemList[i]));
-        },
-        child: ListTile(
-          contentPadding: EdgeInsets.all(0),
-          leading: Container(
-            width: 50,
-            color: HexColor(itemList[i].color),
-            child: FlatButton(
-              child: Text(
-                itemList[i].name.length > 2
-                    ? itemList[i].name.substring(0, 2)
-                    : itemList[i].name,
-                style: TextStyle(
-                  color: Colors.white,
+    if (itemList[i].name != "custom") {
+      list.add(
+        GestureDetector(
+          onTap: () {
+            StoreProvider.of<AppState>(context)
+                .dispatch(NeedItemVariation(item: itemList[i]));
+          },
+          onLongPress: () {
+            StoreProvider.of<AppState>(context)
+                .dispatch(NeedItemVariation(item: itemList[i]));
+          },
+          child: ListTile(
+            contentPadding: EdgeInsets.all(0),
+            leading: Container(
+              width: 50,
+              color: HexColor(itemList[i].color),
+              child: FlatButton(
+                child: Text(
+                  itemList[i].name.length > 2
+                      ? itemList[i].name.substring(0, 2)
+                      : itemList[i].name,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
+                onPressed: () {},
               ),
-              onPressed: () {},
+            ),
+            title: Text(
+              itemList[i].name,
+              style: TextStyle(color: Colors.black),
             ),
           ),
-          title: Text(
-            itemList[i].name,
-            style: TextStyle(color: Colors.black),
-          ),
         ),
-      ),
-    );
+      );
+    } else {
+      Logger.d("duplicated item${itemList[i].name}");
+    }
   }
   list.add(GestureDetector(
     onTap: () {

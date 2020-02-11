@@ -33,25 +33,5 @@ export class TransactionDetailsComponent implements OnInit {
     this.closeOrderDetailsEmit.emit(false);
   }
 
-  printOut() {
-    const contents = this.myDiv.nativeElement.innerHTML;
-    const frame1 = this.ren.createElement('iframe');
-    frame1.name = 'frame3';
-    frame1.style.position = 'absolute';
-    frame1.style.top = '-1000000px';
-    document.body.appendChild(frame1);
-    const frameDoc = frame1.contentWindow;
-    frameDoc.document.open();
-    frameDoc.document.write('<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=70"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Print Brcode Labels</title>');
-    frameDoc.document.write('</head><body>');
-    frameDoc.document.write(contents);
-    frameDoc.document.write('</body></html>');
-    frameDoc.document.close();
-    setTimeout(() => {
-      window.frames.frame3.focus();
-      window.frames.frame3.print();
-      document.body.removeChild(frame1);
-    }, 500);
-    return false;
-  }
+ 
 }

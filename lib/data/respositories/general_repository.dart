@@ -7,6 +7,7 @@ import 'package:flipper/model/category.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/order.dart';
 import 'package:flipper/model/unit.dart';
+import 'package:flipper/util/logger.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
@@ -65,6 +66,9 @@ class GeneralRepository {
   }
 
   Future<int> insertItem(Store<AppState> store, ItemTableData data) async {
+    Logger.d("InsertItem:branchId${data.branchId}");
+    Logger.d("InsertItem:branchId${data.branchId}");
+    Logger.d("InsertItem:branchId${data.name}");
     ItemTableData itemData =
         await store.state.database.itemDao.getItemBy(data.name, data.branchId);
 
@@ -129,9 +133,12 @@ class GeneralRepository {
     CategoryTableData categoryData =
         await store.state.database.categoryDao.getCategoryName(category.name);
     if (categoryData == null) {
-      return store.state.database.categoryDao
+      store.state.database.categoryDao
           .insert(category.copyWith(createdAt: DateTime.now()));
     }
+
+    categoryData =
+        await store.state.database.categoryDao.getCategoryName(category.name);
 
     store.dispatch(
       CustomCategory(

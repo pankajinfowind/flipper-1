@@ -66,8 +66,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       store.dispatch(Unauthenticated);
       return;
     }
-    //start by clearing the app store
-    store.state.clear();
 
     //end of streaming new order to part of apps's store
     UserTableData user = await userRepository.checkAuth(store);
@@ -298,6 +296,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           ..branchId = store.state.branch.id
           ..focused = false),
       );
+
       //create custom item if does not exist
       await generalRepository.insertItem(
         store,

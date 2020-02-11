@@ -90,7 +90,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       final branchId = await branchRepo.insert(store, branch);
       setUnits(store, branchId, generalRepository);
       //update store will all the thing we need and set all default values we want here
-      store.state.clear();
+      // store.state.clear();
       store.dispatch(VerifyAuthenticationState());
     }
   };

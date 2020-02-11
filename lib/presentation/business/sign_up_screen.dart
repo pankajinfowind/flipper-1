@@ -158,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       visible: false,
                       child: FlatButton(
                         child: Text("invisible button"),
-                        onPressed: vm.hasAction &&
+                        onPressed: vm.appAction != null &&
                                 vm.appAction.name == 'createBusiness'
                             ? _handleFormSubmit()
                             : null,

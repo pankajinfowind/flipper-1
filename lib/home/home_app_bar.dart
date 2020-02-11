@@ -27,7 +27,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           top: true,
           child: Center(
             child: Container(
-              height: AppTheme.appBarSize,
+              height: 44,
               child: Row(
                 children: <Widget>[
                   _hamburger(),

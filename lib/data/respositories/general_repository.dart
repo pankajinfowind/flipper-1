@@ -193,6 +193,15 @@ class GeneralRepository {
     return store.state.database.cartDao.getCarts(store.state.order.id);
   }
 
+  Future insertOrUpdateColor(Store<AppState> store, ColorTableData data) async {
+    //if item with the same variationId exist update content
+    ColorTableData colorsExists =
+        await store.state.database.colorDao.colorExists(data.name);
+    if (colorsExists == null) {
+      store.state.database.colorDao.insert(data);
+    }
+  }
+
   Future<bool> insertOrUpdateCart(
       Store<AppState> store, CartTableData data) async {
     //if item with the same variationId exist update content

@@ -309,6 +309,25 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           unitId: store.state.customUnit.id,
         ),
       );
+      List<String> colors = [
+        "#d63031",
+        "#0984e3",
+        "#e84393",
+        "#2d3436",
+        "#6c5ce7",
+        "#74b9ff",
+        "#ff7675",
+        "#a29bfe"
+      ];
+      //insert default colors for the app
+      for (var i = 0; i < 8; i++) {
+        //create default color items if does not exist
+        await generalRepository.insertOrUpdateColor(
+            store,
+            //ignore: missing_required_param
+            ColorTableData(isActive: false, name: colors[i]));
+      }
+
       //branch
       if (businesses.length == 0) {
         Router.navigator.pushNamed(Router.signUpScreen);

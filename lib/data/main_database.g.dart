@@ -5828,6 +5828,203 @@ class $OrderTableTable extends OrderTable
   }
 }
 
+class ColorTableData extends DataClass implements Insertable<ColorTableData> {
+  final int id;
+  final String name;
+  final bool isActive;
+  ColorTableData(
+      {@required this.id, @required this.name, @required this.isActive});
+  factory ColorTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return ColorTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      isActive:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_active']),
+    );
+  }
+  factory ColorTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return ColorTableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'isActive': serializer.toJson<bool>(isActive),
+    };
+  }
+
+  @override
+  ColorTableCompanion createCompanion(bool nullToAbsent) {
+    return ColorTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      isActive: isActive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isActive),
+    );
+  }
+
+  ColorTableData copyWith({int id, String name, bool isActive}) =>
+      ColorTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        isActive: isActive ?? this.isActive,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ColorTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('isActive: $isActive')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, isActive.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is ColorTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.isActive == this.isActive);
+}
+
+class ColorTableCompanion extends UpdateCompanion<ColorTableData> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<bool> isActive;
+  const ColorTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.isActive = const Value.absent(),
+  });
+  ColorTableCompanion.insert({
+    this.id = const Value.absent(),
+    @required String name,
+    this.isActive = const Value.absent(),
+  }) : name = Value(name);
+  ColorTableCompanion copyWith(
+      {Value<int> id, Value<String> name, Value<bool> isActive}) {
+    return ColorTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      isActive: isActive ?? this.isActive,
+    );
+  }
+}
+
+class $ColorTableTable extends ColorTable
+    with TableInfo<$ColorTableTable, ColorTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $ColorTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _isActiveMeta = const VerificationMeta('isActive');
+  GeneratedBoolColumn _isActive;
+  @override
+  GeneratedBoolColumn get isActive => _isActive ??= _constructIsActive();
+  GeneratedBoolColumn _constructIsActive() {
+    return GeneratedBoolColumn('is_active', $tableName, false,
+        defaultValue: Constant(false));
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name, isActive];
+  @override
+  $ColorTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'color_table';
+  @override
+  final String actualTableName = 'color_table';
+  @override
+  VerificationContext validateIntegrity(ColorTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.name.present) {
+      context.handle(
+          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+    } else if (name.isRequired && isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (d.isActive.present) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableValue(d.isActive.value, _isActiveMeta));
+    } else if (isActive.isRequired && isInserting) {
+      context.missing(_isActiveMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ColorTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return ColorTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(ColorTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.name.present) {
+      map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.isActive.present) {
+      map['is_active'] = Variable<bool, BoolType>(d.isActive.value);
+    }
+    return map;
+  }
+
+  @override
+  $ColorTableTable createAlias(String alias) {
+    return $ColorTableTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $UserTableTable _userTable;
@@ -5865,6 +6062,8 @@ abstract class _$Database extends GeneratedDatabase {
   $CartTableTable get cartTable => _cartTable ??= $CartTableTable(this);
   $OrderTableTable _orderTable;
   $OrderTableTable get orderTable => _orderTable ??= $OrderTableTable(this);
+  $ColorTableTable _colorTable;
+  $ColorTableTable get colorTable => _colorTable ??= $ColorTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
@@ -5890,6 +6089,8 @@ abstract class _$Database extends GeneratedDatabase {
   CartDao get cartDao => _cartDao ??= CartDao(this as Database);
   OrderDao _orderDao;
   OrderDao get orderDao => _orderDao ??= OrderDao(this as Database);
+  ColorDao _colorDao;
+  ColorDao get colorDao => _colorDao ??= ColorDao(this as Database);
   @override
   List<TableInfo> get allTables => [
         userTable,
@@ -5906,6 +6107,7 @@ abstract class _$Database extends GeneratedDatabase {
         variationTable,
         historyTable,
         cartTable,
-        orderTable
+        orderTable,
+        colorTable
       ];
 }

@@ -265,3 +265,10 @@ class CustomCategory {
 
   CustomCategory({this.category});
 }
+
+@immutable
+class CustomItem {
+  final Item item;
+
+  CustomItem({this.item});
+}

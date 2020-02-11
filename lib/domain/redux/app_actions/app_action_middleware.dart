@@ -455,7 +455,9 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
       //ignore: missing_required_param
       CartTableData(
         branchId: store.state.cartItem.branchId,
-        count: store.state.currentIncrement,
+        count: store.state.currentIncrement == null
+            ? 1
+            : store.state.currentIncrement,
         variationName: store.state.cartItem.name,
         orderId: store.state.order.id,
         price: store.state.cartItem.price,

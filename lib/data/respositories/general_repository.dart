@@ -4,6 +4,7 @@ import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/domain/redux/authentication/auth_actions.dart';
 import 'package:flipper/model/category.dart';
+import 'package:flipper/model/item.dart';
 import 'package:flipper/model/order.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -63,6 +64,32 @@ class GeneralRepository {
     return store.state.database.unitDao.getUnits();
   }
 
+  Future<int> insertItem(Store<AppState> store, ItemTableData data) async {
+    ItemTableData itemData =
+        await store.state.database.itemDao.getItemBy(data.name, data.branchId);
+
+    if (itemData == null) {
+      await store.state.database.itemDao
+          .insert(data.copyWith(createdAt: DateTime.now()));
+    }
+    itemData =
+        await store.state.database.itemDao.getItemBy(data.name, data.branchId);
+
+    store.dispatch(
+      CustomItem(
+        item: Item((i) => i
+          ..id = itemData.id
+          ..isActive = false
+          ..name = itemData.name
+          ..branchId = itemData.branchId
+          ..categoryId = itemData.categoryId
+          ..unitId = itemData.unitId
+          ..description = itemData.description),
+      ),
+    );
+    return itemData.id;
+  }
+
   Future<int> insertUnit(Store<AppState> store, Unit unit) async {
     UnitTableData unitData =
         await store.state.database.unitDao.getExistingUnit(unit.name);
@@ -75,7 +102,7 @@ class GeneralRepository {
           focused: unit.focused);
       store.state.database.unitDao.insert(values);
     }
-
+    unitData = await store.state.database.unitDao.getExistingUnit(unit.name);
     store.dispatch(
       CustomUnit(
         unit: Unit(
@@ -137,10 +164,6 @@ class GeneralRepository {
     } else {
       return existingCategory.id;
     }
-  }
-
-  Future<int> insertItem(Store<AppState> store, ItemTableData data) {
-    return store.state.database.itemDao.insert(data);
   }
 
   Future<int> insertVariant(Store<AppState> store, VariationTableData data) {

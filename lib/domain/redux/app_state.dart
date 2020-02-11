@@ -54,6 +54,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @nullable
   Unit get customUnit;
+  @nullable
+  Item get customItem;
 
   @nullable
   Category get customCategory;

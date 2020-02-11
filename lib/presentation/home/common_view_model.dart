@@ -105,6 +105,9 @@ abstract class CommonViewModel
   @nullable
   Category get customCategory;
 
+  @nullable
+  Item get customItem;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -174,6 +177,9 @@ abstract class CommonViewModel
       ..customUnit = store.state.customUnit == null
           ? null
           : store.state.customUnit.toBuilder()
+      ..customItem = store.state.customItem == null
+          ? null
+          : store.state.customItem.toBuilder()
       ..branches = store.state.branches);
   }
 }

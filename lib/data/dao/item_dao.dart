@@ -43,5 +43,12 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
     }).get();
   }
 
+  Future<ItemTableData> getItemBy(String name, int branchId) {
+    return (select(db.itemTable)
+          ..where((t) => t.name.equals(name))
+          ..where((t) => t.branchId.equals(branchId)))
+        .getSingle();
+  }
+
   Future<List<ItemTableData>> getItems() => select(db.itemTable).get();
 }

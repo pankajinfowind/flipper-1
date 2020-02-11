@@ -296,6 +296,19 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           ..branchId = store.state.branch.id
           ..focused = false),
       );
+      //create custom item if does not exist
+      await generalRepository.insertItem(
+        store,
+        //ignore: missing_required_param
+        ItemTableData(
+          name: "custom",
+          branchId: store.state.branch.id,
+          categoryId: store.state.customCategory.id,
+          color: "#cccc",
+          description: "custom item",
+          unitId: store.state.customUnit.id,
+        ),
+      );
       //branch
       if (businesses.length == 0) {
         Router.navigator.pushNamed(Router.signUpScreen);

@@ -1,5 +1,6 @@
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/model/item.dart';
 import 'package:flipper/model/key_pad.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flutter/material.dart';
@@ -79,9 +80,7 @@ class SingleKey extends StatelessWidget {
             return;
           }
           if (keypadValue == "+") {
-            print(vm.customCategory);
-            print(vm.customUnit);
-            //create order if does not exist createaction from appMiddleware for it
+            _addCustomItemToCart(context);
             //push into cart items and dispatch SaveCart
             //save carts
             //add to sale and clear the keypad
@@ -111,5 +110,25 @@ class SingleKey extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _addCustomItemToCart(BuildContext context) {
+    Item cartItem = Item(
+      (b) => b
+        ..id = vm.customItem.id
+        ..name = vm.customItem.name
+        ..branchId = vm.customItem.branchId
+        ..unitId = vm.customItem.unitId
+        ..price = 200 //todo: change this
+        ..parentName = vm.customItem.name
+        ..categoryId = vm.customItem.categoryId
+        ..color = vm.customItem.color
+        ..count = 1,
+    );
+
+    StoreProvider.of<AppState>(context).dispatch(
+      AddItemToCartAction(cartItem: cartItem),
+    );
+    StoreProvider.of<AppState>(context).dispatch(SaveCart());
   }
 }

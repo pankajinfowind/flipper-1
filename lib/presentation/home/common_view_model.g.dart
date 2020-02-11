@@ -71,6 +71,8 @@ class _$CommonViewModel extends CommonViewModel {
   final Unit customUnit;
   @override
   final Category customCategory;
+  @override
+  final Item customItem;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -107,7 +109,8 @@ class _$CommonViewModel extends CommonViewModel {
       this.user,
       this.keypad,
       this.customUnit,
-      this.customCategory})
+      this.customCategory,
+      this.customItem})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
@@ -184,7 +187,8 @@ class _$CommonViewModel extends CommonViewModel {
         user == other.user &&
         keypad == other.keypad &&
         customUnit == other.customUnit &&
-        customCategory == other.customCategory;
+        customCategory == other.customCategory &&
+        customItem == other.customItem;
   }
 
   @override
@@ -207,26 +211,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode), hint.hashCode), categoryName.hashCode),
-                                                                                category.hashCode),
-                                                                            currentUnit.hashCode),
-                                                                        currentColor.hashCode),
-                                                                    currentDisable.hashCode),
-                                                                currentBranch.hashCode),
-                                                            cartItem.hashCode),
-                                                        variations.hashCode),
-                                                    itemVariations.hashCode),
-                                                items.hashCode),
-                                            currentIncrement.hashCode),
-                                        currentActiveSaleItem.hashCode),
-                                    database.hashCode),
-                                carts.hashCode),
-                            cartQuantities.hashCode),
-                        order.hashCode),
-                    user.hashCode),
-                keypad.hashCode),
-            customUnit.hashCode),
-        customCategory.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode), hint.hashCode), categoryName.hashCode), category.hashCode),
+                                                                                currentUnit.hashCode),
+                                                                            currentColor.hashCode),
+                                                                        currentDisable.hashCode),
+                                                                    currentBranch.hashCode),
+                                                                cartItem.hashCode),
+                                                            variations.hashCode),
+                                                        itemVariations.hashCode),
+                                                    items.hashCode),
+                                                currentIncrement.hashCode),
+                                            currentActiveSaleItem.hashCode),
+                                        database.hashCode),
+                                    carts.hashCode),
+                                cartQuantities.hashCode),
+                            order.hashCode),
+                        user.hashCode),
+                    keypad.hashCode),
+                customUnit.hashCode),
+            customCategory.hashCode),
+        customItem.hashCode));
   }
 
   @override
@@ -263,7 +267,8 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('user', user)
           ..add('keypad', keypad)
           ..add('customUnit', customUnit)
-          ..add('customCategory', customCategory))
+          ..add('customCategory', customCategory)
+          ..add('customItem', customItem))
         .toString();
   }
 }
@@ -421,6 +426,10 @@ class CommonViewModelBuilder
   set customCategory(CategoryBuilder customCategory) =>
       _$this._customCategory = customCategory;
 
+  ItemBuilder _customItem;
+  ItemBuilder get customItem => _$this._customItem ??= new ItemBuilder();
+  set customItem(ItemBuilder customItem) => _$this._customItem = customItem;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -457,6 +466,7 @@ class CommonViewModelBuilder
       _keypad = _$v.keypad?.toBuilder();
       _customUnit = _$v.customUnit?.toBuilder();
       _customCategory = _$v.customCategory?.toBuilder();
+      _customItem = _$v.customItem?.toBuilder();
       _$v = null;
     }
     return this;
@@ -512,7 +522,8 @@ class CommonViewModelBuilder
               user: _user?.build(),
               keypad: _keypad?.build(),
               customUnit: _customUnit?.build(),
-              customCategory: _customCategory?.build());
+              customCategory: _customCategory?.build(),
+              customItem: _customItem?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -564,6 +575,8 @@ class CommonViewModelBuilder
         _customUnit?.build();
         _$failedField = 'customCategory';
         _customCategory?.build();
+        _$failedField = 'customItem';
+        _customItem?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

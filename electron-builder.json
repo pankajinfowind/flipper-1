@@ -33,12 +33,6 @@
      "publisherName": "Flipper Litd",
     "target": ["nsis"]
   },
-  "nsis":{
-    "installerIcon":"dist/assets/icon/win/icon.ico",
-    "uninstallerIcon":"dist/assets/icon/win/icon.ico",
-    "license":"Yegobox Ltd",
-    "runAfterFinish":true
-    },
   "mac": {
     "icon":"dist/assets/icon/mac/icon.icns",
     "target": [

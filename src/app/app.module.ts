@@ -15,6 +15,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MigrationModule } from './migration/migration.module';
+import { MainModelService, Menu, Tables } from '@enexus/flipper-components';
+import { Router } from '@angular/router';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,7 +42,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-constructor() {
-
+constructor(private model: MainModelService, private router: Router) {
+  this.redirect();
+}
+redirect(){
+  const activeMenu=this.model.active<Menu>(Tables.menu);
+  return this.router.navigate([activeMenu?activeMenu.route:'/admin']);
 }
 }

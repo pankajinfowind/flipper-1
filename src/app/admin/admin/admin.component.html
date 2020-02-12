@@ -2,7 +2,11 @@
     <mat-sidenav [opened]="true" mode="side">
     
         <flipper-menu 
-        [menuEntries]="entries" 
+        [business]="business" 
+        [branch]="branch" 
+        [user]="user" 
+        [menu]="menu" 
+        [settingMenu]="settingMenu"
         (menuToggled)="isMenuToggled($event)" 
         (switchedBusiness)="displaySwitchedBusiness($event)" 
         (switchedBranch)="displaySwitchedBranch($event)"

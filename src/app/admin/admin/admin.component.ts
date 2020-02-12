@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { MenuEntries, MainModelService, Tables, Business, Branch, Menu } from '@enexus/flipper-components';
+import { MenuEntries, MainModelService, Tables, Business, Branch, Menu, User } from '@enexus/flipper-components';
 import { Router } from '@angular/router';
 import { CurrentUser } from '../../core/guards/current-user';
 
@@ -13,15 +13,48 @@ import { CurrentUser } from '../../core/guards/current-user';
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
-  entry: MenuEntries = null;
+ 
+  businesses: Business[] = [];
+  menus: Menu[] = [];
+  branches: Branch[] = [];
+  users:User;
   userToggledMenu: boolean;
+  settingMenus:Menu=null;
 
-  set entries(value: MenuEntries) {
-    this.entry = value;
+  set menu(value: Menu[]) {
+    this.menus = value;
   }
-  get entries(): MenuEntries {
-    return this.entry;
+  get menu(): Menu[] {
+    return this.menus;
   }
+  //
+  set business(value: Business[]) {
+    this.businesses = value;
+  }
+  get business(): Business[] {
+    return this.businesses;
+  }
+  //
+  set branch(value: Branch[]) {
+    this.branches = value;
+  }
+  get branch(): Branch[] {
+    return this.branches;
+  }
+
+  set user(value: User) {
+    this.users = value;
+  }
+  get user(): User {
+    return this.users;
+  }
+  set settingMenu(value: Menu) {
+    this.settingMenus = value;
+  }
+  get settingMenu(): Menu {
+    return this.settingMenus;
+  }
+
 
 
   constructor(private model: MainModelService, private router: Router, public currentUser: CurrentUser) {
@@ -29,14 +62,13 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   loadMenusEntries() {
-
-    this.entries = {
-      businesses: this.model.loadAll<Business>(Tables.business),
-      user: this.currentUser.userLoggedIn(),
-      branches: this.model.filters<Branch>(Tables.branch, 'businessId', this.model.active<Business>(Tables.business).id),
-      menu: this.model.loadAll<Menu>(Tables.menu)
-    };
-
+    this.business =this.model.loadAll<Business>(Tables.business);
+    this.branch   =this.model.loadAll<Business>(Tables.branch);
+    this.user     =this.model.active(Tables.user);
+    this.menu     =this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting===false);
+     this.settingMenu=this.model.loadAll<Menu>(Tables.menu).find(m=>m.isSetting===true);
+    
+    
   }
 
   ngOnDestroy() {
@@ -74,21 +106,26 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
 
   }
-  getRouterClicked(event) {
-    const updatedMenu = event.menus.find(r => r.route === event.router);
-    updatedMenu.active = true;
 
-    const activatedMenu: Menu = this.currentUser.activeMenu();
-    if (activatedMenu) {
-      activatedMenu.active = false;
-    }
+    getRouterClicked(event) {
 
-    if(updatedMenu && activatedMenu) {
-  this.activateOrDesactived<Menu>(Tables.menu, updatedMenu, updatedMenu.id);
-  this.activateOrDesactived<Menu>(Tables.menu, activatedMenu, activatedMenu.id);
-  this.router.navigate([event.router]);
-}
+     this.desactiveAllMenu();
+      if(event.clickedMenu){
+        event.clickedMenu.active=true;
+          this.model.update<Menu>(Tables.menu,event.clickedMenu,event.clickedMenu.id);
+      }
+     
+      this.menu     =this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting===false);
+      this.settingMenu=this.model.loadAll<Menu>(Tables.menu).find(m=>m.isSetting===true);
 
-
+      this.router.navigate([event.clickedMenu.route])
   }
+
+  desactiveAllMenu(){
+    this.model.loadAll<Menu>(Tables.menu).forEach(menu=>{
+      menu.active=false;
+      this.model.update<Menu>(Tables.menu,menu,menu.id)
+    });
+  }
+
 }

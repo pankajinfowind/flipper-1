@@ -3,14 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../core/guards/auth-guard.service';
 import { PageNotFoundComponent } from '../shared/components';
 import { AdminComponent } from './admin/admin.component';
-import { RedirectGuard } from '../core/guards/redirect-guard.service';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    canActivate: [AuthGuard,RedirectGuard],
-    canActivateChild: [AuthGuard,RedirectGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
@@ -20,27 +19,27 @@ const routes: Routes = [
       {
         path: 'analytics',
         loadChildren: () => import('./../dashboard/dashboard.module').then(m => m.DashboardModule),
-        canLoad: [AuthGuard,RedirectGuard]
+        canLoad: [AuthGuard]
       },
       {
         path: 'pos',
         loadChildren: () => import('./../pos/pos.module').then(m => m.PosModule),
-        canLoad: [AuthGuard,RedirectGuard]
+        canLoad: [AuthGuard]
       },
       {
         path: 'settings',
         loadChildren: () => import('./../settings/settings.module').then(m => m.SettingsModule),
-        canLoad: [AuthGuard,RedirectGuard]
+        canLoad: [AuthGuard]
       },
       {
         path: 'inventory',
         loadChildren: () => import('./../inventory/inventory.module').then(m => m.InventoryModule),
-        canLoad: [AuthGuard,RedirectGuard]
+        canLoad: [AuthGuard]
       },
       {
         path: 'transactions',
         loadChildren: () => import('./../transactions/transactions.module').then(m => m.TransactionsModule),
-        canLoad: [AuthGuard,RedirectGuard]
+        canLoad: [AuthGuard]
       },
       {
         path: '**',

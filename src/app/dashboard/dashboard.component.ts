@@ -43,7 +43,7 @@ export class DashboardComponent {
 
   }
 
- 
+
 
   topSoldItems() {
     const topSolds=[];
@@ -142,28 +142,28 @@ export class DashboardComponent {
 
   getSaleStocks() {
     let stocks = [{ netProfit: 0, grossProfit: 0 }];
-      if (this.loadSales().length > 0) {
+    if (this.loadSales().length > 0) {
         stocks=[];
         this.loadSales().forEach(orderDetails => {
           if (orderDetails && orderDetails.stockId > 0) {
-           
+
             stocks.push(this.loadOrderDetails(orderDetails));
           }
         });
       }
     return stocks;
   }
-  loadSales(){
-    let orderItems:OrderDetails[]=[];
-   const details:OrderDetails[]= this.model.loadAll<OrderDetails>(Tables.orderDetails);
+  loadSales() {
+    const orderItems: OrderDetails[]=[];
+    const details: OrderDetails[]= this.model.loadAll<OrderDetails>(Tables.orderDetails);
     this.sales().forEach(sale => {
       if (sale) {
-        details.forEach(d=>{
-          if((!orderItems.find(dd=>dd.id===d.id)) && d.orderId===sale.id){
+        details.forEach(d=> {
+          if((!orderItems.find(dd=>dd.id===d.id)) && d.orderId===sale.id) {
             orderItems.push(d);
           }
         });
-       
+
       }
     });
     return orderItems;
@@ -171,7 +171,7 @@ export class DashboardComponent {
 
   loadOrderDetails(orderDetails) {
     const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
-           return { netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
+    return { netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
               grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) };
   }
 

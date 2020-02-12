@@ -1,0 +1,48 @@
+.l-transactions__key-stats {
+    padding: 25px;
+}
+.key-stats {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+}
+/* Float four columns side by side */
+.column-3 {
+    float: left;
+    width: 33.1%;
+    padding: 0 10px 10px 0px;
+    /* padding: 0 10px 10px 0px; */
+  }
+  /* Responsive columns */
+@media screen and (max-width: 600px) {
+    .column-1,.column-2,.column-3,.column-4 {
+      width: 100%;
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+
+  .key-stats-value {
+    color: #211a36;
+    font-size: 30px;
+    font-family: Roboto;
+    font-weight: 600;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: -0.06px;
+    color: #212529;
+}
+
+.key-stats-tooltip-wrapper {
+    display: inline-block;
+}
+
+.key-stats-label {
+    color: #71767b;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.667;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+  

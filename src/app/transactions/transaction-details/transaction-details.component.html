@@ -1,29 +1,29 @@
-<div class="edit-pane__content">
+<div class="details-right-side-panel">
 
   <div class="sider-container">
 
 
     <div mat-dialog-content class="edit-pane" *ngIf="order">
-      <div class="ember-view" #printReceipt>
-        <div class="detail-body">
-          <div id="ember711" class="detail-blade__section">
-            <h2 class="detail-blade__header">
+      <div>
+        <div class="right-side-body">
+          <div class="right-side-blade__section">
+            <h2 class="right-side-blade__header">
               {{currency}} {{order.subTotal | roundNumber}} Payment
               <!-- FRw1,458.81 Payment -->
             </h2>
 
-            <div class="detail-blade__header-datetime detail-blade__header-data">
+            <div class="right-side-blade__header-datetime right-side-blade__header-data">
               {{order.createdAt | date}} {{order.createdAt | date:'mediumTime'}}
               <!-- Feb. 5, 2020 11:33 am -->
             </div>
 
             <!---->
-            <div class="detail-blade__header-data">
+            <div class="right-side-blade__header-data">
               Collected at: {{order.branch?order.branch.name:'--'}}
             </div>
 
             <!---->
-            <div class="detail-blade__header-data">
+            <div class="right-side-blade__header-data">
               Source: Point of Sale
             </div>
 
@@ -31,28 +31,29 @@
           </div>
 
           <!---->
-          <div class="detail-blade__section">
-            <h5 class="detail-blade__section-header type-small-caps">
+          <div class="right-side-blade__section">
+            <h5 class="right-side-blade__section-header type-small-caps">
               For Here
             </h5>
 
-            <div class="detail-blade__section-body--with-header" *ngIf="order.orderItems.length > 0">
-              <div class="detail-blade__detail-row">
-                <div class="row" *ngFor="let details of order.orderItems; let i = index;">
-                  <div *ngIf="details.variantName" class="details-name col float-left">
-                    <span class="type-strong">
-                      {{details.variantName+' x '+details.quantity +''+ details.unit}}
+            <div class="right-side-blade__section-body--with-header" *ngIf="order.orderItems.length > 0">
+              <div class="right-side-blade__right-side-row">
+                <div class="row" *ngFor="let data of order.orderItems; let i = index;">
+                  <div *ngIf="data.variantName" class="data-name col float-left">
+                    <span class="type-strong" style="float: left;text-align: left;">
+                      {{data.variantName}}<br />
+                      {{currency}} {{data.price | roundNumber}}{{data.unit?'/'+data.unit:''}} {{'x'+data.quantity}}
                     </span>
 
                     <!---->
-                    <div *ngIf="details.productName && details.productName!=details.variantName"
-                      class="detail-blade__detail-row-meta type-strong">
-                      {{details.productName}}
+                    <div *ngIf="data.productName && data.productName!=data.variantName"
+                      class="right-side-blade__right-side-row-meta type-strong">
+                      {{data.productName}}
                     </div>
                   </div>
 
-                  <div class="type-tnum price-details col float-right">
-                    {{currency}} {{details.price | roundNumber}}
+                  <div class="type-tnum price-data col float-right" style="float: right!important;">
+                    {{currency}} {{data.price*data.quantity | roundNumber}}
                     <!---->
                   </div>
                 </div>
@@ -64,55 +65,55 @@
 
           <!---->
 
-          <div class="detail-blade__section grid-row">
+          <div class="right-side-blade__section grid-row">
 
-            <div class="detail-blade__section-body mt-3">
+            <div class="right-side-blade__section-body mt-3">
 
               <div class="row">
                 <div class="col float-left">
                   Subtotal
                 </div>
 
-                <div class="col float-right type-tnum">
+                <div class="col float-right type-tnum"  style="float: right!important;">
                   {{currency}} {{order.subTotal | roundNumber}}
                 </div>
               </div>
 
               <!---->
               <!---->
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col float-left">
                   Tax Included
                 </div>
-                <div class="col float-right type-tnum">
-                  FRw218.76
+                <div class="col float-right type-tnum"  style="float: right!important;">
+                  ({{currency}} {{order.taxAmount | roundNumber}})
                 </div>
-              </div>
+              </div> -->
 
               <div class="row">
                 <div class="float-left col">
                   Vat
                 </div>
-                <div class="float-right type-tnum col">
-                  FRw218.76
+                <div class="float-right type-tnum col"  style="float: right!important;">
+                  ({{currency}} {{order.taxAmount | roundNumber}})
                 </div>
               </div>
 
             </div>
           </div>
-          <div class="detail-blade__section grid-row">
-            <div class="detail-blade__section-body mt-3">
+          <div class="right-side-blade__section grid-row">
+            <div class="right-side-blade__section-body mt-3">
 
 
-              <div class="grid-row detail-blade__detail-row">
-                <div class="detail-blade__detail-row">
+              <div class="grid-row right-side-blade__right-side-row">
+                <div class="right-side-blade__right-side-row">
 
                   <div class="row">
                     <div class="col float-left">
                       Total
                     </div>
-                    <div class="col float-right type-tnum">
-                      {{currency}} {{order.subTotal | roundNumber}}
+                    <div class="col float-right type-tnum"  style="float: right!important;">
+                      {{currency}} {{order.saleTotal | roundNumber}}
                       <!-- FRw1,458.81 -->
                     </div>
                   </div>
@@ -121,7 +122,7 @@
                     <div class="col float-left">
                       Tendered
                     </div>
-                    <div class="col float-right type-tnum">
+                    <div class="col float-right type-tnum"  style="float: right!important;">
                       ({{currency}} {{order.cashReceived | roundNumber}})
                     </div>
                   </div>
@@ -130,19 +131,19 @@
                     <div class="col float-left">
                       Change
                     </div>
-                    <div class="col float-right type-tnum">
+                    <div class="col float-right type-tnum"  style="float: right!important;">
                       ({{currency}} {{order.customerChangeDue | roundNumber}})
                     </div>
                   </div>
 
-                  <div class="detail-blade__detail-row">
+                  <div class="right-side-blade__right-side-row">
                     <div class="row">
                       <div class="col float-left">
                         Cash
                       </div>
 
-                      <div class="col float-right type-tnum">
-                        {{currency}} {{order.subTotal | roundNumber}}
+                      <div class="col float-right type-tnum"  style="float: right!important;">
+                        {{currency}} {{order.saleTotal | roundNumber}}
                       </div>
                     </div>
                     <div class="erow">
@@ -152,7 +153,7 @@
 
                       <div class="row">
                         <a href="#" target="_blank">
-                          <div class="col float-right">
+                          <div class="col float-right"  style="float: right!important;">
                             Receipt # {{order.orderNumber}}
                           </div>
                         </a>

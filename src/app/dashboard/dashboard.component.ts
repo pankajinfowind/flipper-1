@@ -105,7 +105,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   grossProfit() {
     const stocks = this.getSaleStocks();
-    return this.totalPipe.transform(stocks, 'retailPrice');
+    return this.totalPipe.transform(stocks, 'grossProfit');
   }
 
   getGrossProfit() {
@@ -114,17 +114,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   getNetProfit() {
-    return this.radomNumberPipe.transform(this.grossProfit() - this.salesStockCostPrice());
+    const stocks = this.getSaleStocks();
+    return this.radomNumberPipe.transform(this.totalPipe.transform(stocks, 'netProfit'));
   }
 
-  salesStockCostPrice() {
-    const stocks = this.getSaleStocks();
-    return this.totalPipe.transform(stocks, 'supplyPrice');
-  }
 
   totalRevenues() {
     const sales: Order[] =this.sales();
-    return this.totalPipe.transform(sales, 'subTotal');
+    return this.totalPipe.transform(sales, 'saleTotal');
   }
   getTotalRevenues() {
     return this.radomNumberPipe.transform(this. totalRevenues());
@@ -160,15 +157,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getSaleStocks() {
-    const stocks = [{ retailPrice: 0, supplyPrice: 0 }];
+    const stocks = [{ netProfit: 0, grossProfit: 0 }];
     this.sales().forEach(sale => {
       if (sale) {
         if (this.loadOrderDetails(sale.id).length > 0) {
           this.loadOrderDetails(sale.id).forEach(orderDetails => {
             if (orderDetails.stockId > 0) {
               const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
-              stocks.push({ retailPrice: orderDetails.quantity * stock.retailPrice,
-                supplyPrice: orderDetails.quantity * stock.supplyPrice });
+
+              stocks.push({ netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
+                grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) });
             }
           });
         }

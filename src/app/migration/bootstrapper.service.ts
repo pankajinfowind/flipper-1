@@ -88,13 +88,7 @@ export class Bootstrapper {
                   }
                 }
 
-                /////////////////////////////////// ADD DEFAULT TAXES
 
-                if (table.name === 'taxes') {
-                  if (config.defaultTaxes.length > 0) {
-                    this.insertDefaultData<Taxes>(config.defaultTaxes as Taxes[], myTable);
-                  }
-                }
 
 
                 ///////////////////////////////////// ADD TYPES //////////////////////////

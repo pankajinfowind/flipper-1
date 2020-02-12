@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeInAnimation, CalculateTotalClassPipe, Order, Variant,
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
-   Product,OrderDetails,StockHistory, Business } from '@enexus/flipper-components';
+   Product,OrderDetails,StockHistory, Business, Taxes } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
 @Component({
@@ -16,6 +16,7 @@ import { ModelService } from '@enexus/flipper-offline-database';
   ],
 })
 export class PosComponent  {
+
 
   get theVariantFiltered(): Variant[] {
     return this.seTheVariantFiltered;
@@ -53,11 +54,20 @@ init() {
   if(this.currentOrder) {
     this.getOrderDetails(this.currentOrder.id);
   }
-
 }
+
+   makeid(length: number) {
+    let result           = '';
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+
   generateCode(): string {
-    return this.date.getSeconds() + this.date.getHours() + this.date.getDay() + '' +
-     '' + this.date.getDate() + '' + this.date.getMonth() + '' + this.date.getFullYear();
+    return this.makeid(5);
   }
 
   public newOrder() {
@@ -65,8 +75,8 @@ init() {
         const rand = Math.floor(Math.random() * 10);
         this.model.create<Order>(Tables.order, {
           id: rand,
-          reference: 'SO' + rand + this.generateCode(),
-          orderNumber: 'SO' + rand + this.generateCode(),
+          reference: 'SO'  + this.generateCode(),
+          orderNumber: 'SO' + this.generateCode(),
           branchId: this.defaultBranch ? this.defaultBranch.id : 0,
           status: STATUS.OPEN,
           orderType: ORDERTYPE.SALES,
@@ -190,6 +200,26 @@ init() {
         }
 
         if (details.action === 'UPDATE') {
+
+          let taxRate=0;
+          let product=null;
+          if(details.item.variantId > 0) {
+            const variant: Variant=this.model.find<Variant>(Tables.variants, details.item.variantId);
+            if(variant) {
+              product = this.model.find<Product>(Tables.products, variant.productId);
+              if(product) {
+                taxRate=this.model.find<Taxes>(Tables.taxes, product.taxId).percentage;
+              } else {
+                taxRate=this.model.findByFirst<Taxes>(Tables.taxes,'isDefault',true).percentage;
+              }
+            } else {
+              taxRate=this.model.findByFirst<Taxes>(Tables.taxes,'isDefault',true).percentage;
+            }
+            }
+          details.item.price=parseFloat(details.item.price);
+          details.item.quantity=details.item.quantity;
+          details.item.taxAmount=((details.item.price*details.item.quantity)*taxRate)/100;
+          details.item.subTotal=details.item.price*details.item.quantity;
           this.model.update<OrderDetails>(Tables.orderDetails, details.item, details.item.id);
         }
 
@@ -197,12 +227,18 @@ init() {
       }
 
       public updateOrder() {
-        const subtotal = this.totalPipe.transform<OrderDetails>
-        (this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', this.setCurrentOrder.id), 'subTotal');
+        const subtotal = parseFloat(this.totalPipe.transform<OrderDetails>
+        (this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', this.setCurrentOrder.id), 'subTotal'));
+        const taxAmount = parseFloat(this.totalPipe.transform<OrderDetails>
+        (this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', this.setCurrentOrder.id), 'taxAmount'));
         this.setCurrentOrder.subTotal = subtotal;
+
+        this.setCurrentOrder.taxAmount=taxAmount;
+        this.setCurrentOrder.saleTotal=subtotal+taxAmount;
+
         this.setCurrentOrder.customerChangeDue = this.setCurrentOrder.cashReceived > 0 ?
-          parseInt(this.setCurrentOrder.cashReceived, 10) - parseInt(subtotal, 10) : 0.00;
-        this.setCurrentOrder.customerChangeDue = this.setCurrentOrder.customerChangeDue;
+        parseFloat(this.setCurrentOrder.cashReceived) - this.setCurrentOrder.saleTotal : 0.00;
+        this.setCurrentOrder.customerChangeDue = parseFloat(this.setCurrentOrder.customerChangeDue);
         this.model.update<Order>(Tables.order, this.setCurrentOrder, this.setCurrentOrder.id);
         this.hasDraftOrder();
       }
@@ -210,6 +246,18 @@ init() {
 
       public addToCart(event: any) {
         const variant: Variant=event.variant;
+        let taxRate=0;
+        let product=null;
+        if(variant.productId > 0) {
+          product = this.model.find<Product>(Tables.products, variant.productId);
+          if(product) {
+            taxRate=this.model.find<Taxes>(Tables.taxes, product.taxId).percentage;
+          } else {
+            taxRate=this.model.findByFirst<Taxes>(Tables.taxes,'isDefault',true).percentage;
+          }
+        } else {
+          taxRate=this.model.findByFirst<Taxes>(Tables.taxes,'isDefault',true).percentage;
+        }
         const orderDetails: OrderDetails = {
           price: variant.priceVariant.retailPrice,
           variantName: variant.name,
@@ -220,8 +268,9 @@ init() {
           SKU: variant.SKU,
           quantity: event.quantity,
           variantId: variant.id,
+          taxAmount:((variant.priceVariant.retailPrice*event.quantity)*taxRate)/100,
           orderId: this.setCurrentOrder.id,
-          subTotal: variant.priceVariant.retailPrice,
+          subTotal: variant.priceVariant.retailPrice*event.quantity,
           createdAt: this.date,
           updatedAt: this.date
         };
@@ -298,4 +347,5 @@ init() {
          this.hasDraftOrder();
       }
     }
+
 

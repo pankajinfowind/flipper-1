@@ -8,16 +8,41 @@
     <flipper-message title="No Transactions" [message]="'No Transactions could found!'">
     </flipper-message>
   </div>
-  <table *ngIf="dataSource.data.length > 0" class="mb-4">
-    <tr class="row">
-      <th class="col">
-        {{dataSource.data.length}}
-      </th>
-      <th class="col">
-        {{currency}} {{getGrandTotal() | roundNumber}}
-      </th>
-    </tr>
-  </table>
+  <div class="row l-transactions__key-stats ml-5 mt-5" style="position: relative;top: 15px;" *ngIf="dataSource.data.length > 0">
+    <div class="column-3 key-stats">
+      <div>
+        <div class="key-stats-value">
+          {{dataSource.data.length}}
+        </div>
+        <div class="type-small-caps key-stats-label key-stats-tooltip-wrapper">
+          Transactions
+        </div>
+      </div>
+    </div>
+    <div class="column-3 key-stats">
+      <div>
+        <div class="key-stats-value">
+          {{currency}} {{getGrandTotal() | roundNumber}}
+        </div>
+        <div class="type-small-caps key-stats-label key-stats-tooltip-wrapper">
+          TOTAL COLLECTED
+        </div>
+      </div>
+    </div>
+
+    <div class="column-3 key-stats">
+      <div>
+        <div class="key-stats-value">
+          {{currency}} {{getNetSaleTotal() | roundNumber}}
+        </div>
+        <div class="type-small-caps key-stats-label key-stats-tooltip-wrapper">
+          NET SALES
+        </div>
+      </div>
+    </div>
+
+
+  </div>
 
   <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" matSort matSortActive="orderNumber"
     matSortDirection="desc">
@@ -49,9 +74,9 @@
     </ng-container>
 
     <ng-container matColumnDef="subTotal">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>SubTotal</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Paid</th>
       <td mat-cell *matCellDef="let transaction">
-        {{currency}} {{transaction.subTotal | roundNumber}}
+        {{currency}} {{transaction.saleTotal | roundNumber}}
       </td>
     </ng-container>
 

@@ -86,7 +86,13 @@ this.currencyEmit.emit(this.currency);
   }
 
   getGrandTotal() {
+    return this.totalPipe.transform(this.dataSource.data, 'saleTotal');
+  }
+
+  getNetSaleTotal() {
     return this.totalPipe.transform(this.dataSource.data, 'subTotal');
   }
+
+  // saleTotal
 
 }

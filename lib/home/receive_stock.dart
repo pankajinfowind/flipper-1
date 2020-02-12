@@ -1,3 +1,4 @@
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
@@ -46,26 +47,16 @@ class _ReceiveStockState extends State<ReceiveStock> {
                     textDirection: TextDirection.rtl,
                     autofocus: true,
                     style: TextStyle(color: Colors.black),
-                    onChanged: (count) {
-                      List<Variation> updateVariations = [];
-
-                      for (var i = 0; i < vm.variations.length; i++) {
-                        if (widget.variationId == vm.variations[i].id) {
-                          updateVariations.add(
-                            Variation((v) => v
-                              ..id = vm.variations[i].id
-                              ..name = vm.variations[i].name
-                              ..stockValue = int.parse(count)
-                              ..sku = vm.variations[i].sku
-                              ..price = vm.variations[i].price
-                              ..unityType = vm.variations[i].unityType),
-                          );
-                        } else {
-                          updateVariations.add(vm.variations[i]);
-                        }
-                      }
-                      StoreProvider.of<AppState>(context).dispatch(
-                          VariationAction(variations: updateVariations));
+                    onChanged: (count) async {
+                      VariationTableData variation = await vm
+                          .database.variationDao
+                          .getVariationById(widget.variationId);
+                      vm.database.variationDao.updateVariation(
+                        variation.copyWith(
+                          count: int.parse(count),
+                          updatedAt: DateTime.now(),
+                        ),
+                      );
                     },
                     decoration: InputDecoration(
                       hintText: "Add Stock",

@@ -8,14 +8,14 @@ part of 'disable.dart';
 
 class _$Disable extends Disable {
   @override
-  final String unDisable;
+  final String disable;
 
   factory _$Disable([void Function(DisableBuilder) updates]) =>
       (new DisableBuilder()..update(updates)).build();
 
-  _$Disable._({this.unDisable}) : super._() {
-    if (unDisable == null) {
-      throw new BuiltValueNullFieldError('Disable', 'unDisable');
+  _$Disable._({this.disable}) : super._() {
+    if (disable == null) {
+      throw new BuiltValueNullFieldError('Disable', 'disable');
     }
   }
 
@@ -29,17 +29,17 @@ class _$Disable extends Disable {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Disable && unDisable == other.unDisable;
+    return other is Disable && disable == other.disable;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, unDisable.hashCode));
+    return $jf($jc(0, disable.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Disable')..add('unDisable', unDisable))
+    return (newBuiltValueToStringHelper('Disable')..add('disable', disable))
         .toString();
   }
 }
@@ -47,15 +47,15 @@ class _$Disable extends Disable {
 class DisableBuilder implements Builder<Disable, DisableBuilder> {
   _$Disable _$v;
 
-  String _unDisable;
-  String get unDisable => _$this._unDisable;
-  set unDisable(String unDisable) => _$this._unDisable = unDisable;
+  String _disable;
+  String get disable => _$this._disable;
+  set disable(String disable) => _$this._disable = disable;
 
   DisableBuilder();
 
   DisableBuilder get _$this {
     if (_$v != null) {
-      _unDisable = _$v.unDisable;
+      _disable = _$v.disable;
       _$v = null;
     }
     return this;
@@ -76,7 +76,7 @@ class DisableBuilder implements Builder<Disable, DisableBuilder> {
 
   @override
   _$Disable build() {
-    final _$result = _$v ?? new _$Disable._(unDisable: unDisable);
+    final _$result = _$v ?? new _$Disable._(disable: disable);
     replace(_$result);
     return _$result;
   }

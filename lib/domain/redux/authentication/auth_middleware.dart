@@ -215,6 +215,14 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         }
       }
 
+      //create app actions
+      ActionsTableData action =
+          await store.state.database.actionsDao.getActionBy('save');
+      if (action == null) {
+        await store.state.database.actionsDao.insert(
+            //ignore:missing_required_param
+            ActionsTableData(name: 'save', isLocked: true));
+      }
       //start by creating a draft order it it does not exist
       OrderTableData order =
           await generalRepository.createDraftOrderOrReturnExistingOne(store);

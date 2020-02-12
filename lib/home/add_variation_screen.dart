@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
@@ -24,60 +25,54 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
   String name;
   String price;
   String sku;
+
+  ActionsTableData _actions;
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CommonViewModel>(
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
+        vm.database.actionsDao.getActionByStream('save').listen((event) {
+          setState(() {
+            _actions = event[0];
+          });
+        });
         return Scaffold(
           appBar: new CommonAppBar(
             title: S.of(context).addVariation,
             showActionButton: true,
-            disableButton: vm.currentDisable == null ||
-                vm.currentDisable.unDisable == 'none',
+            disableButton: _actions.isLocked,
             actionButtonName: S.of(context).save,
-            onPressedCallback: () {
-              List<Variation> variatione = [];
-              List<Variation> updateVariations = [];
-
-              if (vm.variations.length > 0) {
-                vm.variations.forEach((v) => {
-                      updateVariations.add(v),
-                      updateVariations.add(
-                        Variation(
-                          (v) => v
-                            ..id = new Random().nextInt(100) + 1
-                            ..name = name
-                            ..price = price ?? "0"
-                            ..stockValue = 0
-                            ..unityType = vm.currentUnit.name
-                            ..sku = sku ?? 'null',
-                        ),
-                      )
-                    });
-
-                StoreProvider.of<AppState>(context)
-                    .dispatch(VariationAction(variations: updateVariations));
-
-                Router.navigator.pop();
-                return;
-              } else {
-                variatione.add(Variation(
-                  (v) => v
-                    ..id = new Random().nextInt(100) + 1
-                    ..name = name
-                    ..price = price ?? "0"
-                    ..stockValue = 0
-                    ..unityType = vm.currentUnit.name
-                    ..sku = sku ?? 'null',
-                ));
-
-                StoreProvider.of<AppState>(context)
-                    .dispatch(VariationAction(variations: variatione));
-
-                Router.navigator.pop();
-              }
+            onPressedCallback: () async {
+              ItemTableData item =
+                  await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+              VariationTableData variation = await vm.database.variationDao
+                  .getVariationBy('tmp', vm.branch.id);
+              StoreProvider.of<AppState>(context).dispatch(
+                SaveRegular(
+                  price: variation.price,
+                  itemId: item.id,
+                  name: 'Regular',
+                  id: variation.id,
+                ),
+              );
+              //insert the variation.
+              vm.database.variationDao.insert(
+                //ignore:missing_required_param
+                VariationTableData(
+                  name: name,
+                  price: int.parse(price),
+                  branchId: vm.branch.id,
+                  createdAt: DateTime.now(),
+                  count: 0,
+                  isActive: false,
+                  itemId: item.id,
+                ),
+              );
+              vm.database.actionsDao
+                  .updateAction(_actions.copyWith(isLocked: true));
+              Router.navigator.maybePop();
             },
             icon: Icons.close,
             multi: 3,
@@ -130,19 +125,14 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                           validator: Validators.isStringHasMoreChars,
                           onChanged: (_name) {
                             if (_name == '') {
-                              StoreProvider.of<AppState>(context).dispatch(
-                                  CurrentDisable(
-                                      disable: Disable(
-                                          (u) => u..unDisable = "none")));
+                              vm.database.actionsDao.updateAction(
+                                  _actions.copyWith(isLocked: true));
                               return;
                             }
+                            vm.database.actionsDao.updateAction(
+                                _actions.copyWith(isLocked: false));
 
                             name = _name;
-
-                            StoreProvider.of<AppState>(context).dispatch(
-                                CurrentDisable(
-                                    disable: Disable((u) =>
-                                        u..unDisable = "variationName")));
                           },
                           decoration: InputDecoration(
                               hintText: S.of(context).name,

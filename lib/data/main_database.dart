@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:flipper/data/actions_table.dart';
 import 'package:flipper/data/branch.dart';
 import 'package:flipper/data/business.dart';
 import 'package:flipper/data/business_user.dart';
 import 'package:flipper/data/cart.dart';
 import 'package:flipper/data/category_table.dart';
 import 'package:flipper/data/color_table.dart';
+import 'package:flipper/data/dao/actions_dao.dart';
 import 'package:flipper/data/dao/branch_dao.dart';
 import 'package:flipper/data/dao/business_dao.dart';
 import 'package:flipper/data/dao/cart_dao.dart';
@@ -66,6 +68,7 @@ LazyDatabase _openConnection() {
   CartTable,
   OrderTable,
   ColorTable,
+  ActionsTable
 ], daos: [
   UserDao,
   TokenDao,
@@ -79,12 +82,13 @@ LazyDatabase _openConnection() {
   HistoryDao,
   CartDao,
   OrderDao,
-  ColorDao
+  ColorDao,
+  ActionsDao
 ])
 class Database extends _$Database {
   Database() : super(_openConnection());
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
@@ -92,8 +96,8 @@ class Database extends _$Database {
         customStatement('PRAGMA foreign_keys = ON');
       },
       onUpgrade: (Migrator migrator, from, to) async {
-        if (from == 1) {
-          await migrator.createTable(colorTable);
+        if (from == 2) {
+          await migrator.createTable(actionsTable);
         }
       },
       onCreate: (Migrator m) {

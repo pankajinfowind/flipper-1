@@ -63,8 +63,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   BuiltList<Unit> get units;
 
-  BuiltList<Category> get categories;
-
   @nullable
   int get focusedUnit;
 
@@ -90,9 +88,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Hint get hint;
 
   Database get database;
-
-  @nullable
-  String get categoryName;
 
   @nullable
   int get tempCategoryId;
@@ -131,6 +126,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   KeyPad get keypad;
 
+  @nullable
+  Item get tmpItem;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 
@@ -138,7 +136,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..database = Database()
     ..units = ListBuilder()
     ..carts = ListBuilder()
-    ..categories = ListBuilder()
     ..variations = ListBuilder()
     ..itemVariations = ListBuilder()
     ..items = ListBuilder()

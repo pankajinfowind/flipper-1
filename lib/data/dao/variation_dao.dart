@@ -29,4 +29,45 @@ class VariationDao extends DatabaseAccessor<Database> with _$VariationDaoMixin {
           ..where((t) => t.itemId.equals(itemId)))
         .get();
   }
+
+  Stream<List<VariationTableData>> getItemVariations2(int itemId) {
+    return (select(db.variationTable)
+          ..orderBy(
+              [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.asc)])
+          ..where((t) => t.itemId.equals(itemId)))
+        .watch();
+  }
+
+  Future<VariationTableData> getVariationBy(String name, int branchId) {
+    return (select(db.variationTable)
+          ..orderBy(
+            ([
+              (t) => OrderingTerm(expression: t.id, mode: OrderingMode.asc),
+            ]),
+          )
+          ..where((t) => t.name.equals(name))
+          ..where((t) => t.branchId.equals(branchId)))
+        .getSingle();
+  }
+
+  Future<VariationTableData> getVariationById(int variantId) {
+    return (select(db.variationTable)..where((t) => t.id.equals(variantId)))
+        .getSingle();
+  }
+
+  Stream<List<VariationTableData>> getVariationByStream(
+      String name, int branchId) {
+    return (select(db.variationTable)
+          ..where((t) => t.name.equals(name))
+          ..where((t) => t.branchId.equals(branchId)))
+        .watch();
+  }
+
+  Stream<List<VariationTableData>> getVariationByStream2(
+      String name, int itemId) {
+    return (select(db.variationTable)
+          ..where((t) => t.name.equals(name))
+          ..where((t) => t.itemId.equals(itemId)))
+        .watch();
+  }
 }

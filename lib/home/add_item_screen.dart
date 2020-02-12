@@ -1,15 +1,14 @@
 import 'package:built_collection/src/list.dart';
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/app_action.dart';
-import 'package:flipper/model/category.dart';
 import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
-import 'package:flipper/theme.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';
@@ -34,7 +33,7 @@ class AddItemScreen extends StatefulWidget {
 class _AddItemScreenState extends State<AddItemScreen> {
   final TForm tForm = new TForm();
 
-  Category _currentCategory;
+  ActionsTableData _actions;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +41,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
+        vm.database.actionsDao.getActionByStream('save').listen((event) {
+          setState(() {
+            _actions = event[0];
+          });
+        });
         return Scaffold(
           appBar: CommonAppBar(
             title: S.of(context).createItem,
-            disableButton: vm.currentDisable == null ||
-                vm.currentDisable.unDisable == 'none',
+            disableButton: _actions == null ? true : _actions.isLocked,
             showActionButton: true,
             onPressedCallback: () {
               StoreProvider.of<AppState>(context).dispatch(
@@ -89,17 +92,14 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         validator: Validators.isStringHasMoreChars,
                         onChanged: (name) {
                           if (name == '') {
-                            StoreProvider.of<AppState>(context).dispatch(
-                                CurrentDisable(
-                                    disable:
-                                        Disable((u) => u..unDisable = "none")));
+                            vm.database.actionsDao.updateAction(
+                                _actions.copyWith(isLocked: true));
                             return;
                           }
+                          vm.database.actionsDao
+                              .updateAction(_actions.copyWith(isLocked: false));
+
                           tForm.name = name;
-                          StoreProvider.of<AppState>(context).dispatch(
-                              CurrentDisable(
-                                  disable: Disable(
-                                      (u) => u..unDisable = "itemName")));
                         },
                         decoration: InputDecoration(
                             hintText: "Name", focusColor: Colors.black),
@@ -118,9 +118,20 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           leading: Text(S.of(context).category),
                           trailing: Wrap(
                             children: <Widget>[
-                              vm.categories.length == 0
-                                  ? Text(S.of(context).selectCategory)
-                                  : categorySelector(vm),
+                              StreamBuilder(
+                                stream: vm.database.categoryDao
+                                    .getCategoriesStream(),
+                                builder: (context,
+                                    AsyncSnapshot<List<CategoryTableData>>
+                                        snapshot) {
+                                  if (snapshot.data == null) {
+                                    return Text(S.of(context).selectCategory);
+                                  }
+                                  return snapshot.data.length == 0
+                                      ? Text(S.of(context).selectCategory)
+                                      : categorySelector(snapshot.data);
+                                },
+                              ),
                               Icon(Icons.arrow_forward_ios)
                             ],
                           ),
@@ -183,38 +194,89 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       ),
                     ),
                   ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        validator: Validators.isStringHasMoreChars,
-                        style: TextStyle(color: Colors.black),
-                        onSaved: (name) {},
-                        onChanged: (price) {
-                          tForm.price = price;
-                        },
-                        decoration: InputDecoration(
-                            hintText: S.of(context).costPrice,
-                            focusColor: Colors.blue),
-                      ),
-                    ),
+                  StreamBuilder(
+                    stream: vm.database.variationDao.getVariationByStream2(
+                        'Regular',
+                        vm.tmpItem
+                            .id), //do we have regular variant on this item?
+                    builder: (context,
+                        AsyncSnapshot<List<VariationTableData>> snapshot) {
+                      if (snapshot.data == null) {
+                        return Text("");
+                      }
+                      return snapshot.data.length == 0
+                          ? Center(
+                              child: Container(
+                                width: 300,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  validator: Validators.isStringHasMoreChars,
+                                  style: TextStyle(color: Colors.black),
+                                  onChanged: (price) async {
+                                    ItemTableData item = await vm
+                                        .database.itemDao
+                                        .getItemBy('tmp', vm.branch.id);
+                                    VariationTableData variation = await vm
+                                        .database.variationDao
+                                        .getVariationBy('tmp', vm.branch.id);
+                                    StoreProvider.of<AppState>(context)
+                                        .dispatch(
+                                      SaveRegular(
+                                        price: int.parse(price),
+                                        itemId: item.id,
+                                        name: variation.name,
+                                      ),
+                                    );
+
+                                    //on typing here should save Regular Item variation
+                                  },
+                                  decoration: InputDecoration(
+                                      hintText: S.of(context).costPrice,
+                                      focusColor: Colors.blue),
+                                ),
+                              ),
+                            )
+                          : Text("");
+                    },
                   ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: TextFormField(
-                        style: TextStyle(color: Colors.black),
-                        validator: Validators.isStringHasMoreChars,
-                        onSaved: (name) {},
-                        decoration: InputDecoration(
-                            hintText: "SKU", focusColor: Colors.blue),
-                      ),
-                    ),
+                  StreamBuilder(
+                    stream: vm.database.variationDao
+                        .getVariationByStream2("Regular", vm.tmpItem.id),
+                    builder: (context,
+                        AsyncSnapshot<List<VariationTableData>> snapshot) {
+                      if (snapshot.data == null) {
+                        return Text("");
+                      }
+                      return snapshot.data.length == 0
+                          ? Center(
+                              child: Container(
+                                width: 300,
+                                child: TextFormField(
+                                  style: TextStyle(color: Colors.black),
+                                  validator: Validators
+                                      .isStringHasMoreChars, //on typing here should save Regular Item variation
+
+                                  decoration: InputDecoration(
+                                      hintText: "SKU", focusColor: Colors.blue),
+                                ),
+                              ),
+                            )
+                          : Text("");
+                    },
                   ),
-                  vm.variations.length > 0
-                      ? _buildVariationsList(vm.variations)
-                      : Text(""),
+                  StreamBuilder(
+                    stream: vm.database.variationDao
+                        .getItemVariations2(vm.tmpItem.id),
+                    builder: (context,
+                        AsyncSnapshot<List<VariationTableData>> snapshot) {
+                      if (snapshot.data == null) {
+                        return Text("");
+                      }
+                      return snapshot.data != 0
+                          ? _buildVariationsList(snapshot.data)
+                          : Text("");
+                    },
+                  ),
                   Center(
                     child: SizedBox(
                       height: 50,
@@ -223,11 +285,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         color: HexColor("#ecf0f1"),
                         child: Text(S.of(context).addVariation),
                         onPressed: () {
-                          StoreProvider.of<AppState>(context).dispatch(
-                            CurrentDisable(
-                              disable: Disable((u) => u..unDisable = "none"),
-                            ),
-                          );
+                          vm.database.actionsDao
+                              .updateAction(_actions.copyWith(isLocked: true));
                           Router.navigator.pushNamed(Router.addVariationScreen);
                         },
                       ),
@@ -266,12 +325,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
     );
   }
 
-  Text categorySelector(CommonViewModel vm) {
+  Text categorySelector(List<CategoryTableData> categories) {
     Text text;
-    for (var i = 0; i < vm.categories.length; i++) {
-      if (vm.categories[i].focused) {
-        _currentCategory = vm.categories[i];
-        text = Text(vm.categories[i].name);
+    for (var i = 0; i < categories.length; i++) {
+      if (categories[i].focused) {
+        text = Text(categories[i].name);
         return text;
       } else {
         text = Text(S.of(context).selectCategory);
@@ -280,112 +338,53 @@ class _AddItemScreenState extends State<AddItemScreen> {
     return text;
   }
 
-  _handleFormSubmit(CommonViewModel vm, TForm tForm) {
-    if (tForm.name == null) {
-      Fluttertoast.showToast(
-          msg: S.of(context).youNeedNameOfYourProduct,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIos: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-      return; // a toast
-    }
-    if (_currentCategory == null) {
-      Fluttertoast.showToast(
-          msg: S.of(context).youNeedCategoryOfYourProduct,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIos: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-      return;
-    }
-    if (vm.currentBranch == null) {
-      Fluttertoast.showToast(
-        msg: S.of(context).branchError,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      return;
-    }
-    if (tForm.description == null) {
-      Fluttertoast.showToast(
-          msg: "Pleaseprovide description for your item",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIos: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-      return;
-    }
-    StoreProvider.of<AppState>(context).dispatch(
-      SaveItemAction(
-        business: vm.currentBusiness,
-        name: tForm.name,
-        description: tForm.description,
-        price: tForm.price,
-        branch: vm.currentBranch,
-        color: vm.currentColor == null
-            ? FlipperColors.blue
-            : vm.currentColor.hexCode,
-        variations: vm.variations.toList(),
-        category: _currentCategory,
-        unit: vm.currentUnit,
-      ),
-    );
-
-    StoreProvider.of<AppState>(context).dispatch(
-      AppAction(
-        actions: AppActions((a) => a..name = "null"),
-      ),
-    );
-    return;
+  _handleFormSubmit(CommonViewModel vm, TForm tForm) async {
+    ItemTableData item =
+        await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+    vm.database.itemDao
+        .updateItem(item.copyWith(name: tForm.name, updatedAt: DateTime.now()));
+    Router.navigator.maybePop();
   }
 
-  _buildVariationsList(BuiltList<Variation> variations) {
+  _buildVariationsList(List<VariationTableData> variations) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < variations.length; i++) {
-      list.add(
-        Center(
-          child: SizedBox(
-            height: 90,
-            width: 350,
-            child: ListView(children: <Widget>[
-              ListTile(
-                leading: Icon(
-                  Icons.dehaze,
-                ),
-                subtitle:
-                    Text("${variations[i].name} \nRWF ${variations[i].price}"),
-                trailing:
-                    Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      variations[i].stockValue == 0
-                          ? S.of(context).receiveStock
-                          : variations[i].stockValue.toString() +
-                              S.of(context).inStock,
-                    ),
-                    onPressed: () {
-                      Router.navigator.pushNamed(Router.receiveStock,
-                          arguments: variations[i].id);
-                    },
-                  )
-                ]),
-                dense: true,
-              )
-            ]),
+      if (variations[i].name != 'tmp') {
+        list.add(
+          Center(
+            child: SizedBox(
+              height: 90,
+              width: 350,
+              child: ListView(children: <Widget>[
+                ListTile(
+                  leading: Icon(
+                    Icons.dehaze,
+                  ),
+                  subtitle: Text(
+                      "${variations[i].name} \nRWF ${variations[i].price}"),
+                  trailing:
+                      Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        variations[i].count == 0
+                            ? S.of(context).receiveStock
+                            : variations[i].count.toString() +
+                                S.of(context).inStock,
+                      ),
+                      onPressed: () {
+                        Router.navigator.pushNamed(Router.receiveStock,
+                            arguments: variations[i].id);
+                      },
+                    )
+                  ]),
+                  dense: true,
+                )
+              ]),
+            ),
           ),
-        ),
-      );
+        );
+      }
+      ;
     }
     if (list.length == 0) {
       return Container();

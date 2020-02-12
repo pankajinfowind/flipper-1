@@ -42,7 +42,11 @@ class CategoryNameAction {
 }
 
 @immutable
-class CreateEmptyTempCategoryAction {}
+class CreateEmptyTempCategoryAction {
+  final String name;
+
+  CreateEmptyTempCategoryAction({this.name});
+}
 
 @immutable
 class TempCategoryIdAction {
@@ -62,13 +66,6 @@ class WithUnitId {
   final int unitId;
 
   WithUnitId({@required this.unitId});
-}
-
-@immutable
-class InvokePersistFocusedCategory {
-  final Category category;
-
-  InvokePersistFocusedCategory({this.category});
 }
 
 @immutable
@@ -135,7 +132,7 @@ class SaveItemAction {
   final Branch branch;
   final String price;
   final List<Variation> variations;
-  final Category category;
+  final int categoryId;
   final String description;
   final String name;
   final Unit unit;
@@ -146,7 +143,7 @@ class SaveItemAction {
     this.branch,
     this.price,
     this.variations,
-    this.category,
+    this.categoryId,
     this.description,
     this.name,
     this.unit,
@@ -173,13 +170,6 @@ class IncrementAction {
   final int increment;
 
   IncrementAction({this.increment});
-}
-
-@immutable
-class SwitchCategory {
-  final category;
-
-  SwitchCategory({this.category});
 }
 
 @immutable
@@ -273,4 +263,21 @@ class CustomItem {
   CustomItem({this.item});
 }
 
-class SaveCartCustom{}
+class SaveCartCustom {}
+
+class SaveRegular {
+  final String name;
+  final int itemId;
+  final int price;
+  final int id;
+  final String sku;
+
+  SaveRegular({this.id, this.name, this.itemId, this.price, this.sku});
+}
+
+@immutable
+class TempItem {
+  final Item item;
+
+  TempItem({this.item});
+}

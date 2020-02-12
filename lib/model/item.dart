@@ -5,7 +5,7 @@ part 'item.g.dart';
 abstract class Item implements Built<Item, ItemBuilder> {
   @nullable
   String get parentName;
-
+  @nullable
   String get name;
   @nullable
   String get color;

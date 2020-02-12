@@ -49,9 +49,6 @@ class _$Item extends Item {
       this.description,
       this.count})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('Item', 'name');
-    }
     if (id == null) {
       throw new BuiltValueNullFieldError('Item', 'id');
     }

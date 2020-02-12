@@ -66,9 +66,6 @@ class GeneralRepository {
   }
 
   Future<int> insertItem(Store<AppState> store, ItemTableData data) async {
-    Logger.d("InsertItem:branchId${data.branchId}");
-    Logger.d("InsertItem:branchId${data.branchId}");
-    Logger.d("InsertItem:branchId${data.name}");
     ItemTableData itemData =
         await store.state.database.itemDao.getItemBy(data.name, data.branchId);
 
@@ -156,25 +153,38 @@ class GeneralRepository {
     //broadcast custom unit
   }
 
-  Future<int> insertCategory(Store<AppState> store, {int branchId}) async {
-    //ignore: missing_required_param
-    var category = new CategoryTableData(
-      branchId: branchId,
-      focused: false,
-      createdAt: DateTime.now(),
-      name: "toBeModified",
-    );
+  Future<int> insertCategory(
+      Store<AppState> store, CategoryTableData category) async {
     CategoryTableData existingCategory =
-        await store.state.database.categoryDao.getCategoryName("toBeModified");
+        await store.state.database.categoryDao.getCategoryName(category.name);
     if (existingCategory == null) {
       return store.state.database.categoryDao.insert(category);
-    } else {
-      return existingCategory.id;
     }
+    store.state.database.categoryDao
+        .updateCategory(category.copyWith(updatedAt: DateTime.now()));
+    existingCategory =
+        await store.state.database.categoryDao.getCategoryName(category.name);
+    return existingCategory.id;
   }
 
-  Future<int> insertVariant(Store<AppState> store, VariationTableData data) {
-    return store.state.database.variationDao.insert(data);
+  Future<int> insertVariant(
+      Store<AppState> store, VariationTableData data) async {
+    //insert or update if exist
+    VariationTableData exist;
+    if (data.name == 'Regular') {
+      exist = await store.state.database.variationDao.getVariationById(data.id);
+    } else {
+      exist = await store.state.database.variationDao
+          .getVariationBy(data.name, data.branchId);
+    }
+
+    if (exist != null) {
+      store.state.database.variationDao.updateVariation(exist.copyWith(
+          name: data.name, price: data.price, updatedAt: DateTime.now()));
+      return 1;
+    } else {
+      return store.state.database.variationDao.insert(data);
+    }
   }
 
   Future<int> insertHistory(Store<AppState> store, int variantId, int count) {

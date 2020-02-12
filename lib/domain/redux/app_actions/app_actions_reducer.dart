@@ -11,9 +11,9 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, UnitR>(_onUnits),
   TypedReducer<AppState, CurrentUnit>(_onCurrentUnit),
   TypedReducer<AppState, CurrentColor>(_onCurrentColor),
-  TypedReducer<AppState, CategoryNameAction>(_onCategoryName),
+
   TypedReducer<AppState, TempCategoryIdAction>(_onTempCategoryId),
-  TypedReducer<AppState, CategoryAction>(_onCategories),
+
   TypedReducer<AppState, UpdateUnitAction>(_onUpdateUnit),
   TypedReducer<AppState, WithUnitId>(_withUnitId),
   TypedReducer<AppState, ResetAppAction>(_onResetAppAction),
@@ -29,6 +29,8 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, CartQuantity>(_onCartQuantity),
   TypedReducer<AppState, KayPadAction>(_onKeyPad),
   TypedReducer<AppState, CleanKeyPad>(_onCleanKeyPad),
+
+  TypedReducer<AppState, TempItem>(_onTempItem),
 
   //move this to cleaner reducer
   TypedReducer<AppState, CleanVariation>(_onCleanVariation),
@@ -87,14 +89,6 @@ AppState _onSetTab(AppState state, CurrentTab action) {
 
 AppState _withUnitId(AppState state, WithUnitId action) {
   return state.rebuild((a) => a..focusedUnit = action.unitId);
-}
-
-AppState _onCategories(AppState state, CategoryAction action) {
-  return state.rebuild((a) => a..categories = ListBuilder(action.categories));
-}
-
-AppState _onCategoryName(AppState state, CategoryNameAction action) {
-  return state.rebuild((a) => a..categoryName = action.name);
 }
 
 AppState _onTempCategoryId(AppState state, TempCategoryIdAction action) {
@@ -177,4 +171,8 @@ AppState _onCustomCategory(AppState state, CustomCategory action) {
 
 AppState _onCustomItem(AppState state, CustomItem action) {
   return state.rebuild((a) => a..customItem = action.item.toBuilder());
+}
+
+AppState _onTempItem(AppState state, TempItem action) {
+  return state.rebuild((a) => a..tmpItem = action.item.toBuilder());
 }

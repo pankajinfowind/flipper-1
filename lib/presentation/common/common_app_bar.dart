@@ -50,16 +50,15 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: <Widget>[
               ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 0.5),
-                leading: GestureDetector(
-                  onTap: () {
-                    //close the page.
-                    Router.navigator.pop();
-                  },
-                  child: Icon(
+                leading: IconButton(
+                  icon: Icon(
                     _icon ?? Icons.close,
                     color: Colors.black,
                     size: 30,
                   ),
+                  onPressed: () {
+                    Router.navigator.maybePop();
+                  },
                 ),
                 title: _title == null
                     ? Text("")

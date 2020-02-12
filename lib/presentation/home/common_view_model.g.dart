@@ -16,8 +16,6 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final BuiltList<Unit> units;
   @override
-  final BuiltList<Category> categories;
-  @override
   final int tab;
   @override
   final Business currentBusiness;
@@ -32,8 +30,6 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final Hint hint;
   @override
-  final String categoryName;
-  @override
   final Category category;
   @override
   final Unit currentUnit;
@@ -42,7 +38,7 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final Disable currentDisable;
   @override
-  final Branch currentBranch;
+  final Branch branch;
   @override
   final Item cartItem;
   @override
@@ -73,6 +69,10 @@ class _$CommonViewModel extends CommonViewModel {
   final Category customCategory;
   @override
   final Item customItem;
+  @override
+  final int tempCategoryId;
+  @override
+  final Item tmpItem;
 
   factory _$CommonViewModel([void Function(CommonViewModelBuilder) updates]) =>
       (new CommonViewModelBuilder()..update(updates)).build();
@@ -82,7 +82,6 @@ class _$CommonViewModel extends CommonViewModel {
       this.hasSheet,
       this.hasHint,
       this.units,
-      this.categories,
       this.tab,
       this.currentBusiness,
       this.hasAction,
@@ -90,12 +89,11 @@ class _$CommonViewModel extends CommonViewModel {
       this.businesses,
       this.appAction,
       this.hint,
-      this.categoryName,
       this.category,
       this.currentUnit,
       this.currentColor,
       this.currentDisable,
-      this.currentBranch,
+      this.branch,
       this.cartItem,
       this.variations,
       this.itemVariations,
@@ -110,16 +108,15 @@ class _$CommonViewModel extends CommonViewModel {
       this.keypad,
       this.customUnit,
       this.customCategory,
-      this.customItem})
+      this.customItem,
+      this.tempCategoryId,
+      this.tmpItem})
       : super._() {
     if (hasUser == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasUser');
     }
     if (hasSheet == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasSheet');
-    }
-    if (categories == null) {
-      throw new BuiltValueNullFieldError('CommonViewModel', 'categories');
     }
     if (hasAction == null) {
       throw new BuiltValueNullFieldError('CommonViewModel', 'hasAction');
@@ -160,7 +157,6 @@ class _$CommonViewModel extends CommonViewModel {
         hasSheet == other.hasSheet &&
         hasHint == other.hasHint &&
         units == other.units &&
-        categories == other.categories &&
         tab == other.tab &&
         currentBusiness == other.currentBusiness &&
         hasAction == other.hasAction &&
@@ -168,12 +164,11 @@ class _$CommonViewModel extends CommonViewModel {
         businesses == other.businesses &&
         appAction == other.appAction &&
         hint == other.hint &&
-        categoryName == other.categoryName &&
         category == other.category &&
         currentUnit == other.currentUnit &&
         currentColor == other.currentColor &&
         currentDisable == other.currentDisable &&
-        currentBranch == other.currentBranch &&
+        branch == other.branch &&
         cartItem == other.cartItem &&
         variations == other.variations &&
         itemVariations == other.itemVariations &&
@@ -188,7 +183,9 @@ class _$CommonViewModel extends CommonViewModel {
         keypad == other.keypad &&
         customUnit == other.customUnit &&
         customCategory == other.customCategory &&
-        customItem == other.customItem;
+        customItem == other.customItem &&
+        tempCategoryId == other.tempCategoryId &&
+        tmpItem == other.tmpItem;
   }
 
   @override
@@ -211,26 +208,26 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), categories.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode), hint.hashCode), categoryName.hashCode), category.hashCode),
-                                                                                currentUnit.hashCode),
-                                                                            currentColor.hashCode),
-                                                                        currentDisable.hashCode),
-                                                                    currentBranch.hashCode),
-                                                                cartItem.hashCode),
-                                                            variations.hashCode),
-                                                        itemVariations.hashCode),
-                                                    items.hashCode),
-                                                currentIncrement.hashCode),
-                                            currentActiveSaleItem.hashCode),
-                                        database.hashCode),
-                                    carts.hashCode),
-                                cartQuantities.hashCode),
-                            order.hashCode),
-                        user.hashCode),
-                    keypad.hashCode),
-                customUnit.hashCode),
-            customCategory.hashCode),
-        customItem.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode), hint.hashCode), category.hashCode), currentUnit.hashCode), currentColor.hashCode),
+                                                                                currentDisable.hashCode),
+                                                                            branch.hashCode),
+                                                                        cartItem.hashCode),
+                                                                    variations.hashCode),
+                                                                itemVariations.hashCode),
+                                                            items.hashCode),
+                                                        currentIncrement.hashCode),
+                                                    currentActiveSaleItem.hashCode),
+                                                database.hashCode),
+                                            carts.hashCode),
+                                        cartQuantities.hashCode),
+                                    order.hashCode),
+                                user.hashCode),
+                            keypad.hashCode),
+                        customUnit.hashCode),
+                    customCategory.hashCode),
+                customItem.hashCode),
+            tempCategoryId.hashCode),
+        tmpItem.hashCode));
   }
 
   @override
@@ -240,7 +237,6 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('hasSheet', hasSheet)
           ..add('hasHint', hasHint)
           ..add('units', units)
-          ..add('categories', categories)
           ..add('tab', tab)
           ..add('currentBusiness', currentBusiness)
           ..add('hasAction', hasAction)
@@ -248,12 +244,11 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('businesses', businesses)
           ..add('appAction', appAction)
           ..add('hint', hint)
-          ..add('categoryName', categoryName)
           ..add('category', category)
           ..add('currentUnit', currentUnit)
           ..add('currentColor', currentColor)
           ..add('currentDisable', currentDisable)
-          ..add('currentBranch', currentBranch)
+          ..add('branch', branch)
           ..add('cartItem', cartItem)
           ..add('variations', variations)
           ..add('itemVariations', itemVariations)
@@ -268,7 +263,9 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('keypad', keypad)
           ..add('customUnit', customUnit)
           ..add('customCategory', customCategory)
-          ..add('customItem', customItem))
+          ..add('customItem', customItem)
+          ..add('tempCategoryId', tempCategoryId)
+          ..add('tmpItem', tmpItem))
         .toString();
   }
 }
@@ -292,12 +289,6 @@ class CommonViewModelBuilder
   ListBuilder<Unit> _units;
   ListBuilder<Unit> get units => _$this._units ??= new ListBuilder<Unit>();
   set units(ListBuilder<Unit> units) => _$this._units = units;
-
-  ListBuilder<Category> _categories;
-  ListBuilder<Category> get categories =>
-      _$this._categories ??= new ListBuilder<Category>();
-  set categories(ListBuilder<Category> categories) =>
-      _$this._categories = categories;
 
   int _tab;
   int get tab => _$this._tab;
@@ -330,10 +321,6 @@ class CommonViewModelBuilder
   HintBuilder get hint => _$this._hint ??= new HintBuilder();
   set hint(HintBuilder hint) => _$this._hint = hint;
 
-  String _categoryName;
-  String get categoryName => _$this._categoryName;
-  set categoryName(String categoryName) => _$this._categoryName = categoryName;
-
   CategoryBuilder _category;
   CategoryBuilder get category => _$this._category ??= new CategoryBuilder();
   set category(CategoryBuilder category) => _$this._category = category;
@@ -354,11 +341,9 @@ class CommonViewModelBuilder
   set currentDisable(DisableBuilder currentDisable) =>
       _$this._currentDisable = currentDisable;
 
-  BranchBuilder _currentBranch;
-  BranchBuilder get currentBranch =>
-      _$this._currentBranch ??= new BranchBuilder();
-  set currentBranch(BranchBuilder currentBranch) =>
-      _$this._currentBranch = currentBranch;
+  BranchBuilder _branch;
+  BranchBuilder get branch => _$this._branch ??= new BranchBuilder();
+  set branch(BranchBuilder branch) => _$this._branch = branch;
 
   ItemBuilder _cartItem;
   ItemBuilder get cartItem => _$this._cartItem ??= new ItemBuilder();
@@ -430,6 +415,15 @@ class CommonViewModelBuilder
   ItemBuilder get customItem => _$this._customItem ??= new ItemBuilder();
   set customItem(ItemBuilder customItem) => _$this._customItem = customItem;
 
+  int _tempCategoryId;
+  int get tempCategoryId => _$this._tempCategoryId;
+  set tempCategoryId(int tempCategoryId) =>
+      _$this._tempCategoryId = tempCategoryId;
+
+  ItemBuilder _tmpItem;
+  ItemBuilder get tmpItem => _$this._tmpItem ??= new ItemBuilder();
+  set tmpItem(ItemBuilder tmpItem) => _$this._tmpItem = tmpItem;
+
   CommonViewModelBuilder();
 
   CommonViewModelBuilder get _$this {
@@ -438,7 +432,6 @@ class CommonViewModelBuilder
       _hasSheet = _$v.hasSheet;
       _hasHint = _$v.hasHint;
       _units = _$v.units?.toBuilder();
-      _categories = _$v.categories?.toBuilder();
       _tab = _$v.tab;
       _currentBusiness = _$v.currentBusiness?.toBuilder();
       _hasAction = _$v.hasAction;
@@ -446,12 +439,11 @@ class CommonViewModelBuilder
       _businesses = _$v.businesses;
       _appAction = _$v.appAction?.toBuilder();
       _hint = _$v.hint?.toBuilder();
-      _categoryName = _$v.categoryName;
       _category = _$v.category?.toBuilder();
       _currentUnit = _$v.currentUnit?.toBuilder();
       _currentColor = _$v.currentColor?.toBuilder();
       _currentDisable = _$v.currentDisable?.toBuilder();
-      _currentBranch = _$v.currentBranch?.toBuilder();
+      _branch = _$v.branch?.toBuilder();
       _cartItem = _$v.cartItem?.toBuilder();
       _variations = _$v.variations?.toBuilder();
       _itemVariations = _$v.itemVariations?.toBuilder();
@@ -467,6 +459,8 @@ class CommonViewModelBuilder
       _customUnit = _$v.customUnit?.toBuilder();
       _customCategory = _$v.customCategory?.toBuilder();
       _customItem = _$v.customItem?.toBuilder();
+      _tempCategoryId = _$v.tempCategoryId;
+      _tmpItem = _$v.tmpItem?.toBuilder();
       _$v = null;
     }
     return this;
@@ -495,7 +489,6 @@ class CommonViewModelBuilder
               hasSheet: hasSheet,
               hasHint: hasHint,
               units: _units?.build(),
-              categories: categories.build(),
               tab: tab,
               currentBusiness: _currentBusiness?.build(),
               hasAction: hasAction,
@@ -503,12 +496,11 @@ class CommonViewModelBuilder
               businesses: businesses,
               appAction: _appAction?.build(),
               hint: hint.build(),
-              categoryName: categoryName,
               category: _category?.build(),
               currentUnit: _currentUnit?.build(),
               currentColor: _currentColor?.build(),
               currentDisable: _currentDisable?.build(),
-              currentBranch: _currentBranch?.build(),
+              branch: _branch?.build(),
               cartItem: _cartItem?.build(),
               variations: _variations?.build(),
               itemVariations: _itemVariations?.build(),
@@ -523,14 +515,14 @@ class CommonViewModelBuilder
               keypad: _keypad?.build(),
               customUnit: _customUnit?.build(),
               customCategory: _customCategory?.build(),
-              customItem: _customItem?.build());
+              customItem: _customItem?.build(),
+              tempCategoryId: tempCategoryId,
+              tmpItem: _tmpItem?.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'units';
         _units?.build();
-        _$failedField = 'categories';
-        categories.build();
 
         _$failedField = 'currentBusiness';
         _currentBusiness?.build();
@@ -539,7 +531,6 @@ class CommonViewModelBuilder
         _appAction?.build();
         _$failedField = 'hint';
         hint.build();
-
         _$failedField = 'category';
         _category?.build();
         _$failedField = 'currentUnit';
@@ -548,8 +539,8 @@ class CommonViewModelBuilder
         _currentColor?.build();
         _$failedField = 'currentDisable';
         _currentDisable?.build();
-        _$failedField = 'currentBranch';
-        _currentBranch?.build();
+        _$failedField = 'branch';
+        _branch?.build();
         _$failedField = 'cartItem';
         _cartItem?.build();
         _$failedField = 'variations';
@@ -577,6 +568,9 @@ class CommonViewModelBuilder
         _customCategory?.build();
         _$failedField = 'customItem';
         _customItem?.build();
+
+        _$failedField = 'tmpItem';
+        _tmpItem?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CommonViewModel', _$failedField, e.toString());

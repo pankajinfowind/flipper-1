@@ -36,8 +36,6 @@ class _$AppState extends AppState {
   @override
   final BuiltList<Unit> units;
   @override
-  final BuiltList<Category> categories;
-  @override
   final int focusedUnit;
   @override
   final Category category;
@@ -55,8 +53,6 @@ class _$AppState extends AppState {
   final Hint hint;
   @override
   final Database database;
-  @override
-  final String categoryName;
   @override
   final int tempCategoryId;
   @override
@@ -85,6 +81,8 @@ class _$AppState extends AppState {
   final Order order;
   @override
   final KeyPad keypad;
+  @override
+  final Item tmpItem;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -104,7 +102,6 @@ class _$AppState extends AppState {
       this.customItem,
       this.customCategory,
       this.units,
-      this.categories,
       this.focusedUnit,
       this.category,
       this.permissions,
@@ -114,7 +111,6 @@ class _$AppState extends AppState {
       this.business,
       this.hint,
       this.database,
-      this.categoryName,
       this.tempCategoryId,
       this.currentUnit,
       this.currentColor,
@@ -128,11 +124,9 @@ class _$AppState extends AppState {
       this.carts,
       this.cartQuantities,
       this.order,
-      this.keypad})
+      this.keypad,
+      this.tmpItem})
       : super._() {
-    if (categories == null) {
-      throw new BuiltValueNullFieldError('AppState', 'categories');
-    }
     if (database == null) {
       throw new BuiltValueNullFieldError('AppState', 'database');
     }
@@ -175,7 +169,6 @@ class _$AppState extends AppState {
         customItem == other.customItem &&
         customCategory == other.customCategory &&
         units == other.units &&
-        categories == other.categories &&
         focusedUnit == other.focusedUnit &&
         category == other.category &&
         permissions == other.permissions &&
@@ -185,7 +178,6 @@ class _$AppState extends AppState {
         business == other.business &&
         hint == other.hint &&
         database == other.database &&
-        categoryName == other.categoryName &&
         tempCategoryId == other.tempCategoryId &&
         currentUnit == other.currentUnit &&
         currentColor == other.currentColor &&
@@ -199,7 +191,8 @@ class _$AppState extends AppState {
         carts == other.carts &&
         cartQuantities == other.cartQuantities &&
         order == other.order &&
-        keypad == other.keypad;
+        keypad == other.keypad &&
+        tmpItem == other.tmpItem;
   }
 
   @override
@@ -222,26 +215,26 @@ class _$AppState extends AppState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), customUnit.hashCode), customItem.hashCode), customCategory.hashCode), units.hashCode), categories.hashCode), focusedUnit.hashCode), category.hashCode), permissions.hashCode), branches.hashCode), businesses.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), userId.hashCode), currentActiveBusiness.hashCode), tab.hashCode), nextActiveBusiness.hashCode), sheet.hashCode), action.hashCode), price.hashCode), businessId.hashCode), unit.hashCode), customUnit.hashCode), customItem.hashCode), customCategory.hashCode), units.hashCode), focusedUnit.hashCode), category.hashCode), permissions.hashCode), branches.hashCode), businesses.hashCode),
                                                                                 branch.hashCode),
                                                                             business.hashCode),
                                                                         hint.hashCode),
                                                                     database.hashCode),
-                                                                categoryName.hashCode),
-                                                            tempCategoryId.hashCode),
-                                                        currentUnit.hashCode),
-                                                    currentColor.hashCode),
-                                                currentDisable.hashCode),
-                                            variations.hashCode),
-                                        itemVariations.hashCode),
-                                    currentActiveSaleItem.hashCode),
-                                cartItem.hashCode),
-                            items.hashCode),
-                        currentIncrement.hashCode),
-                    carts.hashCode),
-                cartQuantities.hashCode),
-            order.hashCode),
-        keypad.hashCode));
+                                                                tempCategoryId.hashCode),
+                                                            currentUnit.hashCode),
+                                                        currentColor.hashCode),
+                                                    currentDisable.hashCode),
+                                                variations.hashCode),
+                                            itemVariations.hashCode),
+                                        currentActiveSaleItem.hashCode),
+                                    cartItem.hashCode),
+                                items.hashCode),
+                            currentIncrement.hashCode),
+                        carts.hashCode),
+                    cartQuantities.hashCode),
+                order.hashCode),
+            keypad.hashCode),
+        tmpItem.hashCode));
   }
 
   @override
@@ -261,7 +254,6 @@ class _$AppState extends AppState {
           ..add('customItem', customItem)
           ..add('customCategory', customCategory)
           ..add('units', units)
-          ..add('categories', categories)
           ..add('focusedUnit', focusedUnit)
           ..add('category', category)
           ..add('permissions', permissions)
@@ -271,7 +263,6 @@ class _$AppState extends AppState {
           ..add('business', business)
           ..add('hint', hint)
           ..add('database', database)
-          ..add('categoryName', categoryName)
           ..add('tempCategoryId', tempCategoryId)
           ..add('currentUnit', currentUnit)
           ..add('currentColor', currentColor)
@@ -285,7 +276,8 @@ class _$AppState extends AppState {
           ..add('carts', carts)
           ..add('cartQuantities', cartQuantities)
           ..add('order', order)
-          ..add('keypad', keypad))
+          ..add('keypad', keypad)
+          ..add('tmpItem', tmpItem))
         .toString();
   }
 }
@@ -355,12 +347,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   ListBuilder<Unit> get units => _$this._units ??= new ListBuilder<Unit>();
   set units(ListBuilder<Unit> units) => _$this._units = units;
 
-  ListBuilder<Category> _categories;
-  ListBuilder<Category> get categories =>
-      _$this._categories ??= new ListBuilder<Category>();
-  set categories(ListBuilder<Category> categories) =>
-      _$this._categories = categories;
-
   int _focusedUnit;
   int get focusedUnit => _$this._focusedUnit;
   set focusedUnit(int focusedUnit) => _$this._focusedUnit = focusedUnit;
@@ -398,10 +384,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   Database _database;
   Database get database => _$this._database;
   set database(Database database) => _$this._database = database;
-
-  String _categoryName;
-  String get categoryName => _$this._categoryName;
-  set categoryName(String categoryName) => _$this._categoryName = categoryName;
 
   int _tempCategoryId;
   int get tempCategoryId => _$this._tempCategoryId;
@@ -472,6 +454,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   KeyPadBuilder get keypad => _$this._keypad ??= new KeyPadBuilder();
   set keypad(KeyPadBuilder keypad) => _$this._keypad = keypad;
 
+  ItemBuilder _tmpItem;
+  ItemBuilder get tmpItem => _$this._tmpItem ??= new ItemBuilder();
+  set tmpItem(ItemBuilder tmpItem) => _$this._tmpItem = tmpItem;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -490,7 +476,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _customItem = _$v.customItem?.toBuilder();
       _customCategory = _$v.customCategory?.toBuilder();
       _units = _$v.units?.toBuilder();
-      _categories = _$v.categories?.toBuilder();
       _focusedUnit = _$v.focusedUnit;
       _category = _$v.category?.toBuilder();
       _permissions = _$v.permissions?.toBuilder();
@@ -500,7 +485,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _business = _$v.business?.toBuilder();
       _hint = _$v.hint?.toBuilder();
       _database = _$v.database;
-      _categoryName = _$v.categoryName;
       _tempCategoryId = _$v.tempCategoryId;
       _currentUnit = _$v.currentUnit?.toBuilder();
       _currentColor = _$v.currentColor?.toBuilder();
@@ -515,6 +499,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _cartQuantities = _$v.cartQuantities;
       _order = _$v.order?.toBuilder();
       _keypad = _$v.keypad?.toBuilder();
+      _tmpItem = _$v.tmpItem?.toBuilder();
       _$v = null;
     }
     return this;
@@ -553,7 +538,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               customItem: _customItem?.build(),
               customCategory: _customCategory?.build(),
               units: _units?.build(),
-              categories: categories.build(),
               focusedUnit: focusedUnit,
               category: _category?.build(),
               permissions: _permissions?.build(),
@@ -563,7 +547,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               business: _business?.build(),
               hint: _hint?.build(),
               database: database,
-              categoryName: categoryName,
               tempCategoryId: tempCategoryId,
               currentUnit: _currentUnit?.build(),
               currentColor: _currentColor?.build(),
@@ -577,7 +560,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               carts: carts.build(),
               cartQuantities: cartQuantities,
               order: _order?.build(),
-              keypad: _keypad?.build());
+              keypad: _keypad?.build(),
+              tmpItem: _tmpItem?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -606,8 +590,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _customCategory?.build();
         _$failedField = 'units';
         _units?.build();
-        _$failedField = 'categories';
-        categories.build();
 
         _$failedField = 'category';
         _category?.build();
@@ -645,6 +627,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _order?.build();
         _$failedField = 'keypad';
         _keypad?.build();
+        _$failedField = 'tmpItem';
+        _tmpItem?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

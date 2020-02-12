@@ -1,8 +1,7 @@
-import 'package:built_collection/src/list.dart';
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
-import 'package:flipper/model/category.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -19,20 +18,20 @@ class AddCategoryScreen extends StatefulWidget {
 }
 
 class _AddCategoryScreenState extends State<AddCategoryScreen> {
-  _getCategoriesWidgets(BuiltList<Category> categories) {
+  _getCategoriesWidgets(
+      List<CategoryTableData> categories, CommonViewModel vm) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < categories.length; i++) {
-      if (categories[i].name != "toBeModified") {
+      if (categories[i].name != "custom") {
         list.add(
           GestureDetector(
             onTap: () {
-              StoreProvider.of<AppState>(context).dispatch(
-                SwitchCategory(category: categories[i]),
-              );
-
-              StoreProvider.of<AppState>(context).dispatch(
-                InvokePersistFocusedCategory(category: categories[i]),
-              );
+              for (var y = 0; y < categories.length; y++) {
+                vm.database.categoryDao
+                    .updateCategory(categories[y].copyWith(focused: false));
+              }
+              vm.database.categoryDao.updateCategory(
+                  categories[i].copyWith(focused: !categories[i].focused));
             },
             child: ListTile(
               title: Text(
@@ -87,10 +86,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
               GestureDetector(
                 onTap: () {
                   StoreProvider.of<AppState>(context).dispatch(
-                    CategoryNameAction(name: null),
-                  );
-                  StoreProvider.of<AppState>(context).dispatch(
-                    CreateEmptyTempCategoryAction(),
+                    CreateEmptyTempCategoryAction(name: "tmp"),
                   );
                   Router.navigator.pushNamed(Router.createCategoryInputScreen);
                 },
@@ -102,27 +98,20 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                   ),
                 ),
               ),
-              _getCategoriesWidgets(vm.categories),
-              Visibility(
-                visible: false,
-                child: FlatButton(
-                  child: Text("invisible button"),
-                  onPressed: vm.categoryName != null
-                      ? _handleCreateCategory(vm)
-                      : null,
-                ),
+              StreamBuilder(
+                stream: vm.database.categoryDao.getCategoriesStream(),
+                builder:
+                    (context, AsyncSnapshot<List<CategoryTableData>> snapshot) {
+                  if (snapshot.data == null) {
+                    return Container();
+                  }
+                  return _getCategoriesWidgets(snapshot.data, vm);
+                },
               ),
             ],
           ),
         );
       },
-    );
-  }
-
-  _handleCreateCategory(CommonViewModel vm) {
-    //fire the event to create category
-    StoreProvider.of<AppState>(context).dispatch(
-      CreateCategoryFromAddItemScreenAction(categoryName: vm.categoryName),
     );
   }
 }

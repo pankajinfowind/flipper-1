@@ -3219,7 +3219,7 @@ class ItemTableData extends DataClass implements Insertable<ItemTableData> {
       {@required this.id,
       @required this.name,
       @required this.color,
-      @required this.description,
+      this.description,
       @required this.categoryId,
       @required this.branchId,
       @required this.unitId,
@@ -3402,7 +3402,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     this.id = const Value.absent(),
     @required String name,
     @required String color,
-    @required String description,
+    this.description = const Value.absent(),
     @required int categoryId,
     @required int branchId,
     @required int unitId,
@@ -3410,7 +3410,6 @@ class ItemTableCompanion extends UpdateCompanion<ItemTableData> {
     this.updatedAt = const Value.absent(),
   })  : name = Value(name),
         color = Value(color),
-        description = Value(description),
         categoryId = Value(categoryId),
         branchId = Value(branchId),
         unitId = Value(unitId);
@@ -3486,7 +3485,7 @@ class $ItemTableTable extends ItemTable
     return GeneratedTextColumn(
       'description',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -6025,6 +6024,204 @@ class $ColorTableTable extends ColorTable
   }
 }
 
+class ActionsTableData extends DataClass
+    implements Insertable<ActionsTableData> {
+  final int id;
+  final bool isLocked;
+  final String name;
+  ActionsTableData(
+      {@required this.id, @required this.isLocked, @required this.name});
+  factory ActionsTableData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return ActionsTableData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      isLocked:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_locked']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+    );
+  }
+  factory ActionsTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return ActionsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      isLocked: serializer.fromJson<bool>(json['isLocked']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson(
+      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'isLocked': serializer.toJson<bool>(isLocked),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  @override
+  ActionsTableCompanion createCompanion(bool nullToAbsent) {
+    return ActionsTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      isLocked: isLocked == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isLocked),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+    );
+  }
+
+  ActionsTableData copyWith({int id, bool isLocked, String name}) =>
+      ActionsTableData(
+        id: id ?? this.id,
+        isLocked: isLocked ?? this.isLocked,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ActionsTableData(')
+          ..write('id: $id, ')
+          ..write('isLocked: $isLocked, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(isLocked.hashCode, name.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is ActionsTableData &&
+          other.id == this.id &&
+          other.isLocked == this.isLocked &&
+          other.name == this.name);
+}
+
+class ActionsTableCompanion extends UpdateCompanion<ActionsTableData> {
+  final Value<int> id;
+  final Value<bool> isLocked;
+  final Value<String> name;
+  const ActionsTableCompanion({
+    this.id = const Value.absent(),
+    this.isLocked = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  ActionsTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.isLocked = const Value.absent(),
+    @required String name,
+  }) : name = Value(name);
+  ActionsTableCompanion copyWith(
+      {Value<int> id, Value<bool> isLocked, Value<String> name}) {
+    return ActionsTableCompanion(
+      id: id ?? this.id,
+      isLocked: isLocked ?? this.isLocked,
+      name: name ?? this.name,
+    );
+  }
+}
+
+class $ActionsTableTable extends ActionsTable
+    with TableInfo<$ActionsTableTable, ActionsTableData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $ActionsTableTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _isLockedMeta = const VerificationMeta('isLocked');
+  GeneratedBoolColumn _isLocked;
+  @override
+  GeneratedBoolColumn get isLocked => _isLocked ??= _constructIsLocked();
+  GeneratedBoolColumn _constructIsLocked() {
+    return GeneratedBoolColumn('is_locked', $tableName, false,
+        defaultValue: Constant(false));
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, isLocked, name];
+  @override
+  $ActionsTableTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'actions_table';
+  @override
+  final String actualTableName = 'actions_table';
+  @override
+  VerificationContext validateIntegrity(ActionsTableCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    } else if (id.isRequired && isInserting) {
+      context.missing(_idMeta);
+    }
+    if (d.isLocked.present) {
+      context.handle(_isLockedMeta,
+          isLocked.isAcceptableValue(d.isLocked.value, _isLockedMeta));
+    } else if (isLocked.isRequired && isInserting) {
+      context.missing(_isLockedMeta);
+    }
+    if (d.name.present) {
+      context.handle(
+          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+    } else if (name.isRequired && isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ActionsTableData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return ActionsTableData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(ActionsTableCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.isLocked.present) {
+      map['is_locked'] = Variable<bool, BoolType>(d.isLocked.value);
+    }
+    if (d.name.present) {
+      map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    return map;
+  }
+
+  @override
+  $ActionsTableTable createAlias(String alias) {
+    return $ActionsTableTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $UserTableTable _userTable;
@@ -6064,6 +6261,9 @@ abstract class _$Database extends GeneratedDatabase {
   $OrderTableTable get orderTable => _orderTable ??= $OrderTableTable(this);
   $ColorTableTable _colorTable;
   $ColorTableTable get colorTable => _colorTable ??= $ColorTableTable(this);
+  $ActionsTableTable _actionsTable;
+  $ActionsTableTable get actionsTable =>
+      _actionsTable ??= $ActionsTableTable(this);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Database);
   TokenDao _tokenDao;
@@ -6091,6 +6291,8 @@ abstract class _$Database extends GeneratedDatabase {
   OrderDao get orderDao => _orderDao ??= OrderDao(this as Database);
   ColorDao _colorDao;
   ColorDao get colorDao => _colorDao ??= ColorDao(this as Database);
+  ActionsDao _actionsDao;
+  ActionsDao get actionsDao => _actionsDao ??= ActionsDao(this as Database);
   @override
   List<TableInfo> get allTables => [
         userTable,
@@ -6108,6 +6310,7 @@ abstract class _$Database extends GeneratedDatabase {
         historyTable,
         cartTable,
         orderTable,
-        colorTable
+        colorTable,
+        actionsTable
       ];
 }

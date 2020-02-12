@@ -5,7 +5,7 @@ class ItemTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
   TextColumn get color => text()();
-  TextColumn get description => text()();
+  TextColumn get description => text().nullable()();
 
   IntColumn get categoryId =>
       integer().customConstraint('NULL REFERENCES category_table(id)')();

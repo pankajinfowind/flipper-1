@@ -30,8 +30,6 @@ abstract class CommonViewModel
   @nullable
   BuiltList<Unit> get units;
 
-  BuiltList<Category> get categories;
-
   @nullable
   int get tab;
 
@@ -50,9 +48,6 @@ abstract class CommonViewModel
   Hint get hint;
 
   @nullable
-  String get categoryName;
-
-  @nullable
   Category get category;
 
   @nullable
@@ -65,7 +60,7 @@ abstract class CommonViewModel
   Disable get currentDisable;
 
   @nullable
-  Branch get currentBranch;
+  Branch get branch;
 
   @nullable
   Item get cartItem;
@@ -108,6 +103,12 @@ abstract class CommonViewModel
   @nullable
   Item get customItem;
 
+  @nullable
+  int get tempCategoryId;
+
+  @nullable
+  Item get tmpItem;
+
   CommonViewModel._();
   factory CommonViewModel([void Function(CommonViewModelBuilder) updates]) =
       _$CommonViewModel;
@@ -133,8 +134,6 @@ abstract class CommonViewModel
       ..hasUser = _hasUser(store)
       ..hasSheet = _hasSheet(store)
       ..hasAction = _hasAction(store)
-      ..currentBranch =
-          store.state.branch == null ? null : store.state.branch.toBuilder()
       ..businesses = store.state.businesses
       ..tab = store.state.tab
       ..currentIncrement = store.state.currentIncrement
@@ -150,14 +149,12 @@ abstract class CommonViewModel
       ..units = store.state.units.toBuilder()
       ..variations = store.state.variations.toBuilder()
       ..itemVariations = store.state.itemVariations.toBuilder()
-      ..categoryName = store.state.categoryName
       ..currentColor = store.state.currentColor == null
           ? null
           : store.state.currentColor.toBuilder()
       ..currentDisable = store.state.currentDisable == null
           ? null
           : store.state.currentDisable.toBuilder()
-      ..categories = store.state.categories.toBuilder()
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()
       ..currentBusiness = store.state.currentActiveBusiness == null
@@ -177,9 +174,15 @@ abstract class CommonViewModel
       ..customUnit = store.state.customUnit == null
           ? null
           : store.state.customUnit.toBuilder()
+      ..tempCategoryId =
+          store.state.tempCategoryId == null ? null : store.state.tempCategoryId
       ..customItem = store.state.customItem == null
           ? null
           : store.state.customItem.toBuilder()
-      ..branches = store.state.branches);
+      ..branches = store.state.branches
+      ..tmpItem =
+          store.state.tmpItem == null ? null : store.state.tmpItem.toBuilder()
+      ..branch =
+          store.state.branch == null ? null : store.state.branch.toBuilder());
   }
 }

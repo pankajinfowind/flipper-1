@@ -12,6 +12,7 @@ import 'package:flipper/domain/redux/user/user_middleware.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/theme.dart';
+import 'package:flipper/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -22,6 +23,7 @@ import 'domain/redux/app_reducer.dart';
 import 'domain/redux/authentication/auth_actions.dart';
 import 'domain/redux/authentication/auth_middleware.dart';
 import 'domain/redux/branch/branch_middleware.dart';
+import 'domain/redux/push/push_actions.dart';
 import 'domain/redux/push/push_middleware.dart';
 
 class FlipperApp extends StatefulWidget {
@@ -68,6 +70,28 @@ class _FlipperAppState extends State<FlipperApp> {
     store.dispatch(
       ShouldLoadBusiness(),
     );
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        store.dispatch(OnPushNotificationReceivedAction(message));
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        store.dispatch(OnPushNotificationOpenAction(message));
+      },
+      onResume: (Map<String, dynamic> message) async {
+        store.dispatch(OnPushNotificationOpenAction(message));
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      Logger.d("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      Logger.d("Push Messaging token: $token");
+      store.dispatch(UpdateUserTokenAction(token));
+    });
   }
 
   @override

@@ -105,13 +105,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Container(
                         width: 300,
                         child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
                           style: TextStyle(color: Colors.black),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Email is required";
-                            }
-                            return null;
-                          },
+                          validator: Validators.isEmailValid,
                           onChanged: (email) {
                             tBusiness.email = email;
                           },
@@ -127,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           obscureText: true,
                           style: TextStyle(color: Colors.black),
                           validator: Validators
-                              .isStringHasMoreChars, //todo: use password validation,
+                              .validatePassword, //todo: use password validation,
                           onChanged: (password) {
                             tBusiness.password = password;
                           },

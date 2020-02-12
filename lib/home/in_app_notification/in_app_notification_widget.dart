@@ -103,23 +103,24 @@ class _InAppNotificationWidgetState extends State<InAppNotificationWidget>
                           "assets/graphics/icon_notification.png",
                           height: 16,
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              "${widget._vm.inAppNotification.groupName}: ${widget._vm.inAppNotification.channel.name}",
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTheme.notificationTitle,
-                            ),
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.only(left: 8.0),
+                        //     child: Text
+                        //     "name",
+                        //       // "${widget._vm.inAppNotification.groupName}: ${widget._vm.inAppNotification.channel.name}",
+                        //       overflow: TextOverflow.ellipsis,
+                        //       style: AppTheme.notificationTitle,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
-                    Text(
-                      "${widget._vm.inAppNotification.userName}: ${widget._vm.inAppNotification.message}",
-                      overflow: TextOverflow.ellipsis,
-                      // style: AppTheme.notificationBody,
-                    )
+                    // Text(
+                    //   "${widget._vm.inAppNotification.userName}: ${widget._vm.inAppNotification.message}",
+                    //   overflow: TextOverflow.ellipsis,
+                    //   // style: AppTheme.notificationBody,
+                    // )
                   ],
                 ),
               ),

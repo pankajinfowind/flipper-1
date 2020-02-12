@@ -15,7 +15,7 @@ import { ModelService } from '@enexus/flipper-offline-database';
     ]),
   ],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent {
 
 
   dashboardEntries: DashBoardEntries;
@@ -43,23 +43,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngOnInit(): void {
-    this.totalRevenue = this.getTotalRevenues();
-    this.totalStore = this.getStockValue();
-    this.netProfit = this.getNetProfit();
-    this.grossProfits = this.getGrossProfit();
-    this.lowStockItem = this.getLowStocks();
-    this.topSoldItem = this.topSoldItems();
-  }
-
-  ngAfterViewInit(): void {
-    this.totalRevenue = this.getTotalRevenues();
-    this.totalStore = this.getStockValue();
-    this.netProfit = this.getNetProfit();
-    this.grossProfits = this.getGrossProfit();
-    this.lowStockItem = this.getLowStocks();
-    this.topSoldItem = this.topSoldItems();
-  }
+ 
 
   topSoldItems() {
     const topSolds=[];
@@ -157,26 +141,38 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getSaleStocks() {
-    const stocks = [{ netProfit: 0, grossProfit: 0 }];
-    this.sales().forEach(sale => {
-      if (sale) {
-        if (this.loadOrderDetails(sale.id).length > 0) {
-          this.loadOrderDetails(sale.id).forEach(orderDetails => {
-            if (orderDetails.stockId > 0) {
-              const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
-
-              stocks.push({ netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
-                grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) });
-            }
-          });
-        }
+    let stocks = [{ netProfit: 0, grossProfit: 0 }];
+      if (this.loadSales().length > 0) {
+        stocks=[];
+        this.loadSales().forEach(orderDetails => {
+          if (orderDetails && orderDetails.stockId > 0) {
+           
+            stocks.push(this.loadOrderDetails(orderDetails));
+          }
+        });
       }
-    });
     return stocks;
   }
+  loadSales(){
+    let orderItems:OrderDetails[]=[];
+   const details:OrderDetails[]= this.model.loadAll<OrderDetails>(Tables.orderDetails);
+    this.sales().forEach(sale => {
+      if (sale) {
+        details.forEach(d=>{
+          if((!orderItems.find(dd=>dd.id===d.id)) && d.orderId===sale.id){
+            orderItems.push(d);
+          }
+        });
+       
+      }
+    });
+    return orderItems;
+  }
 
-  loadOrderDetails(orderId: number) {
-    return this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId);
+  loadOrderDetails(orderDetails) {
+    const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
+           return { netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
+              grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) };
   }
 
   topSoldsItem(orderId: number): OrderDetails[] {

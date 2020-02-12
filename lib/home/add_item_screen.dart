@@ -1,20 +1,15 @@
-import 'package:built_collection/src/list.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/model/app_action.dart';
-import 'package:flipper/model/disable.dart';
-import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
-import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class TForm {
   String price;
@@ -42,9 +37,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
         vm.database.actionsDao.getActionByStream('save').listen((event) {
-          setState(() {
-            _actions = event[0];
-          });
+          if (mounted) {
+            setState(() {
+              _actions = event[0];
+            });
+          }
         });
         return Scaffold(
           appBar: CommonAppBar(
@@ -341,6 +338,19 @@ class _AddItemScreenState extends State<AddItemScreen> {
   _handleFormSubmit(CommonViewModel vm, TForm tForm) async {
     ItemTableData item =
         await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+
+    VariationTableData variation =
+        await vm.database.variationDao.getVariationBy('tmp', vm.branch.id);
+    print(variation);
+    StoreProvider.of<AppState>(context).dispatch(
+      SaveRegular(
+        price: variation.price,
+        itemId: item.id,
+        name: 'Regular',
+        id: variation.id,
+      ),
+    );
+
     vm.database.itemDao
         .updateItem(item.copyWith(name: tForm.name, updatedAt: DateTime.now()));
     Router.navigator.maybePop();

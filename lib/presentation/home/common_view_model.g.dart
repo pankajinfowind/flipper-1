@@ -36,13 +36,9 @@ class _$CommonViewModel extends CommonViewModel {
   @override
   final FlipperColor currentColor;
   @override
-  final Disable currentDisable;
-  @override
   final Branch branch;
   @override
   final Item cartItem;
-  @override
-  final BuiltList<Variation> variations;
   @override
   final BuiltList<Item> itemVariations;
   @override
@@ -92,10 +88,8 @@ class _$CommonViewModel extends CommonViewModel {
       this.category,
       this.currentUnit,
       this.currentColor,
-      this.currentDisable,
       this.branch,
       this.cartItem,
-      this.variations,
       this.itemVariations,
       this.items,
       this.currentIncrement,
@@ -167,10 +161,8 @@ class _$CommonViewModel extends CommonViewModel {
         category == other.category &&
         currentUnit == other.currentUnit &&
         currentColor == other.currentColor &&
-        currentDisable == other.currentDisable &&
         branch == other.branch &&
         cartItem == other.cartItem &&
-        variations == other.variations &&
         itemVariations == other.itemVariations &&
         items == other.items &&
         currentIncrement == other.currentIncrement &&
@@ -208,11 +200,11 @@ class _$CommonViewModel extends CommonViewModel {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode), hint.hashCode), category.hashCode), currentUnit.hashCode), currentColor.hashCode),
-                                                                                currentDisable.hashCode),
-                                                                            branch.hashCode),
-                                                                        cartItem.hashCode),
-                                                                    variations.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, hasUser.hashCode), hasSheet.hashCode), hasHint.hashCode), units.hashCode), tab.hashCode), currentBusiness.hashCode), hasAction.hashCode), branches.hashCode), businesses.hashCode), appAction.hashCode), hint.hashCode), category.hashCode),
+                                                                                currentUnit.hashCode),
+                                                                            currentColor.hashCode),
+                                                                        branch.hashCode),
+                                                                    cartItem.hashCode),
                                                                 itemVariations.hashCode),
                                                             items.hashCode),
                                                         currentIncrement.hashCode),
@@ -247,10 +239,8 @@ class _$CommonViewModel extends CommonViewModel {
           ..add('category', category)
           ..add('currentUnit', currentUnit)
           ..add('currentColor', currentColor)
-          ..add('currentDisable', currentDisable)
           ..add('branch', branch)
           ..add('cartItem', cartItem)
-          ..add('variations', variations)
           ..add('itemVariations', itemVariations)
           ..add('items', items)
           ..add('currentIncrement', currentIncrement)
@@ -335,12 +325,6 @@ class CommonViewModelBuilder
   set currentColor(FlipperColorBuilder currentColor) =>
       _$this._currentColor = currentColor;
 
-  DisableBuilder _currentDisable;
-  DisableBuilder get currentDisable =>
-      _$this._currentDisable ??= new DisableBuilder();
-  set currentDisable(DisableBuilder currentDisable) =>
-      _$this._currentDisable = currentDisable;
-
   BranchBuilder _branch;
   BranchBuilder get branch => _$this._branch ??= new BranchBuilder();
   set branch(BranchBuilder branch) => _$this._branch = branch;
@@ -348,12 +332,6 @@ class CommonViewModelBuilder
   ItemBuilder _cartItem;
   ItemBuilder get cartItem => _$this._cartItem ??= new ItemBuilder();
   set cartItem(ItemBuilder cartItem) => _$this._cartItem = cartItem;
-
-  ListBuilder<Variation> _variations;
-  ListBuilder<Variation> get variations =>
-      _$this._variations ??= new ListBuilder<Variation>();
-  set variations(ListBuilder<Variation> variations) =>
-      _$this._variations = variations;
 
   ListBuilder<Item> _itemVariations;
   ListBuilder<Item> get itemVariations =>
@@ -442,10 +420,8 @@ class CommonViewModelBuilder
       _category = _$v.category?.toBuilder();
       _currentUnit = _$v.currentUnit?.toBuilder();
       _currentColor = _$v.currentColor?.toBuilder();
-      _currentDisable = _$v.currentDisable?.toBuilder();
       _branch = _$v.branch?.toBuilder();
       _cartItem = _$v.cartItem?.toBuilder();
-      _variations = _$v.variations?.toBuilder();
       _itemVariations = _$v.itemVariations?.toBuilder();
       _items = _$v.items?.toBuilder();
       _currentIncrement = _$v.currentIncrement;
@@ -499,10 +475,8 @@ class CommonViewModelBuilder
               category: _category?.build(),
               currentUnit: _currentUnit?.build(),
               currentColor: _currentColor?.build(),
-              currentDisable: _currentDisable?.build(),
               branch: _branch?.build(),
               cartItem: _cartItem?.build(),
-              variations: _variations?.build(),
               itemVariations: _itemVariations?.build(),
               items: items.build(),
               currentIncrement: currentIncrement,
@@ -537,14 +511,10 @@ class CommonViewModelBuilder
         _currentUnit?.build();
         _$failedField = 'currentColor';
         _currentColor?.build();
-        _$failedField = 'currentDisable';
-        _currentDisable?.build();
         _$failedField = 'branch';
         _branch?.build();
         _$failedField = 'cartItem';
         _cartItem?.build();
-        _$failedField = 'variations';
-        _variations?.build();
         _$failedField = 'itemVariations';
         _itemVariations?.build();
         _$failedField = 'items';

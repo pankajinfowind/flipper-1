@@ -34,9 +34,11 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
         vm.database.actionsDao.getActionByStream('save').listen((event) {
-          setState(() {
-            _actions = event[0];
-          });
+          if (mounted) {
+            setState(() {
+              _actions = event[0];
+            });
+          }
         });
         return Scaffold(
           appBar: new CommonAppBar(

@@ -98,11 +98,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   FlipperColor get currentColor;
 
-  @nullable
-  Disable get currentDisable;
-
-  BuiltList<Variation> get variations;
-
   BuiltList<Item> get itemVariations;
 
   @nullable
@@ -136,7 +131,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..database = Database()
     ..units = ListBuilder()
     ..carts = ListBuilder()
-    ..variations = ListBuilder()
     ..itemVariations = ListBuilder()
     ..items = ListBuilder()
     ..businesses = List<Business>()

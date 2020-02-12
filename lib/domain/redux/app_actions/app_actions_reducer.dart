@@ -18,8 +18,6 @@ final appActionReducer = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, WithUnitId>(_withUnitId),
   TypedReducer<AppState, ResetAppAction>(_onResetAppAction),
   TypedReducer<AppState, CurrentTab>(_onSetTab),
-  TypedReducer<AppState, CurrentDisable>(_onDisable),
-  TypedReducer<AppState, VariationAction>(_onVariations),
   TypedReducer<AppState, ItemLoaded>(_onItemLoaded),
   TypedReducer<AppState, AddItemToCartAction>(_onAddingOneItemOnCart),
   TypedReducer<AppState, IncrementAction>(_onIncrement),
@@ -101,14 +99,6 @@ AppState _onCurrentUnit(AppState state, CurrentUnit action) {
 
 AppState _onCurrentColor(AppState state, CurrentColor action) {
   return state.rebuild((a) => a..currentColor = action.color.toBuilder());
-}
-
-AppState _onDisable(AppState state, CurrentDisable action) {
-  return state.rebuild((a) => a..currentDisable = action.disable.toBuilder());
-}
-
-AppState _onVariations(AppState state, VariationAction action) {
-  return state.rebuild((a) => a..variations = ListBuilder(action.variations));
 }
 
 AppState _onItemLoaded(AppState state, ItemLoaded action) {

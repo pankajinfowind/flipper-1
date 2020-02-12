@@ -110,21 +110,7 @@ class CurrentColor {
 }
 
 @immutable
-class CurrentDisable {
-  final Disable disable;
-
-  const CurrentDisable({@required this.disable});
-}
-
-@immutable
 class ResetAppAction {}
-
-@immutable
-class VariationAction {
-  final List<Variation> variations;
-
-  VariationAction({this.variations});
-}
 
 @immutable
 class SaveItemAction {

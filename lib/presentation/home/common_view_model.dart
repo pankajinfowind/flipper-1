@@ -57,16 +57,10 @@ abstract class CommonViewModel
   FlipperColor get currentColor;
 
   @nullable
-  Disable get currentDisable;
-
-  @nullable
   Branch get branch;
 
   @nullable
   Item get cartItem;
-
-  @nullable
-  BuiltList<Variation> get variations;
 
   @nullable
   BuiltList<Item> get itemVariations;
@@ -147,14 +141,10 @@ abstract class CommonViewModel
           ? null
           : store.state.currentActiveSaleItem.toBuilder()
       ..units = store.state.units.toBuilder()
-      ..variations = store.state.variations.toBuilder()
       ..itemVariations = store.state.itemVariations.toBuilder()
       ..currentColor = store.state.currentColor == null
           ? null
           : store.state.currentColor.toBuilder()
-      ..currentDisable = store.state.currentDisable == null
-          ? null
-          : store.state.currentDisable.toBuilder()
       ..appAction =
           store.state.action == null ? null : store.state.action.toBuilder()
       ..currentBusiness = store.state.currentActiveBusiness == null

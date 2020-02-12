@@ -20,5 +20,3 @@ void main() {
   ]);
   runApp(FlipperApp());
 }
-
-//delete VariationAction CurrentDisable

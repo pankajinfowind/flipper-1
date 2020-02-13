@@ -55,6 +55,8 @@ void Function(Store<AppState> store, SaveRegular action, NextDispatcher next)
           branchId: store.state.branch.id,
           price: action.price,
           id: action.id,
+          count: action.count,
+          itemId: action.itemId,
           name: action.name,
         ),
       );
@@ -67,6 +69,8 @@ void Function(Store<AppState> store, SaveRegular action, NextDispatcher next)
           branchId: store.state.branch.id,
           costPrice: action.costPrice,
           id: action.id,
+          count: action.count,
+          itemId: action.itemId,
           name: action.name,
         ),
       );

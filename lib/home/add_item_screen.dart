@@ -349,11 +349,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         child: OutlineButton(
                           color: HexColor("#ecf0f1"),
                           child: Text(S.of(context).addVariation),
-                          onPressed: () {
-                            vm.database.actionsDao.updateAction(
-                                _actions.copyWith(isLocked: true));
-                            Router.navigator
-                                .pushNamed(Router.addVariationScreen);
+                          onPressed: () async {
+                            _getSaveStatus(vm);
+                            if (_actions != null) {
+                              vm.database.actionsDao.updateAction(
+                                  _actions.copyWith(isLocked: true));
+
+                              Router.navigator
+                                  .pushNamed(Router.addVariationScreen);
+                            }
                           },
                         ),
                       ),
@@ -481,15 +485,17 @@ class _AddItemScreenState extends State<AddItemScreen> {
     VariationTableData variation =
         await vm.database.variationDao.getVariationBy('tmp', vm.branch.id);
 
-    StoreProvider.of<AppState>(context).dispatch(
-      SaveRegular(
-        price: variation.price,
-        costPrice: variation.costPrice,
-        itemId: item.id,
-        name: 'Regular',
-        id: variation.id,
-      ),
-    );
+    if (variation != null) {
+      StoreProvider.of<AppState>(context).dispatch(
+        SaveRegular(
+          price: variation.price,
+          costPrice: variation.costPrice,
+          itemId: item.id,
+          name: 'Regular',
+          id: variation.id,
+        ),
+      );
+    }
 
     //set back the options as it was.
     vm.database.actionsDao

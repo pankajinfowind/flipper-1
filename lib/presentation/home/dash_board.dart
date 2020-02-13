@@ -53,7 +53,7 @@ class _DashBoardState extends State<DashBoard> {
           );
           if (vm.hasSheet) {
             WidgetsBinding.instance.addPostFrameCallback(
-                (_) => Router.navigator.pushNamed(Router.bottom));
+                (_) => Router.navigator.pushNamed(Router.addNoteScreen));
           }
 
           return we;

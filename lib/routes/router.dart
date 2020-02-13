@@ -27,7 +27,7 @@ class $Router {
   @MaterialRoute(fullscreenDialog: true)
   AfterSplash afterSplash;
   @MaterialRoute(fullscreenDialog: true)
-  BottomSheetScreen bottom;
+  AddNoteScreen addNoteScreen;
   // @MaterialRoute(fullscreenDialog: true)
   // SaleScreen saleScreen;
 

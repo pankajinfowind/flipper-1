@@ -2,14 +2,14 @@ import 'package:flipper/home/widget/flipper_input.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class BottomSheetScreen extends StatefulWidget {
-  BottomSheetScreen({Key key}) : super(key: key);
+class AddNoteScreen extends StatefulWidget {
+  AddNoteScreen({Key key}) : super(key: key);
 
   @override
-  _BottomSheetScreenState createState() => _BottomSheetScreenState();
+  _AddNoteScreenState createState() => _AddNoteScreenState();
 }
 
-class _BottomSheetScreenState extends State<BottomSheetScreen> {
+class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,10 +17,12 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
         disableButton: false,
         title: "Add Note",
       ),
-      body: Row(
+      body: Column(
         children: <Widget>[
-          FlipperInput(
-            hint: "Add Note",
+          Center(
+            child: FlipperInput(
+              hint: "Add Note",
+            ),
           )
         ],
       ),

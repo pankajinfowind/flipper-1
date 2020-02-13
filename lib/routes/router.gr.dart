@@ -31,7 +31,7 @@ class Router {
   static const splashScreen = '/';
   static const dashboard = '/dashboard';
   static const afterSplash = '/afterSplash';
-  static const bottom = '/bottom';
+  static const addNoteScreen = '/addNoteScreen';
   static const settingUpApplicationScreen = '/settingUpApplicationScreen';
   static const signUpScreen = '/signUpScreen';
   static const createBusiness = '/createBusiness';
@@ -77,13 +77,13 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.bottom:
+      case Router.addNoteScreen:
         if (hasInvalidArgs<Key>(args)) {
           return misTypedArgsRoute<Key>(args);
         }
         final typedArgs = args as Key;
         return MaterialPageRoute(
-          builder: (_) => BottomSheetScreen(key: typedArgs),
+          builder: (_) => AddNoteScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

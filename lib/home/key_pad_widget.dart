@@ -36,6 +36,7 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
+                height: 75.3,
                 color: Colors.white30,
                 child: ListTile(
                   trailing: FlatButton(
@@ -47,7 +48,7 @@ class _KeyPadWidgetState extends State<KeyPadWidget> {
                   ),
                   leading: FlatButton(
                     onPressed: () {
-                      Router.navigator.pushNamed(Router.bottom);
+                      Router.navigator.pushNamed(Router.addNoteScreen);
                     },
                     child: Text(
                       "Add a note",

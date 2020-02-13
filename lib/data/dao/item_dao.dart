@@ -14,6 +14,9 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
   Future insert(Insertable<ItemTableData> item) =>
       into(db.itemTable).insert(item);
 
+  Future deleteItem(Insertable<ItemTableData> item) =>
+      delete(db.itemTable).delete(item);
+
   Future updateItem(ItemTableData entry) {
     // using replace will update all fields from the entry that are not marked as a primary key.
     // it will also make sure that only the entry with the same primary key will be updated.

@@ -32,26 +32,45 @@ class _AddItemScreenState extends State<AddItemScreen> {
   ActionsTableData _actionsSaveItem;
 
   Future<bool> _onWillPop() async {
-    return (await showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Are you sure?'),
-            content: new Text('Do you want to exit an App'),
-            actions: <Widget>[
-              new FlatButton(
-                onPressed: () => Router.navigator.pop(false),
-                child: new Text('No'),
+    //if we have dirty db then show the alert or if is clean go back without alert
+    int branchId = StoreProvider.of<AppState>(context).state.branch.id;
+
+    ItemTableData item = await StoreProvider.of<AppState>(context)
+        .state
+        .database
+        .itemDao
+        .getItemBy('tmp', branchId);
+
+    //delete this item add look trough all variation and delete related variation.
+    if (item != null) {
+      return (await showDialog(
+            context: context,
+            builder: (context) => new AlertDialog(
+              title: new Text(
+                'Are you sure?',
+                style: TextStyle(color: Colors.black),
               ),
-              new FlatButton(
-                // Navigator.of(context).pop(true)
-                //todo: go and cleam the tmp item and variation created recently.
-                onPressed: () => Router.navigator.pop(true),
-                child: new Text('Yes'),
+              content: new Text(
+                'Do you want to exit an App',
+                style: TextStyle(color: Colors.black),
               ),
-            ],
-          ),
-        )) ??
-        false;
+              actions: <Widget>[
+                new FlatButton(
+                  onPressed: () => Router.navigator.pop(false),
+                  child: new Text('No'),
+                ),
+                new FlatButton(
+                  // Navigator.of(context).pop(true)
+                  //todo: go and cleam the tmp item and variation created recently.
+                  onPressed: _onClose(context),
+                  child: new Text('Yes'),
+                ),
+              ],
+            ),
+          )) ??
+          false;
+    }
+    return true;
   }
 
   @override
@@ -67,11 +86,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
               title: S.of(context).createItem,
               disableButton: _actions == null ? true : _actions.isLocked,
               showActionButton: true,
-              onPressedCallback: () {
-                vm.database.actionsDao
+              onPressedCallback: () async {
+                await vm.database.actionsDao
                     .updateAction(_actionsSaveItem.copyWith(isLocked: false));
                 _getSaveItemStatus(vm);
-                if (!_actionsSaveItem.isLocked) {
+                if (_actionsSaveItem.isLocked == false) {
                   _handleFormSubmit(vm);
                 }
               },
@@ -108,14 +127,18 @@ class _AddItemScreenState extends State<AddItemScreen> {
                               color:
                                   Colors.black), //todo: move this to app theme
                           validator: Validators.isStringHasMoreChars,
-                          onChanged: (name) {
+                          onChanged: (name) async {
                             if (name == '') {
-                              vm.database.actionsDao.updateAction(
+                              _getSaveStatus(vm);
+                              _getSaveItemStatus(vm);
+                              await vm.database.actionsDao.updateAction(
                                   _actions.copyWith(isLocked: true));
                               _getSaveStatus(vm);
                               return;
                             }
-                            vm.database.actionsDao.updateAction(
+                            _getSaveStatus(vm);
+                            _getSaveItemStatus(vm);
+                            await vm.database.actionsDao.updateAction(
                                 _actions.copyWith(isLocked: false));
                             _getSaveStatus(vm);
 
@@ -240,9 +263,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                       ItemTableData item = await vm
                                           .database.itemDao
                                           .getItemBy('tmp', vm.branch.id);
+
                                       VariationTableData variation = await vm
                                           .database.variationDao
                                           .getVariationBy('tmp', vm.branch.id);
+
                                       StoreProvider.of<AppState>(context)
                                           .dispatch(
                                         SaveRegular(
@@ -354,6 +379,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     setState(() {
       _actions = result;
     });
+    print(_actions);
   }
 
   Text categorySelector(List<CategoryTableData> categories) {
@@ -392,8 +418,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
     vm.database.actionsDao.updateAction(_actions.copyWith(isLocked: true));
 
     //todo: also update unit Id of choosen item.
-    vm.database.itemDao
-        .updateItem(item.copyWith(name: tForm.name, updatedAt: DateTime.now()));
+    vm.database.itemDao.updateItem(
+      item.copyWith(
+        name: tForm.name,
+        updatedAt: DateTime.now(),
+        color: vm.currentColor.hexCode ?? HexColor('#00cec9'),
+      ),
+    );
     Router.navigator.maybePop();
   }
 
@@ -441,5 +472,33 @@ class _AddItemScreenState extends State<AddItemScreen> {
       return Container();
     }
     return Column(children: list);
+  }
+}
+
+_onClose(BuildContext context) async {
+  int branchId = StoreProvider.of<AppState>(context).state.branch.id;
+
+  ItemTableData item = await StoreProvider.of<AppState>(context)
+      .state
+      .database
+      .itemDao
+      .getItemBy('tmp', branchId);
+
+  //delete this item add look trough all variation and delete related variation.
+  if (item != null) {
+    List<VariationTableData> variations =
+        await StoreProvider.of<AppState>(context)
+            .state
+            .database
+            .variationDao
+            .getVariantByItemId(item.id);
+    for (var i = 0; i < variations.length; i++) {
+      await StoreProvider.of<AppState>(context)
+          .state
+          .database
+          .variationDao
+          .deleteVariation(variations[i]);
+    }
+    StoreProvider.of<AppState>(context).state.database.itemDao.deleteItem(item);
   }
 }

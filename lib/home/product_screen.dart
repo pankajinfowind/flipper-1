@@ -18,7 +18,8 @@ class ProductScreen extends StatefulWidget {
   _ProductScreenState createState() => _ProductScreenState();
 }
 
-List<Widget> getItems(List<ItemTableData> itemList, BuildContext context) {
+List<Widget> getItems(
+    List<ItemTableData> itemList, BuildContext context, CommonViewModel vm) {
   List<Widget> list = new List<Widget>();
 
   list.add(
@@ -73,27 +74,45 @@ List<Widget> getItems(List<ItemTableData> itemList, BuildContext context) {
             );
           },
           child: ListTile(
-            contentPadding: EdgeInsets.all(0),
-            leading: Container(
-              width: 50,
-              color: HexColor(itemList[i].color),
-              child: FlatButton(
-                child: Text(
-                  itemList[i].name.length > 2
-                      ? itemList[i].name.substring(0, 2)
-                      : itemList[i].name,
-                  style: TextStyle(
-                    color: Colors.white,
+              contentPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+              leading: Container(
+                width: 50,
+                color: HexColor(itemList[i].color),
+                child: FlatButton(
+                  child: Text(
+                    itemList[i].name.length > 2
+                        ? itemList[i].name.substring(0, 2)
+                        : itemList[i].name,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
+                  onPressed: () {},
                 ),
-                onPressed: () {},
               ),
-            ),
-            title: Text(
-              itemList[i].name,
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
+              title: Text(
+                itemList[i].name,
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: StreamBuilder(
+                stream: vm.database.variationDao
+                    .getVariantByItemIdStream(itemList[i].id),
+                builder: (context,
+                    AsyncSnapshot<List<VariationTableData>> snapshot) {
+                  if (snapshot.data == null) {
+                    return Text("");
+                  }
+                  return snapshot.data.length == 1
+                      ? Text(
+                          snapshot.data[0].price.toString() + "RWF",
+                          style: TextStyle(color: Colors.black),
+                        )
+                      : Text(
+                          snapshot.data.length.toString() + " Prices",
+                          style: TextStyle(color: Colors.black),
+                        );
+                },
+              )),
         ),
       );
     } else {
@@ -125,11 +144,12 @@ List<Widget> getItems(List<ItemTableData> itemList, BuildContext context) {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  Widget _itemsList(BuildContext context, List<ItemTableData> data) {
+  Widget _itemsList(
+      BuildContext context, List<ItemTableData> data, CommonViewModel vm) {
     return ListView(
       children: ListTile.divideTiles(
         context: context,
-        tiles: getItems(data, context),
+        tiles: getItems(data, context, vm),
       ).toList(),
     );
   }
@@ -166,7 +186,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     if (snapshot.data == null) {
                       return Text("");
                     }
-                    return _itemsList(context, snapshot.data);
+                    return _itemsList(context, snapshot.data, vm);
                   },
                 ),
               )

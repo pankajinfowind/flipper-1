@@ -507,7 +507,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       item.copyWith(
         name: tForm.name,
         updatedAt: DateTime.now(),
-        color: vm.currentColor == null ? '#00cec9' : vm.currentColor.hashCode,
+        color: vm.currentColor == null ? '#00cec9' : vm.currentColor.hexCode,
       ),
     );
     Router.navigator.maybePop();

@@ -104,7 +104,7 @@ List<Widget> getItems(
                   }
                   return snapshot.data.length == 1
                       ? Text(
-                          snapshot.data[0].price.toString() + "RWF",
+                          "RWF" + snapshot.data[0].price.toString(),
                           style: TextStyle(color: Colors.black),
                         )
                       : Text(

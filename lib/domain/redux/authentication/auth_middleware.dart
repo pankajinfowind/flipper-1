@@ -218,6 +218,14 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       //create app actions
       ActionsTableData action =
           await store.state.database.actionsDao.getActionBy('save');
+
+      ActionsTableData saveItem =
+          await store.state.database.actionsDao.getActionBy('saveItem');
+      if (saveItem == null) {
+        await store.state.database.actionsDao.insert(
+            //ignore:missing_required_param
+            ActionsTableData(name: 'saveItem', isLocked: true));
+      }
       if (action == null) {
         await store.state.database.actionsDao.insert(
             //ignore:missing_required_param

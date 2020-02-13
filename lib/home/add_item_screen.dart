@@ -2,7 +2,6 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
-import 'package:flipper/model/app_action.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -30,296 +29,331 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   ActionsTableData _actions;
 
+  ActionsTableData _actionsSaveItem;
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Are you sure?'),
+            content: new Text('Do you want to exit an App'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Router.navigator.pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                // Navigator.of(context).pop(true)
+                //todo: go and cleam the tmp item and variation created recently.
+                onPressed: () => Router.navigator.pop(true),
+                child: new Text('Yes'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CommonViewModel>(
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
-        vm.database.actionsDao.getActionByStream('save').listen((event) {
-          if (mounted) {
-            setState(() {
-              _actions = event[0];
-            });
-          }
-        });
-        return Scaffold(
-          appBar: CommonAppBar(
-            title: S.of(context).createItem,
-            disableButton: _actions == null ? true : _actions.isLocked,
-            showActionButton: true,
-            onPressedCallback: () {
-              StoreProvider.of<AppState>(context).dispatch(
-                AppAction(
-                  actions: AppActions((a) => a..name = "saveItem"),
-                ),
-              );
-            },
-            actionButtonName: S.of(context).save,
-            icon: Icons.close,
-            multi: 3,
-            bottomSpacer: 52,
-          ),
-          body: ListView(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Router.navigator.pushNamed(Router.editItemTitle);
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      color: vm.currentColor != null
-                          ? HexColor(vm.currentColor.hexCode)
-                          : HexColor("#00cec9"),
+        return WillPopScope(
+          onWillPop: _onWillPop,
+          child: Scaffold(
+            appBar: CommonAppBar(
+              title: S.of(context).createItem,
+              disableButton: _actions == null ? true : _actions.isLocked,
+              showActionButton: true,
+              onPressedCallback: () {
+                vm.database.actionsDao
+                    .updateAction(_actionsSaveItem.copyWith(isLocked: false));
+                _getSaveItemStatus(vm);
+                if (!_actionsSaveItem.isLocked) {
+                  _handleFormSubmit(vm);
+                }
+              },
+              actionButtonName: S.of(context).save,
+              icon: Icons.close,
+              multi: 3,
+              bottomSpacer: 52,
+            ),
+            body: ListView(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  Text(S.of(context).newItem),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: TextFormField(
-                        style: TextStyle(
-                            color: Colors.black), //todo: move this to app theme
-                        validator: Validators.isStringHasMoreChars,
-                        onChanged: (name) {
-                          if (name == '') {
+                    GestureDetector(
+                      onTap: () {
+                        Router.navigator.pushNamed(Router.editItemTitle);
+                      },
+                      child: Container(
+                        height: 80,
+                        width: 80,
+                        color: vm.currentColor != null
+                            ? HexColor(vm.currentColor.hexCode)
+                            : HexColor("#00cec9"),
+                      ),
+                    ),
+                    Text(S.of(context).newItem),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: TextFormField(
+                          style: TextStyle(
+                              color:
+                                  Colors.black), //todo: move this to app theme
+                          validator: Validators.isStringHasMoreChars,
+                          onChanged: (name) {
+                            if (name == '') {
+                              vm.database.actionsDao.updateAction(
+                                  _actions.copyWith(isLocked: true));
+                              _getSaveStatus(vm);
+                              return;
+                            }
+                            vm.database.actionsDao.updateAction(
+                                _actions.copyWith(isLocked: false));
+                            _getSaveStatus(vm);
+
+                            tForm.name = name;
+                          },
+                          decoration: InputDecoration(
+                              hintText: "Name", focusColor: Colors.black),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: GestureDetector(
+                          onTap: () {
+                            Router.navigator
+                                .pushNamed(Router.addCategoryScreen);
+                          },
+                          child: ListTile(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 0.3),
+                            leading: Text(S.of(context).category),
+                            trailing: Wrap(
+                              children: <Widget>[
+                                StreamBuilder(
+                                  stream: vm.database.categoryDao
+                                      .getCategoriesStream(),
+                                  builder: (context,
+                                      AsyncSnapshot<List<CategoryTableData>>
+                                          snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text(S.of(context).selectCategory);
+                                    }
+                                    return snapshot.data.length == 0
+                                        ? Text(S.of(context).selectCategory)
+                                        : categorySelector(snapshot.data);
+                                  },
+                                ),
+                                Icon(Icons.arrow_forward_ios)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: Divider(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 24,
+                    ),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: Text(S.of(context).priceAndInventory),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: Divider(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: GestureDetector(
+                          onTap: () {
+                            Router.navigator.pushNamed(Router.addUnitType);
+                          },
+                          child: ListTile(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 0.3),
+                            leading: Text(S.of(context).unityType),
+                            trailing: Wrap(
+                              children: <Widget>[
+                                Text(vm.currentUnit != null
+                                    ? vm.currentUnit.name
+                                    : S.of(context).perItem),
+                                Icon(Icons.arrow_forward_ios)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: Divider(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    StreamBuilder(
+                      stream: vm.database.variationDao.getVariationByStream2(
+                          'Regular',
+                          vm.tmpItem
+                              .id), //do we have regular variant on this item?
+                      builder: (context,
+                          AsyncSnapshot<List<VariationTableData>> snapshot) {
+                        if (snapshot.data == null) {
+                          return Text("");
+                        }
+                        return snapshot.data.length == 0
+                            ? Center(
+                                child: Container(
+                                  width: 300,
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    validator: Validators.isStringHasMoreChars,
+                                    style: TextStyle(color: Colors.black),
+                                    onChanged: (price) async {
+                                      tForm.price = price;
+                                      ItemTableData item = await vm
+                                          .database.itemDao
+                                          .getItemBy('tmp', vm.branch.id);
+                                      VariationTableData variation = await vm
+                                          .database.variationDao
+                                          .getVariationBy('tmp', vm.branch.id);
+                                      StoreProvider.of<AppState>(context)
+                                          .dispatch(
+                                        SaveRegular(
+                                          price: int.parse(price),
+                                          itemId: item.id,
+                                          name: variation.name,
+                                        ),
+                                      );
+                                      //on typing here should save Regular Item variation
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: S.of(context).costPrice,
+                                        focusColor: Colors.blue),
+                                  ),
+                                ),
+                              )
+                            : Text("");
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: vm.database.variationDao
+                          .getVariationByStream2("Regular", vm.tmpItem.id),
+                      builder: (context,
+                          AsyncSnapshot<List<VariationTableData>> snapshot) {
+                        if (snapshot.data == null) {
+                          return Text("");
+                        }
+                        return snapshot.data.length == 0
+                            ? Center(
+                                child: Container(
+                                  width: 300,
+                                  child: TextFormField(
+                                    style: TextStyle(color: Colors.black),
+                                    onChanged: (sku) {
+                                      tForm.sku = sku;
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: "SKU",
+                                        focusColor: Colors.blue),
+                                  ),
+                                ),
+                              )
+                            : Text("");
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: vm.database.variationDao
+                          .getItemVariations2(vm.tmpItem.id),
+                      builder: (context,
+                          AsyncSnapshot<List<VariationTableData>> snapshot) {
+                        if (snapshot.data == null) {
+                          return Text("");
+                        }
+                        return snapshot.data != 0
+                            ? _buildVariationsList(snapshot.data)
+                            : Text("");
+                      },
+                    ),
+                    Center(
+                      child: SizedBox(
+                        height: 50,
+                        width: 340,
+                        child: OutlineButton(
+                          color: HexColor("#ecf0f1"),
+                          child: Text(S.of(context).addVariation),
+                          onPressed: () {
                             vm.database.actionsDao.updateAction(
                                 _actions.copyWith(isLocked: true));
-                            return;
-                          }
-                          vm.database.actionsDao
-                              .updateAction(_actions.copyWith(isLocked: false));
-
-                          tForm.name = name;
-                        },
-                        decoration: InputDecoration(
-                            hintText: "Name", focusColor: Colors.black),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: GestureDetector(
-                        onTap: () {
-                          Router.navigator.pushNamed(Router.addCategoryScreen);
-                        },
-                        child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                          leading: Text(S.of(context).category),
-                          trailing: Wrap(
-                            children: <Widget>[
-                              StreamBuilder(
-                                stream: vm.database.categoryDao
-                                    .getCategoriesStream(),
-                                builder: (context,
-                                    AsyncSnapshot<List<CategoryTableData>>
-                                        snapshot) {
-                                  if (snapshot.data == null) {
-                                    return Text(S.of(context).selectCategory);
-                                  }
-                                  return snapshot.data.length == 0
-                                      ? Text(S.of(context).selectCategory)
-                                      : categorySelector(snapshot.data);
-                                },
-                              ),
-                              Icon(Icons.arrow_forward_ios)
-                            ],
-                          ),
+                            Router.navigator
+                                .pushNamed(Router.addVariationScreen);
+                          },
                         ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: Divider(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 24,
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: Text(S.of(context).priceAndInventory),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: Divider(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: GestureDetector(
-                        onTap: () {
-                          Router.navigator.pushNamed(Router.addUnitType);
-                        },
-                        child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
-                          leading: Text(S.of(context).unityType),
-                          trailing: Wrap(
-                            children: <Widget>[
-                              Text(vm.currentUnit != null
-                                  ? vm.currentUnit.name
-                                  : S.of(context).perItem),
-                              Icon(Icons.arrow_forward_ios)
-                            ],
-                          ),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        child: TextFormField(
+                          style: TextStyle(color: Colors.black),
+                          onChanged: (description) {
+                            tForm.description = description;
+                          },
                         ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: Divider(
-                        color: Colors.black,
-                      ),
+                    Container(
+                      height: 64,
                     ),
-                  ),
-                  StreamBuilder(
-                    stream: vm.database.variationDao.getVariationByStream2(
-                        'Regular',
-                        vm.tmpItem
-                            .id), //do we have regular variant on this item?
-                    builder: (context,
-                        AsyncSnapshot<List<VariationTableData>> snapshot) {
-                      if (snapshot.data == null) {
-                        return Text("");
-                      }
-                      return snapshot.data.length == 0
-                          ? Center(
-                              child: Container(
-                                width: 300,
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  validator: Validators.isStringHasMoreChars,
-                                  style: TextStyle(color: Colors.black),
-                                  onChanged: (price) async {
-                                    ItemTableData item = await vm
-                                        .database.itemDao
-                                        .getItemBy('tmp', vm.branch.id);
-                                    VariationTableData variation = await vm
-                                        .database.variationDao
-                                        .getVariationBy('tmp', vm.branch.id);
-                                    StoreProvider.of<AppState>(context)
-                                        .dispatch(
-                                      SaveRegular(
-                                        price: int.parse(price),
-                                        itemId: item.id,
-                                        name: variation.name,
-                                      ),
-                                    );
-
-                                    //on typing here should save Regular Item variation
-                                  },
-                                  decoration: InputDecoration(
-                                      hintText: S.of(context).costPrice,
-                                      focusColor: Colors.blue),
-                                ),
-                              ),
-                            )
-                          : Text("");
-                    },
-                  ),
-                  StreamBuilder(
-                    stream: vm.database.variationDao
-                        .getVariationByStream2("Regular", vm.tmpItem.id),
-                    builder: (context,
-                        AsyncSnapshot<List<VariationTableData>> snapshot) {
-                      if (snapshot.data == null) {
-                        return Text("");
-                      }
-                      return snapshot.data.length == 0
-                          ? Center(
-                              child: Container(
-                                width: 300,
-                                child: TextFormField(
-                                  style: TextStyle(color: Colors.black),
-                                  validator: Validators
-                                      .isStringHasMoreChars, //on typing here should save Regular Item variation
-
-                                  decoration: InputDecoration(
-                                      hintText: "SKU", focusColor: Colors.blue),
-                                ),
-                              ),
-                            )
-                          : Text("");
-                    },
-                  ),
-                  StreamBuilder(
-                    stream: vm.database.variationDao
-                        .getItemVariations2(vm.tmpItem.id),
-                    builder: (context,
-                        AsyncSnapshot<List<VariationTableData>> snapshot) {
-                      if (snapshot.data == null) {
-                        return Text("");
-                      }
-                      return snapshot.data != 0
-                          ? _buildVariationsList(snapshot.data)
-                          : Text("");
-                    },
-                  ),
-                  Center(
-                    child: SizedBox(
-                      height: 50,
-                      width: 340,
-                      child: OutlineButton(
-                        color: HexColor("#ecf0f1"),
-                        child: Text(S.of(context).addVariation),
-                        onPressed: () {
-                          vm.database.actionsDao
-                              .updateAction(_actions.copyWith(isLocked: true));
-                          Router.navigator.pushNamed(Router.addVariationScreen);
-                        },
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: TextFormField(
-                        validator: Validators.isStringHasMoreChars,
-                        style: TextStyle(color: Colors.black),
-                        onChanged: (description) {
-                          tForm.description = description;
-                        },
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: false,
-                    child: FlatButton(
-                      onPressed: vm.hasAction && vm.appAction.name == 'saveItem'
-                          ? _handleFormSubmit(vm, tForm)
-                          : null,
-                      child: null,
-                    ),
-                  ),
-                  Container(
-                    height: 64,
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },
     );
+  }
+
+  void _getSaveItemStatus(CommonViewModel vm) async {
+    var result = await vm.database.actionsDao.getActionBy('saveItem');
+    setState(() {
+      _actionsSaveItem = result;
+    });
+  }
+
+  void _getSaveStatus(CommonViewModel vm) async {
+    var result = await vm.database.actionsDao.getActionBy('save');
+
+    setState(() {
+      _actions = result;
+    });
   }
 
   Text categorySelector(List<CategoryTableData> categories) {
@@ -335,13 +369,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
     return text;
   }
 
-  _handleFormSubmit(CommonViewModel vm, TForm tForm) async {
+  _handleFormSubmit(CommonViewModel vm) async {
     ItemTableData item =
         await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
 
     VariationTableData variation =
         await vm.database.variationDao.getVariationBy('tmp', vm.branch.id);
-    print(variation);
+
     StoreProvider.of<AppState>(context).dispatch(
       SaveRegular(
         price: variation.price,
@@ -351,6 +385,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
       ),
     );
 
+    //set back the options as it was.
+    vm.database.actionsDao
+        .updateAction(_actionsSaveItem.copyWith(isLocked: true));
+
+    vm.database.actionsDao.updateAction(_actions.copyWith(isLocked: true));
+
+    //todo: also update unit Id of choosen item.
     vm.database.itemDao
         .updateItem(item.copyWith(name: tForm.name, updatedAt: DateTime.now()));
     Router.navigator.maybePop();

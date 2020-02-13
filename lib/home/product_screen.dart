@@ -1,3 +1,4 @@
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
@@ -17,7 +18,7 @@ class ProductScreen extends StatefulWidget {
   _ProductScreenState createState() => _ProductScreenState();
 }
 
-List<Widget> getItems(List<Item> itemList, context) {
+List<Widget> getItems(List<ItemTableData> itemList, BuildContext context) {
   List<Widget> list = new List<Widget>();
 
   list.add(
@@ -44,12 +45,32 @@ List<Widget> getItems(List<Item> itemList, context) {
       list.add(
         GestureDetector(
           onTap: () {
-            StoreProvider.of<AppState>(context)
-                .dispatch(NeedItemVariation(item: itemList[i]));
+            StoreProvider.of<AppState>(context).dispatch(
+              NeedItemVariation(
+                item: Item(
+                  (y) => y
+                    ..id = itemList[i].id
+                    ..name = itemList[i].name
+                    ..branchId = itemList[i].branchId
+                    ..unitId = itemList[i].unitId
+                    ..categoryId = itemList[i].categoryId,
+                ),
+              ),
+            );
           },
           onLongPress: () {
-            StoreProvider.of<AppState>(context)
-                .dispatch(NeedItemVariation(item: itemList[i]));
+            StoreProvider.of<AppState>(context).dispatch(
+              NeedItemVariation(
+                item: Item(
+                  (y) => y
+                    ..id = itemList[i].id
+                    ..name = itemList[i].name
+                    ..branchId = itemList[i].branchId
+                    ..unitId = itemList[i].unitId
+                    ..categoryId = itemList[i].categoryId,
+                ),
+              ),
+            );
           },
           child: ListTile(
             contentPadding: EdgeInsets.all(0),
@@ -104,11 +125,11 @@ List<Widget> getItems(List<Item> itemList, context) {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  Widget _itemsList(BuildContext context, CommonViewModel vm) {
+  Widget _itemsList(BuildContext context, List<ItemTableData> data) {
     return ListView(
       children: ListTile.divideTiles(
         context: context,
-        tiles: getItems(vm.items.toList(), context),
+        tiles: getItems(data, context),
       ).toList(),
     );
   }
@@ -138,7 +159,16 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
               ),
               Expanded(
-                child: _itemsList(context, vm),
+                child: StreamBuilder(
+                  stream: vm.database.itemDao.getItemsStream(),
+                  builder:
+                      (context, AsyncSnapshot<List<ItemTableData>> snapshot) {
+                    if (snapshot.data == null) {
+                      return Text("");
+                    }
+                    return _itemsList(context, snapshot.data);
+                  },
+                ),
               )
             ],
           ),

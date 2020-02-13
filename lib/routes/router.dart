@@ -2,13 +2,14 @@ import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/transitions_builders.dart';
 import 'package:flipper/home/add_category_screen.dart';
 import 'package:flipper/home/add_item_screen.dart';
+import 'package:flipper/home/add_note_screen.dart';
 import 'package:flipper/home/add_unit_type.dart';
 import 'package:flipper/home/add_variation_screen.dart';
-import 'package:flipper/home/bottom_sheet_sreen.dart';
 import 'package:flipper/home/cart/cart_details_screen.dart';
 import 'package:flipper/home/create_category_input_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/edit_quantity_item_screen.dart';
+import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/home/receive_stock.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/home/take_picture_screen.dart';
@@ -72,6 +73,9 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   CartDetailsScreen cartDetailsScreen;
+
+  @MaterialRoute(fullscreenDialog: true)
+  AllItemScreen allItemScreen;
 
   LoginScreen login;
 }

@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "flipperPointofSale" : MessageLookupByLibrary.simpleMessage("Flipper Point of Sale"),
     "inStock" : MessageLookupByLibrary.simpleMessage("in Stock"),
     "interactandgrowyourbusiness" : MessageLookupByLibrary.simpleMessage("Interact and  grow your business"),
+    "items" : MessageLookupByLibrary.simpleMessage("Items"),
     "learnaboutFlipper" : MessageLookupByLibrary.simpleMessage("Learn about Flipper."),
     "leavePriceBlank" : MessageLookupByLibrary.simpleMessage("Leave the price blank to enter at the time of sale."),
     "name" : MessageLookupByLibrary.simpleMessage("Name"),

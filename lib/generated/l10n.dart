@@ -299,6 +299,15 @@ class S {
     );
   }
 
+  String get items {
+    return Intl.message(
+      'Items',
+      name: 'items',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get currentSale {
     return Intl.message(
       'Current Sale',

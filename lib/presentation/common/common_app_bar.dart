@@ -5,7 +5,7 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @Deprecated("_action will be removed soon")
+  // @Deprecated("_action will be removed soon")
   final Widget _additionalText;
   final bool _showActionButton;
 
@@ -14,7 +14,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final IconData _icon;
   final double _headerMultiplier;
-  @Deprecated("_bottomSpacer will be removed soon")
   final double _bottomSpacer;
   final Function _onPressedCallback;
   final bool _disableButton;

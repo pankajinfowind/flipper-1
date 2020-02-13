@@ -18,10 +18,13 @@ class _BranchListState extends State<BranchList> {
   // ignore: non_constant_identifier_names
   DropdownButton _BranchItem() => DropdownButton<String>(
         isDense: true,
-        hint: Text(
-          widget.vm.hint.name,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white),
+        hint: Padding(
+          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: Text(
+            widget.vm.hint.name,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         items: widget.vm.branches.map((b) {
           return DropdownMenuItem(
@@ -78,21 +81,23 @@ class _BranchListState extends State<BranchList> {
               //   dense: true,
               // ),
               ListTile(
-                leading: SvgPicture.asset(
-                  "assets/graphics/credit-card.svg",
-                  semanticsLabel: 'Checkout',
-                ),
-                title: GestureDetector(
-                  onTap: () {
-                    Router.navigator
-                        .pushNamed(Router.dashboard); //Checkout on dashboard.
-                  },
+                leading: FlatButton(
+                  onPressed: () {},
                   child: Text(
                     "Checkout",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: _Style.fontFamily,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                dense: true,
+              ),
+              ListTile(
+                leading: FlatButton(
+                  onPressed: () {
+                    Router.navigator.pushNamed(Router.allItemScreen);
+                  },
+                  child: Text(
+                    "Items",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 dense: true,
@@ -140,7 +145,7 @@ class _BranchListState extends State<BranchList> {
               //   dense: true,
               // ),
               SizedBox(
-                height: 495,
+                height: 445,
               ),
               Container(
                 width: 237,

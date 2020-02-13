@@ -10,7 +10,7 @@ import 'package:auto_route/router_utils.dart';
 import 'package:flipper/presentation/splash/splash_screen.dart';
 import 'package:flipper/presentation/home/dash_board.dart';
 import 'package:flipper/presentation/splash/aftersplash.dart';
-import 'package:flipper/home/bottom_sheet_sreen.dart';
+import 'package:flipper/home/add_note_screen.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/presentation/business/sign_up_screen.dart';
 import 'package:auto_route/transitions_builders.dart';
@@ -25,6 +25,7 @@ import 'package:flipper/home/create_category_input_screen.dart';
 import 'package:flipper/home/receive_stock.dart';
 import 'package:flipper/home/edit_quantity_item_screen.dart';
 import 'package:flipper/home/cart/cart_details_screen.dart';
+import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/presentation/login/login_screen.dart';
 
 class Router {
@@ -45,6 +46,7 @@ class Router {
   static const receiveStock = '/receiveStock';
   static const editQuantityItemScreen = '/editQuantityItemScreen';
   static const cartDetailsScreen = '/cartDetailsScreen';
+  static const allItemScreen = '/allItemScreen';
   static const login = '/login';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
@@ -208,6 +210,16 @@ class Router {
         return MaterialPageRoute(
           builder: (_) =>
               CartDetailsScreen(key: typedArgs.key, carts: typedArgs.carts),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.allItemScreen:
+        if (hasInvalidArgs<Key>(args)) {
+          return misTypedArgsRoute<Key>(args);
+        }
+        final typedArgs = args as Key;
+        return MaterialPageRoute(
+          builder: (_) => AllItemScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

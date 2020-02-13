@@ -121,12 +121,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
               disableButton: _actions == null ? true : _actions.isLocked,
               showActionButton: true,
               onPressedCallback: () async {
-                await vm.database.actionsDao
-                    .updateAction(_actionsSaveItem.copyWith(isLocked: false));
-                _getSaveItemStatus(vm);
-                if (_actionsSaveItem.isLocked == false) {
-                  _handleFormSubmit(vm);
-                }
+                _handleFormSubmit(vm);
               },
               actionButtonName: S.of(context).save,
               icon: Icons.close,

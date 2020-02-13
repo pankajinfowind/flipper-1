@@ -254,11 +254,13 @@ class SaveCartCustom {}
 class SaveRegular {
   final String name;
   final int itemId;
-  final int price;
+  final double price;
+  final double costPrice;
   final int id;
   final String sku;
 
-  SaveRegular({this.id, this.name, this.itemId, this.price, this.sku});
+  SaveRegular(
+      {this.id, this.name, this.itemId, this.price, this.sku, this.costPrice});
 }
 
 @immutable

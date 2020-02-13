@@ -49,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "quantity" : MessageLookupByLibrary.simpleMessage("Quantity"),
     "receiveStock" : MessageLookupByLibrary.simpleMessage("Receive Stock"),
     "reedeemRewards" : MessageLookupByLibrary.simpleMessage("Reedeem Rewards"),
+    "retailPrice" : MessageLookupByLibrary.simpleMessage("Retail Price"),
     "sKU" : MessageLookupByLibrary.simpleMessage("SKU"),
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
     "selectCategory" : MessageLookupByLibrary.simpleMessage("Select Category"),

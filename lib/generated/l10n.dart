@@ -290,6 +290,15 @@ class S {
     );
   }
 
+  String get retailPrice {
+    return Intl.message(
+      'Retail Price',
+      name: 'retailPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get currentSale {
     return Intl.message(
       'Current Sale',

@@ -64,7 +64,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                 //ignore:missing_required_param
                 VariationTableData(
                   name: name,
-                  price: int.parse(price),
+                  price: double.parse(price),
                   branchId: vm.branch.id,
                   createdAt: DateTime.now(),
                   count: 0,

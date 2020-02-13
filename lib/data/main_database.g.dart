@@ -3670,7 +3670,8 @@ class VariationTableData extends DataClass
   final int itemId;
   final bool isActive;
   final int count;
-  final int price;
+  final double price;
+  final double costPrice;
   final DateTime createdAt;
   final DateTime updatedAt;
   VariationTableData(
@@ -3681,6 +3682,7 @@ class VariationTableData extends DataClass
       @required this.isActive,
       @required this.count,
       @required this.price,
+      @required this.costPrice,
       this.createdAt,
       this.updatedAt});
   factory VariationTableData.fromData(
@@ -3690,6 +3692,7 @@ class VariationTableData extends DataClass
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
     final boolType = db.typeSystem.forDartType<bool>();
+    final doubleType = db.typeSystem.forDartType<double>();
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
     return VariationTableData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
@@ -3701,7 +3704,10 @@ class VariationTableData extends DataClass
       isActive:
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_active']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
-      price: intType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
+      price:
+          doubleType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
+      costPrice: doubleType
+          .mapFromDatabaseResponse(data['${effectivePrefix}cost_price']),
       createdAt: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
       updatedAt: dateTimeType
@@ -3717,7 +3723,8 @@ class VariationTableData extends DataClass
       itemId: serializer.fromJson<int>(json['itemId']),
       isActive: serializer.fromJson<bool>(json['isActive']),
       count: serializer.fromJson<int>(json['count']),
-      price: serializer.fromJson<int>(json['price']),
+      price: serializer.fromJson<double>(json['price']),
+      costPrice: serializer.fromJson<double>(json['costPrice']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -3732,7 +3739,8 @@ class VariationTableData extends DataClass
       'itemId': serializer.toJson<int>(itemId),
       'isActive': serializer.toJson<bool>(isActive),
       'count': serializer.toJson<int>(count),
-      'price': serializer.toJson<int>(price),
+      'price': serializer.toJson<double>(price),
+      'costPrice': serializer.toJson<double>(costPrice),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -3755,6 +3763,9 @@ class VariationTableData extends DataClass
           count == null && nullToAbsent ? const Value.absent() : Value(count),
       price:
           price == null && nullToAbsent ? const Value.absent() : Value(price),
+      costPrice: costPrice == null && nullToAbsent
+          ? const Value.absent()
+          : Value(costPrice),
       createdAt: createdAt == null && nullToAbsent
           ? const Value.absent()
           : Value(createdAt),
@@ -3771,7 +3782,8 @@ class VariationTableData extends DataClass
           int itemId,
           bool isActive,
           int count,
-          int price,
+          double price,
+          double costPrice,
           DateTime createdAt,
           DateTime updatedAt}) =>
       VariationTableData(
@@ -3782,6 +3794,7 @@ class VariationTableData extends DataClass
         isActive: isActive ?? this.isActive,
         count: count ?? this.count,
         price: price ?? this.price,
+        costPrice: costPrice ?? this.costPrice,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -3795,6 +3808,7 @@ class VariationTableData extends DataClass
           ..write('isActive: $isActive, ')
           ..write('count: $count, ')
           ..write('price: $price, ')
+          ..write('costPrice: $costPrice, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -3816,8 +3830,10 @@ class VariationTableData extends DataClass
                           count.hashCode,
                           $mrjc(
                               price.hashCode,
-                              $mrjc(createdAt.hashCode,
-                                  updatedAt.hashCode)))))))));
+                              $mrjc(
+                                  costPrice.hashCode,
+                                  $mrjc(createdAt.hashCode,
+                                      updatedAt.hashCode))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -3829,6 +3845,7 @@ class VariationTableData extends DataClass
           other.isActive == this.isActive &&
           other.count == this.count &&
           other.price == this.price &&
+          other.costPrice == this.costPrice &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -3840,7 +3857,8 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
   final Value<int> itemId;
   final Value<bool> isActive;
   final Value<int> count;
-  final Value<int> price;
+  final Value<double> price;
+  final Value<double> costPrice;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   const VariationTableCompanion({
@@ -3851,6 +3869,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
     this.isActive = const Value.absent(),
     this.count = const Value.absent(),
     this.price = const Value.absent(),
+    this.costPrice = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
@@ -3861,14 +3880,14 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
     @required int itemId,
     this.isActive = const Value.absent(),
     @required int count,
-    @required int price,
+    this.price = const Value.absent(),
+    this.costPrice = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   })  : name = Value(name),
         branchId = Value(branchId),
         itemId = Value(itemId),
-        count = Value(count),
-        price = Value(price);
+        count = Value(count);
   VariationTableCompanion copyWith(
       {Value<int> id,
       Value<String> name,
@@ -3876,7 +3895,8 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
       Value<int> itemId,
       Value<bool> isActive,
       Value<int> count,
-      Value<int> price,
+      Value<double> price,
+      Value<double> costPrice,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt}) {
     return VariationTableCompanion(
@@ -3887,6 +3907,7 @@ class VariationTableCompanion extends UpdateCompanion<VariationTableData> {
       isActive: isActive ?? this.isActive,
       count: count ?? this.count,
       price: price ?? this.price,
+      costPrice: costPrice ?? this.costPrice,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -3959,15 +3980,21 @@ class $VariationTableTable extends VariationTable
   }
 
   final VerificationMeta _priceMeta = const VerificationMeta('price');
-  GeneratedIntColumn _price;
+  GeneratedRealColumn _price;
   @override
-  GeneratedIntColumn get price => _price ??= _constructPrice();
-  GeneratedIntColumn _constructPrice() {
-    return GeneratedIntColumn(
-      'price',
-      $tableName,
-      false,
-    );
+  GeneratedRealColumn get price => _price ??= _constructPrice();
+  GeneratedRealColumn _constructPrice() {
+    return GeneratedRealColumn('price', $tableName, false,
+        defaultValue: Constant(0));
+  }
+
+  final VerificationMeta _costPriceMeta = const VerificationMeta('costPrice');
+  GeneratedRealColumn _costPrice;
+  @override
+  GeneratedRealColumn get costPrice => _costPrice ??= _constructCostPrice();
+  GeneratedRealColumn _constructCostPrice() {
+    return GeneratedRealColumn('cost_price', $tableName, false,
+        defaultValue: Constant(0));
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
@@ -4000,6 +4027,7 @@ class $VariationTableTable extends VariationTable
         isActive,
         count,
         price,
+        costPrice,
         createdAt,
         updatedAt
       ];
@@ -4054,6 +4082,12 @@ class $VariationTableTable extends VariationTable
     } else if (price.isRequired && isInserting) {
       context.missing(_priceMeta);
     }
+    if (d.costPrice.present) {
+      context.handle(_costPriceMeta,
+          costPrice.isAcceptableValue(d.costPrice.value, _costPriceMeta));
+    } else if (costPrice.isRequired && isInserting) {
+      context.missing(_costPriceMeta);
+    }
     if (d.createdAt.present) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableValue(d.createdAt.value, _createdAtMeta));
@@ -4099,7 +4133,10 @@ class $VariationTableTable extends VariationTable
       map['count'] = Variable<int, IntType>(d.count.value);
     }
     if (d.price.present) {
-      map['price'] = Variable<int, IntType>(d.price.value);
+      map['price'] = Variable<double, RealType>(d.price.value);
+    }
+    if (d.costPrice.present) {
+      map['cost_price'] = Variable<double, RealType>(d.costPrice.value);
     }
     if (d.createdAt.present) {
       map['created_at'] = Variable<DateTime, DateTimeType>(d.createdAt.value);

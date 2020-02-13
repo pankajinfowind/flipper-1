@@ -72,7 +72,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
         .database
         .itemDao
         .getItemBy('tmp', branchId);
-
+    if (item == null) {
+      Router.navigator.pop(false);
+      return false;
+    }
     //delete this item add look trough all variation and delete related variation.
     return (await showDialog(
           context: context,
@@ -162,16 +165,20 @@ class _AddItemScreenState extends State<AddItemScreen> {
                             if (name == '') {
                               _getSaveStatus(vm);
                               _getSaveItemStatus(vm);
-                              await vm.database.actionsDao.updateAction(
-                                  _actions.copyWith(isLocked: true));
-                              _getSaveStatus(vm);
+                              if (_actions != null) {
+                                await vm.database.actionsDao.updateAction(
+                                    _actions.copyWith(isLocked: true));
+                                _getSaveStatus(vm);
+                              }
                               return;
                             }
                             _getSaveStatus(vm);
                             _getSaveItemStatus(vm);
-                            await vm.database.actionsDao.updateAction(
-                                _actions.copyWith(isLocked: false));
-                            _getSaveStatus(vm);
+                            if (_actions != null) {
+                              await vm.database.actionsDao.updateAction(
+                                  _actions.copyWith(isLocked: false));
+                              _getSaveStatus(vm);
+                            }
 
                             tForm.name = name;
                           },
@@ -282,39 +289,22 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           return Text("");
                         }
                         return snapshot.data.length == 0
-                            ? Center(
-                                child: Container(
-                                  width: 300,
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    validator: Validators.isStringHasMoreChars,
-                                    style: TextStyle(color: Colors.black),
-                                    onChanged: (price) async {
-                                      tForm.price = price;
-                                      ItemTableData item = await vm
-                                          .database.itemDao
-                                          .getItemBy('tmp', vm.branch.id);
-
-                                      VariationTableData variation = await vm
-                                          .database.variationDao
-                                          .getVariationBy('tmp', vm.branch.id);
-
-                                      StoreProvider.of<AppState>(context)
-                                          .dispatch(
-                                        SaveRegular(
-                                          price: int.parse(price),
-                                          itemId: item.id,
-                                          name: variation.name,
-                                        ),
-                                      );
-                                      //on typing here should save Regular Item variation
-                                    },
-                                    decoration: InputDecoration(
-                                        hintText: S.of(context).costPrice,
-                                        focusColor: Colors.blue),
-                                  ),
-                                ),
-                              )
+                            ? buldRetailPriceWidget(vm, context)
+                            : Text("");
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: vm.database.variationDao.getVariationByStream2(
+                          'Regular',
+                          vm.tmpItem
+                              .id), //do we have regular variant on this item?
+                      builder: (context,
+                          AsyncSnapshot<List<VariationTableData>> snapshot) {
+                        if (snapshot.data == null) {
+                          return Text("");
+                        }
+                        return snapshot.data.length == 0
+                            ? buildCostPriceWidget(vm, context)
                             : Text("");
                       },
                     ),
@@ -397,6 +387,69 @@ class _AddItemScreenState extends State<AddItemScreen> {
     );
   }
 
+  Center buldRetailPriceWidget(CommonViewModel vm, BuildContext context) {
+    return Center(
+      child: Container(
+        width: 300,
+        child: TextFormField(
+          keyboardType: TextInputType.number,
+          style: TextStyle(color: Colors.black),
+          onChanged: (retailPrice) async {
+            tForm.price = retailPrice;
+            ItemTableData item =
+                await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+
+            VariationTableData variation = await vm.database.variationDao
+                .getVariationBy('tmp', vm.branch.id);
+
+            StoreProvider.of<AppState>(context).dispatch(
+              SaveRegular(
+                price: double.parse(retailPrice),
+                costPrice: 0,
+                itemId: item.id,
+                name: variation.name,
+              ),
+            );
+            //on typing here should save Regular Item variation
+          },
+          decoration: InputDecoration(
+              hintText: S.of(context).retailPrice, focusColor: Colors.blue),
+        ),
+      ),
+    );
+  }
+
+  Center buildCostPriceWidget(CommonViewModel vm, BuildContext context) {
+    return Center(
+      child: Container(
+        width: 300,
+        child: TextFormField(
+          keyboardType: TextInputType.number,
+          style: TextStyle(color: Colors.black),
+          onChanged: (costPrice) async {
+            ItemTableData item =
+                await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+
+            VariationTableData variation = await vm.database.variationDao
+                .getVariationBy('tmp', vm.branch.id);
+
+            StoreProvider.of<AppState>(context).dispatch(
+              SaveRegular(
+                costPrice: double.parse(costPrice),
+                price: 0,
+                itemId: item.id,
+                name: variation.name,
+              ),
+            );
+            //on typing here should save Regular Item variation
+          },
+          decoration: InputDecoration(
+              hintText: S.of(context).costPrice, focusColor: Colors.blue),
+        ),
+      ),
+    );
+  }
+
   void _getSaveItemStatus(CommonViewModel vm) async {
     var result = await vm.database.actionsDao.getActionBy('saveItem');
     setState(() {
@@ -436,6 +489,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     StoreProvider.of<AppState>(context).dispatch(
       SaveRegular(
         price: variation.price,
+        costPrice: variation.costPrice,
         itemId: item.id,
         name: 'Regular',
         id: variation.id,
@@ -453,7 +507,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       item.copyWith(
         name: tForm.name,
         updatedAt: DateTime.now(),
-        color: vm.currentColor.hexCode ?? HexColor('#00cec9'),
+        color: vm.currentColor == null ? '#00cec9' : vm.currentColor.hashCode,
       ),
     );
     Router.navigator.maybePop();

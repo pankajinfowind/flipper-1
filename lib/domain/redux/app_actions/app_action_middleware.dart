@@ -47,16 +47,30 @@ void Function(Store<AppState> store, SaveRegular action, NextDispatcher next)
     _saveRegular(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
-    await generalRepository.insertVariant(
-      store,
-      //ignore:missing_required_param
-      VariationTableData(
-        branchId: store.state.branch.id,
-        price: action.price,
-        id: action.id,
-        name: action.name,
-      ),
-    );
+    if (action.costPrice == 0) {
+      await generalRepository.insertVariant(
+        store,
+        //ignore:missing_required_param
+        VariationTableData(
+          branchId: store.state.branch.id,
+          price: action.price,
+          id: action.id,
+          name: action.name,
+        ),
+      );
+    }
+    if (action.price == 0) {
+      await generalRepository.insertVariant(
+        store,
+        //ignore:missing_required_param
+        VariationTableData(
+          branchId: store.state.branch.id,
+          costPrice: action.costPrice,
+          id: action.id,
+          name: action.name,
+        ),
+      );
+    }
   };
 }
 
@@ -290,7 +304,7 @@ void Function(
             ..color = action.item.color
             ..unitId = action.item.unitId
             ..categoryId = action.item.categoryId
-            ..price = variations[i].price
+            ..price = variations[i].price.toInt()
             ..branchId = variations[i].branchId,
         ),
       );

@@ -11,8 +11,8 @@ class VariationTable extends Table {
 
   BoolColumn get isActive => boolean().withDefault(Constant(false))();
   IntColumn get count => integer()();
-  IntColumn get price => integer()(); //retail
-  IntColumn get costPrice => integer().withDefault(Constant(0))(); //retail
+  RealColumn get price => real().withDefault(Constant(0))(); //retail
+  RealColumn get costPrice => real().withDefault(Constant(0))(); //retail
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();

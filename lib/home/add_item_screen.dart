@@ -31,6 +31,38 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   ActionsTableData _actionsSaveItem;
 
+  _onClose(BuildContext context) async {
+    int branchId = StoreProvider.of<AppState>(context).state.branch.id;
+    ItemTableData item = await StoreProvider.of<AppState>(context)
+        .state
+        .database
+        .itemDao
+        .getItemBy('tmp', branchId);
+
+    //delete this item add look trough all variation and delete related variation.
+    if (item != null) {
+      List<VariationTableData> variations =
+          await StoreProvider.of<AppState>(context)
+              .state
+              .database
+              .variationDao
+              .getVariantByItemId(item.id);
+      for (var i = 0; i < variations.length; i++) {
+        await StoreProvider.of<AppState>(context)
+            .state
+            .database
+            .variationDao
+            .deleteVariation(variations[i]);
+      }
+      StoreProvider.of<AppState>(context)
+          .state
+          .database
+          .itemDao
+          .deleteItem(item);
+    }
+    Router.navigator.pop(true);
+  }
+
   Future<bool> _onWillPop() async {
     //if we have dirty db then show the alert or if is clean go back without alert
     int branchId = StoreProvider.of<AppState>(context).state.branch.id;
@@ -42,35 +74,34 @@ class _AddItemScreenState extends State<AddItemScreen> {
         .getItemBy('tmp', branchId);
 
     //delete this item add look trough all variation and delete related variation.
-    if (item != null) {
-      return (await showDialog(
-            context: context,
-            builder: (context) => new AlertDialog(
-              title: new Text(
-                'Are you sure?',
-                style: TextStyle(color: Colors.black),
-              ),
-              content: new Text(
-                'Do you want to exit an App',
-                style: TextStyle(color: Colors.black),
-              ),
-              actions: <Widget>[
-                new FlatButton(
-                  onPressed: () => Router.navigator.pop(false),
-                  child: new Text('No'),
-                ),
-                new FlatButton(
-                  // Navigator.of(context).pop(true)
-                  //todo: go and cleam the tmp item and variation created recently.
-                  onPressed: _onClose(context),
-                  child: new Text('Yes'),
-                ),
-              ],
+    return (await showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text(
+              'Are you sure?',
+              style: TextStyle(color: Colors.black),
             ),
-          )) ??
-          false;
-    }
-    return true;
+            content: new Text(
+              'Do you want to exit an App',
+              style: TextStyle(color: Colors.black),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Router.navigator.pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                // Navigator.of(context).pop(true)
+                //todo: go and cleam the tmp item and variation created recently.
+                onPressed: () {
+                  _onClose(context);
+                },
+                child: new Text('Yes'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
   }
 
   @override
@@ -472,33 +503,5 @@ class _AddItemScreenState extends State<AddItemScreen> {
       return Container();
     }
     return Column(children: list);
-  }
-}
-
-_onClose(BuildContext context) async {
-  int branchId = StoreProvider.of<AppState>(context).state.branch.id;
-
-  ItemTableData item = await StoreProvider.of<AppState>(context)
-      .state
-      .database
-      .itemDao
-      .getItemBy('tmp', branchId);
-
-  //delete this item add look trough all variation and delete related variation.
-  if (item != null) {
-    List<VariationTableData> variations =
-        await StoreProvider.of<AppState>(context)
-            .state
-            .database
-            .variationDao
-            .getVariantByItemId(item.id);
-    for (var i = 0; i < variations.length; i++) {
-      await StoreProvider.of<AppState>(context)
-          .state
-          .database
-          .variationDao
-          .deleteVariation(variations[i]);
-    }
-    StoreProvider.of<AppState>(context).state.database.itemDao.deleteItem(item);
   }
 }

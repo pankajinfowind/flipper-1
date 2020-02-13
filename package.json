@@ -1,6 +1,6 @@
 {
   "name": "Flipper",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "Flipper is an inventory management system and POS system.",
   "homepage": "https://flipper.rw/",
   "author": {
@@ -28,7 +28,7 @@
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
     "ng:serve": "ng serve",
-    "ng:serve:web": "ng serve -c dev-web -o",
+    "start-web": "ng serve -c dev-web -o",
     "postinstall:web": "node postinstall-web.js",
     "postinstall:electron": "node postinstall.js",
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
@@ -117,7 +117,7 @@
     "@enexus/flipper-event": "0.0.2",
     "@enexus/flipper-file-upload": "0.0.1",
     "@enexus/flipper-font": "0.0.2",
-    "@enexus/flipper-inventory": "0.0.10",
+    "@enexus/flipper-inventory": "0.0.13",
     "@enexus/flipper-menu": "0.0.11",
     "@enexus/flipper-offline-database": "0.0.10",
     "@enexus/flipper-pos": "0.0.18",

@@ -13,13 +13,13 @@ import { CurrentUser } from '../../core/guards/current-user';
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
- 
+
   businesses: Business[] = [];
   menus: Menu[] = [];
   branches: Branch[] = [];
-  users:User;
+  users: User;
   userToggledMenu: boolean;
-  settingMenus:Menu=null;
+  settingMenus: Menu=null;
 
   set menu(value: Menu[]) {
     this.menus = value;
@@ -66,9 +66,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.branch   =this.model.loadAll<Business>(Tables.branch);
     this.user     =this.model.active(Tables.user);
     this.menu     =this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting===false);
-     this.settingMenu=this.model.loadAll<Menu>(Tables.menu).find(m=>m.isSetting===true);
-    
-    
+    this.settingMenu=this.model.loadAll<Menu>(Tables.menu).find(m=>m.isSetting===true);
+
+
   }
 
   ngOnDestroy() {
@@ -110,21 +110,21 @@ export class AdminComponent implements OnInit, OnDestroy {
     getRouterClicked(event) {
 
      this.desactiveAllMenu();
-      if(event.clickedMenu){
+     if(event.clickedMenu) {
         event.clickedMenu.active=true;
-          this.model.update<Menu>(Tables.menu,event.clickedMenu,event.clickedMenu.id);
+        this.model.update<Menu>(Tables.menu,event.clickedMenu,event.clickedMenu.id);
       }
-     
-      this.menu     =this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting===false);
-      this.settingMenu=this.model.loadAll<Menu>(Tables.menu).find(m=>m.isSetting===true);
 
-      this.router.navigate([event.clickedMenu.route])
+     this.menu     =this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting===false);
+     this.settingMenu=this.model.loadAll<Menu>(Tables.menu).find(m=>m.isSetting===true);
+
+     this.router.navigate([event.clickedMenu.route]);
   }
 
-  desactiveAllMenu(){
-    this.model.loadAll<Menu>(Tables.menu).forEach(menu=>{
+  desactiveAllMenu() {
+    this.model.loadAll<Menu>(Tables.menu).forEach(menu=> {
       menu.active=false;
-      this.model.update<Menu>(Tables.menu,menu,menu.id)
+      this.model.update<Menu>(Tables.menu,menu,menu.id);
     });
   }
 

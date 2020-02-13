@@ -42,11 +42,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-constructor(private model: MainModelService, private router: Router) {
-  this.redirect();
+constructor() {
+
 }
-redirect(){
-  const activeMenu=this.model.active<Menu>(Tables.menu);
-  return this.router.navigate([activeMenu?activeMenu.route:'/admin']);
-}
+
 }

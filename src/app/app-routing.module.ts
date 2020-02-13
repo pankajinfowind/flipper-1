@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './shared/components';
 import { HasBusinessGuard } from './core/guards/has-business-guard.service';
 import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings';
+import { CreateProductComponent } from '@enexus/flipper-inventory';
 
 const routes: Routes = [
   {
@@ -18,6 +19,9 @@ const routes: Routes = [
   },
   {
     path: 'setup/business/new', component: CreateUpdateBusinessComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'add/product', component: CreateProductComponent, canActivate: [AuthGuard]
   },
   {
     path: 'admin',

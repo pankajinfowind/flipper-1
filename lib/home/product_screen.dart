@@ -46,7 +46,10 @@ class _ProductScreenState extends State<ProductScreen> {
                       return Text("");
                     }
                     return ItemsView(
-                        context: context, data: snapshot.data, vm: vm);
+                      context: context,
+                      data: snapshot.data,
+                      vm: vm,
+                    );
                   },
                 ),
               )

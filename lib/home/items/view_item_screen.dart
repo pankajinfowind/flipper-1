@@ -1,5 +1,7 @@
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
+import 'package:flipper/home/items/item_view.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,26 @@ class _ViewItemsScreenState extends State<ViewItemsScreen> {
             multi: 1,
             bottomSpacer: 48,
           ),
-          body: Text("can view Items"),
+          body: Column(
+            children: <Widget>[
+              Expanded(
+                child: StreamBuilder(
+                  stream: vm.database.itemDao.getItemsStream(),
+                  builder:
+                      (context, AsyncSnapshot<List<ItemTableData>> snapshot) {
+                    if (snapshot.data == null) {
+                      return Text("");
+                    }
+                    return ItemsView(
+                      context: context,
+                      data: snapshot.data,
+                      vm: vm,
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 
 class AllItemScreen extends StatefulWidget {
@@ -25,7 +26,9 @@ class _AllItemScreenState extends State<AllItemScreen> {
         body: Column(
           children: <Widget>[
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Router.navigator.pushNamed(Router.viewItemsScreen);
+              },
               child: ListTile(
                 title: Text("All Items", style: TextStyle(color: Colors.black)),
                 trailing: Wrap(

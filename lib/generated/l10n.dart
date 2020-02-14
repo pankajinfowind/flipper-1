@@ -227,6 +227,15 @@ class S {
     );
   }
 
+  String get allItems {
+    return Intl.message(
+      'All Items',
+      name: 'allItems',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get description {
     return Intl.message(
       'Description',

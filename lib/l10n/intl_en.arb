@@ -21,6 +21,7 @@
     "priceAndInventory": "PRICE AND INVENTORY",
     "unity_type": "Unit Type",
     "perItem": "Per Item",
+    "allItems": "All Items",
     "description": "Description",
     "inStock": "in Stock",
     "add": "Add",

@@ -21,7 +21,10 @@ class TForm {
 }
 
 class ViewItemScreen extends StatefulWidget {
-  ViewItemScreen({Key key}) : super(key: key);
+  ViewItemScreen({Key key, @required this.itemId, @required this.itemName})
+      : super(key: key);
+  final int itemId;
+  final String itemName;
 
   @override
   _ViewItemScreenState createState() => _ViewItemScreenState();
@@ -116,278 +119,292 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
-        return WillPopScope(
-          onWillPop: _onWillPop,
-          child: Scaffold(
-            appBar: CommonAppBar(
-              title: S.of(context).createItem,
-              disableButton: _actions == null ? true : _actions.isLocked,
-              showActionButton: true,
-              onPressedCallback: () async {
-                _handleFormSubmit(vm);
-              },
-              actionButtonName: S.of(context).save,
-              icon: Icons.close,
-              multi: 3,
-              bottomSpacer: 52,
-            ),
-            body: ListView(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Router.navigator.pushNamed(Router.editItemTitle);
-                      },
-                      child: Container(
-                        height: 80,
-                        width: 80,
-                        color: vm.currentColor != null
-                            ? HexColor(vm.currentColor.hexCode)
-                            : HexColor("#00cec9"),
-                      ),
-                    ),
-                    Text(S.of(context).newItem),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: TextFormField(
-                          style: TextStyle(
-                              color:
-                                  Colors.black), //todo: move this to app theme
-                          validator: Validators.isStringHasMoreChars,
-                          onChanged: (name) async {
-                            if (name == '') {
-                              _getSaveStatus(vm);
-                              _getSaveItemStatus(vm);
-                              if (_actions != null) {
-                                await vm.database.actionsDao.updateAction(
-                                    _actions.copyWith(isLocked: true));
-                                _getSaveStatus(vm);
-                              }
-                              return;
-                            }
-                            _getSaveStatus(vm);
-                            _getSaveItemStatus(vm);
-                            if (_actions != null) {
-                              await vm.database.actionsDao.updateAction(
-                                  _actions.copyWith(isLocked: false));
-                              _getSaveStatus(vm);
-                            }
-
-                            tForm.name = name;
-                          },
-                          decoration: InputDecoration(
-                              hintText: "Name", focusColor: Colors.black),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: GestureDetector(
-                          onTap: () {
-                            Router.navigator
-                                .pushNamed(Router.addCategoryScreen);
-                          },
-                          child: ListTile(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 0.3),
-                            leading: Text(S.of(context).category),
-                            trailing: Wrap(
-                              children: <Widget>[
-                                StreamBuilder(
-                                  stream: vm.database.categoryDao
-                                      .getCategoriesStream(),
-                                  builder: (context,
-                                      AsyncSnapshot<List<CategoryTableData>>
-                                          snapshot) {
-                                    if (snapshot.data == null) {
-                                      return Text(S.of(context).selectCategory);
+        return StreamBuilder<Object>(
+            stream: null,
+            builder: (context, snapshot) {
+              return WillPopScope(
+                onWillPop: _onWillPop,
+                child: Scaffold(
+                  appBar: CommonAppBar(
+                    title: S.of(context).createItem,
+                    disableButton: _actions == null ? true : _actions.isLocked,
+                    showActionButton: true,
+                    onPressedCallback: () async {
+                      _handleFormSubmit(vm);
+                    },
+                    actionButtonName: S.of(context).save,
+                    icon: Icons.close,
+                    multi: 3,
+                    bottomSpacer: 52,
+                  ),
+                  body: ListView(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Router.navigator.pushNamed(Router.editItemTitle);
+                            },
+                            child: Container(
+                              height: 80,
+                              width: 80,
+                              color: vm.currentColor != null
+                                  ? HexColor(vm.currentColor.hexCode)
+                                  : HexColor("#00cec9"),
+                            ),
+                          ),
+                          Text(S.of(context).newItem),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: TextFormField(
+                                style: TextStyle(
+                                    color: Colors
+                                        .black), //todo: move this to app theme
+                                validator: Validators.isStringHasMoreChars,
+                                onChanged: (name) async {
+                                  if (name == '') {
+                                    _getSaveStatus(vm);
+                                    _getSaveItemStatus(vm);
+                                    if (_actions != null) {
+                                      await vm.database.actionsDao.updateAction(
+                                          _actions.copyWith(isLocked: true));
+                                      _getSaveStatus(vm);
                                     }
-                                    return snapshot.data.length == 0
-                                        ? Text(S.of(context).selectCategory)
-                                        : categorySelector(snapshot.data);
-                                  },
-                                ),
-                                Icon(Icons.arrow_forward_ios)
-                              ],
+                                    return;
+                                  }
+                                  _getSaveStatus(vm);
+                                  _getSaveItemStatus(vm);
+                                  if (_actions != null) {
+                                    await vm.database.actionsDao.updateAction(
+                                        _actions.copyWith(isLocked: false));
+                                    _getSaveStatus(vm);
+                                  }
+
+                                  tForm.name = name;
+                                },
+                                decoration: InputDecoration(
+                                    hintText: "Name", focusColor: Colors.black),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: Divider(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 24,
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: Text(S.of(context).priceAndInventory),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: Divider(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: GestureDetector(
-                          onTap: () {
-                            Router.navigator.pushNamed(Router.addUnitType);
-                          },
-                          child: ListTile(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 0.3),
-                            leading: Text(S.of(context).unityType),
-                            trailing: Wrap(
-                              children: <Widget>[
-                                Text(vm.currentUnit != null
-                                    ? vm.currentUnit.name
-                                    : S.of(context).perItem),
-                                Icon(Icons.arrow_forward_ios)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: Divider(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    StreamBuilder(
-                      stream: vm.database.variationDao.getVariationByStream2(
-                          'Regular',
-                          vm.tmpItem
-                              .id), //do we have regular variant on this item?
-                      builder: (context,
-                          AsyncSnapshot<List<VariationTableData>> snapshot) {
-                        if (snapshot.data == null) {
-                          return Text("");
-                        }
-                        return snapshot.data.length == 0
-                            ? BuildRetailPriceWidget(
-                                vm: vm,
-                                context: context,
-                              )
-                            : Text("");
-                      },
-                    ),
-                    StreamBuilder(
-                      stream: vm.database.variationDao.getVariationByStream2(
-                          'Regular',
-                          vm.tmpItem
-                              .id), //do we have regular variant on this item?
-                      builder: (context,
-                          AsyncSnapshot<List<VariationTableData>> snapshot) {
-                        if (snapshot.data == null) {
-                          return Text("");
-                        }
-                        return snapshot.data.length == 0
-                            ? BuildCostPriceWidget(vm: vm, context: context)
-                            : Text("");
-                      },
-                    ),
-                    StreamBuilder(
-                      stream: vm.database.variationDao
-                          .getVariationByStream2("Regular", vm.tmpItem.id),
-                      builder: (context,
-                          AsyncSnapshot<List<VariationTableData>> snapshot) {
-                        if (snapshot.data == null) {
-                          return Text("");
-                        }
-                        return snapshot.data.length == 0
-                            ? Center(
-                                child: Container(
-                                  width: 300,
-                                  child: TextFormField(
-                                    style: TextStyle(color: Colors.black),
-                                    onChanged: (sku) {
-                                      tForm.sku = sku;
-                                    },
-                                    decoration: InputDecoration(
-                                        hintText: "SKU",
-                                        focusColor: Colors.blue),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Router.navigator
+                                      .pushNamed(Router.addCategoryScreen);
+                                },
+                                child: ListTile(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 0.3),
+                                  leading: Text(S.of(context).category),
+                                  trailing: Wrap(
+                                    children: <Widget>[
+                                      StreamBuilder(
+                                        stream: vm.database.categoryDao
+                                            .getCategoriesStream(),
+                                        builder: (context,
+                                            AsyncSnapshot<
+                                                    List<CategoryTableData>>
+                                                snapshot) {
+                                          if (snapshot.data == null) {
+                                            return Text(
+                                                S.of(context).selectCategory);
+                                          }
+                                          return snapshot.data.length == 0
+                                              ? Text(
+                                                  S.of(context).selectCategory)
+                                              : categorySelector(snapshot.data);
+                                        },
+                                      ),
+                                      Icon(Icons.arrow_forward_ios)
+                                    ],
                                   ),
                                 ),
-                              )
-                            : Text("");
-                      },
-                    ),
-                    StreamBuilder(
-                      stream: vm.database.variationDao
-                          .getItemVariations2(vm.tmpItem.id),
-                      builder: (context,
-                          AsyncSnapshot<List<VariationTableData>> snapshot) {
-                        if (snapshot.data == null) {
-                          return Text("");
-                        }
-                        return snapshot.data != 0
-                            ? _buildVariationsList(snapshot.data)
-                            : Text("");
-                      },
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 50,
-                        width: 340,
-                        child: OutlineButton(
-                          color: HexColor("#ecf0f1"),
-                          child: Text(S.of(context).addVariation),
-                          onPressed: () async {
-                            _getSaveStatus(vm);
-                            if (_actions != null) {
-                              vm.database.actionsDao.updateAction(
-                                  _actions.copyWith(isLocked: true));
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: Divider(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 24,
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: Text(S.of(context).priceAndInventory),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: Divider(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Router.navigator
+                                      .pushNamed(Router.addUnitType);
+                                },
+                                child: ListTile(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 0.3),
+                                  leading: Text(S.of(context).unityType),
+                                  trailing: Wrap(
+                                    children: <Widget>[
+                                      Text(vm.currentUnit != null
+                                          ? vm.currentUnit.name
+                                          : S.of(context).perItem),
+                                      Icon(Icons.arrow_forward_ios)
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: Divider(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          StreamBuilder(
+                            stream: vm.database.variationDao.getVariationByStream2(
+                                'Regular',
+                                vm.tmpItem
+                                    .id), //do we have regular variant on this item?
+                            builder: (context,
+                                AsyncSnapshot<List<VariationTableData>>
+                                    snapshot) {
+                              if (snapshot.data == null) {
+                                return Text("");
+                              }
+                              return snapshot.data.length == 0
+                                  ? BuildRetailPriceWidget(
+                                      vm: vm,
+                                      context: context,
+                                    )
+                                  : Text("");
+                            },
+                          ),
+                          StreamBuilder(
+                            stream: vm.database.variationDao.getVariationByStream2(
+                                'Regular',
+                                vm.tmpItem
+                                    .id), //do we have regular variant on this item?
+                            builder: (context,
+                                AsyncSnapshot<List<VariationTableData>>
+                                    snapshot) {
+                              if (snapshot.data == null) {
+                                return Text("");
+                              }
+                              return snapshot.data.length == 0
+                                  ? BuildCostPriceWidget(
+                                      vm: vm, context: context)
+                                  : Text("");
+                            },
+                          ),
+                          StreamBuilder(
+                            stream: vm.database.variationDao
+                                .getVariationByStream2(
+                                    "Regular", vm.tmpItem.id),
+                            builder: (context,
+                                AsyncSnapshot<List<VariationTableData>>
+                                    snapshot) {
+                              if (snapshot.data == null) {
+                                return Text("");
+                              }
+                              return snapshot.data.length == 0
+                                  ? Center(
+                                      child: Container(
+                                        width: 300,
+                                        child: TextFormField(
+                                          style: TextStyle(color: Colors.black),
+                                          onChanged: (sku) {
+                                            tForm.sku = sku;
+                                          },
+                                          decoration: InputDecoration(
+                                              hintText: "SKU",
+                                              focusColor: Colors.blue),
+                                        ),
+                                      ),
+                                    )
+                                  : Text("");
+                            },
+                          ),
+                          StreamBuilder(
+                            stream: vm.database.variationDao
+                                .getItemVariations2(vm.tmpItem.id),
+                            builder: (context,
+                                AsyncSnapshot<List<VariationTableData>>
+                                    snapshot) {
+                              if (snapshot.data == null) {
+                                return Text("");
+                              }
+                              return snapshot.data != 0
+                                  ? _buildVariationsList(snapshot.data)
+                                  : Text("");
+                            },
+                          ),
+                          Center(
+                            child: SizedBox(
+                              height: 50,
+                              width: 340,
+                              child: OutlineButton(
+                                color: HexColor("#ecf0f1"),
+                                child: Text(S.of(context).addVariation),
+                                onPressed: () async {
+                                  _getSaveStatus(vm);
+                                  if (_actions != null) {
+                                    vm.database.actionsDao.updateAction(
+                                        _actions.copyWith(isLocked: true));
 
-                              Router.navigator
-                                  .pushNamed(Router.addVariationScreen);
-                            }
-                          },
-                        ),
+                                    Router.navigator
+                                        .pushNamed(Router.addVariationScreen);
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              child: TextFormField(
+                                style: TextStyle(color: Colors.black),
+                                onChanged: (description) {
+                                  tForm.description = description;
+                                },
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 64,
+                          ),
+                        ],
                       ),
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: TextFormField(
-                          style: TextStyle(color: Colors.black),
-                          onChanged: (description) {
-                            tForm.description = description;
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 64,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        );
+              );
+            });
       },
     );
   }

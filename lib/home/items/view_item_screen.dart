@@ -119,9 +119,15 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       distinct: true,
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
-        return StreamBuilder<Object>(
-            stream: null,
-            builder: (context, snapshot) {
+        return StreamBuilder(
+            stream: vm.database.variationDao
+                .getVariationByItemIdStream(widget.itemId),
+            builder:
+                (context, AsyncSnapshot<List<VariationTableData>> snapshot) {
+              if (snapshot.data == null) {
+                return Text("");
+              }
+
               return WillPopScope(
                 onWillPop: _onWillPop,
                 child: Scaffold(
@@ -287,10 +293,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             ),
                           ),
                           StreamBuilder(
-                            stream: vm.database.variationDao.getVariationByStream2(
-                                'Regular',
-                                vm.tmpItem
-                                    .id), //do we have regular variant on this item?
+                            stream: vm.database.variationDao
+                                .getVariationByStream2(
+                                    'Regular', widget.itemId),
                             builder: (context,
                                 AsyncSnapshot<List<VariationTableData>>
                                     snapshot) {
@@ -306,10 +311,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             },
                           ),
                           StreamBuilder(
-                            stream: vm.database.variationDao.getVariationByStream2(
-                                'Regular',
-                                vm.tmpItem
-                                    .id), //do we have regular variant on this item?
+                            stream: vm.database.variationDao
+                                .getVariationByStream2(
+                                    'Regular', widget.itemId),
                             builder: (context,
                                 AsyncSnapshot<List<VariationTableData>>
                                     snapshot) {
@@ -325,7 +329,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                           StreamBuilder(
                             stream: vm.database.variationDao
                                 .getVariationByStream2(
-                                    "Regular", vm.tmpItem.id),
+                                    "Regular", widget.itemId),
                             builder: (context,
                                 AsyncSnapshot<List<VariationTableData>>
                                     snapshot) {
@@ -352,7 +356,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                           ),
                           StreamBuilder(
                             stream: vm.database.variationDao
-                                .getItemVariations2(vm.tmpItem.id),
+                                .getItemVariations2(widget.itemId),
                             builder: (context,
                                 AsyncSnapshot<List<VariationTableData>>
                                     snapshot) {

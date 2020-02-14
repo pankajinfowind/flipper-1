@@ -29,6 +29,7 @@ import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/home/items/edit_item_screen.dart';
 import 'package:flipper/home/items/view_items_screen.dart';
 import 'package:flipper/presentation/login/login_screen.dart';
+import 'package:flipper/home/items/view_item_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -52,6 +53,7 @@ class Router {
   static const editItemScreen = '/editItemScreen';
   static const viewItemsScreen = '/viewItemsScreen';
   static const login = '/login';
+  static const viewSingleItem = '/viewSingleItem';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -251,6 +253,20 @@ class Router {
           builder: (_) => LoginScreen(),
           settings: settings,
         );
+      case Router.viewSingleItem:
+        if (hasInvalidArgs<ViewItemScreenArguments>(args)) {
+          return misTypedArgsRoute<ViewItemScreenArguments>(args);
+        }
+        final typedArgs =
+            args as ViewItemScreenArguments ?? ViewItemScreenArguments();
+        return MaterialPageRoute(
+          builder: (_) => ViewItemScreen(
+              key: typedArgs.key,
+              itemId: typedArgs.itemId,
+              itemName: typedArgs.itemName),
+          settings: settings,
+          fullscreenDialog: true,
+        );
       default:
         return unknownRoutePage(settings.name);
     }
@@ -266,4 +282,12 @@ class CartDetailsScreenArguments {
   final Key key;
   final List<dynamic> carts;
   CartDetailsScreenArguments({this.key, this.carts});
+}
+
+//ViewItemScreen arguments holder class
+class ViewItemScreenArguments {
+  final Key key;
+  final int itemId;
+  final String itemName;
+  ViewItemScreenArguments({this.key, this.itemId, this.itemName});
 }

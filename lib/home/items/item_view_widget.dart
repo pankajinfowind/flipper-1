@@ -5,6 +5,7 @@ import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/home/widget/create_options_widget.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
+import 'package:flipper/routes/router.gr.dart';
 import 'package:flipper/util/HexColor.dart';
 import 'package:flipper/util/flitter_color.dart';
 import 'package:flipper/util/logger.dart';
@@ -41,39 +42,44 @@ class _ItemsViewState extends State<ItemsView> {
     if (widget.showCreateItemOnTop) {
       addItemRow(list, context, widget.createButtonName);
     }
-    list.add(
-      ListTile(
-        contentPadding: EdgeInsets.all(0),
-        leading: Container(
-          width: 50,
-          color: HexColor(FlipperColors.gray),
-          child: IconButton(
-            icon: Icon(Icons.star_border),
-            color: Colors.white,
-            onPressed: () {},
+    if (!widget.showCreateItemOnTop) {
+      list.add(
+        ListTile(
+          contentPadding: EdgeInsets.all(0),
+          leading: Container(
+            width: 50,
+            color: HexColor(FlipperColors.gray),
+            child: IconButton(
+              icon: Icon(Icons.star_border),
+              color: Colors.white,
+              onPressed: () {},
+            ),
+          ),
+          title: Text(
+            S.of(context).reedeemRewards,
+            style: TextStyle(color: Colors.black),
           ),
         ),
-        title: Text(
-          S.of(context).reedeemRewards,
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-    );
+      );
+    }
+    ;
 
     for (var i = 0; i < itemList.length; i++) {
       if (itemList[i].name != "custom") {
         list.add(
           GestureDetector(
             onTap: () {
-              //todo: if a tap is comming from viewItem should not dispatch need item variation
-              //instead go to view items
               if (widget.shouldSeeItem) {
+                Router.navigator.pushNamed(Router.viewSingleItem,
+                    arguments: ViewItemScreenArguments(itemId: itemList[i].id));
               } else {
                 dispatchNeedItemVariation(context, itemList, i);
               }
             },
             onLongPress: () {
               if (widget.shouldSeeItem) {
+                Router.navigator.pushNamed(Router.viewSingleItem,
+                    arguments: ViewItemScreenArguments(itemId: itemList[i].id));
               } else {
                 dispatchNeedItemVariation(context, itemList, i);
               }

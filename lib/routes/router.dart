@@ -11,6 +11,7 @@ import 'package:flipper/home/edit_item_title.dart';
 import 'package:flipper/home/edit_quantity_item_screen.dart';
 import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/home/items/edit_item_screen.dart';
+import 'package:flipper/home/items/view_item_screen.dart';
 import 'package:flipper/home/items/view_items_screen.dart';
 import 'package:flipper/home/receive_stock.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
@@ -84,4 +85,7 @@ class $Router {
 
   ViewItemsScreen viewItemsScreen;
   LoginScreen login;
+
+  @MaterialRoute(fullscreenDialog: true)
+  ViewItemScreen viewSingleItem;
 }

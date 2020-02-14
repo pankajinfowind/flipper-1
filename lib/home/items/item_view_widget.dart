@@ -70,18 +70,28 @@ class _ItemsViewState extends State<ItemsView> {
           GestureDetector(
             onTap: () {
               if (widget.shouldSeeItem) {
-                Router.navigator.pushNamed(Router.viewSingleItem,
-                    arguments: ViewItemScreenArguments(
-                        itemId: itemList[i].id, itemName: itemList[i].name));
+                Router.navigator.pushNamed(
+                  Router.viewSingleItem,
+                  arguments: ViewItemScreenArguments(
+                    itemId: itemList[i].id,
+                    itemName: itemList[i].name,
+                    itemColor: itemList[i].color,
+                  ),
+                );
               } else {
                 dispatchNeedItemVariation(context, itemList, i);
               }
             },
             onLongPress: () {
               if (widget.shouldSeeItem) {
-                Router.navigator.pushNamed(Router.viewSingleItem,
-                    arguments: ViewItemScreenArguments(
-                        itemId: itemList[i].id, itemName: itemList[i].name));
+                Router.navigator.pushNamed(
+                  Router.viewSingleItem,
+                  arguments: ViewItemScreenArguments(
+                    itemId: itemList[i].id,
+                    itemName: itemList[i].name,
+                    itemColor: itemList[i].color,
+                  ),
+                );
               } else {
                 dispatchNeedItemVariation(context, itemList, i);
               }

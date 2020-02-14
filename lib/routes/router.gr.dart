@@ -263,7 +263,8 @@ class Router {
           builder: (_) => ViewItemScreen(
               key: typedArgs.key,
               itemId: typedArgs.itemId,
-              itemName: typedArgs.itemName),
+              itemName: typedArgs.itemName,
+              itemColor: typedArgs.itemColor),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -289,5 +290,7 @@ class ViewItemScreenArguments {
   final Key key;
   final int itemId;
   final String itemName;
-  ViewItemScreenArguments({this.key, this.itemId, this.itemName});
+  final String itemColor;
+  ViewItemScreenArguments(
+      {this.key, this.itemId, this.itemName, this.itemColor});
 }

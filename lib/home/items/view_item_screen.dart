@@ -21,10 +21,15 @@ class TForm {
 }
 
 class ViewItemScreen extends StatefulWidget {
-  ViewItemScreen({Key key, @required this.itemId, @required this.itemName})
+  ViewItemScreen(
+      {Key key,
+      @required this.itemId,
+      @required this.itemName,
+      @required this.itemColor})
       : super(key: key);
   final int itemId;
   final String itemName;
+  final String itemColor;
 
   @override
   _ViewItemScreenState createState() => _ViewItemScreenState();
@@ -155,18 +160,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                               Router.navigator.pushNamed(Router.editItemTitle);
                             },
                             child: Container(
-                              height: 80,
-                              width: 80,
-                              color: vm.currentColor != null
-                                  ? HexColor(vm.currentColor.hexCode)
-                                  : HexColor("#00cec9"),
-                            ),
+                                height: 80,
+                                width: 80,
+                                color: HexColor(widget.itemColor)),
                           ),
                           Text(S.of(context).newItem),
                           Center(
                             child: Container(
                               width: 300,
                               child: TextFormField(
+                                initialValue: widget.itemName,
                                 style: TextStyle(
                                     color: Colors
                                         .black), //todo: move this to app theme

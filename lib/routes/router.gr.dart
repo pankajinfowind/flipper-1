@@ -27,7 +27,7 @@ import 'package:flipper/home/edit_quantity_item_screen.dart';
 import 'package:flipper/home/cart/cart_details_screen.dart';
 import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/home/items/edit_item_screen.dart';
-import 'package:flipper/home/items/view_item_screen.dart';
+import 'package:flipper/home/items/view_items_screen.dart';
 import 'package:flipper/presentation/login/login_screen.dart';
 
 class Router {

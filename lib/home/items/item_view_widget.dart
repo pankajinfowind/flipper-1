@@ -17,11 +17,17 @@ class ItemsView extends StatefulWidget {
     @required this.context,
     @required this.data,
     @required this.vm,
+    @required this.showCreateItemOnTop,
+    @required this.createButtonName,
+    @required this.shouldSeeItem,
   }) : super(key: key);
 
   final BuildContext context;
   final List<ItemTableData> data;
   final CommonViewModel vm;
+  final bool showCreateItemOnTop;
+  final String createButtonName;
+  final bool shouldSeeItem;
 
   @override
   _ItemsViewState createState() => _ItemsViewState();
@@ -32,6 +38,9 @@ class _ItemsViewState extends State<ItemsView> {
       List<ItemTableData> itemList, BuildContext context, CommonViewModel vm) {
     List<Widget> list = new List<Widget>();
 
+    if (widget.showCreateItemOnTop) {
+      addItemRow(list, context, widget.createButtonName);
+    }
     list.add(
       ListTile(
         contentPadding: EdgeInsets.all(0),
@@ -56,32 +65,18 @@ class _ItemsViewState extends State<ItemsView> {
         list.add(
           GestureDetector(
             onTap: () {
-              StoreProvider.of<AppState>(context).dispatch(
-                NeedItemVariation(
-                  item: Item(
-                    (y) => y
-                      ..id = itemList[i].id
-                      ..name = itemList[i].name
-                      ..branchId = itemList[i].branchId
-                      ..unitId = itemList[i].unitId
-                      ..categoryId = itemList[i].categoryId,
-                  ),
-                ),
-              );
+              //todo: if a tap is comming from viewItem should not dispatch need item variation
+              //instead go to view items
+              if (widget.shouldSeeItem) {
+              } else {
+                dispatchNeedItemVariation(context, itemList, i);
+              }
             },
             onLongPress: () {
-              StoreProvider.of<AppState>(context).dispatch(
-                NeedItemVariation(
-                  item: Item(
-                    (y) => y
-                      ..id = itemList[i].id
-                      ..name = itemList[i].name
-                      ..branchId = itemList[i].branchId
-                      ..unitId = itemList[i].unitId
-                      ..categoryId = itemList[i].categoryId,
-                  ),
-                ),
-              );
+              if (widget.shouldSeeItem) {
+              } else {
+                dispatchNeedItemVariation(context, itemList, i);
+              }
             },
             child: ListTile(
                 contentPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
@@ -129,28 +124,54 @@ class _ItemsViewState extends State<ItemsView> {
         Logger.d("duplicated item${itemList[i].name}");
       }
     }
-    list.add(GestureDetector(
-      onTap: () {
-        //clearn state first
-        StoreProvider.of<AppState>(context).dispatch(CleanVariation());
-        StoreProvider.of<AppState>(context).dispatch(CleanAppActions());
-        StoreProvider.of<AppState>(context).dispatch(CleanCurrentColor());
-        //end of cleaning app state.
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return CreateOptionsWidget();
-            });
-      },
-      child: ListTile(
-        leading: Icon(Icons.add),
-        title: Text(
-          S.of(context).createNew,
-          style: TextStyle(color: Colors.black),
+    if (!widget.showCreateItemOnTop) {
+      addItemRow(list, context, widget.createButtonName);
+    }
+    ;
+    return list;
+  }
+
+  void dispatchNeedItemVariation(
+      BuildContext context, List<ItemTableData> itemList, int i) {
+    return StoreProvider.of<AppState>(context).dispatch(
+      NeedItemVariation(
+        item: Item(
+          (y) => y
+            ..id = itemList[i].id
+            ..name = itemList[i].name
+            ..branchId = itemList[i].branchId
+            ..unitId = itemList[i].unitId
+            ..categoryId = itemList[i].categoryId,
         ),
       ),
-    ));
-    return list;
+    );
+  }
+
+  void addItemRow(
+      List<Widget> list, BuildContext context, String createButtonName) {
+    return list.add(
+      GestureDetector(
+        onTap: () {
+          //clearn state first
+          StoreProvider.of<AppState>(context).dispatch(CleanVariation());
+          StoreProvider.of<AppState>(context).dispatch(CleanAppActions());
+          StoreProvider.of<AppState>(context).dispatch(CleanCurrentColor());
+
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CreateOptionsWidget();
+              });
+        },
+        child: ListTile(
+          leading: Icon(Icons.add),
+          title: Text(
+            createButtonName,
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ),
+    );
   }
 
   @override

@@ -2,18 +2,19 @@ import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
 import 'package:flipper/home/items/item_view_widget.dart';
+import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
-import 'package:flipper/util/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class ProductScreen extends StatefulWidget {
-  ProductScreen({Key key}) : super(key: key);
+class ViewItemsScreen extends StatefulWidget {
+  ViewItemsScreen({Key key}) : super(key: key);
+
   @override
-  _ProductScreenState createState() => _ProductScreenState();
+  _ViewItemsScreenState createState() => _ViewItemsScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _ViewItemsScreenState extends State<ViewItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CommonViewModel>(
@@ -21,23 +22,16 @@ class _ProductScreenState extends State<ProductScreen> {
       converter: CommonViewModel.fromStore,
       builder: (context, vm) {
         return Scaffold(
+          appBar: CommonAppBar(
+            title: S.of(context).allItems,
+            showActionButton: false,
+            onPressedCallback: () async {},
+            icon: Icons.close,
+            multi: 1,
+            bottomSpacer: 48,
+          ),
           body: Column(
             children: <Widget>[
-              Center(
-                //search form.
-                child: Form(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        child: TextFormField(
-                          style: TextStyle(color: Colors.black),
-                          validator: Validators.isStringHasMoreChars,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
               Expanded(
                 child: StreamBuilder(
                   stream: vm.database.itemDao.getItemsStream(),
@@ -48,11 +42,11 @@ class _ProductScreenState extends State<ProductScreen> {
                     }
                     return ItemsView(
                       context: context,
+                      shouldSeeItem: true,
                       data: snapshot.data,
                       vm: vm,
-                      shouldSeeItem: false,
-                      showCreateItemOnTop: false,
-                      createButtonName: S.of(context).createNew,
+                      showCreateItemOnTop: true,
+                      createButtonName: S.of(context).createItem,
                     );
                   },
                 ),

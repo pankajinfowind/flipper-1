@@ -72,7 +72,7 @@ class _ItemsViewState extends State<ItemsView> {
               if (widget.shouldSeeItem) {
                 Router.navigator.pushNamed(
                   Router.viewSingleItem,
-                  arguments: ViewItemScreenArguments(
+                  arguments: ViewSingleItemScreenArguments(
                     itemId: itemList[i].id,
                     itemName: itemList[i].name,
                     itemColor: itemList[i].color,
@@ -86,7 +86,7 @@ class _ItemsViewState extends State<ItemsView> {
               if (widget.shouldSeeItem) {
                 Router.navigator.pushNamed(
                   Router.viewSingleItem,
-                  arguments: ViewItemScreenArguments(
+                  arguments: ViewSingleItemScreenArguments(
                     itemId: itemList[i].id,
                     itemName: itemList[i].name,
                     itemColor: itemList[i].color,

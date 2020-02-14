@@ -29,7 +29,7 @@ import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/home/items/edit_item_screen.dart';
 import 'package:flipper/home/items/view_items_screen.dart';
 import 'package:flipper/presentation/login/login_screen.dart';
-import 'package:flipper/home/items/view_item_screen.dart';
+import 'package:flipper/home/items/view_single_item_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -254,13 +254,13 @@ class Router {
           settings: settings,
         );
       case Router.viewSingleItem:
-        if (hasInvalidArgs<ViewItemScreenArguments>(args)) {
-          return misTypedArgsRoute<ViewItemScreenArguments>(args);
+        if (hasInvalidArgs<ViewSingleItemScreenArguments>(args)) {
+          return misTypedArgsRoute<ViewSingleItemScreenArguments>(args);
         }
-        final typedArgs =
-            args as ViewItemScreenArguments ?? ViewItemScreenArguments();
+        final typedArgs = args as ViewSingleItemScreenArguments ??
+            ViewSingleItemScreenArguments();
         return MaterialPageRoute(
-          builder: (_) => ViewItemScreen(
+          builder: (_) => ViewSingleItemScreen(
               key: typedArgs.key,
               itemId: typedArgs.itemId,
               itemName: typedArgs.itemName,
@@ -285,12 +285,12 @@ class CartDetailsScreenArguments {
   CartDetailsScreenArguments({this.key, this.carts});
 }
 
-//ViewItemScreen arguments holder class
-class ViewItemScreenArguments {
+//ViewSingleItemScreen arguments holder class
+class ViewSingleItemScreenArguments {
   final Key key;
   final int itemId;
   final String itemName;
   final String itemColor;
-  ViewItemScreenArguments(
+  ViewSingleItemScreenArguments(
       {this.key, this.itemId, this.itemName, this.itemColor});
 }

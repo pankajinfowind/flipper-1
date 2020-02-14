@@ -174,7 +174,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 onChanged: (name) async {
                                   if (name == '') {
                                     _getSaveStatus(vm);
-                                    _getSaveItemStatus(vm);
                                     if (_actions != null) {
                                       await vm.database.actionsDao.updateAction(
                                           _actions.copyWith(isLocked: true));
@@ -183,13 +182,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                     return;
                                   }
                                   _getSaveStatus(vm);
-                                  _getSaveItemStatus(vm);
                                   if (_actions != null) {
                                     await vm.database.actionsDao.updateAction(
                                         _actions.copyWith(isLocked: false));
                                     _getSaveStatus(vm);
                                   }
-
                                   tForm.name = name;
                                 },
                                 decoration: InputDecoration(

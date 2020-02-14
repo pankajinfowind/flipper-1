@@ -71,7 +71,8 @@ class _ItemsViewState extends State<ItemsView> {
             onTap: () {
               if (widget.shouldSeeItem) {
                 Router.navigator.pushNamed(Router.viewSingleItem,
-                    arguments: ViewItemScreenArguments(itemId: itemList[i].id));
+                    arguments: ViewItemScreenArguments(
+                        itemId: itemList[i].id, itemName: itemList[i].name));
               } else {
                 dispatchNeedItemVariation(context, itemList, i);
               }
@@ -79,7 +80,8 @@ class _ItemsViewState extends State<ItemsView> {
             onLongPress: () {
               if (widget.shouldSeeItem) {
                 Router.navigator.pushNamed(Router.viewSingleItem,
-                    arguments: ViewItemScreenArguments(itemId: itemList[i].id));
+                    arguments: ViewItemScreenArguments(
+                        itemId: itemList[i].id, itemName: itemList[i].name));
               } else {
                 dispatchNeedItemVariation(context, itemList, i);
               }

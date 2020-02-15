@@ -18,10 +18,14 @@ class BuildRetailPriceWidget extends StatefulWidget {
     Key key,
     @required this.vm,
     @required this.context,
+    @required this.itemName,
+    @required this.itemId,
   }) : super(key: key);
 
   final CommonViewModel vm;
   final BuildContext context;
+  final int itemId;
+  final String itemName;
 
   @override
   _BuildRetailPriceWidgetState createState() => _BuildRetailPriceWidgetState();
@@ -38,24 +42,7 @@ class _BuildRetailPriceWidgetState extends State<BuildRetailPriceWidget> {
         child: TextFormField(
           keyboardType: TextInputType.number,
           style: TextStyle(color: Colors.black),
-          onChanged: (retailPrice) async {
-            tForm.price = retailPrice;
-            ItemTableData item = await widget.vm.database.itemDao
-                .getItemBy('tmp', widget.vm.branch.id);
-
-            VariationTableData variation = await widget.vm.database.variationDao
-                .getVariationBy('tmp', widget.vm.branch.id);
-
-            StoreProvider.of<AppState>(context).dispatch(
-              SaveRegular(
-                price: double.parse(retailPrice),
-                costPrice: 0,
-                itemId: item.id,
-                name: variation.name,
-              ),
-            );
-            //on typing here should save Regular Item variation
-          },
+          onChanged: (retailPrice) async {},
           decoration: InputDecoration(
               hintText: S.of(context).retailPrice, focusColor: Colors.blue),
         ),

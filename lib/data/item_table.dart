@@ -7,13 +7,13 @@ class ItemTable extends Table {
   TextColumn get color => text()();
   TextColumn get description => text().nullable()();
 
-  IntColumn get categoryId =>
-      integer().customConstraint('NULL REFERENCES category_table(id)')();
-  IntColumn get branchId =>
-      integer().customConstraint('NULL REFERENCES branch_table(id)')();
+  IntColumn get categoryId => integer().customConstraint(
+      'NULL REFERENCES category_table(id) ON DELETE SET NULL ON UPDATE CASCADE')();
+  IntColumn get branchId => integer().customConstraint(
+      'NULL REFERENCES branch_table(id) ON DELETE SET NULL ON UPDATE CASCADE')();
 
-  IntColumn get unitId =>
-      integer().customConstraint('NULL REFERENCES unit_table(id)')();
+  IntColumn get unitId => integer().customConstraint(
+      'NULL REFERENCES unit_table(id) ON DELETE SET NULL ON UPDATE CASCADE')();
 
   // DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get createdAt =>

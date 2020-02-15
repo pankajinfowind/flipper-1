@@ -1,11 +1,7 @@
-import 'dart:math';
-
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
-import 'package:flipper/model/disable.dart';
-import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -48,8 +44,8 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
             disableButton: _actions == null ? true : _actions.isLocked,
             actionButtonName: S.of(context).save,
             onPressedCallback: () async {
-              ItemTableData item =
-                  await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+              ItemTableData item = await vm.database.itemDao.getItemBy(
+                  name: 'tmp', branchId: vm.branch.id, itemId: vm.tmpItem.id);
               VariationTableData variation = await vm.database.variationDao
                   .getVariationBy('tmp', vm.branch.id);
 

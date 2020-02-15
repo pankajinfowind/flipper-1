@@ -26,7 +26,6 @@ import 'package:flipper/home/receive_stock.dart';
 import 'package:flipper/home/edit_quantity_item_screen.dart';
 import 'package:flipper/home/cart/cart_details_screen.dart';
 import 'package:flipper/home/items/all_item_screen.dart';
-import 'package:flipper/home/items/edit_item_screen.dart';
 import 'package:flipper/home/items/view_items_screen.dart';
 import 'package:flipper/presentation/login/login_screen.dart';
 import 'package:flipper/home/items/view_single_item_screen.dart';
@@ -50,7 +49,6 @@ class Router {
   static const editQuantityItemScreen = '/editQuantityItemScreen';
   static const cartDetailsScreen = '/cartDetailsScreen';
   static const allItemScreen = '/allItemScreen';
-  static const editItemScreen = '/editItemScreen';
   static const viewItemsScreen = '/viewItemsScreen';
   static const login = '/login';
   static const viewSingleItem = '/viewSingleItem';
@@ -226,16 +224,6 @@ class Router {
         final typedArgs = args as Key;
         return MaterialPageRoute(
           builder: (_) => AllItemScreen(key: typedArgs),
-          settings: settings,
-          fullscreenDialog: true,
-        );
-      case Router.editItemScreen:
-        if (hasInvalidArgs<Key>(args)) {
-          return misTypedArgsRoute<Key>(args);
-        }
-        final typedArgs = args as Key;
-        return MaterialPageRoute(
-          builder: (_) => EditItemScreen(key: typedArgs),
           settings: settings,
           fullscreenDialog: true,
         );

@@ -7,8 +7,8 @@ class CategoryTable extends Table {
 
   TextColumn get name => text()();
 
-  IntColumn get branchId =>
-      integer().customConstraint('NULL REFERENCES branch_table(id)')();
+  IntColumn get branchId => integer().customConstraint(
+      'NULL REFERENCES branch_table(id) ON DELETE SET NULL ON UPDATE CASCADE')();
 
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();

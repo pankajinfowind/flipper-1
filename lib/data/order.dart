@@ -2,10 +2,10 @@ import 'package:moor/moor.dart';
 
 class OrderTable extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get userId =>
-      integer().customConstraint('NULL REFERENCES user_table(id)')();
-  IntColumn get branchId =>
-      integer().customConstraint('NULL REFERENCES branch_table(id)')();
+  IntColumn get userId => integer()
+      .customConstraint('NULL REFERENCES user_table(id) ON DELETE SET NULL')();
+  IntColumn get branchId => integer().customConstraint(
+      'NULL REFERENCES branch_table(id) ON DELETE SET NULL')();
   IntColumn get orderNUmber => integer().nullable()();
   IntColumn get supplierId => integer().nullable()();
   IntColumn get subTotal => integer().nullable()();

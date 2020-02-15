@@ -22,16 +22,10 @@ List<Middleware<AppState>> AppActionMiddleware(
         _persistUnit(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, CreateEmptyTempCategoryAction>(
         _createTempCategory(navigatorKey, generalRepository)),
-
-    // TypedMiddleware<AppState, SaveItemAction>(
-    //     _createItemInStore(navigatorKey, generalRepository)),
-
     TypedMiddleware<AppState, SwitchVariation>(
         _switchVariation(navigatorKey, generalRepository)),
-
     TypedMiddleware<AppState, SaveRegular>(
         _saveRegular(navigatorKey, generalRepository)),
-
     TypedMiddleware<AppState, NeedItemVariation>(
         _needItemVariation(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SaveCart>(
@@ -154,136 +148,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
     }
   };
 }
-
-// void Function(Store<AppState> store, SaveItemAction action, NextDispatcher next)
-//     _createItemInStore(GlobalKey<NavigatorState> navigatorKey,
-//         GeneralRepository generalRepository) {
-//   return (store, action, next) async {
-//     next(action);
-//     //todo: in v2 clean code duplication.
-//     if (action.variations.length == 0) {
-//       //atleast make sure we do have one variant per item
-//       final item = await generalRepository.insertItem(
-//         store,
-//         // ignore: missing_required_param
-//         ItemTableData(
-//           name: action.name,
-//           categoryId: action.categoryId,
-//           description: action.description,
-//           unitId: action.unit.id,
-//           color: action.color,
-//           branchId: action.branch.id,
-//         ),
-//       );
-
-//       final variantId = await generalRepository.insertVariant(
-//         store,
-//         // ignore: missing_required_param
-//         VariationTableData(
-//           name: "Regular",
-//           price: 0,
-//           count: 0,
-//           itemId: item,
-//           isActive: true,
-//           branchId: action.branch.id,
-//         ),
-//       );
-//       await generalRepository.insertHistory(store, variantId, 0);
-//       //todo: change save the variant with respective price price is saved per variant.
-//       //todo: should save item description too
-
-//       if (item is int) {
-//         List<ItemTableData> items = await generalRepository.getItems(store);
-//         List<Item> itemList = [];
-
-//         items.forEach(
-//           (i) => itemList.add(
-//             Item(
-//               (v) => v
-//                 ..name = i.name
-//                 ..branchId = i.branchId
-//                 ..unitId = i.unitId
-//                 ..id = i.id
-//                 ..color = i.color
-//                 ..categoryId = i.categoryId,
-//             ),
-//           ),
-//         );
-//         store.dispatch(ItemLoaded(items: itemList));
-//         Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
-//       }
-//       return;
-//     }
-
-//     //insert item
-//     final item = await generalRepository.insertItem(
-//       store,
-//       // ignore: missing_required_param
-//       ItemTableData(
-//         name: action.name,
-//         description: action.description,
-//         categoryId: action.categoryId,
-//         unitId: action.unit.id,
-//         color: action.color,
-//         branchId: action.branch.id,
-//       ),
-//     );
-//     for (var i = 0; i < action.variations.length; i++) {
-//       // insert variation and get last id to save the item then
-//       //if i=0 then set the variant active=true
-//       var variationId;
-//       if (i == 0) {
-//         variationId = await generalRepository.insertVariant(
-//           store,
-//           // ignore: missing_required_param
-//           VariationTableData(
-//               name: action.variations[i].name,
-//               price: int.parse(action.variations[i].price),
-//               count: action.variations[i].stockValue,
-//               branchId: action.branch.id,
-//               itemId: item,
-//               isActive: true),
-//         );
-//       } else {
-//         variationId = await generalRepository.insertVariant(
-//           store,
-//           // ignore: missing_required_param
-//           VariationTableData(
-//               name: action.variations[i].name,
-//               price: int.parse(action.variations[i].price),
-//               count: action.variations[i].stockValue,
-//               branchId: action.branch.id,
-//               itemId: item,
-//               isActive: false),
-//         );
-//       }
-
-//       await generalRepository.insertHistory(
-//           store, variationId, action.variations[i].stockValue);
-
-//       if (item is int) {
-//         List<ItemTableData> items = await generalRepository.getItems(store);
-//         List<Item> itemList = [];
-//         items.forEach(
-//           (i) => itemList.add(
-//             Item(
-//               (v) => v
-//                 ..name = i.name
-//                 ..branchId = i.branchId
-//                 ..unitId = i.unitId
-//                 ..id = i.id
-//                 ..color = i.color
-//                 ..categoryId = i.categoryId,
-//             ),
-//           ),
-//         );
-//         store.dispatch(ItemLoaded(items: itemList));
-//         // Logger.d("Sussessfully created an item");
-//         Router.navigator.popUntil(ModalRoute.withName(Router.dashboard));
-//       }
-//     }
-//   };
-// }
 
 void Function(
         Store<AppState> store, NeedItemVariation action, NextDispatcher next)

@@ -33,11 +33,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   _onClose(BuildContext context) async {
     int branchId = StoreProvider.of<AppState>(context).state.branch.id;
+    int itemId = StoreProvider.of<AppState>(context).state.tmpItem.id;
     ItemTableData item = await StoreProvider.of<AppState>(context)
         .state
         .database
         .itemDao
-        .getItemBy('tmp', branchId);
+        .getItemBy(name: 'tmp', branchId: branchId, itemId: itemId);
 
     //delete this item add look trough all variation and delete related variation.
     if (item != null) {
@@ -66,12 +67,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
   Future<bool> _onWillPop() async {
     //if we have dirty db then show the alert or if is clean go back without alert
     int branchId = StoreProvider.of<AppState>(context).state.branch.id;
+    int itemId = StoreProvider.of<AppState>(context).state.tmpItem.id;
 
     ItemTableData item = await StoreProvider.of<AppState>(context)
         .state
         .database
         .itemDao
-        .getItemBy('tmp', branchId);
+        .getItemBy(name: 'tmp', branchId: branchId, itemId: itemId);
     if (item == null) {
       Router.navigator.pop(false);
       return false;
@@ -395,8 +397,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
           style: TextStyle(color: Colors.black),
           onChanged: (retailPrice) async {
             tForm.price = retailPrice;
-            ItemTableData item =
-                await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+            ItemTableData item = await vm.database.itemDao.getItemBy(
+                name: 'tmp', branchId: vm.branch.id, itemId: vm.tmpItem.id);
 
             VariationTableData variation = await vm.database.variationDao
                 .getVariationBy('tmp', vm.branch.id);
@@ -426,8 +428,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
           keyboardType: TextInputType.number,
           style: TextStyle(color: Colors.black),
           onChanged: (costPrice) async {
-            ItemTableData item =
-                await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+            ItemTableData item = await vm.database.itemDao.getItemBy(
+                name: 'tmp', branchId: vm.branch.id, itemId: vm.tmpItem.id);
 
             VariationTableData variation = await vm.database.variationDao
                 .getVariationBy('tmp', vm.branch.id);
@@ -479,8 +481,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
   }
 
   _handleFormSubmit(CommonViewModel vm) async {
-    ItemTableData item =
-        await vm.database.itemDao.getItemBy('tmp', vm.branch.id);
+    ItemTableData item = await vm.database.itemDao
+        .getItemBy(name: 'tmp', branchId: vm.branch.id, itemId: vm.tmpItem.id);
 
     VariationTableData variation =
         await vm.database.variationDao.getVariationBy('tmp', vm.branch.id);

@@ -66,15 +66,15 @@ class GeneralRepository {
   }
 
   Future<int> insertItem(Store<AppState> store, ItemTableData data) async {
-    ItemTableData itemData =
-        await store.state.database.itemDao.getItemBy(data.name, data.branchId);
+    ItemTableData itemData = await store.state.database.itemDao
+        .getItemByBranch(name: data.name, branchId: data.branchId);
 
     if (itemData == null) {
       await store.state.database.itemDao
           .insert(data.copyWith(createdAt: DateTime.now()));
     }
-    itemData =
-        await store.state.database.itemDao.getItemBy(data.name, data.branchId);
+    itemData = await store.state.database.itemDao
+        .getItemByBranch(name: data.name, branchId: data.branchId);
 
     store.dispatch(
       CustomItem(

@@ -760,7 +760,8 @@ class $UnitTableTable extends UnitTable
   GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
   GeneratedIntColumn _constructBusinessId() {
     return GeneratedIntColumn('business_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES business_table(id)');
+        $customConstraints:
+            'NULL REFERENCES business_table(id) ON DELETE SET NULL');
   }
 
   final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
@@ -769,7 +770,8 @@ class $UnitTableTable extends UnitTable
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES branch_table(id)');
+        $customConstraints:
+            'NULL REFERENCES branch_table(id) ON DELETE SET NULL');
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
@@ -1304,7 +1306,7 @@ class $BusinessUserTableTable extends BusinessUserTable
   GeneratedIntColumn get userId => _userId ??= _constructUserId();
   GeneratedIntColumn _constructUserId() {
     return GeneratedIntColumn('user_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES user_table(id)');
+        $customConstraints: 'NULL REFERENCES user_table(id) ON DELETE CASCADE');
   }
 
   final VerificationMeta _businessIdMeta = const VerificationMeta('businessId');
@@ -1313,7 +1315,8 @@ class $BusinessUserTableTable extends BusinessUserTable
   GeneratedIntColumn get businessId => _businessId ??= _constructBusinessId();
   GeneratedIntColumn _constructBusinessId() {
     return GeneratedIntColumn('business_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES business_table(id)');
+        $customConstraints:
+            'NULL REFERENCES business_table(id) ON DELETE CASCADE');
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
@@ -2198,7 +2201,8 @@ class $CategoryTableTable extends CategoryTable
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES branch_table(id)');
+        $customConstraints:
+            'NULL REFERENCES branch_table(id) ON DELETE SET NULL ON UPDATE CASCADE');
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
@@ -3101,7 +3105,8 @@ class $PriceTableTable extends PriceTable
   GeneratedIntColumn get categoryId => _categoryId ??= _constructCategoryId();
   GeneratedIntColumn _constructCategoryId() {
     return GeneratedIntColumn('category_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES category_table(id)');
+        $customConstraints:
+            'NULL REFERENCES variation_table(id) ON DELETE CASCADE  ON UPDATE CASCADE');
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
@@ -3495,7 +3500,8 @@ class $ItemTableTable extends ItemTable
   GeneratedIntColumn get categoryId => _categoryId ??= _constructCategoryId();
   GeneratedIntColumn _constructCategoryId() {
     return GeneratedIntColumn('category_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES category_table(id)');
+        $customConstraints:
+            'NULL REFERENCES category_table(id) ON DELETE SET NULL ON UPDATE CASCADE');
   }
 
   final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
@@ -3504,7 +3510,8 @@ class $ItemTableTable extends ItemTable
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES branch_table(id)');
+        $customConstraints:
+            'NULL REFERENCES branch_table(id) ON DELETE SET NULL ON UPDATE CASCADE');
   }
 
   final VerificationMeta _unitIdMeta = const VerificationMeta('unitId');
@@ -3513,7 +3520,8 @@ class $ItemTableTable extends ItemTable
   GeneratedIntColumn get unitId => _unitId ??= _constructUnitId();
   GeneratedIntColumn _constructUnitId() {
     return GeneratedIntColumn('unit_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES unit_table(id)');
+        $customConstraints:
+            'NULL REFERENCES unit_table(id) ON DELETE SET NULL ON UPDATE CASCADE');
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
@@ -3946,7 +3954,8 @@ class $VariationTableTable extends VariationTable
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES branch_table(id)');
+        $customConstraints:
+            'NULL REFERENCES branch_table(id)  ON DELETE SET NULL');
   }
 
   final VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
@@ -3955,7 +3964,8 @@ class $VariationTableTable extends VariationTable
   GeneratedIntColumn get itemId => _itemId ??= _constructItemId();
   GeneratedIntColumn _constructItemId() {
     return GeneratedIntColumn('item_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES item_table(id)');
+        $customConstraints:
+            'NULL REFERENCES item_table(id)  ON DELETE SET NULL');
   }
 
   final VerificationMeta _isActiveMeta = const VerificationMeta('isActive');
@@ -3985,7 +3995,7 @@ class $VariationTableTable extends VariationTable
   GeneratedRealColumn get price => _price ??= _constructPrice();
   GeneratedRealColumn _constructPrice() {
     return GeneratedRealColumn('price', $tableName, false,
-        defaultValue: Constant(0));
+        $customConstraints: 'DECIMAL(6,2)', defaultValue: Constant(0));
   }
 
   final VerificationMeta _costPriceMeta = const VerificationMeta('costPrice');
@@ -4714,7 +4724,8 @@ class $CartTableTable extends CartTable
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES branch_table(id)');
+        $customConstraints:
+            'NULL REFERENCES branch_table(id) ON DELETE CASCADE');
   }
 
   final VerificationMeta _countMeta = const VerificationMeta('count');
@@ -4735,7 +4746,8 @@ class $CartTableTable extends CartTable
   GeneratedIntColumn get orderId => _orderId ??= _constructOrderId();
   GeneratedIntColumn _constructOrderId() {
     return GeneratedIntColumn('order_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES order_table(id)');
+        $customConstraints:
+            'NULL REFERENCES order_table(id) ON DELETE CASCADE');
   }
 
   final VerificationMeta _priceMeta = const VerificationMeta('price');
@@ -4758,7 +4770,8 @@ class $CartTableTable extends CartTable
       _variationId ??= _constructVariationId();
   GeneratedIntColumn _constructVariationId() {
     return GeneratedIntColumn('variation_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES variation_table(id)');
+        $customConstraints:
+            'NULL REFERENCES variation_table(id) ON UPDATE CASCADE');
   }
 
   final VerificationMeta _parentNameMeta = const VerificationMeta('parentName');
@@ -5407,7 +5420,8 @@ class $OrderTableTable extends OrderTable
   GeneratedIntColumn get userId => _userId ??= _constructUserId();
   GeneratedIntColumn _constructUserId() {
     return GeneratedIntColumn('user_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES user_table(id)');
+        $customConstraints:
+            'NULL REFERENCES user_table(id) ON DELETE SET NULL');
   }
 
   final VerificationMeta _branchIdMeta = const VerificationMeta('branchId');
@@ -5416,7 +5430,8 @@ class $OrderTableTable extends OrderTable
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, false,
-        $customConstraints: 'NULL REFERENCES branch_table(id)');
+        $customConstraints:
+            'NULL REFERENCES branch_table(id) ON DELETE SET NULL');
   }
 
   final VerificationMeta _orderNUmberMeta =

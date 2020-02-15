@@ -8,11 +8,11 @@ class UnitTable extends Table {
   BoolColumn get focused => boolean()();
 
   //todo: delete businessId asp no need here
-  IntColumn get businessId =>
-      integer().customConstraint('NULL REFERENCES business_table(id)')();
+  IntColumn get businessId => integer().customConstraint(
+      'NULL REFERENCES business_table(id) ON DELETE SET NULL')();
 
-  IntColumn get branchId =>
-      integer().customConstraint('NULL REFERENCES branch_table(id)')();
+  IntColumn get branchId => integer().customConstraint(
+      'NULL REFERENCES branch_table(id) ON DELETE SET NULL')();
 
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();

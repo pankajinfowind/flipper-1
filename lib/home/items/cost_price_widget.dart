@@ -7,13 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class BuildCostPriceWidget extends StatefulWidget {
-  const BuildCostPriceWidget({
-    Key key,
-    @required this.vm,
-    @required this.context,
-  }) : super(key: key);
+  const BuildCostPriceWidget(
+      {Key key,
+      @required this.vm,
+      @required this.context,
+      @required this.itemName,
+      @required this.itemId})
+      : super(key: key);
 
   final CommonViewModel vm;
+  final int itemId;
+  final String itemName;
   final BuildContext context;
 
   @override
@@ -30,8 +34,11 @@ class _BuildCostPriceWidgetState extends State<BuildCostPriceWidget> {
           keyboardType: TextInputType.number,
           style: TextStyle(color: Colors.black),
           onChanged: (costPrice) async {
-            ItemTableData item = await widget.vm.database.itemDao
-                .getItemBy('tmp', widget.vm.branch.id);
+            ItemTableData item = await widget.vm.database.itemDao.getItemBy(
+              name: widget.itemName,
+              branchId: widget.vm.branch.id,
+              itemId: widget.itemId,
+            );
 
             VariationTableData variation = await widget.vm.database.variationDao
                 .getVariationBy('tmp', widget.vm.branch.id);

@@ -6,7 +6,6 @@ import 'package:flipper/model/branch.dart';
 import 'package:flipper/model/business.dart';
 import 'package:flipper/model/cart.dart';
 import 'package:flipper/model/category.dart';
-import 'package:flipper/model/disable.dart';
 import 'package:flipper/model/flipper_color.dart';
 import 'package:flipper/model/hint.dart';
 import 'package:flipper/model/item.dart';
@@ -17,7 +16,6 @@ import 'package:flipper/model/price.dart';
 import 'package:flipper/model/sheet.dart';
 import 'package:flipper/model/unit.dart';
 import 'package:flipper/model/user.dart';
-import 'package:flipper/model/variation.dart';
 
 part 'app_state.g.dart';
 

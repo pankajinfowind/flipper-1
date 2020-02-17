@@ -84,7 +84,7 @@ class _BusinessListState extends State<BusinessList> {
           _GroupSettingsButton(
             Image.asset("assets/graphics/drawer/account.png"),
             () {
-              _openUserAccount(context);
+              // _openUserAccount(context);
             },
           ),
           _Style.defaultPadding,
@@ -135,12 +135,6 @@ class _BusinessListState extends State<BusinessList> {
         ],
       ),
     );
-  }
-
-  void _openUserAccount(BuildContext context) {
-    final uid = StoreProvider.of<AppState>(context).state.user.id;
-    //FIXME: should use Router.navigator.pushNamed(Router.dashboard); to navigate ASAP;
-//    Navigator.of(context).pushNamed(Routes.user, arguments: uid);
   }
 }
 
@@ -290,7 +284,6 @@ List<Widget> _buildSelectionHighlight(isSelected, circleColor) {
 }
 
 class _Style {
-  static const listWidth = 72.0;
   static const flipperButtonWidth = 44.0;
 
   static const circleHighlightWidth = 4.0;
@@ -306,6 +299,5 @@ class _Style {
   static const firstSectionHeight = 100.0;
   static const thirdSectionHeight = 60.0;
   static const fourthSectionHeight = 180.0;
-  static const totalStaticSectionHeight =
-      340.0; // Sum of all sections without itemHeight
+// Sum of all sections without itemHeight
 }

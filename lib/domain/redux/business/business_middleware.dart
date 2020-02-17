@@ -34,7 +34,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       int businessId =
           await businessRepository.insert(store, store.state.business);
 
-      final assignBusiness = await businessRepository.assignBusinessToUser(
+      await businessRepository.assignBusinessToUser(
           store, businessId, store.state.userId);
 
       List<BusinessTableData> businessList =
@@ -44,9 +44,13 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
 
       businessList.forEach((b) => {
             businesses.add(
-              Business((bu) => bu
-                ..name = b.name
-                ..id = b.id),
+              Business(
+                (bu) => bu
+                  ..latitude = bu.latitude
+                  ..longitude = bu.longitude
+                  ..name = b.name
+                  ..id = b.id,
+              ),
             )
           });
 
@@ -84,6 +88,8 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         ..id = store.state.nextActiveBusiness.id
         ..abbreviation = store.state.nextActiveBusiness.abbreviation
         ..name = store.state.nextActiveBusiness.name
+        ..longitude = b.longitude
+        ..latitude = b.latitude
         ..hexColor = store.state.nextActiveBusiness.hexColor
         ..isActive = true);
       store.dispatch(RefreshBusinessList(updated));

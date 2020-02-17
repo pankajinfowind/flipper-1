@@ -6,6 +6,8 @@ class BusinessTable extends Table {
   TextColumn get abbreviation => text().nullable()();
   BoolColumn get isActive => boolean().withDefault(Constant(false))();
 
+  RealColumn get longitude => real().nullable()();
+  RealColumn get latitude => real().nullable()();
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();

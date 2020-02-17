@@ -10,6 +10,10 @@ abstract class Business implements Built<Business, BusinessBuilder> {
 
   @nullable
   bool get isActive;
+  @nullable
+  double get latitude;
+  @nullable
+  double get longitude;
 
   @nullable
   String get hexColor;

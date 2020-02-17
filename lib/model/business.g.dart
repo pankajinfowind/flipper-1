@@ -14,6 +14,10 @@ class _$Business extends Business {
   @override
   final bool isActive;
   @override
+  final double latitude;
+  @override
+  final double longitude;
+  @override
   final String hexColor;
   @override
   final String image;
@@ -29,6 +33,8 @@ class _$Business extends Business {
       {this.id,
       this.name,
       this.isActive,
+      this.latitude,
+      this.longitude,
       this.hexColor,
       this.image,
       this.type,
@@ -49,6 +55,8 @@ class _$Business extends Business {
         id == other.id &&
         name == other.name &&
         isActive == other.isActive &&
+        latitude == other.latitude &&
+        longitude == other.longitude &&
         hexColor == other.hexColor &&
         image == other.image &&
         type == other.type &&
@@ -61,8 +69,12 @@ class _$Business extends Business {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, id.hashCode), name.hashCode),
-                        isActive.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), name.hashCode),
+                                isActive.hashCode),
+                            latitude.hashCode),
+                        longitude.hashCode),
                     hexColor.hashCode),
                 image.hashCode),
             type.hashCode),
@@ -75,6 +87,8 @@ class _$Business extends Business {
           ..add('id', id)
           ..add('name', name)
           ..add('isActive', isActive)
+          ..add('latitude', latitude)
+          ..add('longitude', longitude)
           ..add('hexColor', hexColor)
           ..add('image', image)
           ..add('type', type)
@@ -97,6 +111,14 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
   bool _isActive;
   bool get isActive => _$this._isActive;
   set isActive(bool isActive) => _$this._isActive = isActive;
+
+  double _latitude;
+  double get latitude => _$this._latitude;
+  set latitude(double latitude) => _$this._latitude = latitude;
+
+  double _longitude;
+  double get longitude => _$this._longitude;
+  set longitude(double longitude) => _$this._longitude = longitude;
 
   String _hexColor;
   String get hexColor => _$this._hexColor;
@@ -121,6 +143,8 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
       _id = _$v.id;
       _name = _$v.name;
       _isActive = _$v.isActive;
+      _latitude = _$v.latitude;
+      _longitude = _$v.longitude;
       _hexColor = _$v.hexColor;
       _image = _$v.image;
       _type = _$v.type;
@@ -150,6 +174,8 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
             id: id,
             name: name,
             isActive: isActive,
+            latitude: latitude,
+            longitude: longitude,
             hexColor: hexColor,
             image: image,
             type: type,

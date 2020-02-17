@@ -29,6 +29,7 @@ import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/home/items/view_items_screen.dart';
 import 'package:flipper/presentation/login/login_screen.dart';
 import 'package:flipper/home/items/view_single_item_screen.dart';
+import 'package:flipper/home/items/edit_variation_screen.dart';
 
 class Router {
   static const splashScreen = '/';
@@ -52,6 +53,7 @@ class Router {
   static const viewItemsScreen = '/viewItemsScreen';
   static const login = '/login';
   static const viewSingleItem = '/viewSingleItem';
+  static const editVariationScreen = '/editVariationScreen';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -256,6 +258,17 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
+      case Router.editVariationScreen:
+        if (hasInvalidArgs<EditVariationScreenArguments>(args)) {
+          return misTypedArgsRoute<EditVariationScreenArguments>(args);
+        }
+        final typedArgs = args as EditVariationScreenArguments ??
+            EditVariationScreenArguments();
+        return MaterialPageRoute(
+          builder: (_) => EditVariationScreen(
+              key: typedArgs.key, variationId: typedArgs.variationId),
+          settings: settings,
+        );
       default:
         return unknownRoutePage(settings.name);
     }
@@ -281,4 +294,11 @@ class ViewSingleItemScreenArguments {
   final String itemColor;
   ViewSingleItemScreenArguments(
       {this.key, this.itemId, this.itemName, this.itemColor});
+}
+
+//EditVariationScreen arguments holder class
+class EditVariationScreenArguments {
+  final Key key;
+  final int variationId;
+  EditVariationScreenArguments({this.key, this.variationId});
 }

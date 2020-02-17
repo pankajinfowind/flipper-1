@@ -1,11 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'history_dao.dart';
+part of 'reason_dao.dart';
 
 // **************************************************************************
 // DaoGenerator
 // **************************************************************************
 
-mixin _$StockHistoryDaoMixin on DatabaseAccessor<Database> {
-  $StockHistoryTableTable get stockHistoryTable => db.stockHistoryTable;
+mixin _$ReasonDaoMixin on DatabaseAccessor<Database> {
+  $ReasonTableTable get reasonTable => db.reasonTable;
 }

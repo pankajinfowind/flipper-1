@@ -32,14 +32,16 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final TBusiness tBusiness = TBusiness();
-  Position position;
+  Position _position;
   _getCurrentLocation() async {
     var geolocator = Geolocator();
     var locationOptions =
         LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
     geolocator.getPositionStream(locationOptions).listen((Position location) {
-      position = location; //todo: use store for managing the location changes.
+      setState(() {
+        _position = location;
+      });
     });
   }
 
@@ -175,16 +177,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
         AppAction(actions: AppActions((a) => a..name = "showLoader")));
 
     if (_formKey.currentState == null) {
-      //todo:should show atoast.
       return;
     }
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Business business = Business((b) => b
-        ..name = tBusiness.name
-        ..abbreviation = tBusiness.name.substring(0, 2).toLowerCase()
-        ..isActive = true
-        ..type = BusinessType.NORMAL);
+      //todo: make sure location permission is not denied or error is handleted propper.
+      double lat = _position == null ? 0 : _position.latitude;
+      double long = _position == null ? 0 : _position.longitude;
+
+      Business business = Business(
+        (b) => b
+          ..name = tBusiness.name
+          ..latitude = lat ?? 0
+          ..longitude = long ?? 0
+          ..abbreviation = tBusiness.name.substring(0, 2).toLowerCase()
+          ..isActive = true
+          ..type = BusinessType.NORMAL,
+      );
 
       //todo: get the info should be filled in form from yegobox i.e we don't have password field here.
       User user = User(

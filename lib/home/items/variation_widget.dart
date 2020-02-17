@@ -21,26 +21,37 @@ class _VariationWidgetState extends State<VariationWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(children: <Widget>[
-      ListTile(
-        leading: Icon(
-          Icons.dehaze,
-        ),
-        subtitle:
-            Text("${widget.variation.name} \nRWF ${widget.variation.price}"),
-        trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          FlatButton(
-            child: Text(
-              widget.variation.count == 0
-                  ? S.of(context).receiveStock
-                  : widget.variation.count.toString() + S.of(context).inStock,
+      GestureDetector(
+        onTap: () {
+          Router.navigator.pushNamed(
+            Router.editVariationScreen,
+            arguments: EditVariationScreenArguments(
+              variationId: widget.variation.id,
             ),
-            onPressed: () {
-              Router.navigator.pushNamed(Router.receiveStock,
-                  arguments: widget.variation.id);
-            },
-          )
-        ]),
-        dense: true,
+          );
+        },
+        child: ListTile(
+          leading: Icon(
+            Icons.dehaze,
+          ),
+          subtitle:
+              Text("${widget.variation.name} \nRWF ${widget.variation.price}"),
+          trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            FlatButton(
+              child: Text(
+                widget.variation.count == 0
+                    ? S.of(context).receiveStock
+                    : widget.variation.count.toString() + S.of(context).inStock,
+              ),
+              onPressed: () {
+                print("about to choosing a reason");
+                // Router.navigator.pushNamed(Router.receiveStock,
+                //     arguments: widget.variation.id);
+              },
+            )
+          ]),
+          dense: true,
+        ),
       )
     ]);
   }

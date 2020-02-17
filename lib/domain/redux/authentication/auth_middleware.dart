@@ -286,7 +286,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         }
       }
       //end of setting current active business.
-      Logger.d("Successfully loaded the app");
+      // Logger.d("Successfully loaded the app");
       store.dispatch(
         OnBusinessLoaded(business: businessList),
       );
@@ -313,6 +313,41 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
           ..focused = false),
       );
 
+      //if no reason found then create app defaults reasons
+      List<ReasonTableData> reasons =
+          await store.state.database.reasonDao.getReasons();
+      if (reasons.length == 0) {
+        await store.state.database.reasonDao.insert(
+            //ignore:missing_required_param
+            ReasonTableData(name: 'Stock Received', action: 'Received'));
+        await store.state.database.reasonDao
+            //ignore:missing_required_param
+            .insert(ReasonTableData(name: 'Lost', action: 'Lost'));
+        await store.state.database.reasonDao
+            //ignore:missing_required_param
+            .insert(ReasonTableData(name: 'Thief', action: 'Thief'));
+        await store.state.database.reasonDao
+            //ignore:missing_required_param
+            .insert(ReasonTableData(name: 'Damaged', action: 'Damaged'));
+        await store.state.database.reasonDao.insert(
+            //ignore:missing_required_param
+            ReasonTableData(
+                name: 'Inventory Re-counted', action: 'Re-counted'));
+        await store.state.database.reasonDao.insert(
+            //ignore:missing_required_param
+            ReasonTableData(
+                name: 'Restocked Return', action: 'Restocked Return'));
+        await store.state.database.reasonDao
+            //ignore:missing_required_param
+            .insert(ReasonTableData(name: 'Sold', action: 'Sold'));
+        await store.state.database.reasonDao.insert(
+            //ignore:missing_required_param
+            ReasonTableData(name: 'Transferred', action: 'Transferred'));
+
+        await store.state.database.reasonDao
+            //ignore:missing_required_param
+            .insert(ReasonTableData(name: 'Canceled', action: 'Canceled'));
+      }
       //create custom item if does not exist
       await generalRepository.insertItem(
         store,

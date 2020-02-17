@@ -1,11 +1,10 @@
 import 'package:moor/moor.dart';
 
-class HistoryTable extends Table {
+class ReasonTable extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get count => integer()();
+  TextColumn get name => text()();
+  TextColumn get action => text()();
 
-  IntColumn get variantId =>
-      integer().customConstraint('NULL REFERENCES variation_table(id)')();
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();

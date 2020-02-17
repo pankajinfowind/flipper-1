@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 
 class UserRepository {
   Future<int> insertUser(Store<AppState> store, User user) {
+    //ignore:missing_required_param
     var u = new UserTableData(
         email: user.email,
         status: user.status,

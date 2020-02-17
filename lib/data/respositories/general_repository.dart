@@ -7,8 +7,6 @@ import 'package:flipper/model/category.dart';
 import 'package:flipper/model/item.dart';
 import 'package:flipper/model/order.dart';
 import 'package:flipper/model/unit.dart';
-import 'package:flipper/util/logger.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 class GeneralRepository {
@@ -188,9 +186,9 @@ class GeneralRepository {
   }
 
   Future<int> insertHistory(Store<AppState> store, int variantId, int count) {
-    return store.state.database.historyDao
+    return store.state.database.stockHistoryDao
         // ignore: missing_required_param
-        .insert(HistoryTableData(count: count, variantId: variantId));
+        .insert(StockHistoryTableData(quantity: count, variantId: variantId));
   }
 
   Future<List<ItemTableData>> getItems(Store<AppState> store) {

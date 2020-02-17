@@ -28,7 +28,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
   final TForm tForm = new TForm();
 
   ActionsTableData _actions;
-
   ActionsTableData _actionsSaveItem;
 
   _onClose(BuildContext context) async {
@@ -286,7 +285,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           return Text("");
                         }
                         return snapshot.data.length == 0
-                            ? buldRetailPriceWidget(vm, context)
+                            ? buildRetailPriceWidget(vm, context)
                             : Text("");
                       },
                     ),
@@ -388,7 +387,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     );
   }
 
-  Center buldRetailPriceWidget(CommonViewModel vm, BuildContext context) {
+  Center buildRetailPriceWidget(CommonViewModel vm, BuildContext context) {
     return Center(
       child: Container(
         width: 300,
@@ -499,18 +498,17 @@ class _AddItemScreenState extends State<AddItemScreen> {
       );
     }
 
-    //set back the options as it was.
     vm.database.actionsDao
         .updateAction(_actionsSaveItem.copyWith(isLocked: true));
 
     vm.database.actionsDao.updateAction(_actions.copyWith(isLocked: true));
 
-    //todo: also update unit Id of choosen item.
     vm.database.itemDao.updateItem(
       item.copyWith(
         name: tForm.name,
+        unitId: vm.currentUnit.id,
         updatedAt: DateTime.now(),
-        color: vm.currentColor == null ? '#00cec9' : vm.currentColor.hexCode,
+        color: vm.currentColor == null ? item.color : vm.currentColor.hexCode,
       ),
     );
     Router.navigator.maybePop();

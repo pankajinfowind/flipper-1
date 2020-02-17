@@ -44,29 +44,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
             disableButton: _actions == null ? true : _actions.isLocked,
             actionButtonName: S.of(context).save,
             onPressedCallback: () async {
-              ItemTableData item = await vm.database.itemDao.getItemBy(
-                  name: 'tmp', branchId: vm.branch.id, itemId: vm.tmpItem.id);
-              VariationTableData variation = await vm.database.variationDao
-                  .getVariationBy('tmp', vm.branch.id);
-
-              createOrUpdateRegularVariant(variation, context, item);
-
-              //insert the variation.
-              vm.database.variationDao.insert(
-                //ignore:missing_required_param
-                VariationTableData(
-                  name: name,
-                  price: double.parse(retailPrice),
-                  costPrice: double.parse(costPrice),
-                  branchId: vm.branch.id,
-                  createdAt: DateTime.now(),
-                  count: 0,
-                  isActive: false,
-                  itemId: item.id,
-                ),
-              );
-              vm.database.actionsDao
-                  .updateAction(_actions.copyWith(isLocked: true));
+              await _createVariant(vm, context);
               Router.navigator.maybePop();
             },
             icon: Icons.close,
@@ -130,8 +108,9 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                             name = _name;
                           },
                           decoration: InputDecoration(
-                              hintText: S.of(context).name,
-                              focusColor: Colors.blue),
+                            hintText: S.of(context).name,
+                            focusColor: Colors.blue,
+                          ),
                         ),
                       ),
                     ),
@@ -163,6 +142,44 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
         );
       },
     );
+  }
+
+  Future _createVariant(CommonViewModel vm, BuildContext context) async {
+    ItemTableData item = await vm.database.itemDao
+        .getItemBy(name: 'tmp', branchId: vm.branch.id, itemId: vm.tmpItem.id);
+    VariationTableData variation =
+        await vm.database.variationDao.getVariationBy('tmp', vm.branch.id);
+
+    createOrUpdateRegularVariant(variation, context, item);
+
+    int variantId = await vm.database.variationDao.insert(
+      //ignore:missing_required_param
+      VariationTableData(
+        name: name,
+        price: double.parse(retailPrice),
+        costPrice: double.parse(costPrice),
+        branchId: vm.branch.id,
+        createdAt: DateTime.now(),
+        count: 0,
+        isActive: false,
+        itemId: item.id,
+      ),
+    );
+    //insert into stock too
+    vm.database.stockDao.insert(
+      //ignore: missing_required_param
+      StockTableData(
+        value: '0',
+        currentStock: 0,
+        canTrackStock: false,
+        retailPrice: 0,
+        itemId: item.id,
+        variantId: variantId,
+        branchId: vm.branch.id,
+        createdAt: DateTime.now(),
+      ),
+    );
+    vm.database.actionsDao.updateAction(_actions.copyWith(isLocked: true));
   }
 
   void createOrUpdateRegularVariant(

@@ -16,7 +16,7 @@ class StockTable extends Table {
 
   IntColumn get branchId => integer()
       .nullable()
-      .customConstraint('NULL REFERENCES branchId_table(id)')();
+      .customConstraint('NULL REFERENCES branch_table(id)')();
 
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();

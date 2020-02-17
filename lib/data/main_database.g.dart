@@ -3035,7 +3035,7 @@ class $StockTableTable extends StockTable
   GeneratedIntColumn get branchId => _branchId ??= _constructBranchId();
   GeneratedIntColumn _constructBranchId() {
     return GeneratedIntColumn('branch_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES branchId_table(id)');
+        $customConstraints: 'NULL REFERENCES branch_table(id)');
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');

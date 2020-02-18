@@ -116,7 +116,6 @@ class controlSaleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print(vm.currentSales);
     return ListTile(
       dense: true,
       title: Center(
@@ -144,8 +143,10 @@ class controlSaleWidget extends StatelessWidget {
         onPressed: () {
           if (vm.itemVariations.length > 0) {
             for (var i = 0; i < vm.itemVariations.length; i++) {
-              //here we know vm.currentActiveSaleItem has been overwritten only kept the parent name of all variants.
               if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
+                if (vm.currentIncrement == null) {
+                  return;
+                }
                 if (vm.currentIncrement - 1 == -1) {
                   return;
                 }
@@ -159,12 +160,8 @@ class controlSaleWidget extends StatelessWidget {
                   (b) => b
                     ..id = vm.itemVariations[i].id
                     ..name = vm.itemVariations[i].name
-                    ..price = vm.itemVariations[i].price
                     ..branchId = vm.itemVariations[i].branchId
-                    ..unitId = vm.itemVariations[i].unitId
                     ..parentName = vm.currentActiveSaleItem.name
-                    ..categoryId = vm.itemVariations[i].categoryId
-                    ..color = vm.itemVariations[i].color
                     ..count = incrementor,
                 );
                 StoreProvider.of<AppState>(context).dispatch(
@@ -181,11 +178,12 @@ class controlSaleWidget extends StatelessWidget {
         onPressed: () {
           for (var i = 0; i < vm.itemVariations.length; i++) {
             if (vm.currentActiveSaleItem.id == vm.itemVariations[i].id) {
-              var incrementor = vm.currentIncrement + 1;
+              var incrementor =
+                  vm.currentIncrement == null ? 1 : vm.currentIncrement + 1;
 
               StoreProvider.of<AppState>(context).dispatch(
                 IncrementAction(
-                  increment: vm.currentIncrement == null ? 0 + 1 : incrementor,
+                  increment: vm.currentIncrement == null ? 1 : incrementor,
                 ),
               );
               //todo: I see we are not firing new CartItems I have no idea if this is not an error!
@@ -194,11 +192,7 @@ class controlSaleWidget extends StatelessWidget {
                   ..id = vm.itemVariations[i].id
                   ..name = vm.itemVariations[i].name
                   ..branchId = vm.itemVariations[i].branchId
-                  ..unitId = vm.itemVariations[i].unitId
-                  ..price = vm.itemVariations[i].price
                   ..parentName = vm.currentActiveSaleItem.name
-                  ..categoryId = vm.itemVariations[i].categoryId
-                  ..color = vm.itemVariations[i].color
                   ..count = incrementor,
               );
 

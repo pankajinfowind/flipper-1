@@ -117,12 +117,39 @@ class _ItemsViewState extends State<ItemsView> {
   }
 
   void onSellingItem(
-      BuildContext context, List<ItemTableData> itemList, int i) {
-    StoreProvider.of<AppState>(context).dispatch(CurrentActiveSaleItem(
-        item: Item((b) => b
-          ..name = itemList[i].name
-          ..branchId = itemList[i].branchId
-          ..id = itemList[i].id)));
+      BuildContext context, List<ItemTableData> itemList, int i) async {
+    int branchId = StoreProvider.of<AppState>(context).state.branch.id;
+    //ItemsVariation
+    //get the variation with the itemList[i].id wait until are loaded then dispatch
+    List<VariationTableData> variations =
+        await StoreProvider.of<AppState>(context)
+            .state
+            .database
+            .variationDao
+            .getVariationByItemId(branchId: branchId, itemId: itemList[i].id);
+    List<Item> items = [];
+    for (var i = 0; i < variations.length; i++) {
+      items.add(
+        Item(
+          (b) => b
+            ..id = variations[i].itemId
+            ..branchId = variations[i].branchId
+            ..name = variations[i].name,
+          // ..categoryId = variations[i].cate
+        ),
+      );
+    }
+    StoreProvider.of<AppState>(context).dispatch(ItemsVariation(items: items));
+    StoreProvider.of<AppState>(context).dispatch(
+      CurrentActiveSaleItem(
+        item: Item(
+          (b) => b
+            ..name = itemList[i].name
+            ..branchId = itemList[i].branchId
+            ..id = itemList[i].id,
+        ),
+      ),
+    );
     Router.navigator.pushNamed(Router.editQuantityItemScreen,
         arguments: ChangeQuantityForSellingArguments(itemId: itemList[i].id));
   }

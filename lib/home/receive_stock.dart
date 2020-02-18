@@ -1,8 +1,6 @@
 import 'package:flipper/data/main_database.dart';
-import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
-import 'package:flipper/model/variation.dart';
 import 'package:flipper/presentation/common/common_app_bar.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/routes/router.gr.dart';
@@ -48,15 +46,7 @@ class _ReceiveStockState extends State<ReceiveStock> {
                     autofocus: true,
                     style: TextStyle(color: Colors.black),
                     onChanged: (count) async {
-                      VariationTableData variation = await vm
-                          .database.variationDao
-                          .getVariationById(widget.variationId);
-                      vm.database.variationDao.updateVariation(
-                        variation.copyWith(
-                          count: int.parse(count),
-                          updatedAt: DateTime.now(),
-                        ),
-                      );
+                      await receiveStock(vm, double.parse(count));
                     },
                     decoration: InputDecoration(
                       hintText: "Add Stock",
@@ -74,6 +64,15 @@ class _ReceiveStockState extends State<ReceiveStock> {
           ),
         );
       },
+    );
+  }
+
+  Future receiveStock(CommonViewModel vm, double count) async {
+    StockTableData stock = await vm.database.stockDao.getStockByVariantId(
+        variantId: widget.variationId, branchId: vm.branch.id);
+
+    vm.database.stockDao.updateStock(
+      stock.copyWith(updatedAt: DateTime.now(), currentStock: count.toInt()),
     );
   }
 }

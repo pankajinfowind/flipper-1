@@ -41,34 +41,17 @@ void Function(Store<AppState> store, SaveRegular action, NextDispatcher next)
     _saveRegular(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
-    if (action.costPrice == 0) {
-      await generalRepository.insertVariant(
-        store,
-        //ignore:missing_required_param
-        VariationTableData(
-          branchId: store.state.branch.id,
-          price: action.price,
-          id: action.id,
-          count: action.count,
-          itemId: action.itemId,
-          name: action.name,
-        ),
-      );
-    }
-    if (action.price == 0) {
-      await generalRepository.insertVariant(
-        store,
-        //ignore:missing_required_param
-        VariationTableData(
-          branchId: store.state.branch.id,
-          costPrice: action.costPrice,
-          id: action.id,
-          count: action.count,
-          itemId: action.itemId,
-          name: action.name,
-        ),
-      );
-    }
+    int variantId = await generalRepository.insertVariant(
+      store,
+      //ignore:missing_required_param
+      VariationTableData(
+        branchId: store.state.branch.id,
+        id: action.id,
+        itemId: action.itemId,
+        name: action.name,
+      ),
+    );
+    //insert or update stock.
   };
 }
 
@@ -168,11 +151,9 @@ void Function(
             ..id = variations[i].id
             ..name = variations[i].name
             ..isActive = variations[i].isActive
-            ..count = variations[i].count
             ..color = action.item.color
             ..unitId = action.item.unitId
             ..categoryId = action.item.categoryId
-            ..price = variations[i].price.toInt()
             ..branchId = variations[i].branchId,
         ),
       );

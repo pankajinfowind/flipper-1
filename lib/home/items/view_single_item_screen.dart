@@ -22,10 +22,12 @@ class ViewSingleItemScreen extends StatefulWidget {
   ViewSingleItemScreen({
     Key key,
     @required this.itemId,
+    @required this.unitId,
     @required this.itemName,
     @required this.itemColor,
   }) : super(key: key);
   final int itemId;
+  final int unitId;
   final String itemName;
   final String itemColor;
 
@@ -83,7 +85,8 @@ class _ViewSingleItemScreenState extends State<ViewSingleItemScreen> {
         .state
         .database
         .itemDao
-        .getItemBy(name: 'tmp', branchId: branchId, itemId: widget.itemId);
+        .getItemBy(
+            name: widget.itemName, branchId: branchId, itemId: widget.itemId);
     if (item == null) {
       Router.navigator.pop(false);
       return false;
@@ -285,9 +288,17 @@ class _ViewSingleItemScreenState extends State<ViewSingleItemScreen> {
                                   leading: Text(S.of(context).unityType),
                                   trailing: Wrap(
                                     children: <Widget>[
-                                      Text(vm.currentUnit != null
-                                          ? vm.currentUnit.name
-                                          : S.of(context).perItem),
+                                      StreamBuilder(
+                                          stream: vm.database.unitDao
+                                              .getUnitStream(widget.unitId),
+                                          builder: (context,
+                                              AsyncSnapshot<List<UnitTableData>>
+                                                  snapshot) {
+                                            if (snapshot.data.length == 0) {
+                                              return Text("");
+                                            }
+                                            return Text(snapshot.data[0].name);
+                                          }),
                                       Icon(Icons.arrow_forward_ios)
                                     ],
                                   ),
@@ -313,7 +324,7 @@ class _ViewSingleItemScreenState extends State<ViewSingleItemScreen> {
                                 return Text("");
                               }
                               return snapshot.data != 0
-                                  ? _buildVariationsList(snapshot.data)
+                                  ? _buildVariationsList(snapshot.data, vm)
                                   : Text("");
                             },
                           ),
@@ -467,7 +478,8 @@ class _ViewSingleItemScreenState extends State<ViewSingleItemScreen> {
     Router.navigator.maybePop();
   }
 
-  _buildVariationsList(List<VariationTableData> variations) {
+  _buildVariationsList(
+      List<VariationTableData> variations, CommonViewModel vm) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < variations.length; i++) {
       if (variations[i].name != 'tmp') {
@@ -476,8 +488,8 @@ class _ViewSingleItemScreenState extends State<ViewSingleItemScreen> {
             child: SizedBox(
               height: 90,
               width: 350,
-              child:
-                  VariationWidget(variation: variations[i], context: context),
+              child: VariationWidget(
+                  variation: variations[i], context: context, vm: vm),
             ),
           ),
         );

@@ -177,8 +177,8 @@ class GeneralRepository {
     }
 
     if (exist != null) {
-      store.state.database.variationDao.updateVariation(exist.copyWith(
-          name: data.name, price: data.price, updatedAt: DateTime.now()));
+      store.state.database.variationDao.updateVariation(
+          exist.copyWith(name: data.name, updatedAt: DateTime.now()));
       return 1;
     } else {
       return store.state.database.variationDao.insert(data);

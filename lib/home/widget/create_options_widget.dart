@@ -105,9 +105,7 @@ class CreateOptionsWidget extends StatelessWidget {
           itemId: itemId,
           sku: DateTime.now().year.toString() + _randomString(4),
           branchId: vm.branch.id,
-          count: 0,
           isActive: false,
-          price: 0,
           createdAt: DateTime.now()),
     );
 

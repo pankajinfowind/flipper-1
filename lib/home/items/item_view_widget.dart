@@ -88,6 +88,7 @@ class _ItemsViewState extends State<ItemsView> {
                   arguments: ViewSingleItemScreenArguments(
                     itemId: itemList[i].id,
                     itemName: itemList[i].name,
+                    unitId: itemList[i].unitId,
                     itemColor: itemList[i].color,
                   ),
                 );
@@ -96,45 +97,46 @@ class _ItemsViewState extends State<ItemsView> {
               }
             },
             child: ListTile(
-                contentPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                leading: Container(
-                  width: 50,
-                  color: HexColor(itemList[i].color),
-                  child: FlatButton(
-                    child: Text(
-                      itemList[i].name.length > 2
-                          ? itemList[i].name.substring(0, 2)
-                          : itemList[i].name,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+              contentPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+              leading: Container(
+                width: 50,
+                color: HexColor(itemList[i].color),
+                child: FlatButton(
+                  child: Text(
+                    itemList[i].name.length > 2
+                        ? itemList[i].name.substring(0, 2)
+                        : itemList[i].name,
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
-                    onPressed: () {},
                   ),
+                  onPressed: () {},
                 ),
-                title: Text(
-                  itemList[i].name,
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: StreamBuilder(
-                  stream: vm.database.variationDao
-                      .getVariantByItemIdStream(itemList[i].id),
-                  builder: (context,
-                      AsyncSnapshot<List<VariationTableData>> snapshot) {
-                    if (snapshot.data == null) {
-                      return Text("");
-                    }
-                    return snapshot.data.length == 1
-                        ? Text(
-                            "RWF" + snapshot.data[0].price.toString(),
-                            style: TextStyle(color: Colors.black),
-                          )
-                        : Text(
-                            snapshot.data.length.toString() + " Prices",
-                            style: TextStyle(color: Colors.black),
-                          );
-                  },
-                )),
+              ),
+              title: Text(
+                itemList[i].name,
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: StreamBuilder(
+                stream: vm.database.stockDao.getStockByVariantByItemIdStream(
+                    branchId: vm.branch.id, itemId: itemList[i].id),
+                builder:
+                    (context, AsyncSnapshot<List<StockTableData>> snapshot) {
+                  if (snapshot.data == null) {
+                    return Text("");
+                  }
+                  return snapshot.data.length == 1
+                      ? Text(
+                          "RWF " + snapshot.data[0].retailPrice.toString(),
+                          style: TextStyle(color: Colors.black),
+                        )
+                      : Text(
+                          snapshot.data.length.toString() + " Prices",
+                          style: TextStyle(color: Colors.black),
+                        );
+                },
+              ),
+            ),
           ),
         );
       }

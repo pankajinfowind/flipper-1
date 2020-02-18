@@ -11,22 +11,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class EditVariationScreen extends StatefulWidget {
-  EditVariationScreen({Key key, @required this.variationId}) : super(key: key);
+  EditVariationScreen(
+      {Key key, @required this.variationId, @required this.unitId})
+      : super(key: key);
   final int variationId;
+  final int unitId;
 
   @override
   _EditVariationScreenState createState() => _EditVariationScreenState();
 }
 
 class _EditVariationScreenState extends State<EditVariationScreen> {
-  String _retailPrice;
   String sku;
 
   ActionsTableData _actions;
-
+  double _costPrice;
   String _name;
 
-  String _costPrice;
+  double _retailPrice;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CommonViewModel>(
@@ -37,9 +40,10 @@ class _EditVariationScreenState extends State<EditVariationScreen> {
           stream: vm.database.variationDao
               .getVariantByItemIdStream(widget.variationId),
           builder: (context, AsyncSnapshot<List<VariationTableData>> snapshot) {
-            if (snapshot.data == null) {
+            if (snapshot.data.length == 0) {
               return Text("");
             }
+
             return Scaffold(
               appBar: new CommonAppBar(
                 title: S.of(context).addVariation,
@@ -65,81 +69,73 @@ class _EditVariationScreenState extends State<EditVariationScreen> {
                         Container(
                           height: 20,
                         ),
-                        Center(
-                          child: Container(
-                            width: 400,
-                            child: Divider(
-                              color: Colors.black,
-                            ),
+                        Container(
+                          width: 400,
+                          child: Divider(
+                            color: Colors.black,
                           ),
                         ),
-                        Center(
-                          child: Container(
-                            width: 300,
-                            child: GestureDetector(
-                              onTap: () {
-                                Router.navigator.pushNamed(Router.addUnitType);
-                              },
-                              child: ListTile(
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 0.3),
-                                leading: Text(S.of(context).unityType),
-                                trailing: Wrap(
-                                  children: <Widget>[
-                                    Text(vm.currentUnit != null
-                                        ? vm.currentUnit.name
-                                        : S.of(context).unityType),
-                                    Icon(Icons.arrow_forward_ios)
-                                  ],
-                                ),
+                        Container(
+                          width: 300,
+                          child: GestureDetector(
+                            onTap: () {
+                              Router.navigator.pushNamed(Router.addUnitType);
+                            },
+                            child: ListTile(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 0.3),
+                              leading: Text(S.of(context).unityType),
+                              trailing: Wrap(
+                                children: <Widget>[
+                                  Text(vm.currentUnit != null
+                                      ? vm.currentUnit.name
+                                      : S.of(context).unityType),
+                                  Icon(Icons.arrow_forward_ios)
+                                ],
                               ),
                             ),
                           ),
                         ),
-                        Center(
-                          child: Container(
-                            width: 300,
-                            child: TextFormField(
-                              initialValue: snapshot.data[0].name,
-                              style: TextStyle(color: Colors.black),
-                              validator: Validators.isStringHasMoreChars,
-                              onChanged: (name) {
-                                if (name == '') {
-                                  setState(() {
-                                    _name = null;
-                                  });
-                                  _getSaveStatus();
-                                  return;
-                                }
+                        Container(
+                          width: 300,
+                          child: TextFormField(
+                            initialValue: snapshot.data[0].name,
+                            style: TextStyle(color: Colors.black),
+                            validator: Validators.isStringHasMoreChars,
+                            onChanged: (name) {
+                              if (name == '') {
                                 setState(() {
-                                  _name = name;
+                                  _name = null;
                                 });
                                 _getSaveStatus();
-                              },
-                              decoration: InputDecoration(
-                                  hintText: S.of(context).name,
-                                  focusColor: Colors.blue),
-                            ),
+                                return;
+                              }
+                              setState(() {
+                                _name = name;
+                              });
+                              _getSaveStatus();
+                            },
+                            decoration: InputDecoration(
+                                hintText: S.of(context).name,
+                                focusColor: Colors.blue),
                           ),
                         ),
-                        buildRetailPriceWidget(context),
+                        buildRetailPriceWidget(context, snapshot),
                         buildCostPriceWidget(context),
-                        Center(
-                          child: Container(
-                            width: 300,
-                            child: TextFormField(
-                              initialValue: snapshot.data[0].sku,
-                              style: TextStyle(color: HexColor("#2d3436")),
-                              validator: Validators.isStringHasMoreChars,
-                              onChanged: (_sku) {
-                                if (_sku != '') {
-                                  sku = _sku;
-                                }
-                              },
-                              decoration: InputDecoration(
-                                  hintText: S.of(context).sKU,
-                                  focusColor: HexColor("#0984e3")),
-                            ),
+                        Container(
+                          width: 300,
+                          child: TextFormField(
+                            initialValue: snapshot.data[0].sku,
+                            style: TextStyle(color: HexColor("#2d3436")),
+                            validator: Validators.isStringHasMoreChars,
+                            onChanged: (_sku) {
+                              if (_sku != '') {
+                                sku = _sku;
+                              }
+                            },
+                            decoration: InputDecoration(
+                                hintText: S.of(context).sKU,
+                                focusColor: HexColor("#0984e3")),
                           ),
                         ),
                         Text(S.of(context).leavePriceBlank)
@@ -179,7 +175,7 @@ class _EditVariationScreenState extends State<EditVariationScreen> {
           validator: Validators.isStringHasMoreChars,
           onChanged: (cost) {
             if (cost != '') {
-              _costPrice = cost;
+              _costPrice = double.parse(cost);
             }
           },
           decoration: InputDecoration(
@@ -189,7 +185,8 @@ class _EditVariationScreenState extends State<EditVariationScreen> {
     );
   }
 
-  Center buildRetailPriceWidget(BuildContext context) {
+  Center buildRetailPriceWidget(
+      BuildContext context, AsyncSnapshot<List<VariationTableData>> snapshot) {
     return Center(
       child: Container(
         width: 300,
@@ -199,7 +196,7 @@ class _EditVariationScreenState extends State<EditVariationScreen> {
           validator: Validators.isStringHasMoreChars,
           onChanged: (price) {
             if (price != '') {
-              _retailPrice = price;
+              _retailPrice = double.parse(price);
             }
           },
           decoration: InputDecoration(

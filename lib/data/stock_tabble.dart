@@ -2,11 +2,14 @@ import 'package:moor/moor.dart';
 
 class StockTable extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get value => text()();
   IntColumn get currentStock => integer()();
   BoolColumn get canTrackStock => boolean().withDefault(Constant(false))();
 
-  RealColumn get retailPrice => real()();
+  RealColumn get costPrice =>
+      real().customConstraint('DECIMAL(6,2)').withDefault(Constant(0))();
+
+  RealColumn get retailPrice =>
+      real().customConstraint('DECIMAL(6,2)').withDefault(Constant(0))();
   IntColumn get itemId =>
       integer().nullable().customConstraint('NULL REFERENCES item_table(id)')();
 

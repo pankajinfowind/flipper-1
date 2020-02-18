@@ -11,11 +11,7 @@ class VariationTable extends Table {
       .customConstraint('NULL REFERENCES item_table(id)  ON DELETE SET NULL')();
 
   BoolColumn get isActive => boolean().withDefault(Constant(false))();
-  IntColumn get count => integer()();
-  RealColumn get price => real()
-      .customConstraint('DECIMAL(6,2)')
-      .withDefault(Constant(0))(); //retail
-  RealColumn get costPrice => real().withDefault(Constant(0))(); //retail
+
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime).nullable()();
   DateTimeColumn get updatedAt => dateTime().nullable()();

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class TForm {
-  String price;
+  String retailPrice;
   String sku;
   String description;
   String name;
@@ -339,7 +339,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           return Text("");
                         }
                         return snapshot.data != 0
-                            ? _buildVariationsList(snapshot.data)
+                            ? _buildVariationsList(snapshot.data, vm)
                             : Text("");
                       },
                     ),
@@ -395,7 +395,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
           keyboardType: TextInputType.number,
           style: TextStyle(color: Colors.black),
           onChanged: (retailPrice) async {
-            tForm.price = retailPrice;
+            tForm.retailPrice = retailPrice;
             ItemTableData item = await vm.database.itemDao.getItemBy(
                 name: 'tmp', branchId: vm.branch.id, itemId: vm.tmpItem.id);
 
@@ -489,10 +489,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
     if (variation != null) {
       StoreProvider.of<AppState>(context).dispatch(
         SaveRegular(
-          price: variation.price,
-          costPrice: variation.costPrice,
           itemId: item.id,
           name: 'Regular',
+          price: double.parse(tForm.retailPrice),
           id: variation.id,
         ),
       );
@@ -514,7 +513,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
     Router.navigator.maybePop();
   }
 
-  _buildVariationsList(List<VariationTableData> variations) {
+  _buildVariationsList(
+      List<VariationTableData> variations, CommonViewModel vm) {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < variations.length; i++) {
       if (variations[i].name != 'tmp') {
@@ -524,29 +524,42 @@ class _AddItemScreenState extends State<AddItemScreen> {
               height: 90,
               width: 350,
               child: ListView(children: <Widget>[
-                ListTile(
-                  leading: Icon(
-                    Icons.dehaze,
-                  ),
-                  subtitle: Text(
-                      "${variations[i].name} \nRWF ${variations[i].price}"),
-                  trailing:
-                      Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    FlatButton(
-                      child: Text(
-                        variations[i].count == 0
-                            ? S.of(context).receiveStock
-                            : variations[i].count.toString() +
-                                S.of(context).inStock,
-                      ),
-                      onPressed: () {
-                        Router.navigator.pushNamed(Router.receiveStock,
-                            arguments: variations[i].id);
-                      },
-                    )
-                  ]),
-                  dense: true,
-                )
+                StreamBuilder(
+                    stream: vm.database.stockDao.getStockByVariantIdStream(
+                        branchId: vm.branch.id, variantId: variations[i].id),
+                    builder: (context,
+                        AsyncSnapshot<List<StockTableData>> snapshot) {
+                      if (snapshot.data.length == 0) {
+                        return Text("");
+                      }
+                      return ListTile(
+                        leading: Icon(
+                          Icons.dehaze,
+                        ),
+                        subtitle: Text(
+                            //todo: ${variations[i].price
+                            "${variations[i].name} \nRWF ${snapshot.data[0].retailPrice}"),
+                        trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              FlatButton(
+                                child: Text(
+                                  snapshot.data[0].currentStock == 0
+                                      ? S.of(context).receiveStock
+                                      : snapshot.data[0].currentStock
+                                              .toString() +
+                                          S.of(context).inStock,
+                                ),
+                                onPressed: () {
+                                  Router.navigator.pushNamed(
+                                      Router.receiveStock,
+                                      arguments: variations[i].id);
+                                },
+                              ),
+                            ]),
+                        dense: true,
+                      );
+                    })
               ]),
             ),
           ),

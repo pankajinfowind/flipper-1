@@ -110,7 +110,7 @@ class _ViewSingleItemScreenState extends State<ViewSingleItemScreen> {
               ),
               new FlatButton(
                 // Navigator.of(context).pop(true)
-                //todo: go and cleam the tmp item and variation created recently.
+                //todo: go and clean the tmp item and variation created recently.
                 onPressed: () {
                   // _closeAndDelete(context);
                 },

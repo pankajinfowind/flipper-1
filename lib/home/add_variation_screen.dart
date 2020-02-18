@@ -166,7 +166,6 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
     vm.database.stockDao.insert(
       //ignore: missing_required_param
       StockTableData(
-        value: '0',
         currentStock: 0,
         canTrackStock: false,
         retailPrice: 0,

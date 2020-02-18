@@ -2,7 +2,7 @@ import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/home/flipper_drawer.dart';
 import 'package:flipper/home/home_app_bar.dart';
-import 'package:flipper/home/poswidget.dart';
+import 'package:flipper/home/keypad/poswidget.dart';
 import 'package:flipper/home/product_screen.dart';
 import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flipper/presentation/widgets/payable_widget.dart';

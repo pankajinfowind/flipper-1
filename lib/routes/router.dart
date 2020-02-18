@@ -6,14 +6,14 @@ import 'package:flipper/home/add_note_screen.dart';
 import 'package:flipper/home/add_unit_type.dart';
 import 'package:flipper/home/add_variation_screen.dart';
 import 'package:flipper/home/cart/cart_details_screen.dart';
-import 'package:flipper/home/create_category_input_screen.dart';
+import 'package:flipper/home/category/create_category_input_screen.dart';
 import 'package:flipper/home/edit_item_title.dart';
-import 'package:flipper/home/edit_quantity_item_screen.dart';
 import 'package:flipper/home/items/all_item_screen.dart';
 import 'package:flipper/home/items/edit_variation_screen.dart';
 import 'package:flipper/home/items/view_items_screen.dart';
 import 'package:flipper/home/items/view_single_item_screen.dart';
 import 'package:flipper/home/receive_stock.dart';
+import 'package:flipper/home/selling/change_quantity_selling.dart';
 import 'package:flipper/home/setting_up_application_screen.dart';
 import 'package:flipper/home/take_picture_screen.dart';
 import 'package:flipper/presentation/business/create_business_screen.dart';
@@ -72,7 +72,7 @@ class $Router {
   ReceiveStock receiveStock;
 
   @MaterialRoute(fullscreenDialog: true)
-  EditQuantityItemScreen editQuantityItemScreen;
+  ChangeQuantityForSelling editQuantityItemScreen;
 
   @MaterialRoute(fullscreenDialog: true)
   CartDetailsScreen cartDetailsScreen;

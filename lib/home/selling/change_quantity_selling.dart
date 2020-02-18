@@ -7,14 +7,14 @@ import 'package:flipper/presentation/home/common_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class EditQuantityItemScreen extends StatefulWidget {
-  EditQuantityItemScreen({Key key}) : super(key: key);
+class ChangeQuantityForSelling extends StatefulWidget {
+  ChangeQuantityForSelling({Key key}) : super(key: key);
 
   @override
-  _EditQuantityItemScreenState createState() => _EditQuantityItemScreenState();
+  _ChangeQuantityForSellingState createState() => _ChangeQuantityForSellingState();
 }
 
-class _EditQuantityItemScreenState extends State<EditQuantityItemScreen> {
+class _ChangeQuantityForSellingState extends State<ChangeQuantityForSelling> {
   final incrementController = TextEditingController();
 
   @override

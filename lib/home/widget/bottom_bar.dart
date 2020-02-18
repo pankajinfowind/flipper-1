@@ -1,4 +1,4 @@
-import 'package:flipper/home/poswidget.dart';
+import 'package:flipper/home/keypad/poswidget.dart';
 import 'package:flipper/home/product_screen.dart';
 import 'package:flutter/material.dart';
 

@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrateg
 import { MenuEntries, MainModelService, Tables, Business, Branch, Menu, User } from '@enexus/flipper-components';
 import { Router } from '@angular/router';
 import { CurrentUser } from '../../core/guards/current-user';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -57,7 +59,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private model: MainModelService, private router: Router, public currentUser: CurrentUser) {
+  constructor(public http: HttpClient, private model: MainModelService, private router: Router, public currentUser: CurrentUser) {
     this.loadMenusEntries();
   }
 
@@ -106,6 +108,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
 
   }
+
 
     getRouterClicked(event) {
 

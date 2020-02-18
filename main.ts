@@ -1,20 +1,115 @@
-import { app, BrowserWindow, screen, dialog, nativeImage } from 'electron';
+import { app, BrowserWindow, screen, dialog, nativeImage,ipcMain, IpcMessageEvent  } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
 let win;
 let serve;
 const args = process.argv.slice(1);
-serve = args.some(val => val === '--serve');
-
-///////////////////// AUTO UPDATED  /////////////////////////////
-
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 
 const isDev = require('electron-is-dev');
+serve = args.some(val => val === '--serve');
+
+ipcMain.on('sent-login-message', (event, arg) => {
+
+  let authWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false,
+    alwaysOnTop: true,
+    webPreferences: {
+      nodeIntegration: true
+      },
+});
+  authWindow.setMenu(null);
+  const authUrl = 'https://test.flipper.rw/login';
+
+  authWindow.loadURL(authUrl);
+  const ses = authWindow.webContents.session;
+  ses.clearCache();
+
+  ses.cookies.get({})
+  .then((cookies) => {
+
+    cookies.forEach(cookie=> {
+      let uRl = '';
+      // get prefix, like https://www.
+      uRl += cookie.secure ? 'https://' : 'http://';
+      uRl += cookie.domain.charAt(0) === '.' ? 'www' : '';
+      // append domain and path
+      uRl += cookie.domain;
+      uRl += cookie.path;
+      ses.cookies.remove(uRl, cookie.name);
+
+    });
+
+  }).catch((error) => {
+    console.log(error);
+  });
+
+  authWindow.show();
+
+// 'will-navigate' is an event emitted when the window.location changes
+// newUrl should contain the tokens you need
+
+// Handle the response from YEGOBOX - See Update from 17/02/2020
+
+  function handleCallback(redirectUrl) {
+  const currentURL = authWindow.webContents.getURL();
+  let raw=null;
+  let token=null;
+  let email=null;
+  let name=null;
+  let avatar=null;
+
+  // log.info(currentURL);
+
+  const params=currentURL.split('?');
+
+
+  if(params && params.length===2) {
+   if(params[0]==='https://test.flipper.rw/authorized') {
+
+     raw=params[1];
+
+     token=raw.split('&')[0];
+     token=token.split('=')[1];
+
+     email = raw.split('&')[1];
+     email = email.split('=')[1];
+
+     name = raw.split('&')[2];
+     name = name.split('=')[1];
+
+     avatar = raw.split('&')[3];
+     avatar = avatar.split('=')[1];
+     event.sender.send('received-login-message',[email,name,avatar,token] );
+     authWindow.destroy();
+
+      }
+
+   }
+
+}
+
+  authWindow.webContents.on('did-finish-load',  (e: any, urls: string)=> {
+  handleCallback(urls);
+});
+
+  authWindow.on('closed', ()=> {
+    authWindow = null;
+});
+
+});
+
+
+
+///////////////////// AUTO UPDATED  /////////////////////////////
+
+
 function sendStatusToWindow(text) {
   log.info(app.getVersion() + '::' + text);
   win.webContents.send('message', text);
@@ -56,6 +151,7 @@ if (!isDev) {
       ')';
     sendStatusToWindow(logMessage);
   });
+
   autoUpdater.on('update-downloaded', info => {
     const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
     const dialogOpt = {
@@ -68,7 +164,6 @@ if (!isDev) {
     };
 
     showMessage(dialogOpt);
-
     sendStatusToWindow('Update downloaded');
 
   });
@@ -113,7 +208,7 @@ function createWindow() {
     width: size.width,
     height: size.height,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: true
     },
     icon: iconName
   });
@@ -170,6 +265,5 @@ try {
   });
 
 } catch (e) {
-  // Catch Error
-  // throw e;
+  // Catch Error // throw e;
 }

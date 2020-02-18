@@ -32,8 +32,8 @@ export class CurrentUser {
     return this.model.active<Menu>(Tables.menu);
   }
 
-  public userById(id: number) {
-    return this.model.find<User>(Tables.user, id);
+  public user() {
+    return this.model.find<User>(Tables.user, 1);
   }
 
   public insertUser(user: User) {

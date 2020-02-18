@@ -153,6 +153,8 @@ export class DashboardComponent {
       }
     return stocks;
   }
+
+
   loadSales() {
     const orderItems: OrderDetails[]=[];
     const details: OrderDetails[]= this.model.loadAll<OrderDetails>(Tables.orderDetails);
@@ -163,13 +165,14 @@ export class DashboardComponent {
             orderItems.push(d);
           }
         });
-
       }
     });
+
     return orderItems;
+
   }
 
-  loadOrderDetails(orderDetails) {
+  loadOrderDetails(orderDetails: OrderDetails) {
     const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
     return { netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
               grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) };

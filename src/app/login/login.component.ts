@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { CurrentUser } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
@@ -17,26 +17,34 @@ import { fadeInAnimation } from '@enexus/flipper-components';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, public currentUser: CurrentUser, public electronService: ElectronService) {
+  constructor(private router: Router, public currentUser: CurrentUser,private ngZone: NgZone, public electronService: ElectronService) {
+    this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
+      this.ngZone.run(() => {
+        if(arg && arg.length > 0) {
+
+           if (this.currentUser.user()) {
+            this.currentUser.updateUser({  name: arg[1],
+              email: arg[0],
+              token: arg[3], active: true }, this.currentUser.user().id);
+          } else {
+            this.currentUser.insertUser({
+              name: arg[1],
+              email: arg[0],
+              token: arg[3],
+              active: true
+            });
+          }
+           this.router.navigate(['/admin']);
+        }
+      });
+  });
   }
 
   ngOnInit() { }
 
   userLogin() {
+    this.electronService.ipcRenderer.send('sent-login-message', 'ganza need to login');
 
-    if (this.currentUser.userById(1)) {
-      this.currentUser.updateUser({ token: 'zsaas', active: true }, this.currentUser.userById(1).id);
-    } else {
-      this.currentUser.insertUser({
-        name: 'Ganza respice',
-        email: 'respinho2014@gmail.com',
-        token: 'dxmsdeod',
-        active: true
-      });
-    }
-    this.router.navigate([this.currentUser.getRedirectUri()]);
-
-    this.electronService.redirect('https://yegobox.com/login');
   }
 
   getStaredNewToFlipper() {

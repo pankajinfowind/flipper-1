@@ -12,6 +12,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class TForm {
   String retailPrice;
+  String costPrice;
   String sku;
   String description;
   String name;
@@ -404,9 +405,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
             StoreProvider.of<AppState>(context).dispatch(
               SaveRegular(
-                price: double.parse(retailPrice),
+                retailPrice: double.parse(retailPrice),
                 costPrice: 0,
                 itemId: item.id,
+                variantId: variation.id,
                 name: variation.name,
               ),
             );
@@ -432,12 +434,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
             VariationTableData variation = await vm.database.variationDao
                 .getVariationBy('tmp', vm.branch.id);
-
+            tForm.costPrice = costPrice;
             StoreProvider.of<AppState>(context).dispatch(
               SaveRegular(
                 costPrice: double.parse(costPrice),
-                price: 0,
+                retailPrice: 0,
                 itemId: item.id,
+                variantId: variation.id,
                 name: variation.name,
               ),
             );
@@ -490,9 +493,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
       StoreProvider.of<AppState>(context).dispatch(
         SaveRegular(
           itemId: item.id,
-          name: 'Regular',
-          price: double.parse(tForm.retailPrice),
-          id: variation.id,
+          retailPrice: double.parse(tForm.retailPrice),
+          costPrice: double.parse(tForm.costPrice),
+          variantId: variation.id,
         ),
       );
     }

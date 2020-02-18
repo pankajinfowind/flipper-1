@@ -37,17 +37,45 @@ void Function(Store<AppState> store, SaveRegular action, NextDispatcher next)
     _saveRegular(GlobalKey<NavigatorState> navigatorKey,
         GeneralRepository generalRepository) {
   return (store, action, next) async {
-    int variantId = await generalRepository.insertVariant(
-      store,
-      //ignore:missing_required_param
-      VariationTableData(
-        branchId: store.state.branch.id,
-        id: action.id,
-        itemId: action.itemId,
-        name: action.name,
-      ),
-    );
+    StockTableData c;
+    if (action.variantId == null) {
+      int variantId = await generalRepository.insertVariant(
+        store,
+        //ignore:missing_required_param
+        VariationTableData(
+          branchId: store.state.branch.id,
+          id: action.variantId,
+          itemId: action.itemId,
+          name: action.name,
+        ),
+      );
+      c = await store.state.database.stockDao.getStockByVariantId(
+          branchId: store.state.branch.id, variantId: variantId);
+    } else {
+      c = await store.state.database.stockDao.getStockByVariantId(
+          branchId: store.state.branch.id, variantId: action.variantId);
+    }
+
     //insert or update stock.
+
+    if (c == null) {
+      store.state.database.stockDao.insert(
+          //ignore:missing_required_param
+          StockTableData(
+              branchId: store.state.branch.id,
+              canTrackStock: false,
+              costPrice: action.costPrice,
+              currentStock: 0,
+              isActive: false,
+              retailPrice: action.retailPrice));
+    } else {
+      store.state.database.stockDao.updateStock(
+        c.copyWith(
+          retailPrice: action.retailPrice,
+          costPrice: action.costPrice,
+        ),
+      );
+    }
   };
 }
 

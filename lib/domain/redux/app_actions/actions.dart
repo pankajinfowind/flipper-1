@@ -247,17 +247,17 @@ class SaveRegular {
   final String name;
   final int itemId;
   final int count;
-  final double price;
+  final double retailPrice;
   final double costPrice;
-  final int id;
+  final int variantId;
   final String sku;
 
   SaveRegular(
       {this.count,
-      this.id,
+      this.variantId,
       this.name,
       this.itemId,
-      this.price,
+      this.retailPrice,
       this.sku,
       this.costPrice});
 }

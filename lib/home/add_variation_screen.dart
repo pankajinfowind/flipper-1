@@ -183,7 +183,7 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
     if (variation == null) {
       StoreProvider.of<AppState>(context).dispatch(
         SaveRegular(
-          price: 0,
+          retailPrice: 0,
           costPrice: 0.0,
           itemId: item.id,
           count: 0,
@@ -193,12 +193,12 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
     } else {
       StoreProvider.of<AppState>(context).dispatch(
         SaveRegular(
-          price: 0,
+          retailPrice: 0,
           costPrice: 0.0,
           count: 0,
           itemId: item.id,
           name: 'Regular',
-          id: variation.id,
+          variantId: variation.id,
         ),
       );
     }

@@ -46,7 +46,7 @@ class _BuildCostPriceWidgetState extends State<BuildCostPriceWidget> {
             StoreProvider.of<AppState>(context).dispatch(
               SaveRegular(
                 costPrice: double.parse(costPrice),
-                price: 0,
+                retailPrice: 0,
                 itemId: item.id,
                 name: variation.name,
               ),

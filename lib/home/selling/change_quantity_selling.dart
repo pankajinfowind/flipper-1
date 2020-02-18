@@ -58,7 +58,7 @@ class SellSingleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(vm.currentActiveSaleItem);
+    //todo: on selling item with no price should to to setting a price on item while selling.
     return Scaffold(
       appBar: CommonAppBar(
         disableButton: false,

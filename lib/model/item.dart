@@ -14,7 +14,8 @@ abstract class Item implements Built<Item, ItemBuilder> {
   double get retailPrice;
   @nullable
   double get costPrice;
-
+  @nullable
+  int get variantId;
   @nullable
   int get price;
 

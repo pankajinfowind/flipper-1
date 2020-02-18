@@ -16,8 +16,9 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        title: "Total RWF" +
-            widget.carts.fold(0, (a, b) => a + (b.price * b.count)).toString(),
+        //todo: get price of a variant from a stock.
+        title: "Total RWF",
+        // + widget.carts.fold(0, (a, b) => a + (b.price * b.count)).toString(),
         disableButton: false,
         showActionButton: true,
         actionButtonName: S.of(context).add,
@@ -45,7 +46,9 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
         ),
         trailing: Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-          child: Text("RWF " + (carts[i].price * carts[i].count).toString()),
+          child: Text("RWF "
+              // + (carts[i].price * carts[i].count).toString()
+              ),
         ),
       ));
     }
@@ -56,8 +59,9 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
       ),
       trailing: Padding(
         padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-        child: Text("RWF " +
-            carts.fold(0, (a, b) => a + (b.price * b.count)).toString()),
+        child: Text("RWF "
+            // "RWF " + carts.fold(0, (a, b) => a + (b.price * b.count)).toString(),
+            ),
       ),
     ));
     return list;

@@ -10,8 +10,6 @@ class CartTable extends Table {
   IntColumn get orderId => integer()
       .customConstraint('NULL REFERENCES order_table(id) ON DELETE CASCADE')();
 
-  IntColumn get price => integer()();
-
   IntColumn get variationId => integer().customConstraint(
       'NULL REFERENCES variation_table(id) ON UPDATE CASCADE')();
 

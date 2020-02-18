@@ -72,7 +72,20 @@ class SellSingleItem extends StatelessWidget {
                         : vm.currentIncrement))
                 .toString(),
         onPressedCallback: () {
-          //todo: go ahead and insert the new quantity to a sale.
+          if (StoreProvider.of<AppState>(context).state.cartItem == null) {
+            Item cartItem = Item(
+              (b) => b
+                ..id = vm.itemVariations[0].id
+                ..name = vm.itemVariations[0].name
+                ..branchId = vm.itemVariations[0].branchId
+                ..parentName = vm.currentActiveSaleItem.name
+                ..count = 1,
+            );
+            StoreProvider.of<AppState>(context).dispatch(
+              AddItemToCartAction(cartItem: cartItem),
+            );
+          }
+          StoreProvider.of<AppState>(context).dispatch(SaveCart());
         },
       ),
       body: Column(

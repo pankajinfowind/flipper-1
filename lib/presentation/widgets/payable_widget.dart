@@ -27,9 +27,9 @@ class PayableWidget extends StatelessWidget {
             builder: (context, AsyncSnapshot<List<CartTableData>> snapshot) {
               // print(snapshot.data);
               // print(vm.order.id);
-              int cashReceived = snapshot.data == null
-                  ? 0
-                  : snapshot.data.fold(0, (a, b) => a + (b.count * b.price));
+              int cashReceived = snapshot.data == null ? 0 : 0;
+              //todo: get price from stock
+              // snapshot.data.fold(0, (a, b) => a + (b.count * b.price));
 
               payable.updateValue(cashReceived.toDouble());
               return Row(

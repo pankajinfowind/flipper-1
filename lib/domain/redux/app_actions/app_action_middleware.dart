@@ -22,12 +22,8 @@ List<Middleware<AppState>> AppActionMiddleware(
         _persistUnit(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, CreateEmptyTempCategoryAction>(
         _createTempCategory(navigatorKey, generalRepository)),
-    TypedMiddleware<AppState, SwitchVariation>(
-        _switchVariation(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SaveRegular>(
         _saveRegular(navigatorKey, generalRepository)),
-    TypedMiddleware<AppState, NeedItemVariation>(
-        _needItemVariation(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SaveCart>(
         _saveCart(navigatorKey, generalRepository)),
     TypedMiddleware<AppState, SaveCartCustom>(
@@ -129,89 +125,6 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
         await generalRepository.insertTabs(store, store.state.tab);
       }
     }
-  };
-}
-
-void Function(
-        Store<AppState> store, NeedItemVariation action, NextDispatcher next)
-    _needItemVariation(GlobalKey<NavigatorState> navigatorKey,
-        GeneralRepository generalRepository) {
-  return (store, action, next) async {
-    next(action);
-
-    List<VariationTableData> variations = await generalRepository.getVariations(
-        store: store, itemId: action.item.id);
-
-    //variants
-    List<Item> items = [];
-    for (var i = 0; i < variations.length; i++) {
-      items.add(
-        Item(
-          (b) => b
-            ..id = variations[i].id
-            ..name = variations[i].name
-            ..isActive = variations[i].isActive
-            ..color = action.item.color
-            ..unitId = action.item.unitId
-            ..categoryId = action.item.categoryId
-            ..branchId = variations[i].branchId,
-        ),
-      );
-    }
-
-    //the top parent variant item that stands for other sub variants.
-    store.dispatch(
-      CurrentActiveSaleItem(
-        item: Item((b) => b
-              ..id = action.item.id
-              ..color = action.item.color
-              ..branchId = action.item.branchId
-              ..name = action.item.name
-              ..categoryId = action.item.categoryId
-              ..unitId = action.item.unitId
-              ..price = 0 //set to zero will be changed on edit quantity.
-            ),
-      ),
-    );
-    store.dispatch(ItemsVariation(items: items));
-    Router.navigator.pushNamed(Router.editQuantityItemScreen);
-  };
-}
-
-void Function(
-        Store<AppState> store, SwitchVariation action, NextDispatcher next)
-    _switchVariation(GlobalKey<NavigatorState> navigatorKey,
-        GeneralRepository generalRepository) {
-  return (store, action, next) async {
-    next(action);
-
-    List<Item> itemsVariations = [];
-    for (var i = 0; i < store.state.itemVariations.length; i++) {
-      if (store.state.itemVariations[i].id == action.item.id) {
-        itemsVariations.add(
-          Item(
-            (c) => c
-              ..isActive = true
-              ..price = store.state.itemVariations[i].price
-              ..id = store.state.itemVariations[i].id
-              ..name = store.state.itemVariations[i].name
-              ..branchId = store.state.branch.id,
-          ),
-        );
-      } else {
-        itemsVariations.add(
-          Item(
-            (c) => c
-              ..isActive = false
-              ..id = store.state.itemVariations[i].id
-              ..price = store.state.itemVariations[i].price
-              ..name = store.state.itemVariations[i].name
-              ..branchId = store.state.branch.id,
-          ),
-        );
-      }
-    }
-    store.dispatch(ItemsVariation(items: itemsVariations));
   };
 }
 

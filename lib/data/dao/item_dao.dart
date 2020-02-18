@@ -64,4 +64,8 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
   Future<List<ItemTableData>> getItems() => select(db.itemTable).get();
 
   Stream<List<ItemTableData>> getItemsStream() => select(db.itemTable).watch();
+
+  Stream<List<ItemTableData>> getItemByIdStream(int itemId) {
+    return (select(db.itemTable)..where((t) => t.id.equals(itemId))).watch();
+  }
 }

@@ -217,6 +217,18 @@ class GeneralRepository {
     }
   }
 
+  Future<List<StockTableData>> getItemFromStockByItemId(
+      Store<AppState> store, int itemId) async {
+    return await store.state.database.stockDao.getItemFromStockByItemId(
+        branchId: store.state.branch.id, itemId: itemId);
+  }
+
+  Future<List<VariationTableData>> getVariationsByItems(
+      Store<AppState> store, int itemId) async {
+    return await store.state.database.variationDao
+        .getVariationByItemId(branchId: store.state.branch.id, itemId: itemId);
+  }
+
   Future<bool> insertOrUpdateCart(
       Store<AppState> store, CartTableData data) async {
     //if item with the same variationId exist update content

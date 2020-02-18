@@ -16,6 +16,10 @@ class _$Item extends Item {
   @override
   final int id;
   @override
+  final double retailPrice;
+  @override
+  final double costPrice;
+  @override
   final int price;
   @override
   final bool isActive;
@@ -40,6 +44,8 @@ class _$Item extends Item {
       this.name,
       this.color,
       this.id,
+      this.retailPrice,
+      this.costPrice,
       this.price,
       this.isActive,
       this.quantity,
@@ -72,6 +78,8 @@ class _$Item extends Item {
         name == other.name &&
         color == other.color &&
         id == other.id &&
+        retailPrice == other.retailPrice &&
+        costPrice == other.costPrice &&
         price == other.price &&
         isActive == other.isActive &&
         quantity == other.quantity &&
@@ -94,10 +102,18 @@ class _$Item extends Item {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, parentName.hashCode),
-                                                name.hashCode),
-                                            color.hashCode),
-                                        id.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            0,
+                                                            parentName
+                                                                .hashCode),
+                                                        name.hashCode),
+                                                    color.hashCode),
+                                                id.hashCode),
+                                            retailPrice.hashCode),
+                                        costPrice.hashCode),
                                     price.hashCode),
                                 isActive.hashCode),
                             quantity.hashCode),
@@ -115,6 +131,8 @@ class _$Item extends Item {
           ..add('name', name)
           ..add('color', color)
           ..add('id', id)
+          ..add('retailPrice', retailPrice)
+          ..add('costPrice', costPrice)
           ..add('price', price)
           ..add('isActive', isActive)
           ..add('quantity', quantity)
@@ -145,6 +163,14 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
+
+  double _retailPrice;
+  double get retailPrice => _$this._retailPrice;
+  set retailPrice(double retailPrice) => _$this._retailPrice = retailPrice;
+
+  double _costPrice;
+  double get costPrice => _$this._costPrice;
+  set costPrice(double costPrice) => _$this._costPrice = costPrice;
 
   int _price;
   int get price => _$this._price;
@@ -186,6 +212,8 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
       _name = _$v.name;
       _color = _$v.color;
       _id = _$v.id;
+      _retailPrice = _$v.retailPrice;
+      _costPrice = _$v.costPrice;
       _price = _$v.price;
       _isActive = _$v.isActive;
       _quantity = _$v.quantity;
@@ -220,6 +248,8 @@ class ItemBuilder implements Builder<Item, ItemBuilder> {
             name: name,
             color: color,
             id: id,
+            retailPrice: retailPrice,
+            costPrice: costPrice,
             price: price,
             isActive: isActive,
             quantity: quantity,

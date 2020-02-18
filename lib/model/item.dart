@@ -10,6 +10,10 @@ abstract class Item implements Built<Item, ItemBuilder> {
   @nullable
   String get color;
   int get id;
+  @nullable
+  double get retailPrice;
+  @nullable
+  double get costPrice;
 
   @nullable
   int get price;

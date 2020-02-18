@@ -198,12 +198,14 @@ class Router {
           fullscreenDialog: true,
         );
       case Router.editQuantityItemScreen:
-        if (hasInvalidArgs<Key>(args)) {
-          return misTypedArgsRoute<Key>(args);
+        if (hasInvalidArgs<ChangeQuantityForSellingArguments>(args)) {
+          return misTypedArgsRoute<ChangeQuantityForSellingArguments>(args);
         }
-        final typedArgs = args as Key;
+        final typedArgs = args as ChangeQuantityForSellingArguments ??
+            ChangeQuantityForSellingArguments();
         return MaterialPageRoute(
-          builder: (_) => ChangeQuantityForSelling(key: typedArgs),
+          builder: (_) => ChangeQuantityForSelling(
+              key: typedArgs.key, itemId: typedArgs.itemId),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -281,6 +283,13 @@ class Router {
 //**************************************************************************
 // Arguments holder classes
 //***************************************************************************
+
+//ChangeQuantityForSelling arguments holder class
+class ChangeQuantityForSellingArguments {
+  final Key key;
+  final int itemId;
+  ChangeQuantityForSellingArguments({this.key, this.itemId});
+}
 
 //CartDetailsScreen arguments holder class
 class CartDetailsScreenArguments {

@@ -158,13 +158,6 @@ class IncrementAction {
 }
 
 @immutable
-class NeedItemVariation {
-  final Item item;
-
-  NeedItemVariation({this.item});
-}
-
-@immutable
 class SwitchVariation {
   final Item item;
 

@@ -80,9 +80,6 @@ class $Router {
   @MaterialRoute(fullscreenDialog: true)
   AllItemScreen allItemScreen;
 
-  // @MaterialRoute(fullscreenDialog: true)
-  // EditItemScreen editItemScreen;
-
   ViewItemsScreen viewItemsScreen;
   LoginScreen login;
 

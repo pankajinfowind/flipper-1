@@ -5,6 +5,8 @@ class StockTable extends Table {
   IntColumn get currentStock => integer()();
   BoolColumn get canTrackStock => boolean().withDefault(Constant(false))();
 
+  BoolColumn get isActive => boolean().withDefault(Constant(false))();
+
   RealColumn get costPrice =>
       real().customConstraint('DECIMAL(6,2)').withDefault(Constant(0))();
 

@@ -2695,6 +2695,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
   final int id;
   final int currentStock;
   final bool canTrackStock;
+  final bool isActive;
   final double costPrice;
   final double retailPrice;
   final int itemId;
@@ -2706,6 +2707,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
       {@required this.id,
       @required this.currentStock,
       @required this.canTrackStock,
+      @required this.isActive,
       @required this.costPrice,
       @required this.retailPrice,
       this.itemId,
@@ -2727,6 +2729,8 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}current_stock']),
       canTrackStock: boolType
           .mapFromDatabaseResponse(data['${effectivePrefix}can_track_stock']),
+      isActive:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_active']),
       costPrice: doubleType
           .mapFromDatabaseResponse(data['${effectivePrefix}cost_price']),
       retailPrice: doubleType
@@ -2749,6 +2753,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
       id: serializer.fromJson<int>(json['id']),
       currentStock: serializer.fromJson<int>(json['currentStock']),
       canTrackStock: serializer.fromJson<bool>(json['canTrackStock']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
       costPrice: serializer.fromJson<double>(json['costPrice']),
       retailPrice: serializer.fromJson<double>(json['retailPrice']),
       itemId: serializer.fromJson<int>(json['itemId']),
@@ -2765,6 +2770,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
       'id': serializer.toJson<int>(id),
       'currentStock': serializer.toJson<int>(currentStock),
       'canTrackStock': serializer.toJson<bool>(canTrackStock),
+      'isActive': serializer.toJson<bool>(isActive),
       'costPrice': serializer.toJson<double>(costPrice),
       'retailPrice': serializer.toJson<double>(retailPrice),
       'itemId': serializer.toJson<int>(itemId),
@@ -2785,6 +2791,9 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
       canTrackStock: canTrackStock == null && nullToAbsent
           ? const Value.absent()
           : Value(canTrackStock),
+      isActive: isActive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isActive),
       costPrice: costPrice == null && nullToAbsent
           ? const Value.absent()
           : Value(costPrice),
@@ -2812,6 +2821,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
           {int id,
           int currentStock,
           bool canTrackStock,
+          bool isActive,
           double costPrice,
           double retailPrice,
           int itemId,
@@ -2823,6 +2833,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
         id: id ?? this.id,
         currentStock: currentStock ?? this.currentStock,
         canTrackStock: canTrackStock ?? this.canTrackStock,
+        isActive: isActive ?? this.isActive,
         costPrice: costPrice ?? this.costPrice,
         retailPrice: retailPrice ?? this.retailPrice,
         itemId: itemId ?? this.itemId,
@@ -2837,6 +2848,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
           ..write('id: $id, ')
           ..write('currentStock: $currentStock, ')
           ..write('canTrackStock: $canTrackStock, ')
+          ..write('isActive: $isActive, ')
           ..write('costPrice: $costPrice, ')
           ..write('retailPrice: $retailPrice, ')
           ..write('itemId: $itemId, ')
@@ -2856,17 +2868,19 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
           $mrjc(
               canTrackStock.hashCode,
               $mrjc(
-                  costPrice.hashCode,
+                  isActive.hashCode,
                   $mrjc(
-                      retailPrice.hashCode,
+                      costPrice.hashCode,
                       $mrjc(
-                          itemId.hashCode,
+                          retailPrice.hashCode,
                           $mrjc(
-                              variantId.hashCode,
+                              itemId.hashCode,
                               $mrjc(
-                                  branchId.hashCode,
-                                  $mrjc(createdAt.hashCode,
-                                      updatedAt.hashCode))))))))));
+                                  variantId.hashCode,
+                                  $mrjc(
+                                      branchId.hashCode,
+                                      $mrjc(createdAt.hashCode,
+                                          updatedAt.hashCode)))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -2874,6 +2888,7 @@ class StockTableData extends DataClass implements Insertable<StockTableData> {
           other.id == this.id &&
           other.currentStock == this.currentStock &&
           other.canTrackStock == this.canTrackStock &&
+          other.isActive == this.isActive &&
           other.costPrice == this.costPrice &&
           other.retailPrice == this.retailPrice &&
           other.itemId == this.itemId &&
@@ -2887,6 +2902,7 @@ class StockTableCompanion extends UpdateCompanion<StockTableData> {
   final Value<int> id;
   final Value<int> currentStock;
   final Value<bool> canTrackStock;
+  final Value<bool> isActive;
   final Value<double> costPrice;
   final Value<double> retailPrice;
   final Value<int> itemId;
@@ -2898,6 +2914,7 @@ class StockTableCompanion extends UpdateCompanion<StockTableData> {
     this.id = const Value.absent(),
     this.currentStock = const Value.absent(),
     this.canTrackStock = const Value.absent(),
+    this.isActive = const Value.absent(),
     this.costPrice = const Value.absent(),
     this.retailPrice = const Value.absent(),
     this.itemId = const Value.absent(),
@@ -2910,6 +2927,7 @@ class StockTableCompanion extends UpdateCompanion<StockTableData> {
     this.id = const Value.absent(),
     @required int currentStock,
     this.canTrackStock = const Value.absent(),
+    this.isActive = const Value.absent(),
     this.costPrice = const Value.absent(),
     this.retailPrice = const Value.absent(),
     this.itemId = const Value.absent(),
@@ -2922,6 +2940,7 @@ class StockTableCompanion extends UpdateCompanion<StockTableData> {
       {Value<int> id,
       Value<int> currentStock,
       Value<bool> canTrackStock,
+      Value<bool> isActive,
       Value<double> costPrice,
       Value<double> retailPrice,
       Value<int> itemId,
@@ -2933,6 +2952,7 @@ class StockTableCompanion extends UpdateCompanion<StockTableData> {
       id: id ?? this.id,
       currentStock: currentStock ?? this.currentStock,
       canTrackStock: canTrackStock ?? this.canTrackStock,
+      isActive: isActive ?? this.isActive,
       costPrice: costPrice ?? this.costPrice,
       retailPrice: retailPrice ?? this.retailPrice,
       itemId: itemId ?? this.itemId,
@@ -2980,6 +3000,15 @@ class $StockTableTable extends StockTable
       _canTrackStock ??= _constructCanTrackStock();
   GeneratedBoolColumn _constructCanTrackStock() {
     return GeneratedBoolColumn('can_track_stock', $tableName, false,
+        defaultValue: Constant(false));
+  }
+
+  final VerificationMeta _isActiveMeta = const VerificationMeta('isActive');
+  GeneratedBoolColumn _isActive;
+  @override
+  GeneratedBoolColumn get isActive => _isActive ??= _constructIsActive();
+  GeneratedBoolColumn _constructIsActive() {
+    return GeneratedBoolColumn('is_active', $tableName, false,
         defaultValue: Constant(false));
   }
 
@@ -3056,6 +3085,7 @@ class $StockTableTable extends StockTable
         id,
         currentStock,
         canTrackStock,
+        isActive,
         costPrice,
         retailPrice,
         itemId,
@@ -3094,6 +3124,12 @@ class $StockTableTable extends StockTable
               d.canTrackStock.value, _canTrackStockMeta));
     } else if (canTrackStock.isRequired && isInserting) {
       context.missing(_canTrackStockMeta);
+    }
+    if (d.isActive.present) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableValue(d.isActive.value, _isActiveMeta));
+    } else if (isActive.isRequired && isInserting) {
+      context.missing(_isActiveMeta);
     }
     if (d.costPrice.present) {
       context.handle(_costPriceMeta,
@@ -3159,6 +3195,9 @@ class $StockTableTable extends StockTable
     }
     if (d.canTrackStock.present) {
       map['can_track_stock'] = Variable<bool, BoolType>(d.canTrackStock.value);
+    }
+    if (d.isActive.present) {
+      map['is_active'] = Variable<bool, BoolType>(d.isActive.value);
     }
     if (d.costPrice.present) {
       map['cost_price'] = Variable<double, RealType>(d.costPrice.value);

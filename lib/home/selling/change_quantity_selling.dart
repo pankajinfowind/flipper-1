@@ -1,3 +1,4 @@
+import 'package:flipper/data/main_database.dart';
 import 'package:flipper/domain/redux/app_actions/actions.dart';
 import 'package:flipper/domain/redux/app_state.dart';
 import 'package:flipper/generated/l10n.dart';
@@ -8,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class ChangeQuantityForSelling extends StatefulWidget {
-  ChangeQuantityForSelling({Key key}) : super(key: key);
+  ChangeQuantityForSelling({Key key, @required this.itemId}) : super(key: key);
+  final int itemId;
 
   @override
-  _ChangeQuantityForSellingState createState() => _ChangeQuantityForSellingState();
+  _ChangeQuantityForSellingState createState() =>
+      _ChangeQuantityForSellingState();
 }
 
 class _ChangeQuantityForSellingState extends State<ChangeQuantityForSelling> {
@@ -23,38 +26,47 @@ class _ChangeQuantityForSellingState extends State<ChangeQuantityForSelling> {
         distinct: true,
         converter: CommonViewModel.fromStore,
         builder: (context, vm) {
-          return vm.itemVariations == 1
-              ? SellSingleItem(
-                  variations: vm.itemVariations.toList(),
-                  vm: vm,
-                )
-              : SellMultipleItems(
-                  variations: vm.itemVariations.toList(),
-                  vm: vm,
-                );
+          return StreamBuilder(
+              stream: vm.database.stockDao.getStockByItemIdStream(
+                  branchId: vm.branch.id, itemId: widget.itemId),
+              builder: (context, AsyncSnapshot<List<StockTableData>> snapshot) {
+                if (snapshot.data == null) {
+                  return Text("");
+                }
+                return snapshot.data.length == 1
+                    ? SellSingleItem(
+                        stocks: snapshot.data,
+                        vm: vm,
+                      )
+                    : SellMultipleItems(
+                        stocks: snapshot.data,
+                        vm: vm,
+                      );
+              });
         });
   }
 }
 
 class SellSingleItem extends StatelessWidget {
-  final List<Item> variations;
+  final List<StockTableData> stocks;
   final CommonViewModel vm;
   const SellSingleItem({
     Key key,
-    this.variations,
+    this.stocks,
     this.vm,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(vm.currentActiveSaleItem);
     return Scaffold(
       appBar: CommonAppBar(
         disableButton: false,
         showActionButton: true,
         actionButtonName: S.of(context).add,
         title: "RWF " +
-            variations[0].name +
-            (variations[0].price *
+            vm.currentActiveSaleItem.name +
+            (stocks[0].retailPrice *
                     (vm.currentIncrement == null || vm.currentIncrement == 0
                         ? 1
                         : vm.currentIncrement))
@@ -80,10 +92,18 @@ class SellSingleItem extends StatelessWidget {
           Container(
             height: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Text(variations[0].description),
-          )
+          StreamBuilder(
+              stream: vm.database.itemDao.getItemByIdStream(stocks[0].id),
+              builder: (context, AsyncSnapshot<List<ItemTableData>> snapshot) {
+                if (snapshot.data == null) {
+                  return Text("");
+                }
+                ;
+                return Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Text(snapshot.data[0].description),
+                );
+              })
         ],
       ),
     );
@@ -194,15 +214,16 @@ class controlSaleWidget extends StatelessWidget {
 }
 
 class SellMultipleItems extends StatelessWidget {
-  final List<Item> variations;
+  final List<StockTableData> stocks;
   final CommonViewModel vm;
 
   final Item activeItem;
-  const SellMultipleItems({Key key, this.variations, this.vm, this.activeItem})
+  const SellMultipleItems({Key key, this.stocks, this.vm, this.activeItem})
       : super(key: key);
   //todo: move the currency to settings table so it can be changed.
   @override
   Widget build(BuildContext context) {
+    // print(vm.currentActiveSaleItem);
     return Scaffold(
       appBar: CommonAppBar(
         disableButton: false,
@@ -226,14 +247,14 @@ class SellMultipleItems extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: _itemsList(context, variations),
+            child: _itemsList(context, stocks),
           )
         ],
       ),
     );
   }
 
-  Widget _itemsList(BuildContext context, List<Item> items) {
+  Widget _itemsList(BuildContext context, List<StockTableData> items) {
     return ListView(
       children: ListTile.divideTiles(
         context: context,
@@ -242,117 +263,124 @@ class SellMultipleItems extends StatelessWidget {
     );
   }
 
-  List<Widget> getItems(List<Item> items, BuildContext context) {
+  List<Widget> getItems(List<StockTableData> items, BuildContext context) {
     List<Widget> list = new List<Widget>();
     list.add(
-      ListTile(
-        contentPadding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-        leading: Text(vm.currentActiveSaleItem == null
-            ? "CHOOSE ONE"
-            : vm.currentActiveSaleItem.name + " CHOOSE ONE"),
-      ),
+      chooserRow(),
     );
-
     for (var i = 0; i < items.length; i++) {
-      if (items[i].isActive) {
-        StoreProvider.of<AppState>(context).dispatch(
-          IncrementAction(
-            increment: vm.currentIncrement == null ? 1 : vm.currentIncrement,
-          ),
-        );
-        StoreProvider.of<AppState>(context).dispatch(
-          CurrentActiveSaleItem(
-            item: Item(
-              (ui) => ui
-                ..id = items[i].id
-                ..name = vm.currentActiveSaleItem.name
-                ..categoryId = items[i].categoryId
-                ..unitId = items[i].unitId
-                ..price = items[i].price
-                ..color = items[i].color
-                ..branchId = items[i].branchId
-                ..price = items[i].price,
-            ),
-          ),
-        );
-        Item cartItem = Item(
-          (updated) => updated
+      isItemActive(items, i, context);
+      list.add(
+        itemRow(context, items, i),
+      );
+    }
+    list.add(controlSaleWidget(vm: vm));
+    return list;
+  }
+
+  ListTile chooserRow() {
+    return ListTile(
+      contentPadding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+      leading: Text(vm.currentActiveSaleItem == null
+          ? "CHOOSE ONE"
+          : vm.currentActiveSaleItem.name + " CHOOSE ONE"),
+    );
+  }
+
+  void isItemActive(List<StockTableData> items, int i, BuildContext context) {
+    if (items[i].isActive) {
+      StoreProvider.of<AppState>(context).dispatch(
+        IncrementAction(
+          increment: vm.currentIncrement == null ? 1 : vm.currentIncrement,
+        ),
+      );
+      StoreProvider.of<AppState>(context).dispatch(
+        CurrentActiveSaleItem(
+          item: Item((ui) => ui
+            ..id = items[i].id
+            ..name = vm.currentActiveSaleItem.name
+            // ..categoryId = items[i].categoryId
+            // ..unitId = items[i].unitId
+            // ..price = items[i].price
+            // ..color = items[i].color
+            ..branchId = items[i].branchId
+            ..price = items[i].retailPrice.toInt()),
+        ),
+      );
+      Item cartItem = Item((updated) => updated
             ..count = vm.currentIncrement == null ? 1 : vm.currentIncrement
             ..id = items[i].id
-            ..price = items[i].price
+            ..price = items[i].retailPrice.toInt()
             ..parentName = vm.currentActiveSaleItem.name
             ..branchId = items[i].branchId
-            ..name = items[i].name,
-        );
+            ..name = vm.currentActiveSaleItem.name
+          // ..name = items[i].name,
+          );
 
-        StoreProvider.of<AppState>(context).dispatch(
-          AddItemToCartAction(cartItem: cartItem),
+      StoreProvider.of<AppState>(context).dispatch(
+        AddItemToCartAction(cartItem: cartItem),
+      );
+    }
+  }
+
+  GestureDetector itemRow(
+      BuildContext context, List<StockTableData> items, int i) {
+    return GestureDetector(
+      onTap: () {
+        //todo: implement switch veriation here.
+        CurrentActiveSaleItem(
+          item: Item((ui) => ui
+            ..id = items[i].id
+            ..name = vm.currentActiveSaleItem.name
+            ..price = items[i].retailPrice.toInt()
+            ..branchId = items[i].branchId),
         );
-      }
-      list.add(
-        GestureDetector(
-          onTap: () {
-            StoreProvider.of<AppState>(context).dispatch(
-              SwitchVariation(
-                item: items[i],
+        List<Item> cartItems = [];
+        cartItems.add(
+          Item((updated) => updated
+                ..count = vm.currentIncrement
+                ..id = items[i].id
+                ..price = items[i].retailPrice.toInt()
+                // ..parentName = items[i].parentName
+                ..branchId = items[i].branchId
+              // ..name = items[i].name,
               ),
-            );
-            CurrentActiveSaleItem(
-              item: Item(
-                (ui) => ui
-                  ..id = items[i].id
-                  ..name = vm.currentActiveSaleItem.name
-                  ..categoryId = items[i].categoryId
-                  ..unitId = items[i].unitId
-                  ..price = items[i].price
-                  ..color = items[i].color
-                  ..branchId = items[i].branchId
-                  ..price = items[i].price,
-              ),
-            );
-            List<Item> cartItems = [];
-            cartItems.add(
-              Item(
-                (updated) => updated
-                  ..count = vm.currentIncrement
-                  ..id = items[i].id
-                  ..price = items[i].price
-                  ..parentName = items[i].parentName
-                  ..branchId = items[i].branchId
-                  ..name = items[i].name,
-              ),
-            );
-          },
-          child: ListTile(
-            contentPadding: EdgeInsets.fromLTRB(20, 20, 40, 10),
-            dense: false,
-            title: Align(
-              alignment: Alignment.topRight,
-              child: Text(
-                "FRW " + items[i].price.toString(),
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            leading: Text(
-              items[i].name,
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-            trailing: Radio(
-              value: items[i].id,
-              groupValue: items[i].isActive ? items[i].id : 0,
-              onChanged: (int item) {},
+        );
+      },
+      child: ListTile(
+        contentPadding: EdgeInsets.fromLTRB(20, 20, 40, 10),
+        dense: false,
+        title: Align(
+          alignment: Alignment.topRight,
+          child: Text(
+            "FRW " + items[i].retailPrice.toString(),
+            style: TextStyle(
+              color: Colors.black,
             ),
           ),
         ),
-      );
-    }
-    //at the end add control ui
-    list.add(controlSaleWidget(vm: vm));
-    return list;
+        leading: StreamBuilder(
+            stream:
+                vm.database.variationDao.getVariationByIdStream(items[i].id),
+            builder:
+                (context, AsyncSnapshot<List<VariationTableData>> snapshot) {
+              if (snapshot.data == null) {
+                return Text("");
+              }
+              return Text(
+                snapshot.data[0].name,
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              );
+            }),
+        trailing: Radio(
+          value: items[i].id,
+          groupValue: items[i].isActive ? items[i].id : 0,
+          onChanged: (int item) {},
+        ),
+      ),
+    );
   }
 
   void _saveCart(CommonViewModel vm, context) {

@@ -529,7 +529,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         branchId: vm.branch.id, variantId: variations[i].id),
                     builder: (context,
                         AsyncSnapshot<List<StockTableData>> snapshot) {
-                      if (snapshot.data.length == 0) {
+                      if (snapshot.data == null) {
                         return Text("");
                       }
                       return ListTile(

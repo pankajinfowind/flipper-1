@@ -42,24 +42,7 @@ class _ItemsViewState extends State<ItemsView> {
       addItemRow(list, context, widget.createButtonName);
     }
     if (!widget.showCreateItemOnTop) {
-      list.add(
-        ListTile(
-          contentPadding: EdgeInsets.all(0),
-          leading: Container(
-            width: 50,
-            color: HexColor(FlipperColors.gray),
-            child: IconButton(
-              icon: Icon(Icons.star_border),
-              color: Colors.white,
-              onPressed: () {},
-            ),
-          ),
-          title: Text(
-            S.of(context).reedeemRewards,
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-      );
+      itemRow(list, context);
     }
     ;
 
@@ -69,31 +52,16 @@ class _ItemsViewState extends State<ItemsView> {
           GestureDetector(
             onTap: () {
               if (widget.shouldSeeItem) {
-                Router.navigator.pushNamed(
-                  Router.viewSingleItem,
-                  arguments: ViewSingleItemScreenArguments(
-                    itemId: itemList[i].id,
-                    itemName: itemList[i].name,
-                    itemColor: itemList[i].color,
-                  ),
-                );
+                shouldSeeItemOnly(context, itemList, i);
               } else {
-                dispatchNeedItemVariation(context, itemList, i);
+                onSellingItem(context, itemList, i);
               }
             },
             onLongPress: () {
               if (widget.shouldSeeItem) {
-                Router.navigator.pushNamed(
-                  Router.viewSingleItem,
-                  arguments: ViewSingleItemScreenArguments(
-                    itemId: itemList[i].id,
-                    itemName: itemList[i].name,
-                    unitId: itemList[i].unitId,
-                    itemColor: itemList[i].color,
-                  ),
-                );
+                shouldSeeItemOnly(context, itemList, i);
               } else {
-                dispatchNeedItemVariation(context, itemList, i);
+                onSellingItem(context, itemList, i);
               }
             },
             child: ListTile(
@@ -118,7 +86,7 @@ class _ItemsViewState extends State<ItemsView> {
                 style: TextStyle(color: Colors.black),
               ),
               trailing: StreamBuilder(
-                stream: vm.database.stockDao.getStockByVariantByItemIdStream(
+                stream: vm.database.stockDao.getStockByItemIdStream(
                     branchId: vm.branch.id, itemId: itemList[i].id),
                 builder:
                     (context, AsyncSnapshot<List<StockTableData>> snapshot) {
@@ -148,17 +116,49 @@ class _ItemsViewState extends State<ItemsView> {
     return list;
   }
 
-  void dispatchNeedItemVariation(
+  void onSellingItem(
       BuildContext context, List<ItemTableData> itemList, int i) {
-    return StoreProvider.of<AppState>(context).dispatch(
-      NeedItemVariation(
-        item: Item(
-          (y) => y
-            ..id = itemList[i].id
-            ..name = itemList[i].name
-            ..branchId = itemList[i].branchId
-            ..unitId = itemList[i].unitId
-            ..categoryId = itemList[i].categoryId,
+    StoreProvider.of<AppState>(context).dispatch(CurrentActiveSaleItem(
+        item: Item((b) => b
+          ..name = itemList[i].name
+          ..branchId = itemList[i].branchId
+          ..id = itemList[i].id)));
+    Router.navigator.pushNamed(Router.editQuantityItemScreen,
+        arguments: ChangeQuantityForSellingArguments(itemId: itemList[i].id));
+  }
+
+  void shouldSeeItemOnly(
+      BuildContext context, List<ItemTableData> itemList, int i) {
+    StoreProvider.of<AppState>(context).dispatch(CurrentActiveSaleItem(
+        item: Item((b) => b
+          ..name = itemList[i].name
+          ..id = itemList[i].id)));
+    Router.navigator.pushNamed(
+      Router.viewSingleItem,
+      arguments: ViewSingleItemScreenArguments(
+        itemId: itemList[i].id,
+        itemName: itemList[i].name,
+        itemColor: itemList[i].color,
+      ),
+    );
+  }
+
+  void itemRow(List<Widget> list, BuildContext context) {
+    return list.add(
+      ListTile(
+        contentPadding: EdgeInsets.all(0),
+        leading: Container(
+          width: 50,
+          color: HexColor(FlipperColors.gray),
+          child: IconButton(
+            icon: Icon(Icons.star_border),
+            color: Colors.white,
+            onPressed: () {},
+          ),
+        ),
+        title: Text(
+          S.of(context).reedeemRewards,
+          style: TextStyle(color: Colors.black),
         ),
       ),
     );

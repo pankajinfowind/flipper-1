@@ -127,19 +127,21 @@ class _ItemsViewState extends State<ItemsView> {
             .database
             .variationDao
             .getVariationByItemId(branchId: branchId, itemId: itemList[i].id);
-    List<Item> items = [];
+    List<Item> variants = [];
     for (var i = 0; i < variations.length; i++) {
-      items.add(
+      variants.add(
         Item(
           (b) => b
             ..id = variations[i].itemId
+            ..variantId = variations[i].id
             ..branchId = variations[i].branchId
             ..name = variations[i].name,
-          // ..categoryId = variations[i].cate
         ),
       );
     }
-    StoreProvider.of<AppState>(context).dispatch(ItemsVariation(items: items));
+
+    StoreProvider.of<AppState>(context)
+        .dispatch(ItemsVariation(items: variants));
     StoreProvider.of<AppState>(context).dispatch(
       CurrentActiveSaleItem(
         item: Item(

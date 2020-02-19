@@ -186,9 +186,7 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
         GeneralRepository generalRepository) {
   return (store, action, next) async {
     next(action);
-    print(store.state.order.id);
-    print(store.state.cartItem.variantId);
-    print(store.state.branch.id);
+
     await generalRepository.insertOrUpdateCart(
       store,
       //ignore: missing_required_param
@@ -199,7 +197,7 @@ void Function(Store<AppState> store, SaveCart action, NextDispatcher next)
             : store.state.currentIncrement,
         variationName: store.state.cartItem.name,
         orderId: store.state.order.id,
-        variationId: store.state.cartItem.id,
+        variationId: store.state.cartItem.variantId,
         parentName: store.state.cartItem.parentName,
       ),
     );

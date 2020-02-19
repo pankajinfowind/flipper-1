@@ -235,9 +235,6 @@ class GeneralRepository {
     CartTableData existingCart = await store.state.database.cartDao
         .getExistingCartItem(data.variationId);
     if (existingCart == null) {
-      print(data.copyWith(
-        createdAt: DateTime.now(),
-      ));
       store.state.database.cartDao.insert(
         data.copyWith(
           createdAt: DateTime.now(),
@@ -257,6 +254,15 @@ class GeneralRepository {
 
   Future<bool> updateOrder(Store<AppState> store, OrderTableData order) async {
     return await store.state.database.orderDao.updateOrder(order);
+  }
+
+  Future<OrderTableData> getOrder(Store<AppState> store, int orderId) async {
+    return await store.state.database.orderDao.getOrderById(orderId);
+  }
+
+  Future<VariationTableData> getVariationById(
+      Store<AppState> store, int variantId) async {
+    return await store.state.database.variationDao.getVariationById(variantId);
   }
 
   Future<OrderTableData> createDraftOrderOrReturnExistingOne(

@@ -13,12 +13,16 @@ class OrderDao extends DatabaseAccessor<Database> with _$OrderDaoMixin {
   Future insert(Insertable<OrderTableData> order) =>
       into(db.orderTable).insert(order);
 
-
   Future<OrderTableData> getExistingDraftOrder() {
-    return (select(db.orderTable)
-          ..where((t) => t.status.equals("draft")))
+    return (select(db.orderTable)..where((t) => t.status.equals("draft")))
         .getSingle();
   }
+
+  Future<OrderTableData> getOrderById(int orderId) {
+    return (select(db.orderTable)..where((t) => t.id.equals(orderId)))
+        .getSingle();
+  }
+
   Future updateOrder(OrderTableData entry) {
     // using replace will update all fields from the entry that are not marked as a primary key.
     // it will also make sure that only the entry with the same primary key will be updated.

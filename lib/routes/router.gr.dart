@@ -148,12 +148,16 @@ class Router {
           fullscreenDialog: true,
         );
       case Router.addVariationScreen:
-        if (hasInvalidArgs<Key>(args)) {
-          return misTypedArgsRoute<Key>(args);
+        if (hasInvalidArgs<AddVariationScreenArguments>(args)) {
+          return misTypedArgsRoute<AddVariationScreenArguments>(args);
         }
-        final typedArgs = args as Key;
+        final typedArgs = args as AddVariationScreenArguments ??
+            AddVariationScreenArguments();
         return MaterialPageRoute(
-          builder: (_) => AddVariationScreen(key: typedArgs),
+          builder: (_) => AddVariationScreen(
+              key: typedArgs.key,
+              regularRetailPrice: typedArgs.regularRetailPrice,
+              regularCostPrice: typedArgs.regularCostPrice),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -283,6 +287,15 @@ class Router {
 //**************************************************************************
 // Arguments holder classes
 //***************************************************************************
+
+//AddVariationScreen arguments holder class
+class AddVariationScreenArguments {
+  final Key key;
+  final double regularRetailPrice;
+  final double regularCostPrice;
+  AddVariationScreenArguments(
+      {this.key, this.regularRetailPrice, this.regularCostPrice});
+}
 
 //ChangeQuantityForSelling arguments holder class
 class ChangeQuantityForSellingArguments {

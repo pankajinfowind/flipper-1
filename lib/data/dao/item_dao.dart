@@ -3,6 +3,7 @@ import 'package:flipper/data/item_table.dart';
 import 'package:flipper/data/main_database.dart';
 import 'package:flipper/data/variation_table.dart';
 import 'package:moor/moor.dart';
+
 part 'item_dao.g.dart';
 
 @UseDao(tables: [ItemTable, VariationTable])
@@ -57,6 +58,13 @@ class ItemDao extends DatabaseAccessor<Database> with _$ItemDaoMixin {
     return (select(db.itemTable)
           ..where((t) => t.name.equals(name))
           ..where((t) => t.id.equals(itemId))
+          ..where((t) => t.branchId.equals(branchId)))
+        .getSingle();
+  }
+
+  Future<ItemTableData> getItemByName({String name, int branchId}) {
+    return (select(db.itemTable)
+          ..where((t) => t.name.equals(name))
           ..where((t) => t.branchId.equals(branchId)))
         .getSingle();
   }

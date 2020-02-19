@@ -379,7 +379,7 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
             //ignore: missing_required_param
             ColorTableData(isActive: false, name: colors[i]));
       }
-
+      _cleanApp(store);
       //branch
       if (businesses.length == 0) {
         Router.navigator.pushNamed(Router.signUpScreen);
@@ -388,6 +388,25 @@ void Function(Store<AppState> store, dynamic action, NextDispatcher next)
       }
     }
   };
+}
+
+void _cleanApp(Store<AppState> store) async {
+  //todo: use the tmp id find the stock related to the item
+  //todo: delete all of them by looping through them then find the variant before deleting
+  //todo: then delete all variants related to that stock too.
+  //todo: update addItem onClose method and check if it still work onWillPop.
+  //todo: update all table to have isOnline boolean to mark data that need to be synced.
+
+  ItemTableData item = await store.state.database.itemDao
+      .getItemByName(name: 'tmp', branchId: store.state.branch.id);
+  store.state.database.itemDao.deleteItem(item);
+  if (item != null) {
+    List<VariationTableData> variations =
+        await store.state.database.variationDao.getVariantByItemId(item.id);
+    for (var i = 0; i < variations.length; i++) {
+      await store.state.database.variationDao.deleteVariation(variations[i]);
+    }
+  }
 }
 
 void Function(

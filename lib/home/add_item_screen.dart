@@ -207,7 +207,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                     if (snapshot.data == null) {
                                       return Text(S.of(context).selectCategory);
                                     }
-                                    return snapshot.data.length == 0
+                                    return snapshot.data == null
                                         ? Text(S.of(context).selectCategory)
                                         : categorySelector(snapshot.data);
                                   },
@@ -277,7 +277,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     ),
                     StreamBuilder(
                       stream: vm.database.variationDao.getVariationByStream2(
-                          'Regular',
+                          'tmp',
                           vm.tmpItem
                               .id), //do we have regular variant on this item?
                       builder: (context,
@@ -285,14 +285,14 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         if (snapshot.data == null) {
                           return Text("");
                         }
-                        return snapshot.data.length == 0
+                        return snapshot.data == null
                             ? buildRetailPriceWidget(vm, context)
                             : Text("");
                       },
                     ),
                     StreamBuilder(
                       stream: vm.database.variationDao.getVariationByStream2(
-                          'Regular',
+                          'tmp',
                           vm.tmpItem
                               .id), //do we have regular variant on this item?
                       builder: (context,
@@ -300,7 +300,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         if (snapshot.data == null) {
                           return Text("");
                         }
-                        return snapshot.data.length == 0
+                        return snapshot.data == null
                             ? buildCostPriceWidget(vm, context)
                             : Text("");
                       },
@@ -313,7 +313,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         if (snapshot.data == null) {
                           return Text("");
                         }
-                        return snapshot.data.length == 0
+                        return snapshot.data == null
                             ? Center(
                                 child: Container(
                                   width: 300,
@@ -357,8 +357,18 @@ class _AddItemScreenState extends State<AddItemScreen> {
                               vm.database.actionsDao.updateAction(
                                   _actions.copyWith(isLocked: true));
 
-                              Router.navigator
-                                  .pushNamed(Router.addVariationScreen);
+                              //pass to the screen the variant needed for creating and or saving regular
+                              Router.navigator.pushNamed(
+                                  Router.addVariationScreen,
+                                  arguments: AddVariationScreenArguments(
+                                      regularCostPrice:
+                                          tForm.retailPrice == null
+                                              ? 0
+                                              : double.parse(tForm.retailPrice),
+                                      regularRetailPrice:
+                                          tForm.costPrice == null
+                                              ? 0
+                                              : double.parse(tForm.costPrice)));
                             }
                           },
                         ),
@@ -493,6 +503,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       StoreProvider.of<AppState>(context).dispatch(
         SaveRegular(
           itemId: item.id,
+          name: "Regular",
           retailPrice: double.parse(tForm.retailPrice),
           costPrice: double.parse(tForm.costPrice),
           variantId: variation.id,
@@ -540,7 +551,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           Icons.dehaze,
                         ),
                         subtitle: Text(
-                            //todo: ${variations[i].price
                             "${variations[i].name} \nRWF ${snapshot.data[0].retailPrice}"),
                         trailing: Row(
                             mainAxisSize: MainAxisSize.min,

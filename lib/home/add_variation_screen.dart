@@ -11,7 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class AddVariationScreen extends StatefulWidget {
-  AddVariationScreen({Key key}) : super(key: key);
+  AddVariationScreen(
+      {Key key,
+      @required this.regularRetailPrice,
+      @required this.regularCostPrice})
+      : super(key: key);
+  final double regularRetailPrice;
+  final double regularCostPrice;
 
   @override
   _AddVariationScreenState createState() => _AddVariationScreenState();
@@ -67,25 +73,22 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                         ),
                       ),
                     ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: GestureDetector(
-                          onTap: () {
-                            Router.navigator.pushNamed(Router.addUnitType);
-                          },
-                          child: ListTile(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 0.3),
-                            leading: Text(S.of(context).unityType),
-                            trailing: Wrap(
-                              children: <Widget>[
-                                Text(vm.currentUnit != null
-                                    ? vm.currentUnit.name
-                                    : S.of(context).unityType),
-                                Icon(Icons.arrow_forward_ios)
-                              ],
-                            ),
+                    Container(
+                      width: 300,
+                      child: GestureDetector(
+                        onTap: () {
+                          Router.navigator.pushNamed(Router.addUnitType);
+                        },
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0.3),
+                          leading: Text(S.of(context).unityType),
+                          trailing: Wrap(
+                            children: <Widget>[
+                              Text(vm.currentUnit != null
+                                  ? vm.currentUnit.name
+                                  : S.of(context).unityType),
+                              Icon(Icons.arrow_forward_ios)
+                            ],
                           ),
                         ),
                       ),
@@ -116,21 +119,19 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
                     ),
                     buildRetailPriceWidget(context),
                     buildCostPriceWidget(context),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        child: TextFormField(
-                          style: TextStyle(color: HexColor("#2d3436")),
-                          validator: Validators.isStringHasMoreChars,
-                          onChanged: (_sku) {
-                            if (_sku != '') {
-                              sku = _sku;
-                            }
-                          },
-                          decoration: InputDecoration(
-                              hintText: S.of(context).sKU,
-                              focusColor: HexColor("#0984e3")),
-                        ),
+                    Container(
+                      width: 300,
+                      child: TextFormField(
+                        style: TextStyle(color: HexColor("#2d3436")),
+                        validator: Validators.isStringHasMoreChars,
+                        onChanged: (_sku) {
+                          if (_sku != '') {
+                            sku = _sku;
+                          }
+                        },
+                        decoration: InputDecoration(
+                            hintText: S.of(context).sKU,
+                            focusColor: HexColor("#0984e3")),
                       ),
                     ),
                     Text(S.of(context).leavePriceBlank)
@@ -168,8 +169,9 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
       StockTableData(
         currentStock: 0,
         canTrackStock: false,
-        retailPrice: 0,
+        retailPrice: double.parse(retailPrice),
         itemId: item.id,
+        costPrice: double.parse(costPrice),
         variantId: variantId,
         branchId: vm.branch.id,
         createdAt: DateTime.now(),
@@ -178,24 +180,25 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
     vm.database.actionsDao.updateAction(_actions.copyWith(isLocked: true));
   }
 
+  //there might be a case when a user came here without saving a regular so save it here.
   void createOrUpdateRegularVariant(
       VariationTableData variation, BuildContext context, ItemTableData item) {
     if (variation == null) {
       StoreProvider.of<AppState>(context).dispatch(
         SaveRegular(
-          retailPrice: 0,
-          costPrice: 0.0,
+          retailPrice: widget.regularRetailPrice,
+          costPrice: widget.regularCostPrice,
           itemId: item.id,
-          count: 0,
+          count: 1,
           name: 'Regular',
         ),
       );
     } else {
       StoreProvider.of<AppState>(context).dispatch(
         SaveRegular(
-          retailPrice: 0,
-          costPrice: 0.0,
-          count: 0,
+          retailPrice: widget.regularRetailPrice,
+          costPrice: widget.regularCostPrice,
+          count: 1,
           itemId: item.id,
           name: 'Regular',
           variantId: variation.id,
@@ -204,42 +207,38 @@ class _AddVariationScreenState extends State<AddVariationScreen> {
     }
   }
 
-  Center buildCostPriceWidget(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 300,
-        child: TextFormField(
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          validator: Validators.isStringHasMoreChars,
-          onChanged: (cost) {
-            if (cost != '') {
-              costPrice = cost;
-            }
-          },
-          decoration: InputDecoration(
-              hintText: S.of(context).costPrice, focusColor: Colors.blue),
-        ),
+  Container buildCostPriceWidget(BuildContext context) {
+    return Container(
+      width: 300,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        style: TextStyle(color: Colors.black),
+        validator: Validators.isStringHasMoreChars,
+        onChanged: (cost) {
+          if (cost != '') {
+            costPrice = cost;
+          }
+        },
+        decoration: InputDecoration(
+            hintText: S.of(context).costPrice, focusColor: Colors.blue),
       ),
     );
   }
 
-  Center buildRetailPriceWidget(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 300,
-        child: TextFormField(
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          validator: Validators.isStringHasMoreChars,
-          onChanged: (price) {
-            if (price != '') {
-              retailPrice = price;
-            }
-          },
-          decoration: InputDecoration(
-              hintText: S.of(context).retailPrice, focusColor: Colors.blue),
-        ),
+  Container buildRetailPriceWidget(BuildContext context) {
+    return Container(
+      width: 300,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        style: TextStyle(color: Colors.black),
+        validator: Validators.isStringHasMoreChars,
+        onChanged: (price) {
+          if (price != '') {
+            retailPrice = price;
+          }
+        },
+        decoration: InputDecoration(
+            hintText: S.of(context).retailPrice, focusColor: Colors.blue),
       ),
     );
   }

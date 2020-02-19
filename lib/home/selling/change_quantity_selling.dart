@@ -144,7 +144,7 @@ class SellMultipleItems extends StatelessWidget {
   final Item activeItem;
   const SellMultipleItems({Key key, this.stocks, this.vm, this.activeItem})
       : super(key: key);
-  //todo: move the currency to settings table so it can be changed.
+
   @override
   Widget build(BuildContext context) {
     // print(vm.currentActiveSaleItem);
@@ -189,23 +189,24 @@ class SellMultipleItems extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: _itemsList(context, stocks),
+            child: _variantsList(context, stocks),
           )
         ],
       ),
     );
   }
 
-  Widget _itemsList(BuildContext context, List<StockTableData> stocks) {
+  Widget _variantsList(BuildContext context, List<StockTableData> stocks) {
     return ListView(
       children: ListTile.divideTiles(
         context: context,
-        tiles: getItems(stocks, context),
+        tiles: getVariantsRow(stocks, context),
       ).toList(),
     );
   }
 
-  List<Widget> getItems(List<StockTableData> stocks, BuildContext context) {
+  List<Widget> getVariantsRow(
+      List<StockTableData> stocks, BuildContext context) {
     List<Widget> list = new List<Widget>();
     list.add(
       chooserRow(),
@@ -268,11 +269,11 @@ class SellMultipleItems extends StatelessWidget {
       onTap: () {
         //todo: implement switch veriation here.
         CurrentActiveSaleItem(
-          item: buildItem2(stocks, i),
+          item: buildActiveItem(stocks, i),
         );
         List<Item> cartItems = [];
         cartItems.add(
-          buildItem2(stocks, i),
+          buildActiveItem(stocks, i),
         );
       },
       child: ListTile(
@@ -311,12 +312,13 @@ class SellMultipleItems extends StatelessWidget {
     );
   }
 
-  Item buildItem2(List<StockTableData> stocks, int i) {
+  Item buildActiveItem(List<StockTableData> stocks, int i) {
     return Item(
       (updated) => updated
         ..count = vm.currentIncrement
         ..id = stocks[i].id
         ..variantId = stocks[i].variantId
+        ..isActive = stocks[i].isActive
         ..price = stocks[i].retailPrice.toInt()
         ..branchId = stocks[i].branchId,
     );

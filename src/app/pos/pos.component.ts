@@ -19,7 +19,6 @@ import { ModelService } from '@enexus/flipper-offline-database';
 })
 export class PosComponent {
 
-
   get theVariantFiltered(): Variant[] {
     return this.seTheVariantFiltered;
   }
@@ -139,7 +138,6 @@ export class PosComponent {
       variants.forEach(variant => {
         const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
           .andWhere('branchId', this.defaultBranch.id)
-          .andWhere('currentStock', 0, '>')
           .first<Stock>();
         if (stock) {
           const product: Product = this.model.find<Product>(Tables.products, variant.productId);
@@ -163,10 +161,10 @@ export class PosComponent {
             markup: 0
           };
 
-          if (!stock.canTrackingStock) {
+          if (stock.canTrackingStock===false) {
             this.variants.push(variation);
           } else {
-            if (stock.canTrackingStock && stock.currentStock > 0) {
+            if (stock.canTrackingStock===true && stock.currentStock > 0) {
               this.variants.push(variation);
             }
           }
@@ -216,10 +214,10 @@ export class PosComponent {
           tax = this.model.find<Taxes>(Tables.taxes, product.taxId);
 
         } else {
-          tax = this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true);
+          tax = 0;
         }
       } else {
-        tax = this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true);
+        tax = 0;
       }
 
 
@@ -261,16 +259,16 @@ export class PosComponent {
     if (variant.productId > 0) {
       product = this.model.find<Product>(Tables.products, variant.productId);
       if (product) {
-        tax = this.model.find<Taxes>(Tables.taxes, product.taxId);
+        tax = this.model.find<Taxes>(Tables.taxes, product.taxId)?this.model.find<Taxes>(Tables.taxes, product.taxId).percentage:0;
 
       } else {
-        tax = this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true);
+        tax = 0;
       }
     } else {
-      tax = this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true);
+      tax = event.tax?event.tax:0;
     }
 
-    taxRate = tax ? tax.percentage : 0;
+    taxRate = event.tax?event.tax:tax ? tax : 0;
 
     const orderDetails: OrderDetails = {
       price: variant.priceVariant.retailPrice,
@@ -360,6 +358,7 @@ export class PosComponent {
     this.model.update<Order>(Tables.order, event, event.id);
     this.hasDraftOrder();
   }
+
 }
 
 

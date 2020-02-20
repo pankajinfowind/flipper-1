@@ -23,14 +23,14 @@ export class LoginComponent implements OnInit {
         if(arg && arg.length > 0) {
 
            if (this.currentUser.user()) {
-            this.currentUser.updateUser({  name: arg[1],
-              email: arg[0],
-              token: arg[3], active: true }, this.currentUser.user().id);
+            this.currentUser.updateUser({  name: arg[1].replace('%20', ' '),
+              email: arg[0].replace('%20', ' '),
+              token: arg[3].replace('%20', ' '), active: true }, this.currentUser.user().id);
           } else {
             this.currentUser.insertUser({
-              name: arg[1],
-              email: arg[0],
-              token: arg[3],
+              name: arg[1].replace('%20', ' '),
+              email: arg[0].replace('%20', ' '),
+              token: arg[3].replace('%20', ' '),
               active: true
             });
           }

@@ -1,6 +1,6 @@
 {
   "name": "Flipper",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "Flipper is an inventory management system and POS system.",
   "homepage": "https://flipper.rw/",
   "author": {
@@ -117,10 +117,10 @@
     "@enexus/flipper-event": "0.0.2",
     "@enexus/flipper-file-upload": "0.0.1",
     "@enexus/flipper-font": "0.0.2",
-    "@enexus/flipper-inventory": "0.0.16",
+    "@enexus/flipper-inventory": "0.0.20",
     "@enexus/flipper-menu": "0.0.11",
     "@enexus/flipper-offline-database": "0.0.10",
-    "@enexus/flipper-pos": "0.0.19",
+    "@enexus/flipper-pos": "0.0.20",
     "@enexus/flipper-settings": "0.0.19",
     "@enexus/flipper-vendors": "0.0.3",
     "@types/lodash": "^4.14.149",

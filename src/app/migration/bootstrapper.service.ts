@@ -29,6 +29,9 @@ export class Bootstrapper {
    * Bootstrap application with data returned from server.
    */
 
+   addTableColumns(table:string,columns:string){
+     this.schema.addColumn(table, columns);
+   }
   private insertDefaultData<T>(menus: T[], table: string, type = '') {
     menus.forEach(m => {
       const menu: any = m;
@@ -69,6 +72,12 @@ export class Bootstrapper {
               if (table.query && table.name) {
                 const myTable = config.database.name + '.' + table.name;
                 this.schema.create(myTable, table.query);
+
+                //Add colums
+                if(table.name === 'orderDetails'){
+                //  this.addTableColumns(config.database.name + '.' + table.name,' taxRatess int(11)');
+                }
+                
 
                 ///////////////////////////////////// ADD DEFAULT MENUS //////////////////////////
 

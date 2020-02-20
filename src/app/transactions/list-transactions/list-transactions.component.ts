@@ -72,11 +72,11 @@ export class ListTransactionsComponent implements OnInit,OnDestroy {
   }
 
 
-doSelect(row: Order) {
-this.selectedRow=row;
-this.selectedRowEmit.emit(row);
-this.currencyEmit.emit(this.currency);
-}
+  doSelect(row: Order) {
+    this.selectedRow=row;
+    this.selectedRowEmit.emit(row);
+    this.currencyEmit.emit(this.currency);
+  }
 
   set loadAllTransactions(hosts: Order[]) {
     this.dataSource = new MatTableDataSource(hosts);

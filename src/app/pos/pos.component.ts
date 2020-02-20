@@ -204,29 +204,14 @@ export class PosComponent {
     }
 
     if (details.action === 'UPDATE') {
-
-      let taxRate = 0;
-      let product = null;
-      let tax = null;
-      if (details.item.variantId > 0) {
-        product = this.model.find<Product>(Tables.products, details.item.variantId);
-        if (product) {
-          tax = this.model.find<Taxes>(Tables.taxes, product.taxId);
-
-        } else {
-          tax = 0;
-        }
-      } else {
-        tax = 0;
-      }
-
-
-      taxRate = tax ? tax.percentage : 0;
-
       details.item.price = parseFloat(details.item.price);
       details.item.quantity = details.item.quantity;
-      details.item.taxAmount = ((details.item.price * details.item.quantity) * taxRate) / 100;
-      details.item.subTotal = details.item.price * details.item.quantity;
+
+    let taxRate=details.item.taxRate?details.item.taxRate:0;
+    let subTotal=details.item.price * details.item.quantity;
+      
+      details.item.taxAmount = (subTotal * taxRate) / 100;
+      details.item.subTotal = subTotal;
       this.model.update<OrderDetails>(Tables.orderDetails, details.item, details.item.id);
     }
 
@@ -280,6 +265,7 @@ export class PosComponent {
       SKU: variant.SKU,
       quantity: event.quantity,
       variantId: variant.id,
+      taxRate:taxRate,
       taxAmount: ((variant.priceVariant.retailPrice * event.quantity) * taxRate) / 100,
       orderId: this.setCurrentOrder.id,
       subTotal: variant.priceVariant.retailPrice * event.quantity,

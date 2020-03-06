@@ -1,24 +1,16 @@
 <mat-sidenav-container>
     <mat-sidenav [opened]="true" mode="side">
     
-        <flipper-menu 
-        [business]="business" 
-        [branch]="branch" 
-        [user]="user" 
-        [menu]="menu" 
-        [settingMenu]="settingMenu"
+        <flipper-menu
         (menuToggled)="isMenuToggled($event)" 
-        (switchedBusiness)="displaySwitchedBusiness($event)" 
-        (switchedBranch)="displaySwitchedBranch($event)"
         (logoutUser)="didUserLoggedOut($event)" 
-        (routerClicked)="getRouterClicked($event)" 
          ></flipper-menu>
     
     </mat-sidenav>
     
     
         <mat-sidenav-content class="max-container-fliud" [class.minContainerFliud]="userToggledMenu">
-    
+   
             <router-outlet></router-outlet>
           
         </mat-sidenav-content>

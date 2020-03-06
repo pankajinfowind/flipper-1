@@ -12,16 +12,17 @@ import { CurrentUser } from './current-user';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
 import { UserBusinessEvent } from './user-business-event';
+import { UserSubscriptionEvent } from './user-subscription-event';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad {
+export class HasSubscribedGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private eventBus: FlipperEventBusService,private currentUser: CurrentUser, private router: Router) {
-    this.eventBus.of < UserBusinessEvent > (UserBusinessEvent.CHANNEL)
-    .pipe(filter(e =>e.business && e.business.length > 0))
+    this.eventBus.of < UserSubscriptionEvent > (UserSubscriptionEvent.CHANNEL)
+    .pipe(filter(e =>e.subscription && e.subscription.didSubscribed))
     .subscribe(res =>
-      this.currentUser.currentBusiness = res.business);
+      this.currentUser.currentSubscription = res.subscription);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -38,13 +39,14 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
 
   private async handle(url: string) {
 
-    await this.currentUser.business();
-    if (this.currentUser.currentBusiness && this.currentUser.currentBusiness.length > 0) {
+    await this.currentUser.subscription();
+    console.log(this.currentUser.currentSubscription);
+    if (this.currentUser.currentSubscription && this.currentUser.currentSubscription.didSubscribed) {
       return true;
     }
 
     this.currentUser.redirectUri = url;
-    this.router.navigate(['/setup/business/new']);
+    this.router.navigate(['/pay-now']);
     return false;
   }
 

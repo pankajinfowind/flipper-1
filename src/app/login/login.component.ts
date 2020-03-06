@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { CurrentUser } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInAnimation } from '@enexus/flipper-components';
+import { fadeInAnimation, PouchConfig, PouchDBService } from '@enexus/flipper-components';
+import { FlipperEventBusService } from '@enexus/flipper-event';
+import { UserLoggedEvent } from '../core/guards/user-logged-event';
+import { filter } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-login',
@@ -16,36 +19,60 @@ import { fadeInAnimation } from '@enexus/flipper-components';
   ],
 })
 export class LoginComponent implements OnInit {
+   user:Array<any>;
+  constructor(private eventBus: FlipperEventBusService,private database: PouchDBService,private router: Router, public currentUser: CurrentUser,private ngZone: NgZone, public electronService: ElectronService) {
+    this.database.connect(PouchConfig.bucket);
+  }
 
-  constructor(private router: Router, public currentUser: CurrentUser,private ngZone: NgZone, public electronService: ElectronService) {
+   ngOnInit() {
+    this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
+    .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !==undefined)))
+    .subscribe(res =>
+      this.currentUser.currentUser = res.user);
+
+    if(PouchConfig.canSync){
+      this.database.sync(PouchConfig.syncUrl);
+    }
+
     this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
-      this.ngZone.run(() => {
-        if(arg && arg.length > 0) {
-
-           if (this.currentUser.user()) {
-            this.currentUser.updateUser({  name: arg[1].replace('%20', ' '),
-              email: arg[0].replace('%20', ' '),
-              token: arg[3].replace('%20', ' '), active: true }, this.currentUser.user().id);
-          } else {
-            this.currentUser.insertUser({
+      this.ngZone.run(async () =>  {
+            if(arg && arg.length > 0) {
+            var user={
+              _id:'',
               name: arg[1].replace('%20', ' '),
               email: arg[0].replace('%20', ' '),
               token: arg[3].replace('%20', ' '),
-              active: true
-            });
-          }
-           this.router.navigate(['/admin']);
-        }
-      });
-  });
-  }
+              active: true,
+              createdAt:new Date(),
+              updatedAt:new Date(),
+              id:this.database.uid()
+              };
+            
+              localStorage.setItem("channel",arg[4].replace('%20', ' '));
+              PouchConfig.Tables.user="user_"+localStorage.getItem("channel");
+              PouchConfig.channel=localStorage.getItem("channel");
+          
+              await this.currentUser.user(PouchConfig.Tables.user);
 
-  ngOnInit() { }
+                if (this.currentUser.currentUser) {
+                    user.id=this.currentUser.currentUser.id;
+                    user.createdAt=this.currentUser.currentUser.createdAt;
+                }
+
+                if(this.database.put(PouchConfig.Tables.user,user)){
+                  return window.location.href="/admin";
+                }
+            }
+
+       });
+    });
+ 
+  }
 
   userLogin() {
-    this.electronService.ipcRenderer.send('sent-login-message', 'ganza need to login');
-
+    this.electronService.ipcRenderer.send('sent-login-message', 'someone need to login');
   }
+
 
   getStaredNewToFlipper() {
     this.electronService.redirect('https://flipper.rw');

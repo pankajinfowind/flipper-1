@@ -1,0 +1,36 @@
+{
+  "_id":"branches",
+  "branches": [
+    {
+      "active": false,
+      "businessId": 1,
+      "createdAt": "2020-02-28T15:37:50.204Z",
+      "id": 1,
+      "mapLatitude": "-1.30",
+      "mapLongitude": "1.30",
+      "name": "My Business",
+      "updatedAt": "2020-02-28T15:37:50.204Z"
+    },
+    {
+      "active": true,
+      "businessId": 1,
+      "createdAt": "2020-02-28T15:37:50.204Z",
+      "id": 2,
+      "mapLatitude": "-1.30",
+      "mapLongitude": "1.30",
+      "name": "Gisimenti",
+      "updatedAt": "2020-02-28T15:37:50.204Z"
+    },
+    {
+      "active": false,
+      "businessId": 1,
+      "createdAt": "2020-02-28T15:37:50.204Z",
+      "id": 1,
+      "mapLatitude": "-1.30",
+      "mapLongitude": "1.30",
+      "name": "My Business",
+      "updatedAt": "2020-02-28T15:37:50.204Z"
+    }
+  ],
+  "uid": "ppuqVf"
+}

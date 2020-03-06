@@ -7,6 +7,8 @@ import { PageNotFoundComponent } from './shared/components';
 import { HasBusinessGuard } from './core/guards/has-business-guard.service';
 import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings';
 import { CreateProductComponent } from '@enexus/flipper-inventory';
+import { HasSubscribedGuard } from './core/guards/has-subscribed-guard.service';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
   {
@@ -18,15 +20,18 @@ const routes: Routes = [
     path: 'login', component: LoginComponent, canActivate: [GuestGuard]
   },
   {
-    path: 'setup/business/new', component: CreateUpdateBusinessComponent, canActivate: [AuthGuard]
+    path: 'pay-now', component: SubscriptionComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'add/product', component: CreateProductComponent, canActivate: [AuthGuard]
+    path: 'setup/business/new', component: CreateUpdateBusinessComponent, canActivate: [AuthGuard,HasSubscribedGuard]
+  },
+  {
+    path: 'add/product', component: CreateProductComponent, canActivate: [AuthGuard,HasSubscribedGuard, HasBusinessGuard]
   },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    canLoad: [AuthGuard, HasBusinessGuard]
+    canLoad: [AuthGuard,HasSubscribedGuard, HasBusinessGuard]
   },
   {
     path: '**',

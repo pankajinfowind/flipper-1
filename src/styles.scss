@@ -39,20 +39,7 @@
 @import '../styles/app-all';
 
 
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-overflow: hidden;
-font-family: 'Roboto', 'Heebo', sans-serif!important;
--webkit-touch-callout: none; /* iOS Safari */
--webkit-user-select: none; /* Safari */
- -khtml-user-select: none; /* Konqueror HTML */
-   -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
-                              supported by Chrome, Opera and Firefox */
-}
+
 
 body{
   background-color: #fff!important;
@@ -120,7 +107,6 @@ table, th {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   font-family: 'Roboto', 'Heebo', sans-serif !important;
   -webkit-touch-callout: none;
   /* iOS Safari */
@@ -556,4 +542,39 @@ button {
 }
 .selectBackground{
   background:  #d4eaf5!important;;
+}
+
+.c-wrapper {
+  align-items: center;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  height: 100%;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  margin-top: -70px;
+
+  &__row {
+    margin-top: 10%;
+
+    @media only screen and (max-width: 1919px) {
+      width: 40%;
+    }
+
+    @media only screen and (max-width: 1279px) {
+      width: 50%;
+    }
+
+    @media only screen and (max-width: 959px) {
+      margin-top: 20%;
+      width: 65%;
+    }
+
+    @media only screen and (max-width: 599px) {
+      margin-top: 50%;
+      width: 80%;
+    }
+  }
 }

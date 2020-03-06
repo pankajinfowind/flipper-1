@@ -1,0 +1,10 @@
+<flipper-header></flipper-header>
+<section class="c-wrapper" @insertLogin>
+  <div class="c-wrapper__row">
+    <flipper-payment-card app="Flipper" currency="$" amount="25" (formSaved)="subscribe($event)" 
+    [loading]="(loading | async)"
+    [ccNumMissingTxt]="(ccNumMissingTxt | async)"
+    [cardExpiredTxt]="(cardExpiredTxt | async)"
+    ></flipper-payment-card>
+  </div>
+</section>

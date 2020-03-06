@@ -64,6 +64,8 @@ ipcMain.on('sent-login-message', (event, arg) => {
   let email=null;
   let name=null;
   let avatar=null;
+  let id=null;
+  let subscription=null;
 
   // log.info(currentURL);
 
@@ -74,7 +76,6 @@ ipcMain.on('sent-login-message', (event, arg) => {
    if(params[0]==='https://test.flipper.rw/authorized') {
 
      raw=params[1];
-
      token=raw.split('&')[0];
      token=token.split('=')[1];
 
@@ -86,8 +87,15 @@ ipcMain.on('sent-login-message', (event, arg) => {
 
      avatar = raw.split('&')[3];
      avatar = avatar.split('=')[1];
-     event.sender.send('received-login-message',[email,name,avatar,token] );
-     authWindow.destroy();
+
+     id = raw.split('&')[4];
+     id = id.split('=')[1];
+
+     subscription = raw.split('&')[5];
+     subscription = subscription.split('=')[1];
+
+          event.sender.send('received-login-message',[email,name,avatar,token,id,subscription] );
+          authWindow.destroy();
 
       }
 

@@ -207,9 +207,9 @@ export class PosComponent {
       details.item.price = parseFloat(details.item.price);
       details.item.quantity = details.item.quantity;
 
-    let taxRate=details.item.taxRate?details.item.taxRate:0;
-    let subTotal=details.item.price * details.item.quantity;
-      
+      const taxRate=details.item.taxRate?details.item.taxRate:0;
+      const subTotal=details.item.price * details.item.quantity;
+
       details.item.taxAmount = (subTotal * taxRate) / 100;
       details.item.subTotal = subTotal;
       this.model.update<OrderDetails>(Tables.orderDetails, details.item, details.item.id);
@@ -265,7 +265,7 @@ export class PosComponent {
       SKU: variant.SKU,
       quantity: event.quantity,
       variantId: variant.id,
-      taxRate:taxRate,
+      taxRate,
       taxAmount: ((variant.priceVariant.retailPrice * event.quantity) * taxRate) / 100,
       orderId: this.setCurrentOrder.id,
       subTotal: variant.priceVariant.retailPrice * event.quantity,

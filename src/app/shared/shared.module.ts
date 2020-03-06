@@ -10,6 +10,7 @@ import { FlipperDashboardModule } from '@enexus/flipper-dashboard';
 import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 import { FlipperSettingsModule } from '@enexus/flipper-settings';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
+import { FlipperPaymentCardModule } from '@enexus/payment-card';
 @NgModule({
   declarations: [
     PageNotFoundComponent,
@@ -24,7 +25,7 @@ import { FlipperInventoryModule } from '@enexus/flipper-inventory';
     FlipperDashboardModule,
     FlipperOfflineDatabaseModule,
     FlipperSettingsModule,
-    FlipperInventoryModule
+    FlipperInventoryModule,FlipperPaymentCardModule
   ],
   exports: [
     WebviewDirective,
@@ -36,7 +37,8 @@ import { FlipperInventoryModule } from '@enexus/flipper-inventory';
     FlipperDashboardModule,
     FlipperOfflineDatabaseModule,
     FlipperSettingsModule,
-    FlipperInventoryModule
+    FlipperInventoryModule,
+    FlipperPaymentCardModule
   ]
 })
 export class SharedModule {}

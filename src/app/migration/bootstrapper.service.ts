@@ -29,7 +29,7 @@ export class Bootstrapper {
    * Bootstrap application with data returned from server.
    */
 
-   addTableColumns(table:string,columns:string){
+   addTableColumns(table: string,columns: string) {
      this.schema.addColumn(table, columns);
    }
   private insertDefaultData<T>(menus: T[], table: string, type = '') {
@@ -37,7 +37,7 @@ export class Bootstrapper {
       const menu: any = m;
       const finded = this.model.findByFirst(table,'name', menu.name);
       if (!finded) {
-        if (type === 'types') {
+        if (type === 'businessTypes') {
           const created: any = this.model.create(table, [{ name: menu.name }]);
           if (created) {
             this.insertDefaultBusinessCategory<T>(menu.category,
@@ -73,15 +73,15 @@ export class Bootstrapper {
                 const myTable = config.database.name + '.' + table.name;
                 this.schema.create(myTable, table.query);
 
-                //Add colums
-                if(table.name === 'orderDetails'){
+                // Add colums
+                if(table.name === 'orderDetails') {
                 //  this.addTableColumns(config.database.name + '.' + table.name,' taxRatess int(11)');
                 }
-                
+
 
                 ///////////////////////////////////// ADD DEFAULT MENUS //////////////////////////
 
-                if (table.name === 'menu') {
+                if (table.name === 'menus') {
                   if (config.defaultMenu.length > 0) {
                     this.insertDefaultData<Menu>(config.defaultMenu as Menu[], myTable);
                     this.insertDefaultData<Menu>(this.otherMenus as Menu[], myTable);
@@ -102,9 +102,9 @@ export class Bootstrapper {
 
                 ///////////////////////////////////// ADD TYPES //////////////////////////
 
-                if (table.name === 'types') {
+                if (table.name === 'businessTypes') {
                   if (config.defaultType.length > 0) {
-                    this.insertDefaultData(config.defaultType, myTable, 'types');
+                    this.insertDefaultData(config.defaultType, myTable, 'businessTypes');
                   }
                 }
 

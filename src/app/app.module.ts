@@ -15,8 +15,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MigrationModule } from './migration/migration.module';
-import { MainModelService, Menu, Tables } from '@enexus/flipper-components';
+import { PouchDBService } from '@enexus/flipper-components';
 import { Router } from '@angular/router';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -24,7 +25,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent,SubscriptionComponent],
   imports: [
    CoreModule,
     SharedModule,
@@ -38,12 +39,17 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [],
+  providers: [PouchDBService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-constructor() {
-
+constructor(private database: PouchDBService) {
+ if(localStorage.getItem("channel")===null || localStorage.getItem("channel")==="null" || localStorage.getItem("channel")===undefined){
+  localStorage.setItem("channel",this.database.uid());
+ }
+  localStorage.setItem("bucket", "lagrace");
+  localStorage.setItem("syncUrl", "http://64.227.5.49:4984");
+  localStorage.setItem("canSync", "true");
 }
 
 }

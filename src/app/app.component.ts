@@ -1,6 +1,8 @@
 import { Component} from '@angular/core';
 import { ElectronService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { Menu, Tables, MainModelService } from '@enexus/flipper-components';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,44 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public electronService: ElectronService,private translate: TranslateService) {
+  constructor(private model: MainModelService,private router: Router,public electronService: ElectronService,private translate: TranslateService) {
              this.translate.setDefaultLang('en');
-             console.log('am herrr');
-    }
+             
+             this.router.events.subscribe(e => {
+              if (e instanceof NavigationEnd) {
+       
+                this.desactiveAllMenu();
+                if (e.url === '/admin/pos' || e.url === 'admin/pos') {
+                  this.updateActiveMenu('admin/pos');
+                } else if (e.url === '/admin/inventory' || e.url === 'admin/inventory') {
+                  this.updateActiveMenu('admin/inventory');
+                } else if (e.url === '/admin/settings' || e.url === 'admin/settings') {
+                  this.updateActiveMenu('admin/settings');
+                } else if (e.url === '/admin/analytics' || e.url === 'admin/analytics') {
+                  this.updateActiveMenu('admin/analytics');
+                }else if (e.url === '/admin/transactions' || e.url === 'admin/transactions') {
+                  this.updateActiveMenu('admin/transactions');
+                }
+                else {
+                  this.updateActiveMenu('admin/analytics');
+                 
+                }
+        
+              }
+            });
+      }
+
+      updateActiveMenu(route: string = 'admin/analytics') {
+        let activemenu = null;
+        activemenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.route === route);
+        activemenu.active = true;
+        this.model.update<Menu>(Tables.menu, activemenu, activemenu.id);
+      }
+      
+      desactiveAllMenu() {
+        this.model.loadAll<Menu>(Tables.menu).forEach(menu => {
+          menu.active = false;
+          this.model.update<Menu>(Tables.menu, menu, menu.id);
+        });
+      }
 }

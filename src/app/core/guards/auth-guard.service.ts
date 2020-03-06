@@ -1,34 +1,44 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, CanLoad, Route } from '@angular/router';
 import { CurrentUser } from './current-user';
+import { FlipperEventBusService } from '@enexus/flipper-event';
+import { UserLoggedEvent } from './user-logged-event';
+import { filter } from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
-  constructor(private currentUser: CurrentUser, private router: Router) { }
+  constructor(private eventBus: FlipperEventBusService,private currentUser: CurrentUser, private router: Router) { 
+    this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
+    .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !==undefined)))
+    .subscribe(res =>
+      this.currentUser.currentUser = res.user);
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.handle(state.url);
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.handle(state.url);
+  async canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return await this.handle(state.url);
   }
-  canLoad(route: Route) {
-    return this.handle(route.path);
+  async canLoad(route: Route) {
+    return await this.handle(route.path);
   }
 
-  private handle(url: string) {
 
-    if (this.currentUser.isLoggedIn()) {
-          return true;
+  private async handle(url: string) {
+   
+    await this.currentUser.user();
+    if (this.currentUser.currentUser) {
+      return true;
     }
 
     this.currentUser.redirectUri = url;
 
-    this.router.navigate(['/login']);
+    await this.router.navigate(['/login']);
     return false;
   }
 

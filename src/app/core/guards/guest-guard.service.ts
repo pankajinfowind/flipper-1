@@ -24,7 +24,7 @@ export class GuestGuard implements CanActivate {
 
         console.log(this.currentUser.currentUser);
         await this.currentUser.user();
-       
+
         if (!this.currentUser.currentUser) {
           return true;
         }
@@ -32,7 +32,7 @@ export class GuestGuard implements CanActivate {
 
         return false;
     }
- 
-    
+
+
 
 }

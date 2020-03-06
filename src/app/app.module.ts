@@ -44,12 +44,12 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
 constructor(private database: PouchDBService) {
- if(localStorage.getItem("channel")===null || localStorage.getItem("channel")==="null" || localStorage.getItem("channel")===undefined){
-  localStorage.setItem("channel",this.database.uid());
+ if(localStorage.getItem('channel')===null || localStorage.getItem('channel')==='null' || localStorage.getItem('channel')===undefined) {
+  localStorage.setItem('channel',this.database.uid());
  }
-  localStorage.setItem("bucket", "lagrace");
-  localStorage.setItem("syncUrl", "http://64.227.5.49:4984");
-  localStorage.setItem("canSync", "true");
+ localStorage.setItem('bucket', 'lagrace');
+ localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
+ localStorage.setItem('canSync', 'true');
 }
 
 }

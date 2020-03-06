@@ -10,12 +10,13 @@ import { Menu, Tables, MainModelService } from '@enexus/flipper-components';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private model: MainModelService,private router: Router,public electronService: ElectronService,private translate: TranslateService) {
+  constructor(private model: MainModelService,private router: Router,public electronService: ElectronService,
+              private translate: TranslateService) {
              this.translate.setDefaultLang('en');
-             
+
              this.router.events.subscribe(e => {
               if (e instanceof NavigationEnd) {
-       
+
                 this.desactiveAllMenu();
                 if (e.url === '/admin/pos' || e.url === 'admin/pos') {
                   this.updateActiveMenu('admin/pos');
@@ -25,14 +26,13 @@ export class AppComponent {
                   this.updateActiveMenu('admin/settings');
                 } else if (e.url === '/admin/analytics' || e.url === 'admin/analytics') {
                   this.updateActiveMenu('admin/analytics');
-                }else if (e.url === '/admin/transactions' || e.url === 'admin/transactions') {
+                } else if (e.url === '/admin/transactions' || e.url === 'admin/transactions') {
                   this.updateActiveMenu('admin/transactions');
-                }
-                else {
+                } else {
                   this.updateActiveMenu('admin/analytics');
-                 
+
                 }
-        
+
               }
             });
       }
@@ -43,7 +43,7 @@ export class AppComponent {
         activemenu.active = true;
         this.model.update<Menu>(Tables.menu, activemenu, activemenu.id);
       }
-      
+
       desactiveAllMenu() {
         this.model.loadAll<Menu>(Tables.menu).forEach(menu => {
           menu.active = false;

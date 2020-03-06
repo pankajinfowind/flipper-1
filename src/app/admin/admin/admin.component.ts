@@ -20,24 +20,24 @@ export class AdminComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {}
- 
+
    ngOnInit() {
-  
+
 
 
   }
   isMenuToggled(event) {
-    //this.userToggledMenu = event;
+    // this.userToggledMenu = event;
   }
 
- 
+
   displaySwitchedBranch(event) {
 
   }
   didUserLoggedOut(event) {
-    localStorage.setItem("channel",this.database.uid());
+    localStorage.setItem('channel',this.database.uid());
    // this.router.navigate(['/login']);
-    return window.location.href="/login";
+    return window.location.href='/login';
   }
 
 

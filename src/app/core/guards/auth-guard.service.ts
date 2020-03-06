@@ -10,7 +10,7 @@ import { filter } from 'rxjs/internal/operators';
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
-  constructor(private eventBus: FlipperEventBusService,private currentUser: CurrentUser, private router: Router) { 
+  constructor(private eventBus: FlipperEventBusService,private currentUser: CurrentUser, private router: Router) {
     this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
     .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !==undefined)))
     .subscribe(res =>
@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
 
   private async handle(url: string) {
-   
+
     await this.currentUser.user();
     if (this.currentUser.currentUser) {
       return true;

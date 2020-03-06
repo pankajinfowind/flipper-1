@@ -19,8 +19,9 @@ import { filter } from 'rxjs/internal/operators';
   ],
 })
 export class LoginComponent implements OnInit {
-   user:Array<any>;
-  constructor(private eventBus: FlipperEventBusService,private database: PouchDBService,private router: Router, public currentUser: CurrentUser,private ngZone: NgZone, public electronService: ElectronService) {
+   user: Array<any>;
+  constructor(private eventBus: FlipperEventBusService,private database: PouchDBService,
+              public currentUser: CurrentUser,private ngZone: NgZone, public electronService: ElectronService) {
     this.database.connect(PouchConfig.bucket);
   }
 
@@ -30,14 +31,14 @@ export class LoginComponent implements OnInit {
     .subscribe(res =>
       this.currentUser.currentUser = res.user);
 
-    if(PouchConfig.canSync){
+    if(PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
 
     this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
       this.ngZone.run(async () =>  {
             if(arg && arg.length > 0) {
-            var user={
+            const user= {
               _id:'',
               name: arg[1].replace('%20', ' '),
               email: arg[0].replace('%20', ' '),
@@ -47,26 +48,26 @@ export class LoginComponent implements OnInit {
               updatedAt:new Date(),
               id:this.database.uid()
               };
-            
-              localStorage.setItem("channel",arg[4].replace('%20', ' '));
-              PouchConfig.Tables.user="user_"+localStorage.getItem("channel");
-              PouchConfig.channel=localStorage.getItem("channel");
-          
-              await this.currentUser.user(PouchConfig.Tables.user);
 
-                if (this.currentUser.currentUser) {
+            localStorage.setItem('channel',arg[4].replace('%20', ' '));
+            PouchConfig.Tables.user='user_'+localStorage.getItem('channel');
+            PouchConfig.channel=localStorage.getItem('channel');
+
+            await this.currentUser.user(PouchConfig.Tables.user);
+
+            if (this.currentUser.currentUser) {
                     user.id=this.currentUser.currentUser.id;
                     user.createdAt=this.currentUser.currentUser.createdAt;
                 }
 
-                if(this.database.put(PouchConfig.Tables.user,user)){
-                  return window.location.href="/admin";
+            if(this.database.put(PouchConfig.Tables.user,user)) {
+                  return window.location.href='/admin';
                 }
             }
 
        });
     });
- 
+
   }
 
   userLogin() {

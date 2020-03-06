@@ -1,5 +1,5 @@
-import { BusEvent } from "@enexus/flipper-event";
-import { User } from "@enexus/flipper-components";
+import { BusEvent } from '@enexus/flipper-event';
+import { User } from '@enexus/flipper-components';
 
 
 export class UserLoggedEvent extends BusEvent {

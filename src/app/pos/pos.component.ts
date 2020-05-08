@@ -3,7 +3,7 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import {
   fadeInAnimation, CalculateTotalClassPipe, Order, Variant,
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
-  Product, OrderDetails, StockHistory, Business, Taxes
+  Product, OrderDetails, StockHistory, Business, Taxes, PouchDBService, PouchConfig
 } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
@@ -34,11 +34,19 @@ export class PosComponent {
   set currentOrder(value: Order) {
     this.setCurrentOrder = value;
   }
+  public branch: Branch | null;
 
-  constructor(private model: MainModelService, private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
+  constructor(private model: MainModelService, 
+    private database:PouchDBService,
+    private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
+      this.branch = this.model.active<Branch>(Tables.branch);
     this.init();
+    this.database.connect(PouchConfig.bucket);
+    if (PouchConfig.canSync) {
+     this.database.sync(PouchConfig.syncUrl);
+   }
   }
-  defaultBranch: Branch = this.model.active<Branch>(Tables.business);
+  defaultBranch: Branch = this.model.active<Branch>(Tables.branch);
   public variants: Variant[] = [];
   private seTheVariantFiltered: Variant[] = [];
   public collectCashCompleted: object = {};
@@ -73,9 +81,9 @@ export class PosComponent {
 
   public newOrder() {
     if (!this.setCurrentOrder) {
-      const rand = Math.floor(Math.random() * 10);
+      
       this.model.create<Order>(Tables.order, {
-        id: rand,
+        id: this.database.uid(),
         reference: 'SO' + this.generateCode(),
         orderNumber: 'SO' + this.generateCode(),
         branchId: this.defaultBranch ? this.defaultBranch.id : 0,
@@ -132,16 +140,26 @@ export class PosComponent {
 
 
   public loadVariants() {
-    const variants: Variant[] = this.model.loadAll<Variant>(Tables.variants);
-    this.variants = [];
+  let variants=[]; 
+   const products:Product[]= this.model.raw(`SELECT * 
+              FROM branchProducts JOIN products ON branchProducts.productId = products.id AND branchProducts.branchId="${this.branch.id}"
+              ORDER BY products.id DESC
+              `) as Product[];
+              products.forEach(product => {
+                const variant: Variant = this.query.select(Tables.variants).where('productId', product.id)
+                .first<Variant>();
+                variants.push(variant);
+              });
+
     if (variants.length > 0) {
       variants.forEach(variant => {
-        const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
-          .andWhere('branchId', this.defaultBranch.id)
+  
+         const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
           .first<Stock>();
+      
         if (stock) {
           const product: Product = this.model.find<Product>(Tables.products, variant.productId);
-
+         
           const variation: Variant = variant;
           variation.productName = product.name;
           if (stock) {
@@ -169,7 +187,7 @@ export class PosComponent {
             }
           }
         }
-
+       
 
       });
     }
@@ -241,11 +259,13 @@ export class PosComponent {
     let taxRate = 0;
     let product = null;
     let tax = null;
-    if (variant.productId > 0) {
+    console.log(variant);
+    if (variant.productId) {
       product = this.model.find<Product>(Tables.products, variant.productId);
+      console.log(product);
       if (product) {
         tax = this.model.find<Taxes>(Tables.taxes, product.taxId)?this.model.find<Taxes>(Tables.taxes, product.taxId).percentage:0;
-
+        console.log(tax);
       } else {
         tax = 0;
       }
@@ -256,6 +276,7 @@ export class PosComponent {
     taxRate = event.tax?event.tax:tax ? tax : 0;
 
     const orderDetails: OrderDetails = {
+      id: this.database.uid(),
       price: variant.priceVariant.retailPrice,
       variantName: variant.name,
       productName: variant.productName,
@@ -275,7 +296,7 @@ export class PosComponent {
     this.model.create<OrderDetails>(Tables.orderDetails, orderDetails);
     this.setCurrentOrder.orderItems = this.getOrderDetails(this.setCurrentOrder.id);
     this.updateOrder();
-
+ 
   }
 
   didCollectCash(event) {
@@ -283,8 +304,63 @@ export class PosComponent {
     if (event === true) {
       this.createStockHistory();
       this.currentOrder.isDraft = false;
+      this.currentOrder.active = false;
       this.currentOrder.status = STATUS.COMPLETE;
       this.model.update<Order>(Tables.order, this.currentOrder, this.currentOrder.id);
+      const formOrder= {
+        "active": this.currentOrder.active,
+        "branchId":this.currentOrder.branchId,
+        "cashReceived": this.currentOrder.cashReceived,
+        "createdAt": this.currentOrder.createdAt,
+        "customerChangeDue": this.currentOrder.customerChangeDue,
+        "id": this.currentOrder.id,
+        "isDraft": this.currentOrder.isDraft,
+        "orderNumber": this.currentOrder.orderNumber,
+        "orderType": this.currentOrder.orderType,
+        "reference": this.currentOrder.reference,
+        "saleTotal": this.currentOrder.saleTotal,
+        "status": this.currentOrder.status,
+        "subTotal": this.currentOrder.subTotal,
+        "taxAmount": this.currentOrder.taxAmount,
+        "updatedAt":this.currentOrder.updatedAt,
+        "customerId":"",
+        "currency":this.currency,
+        "supplierInvoiceNumber":'',
+        "discountAmount":'',
+        "paymentId":"",
+        "orderNote":"",
+        "deliverDate": "",
+        "deviceId":"",
+        "orderDate": new Date(),
+
+      }
+      this.database.put(PouchConfig.Tables.orders,{orders:[formOrder]});
+      const orderDetails=[];
+      this.getOrderDetails(this.currentOrder.id).forEach(details=>{
+        orderDetails.push(
+        {
+          "canTrackStock":details.stockId?true:false,
+          "createdAt": details.createdAt,
+          "id": details.id,
+          "orderId": details.orderId,
+          "price": details.price,
+          "productName": details.productName?details.productName:'Custom',
+          "quantity": details.quantity,
+          "stockId": details.stockId?details.stockId:'',
+          "subTotal": details.subTotal,
+          "taxAmount": details.taxAmount,
+          "taxRate": details.taxRate,
+          "unit": details.unit?details.unit:'',
+          "updatedAt": details.updatedAt,
+          "discountRate":0,
+          "discountAmount":0,         
+          "variantId": details.variantId?details.variantId:'',
+          "variantName": details.variantName?details.variantName:'Custom',
+          "note":""
+        })
+      });
+      
+      this.database.put(PouchConfig.Tables.orderDetails,{orderDetails:orderDetails});
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
       this.currentOrder = null;
       this.init();
@@ -296,8 +372,10 @@ export class PosComponent {
   createStockHistory() {
 
     const orderDetails: OrderDetails[] = this.getOrderDetails(this.currentOrder.id);
+    const stockIds:string[]=[];
     if (orderDetails.length) {
-      orderDetails.forEach(details => {
+
+      orderDetails.forEach(details => { 
 
         if (details.stockId > 0 || (details.stock && details.stock.canTrackingStock)) {
           this.model.create<StockHistory>(Tables.stockHistory, {
@@ -314,17 +392,21 @@ export class PosComponent {
             createdAt: new Date(),
             updatedAt: new Date()
           });
-
+          stockIds.push(`'${details.stockId}'`);
           this.updateStock(details);
         }
 
       });
+      
+      this.database.put(PouchConfig.Tables.stockHistories,{stockHistory:this.model.filters<StockHistory>(Tables.stockHistory,'orderId',this.currentOrder.id)});
+      this.database.put(PouchConfig.Tables.stocks,{stocks:this.query.queries(Tables.stocks, `  id IN (${stockIds.join()})`)});
+      
     }
 
   }
   updateStock(stockDetails: OrderDetails) {
     let stockId = 0;
-    if (stockDetails.stockId && stockDetails.stockId > 0) {
+    if (stockDetails.stockId && (stockDetails.stockId!=null || stockDetails.stockId!=undefined)) {
       stockId = stockDetails.stockId;
     } else if (stockDetails.stock && stockDetails.stock.id) {
       stockId = stockDetails.stock.id;

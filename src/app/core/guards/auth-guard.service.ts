@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, CanLoad, Route } from '@angular/router';
 import { CurrentUser } from './current-user';
 import { FlipperEventBusService } from '@enexus/flipper-event';
-import { UserLoggedEvent } from './user-logged-event';
 import { filter } from 'rxjs/internal/operators';
+import { UserLoggedEvent } from '@enexus/flipper-components';
 
 @Injectable({
   providedIn: 'root'

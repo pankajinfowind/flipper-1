@@ -11,8 +11,7 @@ import {
 import { CurrentUser } from './current-user';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
-import { UserBusinessEvent } from './user-business-event';
-import { UserSubscriptionEvent } from './user-subscription-event';
+import { UserSubscriptionEvent } from '@enexus/flipper-components';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +39,7 @@ export class HasSubscribedGuard implements CanActivate, CanActivateChild, CanLoa
   private async handle(url: string) {
 
     await this.currentUser.subscription();
-    console.log(this.currentUser.currentSubscription);
+    // console.log(this.currentUser.currentSubscription);
     if (this.currentUser.currentSubscription && this.currentUser.currentSubscription.didSubscribed) {
       return true;
     }

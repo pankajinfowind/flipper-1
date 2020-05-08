@@ -10,18 +10,21 @@ import {
 } from '@angular/router';
 import { CurrentUser } from './current-user';
 import { FlipperEventBusService } from '@enexus/flipper-event';
-import { filter } from 'rxjs/internal/operators';
-import { UserBusinessEvent } from './user-business-event';
+import { CurrentBusinessEvent, CurrentBranchEvent } from '@enexus/flipper-components';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private eventBus: FlipperEventBusService,private currentUser: CurrentUser, private router: Router) {
-    this.eventBus.of < UserBusinessEvent > (UserBusinessEvent.CHANNEL)
-    .pipe(filter(e =>e.business && e.business.length > 0))
+    this.eventBus.of < CurrentBusinessEvent > (CurrentBusinessEvent.CHANNEL)
     .subscribe(res =>
       this.currentUser.currentBusiness = res.business);
+
+      this.eventBus.of < CurrentBranchEvent > (CurrentBranchEvent.CHANNEL)
+      .subscribe(res =>
+        this.currentUser.currentBranch = res.branch);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -38,8 +41,10 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
 
   private async handle(url: string) {
 
-    await this.currentUser.business();
-    if (this.currentUser.currentBusiness && this.currentUser.currentBusiness.length > 0) {
+    await this.currentUser.defaultBusiness();
+    await this.currentUser.defaultBranch();
+
+    if (this.currentUser.currentBusiness && this.currentUser.currentBusiness.id!==null || this.currentUser.currentBusiness.id!==undefined) {
       return true;
     }
 

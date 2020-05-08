@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { CurrentUser } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInAnimation, PouchConfig, PouchDBService } from '@enexus/flipper-components';
+import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
-import { UserLoggedEvent } from '../core/guards/user-logged-event';
 import { filter } from 'rxjs/internal/operators';
 
 @Component({
@@ -50,8 +49,12 @@ export class LoginComponent implements OnInit {
               };
 
             localStorage.setItem('channel',arg[4].replace('%20', ' '));
+            localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
             PouchConfig.Tables.user='user_'+localStorage.getItem('channel');
+
             PouchConfig.channel=localStorage.getItem('channel');
+
+            PouchConfig.sessionId=localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
 
             await this.currentUser.user(PouchConfig.Tables.user);
 

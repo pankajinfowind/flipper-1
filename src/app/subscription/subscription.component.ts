@@ -2,13 +2,36 @@ import { Component, OnInit } from '@angular/core';
 import { CurrentUser } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInAnimation, PouchConfig, PouchDBService } from '@enexus/flipper-components';
+import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
-import { UserLoggedEvent } from '../core/guards/user-logged-event';
 import { filter, finalize } from 'rxjs/internal/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import {BehaviorSubject } from 'rxjs';
+export class Response {
+  message: Message;
 
+}
+export class Data {
+  txRef?: any;
+  code?: string;
+  flwRef?: string;
+  raveRef?: string;
+  amount?: any;
+  currency?: any;
+  message?: string;
+  customer?: Customer;
+  customerId?: any;
+
+}
+export class Message {
+  status?: string;
+
+  data: Data;
+}
+export class Customer {
+  id?: number;accountId?: any;
+  fullName?: string;
+}
 
 @Component({
   selector: 'app-subscription',
@@ -65,10 +88,11 @@ export class SubscriptionComponent implements OnInit {
     return this.httpClient
         .post('https://mysterious-depths-19225.herokuapp.com/subscribe',
         creds,{headers}).pipe(finalize(() => this.loading.next(false)))
-        .subscribe(response => {
+        .subscribe(res => {
           this.loading.next(false);
-
+          const response: Response=res as Response;
           if(response) {
+
                 if(response.message.status==='error') {
                       if(response.message.data.code==='CARD_ERR') {
                         this.ccNumMissingTxt.next(response.message.data.message);
@@ -95,12 +119,15 @@ export class SubscriptionComponent implements OnInit {
                         txRef: response.message.data.txRef,
                         flwRef: response.message.data.flwRef,
                         raveRef:response.message.data.raveRef,
-                        flutter_customer_id:response.message.data.customer.id,
-                        flutter_customer_accountId:response.message.data.customer.accountId,
+                        flutter_customer_id:response.message.data.customer?
+                        response.message.data.customer.id:response.message.data.customerId,
+                        flutter_customer_accountId:response.message.data.customer?
+                        response.message.data.customer.accountId:0,
                         amount:response.message.data.amount,
                         currency: response.message.data.currency,
                         app: 'Flipper',
-                        customer_name:response.message.data.customer.fullName
+                        customer_name:response.message.data.customer?
+                        response.message.data.customer.fullName:''
                       });
                    }
                 } else {

@@ -71,7 +71,7 @@ ipcMain.on('sent-login-message', (event, arg) => {
 
   const params=currentURL.split('?');
 
-
+  console.log(params);
   if(params && params.length===2) {
    if(params[0]==='https://test.flipper.rw/authorized') {
 
@@ -93,7 +93,7 @@ ipcMain.on('sent-login-message', (event, arg) => {
 
      subscription = raw.split('&')[5];
      subscription = subscription.split('=')[1];
-
+     console.log(params);
      event.sender.send('received-login-message',[email,name,avatar,token,id,subscription] );
      authWindow.destroy();
 

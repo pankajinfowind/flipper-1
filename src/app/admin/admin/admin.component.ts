@@ -15,7 +15,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
    constructor(
     private database: PouchDBService,
-    private router: Router,
     public currentUser: CurrentUser) {}
 
 

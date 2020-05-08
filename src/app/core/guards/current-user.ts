@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { User, Business, Tables, Menu, MenuEntries, PouchDBService, PouchConfig, Subscription } from '@enexus/flipper-components';
+import { User, Business, Tables, Menu, MenuEntries, PouchDBService, PouchConfig, Subscription,
+   CurrentBusinessEvent, CurrentBranchEvent, UserSubscriptionEvent, UserLoggedEvent, Branch } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 import { FlipperEventBusService } from '@enexus/flipper-event';
-import { UserLoggedEvent } from './user-logged-event';
-import { UserBusinessEvent } from './user-business-event';
-import { UserSubscriptionEvent } from './user-subscription-event';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,8 @@ public redirectUri?: string;
 public userInfo=null;
 public current: MenuEntries;
 currentUser: User=null;
-currentBusiness: Business[]=[];
+currentBusiness: Business=null;
+currentBranch: Branch=null;
 currentSubscription: Subscription=null;
 
   constructor(private eventBus: FlipperEventBusService,private model: ModelService,
@@ -61,18 +60,33 @@ currentSubscription: Subscription=null;
 
    }
 
-  public async business() {
+   public async defaultBusiness() {
     await this.database.get(PouchConfig.Tables.business).then(res=> {
 
-        this.eventBus.publish(new UserBusinessEvent(res.businesses));
+        const currentBusiness: Business=res.businesses.find(business=>business.active);
+        this.eventBus.publish(new CurrentBusinessEvent(currentBusiness));
 
     },error=> {
         if(error.error && error.status==='404' ||  error.status===404) {
-          this.eventBus.publish(new UserBusinessEvent(null));
+          this.eventBus.publish(new CurrentBusinessEvent(null));
         }
     });
 
   }
+
+
+  public async defaultBranch() {
+    await this.database.get(PouchConfig.Tables.branches).then(res=> {
+      const currentBranch: Branch=res.branches.find(branch=>branch.active);
+      this.eventBus.publish(new CurrentBranchEvent(currentBranch));
+
+  },error=> {
+      if(error.error && error.status==='404' ||  error.status===404) {
+        this.eventBus.publish(new CurrentBranchEvent(null));
+      }
+  });
+  }
+
 
   public userLoggedIn() {
    return this.database.find(PouchConfig.Tables.user).then(res=> {

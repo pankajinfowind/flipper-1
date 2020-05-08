@@ -33,13 +33,13 @@ export class DashboardComponent {
   constructor(private totalPipe: CalculateTotalClassPipe,
               private radomNumberPipe: RoundNumberPipe,
               private query: ModelService, private model: MainModelService) {
-    this.branch = this.model.active<Branch>(Tables.branch);
-    this.totalStore = this.getStockValue();
-    this.netProfit = this.getNetProfit();
-    this.totalRevenue = this.getTotalRevenues();
-    this.grossProfits = this.getGrossProfit();
-    this.topSoldItem = this.topSoldItems();
-    this.lowStockItem = this.getLowStocks();
+              this.branch = this.model.active<Branch>(Tables.branch);
+              this.totalStore = this.getStockValue();
+              this.netProfit = this.getNetProfit();
+              this.totalRevenue = this.getTotalRevenues();
+              this.grossProfits = this.getGrossProfit();
+              this.topSoldItem = this.topSoldItems();
+              this.lowStockItem = this.getLowStocks();
 
   }
 
@@ -47,25 +47,22 @@ export class DashboardComponent {
 
   topSoldItems() {
     const topSolds=[];
-    if(this.sales().length > 0) {
-      this.sales().forEach(sale=> {
-        if(this.topSoldsItem(sale.id).length > 0) {
-          this.topSoldsItem(sale.id).forEach((item: OrderDetails,i)=> {
-            if(item.quantity) {
-              const x= {
-                id: i+1,
-                name: item.variantName,
-                updatedAt: 'Updated 5m ago',
-                items: item.quantity,
-                total: item.subTotal
-              };
-              topSolds.push(x);
-            }
+    if(this.topSoldsItem().length > 0) {
+      this.topSoldsItem().forEach((item: OrderDetails,i)=> {
 
-          });
+        if(item.quantity) {
+          const x= {
+            id: i+1,
+            name: item.variantName,
+            updatedAt: 'Updated 5m ago',
+            items: item.quantity,
+            total: item.subTotal
+          };
+          topSolds.push(x);
         }
+
       });
-   }
+    }
 
     return topSolds;
   }
@@ -112,16 +109,16 @@ export class DashboardComponent {
   }
 
   stocks() {
-    return this.query.queries<Stock>(Tables.stocks, ` branchId=${this.branch.id} AND currentStock > 0 AND canTrackingStock=true`);
+    return this.query.queries<Stock>(Tables.stocks, ` branchId="${this.branch.id}" AND currentStock > 0 AND canTrackingStock=true`);
   }
 
   sales() {
-    return this.query.queries<Order>(Tables.order, ` branchId=${this.branch.id} AND orderType='sales' AND status='complete'`);
+    return this.query.queries<Order>(Tables.order, ` branchId="${this.branch.id}" AND orderType='sales' AND status='complete'`);
   }
 
   getLowStocks() {
     const lowStocks=[];
-    const stocks: Stock[]=this.query.queries<Stock>(Tables.stocks, ` branchId=${this.branch.id} AND canTrackingStock=true  ORDER BY currentStock ASC`);
+    const stocks: Stock[]=this.query.queries<Stock>(Tables.stocks, ` branchId="${this.branch.id}" AND canTrackingStock=true ORDER BY currentStock ASC`);
     stocks.forEach((stock,i)=> {
       if(i < 6) {
         if(stock.lowStock && stock.currentStock < stock.lowStock) {
@@ -145,7 +142,7 @@ export class DashboardComponent {
     if (this.loadSales().length > 0) {
         stocks=[];
         this.loadSales().forEach(orderDetails => {
-          if (orderDetails && orderDetails.stockId > 0) {
+          if (orderDetails && orderDetails.stockId) {
 
             stocks.push(this.loadOrderDetails(orderDetails));
           }
@@ -178,8 +175,17 @@ export class DashboardComponent {
               grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) };
   }
 
-  topSoldsItem(orderId: number): OrderDetails[] {
-    return this.query.row<OrderDetails>(Tables.orderDetails, `id,variantName,sum(quantity) as quantity,sum(subTotal) as subTotal`
-    ,` id!='undefined' AND orderId=${orderId} GROUP BY variantName ORDER BY quantity DESC `);
+   topSoldsItem(): OrderDetails[] {
+
+    const ids=[];
+    const orderIds: Order[]=this.model.raw(`SELECT id
+    FROM orders WHERE branchId="${this.branch.id}"
+    ORDER BY updatedAt DESC LIMIT 5`) as Order[];
+    orderIds.forEach(d=> {
+      ids.push(`'${d.id}'`);
+    });
+
+    return this.model.raw(`SELECT *
+     FROM orderDetails WHERE  orderDetails.quantity > 0 AND orderId IN (${ids.join()}) ORDER BY updatedAt DESC LIMIT 5`);
   }
 }

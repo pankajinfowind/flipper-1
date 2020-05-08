@@ -22,29 +22,29 @@ export class Bootstrapper {
 
   /**
    * Bootstrap application with data returned from server.
-   * 
+   *
    */
 
-  public bootstrap(data?: string){
+  public bootstrap(data?: string) {
     this.buildTables();
     this. migrateDataFromCouchbaseToSqldb();
     }
 
- 
-  private migrateDataFromCouchbaseToSqldb(){
+
+  private migrateDataFromCouchbaseToSqldb() {
     this.migrate.businessTypes();
     this.migrate.businessCategories();
     this.model.truncate(Tables.user);
     this.model.truncate(Tables.business);
     this.model.truncate(Tables.branch);
     this.model.truncate(Tables.taxes);
-     this.migrate.user();
-     this.migrate.businesses();
-     this.migrate.branches();
-     this.migrate.taxes();
+    this.migrate.user();
+    this.migrate.businesses();
+    this.migrate.branches();
+    this.migrate.taxes();
   }
 
- 
+
 
 
 private buildTables(): Promise<any> {
@@ -63,11 +63,11 @@ private buildTables(): Promise<any> {
                   if (table.query && table.name) {
 
                         const myTable = config.database.name + '.' + table.name;
-                           this.schema.create(myTable, table.query);
+                        this.schema.create(myTable, table.query);
 
                               ///////////////////////////////////// ADD DEFAULT MENUS //////////////////////////
 
-                              if (table.name === 'menus') {
+                        if (table.name === 'menus') {
                                 if (config.defaultMenu.length > 0) {
                                   this.insertDefaultData<Menu>(config.defaultMenu as Menu[], myTable);
                                 }
@@ -93,10 +93,10 @@ private insertDefaultData<T>(rows: T[], table: string) {
 
   rows.forEach(each => {
     const row: any = each;
-    const didInserted:any = this.model.findByFirst(table, 'name', row.name);
-        if (!didInserted) {
+    const didInserted: any = this.model.findByFirst(table, 'name', row.name);
+    if (!didInserted) {
             this.model.create(table, [row]);
-        }else{
+        } else {
           this.model.update(table, row,didInserted.id);
         }
   });

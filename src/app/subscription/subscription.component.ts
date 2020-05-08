@@ -8,7 +8,7 @@ import { filter, finalize } from 'rxjs/internal/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import {BehaviorSubject } from 'rxjs';
 export class Response {
-  message:Message
+  message: Message;
 
 }
 export class Data {
@@ -18,19 +18,19 @@ export class Data {
   raveRef?: string;
   amount?: any;
   currency?: any;
-  message?:string;
+  message?: string;
   customer?: Customer;
-  customerId?:any
+  customerId?: any;
 
 }
 export class Message {
-  status?:string;
+  status?: string;
 
-  data:Data
+  data: Data;
 }
 export class Customer {
-  id?:number;accountId?:any;
-  fullName?:string
+  id?: number;accountId?: any;
+  fullName?: string;
 }
 
 @Component({
@@ -90,7 +90,7 @@ export class SubscriptionComponent implements OnInit {
         creds,{headers}).pipe(finalize(() => this.loading.next(false)))
         .subscribe(res => {
           this.loading.next(false);
-          const response:Response=res as Response;
+          const response: Response=res as Response;
           if(response) {
 
                 if(response.message.status==='error') {
@@ -119,12 +119,15 @@ export class SubscriptionComponent implements OnInit {
                         txRef: response.message.data.txRef,
                         flwRef: response.message.data.flwRef,
                         raveRef:response.message.data.raveRef,
-                        flutter_customer_id:response.message.data.customer?response.message.data.customer.id:response.message.data.customerId,
-                        flutter_customer_accountId:response.message.data.customer?response.message.data.customer.accountId:0,
+                        flutter_customer_id:response.message.data.customer?
+                        response.message.data.customer.id:response.message.data.customerId,
+                        flutter_customer_accountId:response.message.data.customer?
+                        response.message.data.customer.accountId:0,
                         amount:response.message.data.amount,
                         currency: response.message.data.currency,
                         app: 'Flipper',
-                        customer_name:response.message.data.customer?response.message.data.customer.fullName:''
+                        customer_name:response.message.data.customer?
+                        response.message.data.customer.fullName:''
                       });
                    }
                 } else {

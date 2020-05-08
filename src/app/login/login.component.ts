@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('channel',arg[4].replace('%20', ' '));
             localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
             PouchConfig.Tables.user='user_'+localStorage.getItem('channel');
-            
+
             PouchConfig.channel=localStorage.getItem('channel');
 
             PouchConfig.sessionId=localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');

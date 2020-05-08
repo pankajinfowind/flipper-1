@@ -63,7 +63,7 @@ currentSubscription: Subscription=null;
    public async defaultBusiness() {
     await this.database.get(PouchConfig.Tables.business).then(res=> {
 
-        const currentBusiness:Business=res.businesses.find(business=>business.active);
+        const currentBusiness: Business=res.businesses.find(business=>business.active);
         this.eventBus.publish(new CurrentBusinessEvent(currentBusiness));
 
     },error=> {
@@ -77,7 +77,7 @@ currentSubscription: Subscription=null;
 
   public async defaultBranch() {
     await this.database.get(PouchConfig.Tables.branches).then(res=> {
-      const currentBranch:Branch=res.branches.find(branch=>branch.active);
+      const currentBranch: Branch=res.branches.find(branch=>branch.active);
       this.eventBus.publish(new CurrentBranchEvent(currentBranch));
 
   },error=> {

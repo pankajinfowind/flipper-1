@@ -93,7 +93,7 @@ ipcMain.on('sent-login-message', (event, arg) => {
 
      subscription = raw.split('&')[5];
      subscription = subscription.split('=')[1];
-console.log(params);
+     console.log(params);
      event.sender.send('received-login-message',[email,name,avatar,token,id,subscription] );
      authWindow.destroy();
 

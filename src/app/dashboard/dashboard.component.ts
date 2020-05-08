@@ -49,7 +49,7 @@ export class DashboardComponent {
     const topSolds=[];
     if(this.topSoldsItem().length > 0) {
       this.topSoldsItem().forEach((item: OrderDetails,i)=> {
-        
+
         if(item.quantity) {
           const x= {
             id: i+1,
@@ -176,14 +176,16 @@ export class DashboardComponent {
   }
 
    topSoldsItem(): OrderDetails[] {
-  
-    let ids=[];
-    const orderIds:Order[]=this.model.raw(`SELECT id  FROM orders WHERE branchId="${this.branch.id}" ORDER BY updatedAt DESC LIMIT 5`) as Order[];
+
+    const ids=[];
+    const orderIds: Order[]=this.model.raw(`SELECT id
+    FROM orders WHERE branchId="${this.branch.id}"
+    ORDER BY updatedAt DESC LIMIT 5`) as Order[];
     orderIds.forEach(d=> {
       ids.push(`'${d.id}'`);
     });
 
-    return this.model.raw(`SELECT * 
+    return this.model.raw(`SELECT *
      FROM orderDetails WHERE  orderDetails.quantity > 0 AND orderId IN (${ids.join()}) ORDER BY updatedAt DESC LIMIT 5`);
   }
 }

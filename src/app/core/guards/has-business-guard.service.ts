@@ -22,7 +22,7 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
     .subscribe(res =>
       this.currentUser.currentBusiness = res.business);
 
-      this.eventBus.of < CurrentBranchEvent > (CurrentBranchEvent.CHANNEL)
+    this.eventBus.of < CurrentBranchEvent > (CurrentBranchEvent.CHANNEL)
       .subscribe(res =>
         this.currentUser.currentBranch = res.branch);
   }

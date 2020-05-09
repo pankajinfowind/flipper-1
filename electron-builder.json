@@ -24,14 +24,15 @@
     "!karma.conf.js",
     "!tsconfig.json",
     "!tslint.json"
-    
   ],
   "win": {
     "asar": true,
-    "icon":"dist/assets/icon/win/icon.ico",
+    "icon": "dist/assets/icon/win/icon.ico",
     "legalTrademarks": "(c) 2020 flipper.rw",
-     "publisherName": "Flipper Litd",
-    "target": ["nsis"]
+    "publisherName": "Flipper Ltd",
+    "target": [
+      "nsis"
+    ]
   },
   "nsis": {
     "oneClick": false,
@@ -39,13 +40,14 @@
     "allowToChangeInstallationDirectory": true
   },
   "mac": {
-    "icon":"dist/assets/icon/mac/icon.icns",
+    "icon": "dist/assets/icon/mac/icon.icns",
     "target": [
-      "dmg","zip"
+      "zip",
+      "dmg"
     ]
   },
   "linux": {
-    "icon":"dist/assets/icon/linux/icon.png",
+    "icon": "dist/assets/icon/linux/icon.png",
     "target": [
       "AppImage",
       "deb",

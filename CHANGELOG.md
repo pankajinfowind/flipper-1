@@ -1,709 +1,357 @@
-# Changelog
+## <small>1.1.14 (2020-02-20)</small>
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+* chore(release): 1.1.14 ([22c680e](https://github.com/yegobox/flipper/commit/22c680e))
+* tagging release v1.1.13 ([e7ac6bc](https://github.com/yegobox/flipper/commit/e7ac6bc))
 
-### [1.1.14](https://github.com/yegobox/flipper/compare/v1.1.13...v1.1.14) (2020-02-20)
 
-### [1.1.13](https://github.com/yegobox/flipper/compare/v1.1.11...v1.1.13) (2020-02-20)
 
-### [1.1.12](https://github.com/yegobox/flipper/compare/v1.1.11...v1.1.12) (2020-02-18)
+## <small>1.1.13 (2020-02-20)</small>
 
-### [1.1.11](https://github.com/yegobox/flipper/compare/v1.1.12...v1.1.11) (2020-02-18)
+* chore(release): 1.1.12 ([c5a9fc3](https://github.com/yegobox/flipper/commit/c5a9fc3))
+* chore(release): 1.1.13 ([10ef359](https://github.com/yegobox/flipper/commit/10ef359))
+* fixing bug ([d52323d](https://github.com/yegobox/flipper/commit/d52323d))
+* fixing bug ([bda4a9f](https://github.com/yegobox/flipper/commit/bda4a9f))
 
-### [1.1.12](https://github.com/yegobox/flipper/compare/v1.1.10...v1.1.12) (2020-02-18)
 
-### [1.1.13](https://github.com/yegobox/flipper/compare/v1.1.10...v1.1.13) (2020-02-18)
 
-### [1.1.12](https://github.com/yegobox/flipper/compare/v1.1.10...v1.1.12) (2020-02-18)
+## <small>1.1.11 (2020-02-18)</small>
 
-### [1.1.11](https://github.com/yegobox/flipper/compare/v1.1.10...v1.1.11) (2020-02-18)
+* chore(release): 1.1.11 ([d480191](https://github.com/yegobox/flipper/commit/d480191))
 
-### [1.1.10](https://github.com/yegobox/flipper/compare/v1.1.9...v1.1.10) (2020-02-13)
 
-### [1.1.9](https://github.com/yegobox/flipper/compare/v1.1.8...v1.1.9) (2020-02-12)
 
-### [1.1.8](https://github.com/yegobox/flipper/compare/v1.1.7...v1.1.8) (2020-02-12)
+## <small>1.1.12 (2020-02-18)</small>
 
-### [1.1.7](https://github.com/yegobox/flipper/compare/v1.1.6...v1.1.7) (2020-02-12)
+* chore(release): 1.1.12 ([3574887](https://github.com/yegobox/flipper/commit/3574887))
+* release v1.1.10 ([6676ec4](https://github.com/yegobox/flipper/commit/6676ec4))
 
-### [1.1.8](https://github.com/yegobox/flipper/compare/v1.1.6...v1.1.8) (2020-02-12)
 
-### [1.1.7](https://github.com/yegobox/flipper/compare/v1.1.6...v1.1.7) (2020-02-12)
 
-### [1.1.8](https://github.com/yegobox/flipper/compare/v1.1.6...v1.1.8) (2020-02-12)
+## <small>1.1.10 (2020-02-13)</small>
 
-### [1.1.8](https://github.com/yegobox/flipper/compare/v1.1.6...v1.1.8) (2020-02-12)
+* chore(release): 1.1.10 ([44b7598](https://github.com/yegobox/flipper/commit/44b7598))
+* gging release v1.1.9 ([24bbee7](https://github.com/yegobox/flipper/commit/24bbee7))
 
-### [1.1.7](https://github.com/yegobox/flipper/compare/v1.1.6...v1.1.7) (2020-02-12)
 
-### [1.1.6](https://github.com/yegobox/flipper/compare/v1.1.5...v1.1.6) (2020-02-11)
 
-### [1.1.5](https://github.com/maximegris/angular-electron/compare/v1.1.4...v1.1.5) (2020-02-11)
+## <small>1.1.9 (2020-02-12)</small>
 
-### [1.1.5](https://github.com/maximegris/angular-electron/compare/v1.1.4...v1.1.5) (2020-02-11)
+* chore(release): 1.1.9 ([4a3d855](https://github.com/yegobox/flipper/commit/4a3d855))
+* tagging release v1.1.8 ([2937611](https://github.com/yegobox/flipper/commit/2937611))
 
-### [1.1.4](https://github.com/maximegris/angular-electron/compare/v1.1.3...v1.1.4) (2020-02-07)
 
-### [1.1.3](https://github.com/maximegris/angular-electron/compare/v1.1.1...v1.1.3) (2020-02-07)
 
-### [1.1.2](https://github.com/maximegris/angular-electron/compare/v1.1.1...v1.1.2) (2020-02-07)
+## <small>1.1.8 (2020-02-12)</small>
 
-### [1.1.1](https://github.com/maximegris/angular-electron/compare/v1.1.0...v1.1.1) (2020-02-04)
+* chore(release): 1.1.8 ([835ff4a](https://github.com/yegobox/flipper/commit/835ff4a))
+* release v1.1.7 ([c6ca9cb](https://github.com/yegobox/flipper/commit/c6ca9cb))
 
-### [1.1.1-alpha.0](https://github.com/maximegris/angular-electron/compare/v1.1.0...v1.1.1-alpha.0) (2020-02-04)
 
-## [1.1.0](https://github.com/maximegris/angular-electron/compare/v1.1.0-alpha.0...v1.1.0) (2020-01-21)
+
+## <small>1.1.7 (2020-02-12)</small>
+
+* chore(release): 1.1.7 ([d728fc9](https://github.com/yegobox/flipper/commit/d728fc9))
+
+
+
+## <small>1.1.6 (2020-02-11)</small>
+
+* chore(release): 1.1.6 ([41ec922](https://github.com/yegobox/flipper/commit/41ec922))
+* v1.1.5 ([5ef7389](https://github.com/yegobox/flipper/commit/5ef7389))
+* v1.1.5 ([66d7ab7](https://github.com/yegobox/flipper/commit/66d7ab7))
+* v1.1.5 ([dbd6238](https://github.com/yegobox/flipper/commit/dbd6238))
+* v1.1.5 ([10ad12c](https://github.com/yegobox/flipper/commit/10ad12c))
+
+
+
+## <small>1.1.5 (2020-02-11)</small>
+
+* chore(release): 1.1.5 ([3f96d75](https://github.com/yegobox/flipper/commit/3f96d75))
+* update electron builder ([6f7d149](https://github.com/yegobox/flipper/commit/6f7d149))
+* update electron builder ([8664b74](https://github.com/yegobox/flipper/commit/8664b74))
+* update electron builder ([b771198](https://github.com/yegobox/flipper/commit/b771198))
+* warking on dashboard and loading transactions ([5e2f233](https://github.com/yegobox/flipper/commit/5e2f233))
+* warking on dashboard and loading transactions ([1a69604](https://github.com/yegobox/flipper/commit/1a69604))
+
+
+
+## <small>1.1.4 (2020-02-07)</small>
+
+* chore(release): 1.1.4 ([23320a8](https://github.com/yegobox/flipper/commit/23320a8))
+* release  v1.1.3 ([9a4ebb1](https://github.com/yegobox/flipper/commit/9a4ebb1))
+
+
+
+## <small>1.1.3 (2020-02-07)</small>
+
+* chore(release): 1.1.3 ([5ba03b9](https://github.com/yegobox/flipper/commit/5ba03b9))
+* deploy version 1.1.1 ([75e2814](https://github.com/yegobox/flipper/commit/75e2814))
+
+
+
+## <small>1.1.1 (2020-02-04)</small>
+
+* chore(release): 1.1.1 ([f8c1d5e](https://github.com/yegobox/flipper/commit/f8c1d5e))
+* release v1.1.0 ([65f8e62](https://github.com/yegobox/flipper/commit/65f8e62))
+* release v1.1.0 and it should build linux, window and mac desktop application ([3bafc8c](https://github.com/yegobox/flipper/commit/3bafc8c))
+* release v1.1.0 and it should build linux, window and mac desktop application ([009c09d](https://github.com/yegobox/flipper/commit/009c09d))
+
+
+
+## 1.1.0 (2020-01-21)
+
+* chore(release): 1.1.0 ([f109725](https://github.com/yegobox/flipper/commit/f109725))
+* config ghooks ([66ccd49](https://github.com/yegobox/flipper/commit/66ccd49))
+* config ghooks ([45b68e0](https://github.com/yegobox/flipper/commit/45b68e0))
+* make sure, flipper application is working in good way ([5d8041e](https://github.com/yegobox/flipper/commit/5d8041e))
+
+
 
 ## 1.1.0-alpha.0 (2020-01-17)
 
-### 6.3.1 (2019-11-01)
-
-## 6.3.0 (2019-10-25)
-
-## 6.2.0 (2019-09-29)
-
-## 6.1.0 (2019-08-15)
-
-### 6.0.1 (2019-05-31)
-
-## 6.0.0 (2019-05-31)
-
-
-### Features
-
-* **CI:** update Ubuntu and Node versions in Travis ([e0ff557](https://github.com/maximegris/angular-electron/commit/e0ff5570cd3c29b29ab63341424843ea60ea394e))
-
-
-### Bug Fixes
-
-* **e2e:** add mocha types ([20e1e89](https://github.com/maximegris/angular-electron/commit/20e1e892c0d81bab572f319ba3a5eff1315bb1d7))
-* **e2e:** without devTools ([2581983](https://github.com/maximegris/angular-electron/commit/258198393d859ec0950f431b85bb348acab1acf7)), closes [/github.com/electron/spectron/issues/174#issuecomment-319242097](https://github.com/maximegris//github.com/electron/spectron/issues/174/issues/issuecomment-319242097)
-* type conflicts ([a2971bf](https://github.com/maximegris/angular-electron/commit/a2971bf203d6337663418b13c9fa93f94ed08d15))
-
-## 5.1.0 (2018-11-30)
-
-## 5.0.0 (2018-11-11)
-
-## 4.3.0 (2018-10-26)
-
-### 4.2.2 (2018-08-22)
-
-### 4.2.1 (2018-08-22)
-
-## 4.2.0 (2018-08-19)
-
-## 4.1.0 (2018-06-27)
-
-
-### Features
-
-* **zone:** add zone-patch-electron to patch Electron native APIs in polyfills ([01842e2](https://github.com/maximegris/angular-electron/commit/01842e27948cfa8a94ba5c093a75bb020b2c59f6))
-
-## 4.0.0 (2018-05-25)
-
-### 3.4.1 (2018-05-25)
-
-## 3.4.0 (2018-05-25)
-
-
-### Bug Fixes
-
-* **test:** create polyfills-test.ts for karma test & setup Travis CI ([7fbc68c](https://github.com/maximegris/angular-electron/commit/7fbc68cd1fa65bb129f5b894c9e7976375ae6a80))
-* **travis:** set progress to false (speed up npm) ([be48531](https://github.com/maximegris/angular-electron/commit/be48531517097115db1eca13c1b7069375f7dbdd))
-
-## 3.3.0 (2018-04-15)
-
-## 3.2.0 (2018-04-15)
-
-## 3.1.0 (2018-03-15)
-
-### 3.0.1 (2018-03-07)
-
-## 3.0.0 (2018-02-25)
-
-### 2.7.1 (2018-02-15)
-
-## 2.7.0 (2018-02-15)
-
-
-### Bug Fixes
-
-* fixes maximegris/angular-electron[#118](https://github.com/maximegris/angular-electron/issues/118) ([6d21e69](https://github.com/maximegris/angular-electron/commit/6d21e69b6b09f45afa7dff76eed95951860768f4))
-
-## 2.6.0 (2018-01-24)
-
-## 2.5.0 (2018-01-12)
-
-
-### Bug Fixes
-
-* fixes maximegris/angular-electron[#98](https://github.com/maximegris/angular-electron/issues/98) ([136344b](https://github.com/maximegris/angular-electron/commit/136344b1cb96ea9947a080394c2280721ff45667))
-
-### 2.4.1 (2017-12-14)
-
-## 2.4.0 (2017-12-08)
-
-## 2.3.0 (2017-12-04)
-
-## 2.2.0 (2017-11-28)
-
-### 2.1.1 (2017-11-19)
-
-## 2.1.0 (2017-11-19)
-
-## 2.0.0 (2017-11-13)
-
-## 1.9.0 (2017-09-22)
-
-### 1.8.1 (2017-09-22)
-
-## 1.8.0 (2017-09-09)
-
-## 1.7.0 (2017-08-18)
-
-### 1.6.1 (2017-07-27)
-
-## 1.6.0 (2017-07-16)
-
-## 1.5.0 (2017-06-10)
-
-### 1.4.4 (2017-06-08)
-
-### 1.4.3 (2017-06-06)
-
-### 1.4.2 (2017-05-31)
-
-## 1.4.0 (2017-05-23)
-
-### 1.3.6 (2017-05-21)
-
-### 1.3.5 (2017-05-18)
-
-### 1.3.4 (2017-05-12)
-
-### 1.3.3 (2017-05-10)
-
-### 1.3.2 (2017-05-05)
-
-### 1.3.1 (2017-05-05)
-
-## 1.3.0 (2017-05-01)
-
-### 1.2.1 (2017-04-30)
-
-## 1.2.0 (2017-04-19)
-
-### 1.1.2 (2017-04-18)
-
-### 1.1.1 (2017-04-12)
-
-## 1.1.0 (2017-04-12)
-
-### 1.0.3 (2017-04-07)
-
-### 1.0.2 (2017-04-07)
-
-### 1.0.1 (2017-04-03)
-
-## 6.3.0 (2019-10-25)
-
-* [Bumped Version] 6.3.0 ([09f9646](https://github.com/maximegris/angular-electron/commit/09f9646))
-* misc/ change Electron version to 7.0.0 in README ([6a4e2de](https://github.com/maximegris/angular-electron/commit/6a4e2de))
-* misc/ remove link to dependenciesci ([93d5a8c](https://github.com/maximegris/angular-electron/commit/93d5a8c))
-* misc/ upgrade Electron 7 ([d732340](https://github.com/maximegris/angular-electron/commit/d732340))
-
-
-
-## 6.2.0 (2019-09-29)
-
-* [Bumped Version] 6.2.0 ([8838e0e](https://github.com/maximegris/angular-electron/commit/8838e0e))
-* Maj Changelog ([bc4c950](https://github.com/maximegris/angular-electron/commit/bc4c950))
-* misc/ add Stale to close unactive issues ([398bdf1](https://github.com/maximegris/angular-electron/commit/398bdf1))
-* Upgrade Angular 8.2.8 & Electron 6.0.10 ([2ecda63](https://github.com/maximegris/angular-electron/commit/2ecda63))
-
-
-
-## 6.1.0 (2019-08-15)
-
-* [Bumped Version] 6.1.0 ([b47c594](https://github.com/maximegris/angular-electron/commit/b47c594))
-* [DELETE]: vscode settings removed ([becc9b4](https://github.com/maximegris/angular-electron/commit/becc9b4))
-* [UPDATE]: Typescript version fixes ([a284c23](https://github.com/maximegris/angular-electron/commit/a284c23))
-* Angular src restructured as modular as per angular official guidelines, .travis.yml support added fo ([5983703](https://github.com/maximegris/angular-electron/commit/5983703))
-* Corejs path updates ([88056d6](https://github.com/maximegris/angular-electron/commit/88056d6))
-* Electron 6.0.0 ([1aef350](https://github.com/maximegris/angular-electron/commit/1aef350))
-* fix/ Version Electron in README ([acf0d4f](https://github.com/maximegris/angular-electron/commit/acf0d4f))
-* misc/ upgrade Angular 8.2 / Spectron 7 ([6e2211f](https://github.com/maximegris/angular-electron/commit/6e2211f))
-* Update dependencies ([bd51f28](https://github.com/maximegris/angular-electron/commit/bd51f28))
-
-
-
-## <small>6.0.1 (2019-05-31)</small>
-
-* [Bumped Version] 6.0.1 ([4f9cef3](https://github.com/maximegris/angular-electron/commit/4f9cef3))
-* ref/ strict version build-angular & zonejs ([5a24b56](https://github.com/maximegris/angular-electron/commit/5a24b56))
-* ref/ strict version codelyzer ([6ede0c8](https://github.com/maximegris/angular-electron/commit/6ede0c8))
-
-
-
-## 6.0.0 (2019-05-31)
-
-* [Bumped Version] 6.0.0 ([fb719ab](https://github.com/maximegris/angular-electron/commit/fb719ab))
-* Add CI for macOS. ([3ba02e3](https://github.com/maximegris/angular-electron/commit/3ba02e3))
-* bump angular version ([7a564a0](https://github.com/maximegris/angular-electron/commit/7a564a0))
-* bump tslint & codelyzer versions, update tslint rules & alphabetize ([8425cdc](https://github.com/maximegris/angular-electron/commit/8425cdc))
-* Fix Travis CI link ([10aaa4c](https://github.com/maximegris/angular-electron/commit/10aaa4c))
-* Not gitignore src/karma.conf.js ([7599320](https://github.com/maximegris/angular-electron/commit/7599320))
-* ref/ upgrade Angular 8 and Electron 5 ([92334cf](https://github.com/maximegris/angular-electron/commit/92334cf))
-* Remove Node.js v12. ([ccbf6cd](https://github.com/maximegris/angular-electron/commit/ccbf6cd))
-* Run CI for Node.js version 10 ([2538965](https://github.com/maximegris/angular-electron/commit/2538965))
-* update versions and prepare for electron 5 ([07a5786](https://github.com/maximegris/angular-electron/commit/07a5786))
-* Use service xvfb. ([4db31e3](https://github.com/maximegris/angular-electron/commit/4db31e3))
-* version bump ([bb1d6bb](https://github.com/maximegris/angular-electron/commit/bb1d6bb))
-* feat(CI): update Ubuntu and Node versions in Travis ([e0ff557](https://github.com/maximegris/angular-electron/commit/e0ff557))
-* fix: type conflicts ([a2971bf](https://github.com/maximegris/angular-electron/commit/a2971bf))
-* fix(e2e): add mocha types ([20e1e89](https://github.com/maximegris/angular-electron/commit/20e1e89))
-* fix(e2e): without devTools ([2581983](https://github.com/maximegris/angular-electron/commit/2581983)), closes [/github.com/electron/spectron/issues/174#issuecomment-319242097](https://github.com//github.com/electron/spectron/issues/174/issues/issuecomment-319242097)
-* chore: Spectron for e2e tests ([901438a](https://github.com/maximegris/angular-electron/commit/901438a))
-
-
-
-## 5.1.0 (2018-11-30)
-
-* [Bumped Version] 5.1.0 ([b790e12](https://github.com/maximegris/angular-electron/commit/b790e12))
-* fix/ typo Angular 7 ([fde371f](https://github.com/maximegris/angular-electron/commit/fde371f))
-* fix/ typo README ([723233c](https://github.com/maximegris/angular-electron/commit/723233c))
-* fix/ typo script npm electron:windows ([45bab44](https://github.com/maximegris/angular-electron/commit/45bab44))
-* ref/ remve npx - fix vulnerabilities ([41aeb57](https://github.com/maximegris/angular-electron/commit/41aeb57))
-* update README ([f146d5d](https://github.com/maximegris/angular-electron/commit/f146d5d))
-
-
-
-## 5.0.0 (2018-11-11)
-
-* Fix typos in README file ([0440ee9](https://github.com/maximegris/angular-electron/commit/0440ee9))
-* ref/ Generate changelog ([a89b3ce](https://github.com/maximegris/angular-electron/commit/a89b3ce))
-* ref/ Upgrade to Angular 7 ([315a79b](https://github.com/maximegris/angular-electron/commit/315a79b))
-* Update electron-builder.json files rule ([82c7bcf](https://github.com/maximegris/angular-electron/commit/82c7bcf))
-* Update Version Electron 2 to 3 #hacktoberfest ([f083328](https://github.com/maximegris/angular-electron/commit/f083328))
-
-
-
-## <small>4.2.2 (2018-08-22)</small>
-
-* fix/ build serve & electron with single tsc command ([9106c8f](https://github.com/maximegris/angular-electron/commit/9106c8f))
-* fix/ typo README ([a9448aa](https://github.com/maximegris/angular-electron/commit/a9448aa))
-
-
-
-## <small>4.2.1 (2018-08-22)</small>
-
-* fix/ jslib in main process error ([ef33f5e](https://github.com/maximegris/angular-electron/commit/ef33f5e))
-
-
-
-## 4.2.0 (2018-08-19)
-
-* [Bumped Version] V4.2.0 ([0da3856](https://github.com/maximegris/angular-electron/commit/0da3856))
-* fix/ electron builder output directories #200 ([f4535e5](https://github.com/maximegris/angular-electron/commit/f4535e5)), closes [#200](https://github.com/maximegris/angular-electron/issues/200)
-* Make sure tsconfig be used. ([961c8b1](https://github.com/maximegris/angular-electron/commit/961c8b1))
-* ref/ remove some directories of tsconfig.app.json ([1adad4a](https://github.com/maximegris/angular-electron/commit/1adad4a))
-* Upgrade Angular (6.1.2) deps ([d8818c1](https://github.com/maximegris/angular-electron/commit/d8818c1))
-
-
-
-## 4.1.0 (2018-06-27)
-
-* Allow Angular Using Electron Modules ([ec705ee](https://github.com/maximegris/angular-electron/commit/ec705ee))
-* fix/ version angular (revert 6.0.6 -> 6.0.5) ([63a41b8](https://github.com/maximegris/angular-electron/commit/63a41b8))
-* fix/ version ts-node ([0d8341a](https://github.com/maximegris/angular-electron/commit/0d8341a))
-* ref/ postinstall web & electron ([50657d0](https://github.com/maximegris/angular-electron/commit/50657d0))
-* update README ([1d48e32](https://github.com/maximegris/angular-electron/commit/1d48e32))
-* feat(zone): add zone-patch-electron to patch Electron native APIs in polyfills ([01842e2](https://github.com/maximegris/angular-electron/commit/01842e2))
-
-
-
-## 4.0.0 (2018-05-25)
-
-* misc/ remove unused packages ([a7e33b6](https://github.com/maximegris/angular-electron/commit/a7e33b6))
-* misc/ update Changelog ([b758122](https://github.com/maximegris/angular-electron/commit/b758122))
-* ref/ upgrade angular to 6.0.3 ([e7fac6e](https://github.com/maximegris/angular-electron/commit/e7fac6e))
-
-
-
-## <small>3.4.1 (2018-05-25)</small>
-
-* misc/ update changelog ([70b359f](https://github.com/maximegris/angular-electron/commit/70b359f))
-* version 3.4.1 ([308ea9c](https://github.com/maximegris/angular-electron/commit/308ea9c))
-
-
-
-## 3.4.0 (2018-05-25)
-
-* misc/ update changelog ([7d5eeb3](https://github.com/maximegris/angular-electron/commit/7d5eeb3))
-* Modify electron builder configuration to remove source code and tests ([0cf6899](https://github.com/maximegris/angular-electron/commit/0cf6899))
-* ref/ remove contributors ([6dc97a1](https://github.com/maximegris/angular-electron/commit/6dc97a1))
-* The file is unused  ([05c9e39](https://github.com/maximegris/angular-electron/commit/05c9e39))
-* Translation issue ([35354b1](https://github.com/maximegris/angular-electron/commit/35354b1))
-* version 3.4.0 ([06d6b0f](https://github.com/maximegris/angular-electron/commit/06d6b0f))
-* refactor: update electron, electron-builder to latest (2.0.2, 20.14.7) ([f19e6ee](https://github.com/maximegris/angular-electron/commit/f19e6ee))
-* refactor: upgrade to NodeJS 8, Angular 6, CLI 6, Electron 2.0, RxJS 6.1 ([e37efdb](https://github.com/maximegris/angular-electron/commit/e37efdb))
-* refactor(hooks): replace hooks to ng-cli fileReplacements logic ([c940037](https://github.com/maximegris/angular-electron/commit/c940037))
-* fix(test): create polyfills-test.ts for karma test & setup Travis CI ([7fbc68c](https://github.com/maximegris/angular-electron/commit/7fbc68c))
-* fix(travis): set progress to false (speed up npm) ([be48531](https://github.com/maximegris/angular-electron/commit/be48531))
-
-
-
-## 3.3.0 (2018-04-15)
-
-* add Changelog file ([71083f1](https://github.com/maximegris/angular-electron/commit/71083f1))
-* fix/ typo README.md (production variables) ([a8c2b63](https://github.com/maximegris/angular-electron/commit/a8c2b63))
-* version 3.3.0 ([a88bda6](https://github.com/maximegris/angular-electron/commit/a88bda6))
-* version 3.3.0 changelog ([ddfbbf9](https://github.com/maximegris/angular-electron/commit/ddfbbf9))
-
-
-
-## 3.2.0 (2018-04-15)
-
-* fix e2e tests based on PR #161 and terminate the npm process after test execution ([fccf348](https://github.com/maximegris/angular-electron/commit/fccf348)), closes [#161](https://github.com/maximegris/angular-electron/issues/161)
-* fix/ app e2e spec ([8046b2a](https://github.com/maximegris/angular-electron/commit/8046b2a))
-* Including electron to eliminate Electron not found err sg ([d78203f](https://github.com/maximegris/angular-electron/commit/d78203f))
-* provide webFrame access ([6bd044e](https://github.com/maximegris/angular-electron/commit/6bd044e))
-* ref/ add node/electron module import as exemple : fs and remote ([e3ad12d](https://github.com/maximegris/angular-electron/commit/e3ad12d))
-* remove copyfiles ([9af5138](https://github.com/maximegris/angular-electron/commit/9af5138))
-* update dependencies ([89963ab](https://github.com/maximegris/angular-electron/commit/89963ab))
-* version 3.2.0 ([8dc69fa](https://github.com/maximegris/angular-electron/commit/8dc69fa))
-
-
-
-## 3.1.0 (2018-03-15)
-
-* Added option -o to script npm run ng:serve so that it really open the browser ([72aff8d](https://github.com/maximegris/angular-electron/commit/72aff8d))
-* Fix to change environment ([448d68b](https://github.com/maximegris/angular-electron/commit/448d68b))
-* version 3.1.0 ([f7c71e7](https://github.com/maximegris/angular-electron/commit/f7c71e7))
-
-
-
-## <small>3.0.1 (2018-03-07)</small>
-
-* fix/ icon app ([22699ef](https://github.com/maximegris/angular-electron/commit/22699ef))
-* version 3.0.1 ([5258ff1](https://github.com/maximegris/angular-electron/commit/5258ff1))
-
-
-
-## 3.0.0 (2018-02-25)
-
-* fix/ TranslateModule test ([7863aa9](https://github.com/maximegris/angular-electron/commit/7863aa9))
-* Ng not ejected anymore ([67ab31c](https://github.com/maximegris/angular-electron/commit/67ab31c))
-* pin all dependency versions ([0558d6a](https://github.com/maximegris/angular-electron/commit/0558d6a))
-* update dependencies and fix unit tests ([4d3ca6e](https://github.com/maximegris/angular-electron/commit/4d3ca6e))
-
-
-
-## <small>2.7.1 (2018-02-15)</small>
-
-* ref/ dernière version cli ([3df8158](https://github.com/maximegris/angular-electron/commit/3df8158))
-* version 2.7.1 ([1ae6f7a](https://github.com/maximegris/angular-electron/commit/1ae6f7a))
-
-
-
-## 2.7.0 (2018-02-15)
-
-* Correction of a word. ([d6655c7](https://github.com/maximegris/angular-electron/commit/d6655c7))
-* feat/ add webview directive ([e1b5600](https://github.com/maximegris/angular-electron/commit/e1b5600))
-* migrate Angular to 5.2.0 ([b8cf343](https://github.com/maximegris/angular-electron/commit/b8cf343))
-* ref/ Remove sponsor ([2a28239](https://github.com/maximegris/angular-electron/commit/2a28239))
-* ref/ update angular & dep ([e3b1fab](https://github.com/maximegris/angular-electron/commit/e3b1fab))
-* ref/ upgrade electron (security issue) ([f6a0c4e](https://github.com/maximegris/angular-electron/commit/f6a0c4e))
-* version bump + logo resize ([3545d16](https://github.com/maximegris/angular-electron/commit/3545d16))
-* fix: fixes maximegris/angular-electron#118 ([6d21e69](https://github.com/maximegris/angular-electron/commit/6d21e69)), closes [maximegris/angular-electron#118](https://github.com/maximegris/angular-electron/issues/118)
-* fix: fixes maximegris/angular-electron#98 ([136344b](https://github.com/maximegris/angular-electron/commit/136344b)), closes [maximegris/angular-electron#98](https://github.com/maximegris/angular-electron/issues/98)
-
-
-
-## <small>2.4.1 (2017-12-14)</small>
-
-* fix/ Manage icons for linux binary generation ([ccd0601](https://github.com/maximegris/angular-electron/commit/ccd0601))
-* version 2.4.1 ([5fcfca0](https://github.com/maximegris/angular-electron/commit/5fcfca0))
-
-
-
-## 2.4.0 (2017-12-08)
-
-* version 2.4.0 ([0437b33](https://github.com/maximegris/angular-electron/commit/0437b33))
-
-
-
-## 2.3.0 (2017-12-04)
-
-* add ngx translate ([facda37](https://github.com/maximegris/angular-electron/commit/facda37))
-* Use HttpClientModule ([5704e2e](https://github.com/maximegris/angular-electron/commit/5704e2e))
-
-
-
-## 2.2.0 (2017-11-28)
-
-* Brought back scripts defined in webpack.config.js ([441da3d](https://github.com/maximegris/angular-electron/commit/441da3d))
-* migrate to Angular 5.0.3 ([f4bc5b2](https://github.com/maximegris/angular-electron/commit/f4bc5b2))
-* Update LICENSE badge ([fa783aa](https://github.com/maximegris/angular-electron/commit/fa783aa))
-* Update to electron-builder ([0e94b52](https://github.com/maximegris/angular-electron/commit/0e94b52))
-
-
-
-## <small>2.1.1 (2017-11-19)</small>
-
-* Move codesponsor ([064be4c](https://github.com/maximegris/angular-electron/commit/064be4c))
-
-
-
-## 2.1.0 (2017-11-19)
-
-* Add codesponsor ([87e695d](https://github.com/maximegris/angular-electron/commit/87e695d))
-* Add script for winportable ([2be2dae](https://github.com/maximegris/angular-electron/commit/2be2dae))
-* Add support for building a Windows self-contained executable ([7cfa790](https://github.com/maximegris/angular-electron/commit/7cfa790))
-* fix/ electron-packager need favicon >= 256x256 on Windows ([d2c253f](https://github.com/maximegris/angular-electron/commit/d2c253f))
-* fix/ refact webpack config (inspired by ng eject Angular 5) ([d1c30ac](https://github.com/maximegris/angular-electron/commit/d1c30ac))
-* fix/ replace aotPlugin in no prod mode ([a0caf1e](https://github.com/maximegris/angular-electron/commit/a0caf1e))
-* fix/ Replace AotPlugin to AngularCompilerPlugin ([bef106e](https://github.com/maximegris/angular-electron/commit/bef106e))
-* fix/ Update README Angular 5 ([93c6949](https://github.com/maximegris/angular-electron/commit/93c6949))
-* fix/ webpack template path ([518b66b](https://github.com/maximegris/angular-electron/commit/518b66b))
-* Mgrate to Angular 5.0.2 ([bd7bed6](https://github.com/maximegris/angular-electron/commit/bd7bed6))
-* Update package.json ([b16cf73](https://github.com/maximegris/angular-electron/commit/b16cf73))
-* Version 2.1.0 ([fccef2f](https://github.com/maximegris/angular-electron/commit/fccef2f))
-
-
-
-## 2.0.0 (2017-11-13)
-
-* Add buffer to externals ([7e797f0](https://github.com/maximegris/angular-electron/commit/7e797f0))
-* Edit a typo on README ([956a2bc](https://github.com/maximegris/angular-electron/commit/956a2bc))
-* Fix #55 removed bootstraps.css which for example purpose before. ([41445eb](https://github.com/maximegris/angular-electron/commit/41445eb)), closes [#55](https://github.com/maximegris/angular-electron/issues/55)
-* License MIT ([73494b7](https://github.com/maximegris/angular-electron/commit/73494b7))
-* Migrate to Angular 5 ([3a3ffe1](https://github.com/maximegris/angular-electron/commit/3a3ffe1))
-
-
-
-## 1.9.0 (2017-09-22)
-
-* feat/  launch electron & webpack in // (npm run start) ([8c37cc4](https://github.com/maximegris/angular-electron/commit/8c37cc4))
-* ref/ Exclude node_modules (tslint) ([412a0a5](https://github.com/maximegris/angular-electron/commit/412a0a5))
-
-
-
-## <small>1.8.1 (2017-09-22)</small>
-
-* Fix #55 , and also added functionality for scripts global building ([012a894](https://github.com/maximegris/angular-electron/commit/012a894)), closes [#55](https://github.com/maximegris/angular-electron/issues/55)
-* ref/ add package-lock in gitignore ([4edd98d](https://github.com/maximegris/angular-electron/commit/4edd98d))
-* remove package-lock ([8e98627](https://github.com/maximegris/angular-electron/commit/8e98627))
-* upgrade angular version 4.4.3 ([10d0f87](https://github.com/maximegris/angular-electron/commit/10d0f87))
-* version 1.8.1 ([70879d1](https://github.com/maximegris/angular-electron/commit/70879d1))
-
-
-
-## 1.8.0 (2017-09-09)
-
-* upgrade lib version ([2ac2aa0](https://github.com/maximegris/angular-electron/commit/2ac2aa0))
-
-
-
-## 1.7.0 (2017-08-18)
-
-* ref/ Update Angular (4.3.5) / Electron (1.7.2) / Electron Packager (8.7.2) / Typescript (2.5.0) ([f97cd81](https://github.com/maximegris/angular-electron/commit/f97cd81))
-
-
-
-## <small>1.6.1 (2017-07-27)</small>
-
-* fix/  angular-cli error in prod compilation with aot ([c26a5ae](https://github.com/maximegris/angular-electron/commit/c26a5ae))
-* version 1.6.1 ([899babd](https://github.com/maximegris/angular-electron/commit/899babd))
-
-
-
-## 1.6.0 (2017-07-16)
-
-* ajout package-lock npm v5 ([09c0840](https://github.com/maximegris/angular-electron/commit/09c0840))
-* Change background img ([7e58717](https://github.com/maximegris/angular-electron/commit/7e58717))
-* Fix npm run build:prod ([c23bade](https://github.com/maximegris/angular-electron/commit/c23bade))
-* fix/ Bindings not updating automatically #44 ([2a90191](https://github.com/maximegris/angular-electron/commit/2a90191)), closes [#44](https://github.com/maximegris/angular-electron/issues/44)
-* fix/ e2e test with jasmine2 ([9c51f32](https://github.com/maximegris/angular-electron/commit/9c51f32))
-* fix/ typescript issues ([bb0a6ab](https://github.com/maximegris/angular-electron/commit/bb0a6ab))
-* increment version deps ([bde452c](https://github.com/maximegris/angular-electron/commit/bde452c))
-* Revert last pull request - break production compilation ([ccc9064](https://github.com/maximegris/angular-electron/commit/ccc9064))
-* upgrade angular version to 4.3.0 ([ab16959](https://github.com/maximegris/angular-electron/commit/ab16959))
-
-
-
-## 1.5.0 (2017-06-10)
-
-* fix/ karma Unit test ([ea13d6d](https://github.com/maximegris/angular-electron/commit/ea13d6d))
-* fix/ remove yarn because of error with module dep in prod builds ([8a49a45](https://github.com/maximegris/angular-electron/commit/8a49a45))
-* update yarn lock ([18c0e62](https://github.com/maximegris/angular-electron/commit/18c0e62))
-
-
-
-## <small>1.4.4 (2017-06-08)</small>
-
-* fix/ Fix npm run lint ([db7972a](https://github.com/maximegris/angular-electron/commit/db7972a))
-* ref/ electron ./dist more generic ([7e71add](https://github.com/maximegris/angular-electron/commit/7e71add))
-* Replace const icon to let icon ([dadf65f](https://github.com/maximegris/angular-electron/commit/dadf65f))
-
-
-
-## <small>1.4.3 (2017-06-06)</small>
-
-* fix/ favicon path during packaging ([aa2b012](https://github.com/maximegris/angular-electron/commit/aa2b012))
-* remove build node 8 till node-sass failed ([34f201d](https://github.com/maximegris/angular-electron/commit/34f201d))
-* v1.4.3 ([4961fb0](https://github.com/maximegris/angular-electron/commit/4961fb0))
-
-
-
-## <small>1.4.2 (2017-05-31)</small>
-
-* Change dep versions ([62d08d3](https://github.com/maximegris/angular-electron/commit/62d08d3))
-* install npm dep when building ([56948d0](https://github.com/maximegris/angular-electron/commit/56948d0))
-* Minor update ([5f282b7](https://github.com/maximegris/angular-electron/commit/5f282b7))
-* No hot reload in browser ([7892f0d](https://github.com/maximegris/angular-electron/commit/7892f0d))
-* update Electron v1.6.10 ([f2f2080](https://github.com/maximegris/angular-electron/commit/f2f2080))
-* upgrade ng/electron dependencies ([78b0f27](https://github.com/maximegris/angular-electron/commit/78b0f27))
-* chore(package): bump dependencies ([b62c7b6](https://github.com/maximegris/angular-electron/commit/b62c7b6))
-
-
-
-## 1.4.0 (2017-05-23)
-
-* 1.4.0 ([23213c4](https://github.com/maximegris/angular-electron/commit/23213c4))
-* Change style home page ([93dcc52](https://github.com/maximegris/angular-electron/commit/93dcc52))
-* Fixed compiler warnings ([fca6b15](https://github.com/maximegris/angular-electron/commit/fca6b15))
-* ref/ electron main from js to ts ([835d32b](https://github.com/maximegris/angular-electron/commit/835d32b))
-* Remove caret & tilde ([dd98155](https://github.com/maximegris/angular-electron/commit/dd98155))
-
-
-
-## <small>1.3.5 (2017-05-18)</small>
-
-* Add new tags ([cd07a86](https://github.com/maximegris/angular-electron/commit/cd07a86))
-* v 1.3.5 ([d528a71](https://github.com/maximegris/angular-electron/commit/d528a71))
-
-
-
-## <small>1.3.4 (2017-05-12)</small>
-
-* feat/ add nodejs native lib in webpack config ([27d9bc6](https://github.com/maximegris/angular-electron/commit/27d9bc6))
-* Fix issue #15 ([d77cbf1](https://github.com/maximegris/angular-electron/commit/d77cbf1)), closes [#15](https://github.com/maximegris/angular-electron/issues/15)
-* Ref/ Electron packager in external file ([17b04e8](https://github.com/maximegris/angular-electron/commit/17b04e8))
-* version 1.3.4 ([374af16](https://github.com/maximegris/angular-electron/commit/374af16))
-
-
-
-## <small>1.3.3 (2017-05-10)</small>
-
-* Chapters order ([a772b9c](https://github.com/maximegris/angular-electron/commit/a772b9c))
-* Chapters order ([06547e5](https://github.com/maximegris/angular-electron/commit/06547e5))
-* Delete spec file of electron.service ([083498e](https://github.com/maximegris/angular-electron/commit/083498e))
-* Fix issue #15 ([e7cd6e6](https://github.com/maximegris/angular-electron/commit/e7cd6e6)), closes [#15](https://github.com/maximegris/angular-electron/issues/15)
-* Move Browser mode chapter ([8818750](https://github.com/maximegris/angular-electron/commit/8818750))
-* Version 1.3.3 ([f4db75b](https://github.com/maximegris/angular-electron/commit/f4db75b))
-
-
-
-## <small>1.3.2 (2017-05-05)</small>
-
-* Add comments of how conditional import works ([e6c1b3b](https://github.com/maximegris/angular-electron/commit/e6c1b3b))
-* Conditional import of Electron/NodeJS libs - The app can be launch in browser mode ([c434f8a](https://github.com/maximegris/angular-electron/commit/c434f8a))
-* Fix indentation ([6a9836a](https://github.com/maximegris/angular-electron/commit/6a9836a))
-* Fix prepree2e script ([b2af4fd](https://github.com/maximegris/angular-electron/commit/b2af4fd))
-* Set e2e tests ([d223974](https://github.com/maximegris/angular-electron/commit/d223974))
-* Suround electron browser by try/catch ([88be472](https://github.com/maximegris/angular-electron/commit/88be472))
-* Update @types/node ([9d43304](https://github.com/maximegris/angular-electron/commit/9d43304))
-* Update readme with e2e info ([01bbf13](https://github.com/maximegris/angular-electron/commit/01bbf13))
-* update version ([0849a0a](https://github.com/maximegris/angular-electron/commit/0849a0a))
-
-
-
-## <small>1.3.1 (2017-05-05)</small>
-
-* Add routing module ([7334ce8](https://github.com/maximegris/angular-electron/commit/7334ce8))
-* Fixed hardcoded path in glob copy, blocking assets after eject ([815d519](https://github.com/maximegris/angular-electron/commit/815d519))
-* update comments in dev/prod env files ([7cf6a51](https://github.com/maximegris/angular-electron/commit/7cf6a51))
-* Version 1.3.1 ([f18ac77](https://github.com/maximegris/angular-electron/commit/f18ac77))
-
-
-
-## 1.3.0 (2017-05-01)
-
-* Fix webpack prod/dev env ([8549da1](https://github.com/maximegris/angular-electron/commit/8549da1))
-
-
-
-## <small>1.2.1 (2017-04-30)</small>
-
-* allowJs ([4efd188](https://github.com/maximegris/angular-electron/commit/4efd188))
-* Example url background in scss ([3705a35](https://github.com/maximegris/angular-electron/commit/3705a35))
-* Fix electron build (extract-zip workaround) ([a7ee90e](https://github.com/maximegris/angular-electron/commit/a7ee90e))
-* Fix webpack config url in css ([cea4be5](https://github.com/maximegris/angular-electron/commit/cea4be5))
-* html loader ([c55558a](https://github.com/maximegris/angular-electron/commit/c55558a))
-* update version 1.2.1 ([78e8da7](https://github.com/maximegris/angular-electron/commit/78e8da7))
-
-
-
-## 1.2.0 (2017-04-19)
-
-* Set one example of css class in app component ([a15775f](https://github.com/maximegris/angular-electron/commit/a15775f))
-* Update npm dependencies ([0a93ebe](https://github.com/maximegris/angular-electron/commit/0a93ebe))
-
-
-
-## <small>1.1.2 (2017-04-18)</small>
-
-* Fix typo & fix script electron:mac ([bd06859](https://github.com/maximegris/angular-electron/commit/bd06859))
-* Set theme jekyll-theme-architect ([644d857](https://github.com/maximegris/angular-electron/commit/644d857))
-* update README ([97fa63d](https://github.com/maximegris/angular-electron/commit/97fa63d))
-* update README ([23fc0a9](https://github.com/maximegris/angular-electron/commit/23fc0a9))
-* update README ([a8dcf6a](https://github.com/maximegris/angular-electron/commit/a8dcf6a))
-* v1.1.2 ([e29e467](https://github.com/maximegris/angular-electron/commit/e29e467))
-
-
-
-## <small>1.1.1 (2017-04-12)</small>
-
-* Fix webpack.config file path (travisci) ([a172df9](https://github.com/maximegris/angular-electron/commit/a172df9))
-* live reload on disk ([7bb2f8b](https://github.com/maximegris/angular-electron/commit/7bb2f8b))
-* Remove unused dependency (webpack-dev-server) ([e9150f4](https://github.com/maximegris/angular-electron/commit/e9150f4))
-
-
-
-## 1.1.0 (2017-04-12)
-
-* add depdencies CI & Licence ([6ceb0f2](https://github.com/maximegris/angular-electron/commit/6ceb0f2))
-* Override webpack configuration ([60d6116](https://github.com/maximegris/angular-electron/commit/60d6116))
-
-
-
-## <small>1.0.3 (2017-04-07)</small>
-
-* Add TravisCI ([e5640fd](https://github.com/maximegris/angular-electron/commit/e5640fd))
-* v1.0.3 ([9866d53](https://github.com/maximegris/angular-electron/commit/9866d53))
-
-
-
-## <small>1.0.2 (2017-04-07)</small>
-
-* Add TravisCI ([ef4b80e](https://github.com/maximegris/angular-electron/commit/ef4b80e))
-* Fix typo ([f964c3f](https://github.com/maximegris/angular-electron/commit/f964c3f))
-* Fix typo ([e42bb5e](https://github.com/maximegris/angular-electron/commit/e42bb5e))
-* Update README ([3bb45b3](https://github.com/maximegris/angular-electron/commit/3bb45b3))
-* Update README with angular-cli doc ([5a57578](https://github.com/maximegris/angular-electron/commit/5a57578))
-* v1.0.2 ([1bd8e0e](https://github.com/maximegris/angular-electron/commit/1bd8e0e))
-
-
-
-## <small>1.0.1 (2017-04-03)</small>
-
-* feat/ Add electron-packager scripts ([57891dc](https://github.com/maximegris/angular-electron/commit/57891dc))
-* ref/ update README ([7fddc20](https://github.com/maximegris/angular-electron/commit/7fddc20))
-* update README ([9a983c1](https://github.com/maximegris/angular-electron/commit/9a983c1))
-* v1.0.0 ([7a21eb9](https://github.com/maximegris/angular-electron/commit/7a21eb9))
-* v1.0.1 ([68275a3](https://github.com/maximegris/angular-electron/commit/68275a3))
-* chore: initial commit from @angular/cli ([616a69e](https://github.com/maximegris/angular-electron/commit/616a69e))
+* chore: initial commit from @angular/cli ([616a69e](https://github.com/yegobox/flipper/commit/616a69e))
+* chore: Spectron for e2e tests ([901438a](https://github.com/yegobox/flipper/commit/901438a))
+* chore(package): bump dependencies ([b62c7b6](https://github.com/yegobox/flipper/commit/b62c7b6))
+* chore(release): 1.1.0-alpha.0 ([d81422b](https://github.com/yegobox/flipper/commit/d81422b))
+* [Bumped Version]  6.3.1 ([671b6a3](https://github.com/yegobox/flipper/commit/671b6a3))
+* [Bumped Version] 5.1.0 ([b790e12](https://github.com/yegobox/flipper/commit/b790e12))
+* [Bumped Version] 6.0.0 ([fb719ab](https://github.com/yegobox/flipper/commit/fb719ab))
+* [Bumped Version] 6.0.1 ([4f9cef3](https://github.com/yegobox/flipper/commit/4f9cef3))
+* [Bumped Version] 6.1.0 ([b47c594](https://github.com/yegobox/flipper/commit/b47c594))
+* [Bumped Version] 6.2.0 ([8838e0e](https://github.com/yegobox/flipper/commit/8838e0e))
+* [Bumped Version] 6.3.0 ([09f9646](https://github.com/yegobox/flipper/commit/09f9646))
+* [Bumped Version] V4.2.0 ([0da3856](https://github.com/yegobox/flipper/commit/0da3856))
+* [DELETE]: vscode settings removed ([becc9b4](https://github.com/yegobox/flipper/commit/becc9b4))
+* [UPDATE]: Typescript version fixes ([a284c23](https://github.com/yegobox/flipper/commit/a284c23))
+* #395 - require is not defined ([c4b2cb6](https://github.com/yegobox/flipper/commit/c4b2cb6)), closes [#395](https://github.com/yegobox/flipper/issues/395)
+* 1.4.0 ([23213c4](https://github.com/yegobox/flipper/commit/23213c4))
+* Add buffer to externals ([7e797f0](https://github.com/yegobox/flipper/commit/7e797f0))
+* add Changelog file ([71083f1](https://github.com/yegobox/flipper/commit/71083f1))
+* Add CI for macOS. ([3ba02e3](https://github.com/yegobox/flipper/commit/3ba02e3))
+* Add codesponsor ([87e695d](https://github.com/yegobox/flipper/commit/87e695d))
+* Add comments of how conditional import works ([e6c1b3b](https://github.com/yegobox/flipper/commit/e6c1b3b))
+* add depdencies CI & Licence ([6ceb0f2](https://github.com/yegobox/flipper/commit/6ceb0f2))
+* Add new tags ([cd07a86](https://github.com/yegobox/flipper/commit/cd07a86))
+* add ngx translate ([facda37](https://github.com/yegobox/flipper/commit/facda37))
+* Add routing module ([7334ce8](https://github.com/yegobox/flipper/commit/7334ce8))
+* Add script for winportable ([2be2dae](https://github.com/yegobox/flipper/commit/2be2dae))
+* Add support for building a Windows self-contained executable ([7cfa790](https://github.com/yegobox/flipper/commit/7cfa790))
+* Add TravisCI ([e5640fd](https://github.com/yegobox/flipper/commit/e5640fd))
+* Add TravisCI ([ef4b80e](https://github.com/yegobox/flipper/commit/ef4b80e))
+* Added option -o to script npm run ng:serve so that it really open the browser ([72aff8d](https://github.com/yegobox/flipper/commit/72aff8d))
+* ajout package-lock npm v5 ([09c0840](https://github.com/yegobox/flipper/commit/09c0840))
+* Allow Angular Using Electron Modules ([ec705ee](https://github.com/yegobox/flipper/commit/ec705ee))
+* allowJs ([4efd188](https://github.com/yegobox/flipper/commit/4efd188))
+* Angular src restructured as modular as per angular official guidelines, .travis.yml support added fo ([5983703](https://github.com/yegobox/flipper/commit/5983703))
+* Brought back scripts defined in webpack.config.js ([441da3d](https://github.com/yegobox/flipper/commit/441da3d))
+* bump angular version ([7a564a0](https://github.com/yegobox/flipper/commit/7a564a0))
+* bump tslint & codelyzer versions, update tslint rules & alphabetize ([8425cdc](https://github.com/yegobox/flipper/commit/8425cdc))
+* Change background img ([7e58717](https://github.com/yegobox/flipper/commit/7e58717))
+* Change dep versions ([62d08d3](https://github.com/yegobox/flipper/commit/62d08d3))
+* Change style home page ([93dcc52](https://github.com/yegobox/flipper/commit/93dcc52))
+* changelog ([39b0bca](https://github.com/yegobox/flipper/commit/39b0bca))
+* Chapters order ([06547e5](https://github.com/yegobox/flipper/commit/06547e5))
+* Chapters order ([a772b9c](https://github.com/yegobox/flipper/commit/a772b9c))
+* Conditional import of Electron/NodeJS libs - The app can be launch in browser mode ([c434f8a](https://github.com/yegobox/flipper/commit/c434f8a))
+* Corejs path updates ([88056d6](https://github.com/yegobox/flipper/commit/88056d6))
+* Correction of a word. ([d6655c7](https://github.com/yegobox/flipper/commit/d6655c7))
+* Delete spec file of electron.service ([083498e](https://github.com/yegobox/flipper/commit/083498e))
+* Edit a typo on README ([956a2bc](https://github.com/yegobox/flipper/commit/956a2bc))
+* Electron 6.0.0 ([1aef350](https://github.com/yegobox/flipper/commit/1aef350))
+* Example url background in scss ([3705a35](https://github.com/yegobox/flipper/commit/3705a35))
+* feat/  launch electron & webpack in // (npm run start) ([8c37cc4](https://github.com/yegobox/flipper/commit/8c37cc4))
+* feat/ Add electron-packager scripts ([57891dc](https://github.com/yegobox/flipper/commit/57891dc))
+* feat/ add nodejs native lib in webpack config ([27d9bc6](https://github.com/yegobox/flipper/commit/27d9bc6))
+* feat/ add webview directive ([e1b5600](https://github.com/yegobox/flipper/commit/e1b5600))
+* Fix #55 , and also added functionality for scripts global building ([012a894](https://github.com/yegobox/flipper/commit/012a894)), closes [#55](https://github.com/yegobox/flipper/issues/55)
+* Fix #55 removed bootstraps.css which for example purpose before. ([41445eb](https://github.com/yegobox/flipper/commit/41445eb)), closes [#55](https://github.com/yegobox/flipper/issues/55)
+* fix e2e tests based on PR #161 and terminate the npm process after test execution ([fccf348](https://github.com/yegobox/flipper/commit/fccf348)), closes [#161](https://github.com/yegobox/flipper/issues/161)
+* Fix electron build (extract-zip workaround) ([a7ee90e](https://github.com/yegobox/flipper/commit/a7ee90e))
+* Fix indentation ([6a9836a](https://github.com/yegobox/flipper/commit/6a9836a))
+* Fix issue #15 ([d77cbf1](https://github.com/yegobox/flipper/commit/d77cbf1)), closes [#15](https://github.com/yegobox/flipper/issues/15)
+* Fix issue #15 ([e7cd6e6](https://github.com/yegobox/flipper/commit/e7cd6e6)), closes [#15](https://github.com/yegobox/flipper/issues/15)
+* Fix npm run build:prod ([c23bade](https://github.com/yegobox/flipper/commit/c23bade))
+* Fix prepree2e script ([b2af4fd](https://github.com/yegobox/flipper/commit/b2af4fd))
+* Fix to change environment ([448d68b](https://github.com/yegobox/flipper/commit/448d68b))
+* Fix Travis CI link ([10aaa4c](https://github.com/yegobox/flipper/commit/10aaa4c))
+* Fix typo ([f964c3f](https://github.com/yegobox/flipper/commit/f964c3f))
+* Fix typo ([e42bb5e](https://github.com/yegobox/flipper/commit/e42bb5e))
+* Fix typo & fix script electron:mac ([bd06859](https://github.com/yegobox/flipper/commit/bd06859))
+* Fix typos in README file ([0440ee9](https://github.com/yegobox/flipper/commit/0440ee9))
+* Fix webpack config url in css ([cea4be5](https://github.com/yegobox/flipper/commit/cea4be5))
+* Fix webpack prod/dev env ([8549da1](https://github.com/yegobox/flipper/commit/8549da1))
+* Fix webpack.config file path (travisci) ([a172df9](https://github.com/yegobox/flipper/commit/a172df9))
+* fix/  angular-cli error in prod compilation with aot ([c26a5ae](https://github.com/yegobox/flipper/commit/c26a5ae))
+* fix/ app e2e spec ([8046b2a](https://github.com/yegobox/flipper/commit/8046b2a))
+* fix/ Bindings not updating automatically #44 ([2a90191](https://github.com/yegobox/flipper/commit/2a90191)), closes [#44](https://github.com/yegobox/flipper/issues/44)
+* fix/ build serve & electron with single tsc command ([9106c8f](https://github.com/yegobox/flipper/commit/9106c8f))
+* fix/ e2e test with jasmine2 ([9c51f32](https://github.com/yegobox/flipper/commit/9c51f32))
+* fix/ electron builder output directories #200 ([f4535e5](https://github.com/yegobox/flipper/commit/f4535e5)), closes [#200](https://github.com/yegobox/flipper/issues/200)
+* fix/ electron-packager need favicon >= 256x256 on Windows ([d2c253f](https://github.com/yegobox/flipper/commit/d2c253f))
+* fix/ favicon path during packaging ([aa2b012](https://github.com/yegobox/flipper/commit/aa2b012))
+* fix/ Fix npm run lint ([db7972a](https://github.com/yegobox/flipper/commit/db7972a))
+* fix/ icon app ([22699ef](https://github.com/yegobox/flipper/commit/22699ef))
+* fix/ jslib in main process error ([ef33f5e](https://github.com/yegobox/flipper/commit/ef33f5e))
+* fix/ karma Unit test ([ea13d6d](https://github.com/yegobox/flipper/commit/ea13d6d))
+* fix/ Manage icons for linux binary generation ([ccd0601](https://github.com/yegobox/flipper/commit/ccd0601))
+* fix/ refact webpack config (inspired by ng eject Angular 5) ([d1c30ac](https://github.com/yegobox/flipper/commit/d1c30ac))
+* fix/ remove yarn because of error with module dep in prod builds ([8a49a45](https://github.com/yegobox/flipper/commit/8a49a45))
+* fix/ replace aotPlugin in no prod mode ([a0caf1e](https://github.com/yegobox/flipper/commit/a0caf1e))
+* fix/ Replace AotPlugin to AngularCompilerPlugin ([bef106e](https://github.com/yegobox/flipper/commit/bef106e))
+* fix/ TranslateModule test ([7863aa9](https://github.com/yegobox/flipper/commit/7863aa9))
+* fix/ typescript issues ([bb0a6ab](https://github.com/yegobox/flipper/commit/bb0a6ab))
+* fix/ typo Angular 7 ([fde371f](https://github.com/yegobox/flipper/commit/fde371f))
+* fix/ typo README ([723233c](https://github.com/yegobox/flipper/commit/723233c))
+* fix/ typo README ([a9448aa](https://github.com/yegobox/flipper/commit/a9448aa))
+* fix/ typo README.md (production variables) ([a8c2b63](https://github.com/yegobox/flipper/commit/a8c2b63))
+* fix/ typo script npm electron:windows ([45bab44](https://github.com/yegobox/flipper/commit/45bab44))
+* fix/ Update README Angular 5 ([93c6949](https://github.com/yegobox/flipper/commit/93c6949))
+* fix/ version angular (revert 6.0.6 -> 6.0.5) ([63a41b8](https://github.com/yegobox/flipper/commit/63a41b8))
+* fix/ Version Electron in README ([acf0d4f](https://github.com/yegobox/flipper/commit/acf0d4f))
+* fix/ version ts-node ([0d8341a](https://github.com/yegobox/flipper/commit/0d8341a))
+* fix/ webpack template path ([518b66b](https://github.com/yegobox/flipper/commit/518b66b))
+* Fixed compiler warnings ([fca6b15](https://github.com/yegobox/flipper/commit/fca6b15))
+* Fixed hardcoded path in glob copy, blocking assets after eject ([815d519](https://github.com/yegobox/flipper/commit/815d519))
+* html loader ([c55558a](https://github.com/yegobox/flipper/commit/c55558a))
+* Including electron to eliminate Electron not found err sg ([d78203f](https://github.com/yegobox/flipper/commit/d78203f))
+* increment version deps ([bde452c](https://github.com/yegobox/flipper/commit/bde452c))
+* install npm dep when building ([56948d0](https://github.com/yegobox/flipper/commit/56948d0))
+* License MIT ([73494b7](https://github.com/yegobox/flipper/commit/73494b7))
+* live reload on disk ([7bb2f8b](https://github.com/yegobox/flipper/commit/7bb2f8b))
+* Maj Changelog ([bc4c950](https://github.com/yegobox/flipper/commit/bc4c950))
+* Make sure tsconfig be used. ([961c8b1](https://github.com/yegobox/flipper/commit/961c8b1))
+* Mgrate to Angular 5.0.2 ([bd7bed6](https://github.com/yegobox/flipper/commit/bd7bed6))
+* migrate Angular to 5.2.0 ([b8cf343](https://github.com/yegobox/flipper/commit/b8cf343))
+* Migrate to Angular 5 ([3a3ffe1](https://github.com/yegobox/flipper/commit/3a3ffe1))
+* migrate to Angular 5.0.3 ([f4bc5b2](https://github.com/yegobox/flipper/commit/f4bc5b2))
+* Minor update ([5f282b7](https://github.com/yegobox/flipper/commit/5f282b7))
+* misc/ add Stale to close unactive issues ([398bdf1](https://github.com/yegobox/flipper/commit/398bdf1))
+* misc/ change Electron version to 7.0.0 in README ([6a4e2de](https://github.com/yegobox/flipper/commit/6a4e2de))
+* misc/ remove link to dependenciesci ([93d5a8c](https://github.com/yegobox/flipper/commit/93d5a8c))
+* misc/ remove unused packages ([a7e33b6](https://github.com/yegobox/flipper/commit/a7e33b6))
+* misc/ update changelog ([7d5eeb3](https://github.com/yegobox/flipper/commit/7d5eeb3))
+* misc/ update changelog ([70b359f](https://github.com/yegobox/flipper/commit/70b359f))
+* misc/ update Changelog ([b758122](https://github.com/yegobox/flipper/commit/b758122))
+* misc/ upgrade Angular 8.2 / Spectron 7 ([6e2211f](https://github.com/yegobox/flipper/commit/6e2211f))
+* misc/ upgrade Electron 7 ([d732340](https://github.com/yegobox/flipper/commit/d732340))
+* Modify electron builder configuration to remove source code and tests ([0cf6899](https://github.com/yegobox/flipper/commit/0cf6899))
+* Move Browser mode chapter ([8818750](https://github.com/yegobox/flipper/commit/8818750))
+* Move codesponsor ([064be4c](https://github.com/yegobox/flipper/commit/064be4c))
+* Ng not ejected anymore ([67ab31c](https://github.com/yegobox/flipper/commit/67ab31c))
+* No hot reload in browser ([7892f0d](https://github.com/yegobox/flipper/commit/7892f0d))
+* Not gitignore src/karma.conf.js ([7599320](https://github.com/yegobox/flipper/commit/7599320))
+* Override webpack configuration ([60d6116](https://github.com/yegobox/flipper/commit/60d6116))
+* pin all dependency versions ([0558d6a](https://github.com/yegobox/flipper/commit/0558d6a))
+* provide webFrame access ([6bd044e](https://github.com/yegobox/flipper/commit/6bd044e))
+* push by force old flipper project ([a4b26bd](https://github.com/yegobox/flipper/commit/a4b26bd))
+* push by force on master ([1f020f1](https://github.com/yegobox/flipper/commit/1f020f1))
+* ref/ add node/electron module import as exemple : fs and remote ([e3ad12d](https://github.com/yegobox/flipper/commit/e3ad12d))
+* ref/ add package-lock in gitignore ([4edd98d](https://github.com/yegobox/flipper/commit/4edd98d))
+* ref/ dernière version cli ([3df8158](https://github.com/yegobox/flipper/commit/3df8158))
+* ref/ electron ./dist more generic ([7e71add](https://github.com/yegobox/flipper/commit/7e71add))
+* ref/ electron main from js to ts ([835d32b](https://github.com/yegobox/flipper/commit/835d32b))
+* Ref/ Electron packager in external file ([17b04e8](https://github.com/yegobox/flipper/commit/17b04e8))
+* ref/ Exclude node_modules (tslint) ([412a0a5](https://github.com/yegobox/flipper/commit/412a0a5))
+* ref/ Generate changelog ([a89b3ce](https://github.com/yegobox/flipper/commit/a89b3ce))
+* ref/ postinstall web & electron ([50657d0](https://github.com/yegobox/flipper/commit/50657d0))
+* ref/ remove contributors ([6dc97a1](https://github.com/yegobox/flipper/commit/6dc97a1))
+* ref/ remove some directories of tsconfig.app.json ([1adad4a](https://github.com/yegobox/flipper/commit/1adad4a))
+* ref/ Remove sponsor ([2a28239](https://github.com/yegobox/flipper/commit/2a28239))
+* ref/ remve npx - fix vulnerabilities ([41aeb57](https://github.com/yegobox/flipper/commit/41aeb57))
+* ref/ strict version build-angular & zonejs ([5a24b56](https://github.com/yegobox/flipper/commit/5a24b56))
+* ref/ strict version codelyzer ([6ede0c8](https://github.com/yegobox/flipper/commit/6ede0c8))
+* ref/ Update Angular (4.3.5) / Electron (1.7.2) / Electron Packager (8.7.2) / Typescript (2.5.0) ([f97cd81](https://github.com/yegobox/flipper/commit/f97cd81))
+* ref/ update angular & dep ([e3b1fab](https://github.com/yegobox/flipper/commit/e3b1fab))
+* ref/ update README ([7fddc20](https://github.com/yegobox/flipper/commit/7fddc20))
+* ref/ upgrade Angular 8 and Electron 5 ([92334cf](https://github.com/yegobox/flipper/commit/92334cf))
+* ref/ upgrade angular to 6.0.3 ([e7fac6e](https://github.com/yegobox/flipper/commit/e7fac6e))
+* ref/ upgrade electron (security issue) ([f6a0c4e](https://github.com/yegobox/flipper/commit/f6a0c4e))
+* ref/ Upgrade to Angular 7 ([315a79b](https://github.com/yegobox/flipper/commit/315a79b))
+* remove build node 8 till node-sass failed ([34f201d](https://github.com/yegobox/flipper/commit/34f201d))
+* Remove caret & tilde ([dd98155](https://github.com/yegobox/flipper/commit/dd98155))
+* remove copyfiles ([9af5138](https://github.com/yegobox/flipper/commit/9af5138))
+* Remove Node.js v12. ([ccbf6cd](https://github.com/yegobox/flipper/commit/ccbf6cd))
+* remove package-lock ([8e98627](https://github.com/yegobox/flipper/commit/8e98627))
+* Remove unused dependency (webpack-dev-server) ([e9150f4](https://github.com/yegobox/flipper/commit/e9150f4))
+* Replace const icon to let icon ([dadf65f](https://github.com/yegobox/flipper/commit/dadf65f))
+* Revert last pull request - break production compilation ([ccc9064](https://github.com/yegobox/flipper/commit/ccc9064))
+* Run CI for Node.js version 10 ([2538965](https://github.com/yegobox/flipper/commit/2538965))
+* Set e2e tests ([d223974](https://github.com/yegobox/flipper/commit/d223974))
+* Set one example of css class in app component ([a15775f](https://github.com/yegobox/flipper/commit/a15775f))
+* Set theme jekyll-theme-architect ([644d857](https://github.com/yegobox/flipper/commit/644d857))
+* Suround electron browser by try/catch ([88be472](https://github.com/yegobox/flipper/commit/88be472))
+* The file is unused  ([05c9e39](https://github.com/yegobox/flipper/commit/05c9e39))
+* Translation issue ([35354b1](https://github.com/yegobox/flipper/commit/35354b1))
+* Update @types/node ([9d43304](https://github.com/yegobox/flipper/commit/9d43304))
+* update comments in dev/prod env files ([7cf6a51](https://github.com/yegobox/flipper/commit/7cf6a51))
+* update dependencies ([89963ab](https://github.com/yegobox/flipper/commit/89963ab))
+* Update dependencies ([bd51f28](https://github.com/yegobox/flipper/commit/bd51f28))
+* update dependencies and fix unit tests ([4d3ca6e](https://github.com/yegobox/flipper/commit/4d3ca6e))
+* update Electron v1.6.10 ([f2f2080](https://github.com/yegobox/flipper/commit/f2f2080))
+* Update electron-builder.json files rule ([82c7bcf](https://github.com/yegobox/flipper/commit/82c7bcf))
+* Update LICENSE badge ([fa783aa](https://github.com/yegobox/flipper/commit/fa783aa))
+* Update npm dependencies ([0a93ebe](https://github.com/yegobox/flipper/commit/0a93ebe))
+* Update package.json ([b16cf73](https://github.com/yegobox/flipper/commit/b16cf73))
+* update README ([97fa63d](https://github.com/yegobox/flipper/commit/97fa63d))
+* update README ([f146d5d](https://github.com/yegobox/flipper/commit/f146d5d))
+* update README ([23fc0a9](https://github.com/yegobox/flipper/commit/23fc0a9))
+* update README ([a8dcf6a](https://github.com/yegobox/flipper/commit/a8dcf6a))
+* update README ([9a983c1](https://github.com/yegobox/flipper/commit/9a983c1))
+* update README ([1d48e32](https://github.com/yegobox/flipper/commit/1d48e32))
+* Update README ([3bb45b3](https://github.com/yegobox/flipper/commit/3bb45b3))
+* Update README with angular-cli doc ([5a57578](https://github.com/yegobox/flipper/commit/5a57578))
+* Update readme with e2e info ([01bbf13](https://github.com/yegobox/flipper/commit/01bbf13))
+* Update to electron-builder ([0e94b52](https://github.com/yegobox/flipper/commit/0e94b52))
+* update version ([0849a0a](https://github.com/yegobox/flipper/commit/0849a0a))
+* update version 1.2.1 ([78e8da7](https://github.com/yegobox/flipper/commit/78e8da7))
+* Update Version Electron 2 to 3 #hacktoberfest ([f083328](https://github.com/yegobox/flipper/commit/f083328))
+* update versions and prepare for electron 5 ([07a5786](https://github.com/yegobox/flipper/commit/07a5786))
+* update yarn lock ([18c0e62](https://github.com/yegobox/flipper/commit/18c0e62))
+* Upgrade Angular (6.1.2) deps ([d8818c1](https://github.com/yegobox/flipper/commit/d8818c1))
+* Upgrade Angular 8.2.8 & Electron 6.0.10 ([2ecda63](https://github.com/yegobox/flipper/commit/2ecda63))
+* upgrade angular version 4.4.3 ([10d0f87](https://github.com/yegobox/flipper/commit/10d0f87))
+* upgrade angular version to 4.3.0 ([ab16959](https://github.com/yegobox/flipper/commit/ab16959))
+* upgrade lib version ([2ac2aa0](https://github.com/yegobox/flipper/commit/2ac2aa0))
+* upgrade ng/electron dependencies ([78b0f27](https://github.com/yegobox/flipper/commit/78b0f27))
+* Use HttpClientModule ([5704e2e](https://github.com/yegobox/flipper/commit/5704e2e))
+* Use service xvfb. ([4db31e3](https://github.com/yegobox/flipper/commit/4db31e3))
+* v 1.3.5 ([d528a71](https://github.com/yegobox/flipper/commit/d528a71))
+* v1.0.0 ([7a21eb9](https://github.com/yegobox/flipper/commit/7a21eb9))
+* v1.0.1 ([68275a3](https://github.com/yegobox/flipper/commit/68275a3))
+* v1.0.2 ([1bd8e0e](https://github.com/yegobox/flipper/commit/1bd8e0e))
+* v1.0.3 ([9866d53](https://github.com/yegobox/flipper/commit/9866d53))
+* v1.1.2 ([e29e467](https://github.com/yegobox/flipper/commit/e29e467))
+* v1.4.3 ([4961fb0](https://github.com/yegobox/flipper/commit/4961fb0))
+* Version 1.3.1 ([f18ac77](https://github.com/yegobox/flipper/commit/f18ac77))
+* Version 1.3.3 ([f4db75b](https://github.com/yegobox/flipper/commit/f4db75b))
+* version 1.3.4 ([374af16](https://github.com/yegobox/flipper/commit/374af16))
+* version 1.6.1 ([899babd](https://github.com/yegobox/flipper/commit/899babd))
+* version 1.8.1 ([70879d1](https://github.com/yegobox/flipper/commit/70879d1))
+* Version 2.1.0 ([fccef2f](https://github.com/yegobox/flipper/commit/fccef2f))
+* version 2.4.0 ([0437b33](https://github.com/yegobox/flipper/commit/0437b33))
+* version 2.4.1 ([5fcfca0](https://github.com/yegobox/flipper/commit/5fcfca0))
+* version 2.7.1 ([1ae6f7a](https://github.com/yegobox/flipper/commit/1ae6f7a))
+* version 3.0.1 ([5258ff1](https://github.com/yegobox/flipper/commit/5258ff1))
+* version 3.1.0 ([f7c71e7](https://github.com/yegobox/flipper/commit/f7c71e7))
+* version 3.2.0 ([8dc69fa](https://github.com/yegobox/flipper/commit/8dc69fa))
+* version 3.3.0 ([a88bda6](https://github.com/yegobox/flipper/commit/a88bda6))
+* version 3.3.0 changelog ([ddfbbf9](https://github.com/yegobox/flipper/commit/ddfbbf9))
+* version 3.4.0 ([06d6b0f](https://github.com/yegobox/flipper/commit/06d6b0f))
+* version 3.4.1 ([308ea9c](https://github.com/yegobox/flipper/commit/308ea9c))
+* version bump ([bb1d6bb](https://github.com/yegobox/flipper/commit/bb1d6bb))
+* version bump + logo resize ([3545d16](https://github.com/yegobox/flipper/commit/3545d16))
+* feat(CI): update Ubuntu and Node versions in Travis ([e0ff557](https://github.com/yegobox/flipper/commit/e0ff557))
+* feat(zone): add zone-patch-electron to patch Electron native APIs in polyfills ([01842e2](https://github.com/yegobox/flipper/commit/01842e2))
+* fix: fixes maximegris/angular-electron#118 ([6d21e69](https://github.com/yegobox/flipper/commit/6d21e69)), closes [maximegris/angular-electron#118](https://github.com/maximegris/angular-electron/issues/118)
+* fix: fixes maximegris/angular-electron#98 ([136344b](https://github.com/yegobox/flipper/commit/136344b)), closes [maximegris/angular-electron#98](https://github.com/maximegris/angular-electron/issues/98)
+* fix: type conflicts ([a2971bf](https://github.com/yegobox/flipper/commit/a2971bf))
+* fix(e2e): add mocha types ([20e1e89](https://github.com/yegobox/flipper/commit/20e1e89))
+* fix(e2e): without devTools ([2581983](https://github.com/yegobox/flipper/commit/2581983)), closes [/github.com/electron/spectron/issues/174#issuecomment-319242097](https://github.com//github.com/electron/spectron/issues/174/issues/issuecomment-319242097)
+* fix(test): create polyfills-test.ts for karma test & setup Travis CI ([7fbc68c](https://github.com/yegobox/flipper/commit/7fbc68c))
+* fix(travis): set progress to false (speed up npm) ([be48531](https://github.com/yegobox/flipper/commit/be48531))
+* refactor: update electron, electron-builder to latest (2.0.2, 20.14.7) ([f19e6ee](https://github.com/yegobox/flipper/commit/f19e6ee))
+* refactor: upgrade to NodeJS 8, Angular 6, CLI 6, Electron 2.0, RxJS 6.1 ([e37efdb](https://github.com/yegobox/flipper/commit/e37efdb))
+* refactor(hooks): replace hooks to ng-cli fileReplacements logic ([c940037](https://github.com/yegobox/flipper/commit/c940037))
 
 
 

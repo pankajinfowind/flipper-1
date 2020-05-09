@@ -1,9 +1,9 @@
-import { app, BrowserWindow, screen, dialog, nativeImage,ipcMain, IpcMessageEvent  } from 'electron';
+import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
 let win;
-let serve;
+let serve: boolean;
 const args = process.argv.slice(1);
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
@@ -13,112 +13,107 @@ autoUpdater.logger.transports.file.level = 'info';
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
 
-ipcMain.on('sent-login-message', (event, arg) => {
+ipcMain.on('sent-login-message', (event) => {
+  console.log('handle login new....');
+  const authUrl = 'https://test.flipper.rw/login';
+  const size = screen.getPrimaryDisplay().workAreaSize;
 
   let authWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+
+    width: size.width,
+    height: size.height,
     show: false,
+    frame:false,
     alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true
-      },
-});
-  authWindow.setMenu(null);
-  const authUrl = 'https://test.flipper.rw/login';
+    },
+  });
+  const handleRedirect = (e, uri) => {
+    shell.openExternal(uri);
+  };
 
+  authWindow.webContents.on('will-navigate', handleRedirect);
   authWindow.loadURL(authUrl);
+
   const ses = authWindow.webContents.session;
   ses.clearCache();
 
   ses.cookies.get({})
-  .then((cookies) => {
-
-    cookies.forEach(cookie=> {
-      let uRl = '';
-      // get prefix, like https://www.
-      uRl += cookie.secure ? 'https://' : 'http://';
-      uRl += cookie.domain.charAt(0) === '.' ? 'www' : '';
-      // append domain and path
-      uRl += cookie.domain;
-      uRl += cookie.path;
-      ses.cookies.remove(uRl, cookie.name);
-
+    .then((cookies) => {
+      cookies.forEach(cookie => {
+        let uRl = '';
+        // get prefix, like https://www.
+        uRl += cookie.secure ? 'https://' : 'http://';
+        uRl += cookie.domain.charAt(0) === '.' ? 'www' : '';
+        // append domain and path
+        uRl += cookie.domain;
+        uRl += cookie.path;
+        ses.cookies.remove(uRl, cookie.name);
+      });
+    }).catch((error) => {
+      console.log(error);
     });
-
-  }).catch((error) => {
-    console.log(error);
-  });
 
   authWindow.show();
 
-// 'will-navigate' is an event emitted when the window.location changes
-// newUrl should contain the tokens you need
+  // 'will-navigate' is an event emitted when the window.location changes
+  // newUrl should contain the tokens you need
 
-// Handle the response from YEGOBOX - See Update from 17/02/2020
+  // Handle the response from YEGOBOX - See Update from 17/02/2020
 
-  function handleCallback(redirectUrl) {
-  const currentURL = authWindow.webContents.getURL();
-  let raw=null;
-  let token=null;
-  let email=null;
-  let name=null;
-  let avatar=null;
-  let id=null;
-  let subscription=null;
+  function handleCallback() {
+    const currentURL = authWindow.webContents.getURL();
+    let raw = null;
+    let token = null;
+    let email = null;
+    let name = null;
+    let avatar = null;
+    let id = null;
+    let subscription = null;
 
-  // log.info(currentURL);
+    const params = currentURL.split('?');
+    // console.log(params);
+    if (params && params.length === 2) {
+      if (params[0] === 'https://test.flipper.rw/authorized') {
 
-  const params=currentURL.split('?');
+        raw = params[1];
+        token = raw.split('&')[0];
+        token = token.split('=')[1];
 
-  console.log(params);
-  if(params && params.length===2) {
-   if(params[0]==='https://test.flipper.rw/authorized') {
+        email = raw.split('&')[1];
+        email = email.split('=')[1];
 
-     raw=params[1];
-     token=raw.split('&')[0];
-     token=token.split('=')[1];
+        name = raw.split('&')[2];
+        name = name.split('=')[1];
 
-     email = raw.split('&')[1];
-     email = email.split('=')[1];
+        avatar = raw.split('&')[3];
+        avatar = avatar.split('=')[1];
 
-     name = raw.split('&')[2];
-     name = name.split('=')[1];
+        id = raw.split('&')[4];
+        id = id.split('=')[1];
 
-     avatar = raw.split('&')[3];
-     avatar = avatar.split('=')[1];
-
-     id = raw.split('&')[4];
-     id = id.split('=')[1];
-
-     subscription = raw.split('&')[5];
-     subscription = subscription.split('=')[1];
-     console.log(params);
-     event.sender.send('received-login-message',[email,name,avatar,token,id,subscription] );
-     authWindow.destroy();
-
+        subscription = raw.split('&')[5];
+        subscription = subscription.split('=')[1];
+        console.log(params);
+        event.sender.send('received-login-message', [email, name, avatar, token, id, subscription]);
+        authWindow.destroy();
       }
-
-   }
-
-}
-
-  authWindow.webContents.on('did-finish-load',  (e: any, urls: string)=> {
-  handleCallback(urls);
-});
-
-  authWindow.on('closed', ()=> {
+    }
+  }
+  authWindow.webContents.on('did-finish-load', (e: any, urls: string) => {
+    console.log('did finish log');
+    handleCallback();
+  });
+  authWindow.on('closed', () => {
     authWindow = null;
+  });
 });
-
-});
-
-
 
 ///////////////////// AUTO UPDATED  /////////////////////////////
 
 
-function sendStatusToWindow(text) {
+function sendStatusToWindow(text: string) {
   log.info(app.getVersion() + '::' + text);
   win.webContents.send('message', text);
 
@@ -134,20 +129,21 @@ function sendStatusToWindow(text) {
 }
 
 if (!isDev) {
+
   autoUpdater.on('checking-for-update', () => {
     sendStatusToWindow('Checking for update...');
     // tag
   });
-  autoUpdater.on('update-available', info => {
+  autoUpdater.on('update-available', () => {
     sendStatusToWindow('Update available.');
   });
-  autoUpdater.on('update-not-available', info => {
+  autoUpdater.on('update-not-available', () => {
     sendStatusToWindow('Update not available.');
   });
-  autoUpdater.on('error', err => {
+  autoUpdater.on('error', (err: string) => {
     sendStatusToWindow('Error in auto-updater. ' + err);
   });
-  autoUpdater.on('download-progress', progressObj => {
+  autoUpdater.on('download-progress', (progressObj: { bytesPerSecond: string; percent: string; transferred: string; total: string; }) => {
     let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;
     logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%';
     logMessage =
@@ -160,7 +156,7 @@ if (!isDev) {
     sendStatusToWindow(logMessage);
   });
 
-  autoUpdater.on('update-downloaded', info => {
+  autoUpdater.on('update-downloaded', () => {
     const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
     const dialogOpt = {
       type: 'info',
@@ -177,12 +173,12 @@ if (!isDev) {
   });
 }
 
-function showMessage(dialogOpt) {
+function showMessage(dialogOpt: Electron.MessageBoxOptions) {
   const window = BrowserWindow.getFocusedWindow();
   dialog.showMessageBox(window, dialogOpt).then(response => {
-        if (response) {
-             autoUpdater.quitAndInstall();
-        }
+    if (response) {
+      autoUpdater.quitAndInstall();
+    }
   }, error => {
     return dialog.showMessageBox(window, {
       type: 'error',
@@ -191,7 +187,7 @@ function showMessage(dialogOpt) {
   });
 }
 
-let iconName;
+let iconName: string;
 
 if (process.platform === 'win32') {
   iconName = path.join(__dirname, '../assets/win/icon.ico');
@@ -205,14 +201,21 @@ if (process.platform === 'win32') {
 
 function createWindow() {
 
+
+  if (!isDev) {
+    autoUpdater.checkForUpdates();
+  }
+
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
 
   win = new BrowserWindow({
+    // kiosk:true, //support touch for enabled devices.
     x: 0,
     y: 0,
+    frame:false,
     width: size.width,
     height: size.height,
     webPreferences: {
@@ -220,6 +223,8 @@ function createWindow() {
     },
     icon: iconName
   });
+
+  win.setMenu(null);
 
   if (serve) {
     require('electron-reload')(__dirname, {

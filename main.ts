@@ -1,6 +1,10 @@
-import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell,Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+const { menu } = require('./menu');
+
+const isWindows = process.platform === 'win32';
+
 
 let win;
 let serve: boolean;
@@ -20,15 +24,19 @@ ipcMain.on('sent-login-message', (event) => {
 
   let authWindow = new BrowserWindow({
 
-    width: size.width,
-    height: size.height,
+    width: 700,
+    height: 500,
     show: false,
-    frame:false,
     alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true
     },
   });
+
+  authWindow.show();
+  const menus = Menu.buildFromTemplate([]);
+  authWindow.setMenu(menus);
+
   const handleRedirect = (e, uri) => {
     shell.openExternal(uri);
   };
@@ -55,7 +63,6 @@ ipcMain.on('sent-login-message', (event) => {
       console.log(error);
     });
 
-  authWindow.show();
 
   // 'will-navigate' is an event emitted when the window.location changes
   // newUrl should contain the tokens you need
@@ -95,7 +102,7 @@ ipcMain.on('sent-login-message', (event) => {
 
         subscription = raw.split('&')[5];
         subscription = subscription.split('=')[1];
-        console.log(params);
+
         event.sender.send('received-login-message', [email, name, avatar, token, id, subscription]);
         authWindow.destroy();
       }
@@ -215,10 +222,11 @@ function createWindow() {
     // kiosk:true, //support touch for enabled devices.
     x: 0,
     y: 0,
-    frame:false,
+    frame: isWindows ? false : true, // Remove frame to hide default menu,
     width: size.width,
     height: size.height,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
     },
     icon: iconName
@@ -261,21 +269,26 @@ try {
   app.on('ready', createWindow);
 
   // Quit when all windows are closed.
-  app.on('window-all-closed', () => {
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
+  app.on('window-all-closed', function() {
+    if (process.platform !== 'darwin') { app.quit(); }
   });
 
-  app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (win === null) {
-      createWindow();
-    }
-  });
+
+  app.on('activate', function() {
+  if (win === null) { createWindow(); }
+});
+
+
+// Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that point.
+  ipcMain.on(`display-app-menu`, function(e, args) {
+  if (isWindows && win) {
+    menu.popup({
+      window: win,
+      x: args.x,
+      y: args.y
+    });
+  }
+});
 
 } catch (e) {
   // Catch Error // throw e;

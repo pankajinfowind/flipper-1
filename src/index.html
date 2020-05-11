@@ -3,17 +3,103 @@
 
 <head>
   <meta charset="utf-8">
-  <title>flipper</title>
+  <title>Flipper</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./assets/icon/linux/icon.png">
+  <script src="./assets/1c9144b004.js"></script>
+  <style>
+
+#menu-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  /* background: #130f1f;  #34475a; */
+  /* box-shadow: 0 2px 4px 0 rgba(0,0,0,.26);
+    background-color: #130f1f; */
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.26);
+    background-color: #211a36;
+  -webkit-app-region: drag;
+  z-index: 1020;
+  width: 100%;
+}
+
+#menu-bar > div {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menubar-btn {
+  -webkit-app-region: no-drag;
+}
+
+.container1 {
+  height: calc(100vh - 30px);
+}
+
+.button1 {
+  height: 100%;
+  padding: 0 15px;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.button1:hover {
+  background: rgba(221, 221, 221, 0.2);
+}
+
+#close-btn:hover {
+  background: rgb(255, 0, 0);
+}
+
+.button1 img {
+  color: white;
+width:18px
+}
+
+  </style>
+
 </head>
 
-<body class="octagon-background" style="background-color: #ffff;">
+<body class="octagon-background" style="background-color: #ffff; overflow: hidden;">
+  <div id="menu-bar">
+    <div class="left" role="menu">
+      <button class="menubar-btn button1" id="menu-btn">
+        <img
+        src="/assets/icons/menu.svg" class="icon" style="color:#fff">
+      </button>
+      <h5 style="color:#fff;margin-top:10px">Flipper v1</h5>
+    </div>
+    <div class="right">
+      <button class="menubar-btn button1" id="minimize-btn">
+        <img
+          src="/assets/icons/min-window.svg" class="icon" style="color:#fff">
+      </button>
+      <button class="menubar-btn button1" id="max-unmax-btn">
+        <img
+        src="/assets/icons/max-window.svg" class="icon" style="color:#fff">
+      </button>
+      <button class="menubar-btn button1" id="close-btn">
+        <img
+        src="/assets/icons/close-window.svg" class="icon" style="color:#fff">
+      </button>
+    </div>
+  </div>
   <!-- style="background-color: #303030;" -->
-  <app-root></app-root>
+  <div class="container1"><app-root></app-root></div>
+  
+ 
   <style>
+
+
     .primary {
       fill: #2196F3;
     }
@@ -23,6 +109,7 @@
     }
 
     #background-logo {
+      
       position: fixed;
       top: 30%;
       left: 10%;
@@ -108,6 +195,40 @@
   localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
   localStorage.setItem('canSync', 'true');
  if (global === undefined) { var global = window; } 
+
+
+ window.addEventListener("DOMContentLoaded", () => {
+  const menuButton = document.getElementById("menu-btn");
+  const minimizeButton = document.getElementById("minimize-btn");
+  const maxUnmaxButton = document.getElementById("max-unmax-btn");
+  const closeButton = document.getElementById("close-btn");
+
+  menuButton.addEventListener("click", e => {
+    window.openMenu(e.x, e.y);
+  });
+
+  minimizeButton.addEventListener("click", e => {
+    window.minimizeWindow();
+  });
+
+  maxUnmaxButton.addEventListener("click", e => {
+    const icon = maxUnmaxButton.querySelector("i.far");
+
+    window.maxUnmaxWindow();
+    if (window.isWindowMaximized()) {
+      icon.classList.remove("fa-square");
+      icon.classList.add("fa-clone");
+    } else {
+      icon.classList.add("fa-square");
+      icon.classList.remove("fa-clone");
+    }
+  });
+  closeButton.addEventListener("click", e => {
+    window.closeWindow();
+  });
+});
+
+
 </script>
 </html>
 

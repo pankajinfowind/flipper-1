@@ -1,5 +1,10 @@
 
-
+.container1{
+    position: relative;
+    height: calc(100vh - 30px);
+    margin-top: 30px;
+    bottom: 0;
+overflow: hidden;
 .contents {
     margin: 0 auto;
     padding: 8rem 2rem;
@@ -106,4 +111,6 @@
     .flex_direction_column {
         flex-direction: column;
     }
+}
+
 }

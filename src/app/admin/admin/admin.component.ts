@@ -11,7 +11,7 @@ import { PouchDBService } from '@enexus/flipper-components';
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
-
+  userToggledMenu:any;
 
    constructor(
     private database: PouchDBService,
@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   }
   isMenuToggled(event) {
-    // this.userToggledMenu = event;
+    this.userToggledMenu = event;
   }
 
 

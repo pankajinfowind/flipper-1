@@ -269,18 +269,21 @@ try {
   app.on('ready', createWindow);
 
   // Quit when all windows are closed.
-  app.on('window-all-closed', function() {
+  app.on('window-all-closed', ()=> {
     if (process.platform !== 'darwin') { app.quit(); }
   });
 
 
-  app.on('activate', function() {
+  app.on('activate', ()=> {
   if (win === null) { createWindow(); }
 });
 
 
 // Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that point.
-  ipcMain.on(`display-app-menu`, function(e, args) {
+
+/*eslint no-shadow: ["error", { "allow": ["args"] }]*/
+/*eslint-env es6*/
+  ipcMain.on(`display-app-menu`, (e, args)=> {
   if (isWindows && win) {
     menu.popup({
       window: win,

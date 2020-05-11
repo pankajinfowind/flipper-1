@@ -44,7 +44,9 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
     await this.currentUser.defaultBusiness();
     await this.currentUser.defaultBranch();
 
-    if (this.currentUser.currentBusiness && (this.currentUser.currentBusiness.id!==null || this.currentUser.currentBusiness.id!==undefined)) {
+    if (this.currentUser.currentBusiness &&
+       (this.currentUser.currentBusiness.id!==null ||
+       this.currentUser.currentBusiness.id!==undefined)) {
       return true;
     }
 

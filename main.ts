@@ -120,7 +120,7 @@ ipcMain.on('sent-login-message', (event) => {
 ///////////////////// AUTO UPDATED  /////////////////////////////
 
 
-function sendStatusToWindow(text: string) {
+function sendStatusToWindow(text: string,error:boolean=false) {
   log.info(app.getVersion() + '::' + text);
   win.webContents.send('message', text);
 
@@ -131,8 +131,8 @@ function sendStatusToWindow(text: string) {
     message: 'Updated the Flipper version(' + app.getVersion() + ')',
     detail: text,
   };
-
-  showMessage(dialogOpt);
+  
+if(!error)showMessage(dialogOpt);
 }
 
 if (!isDev) {
@@ -148,7 +148,7 @@ if (!isDev) {
     sendStatusToWindow('Update not available.');
   });
   autoUpdater.on('error', (err: string) => {
-    sendStatusToWindow('Error in auto-updater. ' + err);
+    sendStatusToWindow('Error in auto-updater. ' + err,true);
   });
   autoUpdater.on('download-progress', (progressObj: { bytesPerSecond: string; percent: string; transferred: string; total: string; }) => {
     let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;
@@ -183,9 +183,7 @@ if (!isDev) {
 function showMessage(dialogOpt: Electron.MessageBoxOptions) {
   const window = BrowserWindow.getFocusedWindow();
   dialog.showMessageBox(window, dialogOpt).then(response => {
-    if (response) {
-      autoUpdater.quitAndInstall();
-    }
+    if (response) autoUpdater.quitAndInstall();
   }, error => {
     return dialog.showMessageBox(window, {
       type: 'error',

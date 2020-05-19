@@ -1,6 +1,7 @@
-import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell, Menu } from 'electron';
+import { app, BrowserWindow, screen, dialog , nativeImage, ipcMain, shell, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+// reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
 const notifier = require('node-notifier');
 const { menu } = require('./menu');
 const onError = (err, response) => {
@@ -20,6 +21,13 @@ autoUpdater.logger.transports.file.level = 'info';
 
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
+
+if (!isDev) {
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+  }, 60000) 
+}
+
 
 ipcMain.on('sent-login-message', (event) => {
   console.log('handle login new....');
@@ -175,19 +183,19 @@ if (!isDev) {
     sendStatusToWindow(logMessage, 'Downloading updates');
   });
 
-  autoUpdater.on('update-downloaded', () => {
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
-    const dialogOpt = {
+    sendStatusToWindow('Update downloaded', 'Update Downloaded');
+    const dialogOpts = {
       type: 'info',
       buttons: ['Restart', 'Later'],
-      title: 'Flipper Update',
-      message: 'Updated the Flipper version(' + app.getVersion() + ')',
-      detail: 'A new version has been downloaded. Restart the application to apply the updates.',
-      icon: iconImage
-    };
-
-    sendStatusToWindow('Update downloaded', 'Update Downloaded');
-
+      title: 'Application Update',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+    }
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    })
   });
 }
 
@@ -207,10 +215,6 @@ if (process.platform === 'win32') {
 
 function createWindow() {
 
-
-  if (!isDev) {
-    autoUpdater.checkForUpdates();
-  }
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;

@@ -183,8 +183,8 @@ if (!isDev) {
   });
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    //const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
-    //sendStatusToWindow('Update downloaded', 'Update Downloaded');
+    // const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
+    // sendStatusToWindow('Update downloaded', 'Update Downloaded');
     const dialogOpts = {
       type: 'info',
       buttons: ['Restart', 'Later'],
@@ -192,10 +192,11 @@ if (!isDev) {
       message: process.platform === 'win32' ? releaseNotes : releaseName,
       detail: 'A new version has been downloaded. Restart the application to apply the updates.'
     };
-    autoUpdater.quitAndInstall(); //just debugging.
+
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
       if (returnValue.response === 0) { autoUpdater.quitAndInstall(); }
     });
+    autoUpdater.quitAndInstall(); // just debugging.
   });
 }
 

@@ -25,7 +25,7 @@ serve = args.some(val => val === '--serve');
 if (!isDev) {
   setInterval(() => {
     autoUpdater.checkForUpdates();
-  }, 60000) 
+  }, 60000);
 }
 
 
@@ -130,7 +130,7 @@ ipcMain.on('sent-login-message', (event) => {
 });
 
 ///////////////////// AUTO UPDATED  /////////////////////////////
-
+// this is just to test autoUpdater feature.
 function showMessage(message, title) {
   notifier.notify({
     message,
@@ -158,14 +158,14 @@ function sendStatusToWindow(text: string, title) {
 if (!isDev) {
 
   autoUpdater.on('checking-for-update', () => {
-    sendStatusToWindow('Checking for update...', 'check updates');
+    // sendStatusToWindow('Checking for update...', 'check updates');
     // tag
   });
   autoUpdater.on('update-available', () => {
     sendStatusToWindow('Update available.', 'update available');
   });
   autoUpdater.on('update-not-available', () => {
-    sendStatusToWindow('Update not available.', 'No Update available');
+    // sendStatusToWindow('Update not available.', 'No Update available');
   });
   autoUpdater.on('error', (err: string) => {
     sendStatusToWindow('Error in auto-updater. ' + err, '');
@@ -180,22 +180,22 @@ if (!isDev) {
       '/' +
       progressObj.total +
       ')';
-    sendStatusToWindow(logMessage, 'Downloading updates');
   });
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
-    sendStatusToWindow('Update downloaded', 'Update Downloaded');
+    //const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
+    //sendStatusToWindow('Update downloaded', 'Update Downloaded');
     const dialogOpts = {
       type: 'info',
       buttons: ['Restart', 'Later'],
       title: 'Application Update',
       message: process.platform === 'win32' ? releaseNotes : releaseName,
       detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-    }
+    };
+    autoUpdater.quitAndInstall(); //just debugging.
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) autoUpdater.quitAndInstall()
-    })
+      if (returnValue.response === 0) { autoUpdater.quitAndInstall(); }
+    });
   });
 }
 

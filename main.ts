@@ -1,7 +1,11 @@
-import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell,Menu } from 'electron';
+import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+const notifier = require('node-notifier');
 const { menu } = require('./menu');
+const onError = (err, response) => {
+  console.error(err, response);
+};
 
 const isWindows = process.platform === 'win32';
 
@@ -119,35 +123,44 @@ ipcMain.on('sent-login-message', (event) => {
 
 ///////////////////// AUTO UPDATED  /////////////////////////////
 
+function showMessage(message, title) {
+  notifier.notify({
+    message,
+    title,
+    // Special sound
+    // Case Sensitive string for location of sound file, or use one of OS X's native sounds
+    // Only Notification Center or Windows Toasters
+    sound: true,// "Bottle",
+    // The absolute path to the icon of the message
+    // (doesn't work on balloons)
+    // If not found, a system icon will be shown
+    icon: path.join(__dirname, '../assets/logo.png'),
+    // Wait with callback (onClick event of the toast), until user action is taken against notification
+    wait: true
+  }, onError);
 
-function sendStatusToWindow(text: string,error: boolean=false) {
-  log.info(app.getVersion() + '::' + text);
-
-  const dialogOpt = {
-    type: 'info',
-    buttons: ['Cancel'],
-    title: 'Flipper Update',
-    message: 'Updated the Flipper version(' + app.getVersion() + ')',
-    detail: text,
-  };
-
-  if(!error) {showMessage(dialogOpt); }
+  notifier.on('click', (notifierObject, options) => {
+    //  TODO: implement when a user click on notification.
+  });
 }
-
+function sendStatusToWindow(text: string, title) {
+  log.info(app.getVersion() + '::' + text);
+  showMessage(text, title);
+}
 if (!isDev) {
 
   autoUpdater.on('checking-for-update', () => {
-    sendStatusToWindow('Checking for update...');
+    sendStatusToWindow('Checking for update...', 'check updates');
     // tag
   });
   autoUpdater.on('update-available', () => {
-    sendStatusToWindow('Update available.');
+    sendStatusToWindow('Update available.', 'update available');
   });
   autoUpdater.on('update-not-available', () => {
-    sendStatusToWindow('Update not available.');
+    sendStatusToWindow('Update not available.', 'No Update available');
   });
   autoUpdater.on('error', (err: string) => {
-    sendStatusToWindow('Error in auto-updater. ' + err,true);
+    sendStatusToWindow('Error in auto-updater. ' + err, '');
   });
   autoUpdater.on('download-progress', (progressObj: { bytesPerSecond: string; percent: string; transferred: string; total: string; }) => {
     let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;
@@ -159,7 +172,7 @@ if (!isDev) {
       '/' +
       progressObj.total +
       ')';
-    sendStatusToWindow(logMessage);
+    sendStatusToWindow(logMessage, 'Downloading updates');
   });
 
   autoUpdater.on('update-downloaded', () => {
@@ -173,23 +186,12 @@ if (!isDev) {
       icon: iconImage
     };
 
-    showMessage(dialogOpt);
-    sendStatusToWindow('Update downloaded');
+    sendStatusToWindow('Update downloaded', 'Update Downloaded');
 
   });
 }
 
-function showMessage(dialogOpt: Electron.MessageBoxOptions) {
-  const window = BrowserWindow.getFocusedWindow();
-  dialog.showMessageBox(window, dialogOpt).then(response => {
-    if (response) { autoUpdater.quitAndInstall(); }
-  }, error => {
-    return dialog.showMessageBox(window, {
-      type: 'error',
-      message: error,
-    });
-  });
-}
+
 
 let iconName: string;
 
@@ -266,29 +268,29 @@ try {
   app.on('ready', createWindow);
 
   // Quit when all windows are closed.
-  app.on('window-all-closed', ()=> {
+  app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') { app.quit(); }
   });
 
 
-  app.on('activate', ()=> {
-  if (win === null) { createWindow(); }
-});
+  app.on('activate', () => {
+    if (win === null) { createWindow(); }
+  });
 
 
-// Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that point.
+  // Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that point.
 
-/*eslint no-shadow: ["error", { "allow": ["args"] }]*/
-/*eslint-env es6*/
-  ipcMain.on(`display-app-menu`, (e, args)=> {
-  if (isWindows && win) {
-    menu.popup({
-      window: win,
-      x: args.x,
-      y: args.y
-    });
-  }
-});
+  /*eslint no-shadow: ["error", { "allow": ["args"] }]*/
+  /*eslint-env es6*/
+  ipcMain.on(`display-app-menu`, (e, args) => {
+    if (isWindows && win) {
+      menu.popup({
+        window: win,
+        x: args.x,
+        y: args.y
+      });
+    }
+  });
 
 } catch (e) {
   // Catch Error // throw e;

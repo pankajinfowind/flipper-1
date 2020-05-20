@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen, dialog , nativeImage, ipcMain, shell, Menu } from 'electron';
+import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
@@ -21,12 +21,6 @@ autoUpdater.logger.transports.file.level = 'info';
 
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
-
-if (!isDev) {
-  setInterval(() => {
-    autoUpdater.checkForUpdates();
-  }, 60000);
-}
 
 
 ipcMain.on('sent-login-message', (event) => {
@@ -194,7 +188,7 @@ if (!isDev) {
     };
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) { autoUpdater.quitAndInstall(true,true); }
+      if (returnValue.response === 0) { autoUpdater.quitAndInstall(true, true); }
     });
     autoUpdater.quitAndInstall(); // just debugging.
   });
@@ -216,7 +210,9 @@ if (process.platform === 'win32') {
 
 function createWindow() {
 
-
+  if (!isDev) {
+    autoUpdater.checkForUpdates();
+  }
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 

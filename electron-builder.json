@@ -37,7 +37,6 @@
   },
   "nsis": {
     "oneClick": false,
-    "verifyUpdateCodeSignature":false,
     "perMachine": true,
     "allowToChangeInstallationDirectory": true
   },

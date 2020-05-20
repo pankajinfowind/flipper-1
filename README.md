@@ -1,11 +1,7 @@
 
 [![Travis Build Status][build-badge]][build]
-[![Make a pull request][prs-badge]][prs]
-[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
-
-[![Watch on GitHub][github-watch-badge]][github-watch]
-[![Star on GitHub][github-star-badge]][github-star]
-[![Tweet][twitter-badge]][twitter]
+# Mission
+Help Connect wholeseller and reteller and avoid middleman while helping to book keep transactions.
 
 # Make sure to use node v10.16.3 otherwise it won't run.
 

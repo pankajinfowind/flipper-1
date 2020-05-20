@@ -28,6 +28,7 @@
   "win": {
     "asar": true,
     "verifyUpdateCodeSignature":false,
+    "requestedExecutionLevel": "highestAvailable",
     "icon": "dist/assets/icon/win/icon.ico",
     "legalTrademarks": "(c) 2020 flipper.rw",
     "publisherName": "Flipper Ltd",
@@ -37,6 +38,8 @@
   },
   "nsis": {
     "oneClick": false,
+    "allowElevation": true,
+    "license": "eula.html",
     "perMachine": true,
     "allowToChangeInstallationDirectory": true
   },

@@ -27,6 +27,7 @@
   ],
   "win": {
     "asar": true,
+    "verifyUpdateCodeSignature":false,
     "icon": "dist/assets/icon/win/icon.ico",
     "legalTrademarks": "(c) 2020 flipper.rw",
     "publisherName": "Flipper Ltd",
@@ -36,6 +37,7 @@
   },
   "nsis": {
     "oneClick": false,
+    "verifyUpdateCodeSignature":false,
     "perMachine": true,
     "allowToChangeInstallationDirectory": true
   },

@@ -4,7 +4,7 @@
 Help Connect wholeseller and reteller and avoid middleman while helping to book keep transactions.
 
 # Chat with us use
-[link to Our chat!](https://discord.com/channels/714431423812993044/714431565383598110])
+[link to Our chat!](https://discord.gg/5swR6uY])
 
 # Make sure to use node v10.16.3 otherwise it won't run.
 

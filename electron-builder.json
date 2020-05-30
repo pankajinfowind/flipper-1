@@ -42,7 +42,7 @@
     "createStartMenuShortcut":true,
     "license": "dist/assets/eula.html",
     "perMachine": true,
-    "allowToChangeInstallationDirectory": true
+    "allowToChangeInstallationDirectory": false
   },
   "mac": {
     "icon": "dist/assets/icon/mac/icon.icns",

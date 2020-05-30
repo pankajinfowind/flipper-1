@@ -30,8 +30,8 @@
     "verifyUpdateCodeSignature":false,
     "requestedExecutionLevel": "highestAvailable",
     "icon": "dist/assets/icon/win/icon.ico",
-    "legalTrademarks": "(c) 2020 flipper.rw",
-    "publisherName": "Flipper Ltd",
+    "legalTrademarks": "(c) 2020 yegobox",
+    "publisherName": "yegobox",
     "target": [
       "nsis"
     ]

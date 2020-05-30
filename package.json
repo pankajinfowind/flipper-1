@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yegobox/flipper.git"
+    "url": "git@github.com:yegobox/flipper.git"
   },
   "keywords": [
     "POS",

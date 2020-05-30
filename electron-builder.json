@@ -39,7 +39,7 @@
   "nsis": {
     "oneClick": false,
     "allowElevation": true,
-    "license": "eula.html",
+    "license": "dist/assets/eula.html",
     "perMachine": true,
     "allowToChangeInstallationDirectory": true
   },

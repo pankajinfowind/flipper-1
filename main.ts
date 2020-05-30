@@ -177,7 +177,6 @@ if (!isDev) {
   });
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    // const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/logo.png'));
     sendStatusToWindow('Update downloaded', 'Update Downloaded');
     const dialogOpts = {
       type: 'info',

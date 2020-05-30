@@ -1,8 +1,10 @@
 
 [![Build Status](https://travis-ci.org/yegobox/flipper.svg?branch=master)](https://travis-ci.org/yegobox/flipper)
 
-# Mission
-Help Connect wholeseller and reteller and avoid middleman while helping to book keep transactions.
+# Mission | 任务
+Help Connect wholesaler and reteller and avoid middleman while helping to book keep transactions.
+
+帮助连接批发商和转售商，并避免中间人，同时帮助保留交易记录。
 
 # Chat with us use
 [link to Our chat!](https://discord.gg/5swR6uY])

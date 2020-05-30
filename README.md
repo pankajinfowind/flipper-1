@@ -1,5 +1,6 @@
 
-[![Travis Build Status][build-badge]][build]
+[![Build Status](https://travis-ci.org/yegobox/flipper.svg?branch=master)](https://travis-ci.org/yegobox/flipper)
+
 # Mission
 Help Connect wholeseller and reteller and avoid middleman while helping to book keep transactions.
 

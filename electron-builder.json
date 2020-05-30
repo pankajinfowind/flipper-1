@@ -8,7 +8,7 @@
     "owner": "yegobox",
     "repo": "flipper",
     "vPrefixedTagName": true,
-    "token":"45b4634d2cc5b8b4aec501a0b302c8a9c2ddf5fd"
+    "protocol":"https"
   },
   "files": [
     "**/*",

@@ -39,6 +39,7 @@
   "nsis": {
     "oneClick": false,
     "allowElevation": true,
+    "createStartMenuShortcut":true,
     "license": "dist/assets/eula.html",
     "perMachine": true,
     "allowToChangeInstallationDirectory": true

@@ -189,7 +189,7 @@ if (!isDev) {
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
       if (returnValue.response === 0) { autoUpdater.quitAndInstall(true, true); }
     });
-    autoUpdater.quitAndInstall(true, true); 
+    autoUpdater.quitAndInstall(true, true);
   });
 }
 
@@ -295,3 +295,5 @@ try {
 } catch (e) {
   // Catch Error // throw e;
 }
+
+// https://www.electron.build/auto-update#appupdatersetfeedurloptions

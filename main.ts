@@ -214,10 +214,8 @@ function createWindow() {
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
-  // Create the browser window.
 
   win = new BrowserWindow({
-    // kiosk:true, //support touch for enabled devices.
     x: 0,
     y: 0,
     frame: isWindows ? false : true, // Remove frame to hide default menu,

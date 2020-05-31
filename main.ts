@@ -24,8 +24,8 @@ serve = args.some(val => val === '--serve');
 
 
 ipcMain.on('sent-login-message', (event) => {
-  console.log('handle login new....');
-  const authUrl = 'https://test.flipper.rw/login';
+  
+  const authUrl = 'https://flipper.rw/login';
   const size = screen.getPrimaryDisplay().workAreaSize;
 
   let authWindow = new BrowserWindow({
@@ -86,7 +86,7 @@ ipcMain.on('sent-login-message', (event) => {
     let subscription = null;
 
     const params = currentURL.split('?');
-    // console.log(params);
+    
     if (params && params.length === 2) {
       if (params[0] === 'https://test.flipper.rw/authorized') {
 
@@ -115,7 +115,7 @@ ipcMain.on('sent-login-message', (event) => {
     }
   }
   authWindow.webContents.on('did-finish-load', (e: any, urls: string) => {
-    console.log('did finish log');
+    
     handleCallback();
   });
   authWindow.on('closed', () => {
@@ -204,11 +204,12 @@ if (process.platform === 'win32') {
     iconName = path.join(__dirname, '../assets/png/icon.png');
   }
 
-
 function createWindow() {
 
   if (!isDev) {
-    autoUpdater.checkForUpdates();
+    try{
+      autoUpdater.checkForUpdates();
+    }catch(e){}
   }
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;

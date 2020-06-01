@@ -27,8 +27,6 @@
   "win": {
     "asar": true,
     "verifyUpdateCodeSignature":false,
-    "createStartMenuShortcut":true,
-    "allowToChangeInstallationDirectory": false,
     "requestedExecutionLevel": "highestAvailable",
     "icon": "dist/assets/icon/win/icon.ico",
     "legalTrademarks": "(c) 2020 yegobox",

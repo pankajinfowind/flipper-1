@@ -6,7 +6,7 @@ const notifier = require('node-notifier');
 const { menu } = require('./menu');
 const onError = (err, response) => {
   console.error(err, response);
-}; 
+};
 
 const isWindows = process.platform === 'win32';
 

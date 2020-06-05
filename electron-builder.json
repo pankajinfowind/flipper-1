@@ -32,10 +32,10 @@
     "legalTrademarks": "(c) 2020 yegobox",
     "publisherName": "yegobox",
     "target": [
-      "nsis-web"
+      "nsis"
     ]
   },
-  "nsis-web": {
+  "nsis": {
     "oneClick": false,
     "allowElevation": true,
     "differentialPackage": true,

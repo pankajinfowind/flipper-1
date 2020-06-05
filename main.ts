@@ -177,17 +177,18 @@ if (!isDev) {
   });
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    sendStatusToWindow('Update downloaded', 'Update Downloaded');
-    const dialogOpts = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: 'Application Update',
-      message: process.platform === 'win32' ? releaseNotes : releaseName,
-      detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-    };
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) { autoUpdater.quitAndInstall(false, true); }
-    });
+    // sendStatusToWindow('Update downloaded', 'Update Downloaded');
+    autoUpdater.quitAndInstall(true, true);
+    // const dialogOpts = {
+    //   type: 'info',
+    //   buttons: ['Restart', 'Later'],
+    //   title: 'Application Update',
+    //   message: process.platform === 'win32' ? releaseNotes : releaseName,
+    //   detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+    // };
+    // dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    //   if (returnValue.response === 0) { autoUpdater.quitAndInstall(false, true); }
+    // });
   });
 }
 
@@ -295,5 +296,11 @@ try {
 
 // https://www.electron.build/auto-update#appupdatersetfeedurloptions
 // for knowing the downloaded progress will use bellow code.
-//TODO: https://gist.github.com/the3moon/0e9325228f6334dabac6dadd7a3fc0b9
+// TODO: https://gist.github.com/the3moon/0e9325228f6334dabac6dadd7a3fc0b9
 // TODO: integrate analytics https://kilianvalkhof.com/2018/apps/using-google-analytics-to-gather-usage-statistics-in-electron/
+
+// docs:
+// http://muldersoft.com/docs/stdutils_readme.html
+// https://github.com/electron-userland/electron-builder/issues/1084
+// https://stackoverflow.com/questions/24326685/pin-icons-to-taskbar
+// https://www.electron.build/configuration/nsis

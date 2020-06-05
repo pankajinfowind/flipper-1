@@ -294,3 +294,5 @@ try {
 }
 
 // https://www.electron.build/auto-update#appupdatersetfeedurloptions
+// for knowing the downloaded progress will use bellow code.
+// https://gist.github.com/the3moon/0e9325228f6334dabac6dadd7a3fc0b9

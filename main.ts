@@ -162,7 +162,7 @@ if (!isDev) {
     // sendStatusToWindow('Update not available.', 'No Update available');
   });
   autoUpdater.on('error', (err: string) => {
-    sendStatusToWindow('Error in auto-updater. ' + err, '');
+    // sendStatusToWindow('Error in auto-updater. ' + err, '');
   });
   autoUpdater.on('download-progress', (progressObj: { bytesPerSecond: string; percent: string; transferred: string; total: string; }) => {
     let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;
@@ -186,7 +186,7 @@ if (!isDev) {
       detail: 'A new version has been downloaded. Restart the application to apply the updates.'
     };
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) { autoUpdater.quitAndInstall(true, false); }
+      if (returnValue.response === 0) { autoUpdater.quitAndInstall(false, true); }
     });
   });
 }
@@ -295,4 +295,5 @@ try {
 
 // https://www.electron.build/auto-update#appupdatersetfeedurloptions
 // for knowing the downloaded progress will use bellow code.
-// https://gist.github.com/the3moon/0e9325228f6334dabac6dadd7a3fc0b9
+//TODO: https://gist.github.com/the3moon/0e9325228f6334dabac6dadd7a3fc0b9
+// TODO: integrate analytics https://kilianvalkhof.com/2018/apps/using-google-analytics-to-gather-usage-statistics-in-electron/

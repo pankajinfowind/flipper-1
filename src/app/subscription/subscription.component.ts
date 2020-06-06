@@ -181,7 +181,7 @@ export class SubscriptionComponent implements OnInit {
 
           return this.dialog.open(CardValidationComponent, DialogSize.SIZE_MD, obj).subscribe(result => {
             console.log(result);
-            if(result=='success') {
+            if(result==='success') {
               if(this.database.put(PouchConfig.Tables.subscription,subscription)) {
                 return window.location.href='/admin';
                 }

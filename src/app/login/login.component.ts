@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
               public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
               this.database.connect(PouchConfig.bucket);
   }
- 
+
 
   ngOnInit() {
   firebase.initializeApp(environment.config);

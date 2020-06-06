@@ -1,5 +1,4 @@
 {
-  "productName": "Flipper",
   "directories": {
     "output": "release/"
   },
@@ -27,17 +26,22 @@
   ],
   "win": {
     "asar": true,
+    "verifyUpdateCodeSignature":false,
+    "requestedExecutionLevel": "highestAvailable",
     "icon": "dist/assets/icon/win/icon.ico",
-    "legalTrademarks": "(c) 2020 flipper.rw",
-    "publisherName": "Flipper Ltd",
+    "legalTrademarks": "(c) 2020 yegobox",
+    "publisherName": "yegobox",
     "target": [
       "nsis"
     ]
   },
   "nsis": {
     "oneClick": false,
+    "allowElevation": true,
+    "createStartMenuShortcut":true,
+    "license": "dist/assets/eula.html",
     "perMachine": true,
-    "allowToChangeInstallationDirectory": true
+    "allowToChangeInstallationDirectory": false
   },
   "mac": {
     "icon": "dist/assets/icon/mac/icon.icns",

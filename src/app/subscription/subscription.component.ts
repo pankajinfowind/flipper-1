@@ -6,7 +6,13 @@ import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter, finalize } from 'rxjs/internal/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import {BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { CardValidationComponent } from './validate-card/validate-card.component';
+import { environment } from '../../environments/environment';
+import { DialogService, DialogSize } from '@enexus/flipper-dialog';
+import * as firebase from 'firebase';
+import firestore from 'firebase/firestore';
 export class Response {
   message: Message;
 
@@ -21,6 +27,7 @@ export class Data {
   message?: string;
   customer?: Customer;
   customerId?: any;
+  chargeResponseMessage?: any;
 
 }
 export class Message {
@@ -48,9 +55,11 @@ export class SubscriptionComponent implements OnInit {
    public loading = new BehaviorSubject(false);
    public ccNumMissingTxt = new BehaviorSubject('CCV number is required');
    public cardExpiredTxt = new BehaviorSubject('Card has expired');
-
-  constructor(private eventBus: FlipperEventBusService,private database: PouchDBService,
-              public currentUser: CurrentUser, public electronService: ElectronService,protected httpClient: HttpClient) {
+   message = { message:null,momo: null, error: false };
+   ref = firebase.firestore().collection('flipper-plan');
+   flipperPlan=[];
+  constructor(  public dialog: DialogService,private eventBus: FlipperEventBusService,private database: PouchDBService,
+                public currentUser: CurrentUser, public electronService: ElectronService,protected httpClient: HttpClient) {
     this.database.connect(PouchConfig.bucket);
   }
 
@@ -64,6 +73,27 @@ export class SubscriptionComponent implements OnInit {
       this.database.sync(PouchConfig.syncUrl);
     }
 
+    firebase.initializeApp(environment.config);
+    firebase.firestore().settings(environment.settings);
+    this.getFlipperPlan();
+    console.log(this.flipperPlan);
+  }
+
+  getFlipperPlan() {
+
+      return this.ref.onSnapshot((querySnapshot) => {
+        const flipperPlan = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          flipperPlan.push({
+            key: doc.id,
+            title: data.title,
+            description: data.description,
+            author: data.author
+          });
+        });
+        this.flipperPlan.push(flipperPlan);
+      });
 
   }
 
@@ -73,23 +103,23 @@ export class SubscriptionComponent implements OnInit {
     this.loading.next(true);
     this.ccNumMissingTxt.next('');
     this.cardExpiredTxt.next('');
-    const formSubscription= {
-        card:data.cardNumber,
-        expirymonth:data.expirationMonth,
-        expiryyear:data.expirationYear,
-        cvv:data.ccv,
-        email:this.currentUser.currentUser.email,
-        firstname:data.cardHolder
-      };
 
-    const creds = 'card=' + formSubscription.card + '&expirymonth=' + formSubscription.expirymonth +
-     '&expiryyear='+formSubscription.expiryyear+ '&cvv='+formSubscription.cvv+'&email='
-     +formSubscription.email+'&firstname='+formSubscription.firstname ;
+
+    const creds = 'cardno=' + data.cardNumber + '&expirymonth=' + data.expirationMonth +
+     '&expiryyear='+data.expirationYear+ '&vcc='+data.ccv+'&email='
+     +this.currentUser.get('email')+'&firstname='+data.cardHolder
+     +'&lastname='+data.cardHolder+'&planId='+5422+'&phonenumber='+'0781945189'
+     +'&amount='+2
+     +'&pay_type='+'CARD'
+     +'&currency='+'RWF'
+     +'&appname='+'FLIPPER'+'&transactionid='+1000;
+
     return this.httpClient
-        .post('https://mysterious-depths-19225.herokuapp.com/subscribe',
+        .post(environment.paymentUrl+'subscribe',
         creds,{headers}).pipe(finalize(() => this.loading.next(false)))
         .subscribe(res => {
           this.loading.next(false);
+          console.log(res);
           const response: Response=res as Response;
           if(response) {
 
@@ -102,6 +132,7 @@ export class SubscriptionComponent implements OnInit {
                       }
 
                 } else if(response.message.status==='success') {
+                  console.log(res);
                   const subscription= {
                     id: this.database.uid(),
                     userId: this.currentUser.currentUser.id,
@@ -113,23 +144,26 @@ export class SubscriptionComponent implements OnInit {
                     createdAt: new Date(),
                     updatedAt:new Date(),
                         };
-                  if(this.database.put(PouchConfig.Tables.subscription,subscription)) {
-                      return this.saveSubscriptionToFripperApi({
-                        subscribed: 'subscribed',
-                        txRef: response.message.data.txRef,
-                        flwRef: response.message.data.flwRef,
-                        raveRef:response.message.data.raveRef,
-                        flutter_customer_id:response.message.data.customer?
-                        response.message.data.customer.id:response.message.data.customerId,
-                        flutter_customer_accountId:response.message.data.customer?
-                        response.message.data.customer.accountId:0,
-                        amount:response.message.data.amount,
-                        currency: response.message.data.currency,
-                        app: 'Flipper',
-                        customer_name:response.message.data.customer?
-                        response.message.data.customer.fullName:''
-                      });
-                   }
+                  this.message.message = response.message.data.chargeResponseMessage;
+                  this.openValidateCardDialog(response.message.data,subscription);
+                  // if(this.database.put(PouchConfig.Tables.subscription,subscription)) {
+                  //   return window.location.href='/admin';
+                      // return this.saveSubscriptionToFripperApi({
+                      //   subscribed: 'subscribed',
+                      //   txRef: response.message.data.txRef,
+                      //   flwRef: response.message.data.flwRef,
+                      //   raveRef:response.message.data.raveRef,
+                      //   flutter_customer_id:response.message.data.customer?
+                      //   response.message.data.customer.id:response.message.data.customerId,
+                      //   flutter_customer_accountId:response.message.data.customer?
+                      //   response.message.data.customer.accountId:0,
+                      //   amount:response.message.data.amount,
+                      //   currency: response.message.data.currency,
+                      //   app: 'Flipper',
+                      //   customer_name:response.message.data.customer?
+                      //   response.message.data.customer.fullName:''
+                      // });
+                 //  }
                 } else {
                   console.log(response);
                 }
@@ -141,6 +175,19 @@ export class SubscriptionComponent implements OnInit {
           console.log(error);
         });
 
+      }
+
+      openValidateCardDialog(obj,subscription) {
+
+          return this.dialog.open(CardValidationComponent, DialogSize.SIZE_MD, obj).subscribe(result => {
+            console.log(result);
+            if(result=='success') {
+              if(this.database.put(PouchConfig.Tables.subscription,subscription)) {
+                return window.location.href='/admin';
+                }
+              }
+
+            });
       }
 
 saveSubscriptionToFripperApi(data: any) {

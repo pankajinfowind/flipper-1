@@ -1,12 +1,33 @@
 <div class="container1">
   <flipper-header></flipper-header>
 <section class="c-wrapper" @insertLogin>
+
+ 
+
+
   <div class="c-wrapper__row">
     <flipper-payment-card app="Flipper" currency="$" amount="35/mo" (formSaved)="subscribe($event)" 
     [loading]="(loading | async)"
     [ccNumMissingTxt]="(ccNumMissingTxt | async)"
     [cardExpiredTxt]="(cardExpiredTxt | async)"
     ></flipper-payment-card>
+
+    <br>
+<div class="alert alert-warning mt-2 mb-2" role="alert" *ngIf="message.message && !message.error">
+  <h6 class="alert-heading">Payment message</h6>
+ 
+  <hr>
+  <p class="mb-0">{{message.message}}</p>
+</div>
+
+<div class="alert alert-danger mt-2 mb-2" *ngIf="message.message && message.error" role="alert">
+  <h6 class="alert-heading">Payment message</h6>
+ 
+  <hr>
+  <p class="mb-0">{{message.message}}</p>
+</div>
+
   </div>
 </section>
+
 </div>

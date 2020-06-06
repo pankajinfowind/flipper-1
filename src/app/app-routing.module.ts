@@ -23,7 +23,8 @@ const routes: Routes = [
     path: 'pay-now', component: SubscriptionComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'setup/business/new', component: CreateUpdateBusinessComponent, canActivate: [AuthGuard,HasSubscribedGuard]
+    path: 'setup/business/new', component: CreateUpdateBusinessComponent, canActivate: [AuthGuard,
+      HasSubscribedGuard]
   },
   {
     path: 'add/product', component: CreateProductComponent, canActivate: [AuthGuard,HasSubscribedGuard, HasBusinessGuard]

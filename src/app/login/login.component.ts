@@ -5,7 +5,9 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
-
+import * as firebase from 'firebase';
+import firestore from 'firebase/firestore';
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,22 +20,49 @@ import { filter } from 'rxjs/internal/operators';
 })
 export class LoginComponent implements OnInit {
   user: Array<any>;
+  ref = firebase.firestore().collection('flipper-plan');
+  flipperPlan=[];
+
   constructor(private eventBus: FlipperEventBusService, private database: PouchDBService,
               public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
-    this.database.connect(PouchConfig.bucket);
+              this.database.connect(PouchConfig.bucket);
   }
+ 
 
   ngOnInit() {
-    this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
+  firebase.initializeApp(environment.config);
+  firebase.firestore().settings(environment.settings);
+
+
+  this.ref.onSnapshot((querySnapshot) => {
+        const flipperPlan = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          console.log(data);
+        });
+        this.flipperPlan.push(flipperPlan);
+
+      });
+
+    // this.getFlipperPlan().subscribe(data => {
+    //   this.flipperPlan = data.map(e => {
+    //     return {
+    //       id: e.payload.doc.id,
+    //       ...e.payload.doc.data() as any
+    //     } as any;
+    //   })
+    // });
+
+  this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
         this.currentUser.currentUser = res.user);
 
-    if (PouchConfig.canSync) {
+  if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
 
-    this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
+  this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
 
       this.ngZone.run(async () => {
         if (arg && arg.length > 0) {
@@ -70,7 +99,6 @@ export class LoginComponent implements OnInit {
 
       });
     });
-
   }
 
   userLogin() {

@@ -18,18 +18,26 @@ import { MigrationModule } from './migration/migration.module';
 import { PouchDBService } from '@enexus/flipper-components';
 import { Router } from '@angular/router';
 import { SubscriptionComponent } from './subscription/subscription.component';
+import { CardValidationComponent } from './subscription/validate-card/validate-card.component';
+import { environment } from '../environments/environment';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent,SubscriptionComponent],
+  declarations: [AppComponent, LoginComponent,SubscriptionComponent,CardValidationComponent],
   imports: [
    CoreModule,
     SharedModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.config),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
     MigrationModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
@@ -40,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [PouchDBService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[CardValidationComponent]
 })
 export class AppModule {
 constructor(private database: PouchDBService) {

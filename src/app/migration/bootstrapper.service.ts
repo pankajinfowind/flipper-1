@@ -18,7 +18,7 @@ export class Bootstrapper {
   constructor(protected injector: Injector) {
     this.schema = this.injector.get(Schema);
     this.model = this.injector.get(ModelService);
-    
+
     this.migrate = this.injector.get(MigrateService);
   }
 
@@ -75,11 +75,13 @@ private buildTables(): Promise<any> {
                                 }
                             }
 
-                            if (table.name === 'businessTypes') {
+                        if (table.name === 'businessTypes') {
                               if (config.defaultType.length > 0) {
                                  this.insertBusinessTypeData<Types>(config.defaultType as Types[], myTable);
                               }
                           }
+
+
                   }
 
                 });
@@ -111,37 +113,39 @@ private insertDefaultData<T>(rows: T[], table: string) {
 
 }
 
+
+
 private insertBusinessTypeData<T>(rows: T[], table) {
 
   rows.forEach(each => {
     const row: any = each;
-    console.log(row);
+
     const didInserted: any = this.model.findByFirst(table, 'name', row.name);
     if (!didInserted) {
 
-      let form:Types={id:uuidv1(), name:row.name};
+      const form: Types= {id:uuidv1(), name:row.name};
 
-            this.model.create(table, [form]);
+      this.model.create(table, [form]);
 
-                      if(row.category.length > 0){
+      if(row.category.length > 0) {
 
-                        row.category.forEach( row1=>{
+                        row.category.forEach( row1=> {
                           const didInserted1: any = this.model.findByFirst(DEFAULT_FLIPPER_DB_CONFIG.database.name+'.businessCategories', 'name', row1.name);
 
-                          if(!didInserted1){
-                            let form2:BusinessCategory={id:uuidv1(),name:row1.name,typeId:form.id,
+                          if(!didInserted1) {
+                            const form2: BusinessCategory= {id:uuidv1(),name:row1.name,typeId:form.id,
                               createdAt: new Date(),
                               updatedAt:new  Date()};
-                              
-                              this.model.create(DEFAULT_FLIPPER_DB_CONFIG.database.name+'.businessCategories', [form2]);
 
-                                }else{
+                            this.model.create(DEFAULT_FLIPPER_DB_CONFIG.database.name+'.businessCategories', [form2]);
+
+                                } else {
                                   this.model.update(DEFAULT_FLIPPER_DB_CONFIG.database.name+'.businessCategories', row1,didInserted1.id);
                                 }
-                        
-                            }  
+
+                            }
                         );
-                        
+
                       }
         } else {
           this.model.update(table, row,didInserted.id);

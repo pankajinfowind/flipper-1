@@ -67,7 +67,7 @@ ipcMain.on('sent-login-message', (event) => {
     let id = null;
     let subscription = null;
     const params = currentURL.split('?');
-    // console.log(params);
+
     if (params && params.length === 2) {
       if (params[0] === 'https://flipper.rw/authorized') {
         raw = params[1];

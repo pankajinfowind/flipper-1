@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-electron": {
+    "flipper": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -101,24 +101,24 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "flipper:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "angular-electron:build:dev"
+              "browserTarget": "flipper:build:dev"
             },
             "dev-web": {
-              "browserTarget": "angular-electron:build:dev-web"
+              "browserTarget": "flipper:build:dev-web"
             },
             "production": {
-              "browserTarget": "angular-electron:build:production"
+              "browserTarget": "flipper:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "flipper:build"
           }
         },
         "test": {
@@ -160,7 +160,7 @@
         }
       }
     },
-    "angular-electron-e2e": {
+    "flipper-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -199,7 +199,7 @@
       }
     }
   },
-  "defaultProject": "angular-electron",
+  "defaultProject": "flipper",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

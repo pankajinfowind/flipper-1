@@ -38,8 +38,10 @@
   "nsis": {
     "oneClick": false,
     "allowElevation": true,
+    "differentialPackage": true,
     "createStartMenuShortcut":true,
-    "license": "dist/assets/eula.html",
+    "license": "dist/assets/eula.txt",
+    "include":"dist/assets/installer.nsh",
     "perMachine": true,
     "allowToChangeInstallationDirectory": false
   },

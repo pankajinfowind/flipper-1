@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUser } from '../core/guards/current-user';
+import { CurrentUser, User } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
@@ -108,7 +108,7 @@ export class SubscriptionComponent implements OnInit {
 
 
     this.pusher.paymentApproved.bind('event-payment-message-flipper.' +userId, (event) => {
-      console.log(event);
+     
       if (event) {
 
 
@@ -116,7 +116,7 @@ export class SubscriptionComponent implements OnInit {
           this.message.error = false;
           this.message.message = '';
           this.message.momo = '';
-          this.currentUser.currentUser.expiresAt=Date.parse(event.expires_at);
+          this.currentUser.currentUser.expiresAt=Date.parse(event.expiresAt);
           this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
 
           this.openDialog(true, event);
@@ -165,7 +165,7 @@ export class SubscriptionComponent implements OnInit {
             userId: this.currentUser.currentUser.userId,
             subscriptionType: 'monthly',
             lastPaymentDate: today,
-            nextPaymentDate:event.expires_at,
+            nextPaymentDate:event.expiresAt,
             status:'success',
             didSubscribed:true,
             createdAt: new Date(),
@@ -310,14 +310,17 @@ confirmPayment(creds,payType) {
       .pipe(finalize(() => this.loading.next(false)))
       .subscribe(res => {
         const resp: Message=res as Message;
+        console.log(res);
         this.loading.next(false);
+        const data:User=resp.data as User;
         if(resp.status==='success') {
           this.message.error = false;
           this.message.message = '';
           this.message.momo = '';
-          this.currentUser.currentUser.expiresAt=Date.parse(resp.expiresAt);
+          this.currentUser.currentUser.expiresAt=Date.parse(data.expiresAt);
+          console.log(this.currentUser.currentUser);
           this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
-          return this.openDialog(true, resp.data);
+          return this.openDialog(true, data);
         }
       });
     }

@@ -73,7 +73,7 @@ ipcMain.on('sent-login-message', (event) => {
 
     if (params && params.length === 2) {
       if (params[0] === environment.appUrl+'authorized') {
-        console.log(params);
+        // console.log(params);
         raw = params[1];
         token = raw.split('&')[0];
         token = token.split('=')[1];
@@ -90,7 +90,8 @@ ipcMain.on('sent-login-message', (event) => {
 
         expiresAt =raw.split('&')[6];
         expiresAt =expiresAt.split('=')[1];
-
+        // console.log(params);
+        // console.log([email, name, avatar, token, id, subscription,expiresAt]);
         event.sender.send('received-login-message', [email, name, avatar, token, id, subscription,expiresAt]);
         authWindow.destroy();
       }

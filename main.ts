@@ -1,14 +1,16 @@
-import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell, Menu } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, shell, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import { environment } from './src/environments/environment';
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
 const notifier = require('node-notifier');
 const { menu } = require('./menu');
 const onError = (err, response) => {
   console.error(err, response);
 };
+
 const isWindows = process.platform === 'win32';
+
+
 let win;
 let serve: boolean;
 const args = process.argv.slice(1);
@@ -16,13 +18,18 @@ const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
+
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
+
+
 ipcMain.on('sent-login-message', (event) => {
-  console.log(environment.appUrl);
-  const authUrl = environment.appUrl+'login';
+
+  const authUrl = 'https://flipper.rw/login';
   const size = screen.getPrimaryDisplay().workAreaSize;
+
   let authWindow = new BrowserWindow({
+
     width: 700,
     height: 500,
     show: false,
@@ -31,16 +38,21 @@ ipcMain.on('sent-login-message', (event) => {
       nodeIntegration: true
     },
   });
+
   authWindow.show();
   const menus = Menu.buildFromTemplate([]);
   authWindow.setMenu(menus);
+
   const handleRedirect = (e, uri) => {
     shell.openExternal(uri);
   };
+
   authWindow.webContents.on('will-navigate', handleRedirect);
   authWindow.loadURL(authUrl);
+
   const ses = authWindow.webContents.session;
   ses.clearCache();
+
   ses.cookies.get({})
     .then((cookies) => {
       cookies.forEach(cookie => {
@@ -56,9 +68,13 @@ ipcMain.on('sent-login-message', (event) => {
     }).catch((error) => {
       console.log(error);
     });
+
+
   // 'will-navigate' is an event emitted when the window.location changes
   // newUrl should contain the tokens you need
+
   // Handle the response from YEGOBOX - See Update from 17/02/2020
+
   function handleCallback() {
     const currentURL = authWindow.webContents.getURL();
     let raw = null;
@@ -72,7 +88,7 @@ ipcMain.on('sent-login-message', (event) => {
     const params = currentURL.split('?');
 
     if (params && params.length === 2) {
-      if (params[0] === environment.appUrl+'authorized') {
+      if (params[0] === 'https://flipper.rw/authorized') {
         // console.log(params);
         raw = params[1];
         token = raw.split('&')[0];
@@ -98,12 +114,14 @@ ipcMain.on('sent-login-message', (event) => {
     }
   }
   authWindow.webContents.on('did-finish-load', (e: any, urls: string) => {
+
     handleCallback();
   });
   authWindow.on('closed', () => {
     authWindow = null;
   });
 });
+
 ///////////////////// AUTO UPDATED  /////////////////////////////
 // this is just to test autoUpdater feature.
 function showMessage(message, title) {
@@ -121,6 +139,7 @@ function showMessage(message, title) {
     // Wait with callback (onClick event of the toast), until user action is taken against notification
     wait: true
   }, onError);
+
   notifier.on('click', (notifierObject, options) => {
     //  TODO: implement when a user click on notification.
   });
@@ -130,6 +149,7 @@ function sendStatusToWindow(text: string, title) {
   showMessage(text, title);
 }
 if (!isDev) {
+
   autoUpdater.on('checking-for-update', () => {
     // sendStatusToWindow('Checking for update...', 'check updates');
     // tag
@@ -141,7 +161,7 @@ if (!isDev) {
     // sendStatusToWindow('Update not available.', 'No Update available');
   });
   autoUpdater.on('error', (err: string) => {
-    sendStatusToWindow('Error in auto-updater. ' + err, '');
+    // sendStatusToWindow('Error in auto-updater. ' + err, '');
   });
   autoUpdater.on('download-progress', (progressObj: { bytesPerSecond: string; percent: string; transferred: string; total: string; }) => {
     let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;
@@ -154,21 +174,16 @@ if (!isDev) {
       progressObj.total +
       ')';
   });
+
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    sendStatusToWindow('Update downloaded', 'Update Downloaded');
-    const dialogOpts = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: 'Application Update',
-      message: process.platform === 'win32' ? releaseNotes : releaseName,
-      detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-    };
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) { autoUpdater.quitAndInstall(true, true); }
-    });
+    autoUpdater.quitAndInstall(true, true);
   });
 }
+
+
+
 let iconName: string;
+
 if (process.platform === 'win32') {
   iconName = path.join(__dirname, '../assets/win/icon.ico');
 } else
@@ -177,7 +192,9 @@ if (process.platform === 'win32') {
   } else {
     iconName = path.join(__dirname, '../assets/png/icon.png');
   }
+
 function createWindow() {
+
   if (!isDev) {
     try {
       autoUpdater.checkForUpdates();
@@ -185,6 +202,8 @@ function createWindow() {
   }
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+
   win = new BrowserWindow({
     x: 0,
     y: 0,
@@ -197,7 +216,9 @@ function createWindow() {
     },
     icon: iconName
   });
+
   win.setMenu(null);
+
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
@@ -210,9 +231,11 @@ function createWindow() {
       slashes: true
     }));
   }
+
   if (serve) {
     // win.webContents.openDevTools();
   }
+
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -220,20 +243,29 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
 }
+
 try {
+
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', createWindow);
+
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') { app.quit(); }
   });
+
+
   app.on('activate', () => {
     if (win === null) { createWindow(); }
   });
+
+
   // Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that point.
+
   /*eslint no-shadow: ["error", { "allow": ["args"] }]*/
   /*eslint-env es6*/
   ipcMain.on(`display-app-menu`, (e, args) => {
@@ -245,7 +277,18 @@ try {
       });
     }
   });
+
 } catch (e) {
   // Catch Error // throw e;
 }
+
 // https://www.electron.build/auto-update#appupdatersetfeedurloptions
+// for knowing the downloaded progress will use bellow code.
+// TODO: https://gist.github.com/the3moon/0e9325228f6334dabac6dadd7a3fc0b9
+// TODO: integrate analytics https://kilianvalkhof.com/2018/apps/using-google-analytics-to-gather-usage-statistics-in-electron/
+
+// docs:
+// http://muldersoft.com/docs/stdutils_readme.html
+// https://github.com/electron-userland/electron-builder/issues/1084
+// https://stackoverflow.com/questions/24326685/pin-icons-to-taskbar
+// https://www.electron.build/configuration/nsis

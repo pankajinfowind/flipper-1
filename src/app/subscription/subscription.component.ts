@@ -108,7 +108,7 @@ export class SubscriptionComponent implements OnInit {
 
 
     this.pusher.paymentApproved.bind('event-payment-message-flipper.' +userId, (event) => {
-     
+
       if (event) {
 
 
@@ -312,7 +312,7 @@ confirmPayment(creds,payType) {
         const resp: Message=res as Message;
         console.log(res);
         this.loading.next(false);
-        const data:User=resp.data as User;
+        const data: User=resp.data as User;
         if(resp.status==='success') {
           this.message.error = false;
           this.message.message = '';

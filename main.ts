@@ -84,32 +84,35 @@ ipcMain.on('sent-login-message', (event) => {
     let avatar = null;
     let id = null;
     let subscription = null;
-    let expiresAt=null;
+    let expiresAt = null;
     const params = currentURL.split('?');
 
     if (params && params.length === 2) {
       if (params[0] === 'https://flipper.rw/authorized') {
         // console.log(params);
-        raw = params[1];
-        token = raw.split('&')[0];
-        token = token.split('=')[1];
-        email = raw.split('&')[1];
-        email = email.split('=')[1];
-        name = raw.split('&')[2];
-        name = name.split('=')[1];
-        avatar = raw.split('&')[3];
-        avatar = avatar.split('=')[1];
-        id = raw.split('&')[4];
-        id = id.split('=')[1];
-        subscription = raw.split('&')[5];
-        subscription = subscription.split('=')[1];
+        try {
+          raw = params[1];
+          token = raw.split('&')[0];
+          token = token.split('=')[1];
+          email = raw.split('&')[1];
+          email = email.split('=')[1];
+          name = raw.split('&')[2];
+          name = name.split('=')[1];
+          avatar = raw.split('&')[3];
+          avatar = avatar.split('=')[1];
+          id = raw.split('&')[4];
+          id = id.split('=')[1];
+          subscription = raw.split('&')[5];
+          subscription = subscription.split('=')[1];
 
-        expiresAt =raw.split('&')[6];
-        expiresAt =expiresAt.split('=')[1];
-        // console.log(params);
-        // console.log([email, name, avatar, token, id, subscription,expiresAt]);
-        event.sender.send('received-login-message', [email, name, avatar, token, id, subscription,expiresAt]);
-        authWindow.destroy();
+          expiresAt = raw.split('&')[6];
+          expiresAt = expiresAt.split('=')[1];
+
+          event.sender.send('received-login-message', [email, name, avatar, token, id, subscription, expiresAt]);
+          authWindow.destroy();
+        } catch (e) {
+          log.info(e);
+        }
       }
     }
   }
@@ -198,7 +201,7 @@ function createWindow() {
   if (!isDev) {
     try {
       autoUpdater.checkForUpdates();
-    } catch(e) {}
+    } catch (e) { }
   }
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;

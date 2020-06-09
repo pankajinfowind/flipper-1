@@ -38,7 +38,7 @@
                 "./styles"
               ]
             },
-            "scripts": [],
+            "scripts": ["./node_modules/pusher-js/dist/web/pusher.min.js"],
             "customWebpackConfig": {
               "path": "./angular.webpack.js"
             }

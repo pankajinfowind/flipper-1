@@ -11,10 +11,12 @@ import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 import { FlipperSettingsModule } from '@enexus/flipper-settings';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperPaymentCardModule } from '@enexus/payment-card';
+import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 @NgModule({
   declarations: [
     PageNotFoundComponent,
-    WebviewDirective
+    WebviewDirective,
+    LoadingIndicatorComponent
   ],
   imports: [
     FlipperEventModule,
@@ -28,6 +30,7 @@ import { FlipperPaymentCardModule } from '@enexus/payment-card';
     FlipperInventoryModule,FlipperPaymentCardModule
   ],
   exports: [
+    LoadingIndicatorComponent,
     WebviewDirective,
     FlipperEventModule,
     FlipperComponentsModule,

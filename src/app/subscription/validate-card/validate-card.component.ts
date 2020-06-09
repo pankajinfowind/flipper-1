@@ -19,11 +19,8 @@ export class CardValidationComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     public dialogRefs: MatDialogRef<CardValidationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-
-     }
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
     isSuccess=false;
-
 
 
   ngOnInit() {

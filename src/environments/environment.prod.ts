@@ -5,9 +5,9 @@ export const AppConfig = {
 export const environment = {
   production: true,
   paymentUrl:'https://mighty-hamlet-20200.herokuapp.com/',
-  appUrl: 'http://localhost:8000/', // domains when developing should listen on port 8001 so it can be routed propper.
+  appUrl: 'https://flipper.rw/', // domains when developing should listen on port 8001 so it can be routed propper.
   pusher: {
-    key: '3609cb512084f92bbff6',
+    key: 'a5c8bceaeeac6065d8de',
     cluster: 'ap2',
     forceTLS: true
   },

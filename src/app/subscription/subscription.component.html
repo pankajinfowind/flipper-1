@@ -2,32 +2,130 @@
   <flipper-header></flipper-header>
 <section class="c-wrapper" @insertLogin>
 
- 
 
 
-  <div class="c-wrapper__row">
-    <flipper-payment-card app="Flipper" currency="$" amount="35/mo" (formSaved)="subscribe($event)" 
-    [loading]="(loading | async)"
-    [ccNumMissingTxt]="(ccNumMissingTxt | async)"
-    [cardExpiredTxt]="(cardExpiredTxt | async)"
-    ></flipper-payment-card>
 
-    <br>
-<div class="alert alert-warning mt-2 mb-2" role="alert" *ngIf="message.message && !message.error">
-  <h6 class="alert-heading">Payment message</h6>
- 
-  <hr>
-  <p class="mb-0">{{message.message}}</p>
-</div>
+<mat-card class="col-12 mt-2">
+  <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
+<mat-card-header class="mt-3 ml-3">
 
-<div class="alert alert-danger mt-2 mb-2" *ngIf="message.message && message.error" role="alert">
-  <h6 class="alert-heading">Payment message</h6>
- 
-  <hr>
-  <p class="mb-0">{{message.message}}</p>
-</div>
-
+  <div class="alert alert-warning mt-2 mb-2" role="alert" *ngIf="message.message && !message.error">
+    <h6 class="alert-heading">Payment message</h6>
+   
+    <hr>
+    <p class="mb-0">{{message.message}}</p>
   </div>
+  
+  <div class="alert alert-danger mt-2 mb-2" *ngIf="message.message && message.error" role="alert">
+    <h6 class="alert-heading">Payment message</h6>
+   
+    <hr>
+    <p class="mb-0">{{message.message}}</p>
+  </div>
+</mat-card-header>
+
+<mat-card-content>
+<mat-accordion class="example-headers-align">
+
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header class="row">
+      <mat-panel-title class="col-9">
+        <h6 class="text-left"><img [src]="'/assets/img/logo-mtn.png'" mat-card-avatar class="avatar"
+          style="font-weight:bold"> Pay with  Mobile Money</h6>
+      </mat-panel-title>
+
+     
+    </mat-expansion-panel-header>
+<hr>
+
+    <form autocomplete="off" [formGroup]="buyForm" class="mt-3" (ngSubmit)="submitMomo()">
+
+
+      <table style="width: 100%;">
+
+        <tr class="tr" [class.trIsFocused]="isFocused=='mobilephone'"
+          style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+
+          <td class="td" [class.tdIsFocused]="isFocused=='mobilephone'">
+            Enter mobile number:
+          </td>
+          <td style="width:60%">
+            <input type="number" class="input" formControlName="mobilephone" (focus)="focusing('mobilephone')"
+              (focusout)="focusingOut()" autofocus placeholder="Enter mobile number" />
+
+          </td>
+        </tr>
+      </table>
+      <mat-error *ngIf="mobilephone.invalid && (mobilephone.dirty || mobilephone.touched)">
+        <mat-error *ngIf="mobilephone.errors.required">
+         Mobile number is <strong>required</strong>
+        </mat-error>
+      </mat-error>
+
+      <div class="alert alert-danger" *ngIf="message.error" role="alert">
+        <h6 class="alert-heading">Payment message</h6>
+        <hr>
+        <p class="mb-0">{{message.message?message.message:'Something went wrong! try again!'}}</p>
+      </div>
+
+   
+
+      <mat-card-actions class="mt-2">
+        <button type="submit" style="width:100%" class="button-default button--secondary" cdkFocusInitial 
+          *ngIf="(loading | async)!=true">
+          <span trans>Pay {{currency}} {{flipperPlan}}</span>
+        </button>
+        <button type="button" style="width:100%" class="button-default button--secondary" cdkFocusInitial 
+        [disabled]="(loading | async)" *ngIf="(loading | async)">
+        <span trans>Processing ....</span>
+      </button>
+      </mat-card-actions>
+    </form>
+
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header class="row">
+      <mat-panel-title class="col-9">
+        <h6 class="text-left"><img [src]="'/assets/img/visa.png'" mat-card-avatar class="avatar"
+          style="font-weight:bold"> 
+          <img [src]="'/assets/img/mastercard.png'" mat-card-avatar class="avatar"
+          style="font-weight:bold">
+          Pay with Card</h6>
+      </mat-panel-title>
+
+    
+    </mat-expansion-panel-header>
+  
+  
+    <hr>
+    <mat-slide-toggle
+    class="example-margin"
+    [color]="color"
+    [checked]="showCard"
+    [(ngModel)]="showCard"
+    >
+    {{showCard?'Hide Card!':'Show Card!'}}
+</mat-slide-toggle> 
+  
+<div class="" [style.margin-top]="showCard?'120px':'-140px'">
+ 
+  <flipper-payment-card app="Flipper" [showCard]="showCard" [currency]="currency"
+   [amount]="flipperPlan"
+   (formSaved)="submitCard($event)" 
+  [loading]="(loading | async)"
+  [ccNumMissingTxt]="(ccNumMissingTxt | async)"
+  [cardExpiredTxt]="(cardExpiredTxt | async)"
+  ></flipper-payment-card>
+</div>
+  </mat-expansion-panel>
+
+</mat-accordion>
+</mat-card-content>
+</mat-card>
+
 </section>
 
 </div>
+

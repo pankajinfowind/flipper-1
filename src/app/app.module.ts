@@ -24,13 +24,14 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { PaidSuccessComponent } from './subscription/paid-success/paid-success.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent,SubscriptionComponent,CardValidationComponent],
+  declarations: [AppComponent, LoginComponent,SubscriptionComponent,CardValidationComponent,PaidSuccessComponent],
   imports: [
    CoreModule,
     SharedModule,
@@ -49,7 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [PouchDBService],
   bootstrap: [AppComponent],
-  entryComponents:[CardValidationComponent]
+  entryComponents:[CardValidationComponent,PaidSuccessComponent]
 })
 export class AppModule {
 constructor(private database: PouchDBService) {

@@ -8,9 +8,10 @@ export const environment = {
   appUrl: 'http://localhost:8000/', // domains when developing should listen on port 8001 so it can be routed propper.
 
   pusher: {
-    key: '3609cb512084f92bbff6',
+    key: 'a5c8bceaeeac6065d8de',
     cluster: 'ap2',
-    forceTLS: true
+    forceTLS: true,
+    encrypted: true
   },
   config: { // https://www.techiediaries.com/angular-firebase/angular-9-8-firestore-database-crud-tutorial/
     apiKey: 'AIzaSyCpnbw9i23T0237jgd2ladtPgsGYbmioqA',

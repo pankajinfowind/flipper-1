@@ -1,6 +1,7 @@
 import { app, BrowserWindow, screen, dialog, nativeImage, ipcMain, shell, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import { environment } from './src/environments/environment';
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
 const notifier = require('node-notifier');
 const { menu } = require('./menu');
@@ -18,7 +19,8 @@ autoUpdater.logger.transports.file.level = 'info';
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
 ipcMain.on('sent-login-message', (event) => {
-  const authUrl = 'https://flipper.rw/login';
+  console.log(environment.appUrl);
+  const authUrl = environment.appUrl+'login';
   const size = screen.getPrimaryDisplay().workAreaSize;
   let authWindow = new BrowserWindow({
     width: 700,
@@ -66,10 +68,12 @@ ipcMain.on('sent-login-message', (event) => {
     let avatar = null;
     let id = null;
     let subscription = null;
+    let expiresAt=null;
     const params = currentURL.split('?');
 
     if (params && params.length === 2) {
-      if (params[0] === 'https://flipper.rw/authorized') {
+      if (params[0] === environment.appUrl+'authorized') {
+        console.log(params);
         raw = params[1];
         token = raw.split('&')[0];
         token = token.split('=')[1];
@@ -83,7 +87,11 @@ ipcMain.on('sent-login-message', (event) => {
         id = id.split('=')[1];
         subscription = raw.split('&')[5];
         subscription = subscription.split('=')[1];
-        event.sender.send('received-login-message', [email, name, avatar, token, id, subscription]);
+
+        expiresAt =raw.split('&')[6];
+        expiresAt =expiresAt.split('=')[1];
+
+        event.sender.send('received-login-message', [email, name, avatar, token, id, subscription,expiresAt]);
         authWindow.destroy();
       }
     }

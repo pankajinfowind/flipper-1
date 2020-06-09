@@ -5,9 +5,8 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
-import * as firebase from 'firebase';
-import firestore from 'firebase/firestore';
-import { environment } from '../../environments/environment';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +19,6 @@ import { environment } from '../../environments/environment';
 })
 export class LoginComponent implements OnInit {
   user: Array<any>;
-  ref = firebase.firestore().collection('flipper-plan');
   flipperPlan=[];
 
   constructor(private eventBus: FlipperEventBusService, private database: PouchDBService,
@@ -30,28 +28,7 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-  firebase.initializeApp(environment.config);
-  firebase.firestore().settings(environment.settings);
 
-
-  this.ref.onSnapshot((querySnapshot) => {
-        const flipperPlan = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log(data);
-        });
-        this.flipperPlan.push(flipperPlan);
-
-      });
-
-    // this.getFlipperPlan().subscribe(data => {
-    //   this.flipperPlan = data.map(e => {
-    //     return {
-    //       id: e.payload.doc.id,
-    //       ...e.payload.doc.data() as any
-    //     } as any;
-    //   })
-    // });
 
   this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
@@ -61,6 +38,7 @@ export class LoginComponent implements OnInit {
   if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
+
 
   this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
 
@@ -74,7 +52,9 @@ export class LoginComponent implements OnInit {
             active: true,
             createdAt: new Date(),
             updatedAt: new Date(),
-            id: this.database.uid()
+            id: this.database.uid(),
+            userId:arg[4].replace('%20', ' '),
+            expiresAt:Date.parse(arg[6]) as number
           };
 
           localStorage.setItem('channel', arg[4].replace('%20', ' '));
@@ -91,6 +71,8 @@ export class LoginComponent implements OnInit {
             user.id = this.currentUser.currentUser.id;
             user.createdAt = this.currentUser.currentUser.createdAt;
           }
+
+          console.log(user);
 
           if (this.database.put(PouchConfig.Tables.user, user)) {
             return window.location.href = '/admin';

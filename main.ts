@@ -137,7 +137,7 @@ function showMessage(message, title) {
     // The absolute path to the icon of the message
     // (doesn't work on balloons)
     // If not found, a system icon will be shown
-    icon: path.join(__dirname, '/assets/logo.png'),
+    icon: path.join(__dirname, '../assets/logo.png'),
     // Wait with callback (onClick event of the toast), until user action is taken against notification
     wait: true
   }, onError);
@@ -187,12 +187,12 @@ if (!isDev) {
 let iconName: string;
 
 if (process.platform === 'win32') {
-  iconName = path.join(__dirname, '/assets/win/icon.ico');
+  iconName = path.join(__dirname, '../assets/win/icon.ico');
 } else
   if (process.platform === 'darwin') {
-    iconName = path.join(__dirname, '/assets/mac/icon.icns');
+    iconName = path.join(__dirname, '../assets/mac/icon.icns');
   } else {
-    iconName = path.join(__dirname, '/assets/png/icon.png');
+    iconName = path.join(__dirname, '../assets/png/icon.png');
   }
 
 function createWindow() {

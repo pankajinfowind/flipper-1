@@ -46,9 +46,8 @@ script:
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine \
         bash -c "
-          sudo snap install snapcraft --classic \
-          && npm install \
-          && npm run electron:linux && npm run electron:windows "
+          npm install \
+          && npm run electron:windows "
     else
       # Code signing for macOS is not available in Docker, so we build on macOS.
       # yarn dist --mac

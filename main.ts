@@ -89,7 +89,6 @@ ipcMain.on('sent-login-message', (event) => {
 
     if (params && params.length === 2) {
       if (params[0] === 'https://flipper.rw/authorized') {
-        // console.log(params);
         try {
           raw = params[1];
           token = raw.split('&')[0];

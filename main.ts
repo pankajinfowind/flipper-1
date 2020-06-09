@@ -137,7 +137,7 @@ function showMessage(message, title) {
     // The absolute path to the icon of the message
     // (doesn't work on balloons)
     // If not found, a system icon will be shown
-    icon: path.join(__dirname, '../assets/logo.png'),
+    icon: path.join(__dirname, '/assets/logo.png'),
     // Wait with callback (onClick event of the toast), until user action is taken against notification
     wait: true
   }, onError);

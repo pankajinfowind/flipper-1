@@ -141,7 +141,7 @@
     "event-source-polyfill": "^1.0.11",
     "firebase": "^7.15.0",
     "ghooks": "^2.0.4",
-    "hammerjs": "^2.0.8",
+    
     "i": "^0.3.6",
     "ngx-barcode": "^0.2.4",
     "node-notifier": "^7.0.0",

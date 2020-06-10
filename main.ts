@@ -19,6 +19,8 @@ const { autoUpdater } = require('electron-updater');
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 
+const nativeImage = require('electron').nativeImage;
+
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
 
@@ -105,7 +107,8 @@ ipcMain.on('sent-login-message', (event) => {
           subscription = subscription.split('=')[1];
 
           expiresAt = raw.split('&')[6];
-          expiresAt = expiresAt.split('=')[1];
+
+          expiresAt =  expiresAt.split('=')[1];
 
           event.sender.send('received-login-message', [email, name, avatar, token, id, subscription, expiresAt]);
           authWindow.destroy();
@@ -184,22 +187,21 @@ if (!isDev) {
 
 
 
-let iconName: string;
+let iconName;
 
 if (process.platform === 'win32') {
-  iconName = path.join(__dirname, '../assets/win/icon.ico');
+  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/win/icon.ico'));
 } else
   if (process.platform === 'darwin') {
-    iconName = path.join(__dirname, '../assets/mac/icon.icns');
+    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/mac/icon.icns'));
   } else {
-    iconName = path.join(__dirname, '../assets/png/icon.png');
+    iconName =nativeImage.createFromPath( path.join(__dirname, '../assets/png/icon.png'));
   }
-
 function createWindow() {
   autoUpdater.setFeedURL({
-    provider: "github",
-    owner: "yegobox",
-    repo: "flipper",
+    provider: 'github',
+    owner: 'yegobox',
+    repo: 'flipper',
     token: process.env.GH_TOKEN
   });
   autoUpdater.allowPrerelease = true;

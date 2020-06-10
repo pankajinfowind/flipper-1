@@ -8,7 +8,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./assets/icon/linux/icon.png">
-  <script src="./assets/1c9144b004.js"></script>
+  <!-- TODO: commented this scrips, it is not available within project. -->
+  <!-- <script src="./assets/1c9144b004.js"></script> -->
   <style>
     #menu-bar {
       position: fixed;
@@ -222,9 +223,9 @@
 
 </body>
 <script>
-  localStorage.setItem('bucket', 'lagrace');
-  localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
-  localStorage.setItem('canSync', 'true');
+  window.localStorage.setItem('bucket', 'lagrace');
+  window.localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
+  window.localStorage.setItem('canSync', 'true');
   if (global === undefined) { var global = window; }
 
 

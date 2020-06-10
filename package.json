@@ -1,7 +1,8 @@
 {
   "name": "flipper",
+  "appId": "flipper.rw",
   "version": "1.1.71",
-  "description": "Flipper is an inventory management system and POS system.",
+  "description": "Flipper is an inventory management system and Point of sale system.",
   "homepage": "https://flipper.rw/",
   "productName": "flipper",
   "author": {
@@ -80,7 +81,7 @@
     "codelyzer": "5.1.0",
     "conventional-changelog-cli": "2.0.25",
     "core-js": "3.1.4",
-    "electron": "7.0.0",
+    "electron": "^9.0.3",
     "electron-builder": "22.7.0",
     "electron-reload": "1.5.0",
     "gulp": "^4.0.2",

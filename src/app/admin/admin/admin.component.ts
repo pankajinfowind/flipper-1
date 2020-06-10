@@ -34,8 +34,8 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   }
   didUserLoggedOut(event) {
-    localStorage.setItem('channel',this.database.uid());
-   // this.router.navigate(['/login']);
+    window.localStorage.setItem('channel',this.database.uid());
+
     return window.location.href='/login';
   }
 

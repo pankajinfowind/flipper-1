@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import '../polyfills';
 
 import { NgModule } from '@angular/core';
-import {  HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -31,9 +31,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent,SubscriptionComponent,CardValidationComponent,PaidSuccessComponent],
+  declarations: [AppComponent, LoginComponent, SubscriptionComponent, CardValidationComponent, PaidSuccessComponent],
   imports: [
-   CoreModule,
+    CoreModule,
     SharedModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.config),
@@ -50,16 +50,18 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [PouchDBService],
   bootstrap: [AppComponent],
-  entryComponents:[CardValidationComponent,PaidSuccessComponent]
+  entryComponents: [CardValidationComponent, PaidSuccessComponent]
 })
 export class AppModule {
-constructor(private database: PouchDBService) {
- if(localStorage.getItem('channel')===null || localStorage.getItem('channel')==='null' || localStorage.getItem('channel')===undefined) {
-  localStorage.setItem('channel',this.database.uid());
- }
- localStorage.setItem('bucket', 'lagrace');
- localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
- localStorage.setItem('canSync', 'true');
-}
+  constructor(private database: PouchDBService) {
+    if (window.localStorage.getItem('channel') === null 
+    || localStorage.getItem('channel') === 'null' 
+    || localStorage.getItem('channel') === undefined) {
+      window.localStorage.setItem('channel', this.database.uid());
+    }
+    window.localStorage.setItem('bucket', 'lagrace');
+    window.localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
+    window.localStorage.setItem('canSync', 'true');
+  }
 
 }

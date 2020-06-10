@@ -6,7 +6,7 @@ import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter, finalize } from 'rxjs/internal/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import {BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CardValidationComponent } from './validate-card/validate-card.component';
 import { environment } from '../../environments/environment';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
@@ -46,7 +46,7 @@ export class Message {
   expiresAt?: any;
 }
 export class Customer {
-  id?: number;accountId?: any;
+  id?: number; accountId?: any;
   fullName?: string;
 }
 
@@ -64,9 +64,9 @@ export class SubscriptionComponent implements OnInit {
 
   constructor(private pusher: PusherService,
               private firestore: AngularFirestore,
-              public dialog: DialogService,private eventBus: FlipperEventBusService,private database: PouchDBService,
+              public dialog: DialogService, private eventBus: FlipperEventBusService, private database: PouchDBService,
               public currentUser: CurrentUser,
-              public electronService: ElectronService,protected httpClient: HttpClient) {
+              public electronService: ElectronService, protected httpClient: HttpClient) {
     this.database.connect(PouchConfig.bucket);
   }
 
@@ -77,37 +77,37 @@ export class SubscriptionComponent implements OnInit {
   get amount() {
     return this.buyForm.get('amount');
   }
-   user: Array<any>;
-   public loading = new BehaviorSubject(false);
-   public ccNumMissingTxt = new BehaviorSubject('CCV number is required');
-   public cardExpiredTxt = new BehaviorSubject('Card has expired');
-   message = { message:null,momo: null, error: false };
-   flipperPlan=0;
-   buyForm: FormGroup;
-   currency = 'RWF';
-   showCard=false;
-   color = 'primary';
-   public totalAmount: any=null;
-   today=new Date();
+  user: Array<any>;
+  public loading = new BehaviorSubject(false);
+  public ccNumMissingTxt = new BehaviorSubject('CCV number is required');
+  public cardExpiredTxt = new BehaviorSubject('Card has expired');
+  message = { message: null, momo: null, error: false };
+  flipperPlan = 0;
+  buyForm: FormGroup;
+  currency = 'RWF';
+  showCard = false;
+  color = 'primary';
+  public totalAmount: any = null;
+  today = new Date();
 
   step = 0;
   isFocused: any = '';
 
-   ngOnInit() {
-    const userId=this.currentUser.get('userId') as number;
+  ngOnInit() {
+    const userId = this.currentUser.get('userId') as number;
 
     this.pusher.handleDomainMessage.bind('event-handle-domain-message-flipper.'
-    + userId, (event) => {
-      if (event) {
+      + userId, (event) => {
+        if (event) {
 
-        this.message.error = true;
-        this.message.message = event.message;
+          this.message.error = true;
+          this.message.message = event.message;
 
-      }
-    });
+        }
+      });
 
 
-    this.pusher.paymentApproved.bind('event-payment-message-flipper.' +userId, (event) => {
+    this.pusher.paymentApproved.bind('event-payment-message-flipper.' + userId, (event) => {
 
       if (event) {
 
@@ -116,7 +116,7 @@ export class SubscriptionComponent implements OnInit {
           this.message.error = false;
           this.message.message = '';
           this.message.momo = '';
-          this.currentUser.currentUser.expiresAt=Date.parse(event.expiresAt);
+          this.currentUser.currentUser.expiresAt = Date.parse(event.expiresAt);
           this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
 
           this.openDialog(true, event);
@@ -126,20 +126,20 @@ export class SubscriptionComponent implements OnInit {
         }
       }
     });
-    this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
-    .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !==undefined)))
-    .subscribe(res =>
-      this.currentUser.currentUser = res.user);
+    this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
+      .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
+      .subscribe(res =>
+        this.currentUser.currentUser = res.user);
 
-    if(PouchConfig.canSync) {
+    if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
 
-    this.getFlipperPlan().valueChanges().subscribe(res=> {
+    this.getFlipperPlan().valueChanges().subscribe(res => {
 
-      if(res) {
-       const plan: Plan[]=res as Plan[];
-       this.flipperPlan=plan[0].amount;
+      if (res) {
+        const plan: Plan[] = res as Plan[];
+        this.flipperPlan = plan[0].amount;
       }
     });
 
@@ -154,138 +154,141 @@ export class SubscriptionComponent implements OnInit {
   openDialog(success, event) {
 
     return this.dialog.open(PaidSuccessComponent, DialogSize.SIZE_MD, { success, event })
-    .subscribe(result => {
-      const today= this.today.getFullYear()
-      + '-' + ('0' + (this.today.getMonth() + 1)).slice(-2)
-       + '-' + ('0' + this.today.getDate()).slice(-2);
+      .subscribe(result => {
+        const today = this.today.getFullYear()
+          + '-' + ('0' + (this.today.getMonth() + 1)).slice(-2)
+          + '-' + ('0' + this.today.getDate()).slice(-2);
 
-      if(success) {
-          const subscription= {
+        if (success) {
+          const subscription = {
             id: this.database.uid(),
             userId: this.currentUser.currentUser.userId,
             subscriptionType: 'monthly',
             lastPaymentDate: today,
-            nextPaymentDate:event.expiresAt,
-            status:'success',
-            didSubscribed:true,
+            nextPaymentDate: event.expiresAt,
+            status: 'success',
+            didSubscribed: true,
             createdAt: new Date(),
-            updatedAt:new Date(),
-                };
+            updatedAt: new Date(),
+          };
 
 
-          if(this.database.put(PouchConfig.Tables.subscription,subscription)) {
-                return window.location.href='/admin';
-            }
+          if (this.database.put(PouchConfig.Tables.subscription, subscription)) {
+            return window.location.href = '/admin';
           }
-
-
+        }
 
       });
   }
 
   getFlipperPlan() {
 
-      return this.firestore.collection('flipper-plan');
+    return this.firestore.collection('flipper-plan');
 
   }
 
   submitCard(data) {
 
-    const formSubscription= {
-      cardno:data.cardNumber,
-      expirymonth:data.expirationMonth,
-      expiryyear:data.expirationYear,
-      vcc:data.ccv,
-      email:this.currentUser.get('email'),
-      firstname:data.cardHolder,
-      lastname:data.cardHolder,
-      planid:'5422',
-      phone:'07888888888',
-      amount:this.flipperPlan,
-      pay_type:'CARD',
+    const formSubscription = {
+      cardno: data.cardNumber,
+      expirymonth: data.expirationMonth,
+      expiryyear: data.expirationYear,
+      vcc: data.ccv,
+      email: this.currentUser.get('email'),
+      firstname: data.cardHolder,
+      lastname: data.cardHolder,
+      planid: '5422',
+      phone: '07888888888',
+      amount: this.flipperPlan,
+      pay_type: 'CARD',
       userId: this.currentUser.currentUser.id
     };
 
-    return this.confirmPayment(formSubscription,'CARD');
+    return this.confirmPayment(formSubscription, 'CARD');
   }
 
   submitMomo() {
-    const formSubscription= {
-      cardno:'',
-      expirymonth:'',
-      expiryyear:'',
-      vcc:'',
-      email:this.buyForm.value.email,
-      firstname:this.currentUser.get('name'),
-      lastname:this.currentUser.get('name'),
-      planid:'5422',
-      phone:this.buyForm.value.mobilephone,
-      amount:this.flipperPlan,
-      pay_type:'MOMO-RWANDA',
+    const formSubscription = {
+      cardno: '',
+      expirymonth: '',
+      expiryyear: '',
+      vcc: '',
+      email: this.buyForm.value.email,
+      firstname: this.currentUser.get('name'),
+      lastname: this.currentUser.get('name'),
+      planid: '5422',
+      phone: this.buyForm.value.mobilephone,
+      amount: this.flipperPlan,
+      pay_type: 'MOMO-RWANDA',
       userId: this.currentUser.currentUser.id,
     };
 
     this.message.error = false;
-    this.message.message='';
-    if(!this.buyForm.value.mobilephone) {
+    this.message.message = '';
+    if (!this.buyForm.value.mobilephone) {
       this.message.error = true;
-      this.message.message='Mobile number is required';
+      this.message.message = 'Mobile number is required';
     }
- // ,
-    return this.confirmPayment(formSubscription,'MOMO');
-}
+
+    return this.confirmPayment(formSubscription, 'MOMO');
+  }
 
 
 
-confirmPayment(creds,payType) {
+  confirmPayment(creds, payType) {
 
-  const headers = new HttpHeaders({'Content-Type': 'aapplication/json',Accept: 'application/json',
-   'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': '*', Authorization: 'Bearer '
-    + this.currentUser.currentUser.token});
+    const headers = new HttpHeaders({
+      'Content-Type': 'aapplication/json', Accept: 'application/json',
+      'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': '*', Authorization: 'Bearer '
+        + this.currentUser.currentUser.token
+    });
 
-  this.loading.next(true);
-  this.ccNumMissingTxt.next('');
-  this.cardExpiredTxt.next('');
-  this.message.error = false;
-  this.message.message='';
+    this.loading.next(true);
+    this.ccNumMissingTxt.next('');
+    this.cardExpiredTxt.next('');
+    this.message.error = false;
+    this.message.message = '';
 
-  return this.httpClient
-  .post(environment.appUrl+'api/pay',
-  creds,{headers}).pipe(finalize(() => this.loading.next(false)))
-  .subscribe(res => {
+    return this.httpClient
+      .post(environment.appUrl + 'api/pay',
+        creds, { headers }).pipe(finalize(() => this.loading.next(false)))
+      .subscribe(res => {
         this.loading.next(false);
-        const response: Response=res as Response;
-        if(response.message.status==='error') {
-          if(response.message.data.code==='CARD_ERR') {
+        const response: Response = res as Response;
+        if (response.message.status === 'error') {
+          if (response.message.data.code === 'CARD_ERR') {
             this.ccNumMissingTxt.next(response.message.data.message);
           }
-          if(response.message.data.code==='ERR') {
+          if (response.message.data.code === 'ERR') {
             this.cardExpiredTxt.next('Card has expired');
           }
 
-    } else
-        if(response.message.status==='success') {
-          if(payType==='MOMO') {
-            this.message.error = false;
-            this.message.message = response.message.data.chargeResponseMessage;
-
-          } else {
-            // console.log(response.message.data);
-            if(response.message.data.status==='approved' || response.message.data.status==='successful' || response.message.data.status==='Approved' || response.message.data.status==='Successful') {
-              return this.saveExpiredDate();
-            } else {
+        } else
+          if (response.message.status === 'success') {
+            if (payType === 'MOMO') {
               this.message.error = false;
               this.message.message = response.message.data.chargeResponseMessage;
-              this.openValidateCardDialog(response.message.data);
+
+            } else {
+             
+              if (response.message.data.status === 'approved' 
+                || response.message.data.status === 'successful' 
+                || response.message.data.status === 'Approved' 
+                || response.message.data.status === 'Successful') {
+                return this.saveExpiredDate();
+              } else {
+                this.message.error = false;
+                this.message.message = response.message.data.chargeResponseMessage;
+                this.openValidateCardDialog(response.message.data);
+              }
+
             }
 
+          } else {
+
+            this.message.error = true;
+            this.message.message = response.message.message as any;
           }
-
-        } else {
-
-          this.message.error = true;
-          this.message.message = response.message.message as any;
-        }
 
       }, error => {
         this.loading.next(false);
@@ -295,52 +298,54 @@ confirmPayment(creds,payType) {
 
       });
 
-    }
+  }
 
-    saveExpiredDate() {
+  saveExpiredDate() {
 
-      const headers = new HttpHeaders({'Content-Type': 'aapplication/json',Accept: 'application/json',
-       'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': '*', Authorization: 'Bearer '
-        + this.currentUser.currentUser.token});
+    const headers = new HttpHeaders({
+      'Content-Type': 'aapplication/json', Accept: 'application/json',
+      'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': '*', Authorization: 'Bearer '
+        + this.currentUser.currentUser.token
+    });
 
-      this.loading.next(true);
+    this.loading.next(true);
 
-      return this.httpClient
-      .get(environment.appUrl+'api/save-expired-at/'+this.currentUser.get('userId'),{headers})
+    return this.httpClient
+      .get(environment.appUrl + 'api/save-expired-at/' + this.currentUser.get('userId'), { headers })
       .pipe(finalize(() => this.loading.next(false)))
       .subscribe(res => {
-        const resp: Message=res as Message;
+        const resp: Message = res as Message;
         console.log(res);
         this.loading.next(false);
-        const data: User=resp.data as User;
-        if(resp.status==='success') {
+        const data: User = resp.data as User;
+        if (resp.status === 'success') {
           this.message.error = false;
           this.message.message = '';
           this.message.momo = '';
-          this.currentUser.currentUser.expiresAt=Date.parse(data.expiresAt);
+          this.currentUser.currentUser.expiresAt = Date.parse(data.expiresAt);
           console.log(this.currentUser.currentUser);
           this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
           return this.openDialog(true, data);
         }
       });
-    }
+  }
 
-      openValidateCardDialog(obj) {
+  openValidateCardDialog(obj) {
 
-        return this.dialog.open(CardValidationComponent, DialogSize.SIZE_MD, obj).subscribe(result => {
-            // console.log(result);
-            if(result==='success') {
-                  return this.saveExpiredDate();
-              }
-
-            });
+    return this.dialog.open(CardValidationComponent, DialogSize.SIZE_MD, obj).subscribe(result => {
+      // console.log(result);
+      if (result === 'success') {
+        return this.saveExpiredDate();
       }
 
+    });
+  }
 
 
-/**
- * Parse JSON without throwing errors.
- */
+
+  /**
+   * Parse JSON without throwing errors.
+   */
 
   getStaredNewToFlipper() {
     this.electronService.redirect('https://flipper.rw');

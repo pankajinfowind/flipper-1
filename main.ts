@@ -199,7 +199,9 @@ function createWindow() {
 
   if (!isDev) {
     try {
-      autoUpdater.checkForUpdates();
+      setInterval(() => {
+        autoUpdater.checkForUpdates()
+      }, 600000) //set the timer to run every 10 min. to check for update
     } catch (e) { }
   }
   const electronScreen = screen;

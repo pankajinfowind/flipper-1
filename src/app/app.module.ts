@@ -54,8 +54,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
   constructor(private database: PouchDBService) {
-    if (window.localStorage.getItem('channel') === null 
-    || localStorage.getItem('channel') === 'null' 
+    if (window.localStorage.getItem('channel') === null
+    || localStorage.getItem('channel') === 'null'
     || localStorage.getItem('channel') === undefined) {
       window.localStorage.setItem('channel', this.database.uid());
     }

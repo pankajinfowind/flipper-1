@@ -270,10 +270,10 @@ export class SubscriptionComponent implements OnInit {
               this.message.message = response.message.data.chargeResponseMessage;
 
             } else {
-             
-              if (response.message.data.status === 'approved' 
-                || response.message.data.status === 'successful' 
-                || response.message.data.status === 'Approved' 
+
+              if (response.message.data.status === 'approved'
+                || response.message.data.status === 'successful'
+                || response.message.data.status === 'Approved'
                 || response.message.data.status === 'Successful') {
                 return this.saveExpiredDate();
               } else {

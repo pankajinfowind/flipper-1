@@ -136,7 +136,7 @@
     "dot-object": "^1.9.0",
     "electron-is-dev": "^1.1.0",
     "electron-log": "^4.0.3",
-    "electron-updater": "4.0.4",
+    "electron-updater": "4.3.1",
     "event-source-polyfill": "^1.0.11",
     "firebase": "^7.15.0",
     "ghooks": "^2.0.4",

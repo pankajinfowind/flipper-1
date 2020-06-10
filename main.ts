@@ -157,7 +157,7 @@ if (!isDev) {
     // tag
   });
   autoUpdater.on('update-available', () => {
-    sendStatusToWindow('Update available.', 'update available');
+    // sendStatusToWindow('Update available.', 'update available');
   });
   autoUpdater.on('update-not-available', () => {
     // sendStatusToWindow('Update not available.', 'No Update available');
@@ -196,11 +196,17 @@ if (process.platform === 'win32') {
   }
 
 function createWindow() {
-
+  autoUpdater.setFeedURL({
+    provider: "github",
+    owner: "yegobox",
+    repo: "flipper",
+    token: process.env.GH_TOKEN
+  });
+  autoUpdater.allowPrerelease = true;
   if (!isDev) {
     try {
       setInterval(() => {
-        autoUpdater.checkForUpdates();
+        autoUpdater.checkForUpdatesAndNotify();
       }, 600000); // set the timer to run every 10 min. to check for update
     } catch (e) { }
   }

@@ -13,7 +13,7 @@ import { APP_CONFIG, DEFAULT_FLIPPER_DB_CONFIG } from '@enexus/flipper-component
   ]
 })
 export class MigrationModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<MigrationModule> {
     return {
       ngModule: MigrationModule,
       providers: [

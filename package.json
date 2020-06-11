@@ -1,7 +1,7 @@
 {
   "name": "flipper",
   "appId": "flipper.rw",
-  "version": "1.1.75",
+  "version": "1.1.76",
   "description": "Flipper is an inventory management system and Point of sale system.",
   "homepage": "https://flipper.rw/",
   "productName": "flipper",
@@ -125,7 +125,7 @@
     "@enexus/flipper-font": "1.0.0",
     "@enexus/flipper-inventory": "0.0.53",
     "@enexus/flipper-menu": "0.0.21",
-    "@enexus/flipper-offline-database": "^1.0.6",
+    "@enexus/flipper-offline-database": "^1.0.8",
     "@enexus/flipper-pos": "0.0.20",
     "@enexus/flipper-settings": "0.0.23",
     "@enexus/flipper-vendors": "1.0.0",

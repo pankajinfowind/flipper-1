@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { FlipperEventBusService } from '@enexus/flipper-event';
-import { MenuEntries, Business, Branch, Subscription, 
-  PouchDBService, PouchConfig, Tables, Menu, 
-  UserLoggedEvent, UserSubscriptionEvent, 
-  CurrentBusinessEvent 
+import { MenuEntries, Business, Branch, Subscription,
+  PouchDBService, PouchConfig, Tables, Menu,
+  UserLoggedEvent, UserSubscriptionEvent,
+  CurrentBusinessEvent
 } from '@enexus/flipper-components';
 
 import {CurrentBranchEvent} from '@enexus/flipper-components';

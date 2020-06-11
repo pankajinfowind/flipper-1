@@ -1,7 +1,7 @@
 {
   "name": "flipper",
   "appId": "flipper.rw",
-  "version": "1.1.72",
+  "version": "1.1.73",
   "description": "Flipper is an inventory management system and Point of sale system.",
   "homepage": "https://flipper.rw/",
   "productName": "flipper",
@@ -117,7 +117,7 @@
     "@angular/localize": "^9.1.11",
     "@angular/material": "~9.2.4",
     "@enexus/flipper-color": "0.0.3",
-    "@enexus/flipper-components": "^1.0.2",
+    "@enexus/flipper-components": "^1.0.3",
     "@enexus/flipper-dashboard": "0.0.5",
     "@enexus/flipper-dialog": "0.0.7",
     "@enexus/flipper-event": "0.0.2",

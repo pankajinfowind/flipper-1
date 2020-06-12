@@ -20,6 +20,7 @@ import { filter } from 'rxjs/internal/operators';
 export class LoginComponent implements OnInit {
   user: Array<any>;
   flipperPlan=[];
+  today=new Date();
 
   constructor(private eventBus: FlipperEventBusService, private database: PouchDBService,
               public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
@@ -44,6 +45,10 @@ export class LoginComponent implements OnInit {
 
       this.ngZone.run(async () => {
         if (arg && arg.length > 0) {
+          const today= this.today.getFullYear()
+          + '-' + ('0' + (this.today.getMonth() + 1)).slice(-2)
+           + '-' + ('0' + this.today.getDate()).slice(-2);
+
           const user = {
             _id: '',
             name: arg[1].replace('%20', ' '),
@@ -54,7 +59,7 @@ export class LoginComponent implements OnInit {
             updatedAt: new Date(),
             id: this.database.uid(),
             userId:arg[4].replace('%20', ' '),
-            expiresAt:Date.parse(arg[6]) as number
+            expiresAt:typeof arg[6] !== 'undefined' || typeof arg[6] !== undefined?Date.parse(arg[6]) as number:today
           };
 
           localStorage.setItem('channel', arg[4].replace('%20', ' '));

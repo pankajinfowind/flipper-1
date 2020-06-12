@@ -181,6 +181,7 @@ export class DashboardComponent {
     const orderIds: Order[]=this.model.raw(`SELECT id
     FROM orders WHERE branchId="${this.branch.id}"
     ORDER BY updatedAt DESC LIMIT 5`) as Order[];
+
     orderIds.forEach(d=> {
       ids.push(`'${d.id}'`);
     });

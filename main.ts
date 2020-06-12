@@ -49,7 +49,7 @@ ipcMain.on('sent-login-message', (event,url) => {
   };
 
   authWindow.webContents.on('will-navigate', handleRedirect);
-  authWindow.loadURL(authUrl +"login");
+  authWindow.loadURL(authUrl +'login');
 
   const ses = authWindow.webContents.session;
   ses.clearCache();

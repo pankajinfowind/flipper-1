@@ -5,6 +5,7 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -22,9 +23,10 @@ export class LoginComponent implements OnInit {
   flipperPlan = [];
 
   constructor(private eventBus: FlipperEventBusService, private database: PouchDBService,
-              public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
+    public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
     this.database.connect(PouchConfig.bucket);
   }
+
 
 
   ngOnInit() {
@@ -80,7 +82,7 @@ export class LoginComponent implements OnInit {
   }
 
   userLogin() {
-    this.electronService.ipcRenderer.send('sent-login-message', 'someone need to login');
+    this.electronService.ipcRenderer.send('sent-login-message', environment.appUrl);
   }
 
 

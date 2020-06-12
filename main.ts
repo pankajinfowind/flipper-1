@@ -25,13 +25,12 @@ const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
 
 
-ipcMain.on('sent-login-message', (event) => {
+ipcMain.on('sent-login-message', (event,url) => {
 
-  const authUrl = 'https://flipper.rw/login';
+  const authUrl = url ;
   const size = screen.getPrimaryDisplay().workAreaSize;
 
   let authWindow = new BrowserWindow({
-
     width: 700,
     height: 500,
     show: false,
@@ -50,7 +49,7 @@ ipcMain.on('sent-login-message', (event) => {
   };
 
   authWindow.webContents.on('will-navigate', handleRedirect);
-  authWindow.loadURL(authUrl);
+  authWindow.loadURL(authUrl +"login");
 
   const ses = authWindow.webContents.session;
   ses.clearCache();
@@ -72,11 +71,6 @@ ipcMain.on('sent-login-message', (event) => {
     });
 
 
-  // 'will-navigate' is an event emitted when the window.location changes
-  // newUrl should contain the tokens you need
-
-  // Handle the response from YEGOBOX - See Update from 17/02/2020
-
   function handleCallback() {
     const currentURL = authWindow.webContents.getURL();
     let raw = null;
@@ -90,7 +84,7 @@ ipcMain.on('sent-login-message', (event) => {
     const params = currentURL.split('?');
 
     if (params && params.length === 2) {
-      if (params[0] === 'https://flipper.rw/authorized') {
+      if (params[0] === authUrl+'authorized') {
         try {
           raw = params[1];
           token = raw.split('&')[0];

@@ -105,7 +105,7 @@ ipcMain.on('sent-login-message', (event) => {
         subscription = subscription.split('=')[1];
 
         expiresAt =raw.split('&')[6];
-        expiresAt = typeof expiresAt.split('=')[1]!== 'undefined' 
+        expiresAt = typeof expiresAt.split('=')[1]!== 'undefined'
         || typeof expiresAt.split('=')[1]!== undefined?expiresAt.split('=')[1]:null;
 
         event.sender.send('received-login-message', [email, name, avatar, token, id, subscription,expiresAt]);

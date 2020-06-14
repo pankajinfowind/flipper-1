@@ -72,7 +72,6 @@ export class LoginComponent implements OnInit {
             user.id = this.currentUser.currentUser.id;
             user.createdAt = this.currentUser.currentUser.createdAt;
           }
-
           if (this.database.put(PouchConfig.Tables.user, user)) {
             return window.location.href = '/admin';
           }

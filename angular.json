@@ -22,12 +22,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              "src/assets",
-              "src/favicon.ico",
-              "src/favicon.png",
-              "src/favicon.icns",
-              "src/favicon.256x256.png",
-              "src/favicon.512x512.png"
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -38,7 +33,9 @@
                 "./styles"
               ]
             },
-            "scripts": ["./node_modules/pusher-js/dist/web/pusher.min.js"],
+            "scripts": [
+              "./node_modules/pusher-js/dist/web/pusher.min.js"
+            ],
             "customWebpackConfig": {
               "path": "./angular.webpack.js"
             }
@@ -61,7 +58,7 @@
                 }
               ]
             },
-            "dev-web": {
+            "web": {
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
@@ -107,8 +104,8 @@
             "dev": {
               "browserTarget": "flipper:build:dev"
             },
-            "dev-web": {
-              "browserTarget": "flipper:build:dev-web"
+            "web": {
+              "browserTarget": "flipper:build:web"
             },
             "production": {
               "browserTarget": "flipper:build:production"
@@ -133,22 +130,18 @@
               "src/styles.scss"
             ],
             "assets": [
-              "src/assets",
-              "src/favicon.ico",
-              "src/favicon.png",
-              "src/favicon.icns",
-              "src/favicon.256x256.png",
-              "src/favicon.512x512.png"
+              "src/assets"
             ],
             "customWebpackConfig": {
               "path": "./angular.webpack.js",
-              "target": "web"
+              "target": "electron-renderer"
             }
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "src/eslintrc.config.json",
             "tsConfig": [
               "src/tsconfig.app.json",
               "src/tsconfig.spec.json"
@@ -165,9 +158,9 @@
       "projectType": "application",
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "preserveSymlinks": true, 
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "e2e/eslintrc.e2e.json",
             "tsConfig": [
               "e2e/tsconfig.e2e.json"
             ],
@@ -190,8 +183,13 @@
             "lint": {
               "builder": "@angular-devkit/build-angular:tslint",
               "options": {
-                "tsConfig": ["e2e/tsconfig.e2e.json"],
-                "exclude": ["**/node_modules/**","**/src/app/admin/admin/**"]
+                "tsConfig": [
+                  "e2e/tsconfig.e2e.json"
+                ],
+                "exclude": [
+                  "**/node_modules/**",
+                  "**/src/app/admin/admin/**"
+                ]
               }
             }
           }
@@ -208,5 +206,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

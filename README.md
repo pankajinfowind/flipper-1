@@ -1,5 +1,8 @@
 
-[![Build Status](https://travis-ci.org/yegobox/flipper.svg?branch=master)](https://travis-ci.org/yegobox/flipper)
+![Maintained][maintained-badge]
+[![Travis Build Status][build-badge]][build]
+[![Make a pull request][prs-badge]][prs]
+[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
 
 # Mission | 任务
 Help Connect wholesaler and reteller and avoid middleman while helping to book keep transactions.
@@ -23,20 +26,13 @@ Help Connect wholesaler and reteller and avoid middleman while helping to book k
 
 # Introduction
 
-The idea of the flipper is to build a square point of sale-like [Square app ](https://squareup.com/signup/])
-but open-source so that anyone can have a point of sale, stock management, and plus other features for free.
-of cause, the idea of giving a reference to the Square app is to give you a general idea of what we are trying to do.
-
-鳍状肢的想法是建立一个像方形的销售点[Square app]https://squareup.com/signup/]）
-但采用开放源代码，因此任何人都可以免费获得销售点，库存管理以及其他功能。
-当然，引用Square应用程序的目的是让您对我们正在尝试做的事情有一个大致的了解。
+Bootstrap and package your project with Angular 9 and Electron 8 (Typescript + SASS + Hot Reload) for creating Desktop applications.
 
 Currently runs with:
 
-- Angular v8.2.12
-- Electron v7.0.0
-- Electron Builder v21.2.0
-- nodejs v10.16.3
+- Angular v9.1.4
+- Electron v8.2.5
+- Electron Builder v22.6.0
 
 With this config, you can :
 
@@ -87,7 +83,7 @@ You can disable "Developer Tools" by commenting `win.webContents.openDevTools();
 
 ## You want to use a specific lib (like rxjs) in electron main thread ?
 
-You can do this! Just by importing your library in npm dependencies (not devDependencies) with `npm install --save`. It will be loaded by electron during build phase and added to the final package. Then use your library by importing it in `main.ts` file. Easy no ?
+YES! You can do it! Just by importing your library in npm dependencies section (not **devDependencies**) with `npm install --save`. It will be loaded by electron during build phase and added to your final package. Then use your library by importing it in `main.ts` file. Quite simple, isn't it ?
 
 ## Browser mode
 

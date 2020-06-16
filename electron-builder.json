@@ -25,12 +25,7 @@
     "!tslint.json"
   ],
   "win": {
-    "asar": true,
-    "verifyUpdateCodeSignature":false,
-    "requestedExecutionLevel": "highestAvailable",
-    "icon": "dist/assets/icon/win/icon.ico",
-    "legalTrademarks": "(c) 2020 yegobox",
-    "publisherName": "yegobox",
+    "icon": "dist/assets/icons",
     "target": [
       "nsis"
     ]
@@ -46,7 +41,7 @@
     "allowToChangeInstallationDirectory": false
   },
   "mac": {
-    "icon": "dist/assets/icon/mac/icon.icns",
+    "icon": "dist/assets/icons",
     "target": [
       "zip",
       "dmg"

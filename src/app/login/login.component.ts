@@ -6,8 +6,6 @@ import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
 import { environment } from '../../environments/environment';
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,28 +19,19 @@ import { environment } from '../../environments/environment';
 export class LoginComponent implements OnInit {
   user: Array<any>;
   flipperPlan = [];
-
   constructor(private eventBus: FlipperEventBusService, private database: PouchDBService,
     public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
     this.database.connect(PouchConfig.bucket);
   }
-
-
-
   ngOnInit() {
-
     this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
         this.currentUser.currentUser = res.user);
-
     if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
-
-
     this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
-
       this.ngZone.run(async () => {
         if (arg && arg.length > 0) {
           const user = {
@@ -57,17 +46,12 @@ export class LoginComponent implements OnInit {
             userId: arg[4].replace('%20', ' '),
             expiresAt: Date.parse(arg[6]) as number
           };
-
           window.localStorage.setItem('channel', arg[4].replace('%20', ' '));
           window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
           PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
-
           PouchConfig.channel = window.localStorage.getItem('channel');
-
           PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
-
           await this.currentUser.user(PouchConfig.Tables.user);
-
           if (this.currentUser.currentUser) {
             user.id = this.currentUser.currentUser.id;
             user.createdAt = this.currentUser.currentUser.createdAt;
@@ -79,15 +63,10 @@ export class LoginComponent implements OnInit {
       });
     });
   }
-
   userLogin() {
     this.electronService.ipcRenderer.send('sent-login-message', environment.appUrl);
   }
-
-
   getStaredNewToFlipper() {
     this.electronService.redirect('https://flipper.rw');
   }
-
-
 }

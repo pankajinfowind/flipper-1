@@ -2,57 +2,102 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.1.81](https://github.com/yegobox/flipper/compare/v1.1.79...v1.1.81) (2020-06-15)
+### [1.1.82](https://github.com/yegobox/flipper/compare/v1.1.56...v1.1.82) (2020-06-16)
 
-### [1.1.80](https://github.com/yegobox/flipper/compare/v1.1.79...v1.1.80) (2020-06-15)
+## 7.1.0 (2020-05-02)
 
-### [1.1.79](https://github.com/yegobox/flipper/compare/v1.1.78...v1.1.79) (2020-06-14)
+* feat/ VSCode : add Debugging config for man process (#465) + Karma ([acc62d9](https://github.com/maximegris/angular-electron/commit/acc62d9)), closes [#465](https://github.com/maximegris/angular-electron/issues/465)
+* fix/ Karma configuration to debug easily  ([273e752](https://github.com/maximegris/angular-electron/commit/273e752))
 
-### [1.1.78](https://github.com/yegobox/flipper/compare/v1.1.77...v1.1.78) (2020-06-12)
 
-### [1.1.77](https://github.com/yegobox/flipper/compare/v1.1.76...v1.1.77) (2020-06-12)
 
-### [1.1.76](https://github.com/yegobox/flipper/compare/v1.1.75...v1.1.76) (2020-06-11)
+## <small>7.0.5 (2020-04-26)</small>
 
-### [1.1.75](https://github.com/yegobox/flipper/compare/v1.1.74...v1.1.75) (2020-06-11)
+* [Bumped Version] 7.0.5 ([63eed52](https://github.com/maximegris/angular-electron/commit/63eed52))
+* Upgrade Angular 9.1.3 & Electron 8.2.3 ([00b9d43](https://github.com/maximegris/angular-electron/commit/00b9d43))
 
-### [1.1.74](https://github.com/yegobox/flipper/compare/v1.1.73...v1.1.74) (2020-06-11)
 
-### [1.1.73](https://github.com/yegobox/flipper/compare/v1.1.72...v1.1.73) (2020-06-11)
 
-### [1.1.72](https://github.com/yegobox/flipper/compare/v1.1.71...v1.1.72) (2020-06-11)
+## <small>7.0.4 (2020-04-20)</small>
 
-### [1.1.71](https://github.com/yegobox/flipper/compare/v1.1.70...v1.1.71) (2020-06-10)
+* [Bumped Version] 7.0.4 ([dbce7a0](https://github.com/maximegris/angular-electron/commit/dbce7a0))
+* ref/ make app reloading/working with and without usehash routing strategy ([386ce67](https://github.com/maximegris/angular-electron/commit/386ce67))
+* Transparent background issue fix for Linux ([4c0c169](https://github.com/maximegris/angular-electron/commit/4c0c169))
 
-### [1.1.70](https://github.com/yegobox/flipper/compare/v1.1.69...v1.1.70) (2020-06-09)
 
-### [1.1.69](https://github.com/yegobox/flipper/compare/v1.1.68...v1.1.69) (2020-06-09)
 
-### [1.1.68](https://github.com/yegobox/flipper/compare/v1.1.67...v1.1.68) (2020-06-09)
+## <small>7.0.3 (2020-04-11)</small>
 
-### [1.1.67](https://github.com/yegobox/flipper/compare/v1.1.66...v1.1.67) (2020-06-09)
+* [Bumped Version] 7.0.3 ([6206066](https://github.com/maximegris/angular-electron/commit/6206066))
+* fix/ polyfills in tsconfig ([cf4f172](https://github.com/maximegris/angular-electron/commit/cf4f172))
+* misc/ changelog ([19f6027](https://github.com/maximegris/angular-electron/commit/19f6027))
 
-### [1.1.66](https://github.com/yegobox/flipper/compare/v1.1.65...v1.1.66) (2020-06-09)
 
-### [1.1.65](https://github.com/yegobox/flipper/compare/v1.1.64...v1.1.65) (2020-06-09)
 
-### [1.1.61](https://github.com/yegobox/flipper/compare/v1.1.64...v1.1.61) (2020-06-09)
+## <small>7.0.2 (2020-04-11)</small>
 
-### [1.1.64](https://github.com/yegobox/flipper/compare/v1.1.63...v1.1.64) (2020-06-09)
+* [Bumped Version] 7.0.2 ([c4c36f6](https://github.com/maximegris/angular-electron/commit/c4c36f6))
+* Fix a typo in README.md ([86ac910](https://github.com/maximegris/angular-electron/commit/86ac910))
+* misc/ Changelog ([67437ba](https://github.com/maximegris/angular-electron/commit/67437ba))
+* misc/ maj angular 9.1.1 & electron 8.2.1 ([061e01e](https://github.com/maximegris/angular-electron/commit/061e01e))
+* misc/ maj eslint dep ([09fc1f7](https://github.com/maximegris/angular-electron/commit/09fc1f7))
+* moved all app icons to assets/icons folder ([7d6bb69](https://github.com/maximegris/angular-electron/commit/7d6bb69))
+* ref/ set allowRendererProcessReuse to true ([7c5c43b](https://github.com/maximegris/angular-electron/commit/7c5c43b))
 
-### [1.1.63](https://github.com/yegobox/flipper/compare/v1.1.62...v1.1.63) (2020-06-09)
 
-### [1.1.62](https://github.com/yegobox/flipper/compare/v1.1.61...v1.1.62) (2020-06-09)
 
-### [1.1.61](https://github.com/yegobox/flipper/compare/v1.1.60...v1.1.61) (2020-06-09)
+## <small>7.0.1 (2020-02-22)</small>
 
-### [1.1.60](https://github.com/yegobox/flipper/compare/v1.1.59...v1.1.60) (2020-06-09)
+* [Bumped Version] 7.0.1 ([7a84ca0](https://github.com/maximegris/angular-electron/commit/7a84ca0))
+* fix/ README dependencies version ([7276d96](https://github.com/maximegris/angular-electron/commit/7276d96))
+* misc/ upgrade Angular 9.0.2 & Electron 8.0.1 ([174b36f](https://github.com/maximegris/angular-electron/commit/174b36f))
+* ref/ travis test node 10 & 12 ([8b7ee5b](https://github.com/maximegris/angular-electron/commit/8b7ee5b))
 
-### [1.1.59](https://github.com/yegobox/flipper/compare/v1.1.58...v1.1.59) (2020-06-09)
 
-### [1.1.58](https://github.com/yegobox/flipper/compare/v1.1.57...v1.1.58) (2020-06-09)
 
-### [1.1.57](https://github.com/yegobox/flipper/compare/v1.1.56...v1.1.57) (2020-06-09)
+## 7.0.0 (2020-02-09)
+
+* [Bumped Version] 7.0.0 ([0f304d2](https://github.com/maximegris/angular-electron/commit/0f304d2))
+* cast isElectron to boolean #429 ([ee06695](https://github.com/maximegris/angular-electron/commit/ee06695)), closes [#429](https://github.com/maximegris/angular-electron/issues/429)
+* feat/ update angular 8 deps ([7df49ff](https://github.com/maximegris/angular-electron/commit/7df49ff))
+* feat/ update to Angular 9 & Electron 8 ([a304034](https://github.com/maximegris/angular-electron/commit/a304034))
+* fix/ e2e tests ([395d2da](https://github.com/maximegris/angular-electron/commit/395d2da))
+* hot reload note ([28e1854](https://github.com/maximegris/angular-electron/commit/28e1854))
+* ref/ upgrade electron to v8 ([320ce2f](https://github.com/maximegris/angular-electron/commit/320ce2f))
+
+
+
+## <small>6.4.1 (2019-12-25)</small>
+
+* feat/ update Electron (7.1.2) ([3d76ff5](https://github.com/maximegris/angular-electron/commit/3d76ff5))
+* misc/ maj changelog ([eb46727](https://github.com/maximegris/angular-electron/commit/eb46727))
+* reef/ update stale bot ([671b7c9](https://github.com/maximegris/angular-electron/commit/671b7c9))
+* ref/ remove usunsed files ([9bf5824](https://github.com/maximegris/angular-electron/commit/9bf5824))
+
+
+
+## 6.4.0 (2019-11-19)
+
+* [Bumped Version] 6.4.0 ([fac9eef](https://github.com/maximegris/angular-electron/commit/fac9eef))
+* #412 change selector of WebviewDirective ([76e7918](https://github.com/maximegris/angular-electron/commit/76e7918)), closes [#412](https://github.com/maximegris/angular-electron/issues/412)
+* eslint-migration ([7637f45](https://github.com/maximegris/angular-electron/commit/7637f45))
+* eslint-migration - disable warnings/errors ([99e7ec0](https://github.com/maximegris/angular-electron/commit/99e7ec0))
+* eslint-migration - fix removed translation import ([2f64f37](https://github.com/maximegris/angular-electron/commit/2f64f37))
+* eslint-migration - remove tslint.json configuration ([3c1f9f6](https://github.com/maximegris/angular-electron/commit/3c1f9f6))
+* karma-electron ([21f97fd](https://github.com/maximegris/angular-electron/commit/21f97fd))
+* karma-electron - remove chrome deps for travis ([0f09907](https://github.com/maximegris/angular-electron/commit/0f09907))
+* misc/ add npmrc ([9d94f9c](https://github.com/maximegris/angular-electron/commit/9d94f9c))
+* misc/ typo README ([d52b03a](https://github.com/maximegris/angular-electron/commit/d52b03a))
+* permissive eslint rules to remove linter warnings ([964b57f](https://github.com/maximegris/angular-electron/commit/964b57f))
+* require is not defined ([632c454](https://github.com/maximegris/angular-electron/commit/632c454))
+
+
+
+## <small>6.3.1 (2019-11-01)</small>
+
+* [Bumped Version]  6.3.1 ([671b6a3](https://github.com/maximegris/angular-electron/commit/671b6a3))
+* #395 - require is not defined ([c4b2cb6](https://github.com/maximegris/angular-electron/commit/c4b2cb6)), closes [#395](https://github.com/maximegris/angular-electron/issues/395)
+* changelog ([39b0bca](https://github.com/maximegris/angular-electron/commit/39b0bca))
 
 ### [1.1.56](https://github.com/yegobox/flipper/compare/v1.1.55...v1.1.56) (2020-06-09)
 

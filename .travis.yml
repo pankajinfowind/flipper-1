@@ -1,29 +1,14 @@
-env:
-  global:
-    - TRAVIS_SECURE_ENV_VARS=true
-    - DEBUG=electron-builder
-matrix:
-  include:
-    - os: osx
-      osx_image: xcode9.0
-      language: node_js
-      node_js: "10.15.3"
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-
-    - os: linux
-      sudo: required
-      services: docker
-      language: generic
-
-cache:
-  yarn: true
-  directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
-
+os:
+  - linux
+  - osx
+language: node_js
+node_js:
+  - '12'
+  - '10'
+dist: xenial
+sudo: required
+services:
+  - xvfb
 before_script:
   # Replace clientId and clientSecret values in app-config.js with environment
   # variable values.

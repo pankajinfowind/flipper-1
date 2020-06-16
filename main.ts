@@ -7,10 +7,7 @@ const { menu } = require('./menu');
 const onError = (err, response) => {
   console.error(err, response);
 };
-
 const isWindows = process.platform === 'win32';
-
-
 let win;
 let serve: boolean;
 const args = process.argv.slice(1);
@@ -18,18 +15,12 @@ const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
-
 const nativeImage = require('electron').nativeImage;
-
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
-
-
 ipcMain.on('sent-login-message', (event,url) => {
-
   const authUrl = url ;
   const size = screen.getPrimaryDisplay().workAreaSize;
-
   let authWindow = new BrowserWindow({
     width: 700,
     height: 500,
@@ -39,21 +30,16 @@ ipcMain.on('sent-login-message', (event,url) => {
       nodeIntegration: true
     },
   });
-
   authWindow.show();
   const menus = Menu.buildFromTemplate([]);
   authWindow.setMenu(menus);
-
   const handleRedirect = (e, uri) => {
     shell.openExternal(uri);
   };
-
   authWindow.webContents.on('will-navigate', handleRedirect);
   authWindow.loadURL(authUrl +'login');
-
   const ses = authWindow.webContents.session;
   ses.clearCache();
-
   ses.cookies.get({})
     .then((cookies) => {
       cookies.forEach(cookie => {
@@ -69,8 +55,6 @@ ipcMain.on('sent-login-message', (event,url) => {
     }).catch((error) => {
       console.log(error);
     });
-
-
   function handleCallback() {
     const currentURL = authWindow.webContents.getURL();
     let raw = null;
@@ -82,7 +66,6 @@ ipcMain.on('sent-login-message', (event,url) => {
     let subscription = null;
     let expiresAt = null;
     const params = currentURL.split('?');
-
     if (params && params.length === 2) {
       if (params[0] === authUrl+'authorized') {
         try {
@@ -99,11 +82,8 @@ ipcMain.on('sent-login-message', (event,url) => {
           id = id.split('=')[1];
           subscription = raw.split('&')[5];
           subscription = subscription.split('=')[1];
-
           expiresAt = raw.split('&')[6];
-
           expiresAt =  expiresAt.split('=')[1];
-
           event.sender.send('received-login-message', [email, name, avatar, token, id, subscription, expiresAt]);
           authWindow.destroy();
         } catch (e) {
@@ -113,14 +93,12 @@ ipcMain.on('sent-login-message', (event,url) => {
     }
   }
   authWindow.webContents.on('did-finish-load', (e: any, urls: string) => {
-
     handleCallback();
   });
   authWindow.on('closed', () => {
     authWindow = null;
   });
 });
-
 ///////////////////// AUTO UPDATED  /////////////////////////////
 // this is just to test autoUpdater feature.
 function showMessage(message, title) {
@@ -138,7 +116,6 @@ function showMessage(message, title) {
     // Wait with callback (onClick event of the toast), until user action is taken against notification
     wait: true
   }, onError);
-
   notifier.on('click', (notifierObject, options) => {
     //  TODO: implement when a user click on notification.
   });
@@ -148,7 +125,6 @@ function sendStatusToWindow(text: string, title) {
   showMessage(text, title);
 }
 if (!isDev) {
-
   autoUpdater.on('checking-for-update', () => {
     // sendStatusToWindow('Checking for update...', 'check updates');
     // tag
@@ -173,16 +149,11 @@ if (!isDev) {
       progressObj.total +
       ')';
   });
-
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     autoUpdater.quitAndInstall(true, true);
   });
 }
-
-
-
 let iconName;
-
 if (process.platform === 'win32') {
   iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/win/icon.ico'));
 } else
@@ -208,8 +179,6 @@ function createWindow() {
   }
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
-
-
   win = new BrowserWindow({
     x: 0,
     y: 0,
@@ -222,9 +191,7 @@ function createWindow() {
     },
     icon: iconName
   });
-
   win.setMenu(null);
-
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
@@ -237,11 +204,9 @@ function createWindow() {
       slashes: true
     }));
   }
-
   if (serve) {
     // win.webContents.openDevTools();
   }
-
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -249,29 +214,20 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
-
 }
-
 try {
-
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', createWindow);
-
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') { app.quit(); }
   });
-
-
   app.on('activate', () => {
     if (win === null) { createWindow(); }
   });
-
-
   // Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that point.
-
   /*eslint no-shadow: ["error", { "allow": ["args"] }]*/
   /*eslint-env es6*/
   ipcMain.on(`display-app-menu`, (e, args) => {
@@ -283,16 +239,13 @@ try {
       });
     }
   });
-
 } catch (e) {
   // Catch Error // throw e;
 }
-
 // https://www.electron.build/auto-update#appupdatersetfeedurloptions
 // for knowing the downloaded progress will use bellow code.
 // TODO: https://gist.github.com/the3moon/0e9325228f6334dabac6dadd7a3fc0b9
 // TODO: integrate analytics https://kilianvalkhof.com/2018/apps/using-google-analytics-to-gather-usage-statistics-in-electron/
-
 // docs:
 // http://muldersoft.com/docs/stdutils_readme.html
 // https://github.com/electron-userland/electron-builder/issues/1084

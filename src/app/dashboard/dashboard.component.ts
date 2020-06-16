@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DashBoardEntries, fadeInAnimation, MainModelService, Business, Tables, Stock,
   Branch, CalculateTotalClassPipe, RoundNumberPipe, Order, OrderDetails,
-   Variant, Product } from '@enexus/flipper-components';
+   Variant, Product, Taxes } from '@enexus/flipper-components';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { ModelService } from '@enexus/flipper-offline-database';
 
@@ -33,6 +33,9 @@ export class DashboardComponent {
   constructor(private totalPipe: CalculateTotalClassPipe,
               private radomNumberPipe: RoundNumberPipe,
               private query: ModelService, private model: MainModelService) {
+
+                console.log(this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true));
+                
               this.branch = this.model.active<Branch>(Tables.branch);
               this.totalStore = this.getStockValue();
               this.netProfit = this.getNetProfit();
@@ -180,6 +183,7 @@ export class DashboardComponent {
     const orderIds: Order[]=this.model.raw(`SELECT id
     FROM orders WHERE branchId="${this.branch.id}"
     ORDER BY updatedAt DESC LIMIT 5`) as Order[];
+
     orderIds.forEach(d=> {
       ids.push(`'${d.id}'`);
     });

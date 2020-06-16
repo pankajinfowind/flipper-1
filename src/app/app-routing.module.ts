@@ -10,6 +10,7 @@ import { CreateProductComponent } from '@enexus/flipper-inventory';
 import { HasSubscribedGuard } from './core/guards/has-subscribed-guard.service';
 import { SubscriptionComponent } from './subscription/subscription.component';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -48,3 +49,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule { }
+  

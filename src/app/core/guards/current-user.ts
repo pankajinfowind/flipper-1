@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Business, Tables, Menu, MenuEntries, PouchDBService, PouchConfig, Subscription,
-   CurrentBusinessEvent, CurrentBranchEvent, UserSubscriptionEvent, UserLoggedEvent, Branch } from '@enexus/flipper-components';
-import { ModelService } from '@enexus/flipper-offline-database';
-import { FlipperEventBusService } from '@enexus/flipper-event';
 
+import { FlipperEventBusService } from '@enexus/flipper-event';
+import { MenuEntries, Business, Branch, Subscription,
+  PouchDBService, PouchConfig, Tables, Menu,
+  UserLoggedEvent, UserSubscriptionEvent,
+  CurrentBusinessEvent
+} from '@enexus/flipper-components';
+
+import {CurrentBranchEvent} from '@enexus/flipper-components';
+import { ModelService } from '@enexus/flipper-offline-database';
 export  class User {
   id?: any;
   name?: string;

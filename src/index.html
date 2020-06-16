@@ -3,68 +3,64 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Flipper</title>
+  <title>flipper</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./assets/icon/linux/icon.png">
-  <script src="./assets/1c9144b004.js"></script>
+  <!-- TODO: commented this scrips, it is not available within project. -->
+  <!-- <script src="./assets/1c9144b004.js"></script> -->
   <style>
+    #menu-bar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 30px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .26);
+      background-color: #211a36;
+      -webkit-app-region: drag;
+      z-index: 1020;
+      width: 100%;
+    }
 
-#menu-bar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 30px;
-  /* background: #130f1f;  #34475a; */
-  /* box-shadow: 0 2px 4px 0 rgba(0,0,0,.26);
-    background-color: #130f1f; */
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.26);
-    background-color: #211a36;
-  -webkit-app-region: drag;
-  z-index: 1020;
-  width: 100%;
-}
+    #menu-bar>div {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-#menu-bar > div {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .menubar-btn {
+      -webkit-app-region: no-drag;
+    }
 
-.menubar-btn {
-  -webkit-app-region: no-drag;
-}
+    .container1 {
+      height: calc(100vh - 30px);
+    }
 
-.container1 {
-  height: calc(100vh - 30px);
-}
+    .button1 {
+      height: 100%;
+      padding: 0 15px;
+      border: none;
+      background: transparent;
+      outline: none;
+    }
 
-.button1 {
-  height: 100%;
-  padding: 0 15px;
-  border: none;
-  background: transparent;
-  outline: none;
-}
+    .button1:hover {
+      background: rgba(221, 221, 221, 0.2);
+    }
 
-.button1:hover {
-  background: rgba(221, 221, 221, 0.2);
-}
+    #close-btn:hover {
+      background: rgb(255, 0, 0);
+    }
 
-#close-btn:hover {
-  background: rgb(255, 0, 0);
-}
-
-.button1 svg {
-  color: white;
-width:18px
-}
-
+    .button1 svg {
+      color: white;
+      width: 18px
+    }
   </style>
 
 </head>
@@ -73,19 +69,35 @@ width:18px
   <div id="menu-bar">
     <div class="left" role="menu">
       <button class="menubar-btn button1" id="menu-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify">
+          <line x1="21" y1="10" x2="3" y2="10"></line>
+          <line x1="21" y1="6" x2="3" y2="6"></line>
+          <line x1="21" y1="14" x2="3" y2="14"></line>
+          <line x1="21" y1="18" x2="3" y2="18"></line>
+        </svg>
       </button>
-      <h5 style="color:#fff;margin-top:10px">Flipper v1</h5>
+      <h5 style="color:#fff;margin-top:10px">Flipper v1.1.80</h5>
     </div>
     <div class="right">
       <button class="menubar-btn button1" id="minimize-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
       </button>
       <button class="menubar-btn button1" id="max-unmax-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-square">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
       </button>
       <button class="menubar-btn button1" id="close-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
     </div>
   </div>
@@ -94,7 +106,6 @@ width:18px
   
  
   <style>
-
 
     .primary {
       fill: #2196F3;
@@ -105,7 +116,7 @@ width:18px
     }
 
     #background-logo {
-      
+
       position: fixed;
       top: 30%;
       left: 10%;
@@ -120,7 +131,6 @@ width:18px
       bottom: 0%;
       color: #3a3b3f;
     }
-
   </style>
  
  
@@ -163,7 +173,6 @@ width:18px
         .st0 {
           fill: #3a3b3f;
         }
-
       </style>
       <g>
         <path class="st0" d="M0,10V0h1.4v8.6H10V10H0z"></path>
@@ -190,44 +199,44 @@ width:18px
 </app-root></div>
 </body>
 <script>
-  localStorage.setItem('bucket', 'lagrace');
-  localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
-  localStorage.setItem('canSync', 'true');
- if (global === undefined) { var global = window; } 
+  window.localStorage.setItem('bucket', 'lagrace');
+  window.localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
+  window.localStorage.setItem('canSync', 'true');
+  if (global === undefined) { var global = window; }
 
 
- window.addEventListener("DOMContentLoaded", () => {
-  const menuButton = document.getElementById("menu-btn");
-  const minimizeButton = document.getElementById("minimize-btn");
-  const maxUnmaxButton = document.getElementById("max-unmax-btn");
-  const closeButton = document.getElementById("close-btn");
+  window.addEventListener("DOMContentLoaded", () => {
+    const menuButton = document.getElementById("menu-btn");
+    const minimizeButton = document.getElementById("minimize-btn");
+    const maxUnmaxButton = document.getElementById("max-unmax-btn");
+    const closeButton = document.getElementById("close-btn");
 
-  menuButton.addEventListener("click", e => {
-    window.openMenu(e.x, e.y);
+    menuButton.addEventListener("click", e => {
+      window.openMenu(e.x, e.y);
+    });
+
+    minimizeButton.addEventListener("click", e => {
+      window.minimizeWindow();
+    });
+
+    maxUnmaxButton.addEventListener("click", e => {
+      const icon = maxUnmaxButton.querySelector("i.far");
+
+      window.maxUnmaxWindow();
+      if (window.isWindowMaximized()) {
+        icon.classList.remove("fa-square");
+        icon.classList.add("fa-clone");
+      } else {
+        icon.classList.add("fa-square");
+        icon.classList.remove("fa-clone");
+      }
+    });
+    closeButton.addEventListener("click", e => {
+      window.closeWindow();
+    });
   });
-
-  minimizeButton.addEventListener("click", e => {
-    window.minimizeWindow();
-  });
-
-  maxUnmaxButton.addEventListener("click", e => {
-    const icon = maxUnmaxButton.querySelector("i.far");
-
-    window.maxUnmaxWindow();
-    if (window.isWindowMaximized()) {
-      icon.classList.remove("fa-square");
-      icon.classList.add("fa-clone");
-    } else {
-      icon.classList.add("fa-square");
-      icon.classList.remove("fa-clone");
-    }
-  });
-  closeButton.addEventListener("click", e => {
-    window.closeWindow();
-  });
-});
 
 
 </script>
-</html>
 
+</html>

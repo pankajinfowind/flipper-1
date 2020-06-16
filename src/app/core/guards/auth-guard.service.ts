@@ -9,7 +9,7 @@ import { UserLoggedEvent } from '@enexus/flipper-components';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-
+// done
   constructor(private eventBus: FlipperEventBusService,private currentUser: CurrentUser, private router: Router) {
     this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
     .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !==undefined)))

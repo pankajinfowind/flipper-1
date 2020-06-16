@@ -22,7 +22,6 @@ export class GuestGuard implements CanActivate {
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        console.log(this.currentUser.currentUser);
         await this.currentUser.user();
 
         if (!this.currentUser.currentUser) {

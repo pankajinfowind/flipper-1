@@ -41,10 +41,6 @@ export class AppComponent {
                 // }
 
               }
-  //             this.migrate.products();
-  //  this.migrate.variants();
-  //  this.migrate.stocks();
-  //  this.migrate.stockHistories();
             });
       }
 

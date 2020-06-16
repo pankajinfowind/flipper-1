@@ -1,7 +1,7 @@
 {
   "name": "flipper",
   "appId": "flipper.rw",
-  "version": "1.1.82",
+  "version": "1.1.83",
   "description": "Flipper is an inventory management system and Point of sale system.",
   "homepage": "https://flipper.rw/",
   "productName": "flipper",
@@ -53,7 +53,6 @@
   },
   "config": {
     "ghooks": {
-      
       "post-merge": "npm install",
       "post-rewrite": "npm install"
     }

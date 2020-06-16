@@ -53,6 +53,7 @@
   },
   "config": {
     "ghooks": {
+      
       "post-merge": "npm install",
       "post-rewrite": "npm install"
     }

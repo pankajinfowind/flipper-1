@@ -27,7 +27,8 @@ import { LoadingIndicatorComponent } from './components/loading-indicator/loadin
     FlipperDashboardModule,
     FlipperOfflineDatabaseModule,
     FlipperSettingsModule,
-    FlipperInventoryModule,FlipperPaymentCardModule
+    FlipperInventoryModule,
+    FlipperPaymentCardModule
   ],
   exports: [
     LoadingIndicatorComponent,

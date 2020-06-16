@@ -8,6 +8,7 @@ const onError = (err, response) => {
   console.error(err, response);
 };
 
+<<<<<<< HEAD
 const isWindows = process.platform === 'win32';
 
 
@@ -194,6 +195,13 @@ if (process.platform === 'win32') {
   }
 
 function createWindow() {
+=======
+let win: BrowserWindow = null;
+const args = process.argv.slice(1),
+  serve = args.some(val => val === '--serve');
+
+function createWindow(): BrowserWindow {
+>>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f
 
   if (!isDev) {
     try {
@@ -211,8 +219,13 @@ function createWindow() {
     width: size.width,
     height: size.height,
     webPreferences: {
+<<<<<<< HEAD
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
+=======
+      nodeIntegration: true,
+      allowRunningInsecureContent: (serve) ? true : false,
+>>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f
     },
     icon: iconName
   });
@@ -220,10 +233,15 @@ function createWindow() {
   win.setMenu(null);
 
   if (serve) {
+
+    require('devtron').install();
+    win.webContents.openDevTools();
+
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
     win.loadURL('http://localhost:4200');
+
   } else {
     win.loadURL(url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
@@ -232,10 +250,13 @@ function createWindow() {
     }));
   }
 
+<<<<<<< HEAD
   if (serve) {
     // win.webContents.openDevTools();
   }
 
+=======
+>>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -244,14 +265,18 @@ function createWindow() {
     win = null;
   });
 
+  return win;
 }
 
 try {
 
+  app.allowRendererProcessReuse = true;
+
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow);
+  // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
+  app.on('ready', () => setTimeout(createWindow, 400));
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {

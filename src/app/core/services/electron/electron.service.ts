@@ -18,8 +18,8 @@ export class ElectronService {
   shell: typeof shell | undefined = void 0;
   fs: typeof fs;
 
-  get isElectron() {
-    return window && window.process && window.process.type;
+  get isElectron(): boolean {
+    return !!(window && window.process && window.process.type);
   }
 
   constructor(@Inject(DOCUMENT) private document: Document) {

@@ -10,6 +10,7 @@ import { CreateProductComponent } from '@enexus/flipper-inventory';
 import { HasSubscribedGuard } from './core/guards/has-subscribed-guard.service';
 import { SubscriptionComponent } from './subscription/subscription.component';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -41,9 +42,7 @@ const routes: Routes = [
 ];
 //
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    enableTracing: false,
-  }
+  imports: [RouterModule.forRoot(routes,{ useHash: true }
   )],
   exports: [RouterModule],
 })

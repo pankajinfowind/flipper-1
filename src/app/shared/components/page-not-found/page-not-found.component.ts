@@ -15,5 +15,5 @@ import { fadeInAnimation } from '@enexus/flipper-components';
 export class PageNotFoundComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 }

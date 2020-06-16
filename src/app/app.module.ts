@@ -16,7 +16,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MigrationModule } from './migration/migration.module';
 import { PouchDBService } from '@enexus/flipper-components';
-import { Router } from '@angular/router';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { CardValidationComponent } from './subscription/validate-card/validate-card.component';
 import { environment } from '../environments/environment';
@@ -25,8 +24,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { PaidSuccessComponent } from './subscription/paid-success/paid-success.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 // AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
@@ -48,7 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [PouchDBService],
+  providers: [PouchDBService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
   entryComponents:[CardValidationComponent,PaidSuccessComponent]
 })

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 $admin-max-left-width:280px;
 $admin-min-left-width:70px;
@@ -11,4 +12,8 @@ $admin-min-left-width:70px;
 }
 .minContainerFliud{
     width: calc(100% - #{$admin-min-left-width})!important;
+=======
+:host {
+  
+>>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f
 }

@@ -1,5 +1,8 @@
 
-[![Build Status](https://travis-ci.org/yegobox/flipper.svg?branch=master)](https://travis-ci.org/yegobox/flipper)
+![Maintained][maintained-badge]
+[![Travis Build Status][build-badge]][build]
+[![Make a pull request][prs-badge]][prs]
+[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
 
 # Mission | 任务
 Help Connect wholesaler and reteller and avoid middleman while helping to book keep transactions.
@@ -23,20 +26,13 @@ Help Connect wholesaler and reteller and avoid middleman while helping to book k
 
 # Introduction
 
-The idea of the flipper is to build a square point of sale-like [Square app ](https://squareup.com/signup/])
-but open-source so that anyone can have a point of sale, stock management, and plus other features for free.
-of cause, the idea of giving a reference to the Square app is to give you a general idea of what we are trying to do.
-
-鳍状肢的想法是建立一个像方形的销售点[Square app]https://squareup.com/signup/]）
-但采用开放源代码，因此任何人都可以免费获得销售点，库存管理以及其他功能。
-当然，引用Square应用程序的目的是让您对我们正在尝试做的事情有一个大致的了解。
+Bootstrap and package your project with Angular 9 and Electron 8 (Typescript + SASS + Hot Reload) for creating Desktop applications.
 
 Currently runs with:
 
-- Angular v8.2.12
-- Electron v7.0.0
-- Electron Builder v21.2.0
-- nodejs v10.16.3
+- Angular v9.1.4
+- Electron v8.2.5
+- Electron Builder v22.6.0
 
 With this config, you can :
 
@@ -44,7 +40,13 @@ With this config, you can :
 - Run flipper in a production environment
 - Package flipper into an executable file for Linux, Windows & Mac
 
+<<<<<<< HEAD
 /!\ Angular 8.x or Later CLI needs Node v10.16.3 to work.
+=======
+/!\ Hot reload only pertains to the renderer process. The main electron process is not able to be hot reloaded, only restarted.
+
+/!\ Angular 9.x CLI needs Node 10.13 or later to works correctly.
+>>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f
 
 ## Getting Started
 
@@ -60,6 +62,14 @@ Install dependencies with npm :
 npm install
 ```
 
+<<<<<<< HEAD
+=======
+There is an issue with `yarn` and `node_modules` when the application is built by the packager. Please use `npm` as dependencies manager.
+
+
+If you want to generate Angular components with Angular-cli , you **MUST** install `@angular/cli` in npm global context.
+Please follow [Angular-cli documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
+>>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f
 
 ## To build for development
 ``` bash
@@ -87,9 +97,37 @@ You can disable "Developer Tools" by commenting `win.webContents.openDevTools();
 
 ## You want to use a specific lib (like rxjs) in electron main thread ?
 
-You can do this! Just by importing your library in npm dependencies (not devDependencies) with `npm install --save`. It will be loaded by electron during build phase and added to the final package. Then use your library by importing it in `main.ts` file. Easy no ?
+YES! You can do it! Just by importing your library in npm dependencies section (not **devDependencies**) with `npm install --save`. It will be loaded by electron during build phase and added to your final package. Then use your library by importing it in `main.ts` file. Quite simple, isn't it ?
 
 ## Browser mode
 
+<<<<<<< HEAD
 Maybe you want to execute the application in the browser with hot reload ? You can do it with `npm run ng:serve:web`.
 **Note that you can't use Electron or NodeJS native libraries in this case.** Please check `providers/electron.service.ts` to watch how conditional import of electron/Native libraries is done.
+=======
+Maybe you want to execute the application in the browser with hot reload ? Just run `npm run ng:serve:web`.
+**Note that you can't use Electron or NodeJS native libraries in this case.** Please check `providers/electron.service.ts` to watch how conditional import of electron/Native libraries is done.
+
+## Branch & Packages version
+
+- Angular 4 & Electron 1 : Branch [angular4](https://github.com/maximegris/angular-electron/tree/angular4)
+- Angular 5 & Electron 1 : Branch [angular5](https://github.com/maximegris/angular-electron/tree/angular5)
+- Angular 6 & Electron 3 : Branch [angular6](https://github.com/maximegris/angular-electron/tree/angular6)
+- Angular 7 & Electron 3 : Branch [angular7](https://github.com/maximegris/angular-electron/tree/angular7)
+- Angular 8 & Electron 7 : Branch [angular8](https://github.com/maximegris/angular-electron/tree/angular8)
+- Angular 9 & Electron 8 : (master)
+
+[build-badge]: https://travis-ci.org/maximegris/angular-electron.svg?branch=master&style=style=flat-square
+[build]: https://travis-ci.org/maximegris/angular-electron
+[license-badge]: https://img.shields.io/badge/license-Apache2-blue.svg?style=style=flat-square
+[license]: https://github.com/maximegris/angular-electron/blob/master/LICENSE.md
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs]: http://makeapullrequest.com
+[github-watch-badge]: https://img.shields.io/github/watchers/maximegris/angular-electron.svg?style=social
+[github-watch]: https://github.com/maximegris/angular-electron/watchers
+[github-star-badge]: https://img.shields.io/github/stars/maximegris/angular-electron.svg?style=social
+[github-star]: https://github.com/maximegris/angular-electron/stargazers
+[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20angular-electron!%20https://github.com/maximegris/angular-electron%20%F0%9F%91%8D
+[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/maximegris/angular-electron.svg?style=social
+[maintained-badge]: https://img.shields.io/badge/maintained-yes-brightgreen
+>>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f

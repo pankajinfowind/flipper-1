@@ -101,6 +101,8 @@ ipcMain.on('sent-login-message', (event,url) => {
 });
 ///////////////////// AUTO UPDATED  /////////////////////////////
 // this is just to test autoUpdater feature.
+let icon = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/linux/icon.png'));
+
 function showMessage(message, title) {
   notifier.notify({
     message,
@@ -112,7 +114,7 @@ function showMessage(message, title) {
     // The absolute path to the icon of the message
     // (doesn't work on balloons)
     // If not found, a system icon will be shown
-    icon: path.join(__dirname, '../assets/logo.png'),
+    icon: icon,
     // Wait with callback (onClick event of the toast), until user action is taken against notification
     wait: true
   }, onError);
@@ -121,7 +123,6 @@ function showMessage(message, title) {
   });
 }
 function sendStatusToWindow(text: string, title) {
-  log.info(app.getVersion() + '::' + text);
   showMessage(text, title);
 }
 if (!isDev) {
@@ -155,12 +156,12 @@ if (!isDev) {
 }
 let iconName;
 if (process.platform === 'win32') {
-  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/win/icon.ico'));
+  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/win/icon.ico'));
 } else
   if (process.platform === 'darwin') {
-    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/mac/icon.icns'));
+    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/mac/icon.icns'));
   } else {
-    iconName =nativeImage.createFromPath( path.join(__dirname, '../assets/png/icon.png'));
+    iconName =nativeImage.createFromPath( path.join(__dirname, '../assets/icon/linux/icon.png'));
   }
 function createWindow() {
   autoUpdater.setFeedURL({

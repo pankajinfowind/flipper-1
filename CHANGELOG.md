@@ -1,3 +1,9 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.1.82](https://github.com/yegobox/flipper/compare/v1.1.56...v1.1.82) (2020-06-16)
+
 ## 7.1.0 (2020-05-02)
 
 * feat/ VSCode : add Debugging config for man process (#465) + Karma ([acc62d9](https://github.com/maximegris/angular-electron/commit/acc62d9)), closes [#465](https://github.com/maximegris/angular-electron/issues/465)

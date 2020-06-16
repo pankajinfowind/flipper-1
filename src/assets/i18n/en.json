@@ -1,18 +1,8 @@
 {
   "PAGES": {
       "HOME": {
-<<<<<<< HEAD
           "TITLE": "App works !"
           
       }
-=======
-          "TITLE": "App works !",
-          "GO_TO_DETAIL": "Go to Detail"
-      },
-      "DETAIL": {
-        "TITLE": "Detail page !",
-        "BACK_TO_HOME": "Back to Home"
-    }
->>>>>>> 8dffcea40edef5dd1829df67a9524853aea9735f
   }
 }

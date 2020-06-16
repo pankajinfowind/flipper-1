@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { CalculateTotalClassPipe, Order } from '@enexus/flipper-components';
 import { Subscription } from 'rxjs';
 import { TransactionsService } from '../transactions.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list-transactions',

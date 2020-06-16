@@ -2,8 +2,8 @@
 @font-face {
   font-family: Heebo;
   src: local(Heebo-Regular),
-    url(./assets/font/Heebo-Regular.woff) format("woff"),
-    url(./assets/font/Heebo-Regular.ttf) format("truetype");
+    url("./assets/font/Heebo-Regular.woff") format("woff"),
+    url("./assets/font/Heebo-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -11,8 +11,8 @@
 @font-face {
   font-family: Heebo;
   src: local(Heebo-Medium),
-    url(./assets/font/Heebo-Medium.woff) format("woff"),
-    url(./assets/font/Heebo-Medium.ttf) format("truetype");
+    url("./assets/font/Heebo-Medium.woff") format("woff"),
+    url("./assets/font/Heebo-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
@@ -20,8 +20,8 @@
 @font-face {
   font-family: Heebo;
   src: local(Heebo-Bold),
-    url(./assets/font/Heebo-Bold.woff) format("woff"),
-    url(./assets/font/Heebo-Bold.ttf) format("truetype");
+    url("./assets/font/Heebo-Bold.woff") format("woff"),
+    url("./assets/font/Heebo-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
   font-stretch: normal;
@@ -29,37 +29,30 @@
 @font-face {
   font-family: Roboto;
   src: local(Roboto-Regular),
-    url(./assets/font/Roboto-Regular.woff2) format("woff2"),
-    url(./assets/font/Roboto-Regular.woff) format("woff"),
-    url(./assets/font/Roboto-Regular.ttf) format("truetype");
+    url("./assets/font/Roboto-Regular.woff2") format("woff2"),
+    url("./assets/font/Roboto-Regular.woff") format("woff"),
+    url("./assets/font/Roboto-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
 }
 @import '../styles/app-all';
-
-
-
-
 body{
   background-color: #fff!important;
+  height: calc(100vh);
 }
-
 :host {
   @include block-filler();
   @include compact-table();
   @include scrollable();
 }
-
 table {
   @include table-filler();
   @include  full-height();
 }
-
 .mat-table-white{
   background-color: #ffff!important;
 }
-
 .mat-row  {
   border-bottom: 1px #d5d9dc solid!important;
 }
@@ -85,18 +78,15 @@ tr.mat-header-row {
 .mat-sort-header-arrow{
   color: rgb(26, 25, 25)!important;
 }
-
 tr.mat-row {
   font-family: 'Roboto', 'Heebo', sans-serif !important;
   border-bottom: solid rgb(26, 25, 25) 1px!important;
 }
-
 table, th {
   color: rgb(26, 25, 25);
   font-weight: 500;
   font-family: 'Roboto', 'Heebo', sans-serif !important;
 }
-
 .mat-column-name, .mat-column-addresses, .mat-column-capacity {
   @include column-text-ellipsis(100px);
 }
@@ -122,8 +112,6 @@ table, th {
   /* Non-prefixed version, currently
                                 supported by Chrome, Opera and Firefox */
 }
-
-
 .table-container {
   position: relative;
   max-height: 510px;
@@ -145,12 +133,10 @@ table, th {
   justify-content: center;
   text-align: center;
 }
-
 .grid-row-space-line,
 .grid-space-line {
   margin-bottom: -20px !important;
 }
-
 .grid,
 [class*=grid-] {
   display: flex;
@@ -159,33 +145,25 @@ table, th {
   margin-right: -10px;
   margin-bottom: -20px !important;
 }
-
 @media (min-width: 718px) {
   .content--welcome .title {
     text-align: center;
   }
 }
-
-
-
 @media (min-width: 718px) {
   .align-center-at-medium {
     text-align: center !important;
   }
 }
-
-
 @media (min-width: 718px) {
   .grid-2-at-medium>* {
     width: 50%;
   }
 }
-
 .grid-row-space-line>*,
 .grid-space-line>* {
   margin-bottom: 20px !important;
 }
-
 .grid>*,
 [class*=grid-]>* {
   flex: 0 1 auto;
@@ -194,11 +172,9 @@ table, th {
   padding-right: 10px;
   margin-bottom: 20px !important;
 }
-
 .input-element {
   position: relative;
 }
-
 .is-invalid {
   z-index: 1;
   border-color: #df3320 !important;
@@ -209,7 +185,6 @@ table, th {
   padding-right: 40px !important;
   ;
 }
-
 .show-time .input[type=email],
 .show-time .input[type=number],
 .show-time .input[type=password],
@@ -221,7 +196,6 @@ table, th {
 .show-time .textarea {
   transition: color 300ms, border-color 300ms, background-color 300ms;
 }
-
 .input {
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
@@ -245,11 +219,9 @@ table, th {
   border-color: initial;
   border-image: initial;
 }
-
 .select:not(:-internal-list-box) {
   overflow: visible !important;
 }
-
 .select {
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
@@ -276,7 +248,6 @@ table, th {
   border-color: rgb(169, 169, 169);
   border-image: initial;
 }
-
 .input[type=email],
 .input[type=number],
 .input[type=password],
@@ -306,7 +277,6 @@ table, th {
   height: 40px;
 }
 .row {margin: 3px}
-
 /* Clear floats after the columns */
 .row:after {
   content: "";
@@ -320,12 +290,10 @@ table, th {
       display: block;
     }
   }
-
 .col {
   float: left;
   padding: 10px;
 }
-
 .input[type=email]:focus,
 .input[type=number]:focus,
 .input[type=password]:focus,
@@ -338,12 +306,10 @@ table, th {
   border-color: #2996cc;
   z-index: 1
 }
-
 .field-label {
   display: flex;
   justify-content: space-between;
 }
-
 .button.expand,
 button.expand,
 .input[type=button].expand,
@@ -352,18 +318,15 @@ button.expand,
   padding-left: 10px;
   padding-right: 10px;
 }
-
 .expand {
   min-width: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
 }
-
 .show-time label,
 button {
   transition: color 300ms;
 }
-
 .button,
 .input[type=button],
 .input[type=reset],
@@ -393,7 +356,6 @@ button {
   color: #fff;
   background-color: #2996cc;
 }
-
 .button-default {
   position: relative;
   height: 40px;
@@ -411,19 +373,16 @@ button {
   border-radius: 4px;
   transition: background-color 0.2s ease-in-out 0s, color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
 }
-
 .button-default,
 .button-default:hover {
   background-color: rgb(255, 255, 255);
   color: rgb(113, 118, 123);
 }
-
 .button--secondary {
   color: rgb(41, 150, 204) !important;
   background: 0px 0px;
   border-color: rgb(41, 150, 204);
 }
-
 .button--success {
   color: rgb(4, 160, 74) !important;
   background: 0px 0px;
@@ -434,95 +393,72 @@ button {
   background: 0px 0px;
   border-color: rgb(27, 29, 28) !important;
 }
-
 .button--destructive {
   color: rgb(217, 43, 43);
   background: 0px 0px;
   border-color: rgb(217, 43, 43);
 }
-
 .container {
   overflow: auto !important;
   height: 100%
 }
-
 .mt-1 {
   margin-top: 5px;
 }
-
 .mt-2 {
   margin-top: 10px;
 }
-
 .mt-3 {
   margin-top: 15px;
 }
-
 .mt-4 {
   margin-top: 20px;
 }
-
 .mt-5 {
   margin-top: 25px;
 }
-
 .ml-1 {
   margin-left: 5px;
 }
-
 .ml-2 {
   margin-left: 10px;
 }
-
 .ml-3 {
   margin-left: 15px;
 }
-
 .ml-4 {
   margin-left: 20px;
 }
-
 .ml-5 {
   margin-left: 25px;
 }
-
-
 .mr-1 {
   margin-right: 5px;
 }
-
 .mr-2 {
   margin-right: 10px;
 }
-
 .mr-3 {
   margin-right: 15px;
 }
-
 .mr-4 {
   margin-right: 20px;
 }
-
 .mr-5 {
   margin-right: 25px;
 }
-
 .mb-1 {
   margin-bottom: 5px;
 }
-
 .mb-2 {
   margin-bottom: 10px;
 }
-
 .mb-3 {
   margin-bottom: 15px;
 }
-
 .mb-4 {
   margin-bottom: 20px;
 }
-
 .mb-5 {
   margin-bottom: 25px;
 }
@@ -532,68 +468,47 @@ button {
 .float-left{
   float: left!important;
 }
-
 .mat-select-placeholder {
   color: #2996cc !important;
 }
-
 .mat-select-value {
   color: #2996cc !important;
 }
 .selectBackground{
   background:  #d4eaf5!important;;
 }
-
 .c-wrapper {
   align-items: center;
   display: flex;
   flex-flow: row;
   flex-wrap: nowrap;
   height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* CAN (MUST) BE REMOVED ! Sample Global style */
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-
-  background: url(./assets/background.jpg) no-repeat center fixed;
-  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-  background-size: cover; /* version standardisée */
-
-  .title {
-    color: white;
-    margin: 0;
-    padding: 50px 20px;
-  }
-
-  a {
-    color: #fff !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    background: #ed3330;
-    padding: 20px;
-    border-radius: 5px;
-    display: inline-block;
-    border: none;
-    transition: all 0.4s ease 0s;
-
-    &:hover {
-      background: #fff;
-      color: #ed3330 !important;
-      letter-spacing: 1px;
-      -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-      -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-      box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-      transition: all 0.4s ease 0s;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  margin-top: -70px;
+  &__row {
+    margin-top: 10%;
+    @media only screen and (max-width: 1919px) {
+      width: 40%;
+    }
+    @media only screen and (max-width: 1279px) {
+      width: 50%;
+    }
+    @media only screen and (max-width: 959px) {
+      margin-top: 20%;
+      width: 65%;
+    }
+    @media only screen and (max-width: 599px) {
+      margin-top: 50%;
+      width: 80%;
     }
   }
 }
-
+.card-items > .card-body > .card-item> .image{
+  top: 25px!important;
+}
 .container1{
   position: relative;
   height: calc(100vh - 30px);

@@ -22,7 +22,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              "src/assets"
+              "src/assets",
+             
             ],
             "styles": [
               "src/styles.scss"

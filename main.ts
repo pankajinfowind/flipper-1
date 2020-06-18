@@ -1,6 +1,7 @@
 import { app, BrowserWindow, screen, ipcMain, shell, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+const { setup: setupPushReceiver } = require('electron-push-receiver');
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
 const notifier = require('node-notifier');
 const { menu } = require('./menu');
@@ -208,6 +209,9 @@ function createWindow() {
   if (serve) {
     // win.webContents.openDevTools();
   }
+
+  setupPushReceiver(win.webContents);
+  
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -215,6 +219,8 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  
 }
 try {
   // This method will be called when Electron has finished

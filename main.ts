@@ -157,10 +157,10 @@ if (!isDev) {
 }
 let iconName;
 if (process.platform === 'win32') {
-  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/win/icon.ico'));
+  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/win/icon.png'));
 } else
   if (process.platform === 'darwin') {
-    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/mac/icon.icns'));
+    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/mac/icon.png'));
   } else {
     iconName =nativeImage.createFromPath( path.join(__dirname, '../assets/icon/linux/icon.png'));
   }

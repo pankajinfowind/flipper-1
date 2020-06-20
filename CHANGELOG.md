@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.93](https://github.com/yegobox/flipper/compare/v1.1.92...v1.1.93) (2020-06-20)
+
 ### [1.1.92](https://github.com/yegobox/flipper/compare/v1.1.91...v1.1.92) (2020-06-20)
 
 ### [1.1.91](https://github.com/yegobox/flipper/compare/v1.1.90...v1.1.91) (2020-06-20)

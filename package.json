@@ -37,7 +37,7 @@
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run postinstall:electron && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build -p  always --linux snap -c.snap.publish=github",
-    "electron:windows": "npm run build:prod && npx electron-builder build  -p always --windows",
+    "electron:windows": "npm run build:prod && npx electron-builder build --x32 -p always --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build -p always  --mac",
     "test": "ng test",
     "e2e": "ng e2e",

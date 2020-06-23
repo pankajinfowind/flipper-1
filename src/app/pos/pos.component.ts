@@ -141,11 +141,12 @@ export class PosComponent {
 
   public loadVariants() {
   const variants=[];
-  const products: Product[]= this.model.raw(`SELECT *
+  const products: Product[]= this.model.raw(`SELECT branchProducts.branchId,branchProducts.productId,products.id,branchProducts.id as branchProductId
               FROM branchProducts JOIN products ON branchProducts.productId = products.id AND branchProducts.branchId="${this.branch.id}"
               ORDER BY products.id DESC
               `) as Product[];
-  products.forEach(product => {
+              products.forEach(product => {
+               
                 const variant: Variant = this.query.select(Tables.variants).where('productId', product.id)
                 .first<Variant>();
                 variants.push(variant);
@@ -153,10 +154,10 @@ export class PosComponent {
 
   if (variants.length > 0) {
       variants.forEach(variant => {
-
+        
          const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
           .first<Stock>();
-
+        
          if (stock) {
           const product: Product = this.model.find<Product>(Tables.products, variant.productId);
 

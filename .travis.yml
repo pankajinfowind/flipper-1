@@ -4,7 +4,11 @@ os:
 language: node_js
 node_js:
   - '12'
+<<<<<<< HEAD
   - '10'
+=======
+  # - '10'
+>>>>>>> 522a79768ff1fe858de8dab9739f7761c2272209
 dist: xenial
 sudo: required
 services:

@@ -1,6 +1,7 @@
 import { app, BrowserWindow, screen, ipcMain, shell, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+const { setup: setupPushReceiver } = require('electron-push-receiver');
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
 const notifier = require('node-notifier');
 const { menu } = require('./menu');
@@ -101,6 +102,8 @@ ipcMain.on('sent-login-message', (event,url) => {
 });
 ///////////////////// AUTO UPDATED  /////////////////////////////
 // this is just to test autoUpdater feature.
+let icon = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/linux/icon.png'));
+
 function showMessage(message, title) {
   notifier.notify({
     message,
@@ -112,7 +115,7 @@ function showMessage(message, title) {
     // The absolute path to the icon of the message
     // (doesn't work on balloons)
     // If not found, a system icon will be shown
-    icon: path.join(__dirname, '../assets/logo.png'),
+    icon: icon,
     // Wait with callback (onClick event of the toast), until user action is taken against notification
     wait: true
   }, onError);
@@ -121,7 +124,6 @@ function showMessage(message, title) {
   });
 }
 function sendStatusToWindow(text: string, title) {
-  log.info(app.getVersion() + '::' + text);
   showMessage(text, title);
 }
 if (!isDev) {
@@ -155,12 +157,12 @@ if (!isDev) {
 }
 let iconName;
 if (process.platform === 'win32') {
-  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/win/icon.ico'));
+  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/win/icon.png'));
 } else
   if (process.platform === 'darwin') {
-    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/mac/icon.icns'));
+    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/mac/icon.png'));
   } else {
-    iconName =nativeImage.createFromPath( path.join(__dirname, '../assets/png/icon.png'));
+    iconName =nativeImage.createFromPath( path.join(__dirname, '../assets/icon/linux/icon.png'));
   }
 function createWindow() {
   autoUpdater.setFeedURL({
@@ -207,6 +209,9 @@ function createWindow() {
   if (serve) {
     // win.webContents.openDevTools();
   }
+
+  setupPushReceiver(win.webContents);
+  
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -214,6 +219,8 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  
 }
 try {
   // This method will be called when Electron has finished

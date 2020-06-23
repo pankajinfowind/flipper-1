@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.96](https://github.com/yegobox/flipper/compare/v1.1.95...v1.1.96) (2020-06-20)
+
+### [1.1.95](https://github.com/yegobox/flipper/compare/v1.1.94...v1.1.95) (2020-06-20)
+
+### [1.1.94](https://github.com/yegobox/flipper/compare/v1.1.93...v1.1.94) (2020-06-20)
+
+### [1.1.93](https://github.com/yegobox/flipper/compare/v1.1.92...v1.1.93) (2020-06-20)
+
+### [1.1.92](https://github.com/yegobox/flipper/compare/v1.1.91...v1.1.92) (2020-06-20)
+
+### [1.1.91](https://github.com/yegobox/flipper/compare/v1.1.90...v1.1.91) (2020-06-20)
+
+### [1.1.90](https://github.com/yegobox/flipper/compare/v1.1.89...v1.1.90) (2020-06-20)
+
+### [1.1.89](https://github.com/yegobox/flipper/compare/v1.1.88...v1.1.89) (2020-06-20)
+
+### [1.1.88](https://github.com/yegobox/flipper/compare/v1.1.87...v1.1.88) (2020-06-20)
+
+### [1.1.87](https://github.com/yegobox/flipper/compare/v1.1.86...v1.1.87) (2020-06-20)
+
+### [1.1.86](https://github.com/yegobox/flipper/compare/v1.1.85...v1.1.86) (2020-06-18)
+
+### [1.1.85](https://github.com/yegobox/flipper/compare/v1.1.84...v1.1.85) (2020-06-18)
+
+### [1.1.84](https://github.com/yegobox/flipper/compare/v1.1.83...v1.1.84) (2020-06-18)
+
+### [1.1.83](https://github.com/yegobox/flipper/compare/v1.1.82...v1.1.83) (2020-06-16)
+
 ### [1.1.82](https://github.com/yegobox/flipper/compare/v1.1.56...v1.1.82) (2020-06-16)
 
 ## 7.1.0 (2020-05-02)

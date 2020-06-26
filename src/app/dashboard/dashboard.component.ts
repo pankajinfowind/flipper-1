@@ -173,8 +173,15 @@ export class DashboardComponent {
 
   loadOrderDetails(orderDetails: OrderDetails) {
     const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
-    return { netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
-              grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) };
+    if(stock){
+      return { netProfit: orderDetails.subTotal-(orderDetails.quantity * stock.supplyPrice),
+        grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * stock.supplyPrice) };
+    }else{
+      return  { netProfit: orderDetails.subTotal-(orderDetails.quantity * 0),
+        grossProfit: (orderDetails.taxAmount+orderDetails.subTotal)-(orderDetails.quantity * 0) };
+    }
+   
+   
   }
 
    topSoldsItem(): OrderDetails[] {

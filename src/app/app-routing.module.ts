@@ -44,6 +44,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     enableTracing: false,
+    useHash:false
   }
   )],
   exports: [RouterModule],

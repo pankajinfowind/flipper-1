@@ -206,10 +206,11 @@ export class PosComponent {
   filterByValue(arrayOfObject: Variant[], term: any) {
     const query = term.toString().toLowerCase();
     return arrayOfObject.filter((v, i) => {
+      // console.log(v);
       if (v.name.toString().toLowerCase().indexOf(query) >= 0
-        || v.SKU.toString().toLowerCase().indexOf(query) >= 0
+        || v.SKU.toString().toLowerCase().indexOf(query) > 0
         || v.productName.toString().toLowerCase().indexOf(query) >= 0
-        || v.priceVariant && v.priceVariant.retailPrice.toString().toLowerCase().indexOf(query) >= 0) {
+       ) {
         return true;
       } else {
         return false;

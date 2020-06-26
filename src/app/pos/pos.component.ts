@@ -166,7 +166,7 @@ export class PosComponent {
           if (stock) {
             variation.stock = stock;
           }
-          variation.name = variation.name === 'Regular' ? variation.productName : variation.name;
+          // variation.name = variation.name === 'Regular' ? variation.productName : variation.name;
           variation.priceVariant = {
             id: 0,
             priceId: 0,
@@ -220,7 +220,7 @@ export class PosComponent {
 
   updateOrderDetails(details: { action: string, item: OrderDetails }) {
     if (details.action === 'DELETE') {
-      this.model.delete(Tables.orderDetails, details.item.id);
+      this.model.delete(Tables.orderDetails, `'${details.item.id}'`);
     }
 
     if (details.action === 'UPDATE') {

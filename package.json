@@ -127,7 +127,7 @@
     "@enexus/flipper-inventory": "1.0.5",
     "@enexus/flipper-menu": "0.0.21",
     "@enexus/flipper-offline-database": "1.0.13",
-    "@enexus/flipper-pos": "1.0.4",
+    "@enexus/flipper-pos": "1.0.5",
     "@enexus/flipper-settings": "0.0.26",
     "@enexus/flipper-vendors": "1.1.0",
     "@enexus/payment-card": "1.0.3",

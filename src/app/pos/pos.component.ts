@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import {
-  fadeInAnimation, CalculateTotalClassPipe, Order, Variant,
+  fadeInAnimation, CalculateTotalClassPipe, Order,
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
-  Product, OrderDetails, StockHistory, Business, Taxes, PouchDBService, PouchConfig
+  Product, OrderDetails, StockHistory, Business, Taxes, PouchDBService, PouchConfig, Variant
 } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
@@ -59,7 +59,7 @@ export class PosComponent {
   init() {
     this.hasDraftOrder();
     this.newOrder();
-    this.loadVariants();
+    // this.loadVariants();
     if (this.currentOrder) {
       this.getOrderDetails(this.currentOrder.id);
     }
@@ -139,20 +139,39 @@ export class PosComponent {
   }
 
 
-  public loadVariants() {
-  const variants=[];
-  const products: Product[]= this.model.raw(`SELECT branchProducts.branchId,branchProducts.productId,products.id,branchProducts.id as branchProductId
-              FROM branchProducts JOIN products ON branchProducts.productId = products.id AND branchProducts.branchId="${this.branch.id}"
-              ORDER BY products.id DESC
-              `) as Product[];
-              products.forEach(product => {
+  public loadVariants(param=null) {
+
+  
+  // const products: Product[]= this.model.raw(`SELECT branchProducts.branchId,branchProducts.productId,products.id,branchProducts.id as branchProductId
+  //             FROM branchProducts JOIN products ON branchProducts.productId = products.id AND branchProducts.branchId="${this.branch.id}"
+  //             ORDER BY products.id DESC
+  //             `) as Product[];
+              // products.forEach(product => {
                
-                const variant: Variant = this.query.select(Tables.variants).where('productId', product.id)
-                .first<Variant>();
-                variants.push(variant);
-              });
+              //   const variant: Variant = this.query.select(Tables.variants).where('productId', product.id)
+              //   .first<Variant>();
+              //   variants.push(variant);
+              // });
+//
+      // this.theVariantFiltered=[];
+      // this.variants=[];
+let variantsArray:Variant[]=[];
+const variants:Variant[]= this.model.raw(`SELECT
+ products.id as pId,
+ variants.id,
+ products.name as pName,
+ variants.name,
+ variants.SKU,
+ variants.unit,
+ variants.channel,
+ variants.productId,
+ variants.createdAt,
+ variants.updatedAt
+ FROM variants,products WHERE variants.productId = products.id  AND  (products.name LIKE "%${param}%" OR variants.name LIKE "%${param}%" OR variants.SKU="${param}") `);
+        
 
   if (variants.length > 0) {
+
       variants.forEach(variant => {
         
          const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
@@ -161,12 +180,16 @@ export class PosComponent {
          if (stock) {
           const product: Product = this.model.find<Product>(Tables.products, variant.productId);
 
-          const variation: Variant = variant;
+          const variation: Variant = this.model.find<Variant>(Tables.variants, variant.id);
+
           variation.productName = product.name;
+
           if (stock) {
-            variation.stock = stock;
+              variation.stock = stock;
           }
-          // variation.name = variation.name === 'Regular' ? variation.productName : variation.name;
+
+          variation.name = variation.name === 'Regular' ? variation.productName+' - Regular' : variation.name;
+
           variation.priceVariant = {
             id: 0,
             priceId: 0,
@@ -181,10 +204,10 @@ export class PosComponent {
           };
 
           if (stock.canTrackingStock===false) {
-            this.variants.push(variation);
+            variantsArray.push(variation);
           } else {
             if (stock.canTrackingStock===true && stock.currentStock > 0) {
-              this.variants.push(variation);
+              variantsArray.push(variation);
             }
           }
         }
@@ -192,12 +215,21 @@ export class PosComponent {
 
       });
     }
+    return variantsArray;
 
   }
 
   public iWantToSearchVariant(event) {
+    
     if (event) {
-      this.theVariantFiltered = this.filterByValue(this.variants, event);
+      
+     const results= this.loadVariants(event.toString());
+      // console.log(results);
+
+        if(results.length > 0){
+          this.theVariantFiltered = results; //this.filterByValue(this.variants, event);
+        }
+      
     }
 
   }
@@ -261,13 +293,13 @@ export class PosComponent {
     let taxRate = 0;
     let product = null;
     let tax = null;
-    console.log(variant);
+    // console.log(variant);
     if (variant.productId) {
       product = this.model.find<Product>(Tables.products, variant.productId);
-      console.log(product);
+      // console.log(product);
       if (product) {
         tax = this.model.find<Taxes>(Tables.taxes, product.taxId)?this.model.find<Taxes>(Tables.taxes, product.taxId).percentage:0;
-        console.log(tax);
+        // console.log(tax);
       } else {
         tax = 0;
       }

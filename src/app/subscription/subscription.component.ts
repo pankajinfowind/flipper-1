@@ -65,6 +65,7 @@ export class SubscriptionComponent implements OnInit {
 
   constructor(private pusher: PusherService,
               private firestore: AngularFirestore,
+              
               public dialog: DialogService, private eventBus: FlipperEventBusService, private database: PouchDBService,
               public currentUser: CurrentUser,
               public electronService: ElectronService, protected httpClient: HttpClient) {

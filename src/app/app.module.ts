@@ -15,16 +15,16 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MigrationModule } from './migration/migration.module';
-import { PouchDBService } from '@enexus/flipper-components';
-import { Router } from '@angular/router';
+import { PouchDBService, CurrentBusinessEvent } from '@enexus/flipper-components';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { CardValidationComponent } from './subscription/validate-card/validate-card.component';
 import { environment } from '../environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { PaidSuccessComponent } from './subscription/paid-success/paid-success.component';
+import { FlipperEventBusService } from '@enexus/flipper-event';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -36,6 +36,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CoreModule,
     SharedModule,
     AppRoutingModule,
+
     AngularFireModule.initializeApp(environment.config),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
@@ -53,15 +54,52 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   entryComponents: [CardValidationComponent, PaidSuccessComponent]
 })
 export class AppModule {
-  constructor(private database: PouchDBService) {
+  businessName: string;
+
+  constructor(private database: PouchDBService,
+    private eventBus: FlipperEventBusService,
+    private firestore: AngularFirestore,) {
     if (window.localStorage.getItem('channel') === null
-    || localStorage.getItem('channel') === 'null'
-    || localStorage.getItem('channel') === undefined) {
+      || localStorage.getItem('channel') === 'null'
+      || localStorage.getItem('channel') === undefined) {
       window.localStorage.setItem('channel', this.database.uid());
     }
-    window.localStorage.setItem('bucket', 'lagrace');
-    window.localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
-    window.localStorage.setItem('canSync', 'true');
-  }
+    this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
+      .subscribe(res => {
+        this.businessName = res.business.name;
 
+        this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
+          if (res) {
+            const plan: any[] = res as any[];
+            if (plan.length == 0) {
+              this.firestore.collection(this.businessName).add({
+                'bucket': 'main',
+                'syncUrl': 'https://yegobox.com:4984',
+                'canSync': false,
+                'businessName': this.businessName,
+                'channel': this.database.uid()
+              }).then(() => {
+                this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
+                  if (res) {
+                    const plan: any[] = res as any[];
+                    window.localStorage.setItem('bucket', plan[0].bucket);
+                    window.localStorage.setItem('syncUrl', plan[0].syncUrl);
+                    window.localStorage.setItem('canSync', plan[0].canSync);
+                  }
+                })
+              })
+            }else{
+              this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
+                if (res) {
+                  const plan: any[] = res as any[];
+                  window.localStorage.setItem('bucket', plan[0].bucket);
+                  window.localStorage.setItem('syncUrl', plan[0].syncUrl);
+                  window.localStorage.setItem('canSync', plan[0].canSync);
+                }
+              })
+            }
+          }
+        });
+      });
+  }
 }

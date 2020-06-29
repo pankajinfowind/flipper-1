@@ -70,11 +70,12 @@ export class AppModule {
 
         this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
           if (res) {
+            // http://localhost:4985/
             const plan: any[] = res as any[];
             if (plan.length == 0) {
               this.firestore.collection(this.businessName).add({
                 'bucket': 'main',
-                'syncUrl': 'https://yegobox.com:4984',
+                'syncUrl': 'http://localhost:4984/',
                 'canSync': false,
                 'businessName': this.businessName,
                 'channel': this.database.uid()

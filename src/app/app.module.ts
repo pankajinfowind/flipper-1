@@ -25,13 +25,15 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { PaidSuccessComponent } from './subscription/paid-success/paid-success.component';
 import { FlipperEventBusService } from '@enexus/flipper-event';
+import { SafePipe } from './safe.pipe';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SubscriptionComponent, CardValidationComponent, PaidSuccessComponent],
+  declarations: [AppComponent, LoginComponent, SubscriptionComponent, CardValidationComponent,
+     PaidSuccessComponent,SafePipe],
   imports: [
     CoreModule,
     SharedModule,

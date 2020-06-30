@@ -56,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 export class AppModule {
   businessName: string;
 
+  
   constructor(private database: PouchDBService,
     private eventBus: FlipperEventBusService,
     private firestore: AngularFirestore) {

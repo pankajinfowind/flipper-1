@@ -56,18 +56,21 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 export class AppModule {
   businessName: string;
 
+  
   constructor(private database: PouchDBService,
     private eventBus: FlipperEventBusService,
-    private firestore: AngularFirestore,) {
+    private firestore: AngularFirestore) {
     if (window.localStorage.getItem('channel') === null
       || localStorage.getItem('channel') === 'null'
       || localStorage.getItem('channel') === undefined) {
       window.localStorage.setItem('channel', this.database.uid());
     }
+
+
     this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
       .subscribe(res => {
+        if(!res.business)return;
         this.businessName = res.business.name;
-
         this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
           if (res) {
             // http://localhost:4985/
@@ -76,7 +79,7 @@ export class AppModule {
               this.firestore.collection(this.businessName).add({
                 'bucket': 'main',
                 'syncUrl': 'http://localhost:4984/',
-                'canSync': false,
+                'canSync': 'false',
                 'businessName': this.businessName,
                 'channel': this.database.uid()
               }).then(() => {

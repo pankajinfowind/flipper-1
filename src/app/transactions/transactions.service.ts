@@ -19,7 +19,8 @@ export class TransactionsService {
    public loadAllTransactions(): Observable<Order[]> {
     const data: Order[] = [];
 
-    this.query.queries<Order>(Tables.order, ` branchId="${this.branch.id}" AND orderType='sales' AND status='complete' ORDER BY id DESC`).
+    
+    this.query.queries<Order>(Tables.order, ` branchId="${this.branch.id}" AND orderType='sales' AND status='complete' ORDER BY updatedAt DESC`).
     forEach(d => {
       d.orderItems=this.loadOrderDetails(d.id).length > 0?this.loadOrderDetails(d.id):[];
       d.branch=this.model.find<Branch>(Tables.branch,d.branchId);

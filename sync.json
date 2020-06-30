@@ -1,27 +1,32 @@
 {
-    "adminInterface": "127.0.0.1:4985",
-    "interface": "0.0.0.0:4984",
+    "adminInterface": "127.0.0.1:4986",
+    "interface": "0.0.0.0:4985",
+    "logging": {
+      "console": {
+        "log_keys": ["*"]
+      }
+    },
     "databases": {
-        "main": {
-            "server": "http://localhost:8091",
-            "bucket": "main",
-            "username": "admin",
-            "password": "admin1",
-            "enable_shared_bucket_access": true,
-            "import_docs":"continuous",
-            "users": {
-                "GUEST": {
-                    "disabled": false,
-                    "admin_channels": [
-                        "*"
-                    ]
-                }
-            },
-            "sync":`function(doc) {
-                channel(doc.channel);
-            }`,
-            "allow_conflicts": false,
-            "revs_limit": 20
-        }
-    }
-}
+      "main": {
+          "server": "http://localhost:8091",
+          "bucket": "main",
+          "username": "admin",
+          "password": "admin1",
+          "enable_shared_bucket_access": true,
+          "users": {
+              "GUEST": {
+                  "disabled": false,
+                  "admin_channels": [
+                      "*"
+                  ]
+              }
+          },
+          "sync":`function(doc) {
+              channel(doc.channel);
+          }`,
+          "allow_conflicts": false,
+          "num_index_replicas": 0,
+          "revs_limit": 20
+      }
+  }
+  }

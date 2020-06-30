@@ -372,4 +372,10 @@ export class SubscriptionComponent implements OnInit {
   focusingOut() {
     this.isFocused = '';
   }
+
+  logout(){
+    window.localStorage.setItem('channel',this.database.uid());
+
+    return window.location.href='/login';
+  }
 }

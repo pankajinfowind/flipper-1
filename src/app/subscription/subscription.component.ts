@@ -40,7 +40,7 @@ export class Data {
 }
 export class Message {
   status?: string;
-
+  meta:any;
   data: Data;
   message?: string;
   expiresAt?: any;
@@ -94,7 +94,7 @@ export class SubscriptionComponent implements OnInit {
 
   step = 0;
   isFocused: any = '';
-
+  redirectMomo=null;
   ngOnInit() {
     const userId = this.currentUser.get('userId') as number;
 
@@ -203,6 +203,8 @@ export class SubscriptionComponent implements OnInit {
       phone: '07888888888',
       amount: this.flipperPlan,
       pay_type: 'CARD',
+      appname:'FLIPPER',
+      currency:'RWF',
       userId: this.currentUser.currentUser.id
     };
 
@@ -223,6 +225,8 @@ export class SubscriptionComponent implements OnInit {
       amount: this.flipperPlan,
       pay_type: 'MOMO-RWANDA',
       userId: this.currentUser.currentUser.id,
+      appname:'FLIPPER',
+      currency:'RWF'
     };
 
     this.message.error = false;
@@ -250,13 +254,14 @@ export class SubscriptionComponent implements OnInit {
     this.cardExpiredTxt.next('');
     this.message.error = false;
     this.message.message = '';
-
+    this.redirectMomo="";
     return this.httpClient
       .post(environment.appUrl + 'api/pay',
         creds, { headers }).pipe(finalize(() => this.loading.next(false)))
       .subscribe(res => {
         this.loading.next(false);
         const response: Response = res as Response;
+        console.log(response);
         if (response.message.status === 'error') {
           if (response.message.data.code === 'CARD_ERR') {
             this.ccNumMissingTxt.next(response.message.data.message);
@@ -269,7 +274,14 @@ export class SubscriptionComponent implements OnInit {
           if (response.message.status === 'success') {
             if (payType === 'MOMO') {
               this.message.error = false;
-              this.message.message = response.message.data.chargeResponseMessage;
+              if(response.message.meta && response.message.meta.authorization && response.message.meta.authorization.mode=='redirect'){
+
+                this.redirectMomo=response.message.meta.authorization.redirect;
+
+              }else{
+                this.message.message = response.message.data.chargeResponseMessage;
+              }
+              
 
             } else {
 
@@ -325,7 +337,7 @@ export class SubscriptionComponent implements OnInit {
           this.message.message = '';
           this.message.momo = '';
           this.currentUser.currentUser.expiresAt = Date.parse(data.expiresAt);
-          console.log(this.currentUser.currentUser);
+          // console.log(this.currentUser.currentUser);
           this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
           return this.openDialog(true, data);
         }

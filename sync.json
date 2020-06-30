@@ -2,12 +2,13 @@
     "adminInterface": "127.0.0.1:4985",
     "interface": "0.0.0.0:4984",
     "databases": {
-        "db": {
+        "main": {
             "server": "http://localhost:8091",
             "bucket": "main",
             "username": "admin",
             "password": "admin1",
             "enable_shared_bucket_access": true,
+            "import_docs":"continuous",
             "users": {
                 "GUEST": {
                     "disabled": false,
@@ -17,7 +18,7 @@
                 }
             },
             "sync":`function(doc) {
-                channel(doc.type);
+                channel(doc.channel);
             }`,
             "allow_conflicts": false,
             "revs_limit": 20

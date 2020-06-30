@@ -422,6 +422,8 @@
 <script src="../renderer.js"></script>
 
 <script>
+  //we do not set URL here because it will  come from firestore for scalability.
+  window.localStorage.setItem('bucket', 'main');
   if (global === undefined) {
     var global = window;
   }

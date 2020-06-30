@@ -340,6 +340,9 @@ const variants:Variant[]= this.model.raw(`SELECT
       this.currentOrder.isDraft = false;
       this.currentOrder.active = false;
       this.currentOrder.status = STATUS.COMPLETE;
+       this.currentOrder.createdAt = new Date();
+       this.currentOrder.updatedAt = new Date();
+       
       this.model.update<Order>(Tables.order, this.currentOrder, this.currentOrder.id);
       const formOrder= {
         active: this.currentOrder.active,

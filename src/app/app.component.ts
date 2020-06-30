@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
       this.database.sync(PouchConfig.syncUrl);
     }
     this.database.getChangeListener().subscribe(data => {
-      console.log(data);
+      // console.log(data);
     });
 
     this.router.events.subscribe(e => {

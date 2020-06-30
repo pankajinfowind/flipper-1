@@ -1,0 +1,26 @@
+{
+    "adminInterface": "127.0.0.1:4985",
+    "interface": "0.0.0.0:4984",
+    "databases": {
+        "db": {
+            "server": "http://localhost:8091",
+            "bucket": "main",
+            "username": "admin",
+            "password": "admin1",
+            "enable_shared_bucket_access": true,
+            "users": {
+                "GUEST": {
+                    "disabled": false,
+                    "admin_channels": [
+                        "*"
+                    ]
+                }
+            },
+            "sync":`function(doc) {
+                channel(doc.type);
+            }`,
+            "allow_conflicts": false,
+            "revs_limit": 20
+        }
+    }
+}

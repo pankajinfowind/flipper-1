@@ -25,6 +25,7 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "ng": "ng",
+    "start-electron": "npm-run-all -p electron:serve",
     "start": "npm-run-all -p ng:serve electron:serve",
     "build": "npm run postinstall:electron && npm run electron:serve-tsc && ng build  --prod --base-href=./ && gulp",
     "build:dev": "npm run build -- -c dev",
@@ -81,7 +82,7 @@
     "codelyzer": "^5.1.2",
     "conventional-changelog-cli": "2.0.34",
     "core-js": "3.6.5",
-    "electron": "^9.0.3",
+    "electron": "9.0.5",
     "electron-builder": "22.7.0",
     "electron-reload": "1.5.0",
     "gulp": "^4.0.2",

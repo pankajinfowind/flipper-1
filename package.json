@@ -151,7 +151,6 @@
     "pouchdb": "^7.2.1",
     "pouchdb-find": "^7.2.1",
     "pusher-js": "^6.0.3",
-    "rebuild": "0.1.2",
     "showdown": "^1.9.1",
     "tslib": "^1.10.0",
     "uuid": "^8.1.0"

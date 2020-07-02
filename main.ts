@@ -261,3 +261,5 @@ try {
 
 // cd C:\Program Files\Couchbase\Sync Gateway
 // sync_gateway.exe serviceconfig.json
+
+// https://forums.couchbase.com/t/admin-api-localhost-website-cors/10965/3

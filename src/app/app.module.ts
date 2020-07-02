@@ -80,7 +80,7 @@ export class AppModule {
             if (plan.length == 0) {
               this.firestore.collection(this.businessName).add({
                 'bucket': 'main',
-                'syncUrl': 'http://localhost:4984/',
+                'syncUrl': 'http://localhost:4985/',
                 'canSync': 'false',
                 'businessName': this.businessName,
                 'channel': this.database.uid()

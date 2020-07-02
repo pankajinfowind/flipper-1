@@ -110,7 +110,6 @@
     "node": ">=10.9.0"
   },
   "dependencies": {
-    
     "@angular/animations": "~9.1.11",
     "@angular/cdk": "~9.2.4",
     "@angular/fire": "^6.0.0",

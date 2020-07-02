@@ -146,7 +146,6 @@
     "ghooks": "^2.0.4",
     "i": "^0.3.6",
     "ngx-barcode": "^0.2.4",
-    "node-gyp": "7.0.0",
     "node-notifier": "^7.0.1",
     "npm": "^6.14.5",
     "pouchdb": "^7.2.1",

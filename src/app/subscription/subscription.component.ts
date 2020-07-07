@@ -261,7 +261,7 @@ export class SubscriptionComponent implements OnInit {
       .subscribe(res => {
         this.loading.next(false);
         const response: Response = res as Response;
-        console.log(response);
+        // console.log(response);
         if (response.message.status === 'error') {
           if (response.message.data.code === 'CARD_ERR') {
             this.ccNumMissingTxt.next(response.message.data.message);

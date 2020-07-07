@@ -20,21 +20,20 @@ export class AppComponent implements OnInit {
     public electronService: ElectronService,
     private translate: TranslateService,
     private database: PouchDBService) {
-
     this.translate.setDefaultLang('en');
     this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
       .subscribe(res => {
         if(!res.business)return;
-        this.database.connect(PouchConfig.bucket,res.business.id);
+        //console.log("userId",res.business.userId);
+        this.database.connect(PouchConfig.bucket);
+        
         if (PouchConfig.canSync) {
-          this.database.sync(PouchConfig.syncUrl);
+          this.database.sync(PouchConfig.syncUrl +"/main");
         }
         this.database.getChangeListener().subscribe(data => {
           // console.log(data);
         });
-
       });
-
 
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {

@@ -81,7 +81,7 @@ export class AppModule {
               this.firestore.collection(this.businessName).add({
                 'bucket': 'main',
                 'syncUrl': 'http://localhost:4985/',
-                'canSync': 'false',
+                'canSync': 'true',
                 'businessName': this.businessName,
                 'channel': this.database.uid()
               }).then(() => {
@@ -92,12 +92,21 @@ export class AppModule {
                     window.localStorage.setItem('syncUrl', plan[0].syncUrl);
                     window.localStorage.setItem('canSync', plan[0].canSync);
                   }
+                  this.database.sync(plan[0].syncUrl);
                 })
               })
             }else{
               this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
                 if (res) {
+                  
+
                   const plan: any[] = res as any[];
+
+                  if(plan[0].canSync == 'true'){
+                    this.database.sync(plan[0].syncUrl);
+                  }
+                  
+
                   window.localStorage.setItem('bucket', plan[0].bucket);
                   window.localStorage.setItem('syncUrl', plan[0].syncUrl);
                   window.localStorage.setItem('canSync', plan[0].canSync);

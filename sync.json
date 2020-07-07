@@ -3,7 +3,8 @@
     "interface": "0.0.0.0:4985",
     "CORS": {
         "Origin": [
-            "null"
+            "null",
+            "http://localhost:4200"
         ],
         "LoginOrigin": [
             "*"
@@ -21,6 +22,7 @@
         }
     },
     "databases": {
+        
         "main": {
             "server": "http://localhost:8091",
             "bucket": "main",
@@ -41,7 +43,7 @@
             "allow_conflicts": false,
             "import_docs": true,
             "num_index_replicas": 0,
-            "revs_limit": 20
+            "revs_limit": 100
         }
     }
   }

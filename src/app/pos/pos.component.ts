@@ -3,8 +3,7 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import {
   fadeInAnimation, CalculateTotalClassPipe, Order,
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
-  Product, OrderDetails, StockHistory, Business, Taxes, PouchDBService, PouchConfig, Variant
-} from '@enexus/flipper-components';
+  Product, OrderDetails, StockHistory, Business, Taxes, PouchDBService, PouchConfig, Variant } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
 @Component({

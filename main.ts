@@ -5,7 +5,6 @@ const { setup: setupPushReceiver } = require('electron-push-receiver');
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
 const notifier = require('node-notifier');
 const { menu } = require('./menu');
-
 const onError = (err, response) => {
   console.error(err, response);
 };
@@ -190,24 +189,23 @@ function createWindow() {
     height: size.height,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      enableRemoteModule: true
+      nodeIntegration: true
     },
     icon: iconName
   });
   win.setMenu(null);
-  // if (serve) {
-    // require('electron-reload')(__dirname, {
-    //   electron: require(`${__dirname}/node_modules/electron`)
-    // });
-    // win.loadURL('http://localhost:4200');
-  // } else {
+  if (serve) {
+    require('electron-reload')(__dirname, {
+      electron: require(`${__dirname}/node_modules/electron`)
+    });
+    win.loadURL('http://localhost:4200');
+  } else {
     win.loadURL(url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
       protocol: 'file:',
-      slashes: false
+      slashes: true
     }));
-  // }
+  }
   if (serve) {
     // win.webContents.openDevTools();
   }
@@ -260,6 +258,3 @@ try {
 // https://github.com/electron-userland/electron-builder/issues/1084
 // https://stackoverflow.com/questions/24326685/pin-icons-to-taskbar
 // https://www.electron.build/configuration/nsis
-
-// cd C:\Program Files\Couchbase\Sync Gateway
-// sync_gateway.exe serviceconfig.json

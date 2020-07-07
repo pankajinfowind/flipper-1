@@ -258,3 +258,8 @@ try {
 // https://github.com/electron-userland/electron-builder/issues/1084
 // https://stackoverflow.com/questions/24326685/pin-icons-to-taskbar
 // https://www.electron.build/configuration/nsis
+
+// cd C:\Program Files\Couchbase\Sync Gateway
+// sync_gateway.exe serviceconfig.json
+
+// https://forums.couchbase.com/t/admin-api-localhost-website-cors/10965/3

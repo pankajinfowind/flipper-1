@@ -1,7 +1,7 @@
 {
   "name": "flipper",
   "appId": "flipper.rw",
-  "version": "1.1.116",
+  "version": "1.1.117",
   "description": "Flipper business app for business",
   "homepage": "https://flipper.rw/",
   "productName": "flipper",
@@ -111,7 +111,6 @@
     "node": ">=10.9.0"
   },
   "dependencies": {
-    "@angular-eslint/builder": "0.0.1-alpha.18",
     "@angular/animations": "~9.1.11",
     "@angular/cdk": "~9.2.4",
     "@angular/fire": "^6.0.0",
@@ -119,7 +118,7 @@
     "@angular/localize": "^9.1.11",
     "@angular/material": "~9.2.4",
     "@enexus/flipper-color": "0.0.3",
-    "@enexus/flipper-components": "1.0.6",
+    "@enexus/flipper-components": "1.0.8",
     "@enexus/flipper-dashboard": "0.0.6",
     "@enexus/flipper-dialog": "1.0.2",
     "@enexus/flipper-event": "0.0.3",
@@ -147,13 +146,11 @@
     "ghooks": "^2.0.4",
     "i": "^0.3.6",
     "ngx-barcode": "^0.2.4",
-    "node-gyp": "7.0.0",
     "node-notifier": "^7.0.1",
     "npm": "^6.14.5",
     "pouchdb": "^7.2.1",
     "pouchdb-find": "^7.2.1",
     "pusher-js": "^6.0.3",
-    "rebuild": "0.1.2",
     "showdown": "^1.9.1",
     "tslib": "^1.10.0",
     "uuid": "^8.1.0"

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ElectronService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Menu, Tables, MainModelService, PouchConfig, PouchDBService } from '@enexus/flipper-components';
+import { Menu, Tables, MainModelService, PouchConfig, PouchDBService, CurrentBusinessEvent } from '@enexus/flipper-components';
+import { FlipperEventBusService } from '@enexus/flipper-event';
 // import {MessagingService} from './messaging.service';
 
 @Component({
@@ -10,20 +11,30 @@ import { Menu, Tables, MainModelService, PouchConfig, PouchDBService } from '@en
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   message: any;
   constructor(
-    // private msgService: MessagingService,
-    private model: MainModelService, private router: Router, public electronService: ElectronService,
-    private translate: TranslateService, private database: PouchDBService) {
+    private eventBus: FlipperEventBusService,
+    private model: MainModelService,
+    private router: Router,
+    public electronService: ElectronService,
+    private translate: TranslateService,
+    private database: PouchDBService) {
+
     this.translate.setDefaultLang('en');
-    this.database.connect(PouchConfig.bucket);
-    if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
-    }
-    this.database.getChangeListener().subscribe(data => {
-      // console.log(data);
-    });
+    this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
+      .subscribe(res => {
+        if(!res.business)return;
+        this.database.connect(PouchConfig.bucket,res.business.id);
+        if (PouchConfig.canSync) {
+          this.database.sync(PouchConfig.syncUrl);
+        }
+        this.database.getChangeListener().subscribe(data => {
+          // console.log(data);
+        });
+
+      });
+
 
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
@@ -51,7 +62,7 @@ export class AppComponent implements OnInit{
     // this.msgService.getPermission();
     // this.msgService.receiveMessage();
     // this.message = this.msgService.currentMessage;
-    
+
   }
 
   updateActiveMenu(route: string = 'admin/analytics') {

@@ -1,6 +1,5 @@
 import { NgModule} from '@angular/core';
 import { VendorsModule} from '@enexus/flipper-vendors';
-import {PageNotFoundComponent} from './components/';
 import {WebviewDirective} from './directives/';
 import {FlipperEventModule} from '@enexus/flipper-event';
 import {FlipperComponentsModule} from '@enexus/flipper-components';
@@ -12,6 +11,7 @@ import { FlipperSettingsModule } from '@enexus/flipper-settings';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperPaymentCardModule } from '@enexus/payment-card';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
+import { PageNotFoundComponent } from './components';
 @NgModule({
   declarations: [
     PageNotFoundComponent,

@@ -19,8 +19,8 @@ autoUpdater.logger.transports.file.level = 'info';
 const nativeImage = require('electron').nativeImage;
 const isDev = require('electron-is-dev');
 serve = args.some(val => val === '--serve');
-ipcMain.on('sent-login-message', (event,url) => {
-  const authUrl = url ;
+ipcMain.on('sent-login-message', (event, url) => {
+  const authUrl = url;
   const size = screen.getPrimaryDisplay().workAreaSize;
   let authWindow = new BrowserWindow({
     width: 700,
@@ -38,7 +38,7 @@ ipcMain.on('sent-login-message', (event,url) => {
     shell.openExternal(uri);
   };
   authWindow.webContents.on('will-navigate', handleRedirect);
-  authWindow.loadURL(authUrl +'login');
+  authWindow.loadURL(authUrl + 'login');
   const ses = authWindow.webContents.session;
   ses.clearCache();
   ses.cookies.get({})
@@ -68,7 +68,7 @@ ipcMain.on('sent-login-message', (event,url) => {
     let expiresAt = null;
     const params = currentURL.split('?');
     if (params && params.length === 2) {
-      if (params[0] === authUrl+'authorized') {
+      if (params[0] === authUrl + 'authorized') {
         try {
           raw = params[1];
           token = raw.split('&')[0];
@@ -84,7 +84,7 @@ ipcMain.on('sent-login-message', (event,url) => {
           subscription = raw.split('&')[5];
           subscription = subscription.split('=')[1];
           expiresAt = raw.split('&')[6];
-          expiresAt =  expiresAt.split('=')[1];
+          expiresAt = expiresAt.split('=')[1];
           event.sender.send('received-login-message', [email, name, avatar, token, id, subscription, expiresAt]);
           authWindow.destroy();
         } catch (e) {
@@ -102,7 +102,7 @@ ipcMain.on('sent-login-message', (event,url) => {
 });
 ///////////////////// AUTO UPDATED  /////////////////////////////
 // this is just to test autoUpdater feature.
-let icon = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/linux/icon.png'));
+let icon = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/linux/icon.png'));
 
 function showMessage(message, title) {
   notifier.notify({
@@ -157,12 +157,12 @@ if (!isDev) {
 }
 let iconName;
 if (process.platform === 'win32') {
-  iconName = nativeImage.createFromPath( path.join(__dirname, '../assets/icon/win/icon.png'));
+  iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/win/icon.png'));
 } else
   if (process.platform === 'darwin') {
     iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/mac/icon.png'));
   } else {
-    iconName =nativeImage.createFromPath( path.join(__dirname, '../assets/icon/linux/icon.png'));
+    iconName = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/linux/icon.png'));
   }
 function createWindow() {
   autoUpdater.setFeedURL({
@@ -211,7 +211,7 @@ function createWindow() {
   }
 
   setupPushReceiver(win.webContents);
-  
+
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -220,7 +220,7 @@ function createWindow() {
     win = null;
   });
 
-  
+
 }
 try {
   // This method will be called when Electron has finished

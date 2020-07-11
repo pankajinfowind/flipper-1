@@ -6,10 +6,7 @@
     "baseUrl": "",
     "types": []
   },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": false,
-    "preserveWhitespaces": false
-  },
+ 
   "exclude": [
     "**/*.spec.ts"
   ]

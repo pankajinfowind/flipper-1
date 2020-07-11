@@ -11,10 +11,6 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "skipLibCheck": true,
-    "angularCompilerOptions": {
-      "fullTemplateTypeCheck": false,
-      "preserveWhitespaces": false
-    },
     "typeRoots": [
       "node_modules/@types"
     ],

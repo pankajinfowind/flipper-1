@@ -2,8 +2,62 @@
   "extends": "tslint:recommended",
   "rules": {
     "adjacent-overload-signatures": [true, {"OPTION_IGNORE_ACCESSORS": true}],
+    "align": {
+      "options": [
+        "parameters",
+        "statements"
+      ]
+    },
+    "arrow-return-shorthand": true,
+    "curly": true,
+    "eofline": true,
     "forin": false,
     "array-type": false,
+    "import-spacing": true,
+    "indent": {
+      "options": [
+        "spaces"
+      ]
+    },
+    "semicolon": {
+      "options": [
+        "always"
+      ]
+    },
+    "space-before-function-paren": {
+      "options": {
+        "anonymous": "never",
+        "asyncArrow": "always",
+        "constructor": "never",
+        "method": "never",
+        "named": "never"
+      }
+    },
+    "typedef-whitespace": {
+      "options": [
+        {
+          "call-signature": "nospace",
+          "index-signature": "nospace",
+          "parameter": "nospace",
+          "property-declaration": "nospace",
+          "variable-declaration": "nospace"
+        },
+        {
+          "call-signature": "onespace",
+          "index-signature": "onespace",
+          "parameter": "onespace",
+          "property-declaration": "onespace",
+          "variable-declaration": "onespace"
+        }
+      ]
+    },
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-pascal-case"
+      ]
+    },
     "whitespace": false,
     "arrow-parens": false,
     "deprecation": {

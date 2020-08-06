@@ -39,11 +39,8 @@ export class PosComponent {
               private database: PouchDBService,
               private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
       this.branch = this.model.active<Branch>(Tables.branch);
-      this.init();
       this.database.connect(PouchConfig.bucket);
-      if (PouchConfig.canSync) {
-     this.database.sync(PouchConfig.syncUrl);
-   }
+      this.init();
   }
   defaultBranch: Branch = this.model.active<Branch>(Tables.branch);
   public variants: Variant[] = [];
@@ -61,6 +58,9 @@ export class PosComponent {
     // this.loadVariants();
     if (this.currentOrder) {
       this.getOrderDetails(this.currentOrder.id);
+    }
+    if (PouchConfig.canSync) {
+      this.database.sync(PouchConfig.syncUrl);
     }
   }
 
@@ -371,6 +371,7 @@ const variants:Variant[]= this.model.raw(`SELECT
 
       };
       this.database.put(PouchConfig.Tables.orders,{orders:[formOrder]});
+      
       const orderDetails=[];
       this.getOrderDetails(this.currentOrder.id).forEach(details=> {
         orderDetails.push(
@@ -380,7 +381,6 @@ const variants:Variant[]= this.model.raw(`SELECT
           id: details.id,
           orderId: details.orderId,
           price: details.price,
-          productName: details.productName?details.productName:'Custom',
           quantity: details.quantity,
           stockId: details.stockId?details.stockId:'',
           subTotal: details.subTotal,

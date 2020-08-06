@@ -15,6 +15,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PusherService } from '../pusher.service';
 import { PaidSuccessComponent } from './paid-success/paid-success.component';
+import { Router } from '@angular/router';
+// import console from 'console';
 
 export class Response {
   message: Message;
@@ -65,7 +67,7 @@ export class SubscriptionComponent implements OnInit {
 
   constructor(private pusher: PusherService,
               private firestore: AngularFirestore,
-              
+              private router: Router,
               public dialog: DialogService, private eventBus: FlipperEventBusService, private database: PouchDBService,
               public currentUser: CurrentUser,
               public electronService: ElectronService, protected httpClient: HttpClient) {
@@ -110,7 +112,7 @@ export class SubscriptionComponent implements OnInit {
 
 
     this.pusher.paymentApproved.bind('event-payment-message-flipper.' + userId, (event) => {
-
+// console.table(event);
       if (event) {
 
 
@@ -128,6 +130,7 @@ export class SubscriptionComponent implements OnInit {
         }
       }
     });
+
     this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
@@ -172,12 +175,14 @@ export class SubscriptionComponent implements OnInit {
             didSubscribed: true,
             createdAt: new Date(),
             updatedAt: new Date(),
+            table:'subscription',
+            docId:PouchConfig.Tables.subscription
           };
 
 
-          if (this.database.put(PouchConfig.Tables.subscription, subscription)) {
-            return window.location.href = '/admin';
-          }
+          this.database.put(PouchConfig.Tables.subscription, subscription);
+            return  this.router.navigate(['/admin']);
+          
         }
 
       });
@@ -388,7 +393,7 @@ export class SubscriptionComponent implements OnInit {
 
   logout(){
     window.localStorage.setItem('channel',this.database.uid());
-
-    return window.location.href='/login';
+      this.currentUser.redirectUri='login';
+      return  this.router.navigate(['/login']);
   }
 }

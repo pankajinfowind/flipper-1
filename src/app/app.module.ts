@@ -73,6 +73,7 @@ export class AppModule {
       .subscribe(res => {
         if(!res.business)return;
         this.businessName = res.business.name;
+        let userId=res.business.userId;
         this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
           if (res) {
             // http://localhost:4985/
@@ -81,9 +82,9 @@ export class AppModule {
               this.firestore.collection(this.businessName).add({
                 'bucket': 'main',
                 'syncUrl': 'http://localhost:4985/',
-                'canSync': 'false',
+                'canSync': 'true',
                 'businessName': this.businessName,
-                'channel': this.database.uid()
+                'channel': userId
               }).then(() => {
                 this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
                   if (res) {

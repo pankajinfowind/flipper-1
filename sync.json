@@ -3,7 +3,8 @@
     "interface": "0.0.0.0:4985",
     "CORS": {
         "Origin": [
-            "null"
+            "null",
+            "http://localhost:4200"
         ],
         "LoginOrigin": [
             "*"
@@ -36,7 +37,7 @@
                 }
             },
             "sync":`function(doc) {
-              channel(doc.channels);
+              channel(doc.channel);
             }`,
             "allow_conflicts": false,
             "import_docs": true,

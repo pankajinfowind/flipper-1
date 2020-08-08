@@ -1,4 +1,4 @@
-<div class="container1">
+<!-- <div class="container1">
   <flipper-header></flipper-header>
   <div class="contents" @insertLogin>
     <div class="card padding_0 span_4_of_6 display_flex flex_direction_column align_items_center">
@@ -15,4 +15,22 @@
   </div>
   
 
+</div> -->
+
+<div class="main-wrapper">
+  <div class="qr_wrapper">
+    <div class="left_wrapper">
+      <span>To use FLipper on Desktop:</span>
+      <ol>
+        <li> Open Flipper on your phone </li>
+        <li>Tap Menu: or Settings and Select FLipper Desktop </li>
+        <li>Point your phone to this screen to capture the code. </li>
+
+      </ol>
+    </div>
+    <div class="qr_image">
+      <qrcode [level]="2" qrvalue="{{qrcode}}"></qrcode>
+     
+    </div>
+</div>
 </div>

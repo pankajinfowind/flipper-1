@@ -12,18 +12,36 @@
 //   return userAgent.indexOf(" electron/") > -1;
 // };
 
-const { ipcRenderer } = require ('electron')
+const { ipcRenderer } = require('electron')
 const {
   START_NOTIFICATION_SERVICE,
   NOTIFICATION_SERVICE_STARTED,
   NOTIFICATION_SERVICE_ERROR,
   NOTIFICATION_RECEIVED,
   TOKEN_UPDATED,
-} = require ('electron-push-receiver/src/constants')
+} = require('electron-push-receiver/src/constants')
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {
-  console.log('service successfully started', token)
+
+  
+  // const request = require('request');
+
+  // let options = {
+  //   url: 'http://http://mockbin.com/request',
+  //   form: {
+  //     email: 'me@example.com',
+  //     password: 'myPassword'
+  //   },
+  //   headers: {
+  //     'Authorization': 'Bearer 71D50F9987529'
+  //  }
+  // };
+  // request.post(options, function (err, res, body) {
+  //   console.log(body);
+  // });
+
+
 })
 
 // Handle notification errors
@@ -39,16 +57,16 @@ ipcRenderer.on(TOKEN_UPDATED, (_, token) => {
 // Display notification
 ipcRenderer.on(NOTIFICATION_RECEIVED, (_, serverNotificationPayload) => {
   // check to see if payload contains a body string, if it doesn't consider it a silent push
-  if (serverNotificationPayload.notification.body){
+  if (serverNotificationPayload.notification.body) {
     // payload has a body, so show it to the user
     console.log('display notification', serverNotificationPayload)
     let myNotification = new Notification(serverNotificationPayload.notification.title, {
       body: serverNotificationPayload.notification.body
     })
-    
+
     myNotification.onclick = () => {
       console.log('Notification clicked')
-    }  
+    }
   } else {
     // payload has no body, so consider it silent (and just consider the data portion)
     console.log('do something with the key/value pairs in the data', serverNotificationPayload.data)

@@ -26,6 +26,7 @@ import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestor
 import { PaidSuccessComponent } from './subscription/paid-success/paid-success.component';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { SafePipe } from './safe.pipe';
+import { AnQrcodeModule } from 'an-qrcode';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,7 +39,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CoreModule,
     SharedModule,
     AppRoutingModule,
-
+    AnQrcodeModule,
     AngularFireModule.initializeApp(environment.config),
     AngularFirestoreModule,
     AngularFireDatabaseModule,

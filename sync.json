@@ -1,8 +1,9 @@
 {
-    "adminInterface": "127.0.0.1:4986",
-    "interface": "0.0.0.0:4985",
+    "adminInterface": "0.0.0.0:4985",
+    "interface": "0.0.0.0:4984",
     "CORS": {
         "Origin": [
+            "*",
             "null",
             "http://localhost:4200"
         ],
@@ -24,10 +25,10 @@
     "databases": {
         
         "main": {
-            "server": "http://localhost:8091",
+            "server": "http://yegobox.com:8091",
             "bucket": "main",
             "username": "admin",
-            "password": "admin1",
+            "password": "4::love:gasaro::mineLove$%",
             "enable_shared_bucket_access": true,
             "users": {
                 "GUEST": {
@@ -35,7 +36,13 @@
                     "admin_channels": [
                         "*"
                     ]
-                }
+                },
+                "admin": {
+                  "disabled": false,
+                  "admin_channels": [
+                      "*"
+                  ]
+              }
             },
             "sync":`function(doc) {
               channel(doc.channels);

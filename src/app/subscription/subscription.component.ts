@@ -112,8 +112,6 @@ export class SubscriptionComponent implements OnInit {
     this.pusher.paymentApproved.bind('event-payment-message-flipper.' + userId, (event) => {
 
       if (event) {
-
-
         if (event.payment_status === 'approved') {
           this.message.error = false;
           this.message.message = '';

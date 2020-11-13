@@ -5,6 +5,7 @@ import {
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
   Product, OrderDetails, StockHistory, Business, Taxes, PouchDBService, PouchConfig, Variant } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
+import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory';
 
 @Component({
   selector: 'app-pos',
@@ -17,7 +18,6 @@ import { ModelService } from '@enexus/flipper-offline-database';
   ],
 })
 export class PosComponent {
-
   get theVariantFiltered(): Variant[] {
     return this.seTheVariantFiltered;
   }
@@ -34,34 +34,87 @@ export class PosComponent {
     this.setCurrentOrder = value;
   }
   public branch: Branch | null;
-
+  public defaultBusiness$: Business = null;
+  public defaultBranch:Branch=null;
+  public defaultTax$: Taxes = null;
+  public orderDetails:OrderDetails[]=[];
+ 
+  public currency=null;
   constructor(private model: MainModelService,
               private database: PouchDBService,
-              private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
+              private stock: StockService,
+              public variant: VariationService,
+              public product: ProductService, 
+               private totalPipe: CalculateTotalClassPipe) {
       this.branch = this.model.active<Branch>(Tables.branch);
-      this.init();
-      this.database.connect(PouchConfig.bucket);
+      this.database.connect(PouchConfig.bucket,'117');
       if (PouchConfig.canSync) {
-     this.database.sync(PouchConfig.syncUrl);
-   }
+        this.database.sync(PouchConfig.syncUrl);
+      }
+      this.init();
   }
-  defaultBranch: Branch = this.model.active<Branch>(Tables.branch);
+
   public variants: Variant[] = [];
   private seTheVariantFiltered: Variant[] = [];
   public collectCashCompleted: object = {};
 
-  public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
+ 
   private setCurrentOrder: Order;
 
-  date = new Date();
+  date = new Date().toISOString();
 
-  init() {
-    this.hasDraftOrder();
-    this.newOrder();
-    // this.loadVariants();
-    if (this.currentOrder) {
-      this.getOrderDetails(this.currentOrder.id);
+  async ngOnInit() {
+    const user = {
+      _id: '',
+      name: 'ganza',
+      email: 'respinho2014@gmail.com',
+      token: 'xxxxx',
+      active: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      id: this.database.uid(),
+      userId: 117,
+      expiresAt: Date.parse('2020-02-10') as number,
+      table:'users',
+      docId:PouchConfig.Tables.user,
+      
+    };
+    
+    // await  this.database.put(PouchConfig.Tables.user, user);
+    this.init();
+  }
+  async init() {
+    await this.currentBusiness();
+    await this.currentBranches();
+    await this.hasDraftOrder();
+    await this.newOrder();
+    await this. variant.variations();
+    await this.stock. allStocks();
+    if(this.defaultBusiness$){
+      await this.product.loadAllProducts(this.defaultBusiness$.id);
     }
+   
+
+     
+    if (this.currentOrder) {
+      await this.allOrderDetails(this.currentOrder.id);
+     await  this.getOrderDetails();
+    }
+   
+     this.currency = await this.defaultBusiness$  ? this.defaultBusiness$ .currency : 'RWF';
+
+  }
+  
+  public currentBusiness() {
+    return this.database.currentBusiness().then(business => {
+ 
+      this.defaultBusiness$ = business;
+    });
+  }
+  currentBranches() {
+    return this.database.listBusinessBranches().then(branches => {
+      this.defaultBranch = branches.length > 0?branches[0]:0;
+    });
   }
 
   makeid(length: number) {
@@ -78,53 +131,105 @@ export class PosComponent {
     return this.makeid(5);
   }
 
-  public newOrder() {
-    if (!this.setCurrentOrder) {
+  public async newOrder() {
+    if (!this.currentOrder) {
+          const formOrder:Order={
+                id: this.database.uid(),
+                reference: 'SO' + this.generateCode(),
+                orderNumber: 'SO' + this.generateCode(),
+                branchId: this.defaultBranch ? this.defaultBranch.id : '0',
+                status: STATUS.OPEN,
+                orderType: ORDERTYPE.SALES,
+                active: true,
+                orderItems: [],
+                isDraft: true,
+                subTotal: 0.00,
+                cashReceived: 0.00,
+                customerChangeDue: 0.00,
+                table: 'orders',
+                channels:[this.defaultBusiness$.userId],
+                createdAt: this.date,
+                updatedAt: this.date
+          };
 
-      this.model.create<Order>(Tables.order, {
-        id: this.database.uid(),
-        reference: 'SO' + this.generateCode(),
-        orderNumber: 'SO' + this.generateCode(),
-        branchId: this.defaultBranch ? this.defaultBranch.id : 0,
-        status: STATUS.OPEN,
-        orderType: ORDERTYPE.SALES,
-        active: true,
-        orderItems: [],
-        isDraft: true,
-        subTotal: 0.00,
-        cashReceived: 0.00,
-        customerChangeDue: 0.00,
-        createdAt: this.date,
-        updatedAt: this.date
-      });
+      await this.database.put(PouchConfig.Tables.orders + '_' + formOrder.id, formOrder);
       this.hasDraftOrder();
 
     }
+
   }
 
-  hasDraftOrder(): void {
-    this.setCurrentOrder = this.model.draft<Order>(Tables.order, 'isDraft');
-    if (this.setCurrentOrder) {
-      const orderDetails: OrderDetails[] = this.getOrderDetails(this.setCurrentOrder.id);
-      this.setCurrentOrder.orderItems = orderDetails;
+  async hasDraftOrder() {
+    await this.draftOrder(this.defaultBranch ? this.defaultBranch.id : 0) ;
+    if  (await this.currentOrder) {
+      await this.allOrderDetails(this.currentOrder.id);
+      const orderDetails = await this.getOrderDetails();
+    
+      this.currentOrder.orderItems = orderDetails && orderDetails.length > 0?orderDetails:[];
     }
   }
+  public async draftOrder(branchId) {
+    // comment
+   
+    return await this.database.query(['table','isDraft','branchId'], {
+      table: { $eq: 'orders' },
+      isDraft:{ $eq: true },
+      branchId: { $eq: branchId }
+    }).then(res => {
+      if (res.docs && res.docs.length > 0) {
+        this.currentOrder = res.docs[0] as Order;
+      } else {
+        this.currentOrder=null;
+      }
+  });
+}
 
-  getOrderDetails(orderId: number): OrderDetails[] {
+public async productTax(taxId) {
+  // comment
+ 
+  return await this.database.query(['table','id'], {
+    table: { $eq: 'taxes' },
+    id: { $eq: taxId }
+  }).then(res => {
+    if (res.docs && res.docs.length > 0) {
+      this.defaultTax$ = res.docs[0] as Taxes;
+    } else {
+      this.defaultTax$=null;
+    }
+});
+}
+
+public async allOrderDetails(orderId) {
+  // comment
+  
+  return await this.database.query(['table','orderId'], {
+    table: { $eq: 'orderDetails' },
+    orderId: { $eq: orderId }
+  }).then(res => {
+   
+    if (res.docs && res.docs.length > 0) {
+     
+      this.orderDetails = res.docs as OrderDetails[];
+    } else {
+      this.orderDetails=[];
+    }
+});
+}
+   getOrderDetails() {
+ 
+
     const orderDetails: OrderDetails[] = [];
-    this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId)
-      .forEach(details => {
+   this.orderDetails.forEach(details => {
         let stock: Stock = null;
         let variant: Variant = null;
         let product: Product = null;
-        variant = this.model.find<Variant>(Tables.variants, details.variantId);
+        variant = this.variant.allVariants.find(variant=>variant.id==details.variantId);
         if (variant) {
-          stock = this.query.select(Tables.stocks).where('variantId', variant.id)
-            .andWhere('branchId', this.defaultBranch.id).first<Stock>();
+          stock =this.stock.stocks.find(variant=>variant.variantId==variant.id);
         }
 
         if (variant) {
-          product = this.model.find<Product>(Tables.products, variant.productId);
+          product =  this.product.products.find(prod=>prod.id==variant.productId) 
         }
 
         details.stock = stock;
@@ -134,7 +239,9 @@ export class PosComponent {
 
         orderDetails.unshift(details);
       });
+
     return orderDetails;
+    
   }
 
 
@@ -155,33 +262,33 @@ export class PosComponent {
       // this.theVariantFiltered=[];
       // this.variants=[];
 let variantsArray:Variant[]=[];
-const variants:Variant[]= this.model.raw(`SELECT
- products.id as pId,
- variants.id,
- products.name as pName,
- variants.name,
- variants.SKU,
- variants.unit,
- variants.channel,
- variants.productId,
- variants.createdAt,
- variants.updatedAt
- FROM variants,products WHERE variants.productId = products.id  AND  (products.name LIKE "%${param}%" OR variants.name LIKE "%${param}%" OR variants.SKU="${param}") `);
+// const variants:Variant[]= this.model.raw(`SELECT
+//  products.id as pId,
+//  variants.id,
+//  products.name as pName,
+//  variants.name,
+//  variants.SKU,
+//  variants.unit,
+//  variants.channel,
+//  variants.productId,
+//  variants.createdAt,
+//  variants.updatedAt
+//  FROM variants,products WHERE variants.productId = products.id  AND  (products.name LIKE "%${param}%" OR variants.name LIKE "%${param}%" OR variants.SKU="${param}") `);
         
 
-  if (variants.length > 0) {
+  if (this.variant.allVariants.length > 0) {
 
-      variants.forEach(variant => {
+    this.variant.allVariants.forEach(variant => {
         
-         const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
-          .first<Stock>();
+         const stock: Stock =this.stock.stocks.find(res=>res.variantId==variant.id);
         
          if (stock) {
-          const product: Product = this.model.find<Product>(Tables.products, variant.productId);
 
-          const variation: Variant = this.model.find<Variant>(Tables.variants, variant.id);
+          // const product: Product = variant.productName;
 
-          variation.productName = product.name;
+          const variation: Variant = variant;
+
+          variation.productName = variant.productName;
 
           if (stock) {
               variation.stock = stock;
@@ -190,7 +297,7 @@ const variants:Variant[]= this.model.raw(`SELECT
           variation.name = variation.name === 'Regular' ? variation.productName+' - Regular' : variation.name;
 
           variation.priceVariant = {
-            id: 0,
+            id: '0',
             priceId: 0,
             variantId: variation.id,
             minUnit: 0,
@@ -199,7 +306,11 @@ const variants:Variant[]= this.model.raw(`SELECT
             supplyPrice: stock && stock.supplyPrice ? stock.supplyPrice : 0.00,
             wholeSalePrice: stock && stock.wholeSalePrice ? stock.wholeSalePrice : 0.00,
             discount: 0,
-            markup: 0
+            markup: 0,
+            table:'variants',
+            channels:[variant.userId],
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString()
           };
 
           if (stock.canTrackingStock===false) {
@@ -226,7 +337,7 @@ const variants:Variant[]= this.model.raw(`SELECT
       // console.log(results);
 
         if(results.length > 0){
-          this.theVariantFiltered = results; //this.filterByValue(this.variants, event);
+          this.theVariantFiltered = this.filterByValue(results, event);
         }
       
     }
@@ -249,59 +360,74 @@ const variants:Variant[]= this.model.raw(`SELECT
     });
   }
 
-  updateOrderDetails(details: { action: string, item: OrderDetails }) {
-    if (details.action === 'DELETE') {
-      this.model.delete(Tables.orderDetails, `'${details.item.id}'`);
-    }
+  async updateOrderDetails(details: { action: string, item: OrderDetails }) {
 
-    if (details.action === 'UPDATE') {
-      details.item.price = parseFloat(details.item.price);
-      details.item.quantity = details.item.quantity;
+        if (details.action === 'DELETE') {
+            await  this.database.remove(details.item);
+        }
 
-      const taxRate=details.item.taxRate?details.item.taxRate:0;
-      const subTotal=details.item.price * details.item.quantity;
+        if (details.action === 'UPDATE') {
 
-      details.item.taxAmount = (subTotal * taxRate) / 100;
-      details.item.subTotal = subTotal;
-      this.model.update<OrderDetails>(Tables.orderDetails, details.item, details.item.id);
-    }
+            details.item.price = parseFloat(details.item.price);
+            details.item.quantity = details.item.quantity;
 
-    this.updateOrder();
+            const taxRate=details.item.taxRate?details.item.taxRate:0;
+            const subTotal=details.item.price * details.item.quantity;
+
+            details.item.taxAmount = (subTotal * taxRate) / 100;
+            details.item.subTotal = subTotal;
+
+            await this.database.put(PouchConfig.Tables.orderDetails+'_'+details.item.id, details.item);
+        }
+      
+
+        await this.allOrderDetails(this.currentOrder.id);
+        this.currentOrder.orderItems = this.getOrderDetails();
+        this.updateOrder();
+    
   }
 
-  public updateOrder() {
+  public  async updateOrder() {
+        await this.allOrderDetails(this.currentOrder.id);
+        await  this.getOrderDetails();
+
+    const orderDetails=await this.orderDetails.filter(order=>order.orderId==this.currentOrder.id);
     const subtotal = parseFloat(this.totalPipe.transform<OrderDetails>
-      (this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', this.setCurrentOrder.id), 'subTotal'));
+      (orderDetails, 'subTotal'));
     const taxAmount = parseFloat(this.totalPipe.transform<OrderDetails>
-      (this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', this.setCurrentOrder.id), 'taxAmount'));
-    this.setCurrentOrder.subTotal = subtotal;
+      (orderDetails, 'taxAmount'));
+    this.currentOrder.subTotal = subtotal;
 
-    this.setCurrentOrder.taxAmount = taxAmount;
-    this.setCurrentOrder.saleTotal = subtotal + taxAmount;
+    this.currentOrder.taxAmount = taxAmount;
+    this.currentOrder.saleTotal = subtotal + taxAmount;
 
-    this.setCurrentOrder.customerChangeDue = this.setCurrentOrder.cashReceived > 0 ?
-      parseFloat(this.setCurrentOrder.cashReceived) - this.setCurrentOrder.saleTotal : 0.00;
-    this.setCurrentOrder.customerChangeDue = parseFloat(this.setCurrentOrder.customerChangeDue);
-    this.model.update<Order>(Tables.order, this.setCurrentOrder, this.setCurrentOrder.id);
-    this.hasDraftOrder();
+    this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
+      parseFloat(this.currentOrder.cashReceived) - this.currentOrder.saleTotal : 0.00;
+    this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue);
+  
+    await this.database.put(PouchConfig.Tables.orders+'_'+this.currentOrder.id, this.currentOrder);
+    await this.hasDraftOrder();
   }
 
 
-  public addToCart(event: any) {
+  public async addToCart(event: any) {
     const variant: Variant = event.variant;
     let taxRate = 0;
     let product = null;
     let tax = null;
     // console.log(variant);
     if (variant.productId) {
-      product = this.model.find<Product>(Tables.products, variant.productId);
-      // console.log(product);
-      if (product) {
-        tax = this.model.find<Taxes>(Tables.taxes, product.taxId)?this.model.find<Taxes>(Tables.taxes, product.taxId).percentage:0;
-        // console.log(tax);
-      } else {
-        tax = 0;
-      }
+     
+          product = this.product.products.find(prod=>prod.id==variant.productId);
+          // console.log(product);
+          if (product) {
+            await this.productTax(product.taxId); 
+            tax = this.defaultTax$?this.defaultTax$.percentage:0; //model.find<Taxes>(Tables.taxes, product.taxId)?this.model.find<Taxes>(Tables.taxes, product.taxId).percentage:0;
+            // console.log(tax);
+          } else {
+            tax = 0;
+          }
+
     } else {
       tax = event.tax?event.tax:0;
     }
@@ -321,100 +447,60 @@ const variants:Variant[]= this.model.raw(`SELECT
       variantId: variant.id,
       taxRate,
       taxAmount: ((variant.priceVariant.retailPrice * event.quantity) * taxRate) / 100,
-      orderId: this.setCurrentOrder.id,
+      orderId: this.currentOrder.id,
       subTotal: variant.priceVariant.retailPrice * event.quantity,
+      table:'orderDetails',
       createdAt: this.date,
-      updatedAt: this.date
+      updatedAt: this.date,
+      channels:[this.defaultBusiness$.userId]
     };
-    this.model.create<OrderDetails>(Tables.orderDetails, orderDetails);
-    this.setCurrentOrder.orderItems = this.getOrderDetails(this.setCurrentOrder.id);
+    
+
+    this.database.put(PouchConfig.Tables.orderDetails +'_'+ orderDetails.id, orderDetails);
+    await this.allOrderDetails(this.currentOrder.id);
+    this.currentOrder.orderItems = this.getOrderDetails();
     this.updateOrder();
 
   }
 
-  didCollectCash(event) {
+  async didCollectCash(event) {
     this.collectCashCompleted = { isCompleted: false, collectedOrder: this.currentOrder };
     if (event === true) {
-      this.createStockHistory();
+      await this.allOrderDetails(this.currentOrder.id);
+      await this.createStockHistory();
       this.currentOrder.isDraft = false;
       this.currentOrder.active = false;
       this.currentOrder.status = STATUS.COMPLETE;
-       this.currentOrder.createdAt = new Date();
-       this.currentOrder.updatedAt = new Date();
-       
-      this.model.update<Order>(Tables.order, this.currentOrder, this.currentOrder.id);
-      const formOrder= {
-        active: this.currentOrder.active,
-        branchId:this.currentOrder.branchId,
-        cashReceived: this.currentOrder.cashReceived,
-        createdAt: this.currentOrder.createdAt,
-        customerChangeDue: this.currentOrder.customerChangeDue,
-        id: this.currentOrder.id,
-        isDraft: this.currentOrder.isDraft,
-        orderNumber: this.currentOrder.orderNumber,
-        orderType: this.currentOrder.orderType,
-        reference: this.currentOrder.reference,
-        saleTotal: this.currentOrder.saleTotal,
-        status: this.currentOrder.status,
-        subTotal: this.currentOrder.subTotal,
-        taxAmount: this.currentOrder.taxAmount,
-        updatedAt:this.currentOrder.updatedAt,
-        customerId:'',
-        currency:this.currency,
-        supplierInvoiceNumber:'',
-        discountAmount:'',
-        paymentId:'',
-        orderNote:'',
-        deliverDate: '',
-        deviceId:'',
-        orderDate: new Date(),
+       this.currentOrder.createdAt = new Date().toISOString();
+       this.currentOrder.updatedAt = new Date().toISOString();
+       this.currentOrder.customerChangeDue=this.currentOrder.customerChangeDue;
+      
+      
+   
 
-      };
-      this.database.put(PouchConfig.Tables.orders,{orders:[formOrder]});
-      const orderDetails=[];
-      this.getOrderDetails(this.currentOrder.id).forEach(details=> {
-        orderDetails.push(
-        {
-          canTrackStock:details.stockId?true:false,
-          createdAt: details.createdAt,
-          id: details.id,
-          orderId: details.orderId,
-          price: details.price,
-          productName: details.productName?details.productName:'Custom',
-          quantity: details.quantity,
-          stockId: details.stockId?details.stockId:'',
-          subTotal: details.subTotal,
-          taxAmount: details.taxAmount,
-          taxRate: details.taxRate,
-          unit: details.unit?details.unit:'',
-          updatedAt: details.updatedAt,
-          discountRate:0,
-          discountAmount:0,
-          variantId: details.variantId?details.variantId:'',
-          variantName: details.variantName?details.variantName:'Custom',
-          note:''
-        });
-      });
+      await this.database.put(PouchConfig.Tables.orders + '_' +  this.currentOrder.id,  this.currentOrder);
 
-      this.database.put(PouchConfig.Tables.orderDetails,{orderDetails});
+      
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
       this.currentOrder = null;
-      this.init();
+      await this.init();
 
     }
 
   }
 
-  createStockHistory() {
+  async createStockHistory() {
 
-    const orderDetails: OrderDetails[] = this.getOrderDetails(this.currentOrder.id);
-    const stockIds: string[]=[];
+    const orderDetails = this.getOrderDetails();
+  
     if (orderDetails.length) {
 
       orderDetails.forEach(details => {
 
-        if (details.stockId > 0 || (details.stock && details.stock.canTrackingStock)) {
-          this.model.create<StockHistory>(Tables.stockHistory, {
+        if ( (details.stockId!=null || details.stockId!=undefined ) || (details.stock && details.stock.canTrackingStock)) {
+         
+          const stockHistories:StockHistory={
+            id: this.database.uid(),
             orderId: details.orderId,
             variantId: details.variantId,
             variantName: details.variantName,
@@ -425,44 +511,46 @@ const variants:Variant[]= this.model.raw(`SELECT
             isPreviously: false,
             syncedOnline: false,
             note: 'Customer sales',
-            createdAt: new Date(),
-            updatedAt: new Date()
-          });
-          stockIds.push(`'${details.stockId}'`);
+            table:'stockHistories',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            channels:[this.defaultBusiness$.userId],
+          }
+           this.database.put(PouchConfig.Tables.stockHistories + '_' +  stockHistories.id,  stockHistories);
+         
           this.updateStock(details);
         }
-
+       
       });
-
-      this.database.put(PouchConfig.Tables.stockHistories,{stockHistory:
-        this.model.filters<StockHistory>(Tables.stockHistory,'orderId',this.currentOrder.id)});
-      this.database.put(PouchConfig.Tables.stocks,{
-        stocks:this.query.queries(Tables.stocks, `  id IN (${stockIds.join()})`)});
+    
 
     }
 
   }
-  updateStock(stockDetails: OrderDetails) {
-    let stockId = 0;
+
+  
+   updateStock(stockDetails: OrderDetails) {
+    let stockId = '';
     if (stockDetails.stockId && (stockDetails.stockId!==null || stockDetails.stockId!==undefined)) {
       stockId = stockDetails.stockId;
     } else if (stockDetails.stock && stockDetails.stock.id) {
       stockId = stockDetails.stock.id;
     } else {
-      stockId = 0;
+      stockId = '';
     }
 
-    const stock: Stock = this.model.find<Stock>(Tables.stocks, stockId);
+    const stock: Stock = this.stock.stocks.find(stock=>stock.id==stockId);
     if (stock) {
       stock.currentStock = stock.currentStock - stockDetails.quantity;
-      this.model.update<Stock>(Tables.stocks, stock, stock.id);
+
+       this.database.put(PouchConfig.Tables.stocks + '_' +  stock.id,  stock);
     }
 
   }
 
-  saveOrderUpdated(event: Order) {
-    this.model.update<Order>(Tables.order, event, event.id);
-    this.hasDraftOrder();
+  async saveOrderUpdated(event: Order) {
+    await this.database.put(PouchConfig.Tables.orders + '_' +  event.id,  event);
+    await this.hasDraftOrder();
   }
 
 }

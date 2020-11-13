@@ -4,22 +4,12 @@ import { FlipperEventBusService } from '@enexus/flipper-event';
 import { MenuEntries, Business, Branch, Subscription,
   PouchDBService, PouchConfig, Tables, Menu,
   UserLoggedEvent, UserSubscriptionEvent,
-  CurrentBusinessEvent
+  CurrentBusinessEvent,
+  User
 } from '@enexus/flipper-components';
 
 import {CurrentBranchEvent} from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
-export  class User {
-  id?: any;
-  name?: string;
-  email?: string;
-  token?: string;
-  active?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-  userId?: any;
-  expiresAt?: any;
-}
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUser, User } from '../core/guards/current-user';
+import { CurrentUser } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
+import { fadeInAnimation, PouchConfig, PouchDBService, User, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter, finalize } from 'rxjs/internal/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -327,7 +327,7 @@ export class SubscriptionComponent implements OnInit {
       .pipe(finalize(() => this.loading.next(false)))
       .subscribe(res => {
         const resp: Message = res as Message;
-        console.log(res);
+        
         this.loading.next(false);
         const data: User = resp.data as User;
         if (resp.status === 'success') {

@@ -454,7 +454,6 @@ let variantsArray:Variant[]=[];
       updatedAt: this.date,
       channels:[this.defaultBusiness$.userId]
     };
-    
 
     this.database.put(PouchConfig.Tables.orderDetails +'_'+ orderDetails.id, orderDetails);
     await this.allOrderDetails(this.currentOrder.id);

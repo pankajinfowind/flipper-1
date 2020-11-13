@@ -4,6 +4,7 @@ import { DashBoardEntries, fadeInAnimation, MainModelService, Business, Tables, 
    Variant, Product, Taxes } from '@enexus/flipper-components';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { ModelService } from '@enexus/flipper-offline-database';
+import { CurrentUser } from '../core/guards/current-user';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,18 +32,18 @@ export class DashboardComponent {
   public lowStockItem=[];
   public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
   constructor(private totalPipe: CalculateTotalClassPipe,
+    private currentUser: CurrentUser,
               private radomNumberPipe: RoundNumberPipe,
               private query: ModelService, private model: MainModelService) {
 
-                console.log(this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true));
-                
+                console.log(this.currentUser.currentBusiness);
               this.branch = this.model.active<Branch>(Tables.branch);
-              this.totalStore = this.getStockValue();
-              this.netProfit = this.getNetProfit();
-              this.totalRevenue = this.getTotalRevenues();
-              this.grossProfits = this.getGrossProfit();
-              this.topSoldItem = this.topSoldItems();
-              this.lowStockItem = this.getLowStocks();
+              this.totalStore =0.00; //this.getStockValue();
+              this.netProfit = 0.00;//this.getNetProfit();
+              this.totalRevenue =0.00;// this.getTotalRevenues();
+              this.grossProfits = 0.00;//this.getGrossProfit();
+              this.topSoldItem =[];// this.topSoldItems();
+              this.lowStockItem =[];// this.getLowStocks();
 
   }
 

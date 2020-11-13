@@ -45,7 +45,7 @@
               }
             },
             "sync":`function(doc) {
-              channel(doc.channels);
+              channel(doc.channel);
             }`,
             "allow_conflicts": false,
             "import_docs": true,

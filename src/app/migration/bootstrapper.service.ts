@@ -34,16 +34,16 @@ export class Bootstrapper {
 
 
   private migrateDataFromCouchbaseToSqldb() {
-    this.migrate.businessTypes();
-    this.migrate.businessCategories();
-    this.model.truncate(Tables.user);
-    this.model.truncate(Tables.business);
-    this.model.truncate(Tables.branch);
-    this.model.truncate(Tables.taxes);
-    this.migrate.user();
-    this.migrate.businesses();
-    this.migrate.branches();
-    this.migrate.taxes();
+    // this.migrate.businessTypes();
+    // this.migrate.businessCategories();
+    // this.model.truncate(Tables.user);
+    // this.model.truncate(Tables.business);
+    // this.model.truncate(Tables.branch);
+    // this.model.truncate(Tables.taxes);
+    // this.migrate.user();
+    // this.migrate.businesses();
+    // this.migrate.branches();
+    // this.migrate.taxes();
   }
 
 

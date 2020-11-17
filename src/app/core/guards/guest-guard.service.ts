@@ -27,7 +27,7 @@ export class GuestGuard implements CanActivate {
         if (!this.currentUser.currentUser) {
           return true;
         }
-        await this.router.navigate([this.currentUser.getRedirectUri()]);
+         this.router.navigate([this.currentUser.getRedirectUri()]);
 
         return false;
     }

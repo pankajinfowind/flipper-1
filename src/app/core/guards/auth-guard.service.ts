@@ -23,11 +23,11 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.handle(state.url);
   }
 
-  async canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return await this.handle(state.url);
+   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return  this.handle(state.url);
   }
-  async canLoad(route: Route) {
-    return await this.handle(route.path);
+   canLoad(route: Route) {
+    return  this.handle(route.path);
   }
 
 
@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     this.currentUser.redirectUri = url;
 
-    await this.router.navigate(['/login']);
+     this.router.navigate(['/login']);
     return false;
   }
 

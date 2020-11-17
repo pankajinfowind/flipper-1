@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { CurrentUser } from '../core/guards/current-user';
 import { ElectronService } from '../core/services';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components';
+import { fadeInAnimation, PouchConfig, PouchDBService, User, UserLoggedEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
 import { environment } from '../../environments/environment';
@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.qrcode = 'code23';
     // this.qrcode = Date.now();
+    this. fakingUser();
+    
     this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
@@ -80,7 +82,7 @@ export class LoginComponent implements OnInit {
     this.loginApproved = this.pushers.subscribe('login-flipper.' + this.qrcode);
 
     this.loginApproved.bind('event-login-flipper.' + this.qrcode, async (event) => {
-
+  
       if (event) {
         console.log("data", event.name);
         const user = {
@@ -95,6 +97,7 @@ export class LoginComponent implements OnInit {
           userId: event.id,
           expiresAt: Date.parse(event.expiresAt) as number
         };
+
         window.localStorage.setItem('channel', event.id); //event.id is the userId
         window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
         PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
@@ -116,5 +119,35 @@ export class LoginComponent implements OnInit {
   }
   getStaredNewToFlipper() {
     this.electronService.redirect('https://flipper.rw');
+  }
+
+  async fakingUser(){
+    const user:User = {
+      name: 'Testing',
+      email: 'test@gmail.com',
+      token: 'xxxx',
+      active: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      id: this.database.uid(),
+      userId: 1,
+      expiresAt: 1607933474000,
+      table:'users',
+      channels:[]
+    };
+    user.channels=[user.id];
+    window.localStorage.setItem('channel', '1');
+    window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
+    PouchConfig.Tables.user = 'user_' +user.userId;
+    PouchConfig.channel = window.localStorage.getItem('channel');
+    PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
+    await this.currentUser.user(PouchConfig.Tables.user);
+    if (this.currentUser.currentUser) {
+      user.id = this.currentUser.currentUser.id;
+    }
+    if (this.database.put(PouchConfig.Tables.user, user)) {
+   
+      return window.location.href = '/admin';
+    }
   }
 }

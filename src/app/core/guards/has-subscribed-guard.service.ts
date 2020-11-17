@@ -47,9 +47,10 @@ export class HasSubscribedGuard implements CanActivate, CanActivateChild, CanLoa
 
     await this.currentUser.user();
 
-    // if(this.currentUser.currentUser && this.currentUser.currentUser.expiresAt >= date) {
+    if(this.currentUser.currentUser && this.currentUser.currentUser.expiresAt >= date) {
+     
       return true;
-    // }
+    }
 
     this.currentUser.redirectUri = url;
     this.router.navigate(['/pay-now']);

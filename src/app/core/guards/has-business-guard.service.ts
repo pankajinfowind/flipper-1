@@ -44,21 +44,24 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.handle(state.url);
   }
-  async canLoad(route: Route) {
-    return await this.handle(route.path);
+   canLoad(route: Route) {
+    return  this.handle(route.path);
   }
 
   private async handle(url: string) {
     await this.currentUser.user();
     if (this.currentUser.currentUser && this.currentUser.currentUser.id) {
           await this.currentUser.defaultBusiness(this.currentUser.currentUser.id);
+         
           if (this.currentUser.currentBusiness && this.currentUser.currentBusiness.id) {
           return true;
         }
-  }
+  } 
+  
+  console.log('heree');
 
     this.currentUser.redirectUri = url;
-     await this.router.navigate(['/setup/business/new']);
+      this.router.navigate(['/setup/business/new']);
     return false;
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DashBoardEntries, fadeInAnimation, MainModelService, Business, Tables, Stock,
   Branch, CalculateTotalClassPipe, RoundNumberPipe, Order, OrderDetails,
-   Variant, Product, Taxes } from '@enexus/flipper-components';
+   Variant, Product, Taxes, PouchDBService } from '@enexus/flipper-components';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { ModelService } from '@enexus/flipper-offline-database';
 import { CurrentUser } from '../core/guards/current-user';
@@ -16,7 +16,7 @@ import { CurrentUser } from '../core/guards/current-user';
     ]),
   ],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
 
 
   dashboardEntries: DashBoardEntries;
@@ -30,11 +30,15 @@ export class DashboardComponent {
 
   public topSoldItem = [];
   public lowStockItem=[];
-  public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
+  public defaultBusiness$: Business = null;
+  public defaultBranch:Branch=null;
+  // public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
   constructor(private totalPipe: CalculateTotalClassPipe,
     private currentUser: CurrentUser,
               private radomNumberPipe: RoundNumberPipe,
-              private query: ModelService, private model: MainModelService) {
+              private query: ModelService,
+              private database: PouchDBService,
+               private model: MainModelService) {
 
                 console.log(this.currentUser.currentBusiness);
               this.branch = this.model.active<Branch>(Tables.branch);
@@ -47,7 +51,28 @@ export class DashboardComponent {
 
   }
 
+  async init() {
+    await this.currentBusiness();
+    await this.currentBranches();
+  }
 
+  async ngOnInit() {
+  
+    await this.init();
+  }
+
+
+  public currentBusiness() {
+    return this.database.currentBusiness().then(business => {
+ 
+      this.defaultBusiness$ = business;
+    });
+  }
+  currentBranches() {
+    return this.database.listBusinessBranches().then(branches => {
+      this.defaultBranch = branches.length > 0?branches[0]:0;
+    });
+  }
 
   topSoldItems() {
     const topSolds=[];

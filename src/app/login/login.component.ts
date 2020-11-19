@@ -6,7 +6,6 @@ import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
 import { environment } from '../../environments/environment';
-import { PusherService } from '../pusher.service';
 declare const Pusher: any;
 
 
@@ -27,7 +26,6 @@ export class LoginComponent implements OnInit {
   flipperPlan = [];
   loginApproved: any;
   constructor(
-    private pusher: PusherService,
     private eventBus: FlipperEventBusService, private database: PouchDBService,
     public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
     this.database.connect(PouchConfig.bucket);
@@ -51,8 +49,8 @@ export class LoginComponent implements OnInit {
             email: arg[0].replace('%20', ' '),
             token: arg[3].replace('%20', ' '),
             active: true,
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
             id: this.database.uid(),
             userId: arg[4].replace('%20', ' '),
             expiresAt: Date.parse(arg[6]) as number
@@ -65,7 +63,6 @@ export class LoginComponent implements OnInit {
           await this.currentUser.user(PouchConfig.Tables.user);
           if (this.currentUser.currentUser) {
             user.id = this.currentUser.currentUser.id;
-            user.createdAt = this.currentUser.currentUser.createdAt;
           }
           if (this.database.put(PouchConfig.Tables.user, user)) {
             return window.location.href = '/admin';
@@ -92,11 +89,11 @@ export class LoginComponent implements OnInit {
           email: event.email,
           token: event.personal_token,
           active: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
           id: this.database.uid(),
           userId: event.id,
-          expiresAt: event.expiresAt as number
+          expiresAt: Date.parse(event.expiresAt) as number
         };
         window.localStorage.setItem('channel', event.id); //event.id is the userId
         window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
@@ -106,7 +103,6 @@ export class LoginComponent implements OnInit {
         await this.currentUser.user(PouchConfig.Tables.user);
         if (this.currentUser.currentUser) {
           user.id = this.currentUser.currentUser.id;
-          user.createdAt = this.currentUser.currentUser.createdAt;
         }
         if (this.database.put(PouchConfig.Tables.user, user)) {
           return window.location.href = '/admin';

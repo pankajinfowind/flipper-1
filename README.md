@@ -29,7 +29,7 @@ Help Connect wholesaler and reteller and avoid middleman while helping to book k
 Bootstrap and package your project with Angular 9 and Electron 8 (Typescript + SASS + Hot Reload) for creating Desktop applications.
 
 Currently runs with:
-
+    
 - Angular v9.1.4
 - Electron v8.2.5
 - Electron Builder v22.6.0

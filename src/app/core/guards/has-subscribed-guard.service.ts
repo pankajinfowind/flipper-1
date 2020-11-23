@@ -51,6 +51,7 @@ export class HasSubscribedGuard implements CanActivate, CanActivateChild, CanLoa
      
       return true;
     }
+  
 
     this.currentUser.redirectUri = url;
     this.router.navigate(['/pay-now']);

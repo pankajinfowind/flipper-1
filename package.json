@@ -123,7 +123,7 @@
     "@enexus/flipper-file-upload": "1.0.2",
     "@enexus/flipper-font": "1.0.2",
     "@enexus/flipper-inventory": "1.2.7",
-    "@enexus/flipper-menu": "1.2.2",
+    "@enexus/flipper-menu": "1.2.3",
     "@enexus/flipper-offline-database": "1.0.13",
     "@enexus/flipper-pos": "1.2.10",
     "@enexus/flipper-settings": "1.4.12",

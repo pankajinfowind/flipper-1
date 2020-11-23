@@ -35,9 +35,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     await this.currentUser.user();
     
-
+console.log(this.currentUser.currentUser);
     if (this.currentUser.currentUser && this.currentUser.currentUser.id) {
-      await this.currentUser.defaultBusiness(this.currentUser.currentUser.id);
+       this.currentUser.defaultBusiness(this.currentUser.currentUser.id);
       return true;
     }
 

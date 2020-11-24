@@ -71,8 +71,8 @@ class CategoryViewModel extends BaseModel {
 
     q.parameters = {'VALUE': AppTables.category};
 
-    q.addChangeListener((List results) {
-      for (Map map in results) {
+    q.addChangeListener(( results) {
+      for (Map map in results.allResults) {
         map.forEach((key, value) {
           if (!_category.contains(Category.fromMap(value))) {
             _category.add(Category.fromMap(value));

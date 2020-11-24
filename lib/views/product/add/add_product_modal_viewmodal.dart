@@ -73,7 +73,27 @@ class AddProductModalViewModal extends BaseModel {
 
       if (taxResults.allResults.isNotEmpty) {
         for (Map map in taxResults.allResults) {
+          map.forEach((key, value) {
+            _taxId = Tax.fromMap(value).id;
+          });
+          notifyListeners();
+        }
+      }
+      final id1 = Uuid().v1();
+
+      final Document productDoc = _databaseService.insert(id: id1, data: {
+        'name': productName,
+        'categoryId': category.id,
+        'color': '#955be9',
+        'id': id1,
+        'active': true,
         'hasPicture': false,
+        'channels': <String>[userId],
+        'table': AppTables.product,
+        'isCurrentUpdate': false,
+        'isDraft': true,
+        'taxId': _taxId,
+        'businessId': _sharedStateService.business.id,
         'description': productName,
         'createdAt': DateTime.now().toIso8601String(),
       });

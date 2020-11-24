@@ -31,8 +31,8 @@ class RetailPriceViewModel extends BaseModel {
 
     q.parameters = {'VALUE': AppTables.variation, 'PRODUCTID': productId};
 
-    q.addChangeListener((List results) {
-      for (Map map in results) {
+    q.addChangeListener(( results) {
+      for (Map map in results.allResults) {
         map.forEach((key, value) {
           if(!list.contains(Variation.fromMap(value))){
              list.add(Variation.fromMap(value));

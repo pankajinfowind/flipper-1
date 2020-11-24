@@ -33,8 +33,8 @@ class UnitViewModel extends BaseModel {
 
     q.parameters = {'VALUE': AppTables.unit};
 
-    q.addChangeListener((List results) {
-      for (Map map in results) {
+    q.addChangeListener((results) {
+      for (Map map in results.allResults) {
         map.forEach((key, value) {
           _unit.add(Unit.fromMap(value));
         });

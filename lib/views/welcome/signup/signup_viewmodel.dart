@@ -176,7 +176,7 @@ class SignUpViewModel extends BaseViewModel {
     final Document business =
         ProxyService.database.insert(id: businessId, data: _mapBusiness);
 
-    _business.add(Business.fromMap(business.jsonProperties));
+    _business.add(Business.fromMap(business.map));
     StoreProvider.of<AppState>(context)
         .dispatch(OnBusinessLoaded(business: _business));
     // ignore: always_specify_types

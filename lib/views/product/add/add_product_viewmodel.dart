@@ -116,14 +116,14 @@ class AddProductViewmodel extends BaseModel {
 
     final variationsResults = variations.execute();
 
-    if (variationsResults.isNotEmpty) {
-      for (Map map in variationsResults) {
+    if (variationsResults.allResults.isNotEmpty) {
+      for (Map map in variationsResults.allResults) {
         map.forEach((key, value) {
           final Document variation =
               _databaseService.getById(id: Variation.fromMap(value).id);
 
           updateVariation(
-            variation: Variation.fromMap(variation.jsonProperties),
+            variation: Variation.fromMap(variation.map),
             supplyPrice: double.parse(supplierPriceController.text),
             variantName: 'Regular',
             retailPrice: double.parse(retailPriceController.text),
@@ -212,9 +212,9 @@ class AddProductViewmodel extends BaseModel {
 
     final products = q.execute();
 
-    if (products.isNotEmpty) {
+    if (products.allResults.isNotEmpty) {
    
-      for (Map map in products) {
+      for (Map map in products.allResults) {
         map.forEach((key,value){
            _sharedStateService.setProduct(product: Product.fromMap(value));
         });
@@ -239,9 +239,9 @@ class AddProductViewmodel extends BaseModel {
 
     q.parameters = {'VALUE':  AppTables.unit};
     
-    q.addChangeListener((List results) {
+    q.addChangeListener(( results) {
    
-       for (Map map in results) {
+       for (Map map in results.allResults) {
 
         map.forEach((key,value){
            _units.add(Unit.fromMap(value));
@@ -260,9 +260,9 @@ class AddProductViewmodel extends BaseModel {
 
     final variants = q.execute();
 
-    if (variants.isNotEmpty) {
+    if (variants.allResults.isNotEmpty) {
    
-      for (Map map in variants) {
+      for (Map map in variants.allResults) {
         map.forEach((key,value){
           //  _sharedStateService.setProduct(product: Product.fromMap(value));
         });

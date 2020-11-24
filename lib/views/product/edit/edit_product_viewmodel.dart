@@ -90,7 +90,7 @@ class EditProductViewModel extends BaseViewModel {
       final Document productUpdated = _databaseService.getById(id: product.id);
 
       _sharedStateService.setProduct(
-          product: Product.fromMap(productUpdated.jsonProperties));
+          product: Product.fromMap(productUpdated.map));
 
       store.dispatch(
         ImagePreview(
@@ -170,7 +170,7 @@ class EditProductViewModel extends BaseViewModel {
       final Document productDoc =
           _databaseService.getById(id: uploadResponse.productId);
 
-      final Product product = Product.fromMap(productDoc.jsonProperties);
+      final Product product = Product.fromMap(productDoc.map);
 
       // TODO(richard): update url here
       // await store.state.database.productDao.updateProduct(
@@ -196,8 +196,8 @@ class EditProductViewModel extends BaseViewModel {
 
     q.parameters = {'VALUE': AppTables.color};
 
-    q.addChangeListener((List results) {
-      for (Map map in results) {
+    q.addChangeListener(( results) {
+      for (Map map in results.allResults) {
         map.forEach((key, value) {
           if(!colors.contains(PColor.fromMap(value))){
             colors.add(PColor.fromMap(value));

@@ -27,8 +27,8 @@ class SupplierViewmodel extends BaseModel {
 
     q.parameters = {'VALUE': AppTables.variation};
 
-    q.addChangeListener((List results) {
-      for (Map map in results) {
+    q.addChangeListener(( results) {
+      for (Map map in results.allResults) {
         map.forEach((key, value) {
           _variation.add(Variation.fromMap(value));
         });

@@ -17,7 +17,7 @@ class StockViewModel extends BaseModel {
   final List<Stock> _stocks = <Stock>[];
   List<Stock> get stock => _stocks;
 
-  Future<List<Map<String, dynamic>>> geetVariantsBy({String productId}) async {
+  Future<ResultSet> geetVariantsBy({String productId}) async {
     final q = Query(_databaseService.db,
         'SELECT * WHERE table=\$VALUE AND productId=\$PRODUCTID');
 
@@ -42,8 +42,8 @@ class StockViewModel extends BaseModel {
     q.parameters = {'VALUE': AppTables.variation, 'PRODUCTID': productId};
 
     final variants = q.execute();
-    if (variants.isNotEmpty) {
-      for (Map map in variants) {
+    if (variants.allResults.isNotEmpty) {
+      for (Map map in variants.allResults) {
         map.forEach((key, value) {
           _variantId = Variation.fromMap(value).id;
         });
@@ -55,8 +55,8 @@ class StockViewModel extends BaseModel {
 
       q.parameters = {'VALUE': AppTables.stock, 'VARIANTID': variantId};
 
-      q.addChangeListener((List results) {
-        for (Map map in results) {
+      q.addChangeListener(( results) {
+        for (Map map in results.allResults) {
           map.forEach((key, value) {
             _stocks.add(Stock.fromMap(value));
           });

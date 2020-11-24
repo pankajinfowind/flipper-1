@@ -18,7 +18,7 @@ Future<List<Variation>> buildVariantsList(
 
   final variationsResults = q.execute();
 
-  for (Map map in variationsResults) {
+  for (Map map in variationsResults.allResults) {
     map.forEach((key, value) {
       variants.add(Variation.fromMap(value));
     });

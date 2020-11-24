@@ -27,9 +27,9 @@ class SwitchModel extends FutureViewModel {
 
     final switchers = q.execute();
 
-    if (switchers.isNotEmpty) {
+    if (switchers.allResults.isNotEmpty) {
    
-      for (Map map in switchers) {
+      for (Map map in switchers.allResults) {
         map.forEach((key,value){
            _switchi = Switcher.fromMap(value);
         });

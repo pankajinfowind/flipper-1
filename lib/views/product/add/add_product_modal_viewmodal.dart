@@ -45,9 +45,9 @@ class AddProductModalViewModal extends BaseModel {
 
     final categories = q.execute();
 
-    if (categories.isNotEmpty) {
+    if (categories.allResults.isNotEmpty) {
    
-      for (Map map in categories) {
+      for (Map map in categories.allResults) {
         map.forEach((key,value){
            _category = Category.fromMap(value);
         });
@@ -67,10 +67,10 @@ class AddProductModalViewModal extends BaseModel {
 
     final taxResults = gettax.execute();
     final productResults = product.execute();
-    if (productResults.isEmpty) {
+    if (productResults.allResults.isEmpty) {
 
-      if (taxResults.isNotEmpty) {
-        for (Map map in taxResults) {
+      if (taxResults.allResults.isNotEmpty) {
+        for (Map map in taxResults.allResults) {
           map.forEach((key, value) {
             _taxId = Tax.fromMap(value).id;
           });
@@ -137,7 +137,7 @@ class AddProductModalViewModal extends BaseModel {
       return productDoc.ID;
     } else {
      
-        for (Map map in productResults) {
+        for (Map map in productResults.allResults) {
           map.forEach((key, value) {
             _productId = Product.fromMap(value).id;
           });
@@ -147,6 +147,7 @@ class AddProductModalViewModal extends BaseModel {
         return productId;
     }
   }
+
 
 
   void navigateAddProduct() {

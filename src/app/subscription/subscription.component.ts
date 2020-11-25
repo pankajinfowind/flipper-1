@@ -71,7 +71,7 @@ export class SubscriptionComponent implements OnInit {
               public dialog: DialogService, private eventBus: FlipperEventBusService, private database: PouchDBService,
               public currentUser: CurrentUser,
               public electronService: ElectronService, protected httpClient: HttpClient) {
-    this.database.connect(PouchConfig.bucket);
+    this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
   }
 
   get mobilephone() {
@@ -389,9 +389,17 @@ export class SubscriptionComponent implements OnInit {
     this.isFocused = '';
   }
 
-  logout(){
+  async logout(){
+
+   await this.currentUser.user();
+    console.log(this.currentUser.currentUser);
+        if (this.currentUser.currentUser) {
+          this.currentUser.currentUser.active=false;
+          await this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
+        }
+
     window.localStorage.setItem('channel',this.database.uid());
-      this.currentUser.redirectUri='login';
-      return  this.router.navigate(['/login']);
+
+    return window.location.href='/login';
   }
 }

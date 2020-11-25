@@ -63,10 +63,10 @@ export class LoginComponent implements OnInit {
           user.channels=[user.id];
           window.localStorage.setItem('channel', arg[4].replace('%20', ' '));
           window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
+          PouchConfig.Tables.user = 'user_'+ window.localStorage.getItem('channel');
           PouchConfig.channel = window.localStorage.getItem('channel');
           PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          await this.database.put(PouchConfig.Tables.user + '_' + user.id, user);
+          await this.database.put(PouchConfig.Tables.user , this.currentUser.currentUser);
           return window.location.href = '/admin';
           
         }
@@ -82,29 +82,32 @@ export class LoginComponent implements OnInit {
     this.loginApproved = this.pushers.subscribe('login-flipper.' + this.qrcode);
 
     this.loginApproved.bind('event-login-flipper.' + this.qrcode, async (event) => {
- 
+
       if (event) {
     
         const user = {
+          _id: '',
           name: event.name,
           email: event.email,
           token: event.personal_token,
           active: true,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          id: this.database.uid(),
+          id:  event.id,
           userId: event.id,
           table:'users',
           channels:[],
           expiresAt:1606521600000 //event.expiresAt as number
         };
-        window.localStorage.setItem('channel', event.id); //event.id is the userId
+
+        window.localStorage.setItem('channel', event.id); 
         window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
         PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
         PouchConfig.channel = window.localStorage.getItem('channel');
         PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
         user.channels=[user.id];
-        await this.database.put(PouchConfig.Tables.user + '_' + user.id, user);
+        console.log(event);
+        await this.database.put(PouchConfig.Tables.user, user);
         return window.location.href = '/admin';
       }
     });

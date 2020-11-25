@@ -46,7 +46,7 @@ export class PosComponent implements OnInit {
               public variant: VariationService,
               public product: ProductService, 
                private totalPipe: CalculateTotalClassPipe) {
-      this.database.connect(PouchConfig.bucket,'117');
+      this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
       if (PouchConfig.canSync) {
         this.database.sync(PouchConfig.syncUrl);
       }

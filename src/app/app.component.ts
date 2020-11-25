@@ -24,10 +24,10 @@ export class AppComponent implements OnInit {
       .subscribe(res => {
         if(!res.business)return;
         //console.log("userId",res.business.userId);
-        this.database.connect(PouchConfig.bucket);
+        this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
         
         if (PouchConfig.canSync) {
-          this.database.sync(PouchConfig.syncUrl +"/main");
+          this.database.sync(PouchConfig.syncUrl);
         }
         this.database.getChangeListener().subscribe(data => {
           // console.log(data);

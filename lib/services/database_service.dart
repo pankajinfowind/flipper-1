@@ -32,11 +32,11 @@ class DatabaseService {
     final String username = DotEnv().env['USERNAME'];
     final String password = DotEnv().env['PASSWORD'];
 
-      var replicator = Replicator(
+    final replicator = Replicator(
         db,
-        endpointUrl: 'ws://yegobox.com:4985/main/',
-        username: 'admin',
-        password: 'singlworld', // or
+        endpointUrl: 'ws://$gatewayUrl/main/',
+        username: username,
+        password: password, // or
         // 'sessionId': 'dfhfsdyf8dfenfajfoadnf83c4dfhdfad3228yrsefd',
     );
 

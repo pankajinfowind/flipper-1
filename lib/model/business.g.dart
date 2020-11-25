@@ -22,6 +22,12 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'businessUrl',
+      serializers.serialize(object.businessUrl,
+          specifiedType: const FullType(String)),
+      'timeZone',
+      serializers.serialize(object.timeZone,
+          specifiedType: const FullType(String)),
       'active',
       serializers.serialize(object.active, specifiedType: const FullType(bool)),
       'currency',
@@ -59,12 +65,6 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
         ..add(serializers.serialize(object.userId,
             specifiedType: const FullType(String)));
     }
-    if (object.timeZone != null) {
-      result
-        ..add('timeZone')
-        ..add(serializers.serialize(object.timeZone,
-            specifiedType: const FullType(String)));
-    }
     if (object.createdAt != null) {
       result
         ..add('createdAt')
@@ -75,12 +75,6 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
       result
         ..add('updatedAt')
         ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(String)));
-    }
-    if (object.businessUrl != null) {
-      result
-        ..add('businessUrl')
-        ..add(serializers.serialize(object.businessUrl,
             specifiedType: const FullType(String)));
     }
     if (object.hexColor != null) {
@@ -129,6 +123,14 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'businessUrl':
+          result.businessUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'timeZone':
+          result.timeZone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'active':
           result.active = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -157,10 +159,6 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
           result.typeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'timeZone':
-          result.timeZone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'createdAt':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -177,10 +175,6 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
           break;
         case 'country':
           result.country = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'businessUrl':
-          result.businessUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'hexColor':
@@ -212,6 +206,10 @@ class _$Business extends Business {
   @override
   final String name;
   @override
+  final String businessUrl;
+  @override
+  final String timeZone;
+  @override
   final bool active;
   @override
   final String currency;
@@ -226,8 +224,6 @@ class _$Business extends Business {
   @override
   final String typeId;
   @override
-  final String timeZone;
-  @override
   final String createdAt;
   @override
   final String updatedAt;
@@ -235,8 +231,6 @@ class _$Business extends Business {
   final BuiltList<String> channels;
   @override
   final String country;
-  @override
-  final String businessUrl;
   @override
   final String hexColor;
   @override
@@ -252,6 +246,8 @@ class _$Business extends Business {
   _$Business._(
       {this.id,
       this.name,
+      this.businessUrl,
+      this.timeZone,
       this.active,
       this.currency,
       this.categoryId,
@@ -259,12 +255,10 @@ class _$Business extends Business {
       this.longitude,
       this.userId,
       this.typeId,
-      this.timeZone,
       this.createdAt,
       this.updatedAt,
       this.channels,
       this.country,
-      this.businessUrl,
       this.hexColor,
       this.image,
       this.type,
@@ -275,6 +269,12 @@ class _$Business extends Business {
     }
     if (name == null) {
       throw new BuiltValueNullFieldError('Business', 'name');
+    }
+    if (businessUrl == null) {
+      throw new BuiltValueNullFieldError('Business', 'businessUrl');
+    }
+    if (timeZone == null) {
+      throw new BuiltValueNullFieldError('Business', 'timeZone');
     }
     if (active == null) {
       throw new BuiltValueNullFieldError('Business', 'active');
@@ -309,6 +309,8 @@ class _$Business extends Business {
     return other is Business &&
         id == other.id &&
         name == other.name &&
+        businessUrl == other.businessUrl &&
+        timeZone == other.timeZone &&
         active == other.active &&
         currency == other.currency &&
         categoryId == other.categoryId &&
@@ -316,12 +318,10 @@ class _$Business extends Business {
         longitude == other.longitude &&
         userId == other.userId &&
         typeId == other.typeId &&
-        timeZone == other.timeZone &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         channels == other.channels &&
         country == other.country &&
-        businessUrl == other.businessUrl &&
         hexColor == other.hexColor &&
         image == other.image &&
         type == other.type &&
@@ -354,22 +354,22 @@ class _$Business extends Business {
                                                                                     .hashCode),
                                                                             name
                                                                                 .hashCode),
-                                                                        active
+                                                                        businessUrl
                                                                             .hashCode),
-                                                                    currency
+                                                                    timeZone
                                                                         .hashCode),
-                                                                categoryId
+                                                                active
                                                                     .hashCode),
-                                                            latitude.hashCode),
-                                                        longitude.hashCode),
-                                                    userId.hashCode),
-                                                typeId.hashCode),
-                                            timeZone.hashCode),
-                                        createdAt.hashCode),
-                                    updatedAt.hashCode),
-                                channels.hashCode),
-                            country.hashCode),
-                        businessUrl.hashCode),
+                                                            currency.hashCode),
+                                                        categoryId.hashCode),
+                                                    latitude.hashCode),
+                                                longitude.hashCode),
+                                            userId.hashCode),
+                                        typeId.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            channels.hashCode),
+                        country.hashCode),
                     hexColor.hashCode),
                 image.hashCode),
             type.hashCode),
@@ -381,6 +381,8 @@ class _$Business extends Business {
     return (newBuiltValueToStringHelper('Business')
           ..add('id', id)
           ..add('name', name)
+          ..add('businessUrl', businessUrl)
+          ..add('timeZone', timeZone)
           ..add('active', active)
           ..add('currency', currency)
           ..add('categoryId', categoryId)
@@ -388,12 +390,10 @@ class _$Business extends Business {
           ..add('longitude', longitude)
           ..add('userId', userId)
           ..add('typeId', typeId)
-          ..add('timeZone', timeZone)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('channels', channels)
           ..add('country', country)
-          ..add('businessUrl', businessUrl)
           ..add('hexColor', hexColor)
           ..add('image', image)
           ..add('type', type)
@@ -412,6 +412,14 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _businessUrl;
+  String get businessUrl => _$this._businessUrl;
+  set businessUrl(String businessUrl) => _$this._businessUrl = businessUrl;
+
+  String _timeZone;
+  String get timeZone => _$this._timeZone;
+  set timeZone(String timeZone) => _$this._timeZone = timeZone;
 
   bool _active;
   bool get active => _$this._active;
@@ -441,10 +449,6 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
   String get typeId => _$this._typeId;
   set typeId(String typeId) => _$this._typeId = typeId;
 
-  String _timeZone;
-  String get timeZone => _$this._timeZone;
-  set timeZone(String timeZone) => _$this._timeZone = timeZone;
-
   String _createdAt;
   String get createdAt => _$this._createdAt;
   set createdAt(String createdAt) => _$this._createdAt = createdAt;
@@ -461,10 +465,6 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
   String _country;
   String get country => _$this._country;
   set country(String country) => _$this._country = country;
-
-  String _businessUrl;
-  String get businessUrl => _$this._businessUrl;
-  set businessUrl(String businessUrl) => _$this._businessUrl = businessUrl;
 
   String _hexColor;
   String get hexColor => _$this._hexColor;
@@ -488,6 +488,8 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
     if (_$v != null) {
       _id = _$v.id;
       _name = _$v.name;
+      _businessUrl = _$v.businessUrl;
+      _timeZone = _$v.timeZone;
       _active = _$v.active;
       _currency = _$v.currency;
       _categoryId = _$v.categoryId;
@@ -495,12 +497,10 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
       _longitude = _$v.longitude;
       _userId = _$v.userId;
       _typeId = _$v.typeId;
-      _timeZone = _$v.timeZone;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _channels = _$v.channels?.toBuilder();
       _country = _$v.country;
-      _businessUrl = _$v.businessUrl;
       _hexColor = _$v.hexColor;
       _image = _$v.image;
       _type = _$v.type;
@@ -531,6 +531,8 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
           new _$Business._(
               id: id,
               name: name,
+              businessUrl: businessUrl,
+              timeZone: timeZone,
               active: active,
               currency: currency,
               categoryId: categoryId,
@@ -538,12 +540,10 @@ class BusinessBuilder implements Builder<Business, BusinessBuilder> {
               longitude: longitude,
               userId: userId,
               typeId: typeId,
-              timeZone: timeZone,
               createdAt: createdAt,
               updatedAt: updatedAt,
               channels: channels.build(),
               country: country,
-              businessUrl: businessUrl,
               hexColor: hexColor,
               image: image,
               type: type,

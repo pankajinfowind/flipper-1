@@ -47,10 +47,11 @@ class AddProductModalViewModal extends BaseModel {
 
     final categories = q.execute();
 
-    if (categories.isNotEmpty) {
-      for (Map map in categories) {
-        map.forEach((key, value) {
-          _category = Category.fromMap(value);
+    if (categories.allResults.isNotEmpty) {
+   
+      for (Map map in categories.allResults) {
+        map.forEach((key,value){
+           _category = Category.fromMap(value);
         });
         notifyListeners();
       }
@@ -68,10 +69,10 @@ class AddProductModalViewModal extends BaseModel {
 
     final taxResults = gettax.execute();
     final productResults = product.execute();
-    if (productResults.isEmpty) {
-      log.i('product id nabuze:');
-      if (taxResults.isNotEmpty) {
-        for (Map map in taxResults) {
+    if (productResults.allResults.isEmpty) {
+
+      if (taxResults.allResults.isNotEmpty) {
+        for (Map map in taxResults.allResults) {
           map.forEach((key, value) {
             _taxId = Tax.fromMap(value).id;
           });
@@ -138,17 +139,19 @@ class AddProductModalViewModal extends BaseModel {
       print('product id nabuze:' + productDoc.ID);
       return productDoc.ID;
     } else {
-      for (Map map in productResults) {
-        map.forEach((key, value) {
-          _productId = Product.fromMap(value).id;
-        });
-        notifyListeners();
-      }
-      log.d('productId:' + productId);
-
-      return productId;
+     
+        for (Map map in productResults.allResults) {
+          map.forEach((key, value) {
+            _productId = Product.fromMap(value).id;
+          });
+          notifyListeners();
+        }
+        log.d('productId:'+productId);
+        return productId;
     }
   }
+
+
 
   void navigateAddProduct() {
     final FlipperNavigationService _navigationService = ProxyService.nav;

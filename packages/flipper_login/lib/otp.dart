@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
-
 import 'package:flipper/domain/redux/app_state.dart';
+import 'package:flipper/domain/redux/authentication/auth_actions.dart';
 import 'package:flipper/domain/redux/user/user_actions.dart';
 import 'package:flipper/routes/router.gr.dart';
 
-
+import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
 import 'package:flipper/services/proxy.dart';
 import 'package:flipper/model/fuser.dart';
 import 'package:flipper/services/flipperNavigation_service.dart';
@@ -33,7 +33,7 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   TextEditingController number = TextEditingController();
   final FlipperNavigationService _navigationService = ProxyService.nav;
-  
+
   bool _loading = false;
   @override
   void initState() {
@@ -93,7 +93,10 @@ class _OtpPageState extends State<OtpPage> {
                       child: TextField(
                         keyboardType: TextInputType.phone,
                         controller: number,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(color:Colors.black),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2
+                            .copyWith(color: Colors.black),
                         decoration: const InputDecoration(
                             icon: Icon(Icons.phone_android, color: grey),
                             border: InputBorder.none,
@@ -186,33 +189,52 @@ class _OtpPageState extends State<OtpPage> {
                                         ..name = loginResponse.name,
                                     );
                                     store.dispatch(WithUser(user: user));
-                                   
-                                    final userExist = await  ProxyService.sharedPref.getUserId();
+
+                                    final userExist = await ProxyService
+                                        .sharedPref
+                                        .getUserId();
                                     if (userExist == null) {
-                                      ProxyService.database.insert(data:{
+                                      // final q = Query(ProxyService.database.db,
+                                      //     'SELECT * WHERE table=\$VALUE AND id=\$ID');
+
+                                      // q.parameters = {
+                                      //   'VALUE': AppTables.user,
+                                      //   'ID': loginResponse.id.toString()
+                                      // };
+                                      // final user = q.execute();
+                                      // if (user.allResults.isNotEmpty) {
+                                      //   ProxyService.sharedPref.setUserLoggedIn(
+                                      //       userId:
+                                      //           loginResponse.id.toString());
+                                      //   StoreProvider.of<AppState>(context)
+                                      //       .dispatch(
+                                      //           VerifyAuthenticationState());
+                                      //   proxyService.loading.add(false);
+                                      //   return;
+                                      // }
+                                      ProxyService.database.insert(data: {
                                         'name': loginResponse.name,
                                         'email': loginResponse.email,
                                         'token': loginResponse.token,
-                                        'table':  AppTables.user,
-                                        'userId':  loginResponse.id.toString(),
+                                        'table': AppTables.user,
+                                        'userId': loginResponse.id.toString(),
                                         'expiresAt': loginResponse.expiresAt,
                                         'id': loginResponse.id.toString(),
                                       });
-                                      ProxyService.sharedPref.setUserLoggedIn(userId: loginResponse.id.toString());
+                                      ProxyService.sharedPref.setUserLoggedIn(
+                                          userId: loginResponse.id.toString());
                                     }
 
                                     proxyService.loading.add(false);
-                                    
-                                   
+
                                     _navigationService.navigateTo(
                                       Routing.signUpView,
                                       arguments: SignUpViewArguments(
-                                        name: loginResponse.name,
-                                        avatar: loginResponse.avatar,
-                                        email: loginResponse.email,
-                                        token: loginResponse.token,
-                                        userId: loginResponse.id.toString()
-                                      ),
+                                          name: loginResponse.name,
+                                          avatar: loginResponse.avatar,
+                                          email: loginResponse.email,
+                                          token: loginResponse.token,
+                                          userId: loginResponse.id.toString()),
                                     );
                                     // store.dispatch(
                                     //     VerifyAuthenticationState()); //todo check subscription later refere to auth_webview.dart

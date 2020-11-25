@@ -42,9 +42,9 @@ class VariationViewModel extends BaseModel {
     q.parameters = {'VALUE': AppTables.variation,'productId':productId};
 
     
-    q.addChangeListener((List results) {
+    q.addChangeListener((results) {
    
-       for (Map map in results) {
+       for (Map map in results.allResults) {
 
         map.forEach((key,value){
            _stock = Stock.fromMap(value);
@@ -61,9 +61,9 @@ class VariationViewModel extends BaseModel {
     q.parameters = {'VALUE': AppTables.variation,'productId':productId};
 
     
-    q.addChangeListener((List results) {
+    q.addChangeListener(( results) {
    
-       for (Map map in results) {
+       for (Map map in results.allResults) {
 
         map.forEach((key,value){
            _variation = Variation.fromMap(value);
@@ -82,7 +82,7 @@ class VariationViewModel extends BaseModel {
     q.parameters = {'VALUE': AppTables.product,'productId':productId};
 
     final productResults = q.execute();
-     for (Map map in productResults) {
+     for (Map map in productResults.allResults) {
 
         map.forEach((key,value){
            _product = Product.fromMap(value);
@@ -102,9 +102,9 @@ class VariationViewModel extends BaseModel {
     q.parameters = {'VALUE': AppTables.variation};
 
     
-    q.addChangeListener((List results) {
+    q.addChangeListener(( results) {
    
-       for (Map map in results) {
+       for (Map map in results.allResults) {
 
         map.forEach((key,value){
            list.add(Product.fromMap(value));

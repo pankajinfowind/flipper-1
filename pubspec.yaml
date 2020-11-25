@@ -102,7 +102,7 @@ dependencies:
   connectivity: ^2.0.2
   # background_fetch: '^0.5.1'
   flutter_icons: ^1.1.0
-  couchbase_lite_dart: ^0.3.1
+  couchbase_lite_dart: ^0.4.0
   
 
 

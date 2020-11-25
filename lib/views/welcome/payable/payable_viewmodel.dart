@@ -88,9 +88,9 @@ class PayableViewModel extends BaseViewModel {
 
     q.parameters = {'VALUE':  AppTables.order};
 
-    q.addChangeListener((List results) {
+    q.addChangeListener((results) {
    
-       for (Map map in results) {
+       for (Map map in results.allResults) {
 
         map.forEach((key,value){
           //  _users.add(User.fromMap(value));

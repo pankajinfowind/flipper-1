@@ -18,7 +18,6 @@ import 'package:flipper/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 import 'package:redux/redux.dart';
 import 'package:uuid/uuid.dart';
@@ -69,8 +68,8 @@ Future getAppColors() async {
   q.parameters = {'VALUE': AppTables.color};
 
   final results = q.execute();
-  if (results.isNotEmpty) {
-    for (Map map in results) {
+  if (results.allResults.isNotEmpty) {
+    for (Map map in results.allResults) {
       map.forEach((key, value) {
         colors.add(PColor.fromMap(value));
         log.d(colors);
@@ -112,6 +111,7 @@ Future<void> openCloseBusiness({
   }
 }
 
+
 Future<String> isUserCurrentlyLoggedIn(Store<AppState> store) async {
   final DatabaseService _databaseService = ProxyService.database;
   final Logger log = Logging.getLogger('Get User: ');
@@ -134,8 +134,8 @@ Future<String> isUserCurrentlyLoggedIn(Store<AppState> store) async {
 
     final results = q.execute();
 
-    if (results.isNotEmpty) {
-      for (Map map in results) {
+    if (results.allResults.isNotEmpty) {
+      for (Map map in results.allResults) {
         map.forEach((key, value) {
           // FIXME(richard): fix bellow code.
           // openCloseBusiness(
@@ -166,8 +166,8 @@ Future<List<Branch>> getBranches(Store<AppState> store, String userId) async {
   };
 
   final results = q.execute();
-  if (results.isNotEmpty) {
-    for (Map map in results) {
+  if (results.allResults.isNotEmpty) {
+    for (Map map in results.allResults) {
       map.forEach((key, value) {
         branches.add(Branch.fromMap(value));
       });
@@ -217,7 +217,7 @@ Future<bool> isCategory({String branchId}) async {
     'VALUE': AppTables.category,
   };
 
-  return q.execute().isNotEmpty;
+  return q.execute().allResults.isNotEmpty;
 }
 
 Future<void> createSystemStockReasons(Store<AppState> store) async {
@@ -279,8 +279,8 @@ Future<void> getBusinesses({Store<AppState> store, String userId}) async {
   q.parameters = {'VALUE': AppTables.business, 'USERID': userId};
 
   final results = q.execute();
-  if (results.isNotEmpty) {
-    for (Map map in results) {
+  if (results.allResults.isNotEmpty) {
+    for (Map map in results.allResults) {
       map.forEach((key, value) {
         businesses.add(Business.fromMap(value));
       });

@@ -15,6 +15,10 @@ abstract class Business implements Built<Business, BusinessBuilder> {
 
   String get name;
 
+  String get businessUrl;
+
+  String get timeZone;
+
   bool get active;
 
   String get currency;
@@ -32,8 +36,6 @@ abstract class Business implements Built<Business, BusinessBuilder> {
 
   String get typeId;
 
-  @nullable
-  String get timeZone;
 
   @nullable
   String get createdAt;
@@ -46,9 +48,7 @@ abstract class Business implements Built<Business, BusinessBuilder> {
   BuiltList<String> get channels;
 
   String get country;
-  @nullable
-  String get businessUrl;
-
+  
   @nullable
   String get hexColor;
 

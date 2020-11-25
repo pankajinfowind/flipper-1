@@ -137,13 +137,13 @@ class SignUpViewModel extends BaseViewModel {
 
   Future<String> createBranch(
       {String userId, String businessName, String businessId}) async {
+        final id = Uuid().v1();
     final Map<String, dynamic> _mapBranch = {
       'active': true,
       'name': businessName,
-      '_id': Uuid().v1(),
       'channels': [userId],
       'businessId': businessId,
-      'id': Uuid().v1(),
+      'id': id,
       'table': AppTables.branch,
       'mapLatitude': '0.0',
       'mapLongitude': ' 0.0',
@@ -151,23 +151,25 @@ class SignUpViewModel extends BaseViewModel {
       'updatedAt': DateTime.now().toIso8601String(),
     };
 
-   Document branch =  ProxyService.database.insert(data: _mapBranch);
+   Document branch =  ProxyService.database.insert(id:id,data: _mapBranch);
    return branch.ID;
   }
 
   Future<String> createBusiness(
       {String userId, String businessName, BuildContext context}) async {
+        final id = Uuid().v1();
     final Map<String, dynamic> _mapBusiness = {
       'active': true,
-      'id': Uuid().v1(),
+      'id': id,
       'categoryId': '10', //pet store a default id when signup on mobile
       'channels': [userId],
-      'typeId': '1', //pet store a default id when signup on mobile
       'table': AppTables.business,
       'country': 'Rwanda',
+      'businessUrl': 'url',
+      'timeZone': 'cairo',
+      'userId': 'd2f49b00-28f0-11eb-88e7-3f43ab5e8bc6', //FIXME: should pass current user uid from couch
       'currency': 'RWF',
       'name': businessName,
-      'userId': userId,
       'createdAt': DateTime.now().toIso8601String(),
       'updatedAt': DateTime.now().toIso8601String(),
     };
@@ -176,7 +178,7 @@ class SignUpViewModel extends BaseViewModel {
     final Document business =
         ProxyService.database.insert(id: businessId, data: _mapBusiness);
 
-    _business.add(Business.fromMap(business.jsonProperties));
+    _business.add(Business.fromMap(business.map));
     StoreProvider.of<AppState>(context)
         .dispatch(OnBusinessLoaded(business: _business));
     // ignore: always_specify_types

@@ -39,7 +39,6 @@ class DatabaseService {
         password: password, // or
         // 'sessionId': 'dfhfsdyf8dfenfajfoadnf83c4dfhdfad3228yrsefd',
     );
-
     // Set up a status listener
     replicator.addChangeListener((status) {
       print('Replicator status: ' + status.activityLevel.toString());

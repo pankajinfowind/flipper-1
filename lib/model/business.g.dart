@@ -36,9 +36,6 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
       'categoryId',
       serializers.serialize(object.categoryId,
           specifiedType: const FullType(String)),
-      'typeId',
-      serializers.serialize(object.typeId,
-          specifiedType: const FullType(String)),
       'channels',
       serializers.serialize(object.channels,
           specifiedType:
@@ -63,6 +60,12 @@ class _$BusinessSerializer implements StructuredSerializer<Business> {
       result
         ..add('userId')
         ..add(serializers.serialize(object.userId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.typeId != null) {
+      result
+        ..add('typeId')
+        ..add(serializers.serialize(object.typeId,
             specifiedType: const FullType(String)));
     }
     if (object.createdAt != null) {
@@ -284,9 +287,6 @@ class _$Business extends Business {
     }
     if (categoryId == null) {
       throw new BuiltValueNullFieldError('Business', 'categoryId');
-    }
-    if (typeId == null) {
-      throw new BuiltValueNullFieldError('Business', 'typeId');
     }
     if (channels == null) {
       throw new BuiltValueNullFieldError('Business', 'channels');

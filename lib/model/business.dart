@@ -34,8 +34,8 @@ abstract class Business implements Built<Business, BusinessBuilder> {
   @nullable
   String get userId;
 
+  @nullable
   String get typeId;
-
 
   @nullable
   String get createdAt;

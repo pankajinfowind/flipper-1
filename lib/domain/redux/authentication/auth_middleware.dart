@@ -111,6 +111,7 @@ Future<void> openCloseBusiness({
   }
 }
 
+
 Future<String> isUserCurrentlyLoggedIn(Store<AppState> store) async {
   final DatabaseService _databaseService = ProxyService.database;
   final Logger log = Logging.getLogger('Get User: ');

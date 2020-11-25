@@ -14,7 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:logger/logger.dart';
-
+import 'package:flipper/services/database_service.dart';
 bool get isInDebugMode {
   bool inDebugMode = false;
   assert(inDebugMode = true); // never executes in production
@@ -27,10 +27,16 @@ Future<void> main() async {
   initializeDateFormatting();
 
   await DotEnv().load('.env');
-
+  
   await Firebase.initializeApp();
   setupLocator();
 
+// FIXME: crashing the app
+// // login the app to pull system data on start
+//   final db = locator<DatabaseService>();
+//   // login with empty channel to access the shared data
+//   db.login();
+//   // end login.
   if (isInDebugMode) {
     // enableFlipper();
   }

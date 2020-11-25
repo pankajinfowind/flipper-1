@@ -194,24 +194,24 @@ class _OtpPageState extends State<OtpPage> {
                                         .sharedPref
                                         .getUserId();
                                     if (userExist == null) {
-                                      final q = Query(ProxyService.database.db,
-                                          'SELECT * WHERE table=\$VALUE AND id=\$ID');
+                                      // final q = Query(ProxyService.database.db,
+                                      //     'SELECT * WHERE table=\$VALUE AND id=\$ID');
 
-                                      q.parameters = {
-                                        'VALUE': AppTables.user,
-                                        'ID': loginResponse.id.toString()
-                                      };
-                                      final user = q.execute();
-                                      if (user.allResults.isNotEmpty) {
-                                        ProxyService.sharedPref.setUserLoggedIn(
-                                            userId:
-                                                loginResponse.id.toString());
-                                        StoreProvider.of<AppState>(context)
-                                            .dispatch(
-                                                VerifyAuthenticationState());
-                                        proxyService.loading.add(false);
-                                        return;
-                                      }
+                                      // q.parameters = {
+                                      //   'VALUE': AppTables.user,
+                                      //   'ID': loginResponse.id.toString()
+                                      // };
+                                      // final user = q.execute();
+                                      // if (user.allResults.isNotEmpty) {
+                                      //   ProxyService.sharedPref.setUserLoggedIn(
+                                      //       userId:
+                                      //           loginResponse.id.toString());
+                                      //   StoreProvider.of<AppState>(context)
+                                      //       .dispatch(
+                                      //           VerifyAuthenticationState());
+                                      //   proxyService.loading.add(false);
+                                      //   return;
+                                      // }
                                       ProxyService.database.insert(data: {
                                         'name': loginResponse.name,
                                         'email': loginResponse.email,

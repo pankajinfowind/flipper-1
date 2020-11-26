@@ -25,26 +25,34 @@ class DatabaseService {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     final String appDocPath = appDocDir.path;
     // ignore: prefer_single_quotes
-    db = Database("main", directory: appDocPath);
-
+    if(!Database.exists("main",directory: appDocPath)){
+       // ignore: prefer_single_quotes
+        db = Database("main", directory: appDocPath);
+    }else{
+       // ignore: prefer_single_quotes
+       db = Database("main", directory: appDocPath,doOpen:true);
+    }
 
     final String gatewayUrl = DotEnv().env['GATEWAY_URL'];
     final String username = DotEnv().env['USERNAME'];
     final String password = DotEnv().env['PASSWORD'];
-
-    final replicator = Replicator(
-        db,
-        endpointUrl: 'ws://$gatewayUrl/main/',
-        username: username,
-        password: password, // or
-        // 'sessionId': 'dfhfsdyf8dfenfajfoadnf83c4dfhdfad3228yrsefd',
+ 
+    final Replicator replicator = Replicator(
+      db,
+      endpointUrl: 'ws://$gatewayUrl/main/',
+      username: username,
+      password: password, // or
+      // 'sessionId': 'dfhfsdyf8dfenfajfoadnf83c4dfhdfad3228yrsefd',
     );
+
     // Set up a status listener
     replicator.addChangeListener((status) {
       print('Replicator status: ' + status.activityLevel.toString());
     });
-    if(channels!=null){
-      replicator.channels = channels;
+    replicator.continuous = true;
+    if (channels != null) {
+      log.d(channels);
+      // replicator.channels = channels;
     }
     // Start the replicator
     replicator.start();
@@ -53,8 +61,6 @@ class DatabaseService {
   Document getById({@required String id}) {
     return db.getMutableDocument(id);
   }
-
-  
 
   Future<Document> update({@required Document document}) async {
     return await db.saveDocument(document);

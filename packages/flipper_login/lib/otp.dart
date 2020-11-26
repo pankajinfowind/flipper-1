@@ -9,6 +9,7 @@ import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
 import 'package:flipper/services/proxy.dart';
 import 'package:flipper/model/fuser.dart';
 import 'package:flipper/services/flipperNavigation_service.dart';
+import 'package:flipper/utils/logger.dart';
 import 'package:flipper/views/welcome/home/common_view_model.dart';
 import 'package:flipper/utils/constant.dart';
 import 'package:flipper_login/services/proxy_service.dart';
@@ -194,24 +195,26 @@ class _OtpPageState extends State<OtpPage> {
                                         .sharedPref
                                         .getUserId();
                                     if (userExist == null) {
-                                      // final q = Query(ProxyService.database.db,
-                                      //     'SELECT * WHERE table=\$VALUE AND id=\$ID');
+                                      final q = Query(ProxyService.database.db,
+                                          'SELECT * WHERE table=\$VALUE AND id=\$ID');
 
-                                      // q.parameters = {
-                                      //   'VALUE': AppTables.user,
-                                      //   'ID': loginResponse.id.toString()
-                                      // };
-                                      // final user = q.execute();
-                                      // if (user.allResults.isNotEmpty) {
-                                      //   ProxyService.sharedPref.setUserLoggedIn(
-                                      //       userId:
-                                      //           loginResponse.id.toString());
-                                      //   StoreProvider.of<AppState>(context)
-                                      //       .dispatch(
-                                      //           VerifyAuthenticationState());
-                                      //   proxyService.loading.add(false);
-                                      //   return;
-                                      // }
+                                      q.parameters = {
+                                        'VALUE': AppTables.user,
+                                        'ID': loginResponse.id.toString()
+                                      };
+                                      final  log = Logging.getLogger('OTP:');
+                                      final user = q.execute();
+                                      if (user.allResults.isNotEmpty) {
+                                        log.d(user.allResults);
+                                        ProxyService.sharedPref.setUserLoggedIn(
+                                            userId:
+                                                loginResponse.id.toString());
+                                        StoreProvider.of<AppState>(context)
+                                            .dispatch(
+                                                VerifyAuthenticationState());
+                                        proxyService.loading.add(false);
+                                        return;
+                                      }
                                       ProxyService.database.insert(data: {
                                         'name': loginResponse.name,
                                         'email': loginResponse.email,

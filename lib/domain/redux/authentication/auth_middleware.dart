@@ -135,20 +135,22 @@ Future<String> isUserCurrentlyLoggedIn(Store<AppState> store) async {
     final results = q.execute();
 
     if (results.allResults.isNotEmpty) {
-      for (Map map in results.allResults) {
-        map.forEach((key, value) {
-          // FIXME(richard): fix bellow code.
-          // openCloseBusiness(
-          //   isSocial: false,
-          //   name: FUser.fromMap(value).name,
-          //   userId: FUser.fromMap(value).id.toString(),
-          //   isClosed: true,
-          // );
-          ProxyService.sharedState.setUser(user: FUser.fromMap(value));
-          log.d(FUser.fromMap(value));
-          store.dispatch(WithUser(user: FUser.fromMap(value)));
-        });
-      }
+
+      log.d('got hhere');
+      // for (Map map in results.allResults) {
+      //   map.forEach((key, value) {
+      //     // FIXME(richard): fix bellow code.
+      //     // openCloseBusiness(
+      //     //   isSocial: false,
+      //     //   name: FUser.fromMap(value).name,
+      //     //   userId: FUser.fromMap(value).id.toString(),
+      //     //   isClosed: true,
+      //     // );
+      //     ProxyService.sharedState.setUser(user: FUser.fromMap(value));
+      //     log.d(FUser.fromMap(value));
+      //     store.dispatch(WithUser(user: FUser.fromMap(value)));
+      //   });
+      // }
     }
 
     return userExist;

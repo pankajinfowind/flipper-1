@@ -31,12 +31,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
   setupLocator();
 
-// FIXME: crashing the app
-// // login the app to pull system data on start
-//   final db = locator<DatabaseService>();
-//   // login with empty channel to access the shared data
-//   db.login();
-//   // end login.
   if (isInDebugMode) {
     // enableFlipper();
   }

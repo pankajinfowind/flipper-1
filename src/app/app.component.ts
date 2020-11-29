@@ -22,13 +22,13 @@ export class AppComponent implements OnInit {
     this.translate.setDefaultLang('en');
     this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
       .subscribe(res => {
-        if(!res.business)return;
+        // if(!res.business)return;
         //console.log("userId",res.business.userId);
-        this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
+        this.database.connect(PouchConfig.bucket,localStorage.getItem('channel'));
         
-        if (PouchConfig.canSync) {
-          this.database.sync(PouchConfig.syncUrl);
-        }
+        // if (PouchConfig.canSync) {
+          this.database.sync([localStorage.getItem('userId')]);
+        // }
         this.database.getChangeListener().subscribe(data => {
           // console.log(data);
         });

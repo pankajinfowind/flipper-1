@@ -1,31 +1,32 @@
 import { Injectable } from '@angular/core';
 
 import { FlipperEventBusService } from '@enexus/flipper-event';
-import { MenuEntries, Business, Branch, Subscription,
+import {
+  MenuEntries, Business, Branch, Subscription,
   PouchDBService, PouchConfig, Tables, Menu,
   UserLoggedEvent, UserSubscriptionEvent,
   CurrentBusinessEvent,
   User
 } from '@enexus/flipper-components';
 
-import {CurrentBranchEvent} from '@enexus/flipper-components';
+import { CurrentBranchEvent } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrentUser {
-public redirectUri?: string;
-public userInfo=null;
-public current: MenuEntries;
-currentUser: User=null;
-currentBusiness: Business=null;
-currentBranch: Branch=null;
-currentSubscription: Subscription=null;
+  public redirectUri?: string;
+  public userInfo = null;
+  public current: MenuEntries;
+  currentUser: User = null;
+  currentBusiness: Business = null;
+  currentBranch: Branch = null;
+  currentSubscription: Subscription = null;
 
-constructor(private eventBus: FlipperEventBusService,private model: ModelService,
-              private database: PouchDBService) {
-    this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
+  constructor(private eventBus: FlipperEventBusService, private model: ModelService,
+    private database: PouchDBService) {
+    this.database.connect(PouchConfig.bucket, window.localStorage.getItem('channel'));
 
 
     // this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
@@ -37,7 +38,7 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
     //   .pipe(filter(e => e.business && (e.business.id !== null ||  e.business.id !==undefined)))
     //   .subscribe(res =>
     //     this.currentBusiness = res.business);
-  
+
     //   this.eventBus.of < CurrentBranchEvent > (CurrentBranchEvent.CHANNEL)
     //     .subscribe(res =>
     //       this.currentBranch = res.branch);
@@ -53,77 +54,78 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
   }
 
 
-  public async user(table=null) {
+  public async user() {
 
-   await this.database.activeUser().then(res=>{
-      if(res.docs && res.docs.length > 0){
-          this.eventBus.publish(new UserLoggedEvent(res.docs[0]));
+    await this.database.activeUser().then((res: { docs: string | any[]; }) => {
+      if (res.docs && res.docs.length > 0) {
+       
+        this.eventBus.publish(new UserLoggedEvent(res.docs[0]));
       }
-  },error=> {
-      if(error.error && error.status==='404' ||  error.status===404) {
+    }, error => {
+      if (error.error && error.status === '404' || error.status === 404) {
         this.eventBus.publish(new UserLoggedEvent(null));
       }
-  });
+    });
 
 
   }
 
   public async subscription() {
 
-    await this.database.get(PouchConfig.Tables.subscription).then( res=> {
+    await this.database.get(PouchConfig.Tables.subscription).then((res: Subscription) => {
 
-     this.eventBus.publish(new UserSubscriptionEvent(res));
+      this.eventBus.publish(new UserSubscriptionEvent(res));
 
-   },error=> {
-       if(error.error && error.status==='404' ||  error.status===404) {
-         this.eventBus.publish(new UserSubscriptionEvent(null));
-       }
-   });
+    }, (error: { error: any; status: string | number; }) => {
+      if (error.error && error.status === '404' || error.status === 404) {
+        this.eventBus.publish(new UserSubscriptionEvent(null));
+      }
+    });
 
 
-   }
-   
-   public async defaultBusiness(userId) {
+  }
 
-   
-        await this.database.activeBusiness(userId).then(res=>{
+  public async defaultBusiness(userId) {
 
-            if(res.docs && res.docs.length > 0){
-                    this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
-                    this.defaultBranch();
-            }
 
-        },error=> {
-          
-            if(error.error && error.status==='404' ||  error.status===404) {
-              this.eventBus.publish(new CurrentBusinessEvent(null));
-            }
-        });
-     
+    await this.database.activeBusiness(userId).then((res: { docs: string | any[]; }) => {
+
+      if (res.docs && res.docs.length > 0) {
+        this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
+        this.defaultBranch();
+      }
+
+    }, (error: { error: any; status: string | number; }) => {
+
+      if (error.error && error.status === '404' || error.status === 404) {
+        this.eventBus.publish(new CurrentBusinessEvent(null));
+      }
+    });
+
   }
 
 
   public async defaultBranch() {
-    if(this.currentBusiness){
-      
-          await this.database.activeBranch(this.currentBusiness.id).then(res=>{
-            this.eventBus.publish(new CurrentBranchEvent(res.docs[0]));
+    if (this.currentBusiness) {
 
-        },error=> {
-            if(error.error && error.status==='404' ||  error.status===404) {
-              this.eventBus.publish(new CurrentBranchEvent(null));
-            }
-        });
-      }
+      await this.database.activeBranch(this.currentBusiness.id).then((res: { docs: Branch[]; }) => {
+        this.eventBus.publish(new CurrentBranchEvent(res.docs[0]));
+      }, (error: { error: any; status: string | number; }) => {
+        if (error.error && error.status === '404' || error.status === 404) {
+          this.eventBus.publish(new CurrentBranchEvent(null));
+        }
+      });
+    }
   }
 
 
   public userLoggedIn() {
-   return this.database.find(PouchConfig.Tables.user).then(res=> {
-    if(res) {
-       return res;
-    }
-  });
+    return this.database.find(PouchConfig.Tables.user).then(res => {
+      if (res) {
+        return res;
+      }
+      return null;
+    });
   }
 
 

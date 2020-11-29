@@ -24,11 +24,11 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.handle(state.url);
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivateChild(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.handle(state.url);
   }
   canLoad(route: Route) {

@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  updateActiveMenu(route: string = 'admin/analytics') {
+  updateActiveMenu() {
     let activemenu = null;
     // activemenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.route === route);
     // activemenu.active = true;

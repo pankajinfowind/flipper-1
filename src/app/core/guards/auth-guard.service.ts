@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       .subscribe(res => {
         this.currentUser.currentUser = res.user;
         // on getting the user change then we need to change the sync filter too!
-        this.database.sync([this.currentUser.id]);
+        this.database.sync([this.currentUser.current.user.userId]);
       });
 
   }

@@ -18,22 +18,22 @@ import { filter } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private eventBus: FlipperEventBusService,private currentUser: CurrentUser, private router: Router) {
- 
-    this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
-    .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !==undefined)))
-    .subscribe(res =>
-      this.currentUser.currentUser = res.user);
+  constructor(private eventBus: FlipperEventBusService, private user: CurrentUser, private router: Router) {
 
-    
-    this.eventBus.of < CurrentBusinessEvent > (CurrentBusinessEvent.CHANNEL)
-    .subscribe(res =>
-      this.currentUser.currentBusiness = res.business);
-
-    this.eventBus.of < CurrentBranchEvent > (CurrentBranchEvent.CHANNEL)
+    this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
+      .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
-        this.currentUser.currentBranch = res.branch);
-        
+        this.user.currentUser = res.user);
+
+
+    this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
+      .subscribe(res =>
+        this.user.currentBusiness = res.business);
+
+    this.eventBus.of<CurrentBranchEvent>(CurrentBranchEvent.CHANNEL)
+      .subscribe(res =>
+        this.user.currentBranch = res.branch);
+
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -44,21 +44,22 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.handle(state.url);
   }
-  async canLoad(route: Route) {
-    return await this.handle(route.path);
+  canLoad(route: Route) {
+    return this.handle(route.path);
   }
 
   private async handle(url: string) {
-    await this.currentUser.user();
-    if (this.currentUser.currentUser && this.currentUser.currentUser.id) {
-          await this.currentUser.defaultBusiness(this.currentUser.currentUser.id);
-          if (this.currentUser.currentBusiness && this.currentUser.currentBusiness.id) {
-          return true;
-        }
-  }
 
-    this.currentUser.redirectUri = url;
-     await this.router.navigate(['/setup/business/new']);
+    await this.user.user();
+    if (this.user.currentUser && this.user.currentUser.active == true) {
+      await this.user.defaultBusiness(this.user.currentUser.id);
+
+      if (this.user.currentBusiness && this.user.currentBusiness.active==true) {
+        return true;
+      }
+    }
+
+    this.router.navigate(['/setup/business/new']);
     return false;
   }
 

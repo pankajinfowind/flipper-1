@@ -6,6 +6,7 @@ import { fadeInAnimation, PouchConfig, PouchDBService, UserLoggedEvent } from '@
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { filter } from 'rxjs/internal/operators';
 import { environment } from '../../environments/environment';
+import { PusherService } from '../pusher.service';
 declare const Pusher: any;
 
 
@@ -26,13 +27,14 @@ export class LoginComponent implements OnInit {
   flipperPlan = [];
   loginApproved: any;
   constructor(
+    private pusher: PusherService,
     private eventBus: FlipperEventBusService, private database: PouchDBService,
     public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
     this.database.connect(PouchConfig.bucket);
   }
   ngOnInit() {
-    this.qrcode = 'code23';
-    // this.qrcode = Date.now();
+    // this.qrcode = 'code23';
+    this.qrcode = Date.now();
     this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
@@ -41,6 +43,7 @@ export class LoginComponent implements OnInit {
       this.database.sync(PouchConfig.syncUrl);
     }
     this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
+      console.log('here',event);
       this.ngZone.run(async () => {
         if (arg && arg.length > 0) {
           const user = {
@@ -53,20 +56,19 @@ export class LoginComponent implements OnInit {
             updatedAt: new Date().toISOString(),
             id: this.database.uid(),
             userId: arg[4].replace('%20', ' '),
-            expiresAt: Date.parse(arg[6]) as number
+            table:'users',
+          channels:[],
+            expiresAt:1606521600000  //Date.parse(arg[6]) as number
           };
+          user.channels=[user.id];
           window.localStorage.setItem('channel', arg[4].replace('%20', ' '));
           window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
+          PouchConfig.Tables.user = 'user_'+ window.localStorage.getItem('channel');
           PouchConfig.channel = window.localStorage.getItem('channel');
           PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          await this.currentUser.user(PouchConfig.Tables.user);
-          if (this.currentUser.currentUser) {
-            user.id = this.currentUser.currentUser.id;
-          }
-          if (this.database.put(PouchConfig.Tables.user, user)) {
-            return window.location.href = '/admin';
-          }
+          await this.database.put(PouchConfig.Tables.user , this.currentUser.currentUser);
+          return window.location.href = '/admin';
+          
         }
       });
     });
@@ -82,7 +84,7 @@ export class LoginComponent implements OnInit {
     this.loginApproved.bind('event-login-flipper.' + this.qrcode, async (event) => {
 
       if (event) {
-        console.log("data", event.name);
+    
         const user = {
           _id: '',
           name: event.name,
@@ -91,22 +93,22 @@ export class LoginComponent implements OnInit {
           active: true,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          id: this.database.uid(),
+          id:  event.id,
           userId: event.id,
-          expiresAt: Date.parse(event.expiresAt) as number
+          table:'users',
+          channels:[],
+          expiresAt:1606521600000 //event.expiresAt as number
         };
-        window.localStorage.setItem('channel', event.id); //event.id is the userId
+
+        window.localStorage.setItem('channel', event.id); 
         window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
         PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
         PouchConfig.channel = window.localStorage.getItem('channel');
         PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
-        await this.currentUser.user(PouchConfig.Tables.user);
-        if (this.currentUser.currentUser) {
-          user.id = this.currentUser.currentUser.id;
-        }
-        if (this.database.put(PouchConfig.Tables.user, user)) {
-          return window.location.href = '/admin';
-        }
+        user.channels=[user.id];
+        console.log(event);
+        await this.database.put(PouchConfig.Tables.user, user);
+        return window.location.href = '/admin';
       }
     });
     // end of deal here

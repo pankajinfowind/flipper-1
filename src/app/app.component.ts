@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ElectronService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Menu, Tables, MainModelService, PouchConfig, PouchDBService, CurrentBusinessEvent } from '@enexus/flipper-components';
+import { Menu, Tables, PouchConfig, PouchDBService, CurrentBusinessEvent } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 // import {MessagingService} from './messaging.service';
 
@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   message: any;
   constructor(
     private eventBus: FlipperEventBusService,
-    private model: MainModelService,
     private router: Router,
     public electronService: ElectronService,
     private translate: TranslateService,
@@ -25,10 +24,10 @@ export class AppComponent implements OnInit {
       .subscribe(res => {
         if(!res.business)return;
         //console.log("userId",res.business.userId);
-        this.database.connect(PouchConfig.bucket);
+        this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
         
         if (PouchConfig.canSync) {
-          this.database.sync(PouchConfig.syncUrl +"/main");
+          this.database.sync(PouchConfig.syncUrl);
         }
         this.database.getChangeListener().subscribe(data => {
           // console.log(data);
@@ -66,15 +65,15 @@ export class AppComponent implements OnInit {
 
   updateActiveMenu(route: string = 'admin/analytics') {
     let activemenu = null;
-    activemenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.route === route);
-    activemenu.active = true;
-    this.model.update<Menu>(Tables.menu, activemenu, activemenu.id);
+    // activemenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.route === route);
+    // activemenu.active = true;
+    // this.model.update<Menu>(Tables.menu, activemenu, activemenu.id);
   }
 
   desactiveAllMenu() {
-    this.model.loadAll<Menu>(Tables.menu).forEach(menu => {
-      menu.active = false;
-      this.model.update<Menu>(Tables.menu, menu, menu.id);
-    });
+    // this.model.loadAll<Menu>(Tables.menu).forEach(menu => {
+    //   menu.active = false;
+    //   this.model.update<Menu>(Tables.menu, menu, menu.id);
+    // });
   }
 }

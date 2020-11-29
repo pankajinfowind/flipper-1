@@ -25,7 +25,7 @@ currentSubscription: Subscription=null;
 
 constructor(private eventBus: FlipperEventBusService,private model: ModelService,
               private database: PouchDBService) {
-    this.database.connect(PouchConfig.bucket);
+    this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
 
 
     // this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
@@ -94,6 +94,7 @@ constructor(private eventBus: FlipperEventBusService,private model: ModelService
             }
 
         },error=> {
+          
             if(error.error && error.status==='404' ||  error.status===404) {
               this.eventBus.publish(new CurrentBusinessEvent(null));
             }

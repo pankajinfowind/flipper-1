@@ -36,13 +36,13 @@ import { PageNotFoundComponent } from './components';
     WebviewDirective,
     FlipperEventModule,
     FlipperComponentsModule,
-    FlipperPosModule,
     VendorsModule,
     FlipperMenuModule,
     FlipperDashboardModule,
     FlipperOfflineDatabaseModule,
     FlipperSettingsModule,
     FlipperInventoryModule,
+    FlipperPosModule,
     FlipperPaymentCardModule
   ]
 })

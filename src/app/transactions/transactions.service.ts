@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Order, Tables, MainModelService, OrderDetails, Business, Branch } from '@enexus/flipper-components';
+import { Order, Tables, OrderDetails, Business, Branch } from '@enexus/flipper-components';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ModelService } from '@enexus/flipper-offline-database';
 
@@ -10,10 +10,10 @@ export class TransactionsService {
   public transactionSubject: BehaviorSubject<Order[]>;
   private readonly transactionMap = new Map<string, Order>();
   public branch: Branch | null;
-  public currency =  this.model.active<Business>(Tables.business)? this.model.active<Business>(Tables.business).currency:'RWF';
-  constructor(private query: ModelService, private model: MainModelService) {
+  public currency =  'RWF';
+  constructor() {
     this.transactionSubject = new BehaviorSubject([]);
-    this.branch=this.model.active<Branch>(Tables.branch);
+    this.branch=null;
    }
 
    public loadAllTransactions(): Observable<Order[]> {
@@ -38,6 +38,6 @@ export class TransactionsService {
   }
 
   loadOrderDetails(orderId: number) {
-    return this.model.filters<OrderDetails>(Tables.orderDetails,'orderId',orderId);
+    return 0;
   }
 }

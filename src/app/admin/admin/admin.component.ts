@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { CurrentUser } from '../../core/guards/current-user';
-import { PouchDBService } from '@enexus/flipper-components';
+import { PouchConfig, PouchDBService } from '@enexus/flipper-components';
 
 
 @Component({
@@ -15,13 +14,16 @@ export class AdminComponent implements OnInit, OnDestroy {
 
    constructor(
     private database: PouchDBService,
-    public currentUser: CurrentUser) {}
+    public currentUser: CurrentUser) {
+    
+    }
 
 
   ngOnDestroy() {}
 
-   ngOnInit() {
-
+   async ngOnInit() {
+    await this.currentUser.user();
+    
 
 
   }
@@ -33,7 +35,15 @@ export class AdminComponent implements OnInit, OnDestroy {
   displaySwitchedBranch(event) {
 
   }
-  didUserLoggedOut(event) {
+  async didUserLoggedOut(event) {
+    
+    await this.currentUser.user();
+    
+        if (this.currentUser.currentUser ) {
+         
+          this.currentUser.currentUser.active=false;
+          await this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
+        }
     window.localStorage.setItem('channel',this.database.uid());
 
     return window.location.href='/login';

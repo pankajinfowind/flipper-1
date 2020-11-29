@@ -57,66 +57,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   entryComponents: [CardValidationComponent, PaidSuccessComponent]
 })
 export class AppModule {
-  businessName: string;
+
 
   
-  constructor(private database: PouchDBService,
-    private eventBus: FlipperEventBusService,
-    private firestore: AngularFirestore) {
-    if (window.localStorage.getItem('channel') === null
-      || localStorage.getItem('channel') === 'null'
-      || localStorage.getItem('channel') === undefined) {
-      window.localStorage.setItem('channel', this.database.uid());
-    }
-
-
-    this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
-      .subscribe(res => {
-        if(!res.business)return;
-        this.businessName = res.business.name;
-        let userId=res.business.userId;
-        this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
-          if (res) {
-            // http://localhost:4985/
-            const plan: any[] = res as any[];
-            if (plan.length == 0) {
-              this.firestore.collection(this.businessName).add({
-                'bucket': 'main',
-                'syncUrl': 'http://localhost:4985/',
-                'canSync': 'true',
-                'businessName': this.businessName,
-                'channel': userId
-              }).then(() => {
-                this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
-                  if (res) {
-                    const plan: any[] = res as any[];
-                    window.localStorage.setItem('bucket', plan[0].bucket);
-                    window.localStorage.setItem('syncUrl', plan[0].syncUrl);
-                    window.localStorage.setItem('canSync', plan[0].canSync);
-                  }
-                  this.database.sync(plan[0].syncUrl);
-                })
-              })
-            }else{
-              this.firestore.collection(this.businessName).valueChanges().subscribe(res => {
-                if (res) {
-                  
-
-                  const plan: any[] = res as any[];
-
-                  if(plan[0].canSync == 'true'){
-                    this.database.sync(plan[0].syncUrl);
-                  }
-                  
-
-                  window.localStorage.setItem('bucket', plan[0].bucket);
-                  window.localStorage.setItem('syncUrl', plan[0].syncUrl);
-                  window.localStorage.setItem('canSync', plan[0].canSync);
-                }
-              })
-            }
-          }
-        });
-      });
-  }
+  constructor() { }
 }

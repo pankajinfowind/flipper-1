@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import {
   fadeInAnimation, CalculateTotalClassPipe, Order,
-  STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
+  STATUS, ORDERTYPE, Branch, Stock,
   Product, OrderDetails, StockHistory, Business, Taxes, PouchDBService, PouchConfig, Variant } from '@enexus/flipper-components';
-import { ModelService } from '@enexus/flipper-offline-database';
-import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory';
+
+  import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory';
 
 @Component({
   selector: 'app-pos',
@@ -17,7 +17,7 @@ import { ProductService, StockService, VariationService } from '@enexus/flipper-
     ]),
   ],
 })
-export class PosComponent {
+export class PosComponent implements OnInit {
   get theVariantFiltered(): Variant[] {
     return this.seTheVariantFiltered;
   }
@@ -40,14 +40,13 @@ export class PosComponent {
   public orderDetails:OrderDetails[]=[];
  
   public currency=null;
-  constructor(private model: MainModelService,
+  constructor(
               private database: PouchDBService,
               private stock: StockService,
               public variant: VariationService,
               public product: ProductService, 
                private totalPipe: CalculateTotalClassPipe) {
-      this.branch = this.model.active<Branch>(Tables.branch);
-      this.database.connect(PouchConfig.bucket,'117');
+      this.database.connect(PouchConfig.bucket,window.localStorage.getItem('channel'));
       if (PouchConfig.canSync) {
         this.database.sync(PouchConfig.syncUrl);
       }
@@ -64,23 +63,7 @@ export class PosComponent {
   date = new Date().toISOString();
 
   async ngOnInit() {
-    const user = {
-      _id: '',
-      name: 'ganza',
-      email: 'respinho2014@gmail.com',
-      token: 'xxxxx',
-      active: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      id: this.database.uid(),
-      userId: 117,
-      expiresAt: Date.parse('2020-02-10') as number,
-      table:'users',
-      docId:PouchConfig.Tables.user,
-      
-    };
-    
-    // await  this.database.put(PouchConfig.Tables.user, user);
+
     this.init();
   }
   async init() {

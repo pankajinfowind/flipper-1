@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     private database: PouchDBService) {
     this.translate.setDefaultLang('en');
     this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
-      .subscribe(res => {
+      .subscribe(() => {
         // if(!res.business)return;
         //console.log("userId",res.business.userId);
         this.database.connect(PouchConfig.bucket,localStorage.getItem('channel'));
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         // if (PouchConfig.canSync) {
           this.database.sync([localStorage.getItem('userId')]);
         // }
-        this.database.getChangeListener().subscribe(data => {
+        this.database.getChangeListener().subscribe(() => {
           // console.log(data);
         });
       });

@@ -17,9 +17,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res => {
+        console.info('got new user logged in from event',res);
         this.currentUser.currentUser = res.user;
         // on getting the user change then we need to change the sync filter too!
-        this.database.sync([this.currentUser.current.user.userId]);
+        this.database.sync([this.currentUser.currentUser.id]);
       });
 
   }

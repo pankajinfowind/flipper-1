@@ -27,23 +27,21 @@ export class LoginComponent implements OnInit {
   flipperPlan = [];
   loginApproved: any;
   constructor(
-    private pusher: PusherService,
     private eventBus: FlipperEventBusService, private database: PouchDBService,
     public currentUser: CurrentUser, private ngZone: NgZone, public electronService: ElectronService) {
     this.database.connect(PouchConfig.bucket);
   }
   ngOnInit() {
-    // this.qrcode = 'code23';
     this.qrcode = Date.now();
     this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res =>
         this.currentUser.currentUser = res.user);
     if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
+      this.database.sync([localStorage.getItem('userId')]);
     }
     this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
-      console.log('here',event);
+      console.log('here', event);
       this.ngZone.run(async () => {
         if (arg && arg.length > 0) {
           const user = {
@@ -54,21 +52,22 @@ export class LoginComponent implements OnInit {
             active: true,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-            id: this.database.uid(),
+            id: arg[4].replace('%20', ' '),
             userId: arg[4].replace('%20', ' '),
-            table:'users',
-          channels:[],
-            expiresAt:1606521600000  //Date.parse(arg[6]) as number
+            table: 'users',
+            channels: [],
+            expiresAt: 1606521600000  //Date.parse(arg[6]) as number
           };
-          user.channels=[user.id];
+          user.channels = [user.userId];
           window.localStorage.setItem('channel', arg[4].replace('%20', ' '));
-          window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          PouchConfig.Tables.user = 'user_'+ window.localStorage.getItem('channel');
+          window.localStorage.setItem('userId', arg[4].replace('%20', ' '));
+
+          PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
           PouchConfig.channel = window.localStorage.getItem('channel');
-          PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
-          await this.database.put(PouchConfig.Tables.user , this.currentUser.currentUser);
+
+          await this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser);
           return window.location.href = '/admin';
-          
+
         }
       });
     });
@@ -84,7 +83,7 @@ export class LoginComponent implements OnInit {
     this.loginApproved.bind('event-login-flipper.' + this.qrcode, async (event) => {
 
       if (event) {
-    
+
         const user = {
           _id: '',
           name: event.name,
@@ -93,20 +92,22 @@ export class LoginComponent implements OnInit {
           active: true,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          id:  event.id,
+          id: event.id,
           userId: event.id,
-          table:'users',
-          channels:[],
-          expiresAt:1606521600000 //event.expiresAt as number
+          table: 'users',
+          channels: [],
+          expiresAt: 1606521600000 //FIXME: this should come from API event.expiresAt as number
         };
 
-        window.localStorage.setItem('channel', event.id); 
-        window.localStorage.setItem('sessionId', 'b2dfb02940783371ea48881e9594ae0e0eb472d8');
+        window.localStorage.setItem('channel', event.id);
+
         PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel');
         PouchConfig.channel = window.localStorage.getItem('channel');
-        PouchConfig.sessionId = window.localStorage.getItem('b2dfb02940783371ea48881e9594ae0e0eb472d8');
-        user.channels=[user.id];
-        console.log(event);
+        localStorage.setItem('userId', user.id);
+        user.channels = [user.id];
+
+        this.eventBus.publish(new UserLoggedEvent(user));
+
         await this.database.put(PouchConfig.Tables.user, user);
         return window.location.href = '/admin';
       }

@@ -89,10 +89,9 @@ export class CurrentUser {
 
 
     await this.database.activeBusiness(userId).then((res: { docs: string | any[]; }) => {
-
+      console.log(res);
       if (res.docs && res.docs.length > 0) {
         this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
-        this.defaultBranch();
       }
 
     }, (error: { error: any; status: string | number; }) => {
@@ -102,6 +101,19 @@ export class CurrentUser {
       }
     });
 
+  }
+
+  public  getBusiness() {
+    return this.database.query(['table'], {
+      table: { $eq: 'businesses' }
+  }).then(res => {
+      if (res.docs && res.docs.length > 0) {
+        
+      } else {
+          return [];
+      }
+
+  });
   }
 
 

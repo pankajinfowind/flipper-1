@@ -22,12 +22,13 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   displaySwitchedBranch(event) {}
+
   async didUserLoggedOut(event) {
     await this.currentUser.user()
 
     if (this.currentUser.currentUser) {
       this.currentUser.currentUser.active = false
-      await this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser)
+      await this.database.put(this.currentUser.currentUser.id, this.currentUser.currentUser)
     }
     window.localStorage.setItem('channel', this.database.uid())
 

@@ -4,26 +4,6 @@
 [![Make a pull request][prs-badge]][prs]
 [![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
 
-# Mission | 任务
-Help Connect wholesaler and reteller and avoid middleman while helping to book keep transactions.
-
-帮助连接批发商和转售商，并避免中间人，同时帮助保留交易记录。
-
-# Chat with us use
-[link to Our chat!](https://discord.gg/5swR6uY])
-
-# Web & Desktop| 网络和桌面
-- Web and desktop application are on the master branch.
-- Web和桌面应用程序位于master分支上。
-# Mobile android & ios | 手机Android和iOS
-- Android and ios are found on mobile branch
-- 在移动分支上可以找到Android和ios...
-# Tech used | 二手技术
-- We use angular and flutter to build this project and some php(Laravel backend), but you don't need backend at all!
-- 我们使用angular和flutter来构建该项目和一些php（Laravel后端），但是您根本不需要后端！
-
-# Make sure to use node v10.16.3 otherwise it won't run.
-
 # Introduction
 
 Bootstrap and package your project with Angular 9 and Electron 8 (Typescript + SASS + Hot Reload) for creating Desktop applications.

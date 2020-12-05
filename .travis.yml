@@ -1,48 +1,49 @@
-os:
-  - linux
-  - osx
-language: node_js
-node_js:
-  - '10.16.3'
-dist: xenial
-sudo: required
-services:
-  - xvfb
-before_script:
-  # Replace clientId and clientSecret values in app-config.js with environment
-  # variable values.
-  - export NODE_OPTIONS=–max_old_space_size=8096
-  # - cd eapp/config/
-  # - sed -i -e "s/exports.clientId = ''/exports.clientId = \"$clientId\"/g" app-config.js
-  # - sed -i -e "s/exports.clientSecret = ''/exports.clientSecret = \"$clientSecret\"/g" app-config.js
-  # - cd ../../
-  # removed this: -e clientId=${clientId} \
-  # -e clientSecret=${clientSecret} \ bellow
-script:
-  - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      docker run --rm \
-        -e TRAVIS=$TRAVIS \
-        -e TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS \
-        -e GH_TOKEN=${GH_TOKEN} \
-        -v $(pwd):/project \
-        -v ~/.cache/electron:/root/.cache/electron \
-        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        electronuserland/builder:wine \
-        bash -c "
-          npm install \
-          && npm run electron:linux && npm run electron:windows "
-    else
-      # Code signing for macOS is not available in Docker, so we build on macOS.
-      # yarn dist --mac
-      npm run electron:mac
-    fi
+# pause using travis for now.
+# os:
+#   - linux
+#   - osx
+# language: node_js
+# node_js:
+#   - '10.16.3'
+# dist: xenial
+# sudo: required
+# services:
+#   - xvfb
+# before_script:
+#   # Replace clientId and clientSecret values in app-config.js with environment
+#   # variable values.
+#   - export NODE_OPTIONS=–max_old_space_size=8096
+#   # - cd eapp/config/
+#   # - sed -i -e "s/exports.clientId = ''/exports.clientId = \"$clientId\"/g" app-config.js
+#   # - sed -i -e "s/exports.clientSecret = ''/exports.clientSecret = \"$clientSecret\"/g" app-config.js
+#   # - cd ../../
+#   # removed this: -e clientId=${clientId} \
+#   # -e clientSecret=${clientSecret} \ bellow
+# script:
+#   - |
+#     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+#       docker run --rm \
+#         -e TRAVIS=$TRAVIS \
+#         -e TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS \
+#         -e GH_TOKEN=${GH_TOKEN} \
+#         -v $(pwd):/project \
+#         -v ~/.cache/electron:/root/.cache/electron \
+#         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+#         electronuserland/builder:wine \
+#         bash -c "
+#           npm install \
+#           && npm run electron:linux && npm run electron:windows "
+#     else
+#       # Code signing for macOS is not available in Docker, so we build on macOS.
+#       # yarn dist --mac
+#       npm run electron:mac
+#     fi
 
-    #ls dist/
+#     #ls dist/
 
-before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
+# before_cache:
+#   - rm -rf $HOME/.cache/electron-builder/wine
 
-branches:
-  except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
+# branches:
+#   except:
+#     - "/^v\\d+\\.\\d+\\.\\d+$/"

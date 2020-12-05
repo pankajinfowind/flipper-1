@@ -106,9 +106,6 @@ export class LoginComponent implements OnInit {
           expiresAt: 1606521600000, //FIXME: this should come from API event.expiresAt as number
         }
 
-        window.localStorage.setItem('channel', event.id.toString())
-
-        PouchConfig.channel = window.localStorage.getItem('channel')
         localStorage.setItem('userId', user.id.toString())
         user.channels = [user.id]
 

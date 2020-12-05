@@ -1,5 +1,3 @@
-
-
 $loading-indicator-color: #2996cc !default;
 $loading-indicator-width: 64px !default;
 $loading-indicator-height: 64px !default;
@@ -60,5 +58,5 @@ loading-indicator {
     }
   }
 
-  @import "spinner";
+  @import 'spinner';
 }

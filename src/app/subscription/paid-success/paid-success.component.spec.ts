@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PaidSuccessComponent } from './paid-success.component';
+import { PaidSuccessComponent } from './paid-success.component'
 
 describe('PaidSuccessComponent', () => {
-  let component: PaidSuccessComponent;
-  let fixture: ComponentFixture<PaidSuccessComponent>;
+  let component: PaidSuccessComponent
+  let fixture: ComponentFixture<PaidSuccessComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PaidSuccessComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [PaidSuccessComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaidSuccessComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PaidSuccessComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

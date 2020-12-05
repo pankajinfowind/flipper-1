@@ -9,31 +9,30 @@ svg {
   stroke-dasharray: 1000;
   stroke-dashoffset: 0;
   &.circle {
-    -webkit-animation: dash .9s ease-in-out;
-    animation: dash .9s ease-in-out;
+    -webkit-animation: dash 0.9s ease-in-out;
+    animation: dash 0.9s ease-in-out;
   }
   &.line {
     stroke-dashoffset: 1000;
-    -webkit-animation: dash .9s .35s ease-in-out forwards;
-    animation: dash .9s .35s ease-in-out forwards;
+    -webkit-animation: dash 0.9s 0.35s ease-in-out forwards;
+    animation: dash 0.9s 0.35s ease-in-out forwards;
   }
   &.check {
     stroke-dashoffset: -100;
-    -webkit-animation: dash-check .9s .35s ease-in-out forwards;
-    animation: dash-check .9s .35s ease-in-out forwards;
+    -webkit-animation: dash-check 0.9s 0.35s ease-in-out forwards;
+    animation: dash-check 0.9s 0.35s ease-in-out forwards;
   }
 }
 
 p {
   font-size: 1em;
   &.success {
-    color: #73AF55;
+    color: #73af55;
   }
   &.error {
-    color: #D06079;
+    color: #d06079;
   }
 }
-
 
 @-webkit-keyframes dash {
   0% {

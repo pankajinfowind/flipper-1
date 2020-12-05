@@ -1,6 +1,5 @@
-import {DashBoardEntries} from '@enexus/flipper-components';
+import { DashBoardEntries } from '@enexus/flipper-components'
 
 export class MockDashboard {
-  static data: DashBoardEntries = {
-  };
+  static data: DashBoardEntries = {}
 }

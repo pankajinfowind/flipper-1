@@ -1,21 +1,18 @@
-
-$admin-max-left-width:278px;
-$admin-min-left-width:69px;
+$admin-max-left-width: 278px;
+$admin-min-left-width: 69px;
 
 .container1 {
-    height: calc(100vh - 30px);
-    top:30px;
-    bottom: 0;
-  }
-
-.max-container-fliud{
-    position: relative;
-    float: right;
-   
-    width: calc(100% - #{$admin-max-left-width});
-
+  height: calc(100vh - 30px);
+  top: 30px;
+  bottom: 0;
 }
-.minContainerFliud{
-   
-    width: calc(100% - #{$admin-min-left-width})!important;
+
+.max-container-fliud {
+  position: relative;
+  float: right;
+
+  width: calc(100% - #{$admin-max-left-width});
+}
+.minContainerFliud {
+  width: calc(100% - #{$admin-min-left-width}) !important;
 }

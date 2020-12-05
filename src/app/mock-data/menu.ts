@@ -1,6 +1,3 @@
-import { MenuEntries } from '@enexus/flipper-components';
+import { MenuEntries } from '@enexus/flipper-components'
 
-export class MockMenu {
-
-
-}
+export class MockMenu {}

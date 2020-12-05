@@ -119,8 +119,7 @@ export class LoginComponent implements OnInit {
         if (!this.currentUser.currentBusiness) {
           async
             .on('change', (change: any) => {
-              console.log(change)
-              // return (window.location.href = '/admin')
+              return (window.location.href = '/admin')
             })
             .on('paused', (err: any) => {
               console.log('sync paused', err)

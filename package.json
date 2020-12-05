@@ -1,7 +1,7 @@
 {
   "name": "flipper",
   "appId": "flipper.rw",
-  "version": "1.1.23",
+  "version": "1.1.24",
   "description": "Flipper business app for business",
   "homepage": "https://flipper.rw/",
   "productName": "flipper",
@@ -50,11 +50,12 @@
     "alpha": "npm run release -- --prerelease alpha",
     "major": "npm run release -- --release-as major",
     "minor": "npm run release -- --release-as minor",
-    "patch": "npm run release -- --release-as patch"
+    "patch": "npm run release -- --release-as patch",
+    "format": "prettier \"./src/**/*.+(js|jsx|css|less|scss|ts|tsx|md)\" --write"
   },
   "config": {
     "ghooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "",
       "post-merge": "npm install",
       "post-rewrite": "npm install"
     }
@@ -86,6 +87,7 @@
     "electron-reload": "1.5.0",
     "gulp": "^4.0.2",
     "gulp-replace": "^1.0.0",
+    "husky": "4.3.0",
     "jasmine-core": "3.5.0",
     "jasmine-spec-reporter": "5.0.2",
     "karma": "5.0.9",

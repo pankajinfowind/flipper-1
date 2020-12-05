@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userId', user.id.toString())
         user.channels = [user.id]
 
-        //TODO: IF BUSINESS IS NULL , DO SYNC THEN REDIRECT OTHERWISE DO REDIRECT WITHOUT SYNING
+        //NOTE: IF BUSINESS IS NULL , DO SYNC THEN REDIRECT OTHERWISE DO REDIRECT WITHOUT SYNING
         let async: any = this.database.sync([user.id])
         this.eventBus.publish(new UserLoggedEvent(user))
         await this.database.put(PouchConfig.Tables.user, user)

@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userId', user.id.toString())
         user.channels = [user.id]
 
-        //NOTE: IF BUSINESS IS NULL , DO SYNC THEN REDIRECT OTHERWISE DO REDIRECT WITHOUT SYNING
+        //NOTE: IF BUSINESS IS NULL , DO SYNC THEN REDIRECT OTHERWISE DO REDIRECT WITHOUT SYNCING
         let async: any = this.database.sync([user.id])
         this.eventBus.publish(new UserLoggedEvent(user))
         await this.database.put(user.id, user)
@@ -118,8 +118,9 @@ export class LoginComponent implements OnInit {
 
         if (!this.currentUser.currentBusiness) {
           async
-            .on('change', (info: any) => {
-              return (window.location.href = '/admin')
+            .on('change', (change: any) => {
+              console.log(change)
+              // return (window.location.href = '/admin')
             })
             .on('paused', (err: any) => {
               console.log('sync paused', err)

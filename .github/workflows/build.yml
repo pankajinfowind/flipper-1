@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest] 
+        package_manager: [npm]
         #  macos-latest, ubuntu-latest
 
     steps:

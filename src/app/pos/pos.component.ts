@@ -324,7 +324,7 @@ export class PosComponent implements OnInit {
       // console.log(v);
       if (
         v.name.toString().toLowerCase().indexOf(query) >= 0 ||
-        v.SKU.toString().toLowerCase().indexOf(query) > 0 ||
+        v.sku.toString().toLowerCase().indexOf(query) > 0 ||
         v.productName.toString().toLowerCase().indexOf(query) >= 0
       ) {
         return true
@@ -409,7 +409,7 @@ export class PosComponent implements OnInit {
       canTrackStock: variant.stock.canTrackingStock,
       stockId: variant.stock.id,
       unit: variant.unit,
-      SKU: variant.SKU,
+      sku: variant.sku,
       quantity: event.quantity,
       variantId: variant.id,
       taxRate,

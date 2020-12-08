@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.currentUser.currentUser.active = false
       await this.database.put(this.currentUser.currentUser.id, this.currentUser.currentUser)
     }
-    window.localStorage.setItem('channel', this.database.uid())
+    window.localStorage.setItem('channel', this.currentUser.currentUser.id)
 
     return (window.location.href = '/login')
   }

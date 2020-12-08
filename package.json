@@ -134,7 +134,7 @@
     "@enexus/flipper-vendors": "1.1.1",
     "@enexus/flipperofflinedatabase": "1.2.13",
     "@enexus/payment-card": "1.0.3",
-    "@swimlane/ngx-charts": "^14.0.0",
+    "@swimlane/ngx-charts": "16.0.0",
     "@types/lodash": "^4.14.155",
     "@types/pouchdb": "^6.4.0",
     "alasql": "0.6.2",

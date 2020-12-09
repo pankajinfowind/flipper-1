@@ -90,10 +90,10 @@ export class PosComponent implements OnInit {
 
     if (this.currentOrder) {
       await this.allOrderDetails(this.currentOrder.id)
-      await this.getOrderDetails()
+      this.getOrderDetails()
     }
 
-    this.currency = (await this.defaultBusiness$) ? this.defaultBusiness$.currency : 'RWF'
+    this.currency = this.defaultBusiness$ ? this.defaultBusiness$.currency : 'RWF'
   }
 
   public currentBusiness() {

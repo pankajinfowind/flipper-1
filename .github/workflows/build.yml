@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest] 
-        package_manager: [npm]
+        package_manager: [yarn]
         #  macos-latest, ubuntu-latest
 
     steps:

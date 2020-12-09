@@ -10,17 +10,22 @@ jobs:
       matrix:
         os: [windows-latest] 
         package_manager: [yarn]
+        # package_root: ["./"]
         #  macos-latest, ubuntu-latest
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
-      - name: Install Node.js, NPM and Yarn
+      - name: Set up nodejs
         - uses: actions/checkout@v2
         - uses: actions/setup-node@v2-beta
         with:
           node-version: '10'
+      # - name: Install test app dependencies
+      #   run: |
+      #     cd ${{ matrix.package_root }}
+      #     ${{ matrix.package_manager }} install
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1.6.0

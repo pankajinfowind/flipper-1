@@ -1,7 +1,7 @@
 {
   "name": "flipper",
   "appId": "flipper.rw",
-  "version": "1.6.1",
+  "version": "1.6.6",
   "description": "Flipper business app for business",
   "homepage": "https://flipper.rw/",
   "productName": "flipper",
@@ -120,7 +120,7 @@
     "@angular/localize": "^10.0.3",
     "@angular/material": "~9.2.4",
     "@enexus/flipper-color": "0.0.3",
-    "@enexus/flipper-components": "1.6.31",
+    "@enexus/flipper-components": "1.6.47",
     "@enexus/flipper-dashboard": "0.0.6",
     "@enexus/flipper-dialog": "1.0.3",
     "@enexus/flipper-event": "1.0.4",

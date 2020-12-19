@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         let async: any = this.database.sync([this.currentUser.currentUser.id])
         async.on('change', (change: any) => {
           // TODO: call init function to refresh product list
-          console.log('got changes here sir....', change)
+          console.log('change', change)
           this.eventBus.publish(new AnyEvent(change))
           // return (window.location.href = '/admin')
         })

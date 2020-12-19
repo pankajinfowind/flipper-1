@@ -3,7 +3,6 @@ import { CurrentUser } from '../core/guards/current-user'
 import { ElectronService } from '../core/services'
 import { trigger, transition, useAnimation } from '@angular/animations'
 import {
-  AnyEvent,
   CurrentBusinessEvent,
   fadeInAnimation,
   PouchConfig,
@@ -11,7 +10,6 @@ import {
   UserLoggedEvent,
 } from '@enexus/flipper-components'
 import { FlipperEventBusService } from '@enexus/flipper-event'
-import { filter } from 'rxjs/internal/operators'
 import { environment } from '../../environments/environment'
 import { PusherService } from '../pusher.service'
 declare const Pusher: any
@@ -46,42 +44,6 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit() {
     this.qrcode = Date.now()
-    this.eventBus
-      .of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
-      .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
-      .subscribe(res => (this.currentUser.currentUser = res.user))
-    if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
-    }
-    this.electronService.ipcRenderer.on('received-login-message', (event, arg) => {
-      console.log('here', event)
-      this.ngZone.run(async () => {
-        if (arg && arg.length > 0) {
-          const user = {
-            _id: '',
-            name: arg[1].replace('%20', ' '),
-            email: arg[0].replace('%20', ' '),
-            token: arg[3].replace('%20', ' '),
-            active: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            id: arg[4].replace('%20', ' '),
-            userId: arg[4].replace('%20', ' '),
-            table: 'users',
-            channels: [],
-            expiresAt: 1606521600000, //Date.parse(arg[6]) as number
-          }
-          user.channels = [user.id]
-          window.localStorage.setItem('channel', arg[4].replace('%20', ' '))
-          PouchConfig.Tables.user = 'user_' + window.localStorage.getItem('channel')
-          PouchConfig.channel = window.localStorage.getItem('channel')
-          await this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser)
-
-          return (window.location.href = '/admin')
-        }
-      })
-    })
-
     // use Qr code to log in
     this.pushers = new Pusher(environment.pusher.key, {
       cluster: environment.pusher.cluster,
@@ -102,7 +64,7 @@ export class LoginComponent implements OnInit {
           id: event.id.toString(),
           userId: event.id.toString(),
           table: 'users',
-          channels: [],
+          channels: [event.id.toString()],
           expiresAt: 1606521600000, //FIXME: this should come from API event.expiresAt as number
         }
 
@@ -112,14 +74,14 @@ export class LoginComponent implements OnInit {
         //NOTE: IF BUSINESS IS NULL , DO SYNC THEN REDIRECT OTHERWISE DO REDIRECT WITHOUT SYNCING
         let async: any = this.database.sync([user.id])
         this.eventBus.publish(new UserLoggedEvent(user))
-        await this.database.put(user.id, user)
 
         await this.currentUser.defaultBusiness(user.id)
 
         if (!this.currentUser.currentBusiness) {
           async
             .on('change', (change: any) => {
-              return (window.location.href = '/admin')
+              console.log('would redirect')
+              // return (window.location.href = '/admin')
             })
             .on('paused', (err: any) => {
               console.log('sync paused', err)
@@ -137,7 +99,8 @@ export class LoginComponent implements OnInit {
               console.log('sync error', err)
             })
         } else {
-          return (window.location.href = '/admin')
+          console.log('in elese method')
+          // return (window.location.href = '/admin')
         }
       }
     })

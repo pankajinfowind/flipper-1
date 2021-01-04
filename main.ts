@@ -288,3 +288,5 @@ try {
 // sync_gateway.exe serviceconfig.json
 
 // https://forums.couchbase.com/t/admin-api-localhost-website-cors/10965/3
+
+// removed:  --browsers=ChromeHeadless from test travis

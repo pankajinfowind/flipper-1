@@ -19,6 +19,23 @@ autoUpdater.logger.transports.file.level = 'info'
 const nativeImage = require('electron').nativeImage
 const isDev = require('electron-is-dev')
 
+var AutoLaunch = require('auto-launch')
+var autoLauncher = new AutoLaunch({
+  name: 'flipper',
+  path: '/Applications/flipper.app',
+})
+autoLauncher.enable()
+// Checking if autoLaunch is enabled, if not then enabling it.
+autoLauncher
+  .isEnabled()
+  .then(function (isEnabled) {
+    if (isEnabled) return
+    autoLauncher.enable()
+  })
+  .catch(function (err) {
+    throw err
+  })
+
 const server = require('./flipper/flipper')
 
 serve = args.some(val => val === '--serve')

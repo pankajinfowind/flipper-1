@@ -8,15 +8,15 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest] 
-        package_manager: [npm]
+        os: [windows-latest]
+        package_manager: [yarn]
         #  macos-latest, ubuntu-latest
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
-      - name: Install Node.js, NPM and Yarn
+      - name: Install Node.js, Yarn
         uses: actions/setup-node@v1
         with:
           node-version: 10

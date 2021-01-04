@@ -27,6 +27,7 @@ jobs:
       - name: Testing
         # Clean Yarn package
         run: |
+         yarn install -g @angular/cli
          yarn test
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1

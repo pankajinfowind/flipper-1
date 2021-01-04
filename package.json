@@ -32,8 +32,6 @@
     "build:prod": "npm run build -- -c production",
     "ng:serve": "ng serve",
     "start-web": "ng serve -c dev-web -o",
-    "postinstall:web": "node postinstall-web.js",
-    "postinstall:electron": "node postinstall.js",
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run postinstall:electron && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
@@ -64,7 +62,7 @@
     }
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "9.1.0",
+    "@angular-builders/custom-webpack": "10.0.1",
     "@angular-devkit/build-angular": "0.1100.5",
     "@angular/cli": "11.0.4",
     "@angular/common": "11.0.4",
@@ -92,6 +90,7 @@
     "gulp-replace": "^1.0.0",
     "husky": "4.3.0",
     "jasmine-core": "~3.6.0",
+    "karma-electron": "6.3.1",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "5.1.1",
     "karma-chrome-launcher": "~3.1.0",
@@ -109,16 +108,21 @@
     "tslint": "~6.1.0",
     "typescript": "~4.0.5",
     "update-electron-app": "^1.5.0",
-    "wait-on": "5.0.1",
+
     "wallaby-webpack": "3.9.16",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "wait-on": "5.0.1",
+    "webdriver-manager": "12.1.7"
   },
   "wallaby": {
     "autoDetect": true
   },
   "engines": {
-    "node": ">=10.9.0"
+    "node": ">=10.13.0"
   },
+  "browserslist": [
+    "chrome 83"
+  ],
   "dependencies": {
     "@angular/animations": "~11.0.4",
     "@angular/cdk": "~11.0.2",

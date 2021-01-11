@@ -3,21 +3,22 @@
  */
 
 module.exports = (config, options) => {
-  config.target = 'electron-renderer'
+  config.target = 'electron-renderer';
+
 
   if (options.fileReplacements) {
-    for (let fileReplacement of options.fileReplacements) {
-      if (fileReplacement.replace !== 'src/environments/environment.ts') {
-        continue
-      }
+      for(let fileReplacement of options.fileReplacements) {
+          if (fileReplacement.replace !== 'src/environments/environment.ts') {
+              continue;
+          }
 
-      let fileReplacementParts = fileReplacement['with'].split('.')
-      if (fileReplacementParts.length > 1 && ['web'].indexOf(fileReplacementParts[1]) >= 0) {
-        config.target = 'web'
+          let fileReplacementParts = fileReplacement['with'].split('.');
+          if (fileReplacementParts.length > 1 && ['web'].indexOf(fileReplacementParts[1]) >= 0) {
+              config.target = 'web';
+          }
+          break;
       }
-      break
-    }
   }
 
-  return config
+  return config;
 }

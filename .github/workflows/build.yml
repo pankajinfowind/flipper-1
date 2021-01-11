@@ -18,8 +18,8 @@ jobs:
 
       - name: Install Node.js, Yarn
         uses: actions/setup-node@v1
-        with:
-          node-version: 10
+        # with:
+        #   node-version: 10
       - name: Yarn clean
         # Clean Yarn package
         run: |

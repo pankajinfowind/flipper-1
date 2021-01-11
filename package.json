@@ -27,7 +27,7 @@
     "ng": "ng",
     "start-electron": "npm-run-all -p electron:serve",
     "start": "npm-run-all -p ng:serve electron:serve",
-    "build": "npm run electron:serve-tsc && ng build --base-href ./",
+    "build": "npm run electron:build",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
     "ng:serve": "ng serve -c web -o",

@@ -9,21 +9,21 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
-        package_manager: [yarn]
+        package_manager: [npm]
         #  macos-latest, ubuntu-latest
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
-      - name: Install Node.js, Yarn
+      - name: Install Node.js, npm
         uses: actions/setup-node@v1
         # with:
         #   node-version: 10
-      - name: Yarn clean
+      - name: npm clean
         # Clean Yarn package
         run: |
-         yarn cache clean
+         npm cache clean --force
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1

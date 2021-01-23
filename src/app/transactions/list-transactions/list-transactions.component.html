@@ -1,0 +1,98 @@
+<div class="table-container mat-table-white">
+
+  <div class="loading-shade" *ngIf="loading">
+    <flipper-spinner *ngIf="loading" [size]="48"></flipper-spinner>
+  </div>
+
+  <div *ngIf="dataSource.data.length === 0">
+    <flipper-message title="No Transactions" [message]="'No Transactions could found!'">
+    </flipper-message>
+  </div>
+  <div class="row l-transactions__key-stats ml-5 mt-5" style="position: relative;top: 15px;" *ngIf="dataSource.data.length > 0">
+    <div class="column-3 key-stats">
+      <div>
+        <div class="key-stats-value">
+          {{dataSource.data.length}}
+        </div>
+        <div class="type-small-caps key-stats-label key-stats-tooltip-wrapper">
+          Transactions
+        </div>
+      </div>
+    </div>
+    <div class="column-3 key-stats">
+      <div>
+        <div class="key-stats-value">
+          {{currency}} {{getGrandTotal() | roundNumber}}
+        </div>
+        <div class="type-small-caps key-stats-label key-stats-tooltip-wrapper">
+          TOTAL COLLECTED
+        </div>
+      </div>
+    </div>
+
+    <div class="column-3 key-stats">
+      <div>
+        <div class="key-stats-value">
+          {{currency}} {{getNetSaleTotal() | roundNumber}}
+        </div>
+        <div class="type-small-caps key-stats-label key-stats-tooltip-wrapper">
+          NET SALES
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" matSort matSortActive="orderNumber"
+    matSortDirection="desc">
+
+    <ng-container matColumnDef="orderNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+      <td mat-cell *matCellDef="let transaction">
+        <span class="toggle-collapse">
+          <img [src]="'./assets/icons/item-chevron-down.svg'">
+        </span>
+        <span class="ml-3 product-name"> {{transaction.orderNumber}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="details">
+      <th mat-header-cell *matHeaderCellDef>Details</th>
+      <td mat-cell *matCellDef="let transaction">
+        <span *ngIf="transaction.orderItems.length > 0">
+          <span *ngIf="transaction.orderItems.length > 1; else oneDetails">
+            <span *ngFor="let vrmt of transaction.orderItems; let i = index;">
+              {{vrmt.variantName?vrmt.variantName+' x '+vrmt.quantity+', ':''}}
+            </span>
+          </span>
+          <ng-template #oneDetails>
+            {{transaction.orderItems[0].variantName?transaction.orderItems[0].variantName+' x '+transaction.orderItems[0].quantity+', ':''}}
+          </ng-template>
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="subTotal">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Paid</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{currency}} {{transaction.saleTotal | roundNumber}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date/Time</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{transaction.createdAt | date}} {{transaction.createdAt | date:'mediumTime'}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+    <tr mat-row style="border-bottom: 1px #d5d9dc solid!important" *matRowDef="let row; columns: displayedColumns;"
+      class="product-row tr-row" (click)="doSelect(row)" [class.selectBackground]="selectedRow === row"></tr>
+
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+</div>

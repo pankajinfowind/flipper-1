@@ -1,0 +1,252 @@
+@import 'app-variables';
+
+// Text color
+@mixin text-error() {
+  color: mat-color($app-error);
+}
+
+@mixin text-warn() {
+  color: mat-color($app-warn);
+}
+
+@mixin text-success() {
+  color: mat-color($app-success);
+}
+
+@mixin text-info() {
+  color: mat-color($app-info);
+}
+
+@mixin text-primary() {
+  color: mat-color($app-primary);
+}
+
+@mixin text-accent() {
+  color: mat-color($app-accent);
+}
+
+@mixin text-background() {
+  color: mat-color($app-background);
+}
+
+@mixin text-muted() {
+  color: $app-foreground-secondary-color;
+}
+
+@mixin text-highlight() {
+  color: mat-color($app-primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@mixin text-green() {
+  color: $app-color-green;
+}
+
+@mixin text-blue() {
+  color: $app-color-blue;
+}
+
+@mixin text-red() {
+  color: $app-color-red;
+}
+
+@mixin text-purple-1() {
+  color: $app-color-purple-1;
+}
+
+@mixin text-purple-2() {
+  color: $app-color-purple-2;
+}
+
+@mixin text-purple-3() {
+  color: $app-color-purple-3;
+}
+
+
+// Text color
+.text-error {
+  @include text-error();
+}
+
+.text-warn {
+  @include text-warn();
+}
+
+.text-success {
+  @include text-success();
+}
+
+.text-info {
+  @include text-info();
+}
+
+.text-primary {
+  @include text-primary();
+}
+
+.text-accent {
+  @include text-accent();
+}
+
+.text-background {
+  @include text-background();
+}
+
+.text-highlight {
+  @include text-highlight();
+}
+
+.text-muted {
+  @include text-muted();
+}
+
+.text-green {
+  @include text-green();
+}
+.text-blue{
+  @include text-blue(); 
+}
+.text-red{
+  @include text-red(); 
+}
+
+.text-purple-1{
+  @include text-purple-1(); 
+}
+.text-purple-2{
+  @include text-purple-2(); 
+}
+.text-purple-3{
+  @include text-purple-3(); 
+}
+
+// Fonts
+
+@mixin font-sm() {
+  font-size: $app-font-size-sm;
+  line-height: $app-line-height-sm;
+}
+
+@mixin font-lg() {
+  font-size: $app-font-size-lg;
+  line-height: $app-line-height-lg;
+}
+@mixin font-24() {
+  font-size: $app-font-size-24;
+  line-height: $app-line-height-lg;
+}
+
+@mixin font-26() {
+  font-size: $app-font-size-26;
+  line-height: $app-line-height-lg;
+}
+@mixin font-28() {
+  font-size: $app-font-size-28;
+  line-height: $app-line-height-lg;
+}
+@mixin font-32() {
+  font-size: $app-font-size-32;
+  line-height: $app-line-height-lg;
+}
+
+
+@mixin font-weight-bold() {
+  font-weight: $app-font-weight-bold;
+}
+
+@mixin font-weight-italic() {
+  font-weight: $app-font-weight-italic;
+}
+@mixin font-weight() {
+  font-weight: $app-font-weight;
+}
+@mixin font-weight-300() {
+  font-weight: $app-font-300;
+}
+
+@mixin font-weight-400() {
+  font-weight: $app-font-weight-400;
+}
+@mixin font-weight-500() {
+  font-weight: $app-font-weight-500;
+}
+@mixin font-weight-600() {
+  font-weight: $app-font-weight-600;
+}
+@mixin font-weight-700() {
+  font-weight: $app-font-weight-700;
+}
+@mixin font-weight-800() {
+  font-weight: $app-font-weight-800;
+}
+// Fonts
+
+.font-weight-bold {
+  @include font-weight-bold();
+}
+.font-weight-italic {
+  @include font-weight-italic();
+}
+
+
+.font-weight-400 {
+  @include font-weight-400();
+}
+.font-weight-500 {
+  @include font-weight-500();
+}
+
+.font-weight-600 {
+  @include font-weight-600();
+}
+.font-weight-700 {
+  @include font-weight-700();
+}
+.font-weight-800 {
+  @include font-weight-800();
+}
+.font-sm {
+  @include font-sm();
+}
+
+.font-lg {
+  @include font-lg();
+}
+
+
+.font-weight-bold {
+  @include font-weight-bold();
+}
+
+.font-26 {
+  @include font-26();
+}
+.font-28 {
+  @include font-28();
+}
+.font-24 {
+  @include font-24();
+}
+.font-32 {
+  @include font-32();
+}
+// Ellipsis
+
+@mixin text-ellipsis() {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.text-ellipsis {
+  @include text-ellipsis();
+}
+
+@mixin text-center() {
+  text-align: center;
+}
+
+.text-center {
+  @include text-center();
+}

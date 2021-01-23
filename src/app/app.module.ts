@@ -18,10 +18,10 @@ import { MigrationModule } from './migration/migration.module'
 import { PouchDBService } from '@enexus/flipper-components'
 import { SubscriptionComponent } from './subscription/subscription.component'
 import { CardValidationComponent } from './subscription/validate-card/validate-card.component'
-import { environment } from '../environments/environment'
-import { AngularFireModule } from '@angular/fire'
-import { AngularFireDatabaseModule } from '@angular/fire/database'
-import { AngularFirestoreModule } from '@angular/fire/firestore'
+// import { environment } from '../environments/environment'
+// import { AngularFireModule } from '@angular/fire'
+// import { AngularFireDatabaseModule } from '@angular/fire/database'
+// import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { PaidSuccessComponent } from './subscription/paid-success/paid-success.component'
 import { SafePipe } from './safe.pipe'
 import { AnQrcodeModule } from 'an-qrcode'
@@ -46,9 +46,9 @@ import {FlipperInventoryModule} from '@enexus/flipper-inventory'
     SharedModule,
     AppRoutingModule,
     AnQrcodeModule,
-    AngularFireModule.initializeApp(environment.config),
-    AngularFirestoreModule,
-    AngularFireDatabaseModule,
+    // AngularFireModule.initializeApp(environment.config),
+    // AngularFirestoreModule,
+    // AngularFireDatabaseModule,
     MigrationModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

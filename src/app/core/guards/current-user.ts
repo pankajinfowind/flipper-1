@@ -91,7 +91,7 @@ export class CurrentUser {
   public async defaultBranch() {
     if (this.currentBusiness) {
       await this.http
-        .get<Business>(environment.url + '/api/bran+ches/' + this.currentBusiness.id)
+        .get<Business>(environment.url + '/api/branches/' + this.currentBusiness.id)
         .toPromise()
         .then(business => {
           this.eventBus.publish(new CurrentBusinessEvent(business))

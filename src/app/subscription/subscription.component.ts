@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs'
 import { CardValidationComponent } from './validate-card/validate-card.component'
 import { environment } from '../../environments/environment'
 import { DialogService, DialogSize } from '@enexus/flipper-dialog'
-import { AngularFirestore } from '@angular/fire/firestore'
+// import { AngularFirestore } from '@angular/fire/firestore'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { PusherService } from '../pusher.service'
 import { PaidSuccessComponent } from './paid-success/paid-success.component'
@@ -60,7 +60,7 @@ export class Customer {
 export class SubscriptionComponent implements OnInit {
   constructor(
     private pusher: PusherService,
-    private firestore: AngularFirestore,
+    // private firestore: AngularFirestore,
     private router: Router,
     public dialog: DialogService,
     private eventBus: FlipperEventBusService,
@@ -131,14 +131,14 @@ export class SubscriptionComponent implements OnInit {
       this.database.sync([PouchConfig.syncUrl])
     }
 
-    this.getFlipperPlan()
-      .valueChanges()
-      .subscribe(res => {
-        if (res) {
-          const plan: Plan[] = res as Plan[]
-          this.flipperPlan = plan[0].amount
-        }
-      })
+    // this.getFlipperPlan()
+    //   .valueChanges()
+    //   .subscribe(res => {
+    //     if (res) {
+    //       const plan: Plan[] = res as Plan[]
+    //       this.flipperPlan = plan[0].amount
+    //     }
+    //   })
 
     this.buyForm = new FormGroup({
       mobilephone: new FormControl('', [Validators.required]),
@@ -176,7 +176,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   getFlipperPlan() {
-    return this.firestore.collection('flipper-plan')
+    // return this.firestore.collection('flipper-plan')
   }
 
   submitCard(data) {

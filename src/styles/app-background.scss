@@ -1,0 +1,226 @@
+@import 'app-variables';
+
+// Backgrounds
+
+@mixin octagon-background(
+  $direction: to bottom,
+  $top-alpha: 0.99,
+  $top-percent: 0%,
+  $bottom-alpha: 1,
+  $bottom-percent: 25%
+) {
+  background-image: linear-gradient($direction, rgba($app-background-color, $top-alpha) $top-percent, rgba($app-background-color, $bottom-alpha) $bottom-percent), url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMi4wLjEsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FscXVlXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAwIDEwMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9DQo8L3N0eWxlPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxNS42LDc1IDYuNCw3NSAwLDgxLjQgMCw5MC42IDYuNCw5NyAxNS42LDk3IDIyLDkwLjYgMjIsODEuNCAiLz4NCjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iNDAuNiw3NSAzMS40LDc1IDI1LDgxLjQgMjUsOTAuNiAzMS40LDk3IDQwLjYsOTcgNDcsOTAuNiA0Nyw4MS40ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSI2NS42LDc1IDU2LjQsNzUgNTAsODEuNCA1MCw5MC42IDU2LjQsOTcgNjUuNiw5NyA3Miw5MC42IDcyLDgxLjQgIi8+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjkwLjYsNzUgODEuNCw3NSA3NSw4MS40IDc1LDkwLjYgODEuNCw5NyA5MC42LDk3IDk3LDkwLjYgOTcsODEuNCAiLz4NCjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTUuNiw1MCA2LjQsNTAgMCw1Ni40IDAsNjUuNiA2LjQsNzIgMTUuNiw3MiAyMiw2NS42IDIyLDU2LjQgIi8+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjQwLjYsNTAgMzEuNCw1MCAyNSw1Ni40IDI1LDY1LjYgMzEuNCw3MiA0MC42LDcyIDQ3LDY1LjYgNDcsNTYuNCAiLz4NCjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iNjUuNiw1MCA1Ni40LDUwIDUwLDU2LjQgNTAsNjUuNiA1Ni40LDcyIDY1LjYsNzIgNzIsNjUuNiA3Miw1Ni40ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSI5MC42LDUwIDgxLjQsNTAgNzUsNTYuNCA3NSw2NS42IDgxLjQsNzIgOTAuNiw3MiA5Nyw2NS42IDk3LDU2LjQgIi8+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjE1LjYsMjUgNi40LDI1IDAsMzEuNCAwLDQwLjYgNi40LDQ3IDE1LjYsNDcgMjIsNDAuNiAyMiwzMS40ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSI0MC42LDI1IDMxLjQsMjUgMjUsMzEuNCAyNSw0MC42IDMxLjQsNDcgNDAuNiw0NyA0Nyw0MC42IDQ3LDMxLjQgIi8+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjY1LjYsMjUgNTYuNCwyNSA1MCwzMS40IDUwLDQwLjYgNTYuNCw0NyA2NS42LDQ3IDcyLDQwLjYgNzIsMzEuNCAiLz4NCjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iOTAuNiwyNSA4MS40LDI1IDc1LDMxLjQgNzUsNDAuNiA4MS40LDQ3IDkwLjYsNDcgOTcsNDAuNiA5NywzMS40ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxNS42LDAgNi40LDAgMCw2LjQgMCwxNS42IDYuNCwyMiAxNS42LDIyIDIyLDE1LjYgMjIsNi40ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSI0MC42LDAgMzEuNCwwIDI1LDYuNCAyNSwxNS42IDMxLjQsMjIgNDAuNiwyMiA0NywxNS42IDQ3LDYuNCAiLz4NCjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iNjUuNiwwIDU2LjQsMCA1MCw2LjQgNTAsMTUuNiA1Ni40LDIyIDY1LjYsMjIgNzIsMTUuNiA3Miw2LjQgIi8+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjkwLjYsMCA4MS40LDAgNzUsNi40IDc1LDE1LjYgODEuNCwyMiA5MC42LDIyIDk3LDE1LjYgOTcsNi40ICIvPg0KPC9zdmc+DQo=");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 100px 100px;
+}
+
+.octagon-background {
+  @include octagon-background();
+}
+
+// Fill color
+
+.fill-error {
+  fill: mat-color($app-error);
+}
+
+.fill-warn {
+  fill: mat-color($app-warn);
+}
+
+.fill-success {
+  fill: mat-color($app-success);
+}
+
+.fill-info {
+  fill: mat-color($app-info);
+}
+
+.fill-primary {
+  fill: mat-color($app-primary);
+}
+
+.fill-accent {
+  fill: mat-color($app-accent);
+}
+
+.fill-background {
+  fill: mat-color($app-background);
+}
+
+.fill-foreground {
+  fill: $app-foreground-color;
+}
+
+.fill-highlight {
+  fill: mat-color($app-primary);
+}
+
+.fill-muted {
+  fill: $app-foreground-secondary-color;
+}
+.fill-green {
+  fill: $app-color-green;
+}
+
+.fill-blue {
+  fill: $app-color-blue;
+}
+.fill-red {
+  fill: $app-color-red;
+}
+.fill-purple-1 {
+  fill: $app-color-purple-1;
+}
+
+.fill-purple-2 {
+  fill: $app-color-purple-2;
+}
+.fill-purple-3 {
+  fill: $app-color-purple-3;
+}
+
+// background color
+
+@mixin background-error() {
+  background-color: mat-color($app-error);
+}
+
+@mixin background-warn() {
+  background-color: mat-color($app-warn);
+}
+
+@mixin background-success() {
+  background-color: mat-color($app-success);
+}
+
+@mixin background-info() {
+  background-color: mat-color($app-info);
+}
+
+@mixin background-primary() {
+  background-color: mat-color($app-primary);
+}
+
+@mixin background-primary-shade($shade) {
+  background-color: mat-color($app-primary, $shade);
+}
+
+@mixin background-accent() {
+  background-color: mat-color($app-accent);
+}
+
+@mixin background-accent-shade($shade) {
+  background-color: mat-color($app-accent, $shade);
+}
+
+@mixin background-background() {
+  background-color: $app-background-color !important;
+}
+
+@mixin background-background-shade($shade) {
+  background-color: mat-color($app-background, $shade);
+}
+
+@mixin background-foreground() {
+  background-color: $app-foreground-color;
+}
+
+@mixin background-highlight() {
+  background-color: mat-color($app-primary);
+}
+
+@mixin background-muted() {
+  background-color: $app-background-color !important;
+}
+
+
+@mixin background-green() {
+  background-color: $app-color-green;
+}
+
+@mixin background-blue() {
+  background-color: $app-color-blue;
+}
+
+@mixin background-red() {
+  background-color: $app-color-red;
+}
+
+@mixin background-purple-1() {
+  background-color: $app-color-purple-1;
+}
+
+@mixin background-purple-2() {
+  background-color: $app-color-purple-2;
+}
+
+@mixin background-purple-3() {
+  color: $app-color-purple-3;
+}
+
+
+.background-error {
+  @include background-error();
+}
+
+.background-warn {
+  @include background-warn();
+}
+
+.background-success {
+  @include background-success();
+}
+
+.background-info {
+  @include background-info();
+}
+
+.background-primary {
+  @include background-primary();
+}
+
+.background-accent {
+  @include background-accent();
+}
+
+.background-background {
+  @include background-background();
+}
+
+.background-foreground {
+  @include background-foreground();
+}
+
+.background-highlight {
+  @include background-highlight();
+}
+
+.background-muted {
+  @include background-muted();
+}
+
+
+.background-green {
+  @include background-green();
+}
+
+.background-blue {
+  @include background-blue();
+}
+
+.background-red {
+  @include background-red();
+}
+
+.background-purple-1 {
+  @include background-purple-1();
+}
+
+.background-purple-2 {
+  @include background-purple-2();
+}
+
+.background-purple-3 {
+  @include background-purple-3();
+}

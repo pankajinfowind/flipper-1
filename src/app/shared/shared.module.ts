@@ -16,6 +16,7 @@ import { PageNotFoundComponent } from './components'
   declarations: [PageNotFoundComponent, WebviewDirective, LoadingIndicatorComponent],
   // comment.
   imports: [
+
     FlipperEventModule,
     FlipperComponentsModule,
     FlipperPosModule,

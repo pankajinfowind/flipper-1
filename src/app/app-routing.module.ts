@@ -34,12 +34,12 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    canLoad: [AuthGuard, HasSubscribedGuard, HasBusinessGuard],
+    // canLoad: [AuthGuard, HasSubscribedGuard, HasBusinessGuard],
   },
-  {
-    path: '**',
-    component: PageNotFoundComponent,
-  },
+  // {
+  //   path: '**',
+  //   component: PageNotFoundComponent,
+  // },
 ]
 //
 @NgModule({

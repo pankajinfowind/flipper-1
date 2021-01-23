@@ -32,28 +32,27 @@ const routes: Routes = [
         loadChildren: () => import('./../settings/settings.module').then(m => m.SettingsModule),
         canLoad: [AuthGuard, HasSubscribedGuard],
       },
-      // {
-      //   path: 'inventory',
-      //   loadChildren: () => import('@enexus/flipper-inventory').then(m => m.FlipperInventoryModule),
-      //   canLoad: [AuthGuard, HasSubscribedGuard],
-      // },
+      {
+        path: 'inventory',
+        loadChildren: () => import('@enexus/flipper-inventory').then(m => m.FlipperInventoryModule),
+        canLoad: [AuthGuard, HasSubscribedGuard],
+      },
       {
         path: 'transactions',
         loadChildren: () => import('./../transactions/transactions.module').then(m => m.TransactionsModule),
         canLoad: [AuthGuard, HasSubscribedGuard],
       },
-      // {
-      //   path: '**',
-      //   component: PageNotFoundComponent,
-      // },
+      {
+        path: '**',
+        component: PageNotFoundComponent,
+      },
     ],
   },
-  // {
-  //   path: '**',
-  //   component: PageNotFoundComponent,
-  // },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+  },
 ]
-//
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

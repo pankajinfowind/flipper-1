@@ -53,7 +53,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     //   this.currentUser.currentUser.active == true
     // ) {
     //   this.currentUser.defaultBusiness(this.currentUser.currentUser.id)
-      return false
+      return true
     // }
 
     // this.currentUser.redirectUri = url

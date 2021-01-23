@@ -30,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
 import {FlipperInventoryModule} from '@enexus/flipper-inventory'
+// import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -41,8 +42,8 @@ import {FlipperInventoryModule} from '@enexus/flipper-inventory'
     SafePipe,
   ],
   imports: [
-    CoreModule,
-    HttpClientModule,
+    // CoreModule,
+    // HttpClientModule,
     SharedModule,
     AppRoutingModule,
     AnQrcodeModule,

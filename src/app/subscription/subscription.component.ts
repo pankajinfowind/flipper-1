@@ -10,7 +10,6 @@ import { BehaviorSubject } from 'rxjs'
 import { CardValidationComponent } from './validate-card/validate-card.component'
 import { environment } from '../../environments/environment'
 import { DialogService, DialogSize } from '@enexus/flipper-dialog'
-
 import { AngularFirestore } from '@angular/fire/firestore'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { PusherService } from '../pusher.service'

@@ -134,6 +134,10 @@
         "dist/test-p/test-p",
         "dist/test-p"
       ],
+      "ee": [
+        "dist/ee/ee",
+        "dist/ee"
+      ]
     }
   },
   "angularCompilerOptions": {

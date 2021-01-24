@@ -55,7 +55,7 @@ export class HasBusinessGuard implements CanActivate, CanActivateChild, CanLoad 
     //   }
     // }
 
-    this.router.navigate(['/setup/business/new'])
+    // this.router.navigate(['/setup/business/new'])
     return false
   }
 }

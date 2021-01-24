@@ -12,35 +12,37 @@ const routes: Routes = [
     canActivate: [AuthGuard, HasSubscribedGuard],
     canActivateChild: [AuthGuard, HasSubscribedGuard],
     children: [
+
       {
         path: '',
-        redirectTo: 'analytics',
+        redirectTo: 'inventory',
         pathMatch: 'full',
       },
       {
+
         path: 'analytics',
         loadChildren: () => import('@enexus/flipper-dashboard').then(m => m.FlipperDashboardModule),
-        canLoad: [AuthGuard, HasSubscribedGuard],
+        // canLoad: [AuthGuard, HasSubscribedGuard],
       },
       {
         path: 'pos',
         loadChildren: () => import('@enexus/flipper-pos').then(m => m.FlipperPosModule),
-        canLoad: [AuthGuard, HasSubscribedGuard],
+        // canLoad: [AuthGuard, HasSubscribedGuard],
       },
       {
         path: 'settings',
         loadChildren: () => import('./../settings/settings.module').then(m => m.SettingsModule),
-        canLoad: [AuthGuard, HasSubscribedGuard],
+        // canLoad: [AuthGuard, HasSubscribedGuard],
       },
       {
         path: 'inventory',
         loadChildren: () => import('@enexus/flipper-inventory').then(m => m.FlipperInventoryModule),
-        canLoad: [AuthGuard, HasSubscribedGuard],
+        // canLoad: [AuthGuard, HasSubscribedGuard],
       },
       {
         path: 'transactions',
         loadChildren: () => import('./../transactions/transactions.module').then(m => m.TransactionsModule),
-        canLoad: [AuthGuard, HasSubscribedGuard],
+        // canLoad: [AuthGuard, HasSubscribedGuard],
       },
       {
         path: '**',

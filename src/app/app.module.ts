@@ -58,7 +58,7 @@ import {FlipperInventoryModule} from '@enexus/flipper-inventory'
         deps: [HttpClient],
       },
     }),
-    FlipperInventoryModule
+    // FlipperInventoryModule
   ],
   providers: [PouchDBService],
   bootstrap: [AppComponent],

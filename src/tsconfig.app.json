@@ -3,8 +3,10 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "",
-    "types": []
+    "types": [],
+    "skipLibCheck": true
   },
+
   "include": [
     "main.ts",
     "polyfill.ts"
@@ -16,6 +18,7 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "preserveWhitespaces": true
+    "preserveWhitespaces": true,
+    "enableIvy": false
   }
 }

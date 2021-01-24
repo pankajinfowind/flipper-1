@@ -1,35 +1,144 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "/",
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": false,
-    "strict": false,
-    "noImplicitReturns": false,
-    "noFallthroughCasesInSwitch": false,
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "downlevelIteration": false,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "target": "es2015",
+    "allowSyntheticDefaultImports": true,
     "module": "es2020",
-    "types": ["node"],
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "yegobox-login": [
+        "dist/yegobox-login"
+      ],
+      "yegobox-login/*": [
+        "dist/yegobox-login/*"
+      ],
+      "ng-offline-db": [
+        "dist/ng-offline-db"
+      ],
+      "ng-offline-db/*": [
+        "dist/ng-offline-db/*"
+      ],
+      "@enexus/flipper-menu": [
+        "dist/flipper-menu"
+      ],
+      "@enexus/flipper-menu/*": [
+        "dist/flipper-menu*"
+      ],
+      "@enexus/flipper-pos": [
+        "dist/flipper-pos"
+      ],
+      "@enexus/flipper-pos/*": [
+        "dist/flipper-pos/*"
+      ],
+      "@enexus/flipper-event": [
+        "dist/flipper-event"
+      ],
+      "@enexus/flipper-event/*": [
+        "dist/flipper-event/*"
+      ],
+      "@enexus/flipper-dialog": [
+        "dist/flipper-dialog"
+      ],
+      "@enexus/flipper-dialog/*": [
+        "dist/flipper-dialog/*"
+      ],
+      "@enexus/flipper-vendors": [
+        "dist/flipper-vendors"
+      ],
+      "@enexus/flipper-vendors/*": [
+        "dist/flipper-vendors/*"
+      ],
+      "@enexus/flipper-color": [
+        "dist/flipper-color"
+      ],
+      "@enexus/flipper-color/*": [
+        "dist/flipper-color/*"
+      ],
+      "@enexus/flipper-font": [
+        "dist/flipper-font"
+      ],
+      "@enexus/flipper-font/*": [
+        "dist/flipper-font/*"
+      ],
+      "@enexus/flipper-dashboard": [
+        "dist/flipper-dashboard"
+      ],
+      "@enexus/flipper-dashboard/*": [
+        "dist/flipper-dashboard/*"
+      ],
+      "flipper-button": [
+        "dist/flipper-button"
+      ],
+      "flipper-button/*": [
+        "dist/flipper-button/*"
+      ],
+      "@enexus/flipper-components": [
+        "dist/flipper-components"
+      ],
+      "@enexus/flipper-components/*": [
+        "dist/flipper-components/*"
+      ],
+      "@enexus/flipper-offline-database": [
+        "dist/flipper-offline-database"
+      ],
+      "@enexus/flipper-offline-database/*": [
+        "dist/flipper-offline-database/*"
+      ],
+      "@enexus/flipper-settings": [
+        "dist/flipper-settings"
+      ],
+      "@enexus/flipper-settings/*": [
+        "dist/flipper-settings/*"
+      ],
+      "@enexus/flipper-inventory": [
+        "dist/flipper-inventory"
+      ],
+      "@enexus/flipper-inventory/*": [
+        "dist/flipper-inventory/*"
+      ],
+      "@enexus/flipper-file-upload": [
+        "dist/flipper-file-upload"
+      ],
+      "@enexus/flipper-file-upload/*": [
+        "dist/flipper-file-upload/*"
+      ],
+      "@enexus/payment-card": [
+        "dist/payment-card"
+      ],
+      "@enexus/payment-card/*": [
+        "dist/payment-card"
+      ],
+      "enable-sync": [
+        "dist/enable-sync/enable-sync",
+        "dist/enable-sync"
+      ],
+      "testlivereload": [
+        "dist/testlivereload/testlivereload",
+        "dist/testlivereload"
+      ],
+      "test-p": [
+        "dist/test-p/test-p",
+        "dist/test-p"
+      ]
+    }
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": false,
-    "strictInjectionParameters": false,
-    "preserveWhitespaces": false,
-    "allowSyntheticDefaultImports": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": false
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "enableIvy": false
   }
 }

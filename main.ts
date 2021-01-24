@@ -53,14 +53,15 @@ ipcMain.on('sent-login-message', (event, url) => {
     },
   })
   authWindow.show()
-  const menus = Menu.buildFromTemplate([])
-  authWindow.setMenu(menus)
+  // const menus = Menu.buildFromTemplate([])
+  // authWindow.setMenu(menus)
   const handleRedirect = (e, uri) => {
     shell.openExternal(uri)
   }
   authWindow.webContents.on('will-navigate', handleRedirect)
   authWindow.loadURL(authUrl + 'login')
   const ses = authWindow.webContents.session
+  authWindow.webContents.openDevTools()
   ses.clearCache()
   ses.cookies
     .get({})
@@ -209,13 +210,13 @@ function createWindow() {
     frame: isWindows ? false : true, // Remove frame to hide default menu,
     width: size.width,
     height: size.height,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-    },
+    // webPreferences: {
+    //   preload: path.join(__dirname, 'preload.js'),
+    //   nodeIntegration: true,
+    // },
     icon: iconName,
   })
-  win.setMenu(null)
+  // win.setMenu(null)
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`),

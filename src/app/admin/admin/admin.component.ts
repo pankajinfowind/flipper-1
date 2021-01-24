@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   async ngOnInit() {
-    await this.currentUser.user()
+    // await this.currentUser.user()
   }
   isMenuToggled(event) {
     this.userToggledMenu = event
@@ -24,14 +24,14 @@ export class AdminComponent implements OnInit, OnDestroy {
   displaySwitchedBranch(event) {}
 
   async didUserLoggedOut(event) {
-    await this.currentUser.user()
+    // await this.currentUser.user()
 
-    if (this.currentUser.currentUser) {
-      this.currentUser.currentUser.active = false
-      await this.database.put(this.currentUser.currentUser.id, this.currentUser.currentUser)
-    }
-    window.localStorage.setItem('channel', this.currentUser.currentUser.id)
+    // if (this.currentUser.currentUser) {
+    //   this.currentUser.currentUser.active = false
+    //   await this.database.put(this.currentUser.currentUser.id, this.currentUser.currentUser)
+    // }
+    // window.localStorage.setItem('channel', this.currentUser.currentUser.id)
 
-    return (window.location.href = '/login')
+    // return (window.location.href = '/login')
   }
 }

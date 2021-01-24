@@ -382,46 +382,7 @@
         }
       }
     },
-    "flipperfont": {
-      "root": "projects/flipper-font",
-      "sourceRoot": "projects/flipper-font/src",
-      "projectType": "library",
-      "prefix": "flipper",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/flipper-font/tsconfig.lib.json",
-            "project": "projects/flipper-font/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/flipper-font/src/test.ts",
-            "tsConfig": "projects/flipper-font/tsconfig.spec.json",
-            "karmaConfig": "projects/flipper-font/karma.conf.js"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/flipper-font/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/flipper-font/tsconfig.lib.json",
-              "projects/flipper-font/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
+
     "flipperevent": {
       "root": "projects/flipper-event",
       "sourceRoot": "projects/flipper-event/src",
@@ -776,6 +737,46 @@
             "tsConfig": [
               "projects/payment-card/tsconfig.lib.json",
               "projects/payment-card/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperfont": {
+      "projectType": "library",
+      "root": "projects/flipper-font",
+      "sourceRoot": "projects/flipper-font/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-font/tsconfig.lib.json",
+            "project": "projects/flipper-font/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-font/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-font/src/test.ts",
+            "tsConfig": "projects/flipper-font/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-font/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-font/tsconfig.lib.json",
+              "projects/flipper-font/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

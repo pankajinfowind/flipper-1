@@ -133,7 +133,7 @@
       "test-p": [
         "dist/test-p/test-p",
         "dist/test-p"
-      ]
+      ],
     }
   },
   "angularCompilerOptions": {

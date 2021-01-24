@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
+import { FlipperPosComponent } from '@enexus/flipper-pos'
 import { AuthGuard } from './core/guards/auth-guard.service'
 import { GuestGuard } from './core/guards/guest-guard.service'
 import { LoginComponent } from './login/login.component'
@@ -37,6 +38,10 @@ const routes: Routes = [
   //   component: DashboardComponent,
   //   // canLoad: [AuthGuard, HasSubscribedGuard, HasBusinessGuard],
   // },
+  {
+    path: 'admin',
+    component: FlipperPosComponent
+  },
   {
     path: '**',
     component: PageNotFoundComponent,

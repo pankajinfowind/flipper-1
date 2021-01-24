@@ -49,7 +49,7 @@
     "build-upload": "ng build flipperfileupload --watch",
     "build-menu": "ng build flippermenu --watch",
     "build-card": "ng build paymentcard --watch",
-    "buildAll": "ng build flipperfont  &&  ng build flippercolor && ng build flipperevent  && ng build flipperfileupload   ng build flippercomponents   && ng build flipperpos ",
+    "buildAll": " ng build flippercolor && ng build flipperevent  && ng build flipperfont && ng build flipperfileupload   && ng build paymentcard && ng build flippervendors  && ng build flipperdialog && ng build flippercomponents   && ng build flipperpos ",
     "e2e": "npm run build:prod && cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' mocha --timeout 300000 --require ts-node/register e2e/**/*.e2e.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "lint": "ng lint"

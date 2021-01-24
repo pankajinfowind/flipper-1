@@ -4,12 +4,12 @@ import { AuthGuard } from './core/guards/auth-guard.service'
 import { GuestGuard } from './core/guards/guest-guard.service'
 import { LoginComponent } from './login/login.component'
 import { PageNotFoundComponent } from './shared/components'
-import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings'
+// import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings'
 
-import { HasSubscribedGuard } from './core/guards/has-subscribed-guard.service'
+// import { HasSubscribedGuard } from './core/guards/has-subscribed-guard.service'
 import { SubscriptionComponent } from './subscription/subscription.component'
-import { FlipperInventoryComponent } from '@enexus/flipper-inventory'
-import { DashboardComponent } from '@enexus/flipper-dashboard'
+// import { FlipperInventoryComponent } from '@enexus/flipper-inventory'
+// import { DashboardComponent } from '@enexus/flipper-dashboard'
 
 const routes: Routes = [
   {
@@ -27,16 +27,16 @@ const routes: Routes = [
     component: SubscriptionComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'setup/business/new',
-    component: CreateUpdateBusinessComponent,
-    canActivate: [AuthGuard, HasSubscribedGuard],
-  },
-  {
-    path: 'admin',
-    component: DashboardComponent,
-    // canLoad: [AuthGuard, HasSubscribedGuard, HasBusinessGuard],
-  },
+  // {
+  //   path: 'setup/business/new',
+  //   component: CreateUpdateBusinessComponent,
+  //   canActivate: [AuthGuard, HasSubscribedGuard],
+  // },
+  // {
+  //   path: 'admin',
+  //   component: DashboardComponent,
+  //   // canLoad: [AuthGuard, HasSubscribedGuard, HasBusinessGuard],
+  // },
   {
     path: '**',
     component: PageNotFoundComponent,

@@ -38,7 +38,7 @@ import { PageNotFoundComponent } from './components'
     FlipperDashboardModule,
     // FlipperOfflineDatabaseModule,
     // FlipperSettingsModule,
-    FlipperInventoryModule,
+    // FlipperInventoryModule,
     FlipperPosModule,
     FlipperPaymentCardModule,
   ],

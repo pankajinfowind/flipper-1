@@ -1,11 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-// import { AppComponent } from './app.component'
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { VendorsModule } from '@enexus/flipper-vendors'
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components'
-import { FlipperPosModule, FlipperPosComponent } from '@enexus/flipper-pos'
+import { FlipperPosModule } from '@enexus/flipper-pos'
 import { FlipperDashboardModule } from '@enexus/flipper-dashboard'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { CommonModule } from '@angular/common'
@@ -51,8 +49,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   ],
   entryComponents: [],
   providers: [PouchDBService],
-  bootstrap: [AppComponent],
-  // bootstrap: [DashboardComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
 declare module '@angular/core' {

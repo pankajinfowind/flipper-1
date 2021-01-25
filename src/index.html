@@ -1,24 +1,464 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Flipper</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
-  <app-root></app-root>
-  <!-- <lib-flipper-pos></lib-flipper-pos> -->
-  <!-- <app-dashboard></app-dashboard> -->
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="./assets/icon/linux/icon.png">
+  <style>
+    #menu-bar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 30px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .26);
+      background-color: #211a36;
+      -webkit-app-region: drag;
+      z-index: 1020;
+      width: 100%;
+    }
+
+    #menu-bar>div {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menubar-btn {
+      -webkit-app-region: no-drag;
+    }
+
+    .container1 {
+      height: calc(100vh - 30px);
+    }
+
+    .button1 {
+      height: 100%;
+      padding: 0 15px;
+      border: none;
+      background: transparent;
+      outline: none;
+    }
+
+    .button1:hover {
+      background: rgba(221, 221, 221, 0.2);
+    }
+
+    #close-btn:hover {
+      background: rgb(255, 0, 0);
+    }
+
+    .button1 svg {
+      color: white;
+      width: 18px
+    }
+  </style>
+  <link rel="manifes" href="/manifest.json">
+</head>
+
+<body class="octagon-background" style="background-color: #ffff;height:100vh; overflow: hidden;">
+  <!-- <div id="menu-bar"> -->
+    <!-- <div class="left" role="menu">
+      <button class="menubar-btn button1" id="menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify">
+          <line x1="21" y1="10" x2="3" y2="10"></line>
+          <line x1="21" y1="6" x2="3" y2="6"></line>
+          <line x1="21" y1="14" x2="3" y2="14"></line>
+          <line x1="21" y1="18" x2="3" y2="18"></line>
+        </svg>
+      </button>
+
+    </div> -->
+    <!-- <div class="right">
+      <button class="menubar-btn button1" id="minimize-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+      <button class="menubar-btn button1" id="max-unmax-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-square">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+      </button>
+      <button class="menubar-btn button1" id="close-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div> -->
+  <!-- style="background-color: #303030;" -->
+
+
+
+  <style>
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    body,
+    td,
+    input,
+    textarea,
+    select {
+      font-family: arial, sans-serif
+    }
+
+    input,
+    textarea,
+    select {
+      font-size: 100%
+    }
+
+    #loading {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      /* background-color: #fff */
+    }
+
+    .msg {
+      color: #757575;
+      font: 20px/20px Arial, sans-serif;
+      letter-spacing: .2px;
+      text-align: center
+    }
+
+    #nlpt {
+      animation: a-s .5s 2.5s 1 forwards;
+      background-color: #f1f1f1;
+      height: 4px;
+      margin: 56px auto 20px;
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+      width: 300px;
+      border-radius: 80px;
+    }
+
+    #nlpt::before {
+      animation: a-lb 20s 3s linear forwards;
+      background-color: #007bff;
+      content: '';
+      display: block;
+      height: 100%;
+      position: absolute;
+      transform: translateX(-300px);
+      width: 100%;
+      border-radius: 80px;
+    }
+
+    @keyframes a-lb {
+      0% {
+        transform: translateX(-300px)
+      }
+
+      5% {
+        transform: translateX(-240px)
+      }
+
+      15% {
+        transform: translateX(-30px)
+      }
+
+      25% {
+        transform: translateX(-30px)
+      }
+
+      30% {
+        transform: translateX(-20px)
+      }
+
+      45% {
+        transform: translateX(-20px)
+      }
+
+      50% {
+        transform: translateX(-15px)
+      }
+
+      65% {
+        transform: translateX(-15px)
+      }
+
+      70% {
+        transform: translateX(-10px)
+      }
+
+      95% {
+        transform: translateX(-10px)
+      }
+
+      100% {
+        transform: translateX(-5px)
+      }
+    }
+
+    @keyframes a-s {
+      100% {
+        opacity: 1
+      }
+    }
+
+    @keyframes a-h {
+      100% {
+        opacity: 0
+      }
+    }
+
+    @keyframes a-nt {
+      100% {
+        transform: none
+      }
+    }
+
+    @keyframes a-e {
+      43% {
+        animation-timing-function: cubic-bezier(.8, 0, .2, 1);
+        transform: scale(.75)
+      }
+
+      60% {
+        animation-timing-function: cubic-bezier(.8, 0, 1, 1);
+        transform: translateY(-16px)
+      }
+
+      77% {
+        animation-timing-function: cubic-bezier(.16, 0, .2, 1);
+        transform: none
+      }
+
+      89% {
+        animation-timing-function: cubic-bezier(.8, 0, 1, 1);
+        transform: translateY(-5px)
+      }
+
+      100% {
+        transform: none
+      }
+    }
+
+    @keyframes a-ef {
+      24% {
+        animation-timing-function: cubic-bezier(.8, 0, .6, 1);
+        transform: scaleY(.42)
+      }
+
+      52% {
+        animation-timing-function: cubic-bezier(.63, 0, .2, 1);
+        transform: scaleY(.98)
+      }
+
+      83% {
+        animation-timing-function: cubic-bezier(.8, 0, .84, 1);
+        transform: scaleY(.96)
+      }
+
+      100% {
+        transform: none
+      }
+    }
+
+    @keyframes a-efs {
+      24% {
+        animation-timing-function: cubic-bezier(.8, 0, .6, 1);
+        opacity: .3
+      }
+
+      52% {
+        animation-timing-function: cubic-bezier(.63, 0, .2, 1);
+        opacity: .03
+      }
+
+      83% {
+        animation-timing-function: cubic-bezier(.8, 0, .84, 1);
+        opacity: .05
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    @keyframes a-es {
+      24% {
+        animation-timing-function: cubic-bezier(.8, 0, .6, 1);
+        transform: rotate(-25deg)
+      }
+
+      52% {
+        animation-timing-function: cubic-bezier(.63, 0, .2, 1);
+        transform: rotate(-42.5deg)
+      }
+
+      83% {
+        animation-timing-function: cubic-bezier(.8, 0, .84, 1);
+        transform: rotate(-42deg)
+      }
+
+      100% {
+        transform: rotate(-43deg)
+      }
+    }
+
+    .invfr {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: -1;
+      width: 0;
+      height: 0;
+      border: 0
+    }
+
+    .msgb {
+      position: absolute;
+      right: 0;
+      font-size: 12px;
+      font-weight: normal;
+      color: #000;
+      padding: 20px
+    }
+  </style>
+
+
+  <div class="container1">
+    <app-root>
+      <div id="loading" style="margin-top:-40px">
+        <div style="bottom:0;left:0;overflow:hidden;position:absolute;right:0;top:0">
+          <div
+            style="animation:a-h .5s 1.25s 1 linear forwards,a-nt .6s 1.25s 1 cubic-bezier(0,0,.2,1);background:transparent;border-radius:50%;height:800px;left:50%;margin:-448px -400px 0;position:absolute;top:50%;transform:scale(0);width:800px">
+          </div>
+        </div>
+        <div style="height:100%;text-align:center">
+          <div style="height:50%;margin:0 0 -230px"></div>
+
+
+          <div style="height:200px;margin:0 auto;position:relative;width:200px;top:50px">
+            <div
+              style="background:transparent;border-radius:50%;animation:a-s .5s .5s 1 linear forwards,a-e 1.75s .5s 1 cubic-bezier(0,0,.67,1) forwards;opacity:0;transform:scale(.68)">
+
+              <svg style="margin-top:100px" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" width="54.438" height="59.945" viewBox="0 0 54.438 59.945">
+                <defs>
+                  <filter id="Rectangle_6" x="0" y="0" width="54.438" height="59.945" filterUnits="userSpaceOnUse">
+                    <feOffset dy="3" input="SourceAlpha" />
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feFlood flood-opacity="0.161" />
+                    <feComposite operator="in" in2="blur" />
+                    <feComposite in="SourceGraphic" />
+                  </filter>
+                </defs>
+                <g id="Group_29" data-name="Group 29" transform="translate(-390 -16.515)">
+                  <g id="Group_26" data-name="Group 26" transform="translate(399 22.515)">
+                    <g id="Group_33" data-name="Group 33">
+                      <g id="Group_34" data-name="Group 34">
+                        <path id="Path_8" data-name="Path 8"
+                          d="M10.914,0H33.086A10.668,10.668,0,0,1,44,10.4V31.541a10.668,10.668,0,0,1-10.914,10.4H10.914A10.668,10.668,0,0,1,0,31.541V10.4A10.668,10.668,0,0,1,10.914,0Z"
+                          fill="none" />
+                        <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#Rectangle_6)">
+                          <rect id="Rectangle_6-2" data-name="Rectangle 6" width="36.438" height="41.945" rx="18.219"
+                            transform="translate(9 6)" fill="none" />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                  <g id="Group_35" data-name="Group 35" transform="translate(399 20.46)">
+                    <g id="Group_32" data-name="Group 32" transform="translate(0)">
+                      <g id="Group_31" data-name="Group 31">
+                        <path id="Path_1" data-name="Path 1"
+                          d="M12.9,1.924a3.276,3.276,0,0,1,5.968,0L31.3,26.01c1.322,2.561-.335,5.759-2.984,5.759H3.449c-2.65,0-4.307-3.2-2.984-5.759l6.85-13.268Z"
+                          transform="translate(36.666 6.115) rotate(90)" fill="rgba(192,23,252,0.78)" />
+                        <path id="Path_2" data-name="Path 2"
+                          d="M12.9,1.924a3.276,3.276,0,0,1,5.968,0L31.3,26.01c1.322,2.561-.335,5.759-2.984,5.759H3.449c-2.65,0-4.307-3.2-2.984-5.759l6.85-13.268Z"
+                          transform="translate(35.967 6.115) rotate(90)" fill="rgba(192,23,252,0.78)" />
+                        <path id="Path_6" data-name="Path 6"
+                          d="M12.9,1.924a3.276,3.276,0,0,1,5.968,0L31.3,26.01c1.322,2.561-.335,5.759-2.984,5.759H3.449c-2.65,0-4.307-3.2-2.984-5.759l6.85-13.268Z"
+                          transform="translate(34.919 6.115) rotate(90)" fill="rgba(192,23,252,0.78)" />
+                        <path id="Path_7" data-name="Path 7"
+                          d="M17.867,2.665a4.537,4.537,0,0,1,8.266,0L43.356,36.023C45.188,39.571,42.893,44,39.223,44H4.777c-3.67,0-5.965-4.429-4.133-7.977l9.487-18.375Z"
+                          transform="translate(44) rotate(90)" fill="rgba(23,138,252,0.76)" />
+                        <path id="Path_5" data-name="Path 5"
+                          d="M12.9,1.924a3.276,3.276,0,0,1,5.968,0L31.3,26.01c1.322,2.561-.335,5.759-2.984,5.759H3.449c-2.65,0-4.307-3.2-2.984-5.759l6.85-13.268Z"
+                          transform="translate(35.268 6.272) rotate(90)" fill="rgba(23,138,252,0.57)" />
+                      </g>
+                    </g>
+                    <text id="f" transform="translate(15.716 27.5)" fill="#fff" stroke="#fff" stroke-width="1"
+                      font-size="17" font-family="SegoeScript, Segoe Script">
+                      <tspan x="-6.583" y="0">f</tspan>
+                    </text>
+                  </g>
+                </g>
+              </svg>
+
+            </div>
+          </div>
+          <div id="nlpt"></div>
+          <div style="animation:a-s .25s 1.25s 1 forwards;opacity:0" class="msg">Loading Flipper &hellip;</div>
+        </div>
+      </div>
+
+    </app-root>
+
+  </div>
 </body>
-</html>
+<script src="../renderer.js"></script>
+
 <script>
 
-  if (global === undefined) {
-    var global = window;
-  }
+
+
+
+  // if (global === undefined) {
+  //   var global = window;
+  // }
+  // window.addEventListener("DOMContentLoaded", () => {
+  //   const menuButton = document.getElementById("menu-btn");
+  //   const minimizeButton = document.getElementById("minimize-btn");
+  //   const maxUnmaxButton = document.getElementById("max-unmax-btn");
+  //   const closeButton = document.getElementById("close-btn");
+
+  //   menuButton.addEventListener("click", e => {
+  //     window.openMenu(e.x, e.y);
+  //   });
+
+  //   minimizeButton.addEventListener("click", e => {
+  //     window.minimizeWindow();
+  //   });
+
+  //   maxUnmaxButton.addEventListener("click", e => {
+  //     const icon = maxUnmaxButton.querySelector("i.far");
+
+  //     window.maxUnmaxWindow();
+  //     if (window.isWindowMaximized()) {
+  //       icon.classList.remove("fa-square");
+  //       icon.classList.add("fa-clone");
+  //     } else {
+  //       icon.classList.add("fa-square");
+  //       icon.classList.remove("fa-clone");
+  //     }
+  //   });
+  //   closeButton.addEventListener("click", e => {
+  //     window.closeWindow();
+  //   });
+  // });
+
 </script>
+
+</html>

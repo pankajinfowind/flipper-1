@@ -124,11 +124,11 @@ export class SubscriptionComponent implements OnInit {
 
     this.eventBus
       .of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
-      .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
+      // .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res => (this.currentUser.currentUser = res.user))
 
     if (PouchConfig.canSync) {
-      this.database.sync([PouchConfig.syncUrl])
+      // this.database.sync([PouchConfig.syncUrl])
     }
 
     // this.getFlipperPlan()

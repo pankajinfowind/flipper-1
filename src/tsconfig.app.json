@@ -6,19 +6,13 @@
     "types": [],
     "skipLibCheck": true
   },
-
-  "include": [
-    "main.ts",
-    "polyfill.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "src/**/*.spec.ts"
-  ],
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "preserveWhitespaces": true,
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": false,
+    "preserveWhitespaces": false,
+    "allowSyntheticDefaultImports": true,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false,
     "enableIvy": false
   }
 }

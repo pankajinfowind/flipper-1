@@ -1,70 +1,36 @@
-import 'reflect-metadata'
-import '../polyfills'
-
+import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { HttpClient, HttpClientModule } from '@angular/common/http'
-import { CoreModule } from './core/core.module'
-import { SharedModule } from './shared/shared.module'
+// import { AppComponent } from './app.component'
 
-import { AppRoutingModule } from './app-routing.module'
-
-// NG Translate
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
-
-import { AppComponent } from './app.component'
-import { LoginComponent } from './login/login.component'
-import { MigrationModule } from './migration/migration.module'
-import { PouchDBService } from '@enexus/flipper-components'
-import { SubscriptionComponent } from './subscription/subscription.component'
-import { CardValidationComponent } from './subscription/validate-card/validate-card.component'
-// import { environment } from '../environments/environment'
-// import { AngularFireModule } from '@angular/fire'
-// import { AngularFireDatabaseModule } from '@angular/fire/database'
-// import { AngularFirestoreModule } from '@angular/fire/firestore'
-import { PaidSuccessComponent } from './subscription/paid-success/paid-success.component'
-import { SafePipe } from './safe.pipe'
-import { AnQrcodeModule } from 'an-qrcode'
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json')
-}
-import {FlipperInventoryModule} from '@enexus/flipper-inventory'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { VendorsModule } from '@enexus/flipper-vendors'
+import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components'
+import { FlipperPosModule, FlipperPosComponent } from '@enexus/flipper-pos'
+// import { DashboardComponent, FlipperDashboardModule } from '@enexus/flipper-dashboard'
+import { HttpClientModule } from '@angular/common/http'
 import { CommonModule } from '@angular/common'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    SubscriptionComponent,
-    CardValidationComponent,
-    PaidSuccessComponent,
-    SafePipe,
-  ],
+  // declarations: [AppComponent],
   imports: [
+    // FlipperDashboardModule,
+    BrowserModule,
+    VendorsModule,
+    HttpClientModule,
     CommonModule,
-    // CoreModule,
-    // HttpClientModule,
-    SharedModule,
-    AppRoutingModule,
-    AnQrcodeModule,
-    // AngularFireModule.initializeApp(environment.config),
-    // AngularFirestoreModule,
-    // AngularFireDatabaseModule,
-    MigrationModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-    // FlipperInventoryModule
+    FlipperComponentsModule,
+    FlipperPosModule,
+    BrowserAnimationsModule,
   ],
+  entryComponents: [],
   providers: [PouchDBService],
-  bootstrap: [AppComponent],
-  entryComponents: [CardValidationComponent, PaidSuccessComponent],
+  bootstrap: [FlipperPosComponent],
+  // bootstrap: [DashboardComponent],
 })
-export class AppModule {
-  constructor() {}
+export class AppModule {}
+declare module '@angular/core' {
+  interface ModuleWithProviders<T = any> {
+    ngModule: Type<T>
+    providers?: Provider[]
+  }
 }

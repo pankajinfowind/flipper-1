@@ -173,7 +173,6 @@
         }
       }
     },
-
     "flippermenu": {
       "projectType": "library",
       "root": "projects/flipper-menu",
@@ -264,7 +263,6 @@
         }
       }
     },
-
     "flippercolor": {
       "root": "projects/flipper-color",
       "sourceRoot": "projects/flipper-color/src",
@@ -345,7 +343,6 @@
         }
       }
     },
-
     "flipperevent": {
       "root": "projects/flipper-event",
       "sourceRoot": "projects/flipper-event/src",
@@ -466,7 +463,6 @@
         }
       }
     },
-
     "flippercomponents": {
       "root": "projects/flipper-components",
       "sourceRoot": "projects/flipper-components/src",
@@ -587,7 +583,6 @@
         }
       }
     },
-
     "flipperinventory": {
       "projectType": "library",
       "root": "projects/flipper-inventory",
@@ -762,6 +757,46 @@
           }
         }
       }
+    },
+    "ee": {
+      "projectType": "library",
+      "root": "projects/ee",
+      "sourceRoot": "projects/ee/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ee/tsconfig.lib.json",
+            "project": "projects/ee/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ee/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ee/src/test.ts",
+            "tsConfig": "projects/ee/tsconfig.spec.json",
+            "karmaConfig": "projects/ee/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ee/tsconfig.lib.json",
+              "projects/ee/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "flipper",
@@ -773,5 +808,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

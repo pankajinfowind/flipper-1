@@ -19,13 +19,8 @@
       "es2018",
       "dom"
     ],
+
     "paths": {
-      "yegobox-login": [
-        "dist/yegobox-login"
-      ],
-      "yegobox-login/*": [
-        "dist/yegobox-login/*"
-      ],
       "ng-offline-db": [
         "dist/ng-offline-db"
       ],
@@ -133,16 +128,26 @@
       "test-p": [
         "dist/test-p/test-p",
         "dist/test-p"
-      ],
-      "ee": [
-        "dist/ee/ee",
-        "dist/ee"
       ]
     }
   },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": false,
+    "preserveWhitespaces": false,
+    "allowSyntheticDefaultImports": true,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false,
     "enableIvy": false
   }
 }

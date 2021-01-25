@@ -41,10 +41,10 @@ const routes: Routes = [
     path: 'admin',
     component: FlipperPosComponent
   },
-  {
-    path: '**',
-    component: PageNotFoundComponent,
-  },
+  // {
+  //   path: '**',
+  //   component: PageNotFoundComponent,
+  // },
 ]
 //
 @NgModule({

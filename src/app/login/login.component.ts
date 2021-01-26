@@ -43,9 +43,6 @@ export class LoginComponent implements OnInit {
       .subscribe(res => (this.currentUser.currentBusiness = res.business))
   }
   ngOnInit() {
-    // fake login:
-     this.currentUser.defaultBusiness("48")
-    //FIXME end of fake login end fake login after testing
     this.qrcode = Date.now()
     // use Qr code to log in
     this.pushers = new Pusher(environment.pusher.key, {
@@ -59,27 +56,19 @@ export class LoginComponent implements OnInit {
         const user = {
           name: event.name,
           email: event.email,
-          // token: event.personal_token,
           active: true,
           createdAt: null,
-          // updatedAt: new Date().toISOString(),
           id: event.id.toString(),
           userId: event.id.toString(),
           table: 'users',
-          channels: [event.id.toString()],
-          // expiresAt: 1606521600000, //FIXME: this should come from API event.expiresAt as number
+          channels: [event.id.toString()]
         }
-        //NOTE: IF BUSINESS IS NULL , DO SYNC THEN REDIRECT OTHERWISE DO REDIRECT WITHOUT SYNCING
+        localStorage.setItem('loggedin','true');
+        //now check subscription is enabled
 
         this.eventBus.publish(new UserLoggedEvent(user))
 
         await this.currentUser.defaultBusiness(user.id)
-
-        // if (!this.currentUser.currentBusiness) {
-        //   // return (window.location.href = '/admin')
-        // } else {
-        //   // return (window.location.href = '/admin')
-        // }
       }
     })
     // end of deal here

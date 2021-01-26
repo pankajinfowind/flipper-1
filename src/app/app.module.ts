@@ -44,6 +44,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CommonModule,
     SharedModule,
     AppRoutingModule,
+    MatIconModule,
     FlipperComponentsModule,
     FlipperPosModule,
     BrowserAnimationsModule,

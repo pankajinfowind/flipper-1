@@ -1,13 +1,12 @@
+import { HasSubscribedGuard } from './core/guards/has-subscribed-guard.service';
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { FlipperPosComponent } from '@enexus/flipper-pos'
 import { AuthGuard } from './core/guards/auth-guard.service'
-import { GuestGuard } from './core/guards/guest-guard.service'
 import { LoginComponent } from './login/login.component'
 import { PageNotFoundComponent } from './shared/components'
 import { DashboardComponent } from '@enexus/flipper-dashboard'
 import { SubscriptionComponent } from './subscription/subscription.component'
-
 const routes: Routes = [
   {
     path: '',
@@ -17,7 +16,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [GuestGuard],
   },
   {
     path: 'pay-now',
@@ -31,10 +29,17 @@ const routes: Routes = [
   {
     path: 'pos',
     component: FlipperPosComponent,
+    canActivate: [AuthGuard,HasSubscribedGuard]
+  },
+  {
+    path: 'inventory',
+    component: FlipperPosComponent,
+    canActivate: [AuthGuard,HasSubscribedGuard]
   },
   {
     path: 'admin',
-    component: FlipperPosComponent
+    component: FlipperPosComponent,
+    canActivate: [AuthGuard,HasSubscribedGuard]
   },
   {
     path: '**',

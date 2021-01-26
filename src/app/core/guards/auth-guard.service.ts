@@ -45,20 +45,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private async handle(url: string) {
-    // await this.currentUser.user()
-
-    // if (
-    //   this.currentUser.currentUser &&
-    //   this.currentUser.currentUser.id &&
-    //   this.currentUser.currentUser.active == true
-    // ) {
-    //   this.currentUser.defaultBusiness(this.currentUser.currentUser.id)
-      return true
-    // }
-
-    // this.currentUser.redirectUri = url
-//
-    // this.router.navigate(['/login'])
-    // return false
+    this.router.navigate(['/login']);
+    return false;
   }
 }

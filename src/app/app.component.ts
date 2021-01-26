@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       // }
       this.database.getChangeListener().subscribe(() => {
         // console.log(data);
-      })
+      });
     })
 
     this.router.events.subscribe(e => {

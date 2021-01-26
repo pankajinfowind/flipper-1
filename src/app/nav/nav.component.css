@@ -1,17 +1,22 @@
 .sidenav-container {
   height: 100%;
+  overflow: hidden;
 }
 
 .sidenav {
-  width: 200px;
+  width: 280px;
+  overflow: hidden;
 }
 
 .sidenav .mat-toolbar {
   background: inherit;
+  overflow: hidden;
 }
 
 .mat-toolbar.mat-primary {
+  overflow: hidden;
   position: sticky;
+  background-color:transparent;
   position: -webkit-sticky; /* For macOS/iOS Safari */
   top: 0; /* Sets the sticky toolbar to be on top */
   z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
@@ -23,3 +28,7 @@
   /* top: 30px; */
   background-color: #130f1f;
 }
+.mat-drawer-inner-container{
+  overflow: hidden;
+}
+/* .mat-sidenav  */

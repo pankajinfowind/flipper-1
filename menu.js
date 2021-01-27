@@ -46,7 +46,7 @@ const template = [
         label: "Learn More",
         click: async () => {
           // const { shell } = require("electron");
-          // await shell.openExternal("https://flipper.rw/");
+          // await shell.openExternal("https://flipper.yegobox.com/");
         }
       }
     ]

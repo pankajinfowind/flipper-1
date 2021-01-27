@@ -12,6 +12,7 @@ import {
 import { FlipperEventBusService } from '@enexus/flipper-event'
 import { environment } from '../../environments/environment'
 import { PusherService } from '../pusher.service'
+import { Router } from '@angular/router'
 declare const Pusher: any
 
 @Component({
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
   loginApproved: any
   constructor(
     private pusher: PusherService,
+    private router: Router,
     private eventBus: FlipperEventBusService,
     private database: PouchDBService,
     public currentUser: CurrentUser,
@@ -65,10 +67,12 @@ export class LoginComponent implements OnInit {
         }
         localStorage.setItem('loggedin','true');
         //now check subscription is enabled
+        //g
+        await this.currentUser.configAuthUser(user.id);
+        await this.currentUser.defaultBusiness()
 
         this.eventBus.publish(new UserLoggedEvent(user))
-
-        await this.currentUser.defaultBusiness(user.id)
+        this.router.navigate(['/analytics']);
       }
     })
     // end of deal here
@@ -77,6 +81,6 @@ export class LoginComponent implements OnInit {
     this.electronService.ipcRenderer.send('sent-login-message', environment.appUrl)
   }
   getStaredNewToFlipper() {
-    this.electronService.redirect('https://flipper.rw')
+    this.electronService.redirect('https://flipper.yegobox.com')
   }
 }

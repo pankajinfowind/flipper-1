@@ -6,7 +6,7 @@ export const environment = {
   production: true,
   url: 'http://localhost:8082',
   paymentUrl: 'https://mighty-hamlet-20200.herokuapp.com/',
-  appUrl: 'https://flipper.rw/', // domains when developing should listen on port 8001 so it can be routed propper.
+  appUrl: 'https://flipper.yegobox.com/', // domains when developing should listen on port 8001 so it can be routed propper.
   pusher: {
     key: 'a5c8bceaeeac6065d8de',
     cluster: 'ap2',

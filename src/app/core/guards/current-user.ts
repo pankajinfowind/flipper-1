@@ -73,14 +73,16 @@ export class CurrentUser {
       }
     )
   }
-
-  public async defaultBusiness(userId) {
+  public async configAuthUser(userId){
     await this.http
       .post(environment.url + '/config-auth-user', {
         userId: userId,
       })
       .toPromise()
       .then()
+  }
+  public async defaultBusiness() {
+
     await this.http
       .get<Business>(environment.url + '/api/business')
       .toPromise()

@@ -345,7 +345,7 @@ export class SubscriptionComponent implements OnInit {
    */
 
   getStaredNewToFlipper() {
-    this.electronService.redirect('https://flipper.rw')
+    this.electronService.redirect('https://flipper.yegobox.com')
   }
 
   setStep(index: number) {

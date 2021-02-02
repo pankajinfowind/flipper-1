@@ -16,7 +16,6 @@ import {
   User,
 } from '@enexus/flipper-components'
 
-import { CurrentBranchEvent } from '@enexus/flipper-components'
 import { ModelService } from '@enexus/flipper-offline-database'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
@@ -85,6 +84,7 @@ export class CurrentUser {
         //get the user object and set the payment properties to be used in subscription guards
         await this.http.get(environment.url + '/api/user').toPromise().then(async (user:User)=>{
           localStorage.setItem('subscriptionEndDate',user.subscriptionEndDate.toString());
+
           await this.defaultBusiness(userId)
         })
       })

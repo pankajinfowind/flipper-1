@@ -1,13 +1,17 @@
-<div class="container1">
-  <flipper-header></flipper-header>
+<div class="container">
+  <div *ngIf="!electronService.isElectron">
+    <flipper-header></flipper-header>
+  </div>
+
   <section class="c-wrapper" @insertLogin>
 
-    <iframe *ngIf="redirectMomo"  style="width:100%;height:500px" [src]="redirectMomo | safe" frameborder="0"  allowfullscreen></iframe>
-      
-    <mat-card *ngIf="!redirectMomo" class="col-12 mt-2" >
+    <iframe title="payment" *ngIf="redirectMomo" style="width:100%;height:500px" [src]="redirectMomo | safe"
+      allowfullscreen></iframe>
+
+    <mat-card *ngIf="!redirectMomo" class="col-12 mt-2">
       <loading-indicator [isVisible]="(loading | async)" class="overlay"></loading-indicator>
       <mat-card-header class="mt-3 ml-3">
-     
+
         <div class="alert alert-warning mt-2 mb-2" role="alert" *ngIf="message.message && !message.error">
           <h6 class="alert-heading">Payment message</h6>
 
@@ -29,14 +33,14 @@
           <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
             <mat-expansion-panel-header class="row">
               <mat-panel-title class="col-9">
-                <h6 class="text-left"><img [src]="'./assets/img/logo-mtn.png'" mat-card-avatar class="avatar"
-                    style="font-weight:bold"> Pay with Mobile Money</h6>
+                <h6 class="text-left"><img alt="image" [src]="'./assets/img/logo-mtn.png'" mat-card-avatar
+                    class="avatar" style="font-weight:bold"> Pay with Mobile Money</h6>
               </mat-panel-title>
 
             </mat-expansion-panel-header>
             <hr>
 
-<!--             
+
             <form autocomplete="off" [formGroup]="buyForm" class="mt-3" (ngSubmit)="submitMomo()">
 
 
@@ -47,7 +51,7 @@
 
                   <td class="td" [class.tdIsFocused]="isFocused=='mobilephone'">
                     Enter mobile number:
-                    
+
                   </td>
                   <td style="width:60%">
                     <input type="text" class="input" formControlName="mobilephone" (focus)="focusing('mobilephone')"
@@ -80,7 +84,7 @@
                   <span trans>Processing ....</span>
                 </button>
               </mat-card-actions>
-            </form> -->
+            </form>
 
 
           </mat-expansion-panel>
@@ -88,15 +92,16 @@
           <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
             <mat-expansion-panel-header class="row">
               <mat-panel-title class="col-9">
-                <h6 class="text-left"><img [src]="'./assets/img/visa.png'" mat-card-avatar class="avatar"
+                <h6 class="text-left"><img alt="image" [src]="'./assets/img/visa.png'" mat-card-avatar class="avatar"
                     style="font-weight:bold">
-                  <img [src]="'./assets/img/mastercard.png'" mat-card-avatar class="avatar" style="font-weight:bold">
-                  Pay with Card</h6>
+                  <img alt="image" [src]="'./assets/img/mastercard.png'" mat-card-avatar class="avatar"
+                    style="font-weight:bold">
+                  Pay with Card
+                </h6>
               </mat-panel-title>
 
 
             </mat-expansion-panel-header>
-
 
             <hr>
             <mat-slide-toggle class="example-margin" [color]="color" [checked]="showCard" [(ngModel)]="showCard">
@@ -111,7 +116,7 @@
               </flipper-payment-card>
             </div>
           </mat-expansion-panel>
-<br>
+          <br>
           <button type="button" class="button-default" (click)="logout()">
             Back
           </button>

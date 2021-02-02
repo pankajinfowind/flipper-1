@@ -19,11 +19,11 @@ jobs:
       - name: Install Node.js, npm
         uses: actions/setup-node@v1
         # with:
-        #   node-version: 10
+          node-version: 12
       - name: Yarn clean
         # Clean Yarn package
         run: |
-         yarn cache clean
+         npm cache clean
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1

@@ -67,6 +67,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [PouchDBService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
   async login(){
     await this.currentUser.configAuthUser(localStorage.getItem('userId'));

@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
   loginApproved: any
   constructor(
     private pusher: PusherService,
-    private router: Router,
     private eventBus: FlipperEventBusService,
     private database: PouchDBService,
     public currentUser: CurrentUser,
@@ -45,6 +44,8 @@ export class LoginComponent implements OnInit {
       .subscribe(res => (this.currentUser.currentBusiness = res.business))
   }
   ngOnInit() {
+    // localStorage.setItem('loggedin','false');
+
     this.qrcode = Date.now()
     // use Qr code to log in
     this.pushers = new Pusher(environment.pusher.key, {
@@ -65,14 +66,10 @@ export class LoginComponent implements OnInit {
           table: 'users',
           channels: [event.id.toString()]
         }
-        localStorage.setItem('loggedin','true');
-        //now check subscription is enabled
-        //g
+        // console.log("qr login",user);
         await this.currentUser.configAuthUser(user.id);
-        await this.currentUser.defaultBusiness()
-
         this.eventBus.publish(new UserLoggedEvent(user))
-        this.router.navigate(['/analytics']);
+
       }
     })
     // end of deal here

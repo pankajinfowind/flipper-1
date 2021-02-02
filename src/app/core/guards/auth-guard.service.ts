@@ -11,16 +11,18 @@ import {
 import { CurrentUser } from './current-user'
 import { FlipperEventBusService } from '@enexus/flipper-event'
 import { filter } from 'rxjs/internal/operators'
-import { AnyEvent, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components'
+import { CurrentBusinessEvent, PouchDBService, UserLoggedEvent } from '@enexus/flipper-components'
+import { HttpClient } from '@angular/common/http'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-  // done
+
   constructor(
     private eventBus: FlipperEventBusService,
     private database: PouchDBService,
+    private http: HttpClient,
     private currentUser: CurrentUser,
     private router: Router
   ) {
@@ -29,8 +31,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))
       .subscribe(res => {
         this.currentUser.currentUser = res.user
-        // on getting the user change then we need to change the sync filter too!
       })
+    this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL).subscribe(res=>{
+      this.currentUser.currentBusiness = res.business;
+    })
   }
 
   canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -45,7 +49,11 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private async handle(url: string) {
-    this.router.navigate(['/login']);
-    return false;
+    if(localStorage.getItem('userId')){
+      return true;
+    }else{
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 }

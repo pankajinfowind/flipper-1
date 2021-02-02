@@ -20,6 +20,7 @@ import { CurrentBranchEvent } from '@enexus/flipper-components'
 import { ModelService } from '@enexus/flipper-offline-database'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,7 @@ export class CurrentUser {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     private eventBus: FlipperEventBusService,
     private model: ModelService,
     private database: PouchDBService
@@ -75,19 +77,22 @@ export class CurrentUser {
   }
   public async configAuthUser(userId){
     await this.http
-      .post(environment.url + '/config-auth-user', {
+      .post(environment.url + '/auth', {
         userId: userId,
       })
       .toPromise()
-      .then()
+      .then(async (user)=>{
+        await this.defaultBusiness()
+      })
   }
   public async defaultBusiness() {
-
     await this.http
       .get<Business>(environment.url + '/api/business')
       .toPromise()
       .then(business => {
+        console.log("but buuuu",business)
         this.eventBus.publish(new CurrentBusinessEvent(business))
+        this.router.navigate(['/analytics']);
       })
   }
   public async defaultBranch() {

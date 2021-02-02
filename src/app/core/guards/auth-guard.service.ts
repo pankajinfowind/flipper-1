@@ -17,7 +17,7 @@ import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
+export class AuthGuard implements CanActivate {
 
   constructor(
     private eventBus: FlipperEventBusService,

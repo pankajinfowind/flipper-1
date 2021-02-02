@@ -25,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list'
+import { CurrentUser } from './core/guards/current-user'
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
@@ -66,7 +67,17 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [PouchDBService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  async login(){
+    await this.currentUser.configAuthUser(localStorage.getItem('userId'));
+  }
+  constructor( private currentUser: CurrentUser){
+    // on startup the system go to intire login flow ind there check if user still need to be logged in
+    if(localStorage.getItem('userId')){
+      this.login();
+    }
+  }
+}
 declare module '@angular/core' {
   interface ModuleWithProviders<T = any> {
     ngModule: Type<T>

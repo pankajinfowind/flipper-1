@@ -17,7 +17,7 @@ import { environment } from '../../../environments/environment'
 @Injectable({
   providedIn: 'root',
 })
-export class HasSubscribedGuard implements CanActivate, CanActivateChild, CanLoad {
+export class HasSubscribedGuard implements CanActivate {
   today = new Date()
   constructor(private eventBus: FlipperEventBusService, private currentUser: CurrentUser, private router: Router) {
     this.eventBus
@@ -38,27 +38,20 @@ export class HasSubscribedGuard implements CanActivate, CanActivateChild, CanLoa
   }
 
   private async handle(url: string) {
-    if (!environment.production) {
-      return true
-    }
     const today =
       this.today.getFullYear() +
       '-' +
       ('0' + (this.today.getMonth() + 1)).slice(-2) +
       '-' +
       ('0' + this.today.getDate()).slice(-2)
-    const date: number = Date.parse(today) as number
-
+    const todayDate: number = Date.parse(today) as number
     await this.currentUser.user()
 
-    // FIXME: use commented code before adding expiresAt in userModel again
-    // if (this.currentUser.currentUser && this.currentUser.currentUser.expiresAt >= date) {
-    //   return true
-    // }
-    if (this.currentUser.currentUser) {
+    const subscriptionEnd = Date.parse(localStorage.getItem('subscriptionEndDate'));
+    if ( subscriptionEnd >= todayDate) {
+      console.log("time to pay")
       return true
     }
-
     this.currentUser.redirectUri = url
     this.router.navigate(['/pay-now'])
     return false

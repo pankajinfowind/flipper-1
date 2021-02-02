@@ -25,7 +25,8 @@ const routes: Routes = [
   {
     path: 'analytics',
     component: DashboardComponent,
-    canActivate: [AuthGuard,HasSubscribedGuard]
+    canActivate: [AuthGuard,HasSubscribedGuard],
+    canLoad: [HasSubscribedGuard]
   },
   {
     path: 'pos',

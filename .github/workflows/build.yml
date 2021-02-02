@@ -13,6 +13,10 @@ jobs:
         #  macos-latest, ubuntu-latest
 
     steps:
+      - name: Decode environement
+        env:
+          FIREBASE_SECRET: ${{ secrets.PROD_WEB_ENV }}
+        run: echo $PROD_WEB_ENV > src/environments/environment.prod.ts
       - name: Check out Git repository
         uses: actions/checkout@v1
 

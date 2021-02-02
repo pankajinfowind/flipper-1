@@ -8,9 +8,8 @@ if (AppConfig.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
-// platformBrowserDynamic()
-//   .bootstrapModule(AppModule, {
-//     preserveWhitespaces: false
-//   })
-//   .catch(err => console.error(err));
+platformBrowserDynamic()
+  .bootstrapModule(AppModule, {
+    preserveWhitespaces: false
+  })
+  .catch(err => console.error(err));

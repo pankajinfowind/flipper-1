@@ -19,7 +19,7 @@ jobs:
       - name: Install Node.js, npm
         uses: actions/setup-node@v1
         # with:
-          node-version: 12
+        node-version: 12
       - name: Yarn clean
         # Clean Yarn package
         run: |

@@ -1,25 +1,8 @@
-## <small>9.0.3 (2020-12-08)</small>
+# Changelog
 
-* fix/ upgrade angular to 11.0.2 ([203e608](https://github.com/maximegris/angular-electron/commit/203e608))
-* misc/ upgrade dependencies ([922bbf9](https://github.com/maximegris/angular-electron/commit/922bbf9))
-* misc/ upgrade to Electron 11 ([becaa73](https://github.com/maximegris/angular-electron/commit/becaa73))
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-
-
-## <small>9.0.2 (2020-11-15)</small>
-
-* [Bumped Version] 9.0.2 ([be43e09](https://github.com/maximegris/angular-electron/commit/be43e09))
-* Fix typo in eslint rule ([b8429b8](https://github.com/maximegris/angular-electron/commit/b8429b8))
-* misc/ remove old code ([9933622](https://github.com/maximegris/angular-electron/commit/9933622))
-
-
-
-## <small>9.0.1 (2020-11-14)</small>
-
-* [Bumped Version] 9.0.1 ([066dcdb](https://github.com/maximegris/angular-electron/commit/066dcdb))
-* ref/ support remote module in unit test ([04d9e8a](https://github.com/maximegris/angular-electron/commit/04d9e8a))
-
-
+### 1.6.21 (2021-02-02)
 
 ## 9.0.0 (2020-11-14)
 

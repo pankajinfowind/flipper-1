@@ -82,15 +82,15 @@ export class CurrentUser {
       })
       .toPromise()
       .then(async (user)=>{
-        await this.defaultBusiness()
+        await this.defaultBusiness(userId)
       })
   }
-  public async defaultBusiness() {
+  public async defaultBusiness(userId:string) {
     await this.http
       .get<Business>(environment.url + '/api/business')
       .toPromise()
       .then(business => {
-        console.log("but buuuu",business)
+        localStorage.setItem('userId',userId)
         this.eventBus.publish(new CurrentBusinessEvent(business))
         this.router.navigate(['/analytics']);
       })

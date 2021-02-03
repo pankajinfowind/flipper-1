@@ -19,7 +19,6 @@ jobs:
       - name: Update env
         run: |
           echo $ENV_PROD > .env
-          yarn add  typescript
           yarn add  ts-node
           yarn run config -- --environment=prod
           yarn run config -- --environment=dev

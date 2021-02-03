@@ -1,0 +1,16 @@
+<mat-sidenav-container class="container1">
+  <mat-sidenav [opened]="true" mode="side">
+
+    <flipper-menu class="flipper-menu" (menuToggled)="isMenuToggled($event)" (logoutUser)="didUserLoggedOut($event)">
+    </flipper-menu>
+
+  </mat-sidenav>
+
+
+  <mat-sidenav-content class="max-container-fliud" [class.minContainerFliud]="userToggledMenu">
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

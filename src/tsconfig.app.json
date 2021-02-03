@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "",
+    "types": [],
+    "skipLibCheck": true
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": false,
+    "preserveWhitespaces": false,
+    "allowSyntheticDefaultImports": true,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false,
+    "enableIvy": false
+  }
+}

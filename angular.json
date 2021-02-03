@@ -1,0 +1,817 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "flipper": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": [
+              "./node_modules/pusher-js/dist/web/pusher.min.js"
+            ],
+            "customWebpackConfig": {
+              "path": "./angular.webpack.js"
+            }
+          },
+          "configurations": {
+            "dev": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
+            "web": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.web.ts"
+                }
+              ]
+            },
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "options": {
+            "browserTarget": "flipper:build"
+          },
+          "configurations": {
+            "dev": {
+              "browserTarget": "flipper:build:dev"
+            },
+            "web": {
+              "browserTarget": "flipper:build:web"
+            },
+            "production": {
+              "browserTarget": "flipper:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "flipper:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/custom-webpack:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills-test.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
+            "scripts": [],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "assets": [
+              "src/assets"
+            ],
+            "customWebpackConfig": {
+              "path": "./angular.webpack.js"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": ".eslintrc.json",
+            "lintFilePatterns": [
+              "src/**.ts",
+              "main.ts"
+            ]
+          }
+        }
+      }
+    },
+    "flipperbutton": {
+      "projectType": "library",
+      "root": "projects/flipper-button",
+      "sourceRoot": "projects/flipper-button/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-button/tsconfig.lib.json",
+            "project": "projects/flipper-button/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-button/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-button/src/test.ts",
+            "tsConfig": "projects/flipper-button/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-button/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-button/tsconfig.lib.json",
+              "projects/flipper-button/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flippermenu": {
+      "projectType": "library",
+      "root": "projects/flipper-menu",
+      "sourceRoot": "projects/flipper-menu/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-menu/tsconfig.lib.json",
+            "project": "projects/flipper-menu/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-menu/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-menu/src/test.ts",
+            "tsConfig": "projects/flipper-menu/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-menu/karma.conf.js",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "styles"
+              ]
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-menu/tsconfig.lib.json",
+              "projects/flipper-menu/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperdashboard": {
+      "projectType": "library",
+      "root": "projects/flipper-dashboard",
+      "sourceRoot": "projects/flipper-dashboard/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-dashboard/tsconfig.lib.json",
+            "project": "projects/flipper-dashboard/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-dashboard/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-dashboard/src/test.ts",
+            "tsConfig": "projects/flipper-dashboard/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-dashboard/karma.conf.js",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "styles"
+              ]
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-dashboard/tsconfig.lib.json",
+              "projects/flipper-dashboard/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flippercolor": {
+      "root": "projects/flipper-color",
+      "sourceRoot": "projects/flipper-color/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-color/tsconfig.lib.json",
+            "project": "projects/flipper-color/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-color/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-color/src/test.ts",
+            "tsConfig": "projects/flipper-color/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-color/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-color/tsconfig.lib.json",
+              "projects/flipper-color/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperdialog": {
+      "root": "projects/flipper-dialog",
+      "sourceRoot": "projects/flipper-dialog/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-dialog/tsconfig.lib.json",
+            "project": "projects/flipper-dialog/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-dialog/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-dialog/src/test.ts",
+            "tsConfig": "projects/flipper-dialog/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-dialog/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-dialog/tsconfig.lib.json",
+              "projects/flipper-dialog/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperevent": {
+      "root": "projects/flipper-event",
+      "sourceRoot": "projects/flipper-event/src",
+      "projectType": "library",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-event/tsconfig.lib.json",
+            "project": "projects/flipper-event/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-event/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-event/src/test.ts",
+            "tsConfig": "projects/flipper-event/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-event/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-event/tsconfig.lib.json",
+              "projects/flipper-event/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperpos": {
+      "root": "projects/flipper-pos",
+      "sourceRoot": "projects/flipper-pos/src",
+      "projectType": "library",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-pos/tsconfig.lib.json",
+            "project": "projects/flipper-pos/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-pos/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-pos/src/test.ts",
+            "tsConfig": "projects/flipper-pos/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-pos/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-pos/tsconfig.lib.json",
+              "projects/flipper-pos/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flippervendors": {
+      "root": "projects/flipper-vendors",
+      "sourceRoot": "projects/flipper-vendors/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-vendors/tsconfig.lib.json",
+            "project": "projects/flipper-vendors/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-vendors/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-vendors/src/test.ts",
+            "tsConfig": "projects/flipper-vendors/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-vendors/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-vendors/tsconfig.lib.json",
+              "projects/flipper-vendors/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flippercomponents": {
+      "root": "projects/flipper-components",
+      "sourceRoot": "projects/flipper-components/src",
+      "projectType": "library",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-components/tsconfig.lib.json",
+            "project": "projects/flipper-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-components/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-components/src/test.ts",
+            "tsConfig": "projects/flipper-components/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-components/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-components/tsconfig.lib.json",
+              "projects/flipper-components/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperofflinedatabase": {
+      "projectType": "library",
+      "root": "projects/flipper-offline-database",
+      "sourceRoot": "projects/flipper-offline-database/src",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-offline-database/tsconfig.lib.json",
+            "project": "projects/flipper-offline-database/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-offline-database/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-offline-database/src/test.ts",
+            "tsConfig": "projects/flipper-offline-database/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-offline-database/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-offline-database/tsconfig.lib.json",
+              "projects/flipper-offline-database/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flippersettings": {
+      "projectType": "library",
+      "root": "projects/flipper-settings",
+      "sourceRoot": "projects/flipper-settings/src",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-settings/tsconfig.lib.json",
+            "project": "projects/flipper-settings/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-settings/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-settings/src/test.ts",
+            "tsConfig": "projects/flipper-settings/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-settings/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-settings/tsconfig.lib.json",
+              "projects/flipper-settings/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperinventory": {
+      "projectType": "library",
+      "root": "projects/flipper-inventory",
+      "sourceRoot": "projects/flipper-inventory/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-inventory/tsconfig.lib.json",
+            "project": "projects/flipper-inventory/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-inventory/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-inventory/src/test.ts",
+            "tsConfig": "projects/flipper-inventory/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-inventory/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-inventory/tsconfig.lib.json",
+              "projects/flipper-inventory/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperfileupload": {
+      "projectType": "library",
+      "root": "projects/flipper-file-upload",
+      "sourceRoot": "projects/flipper-file-upload/src",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-file-upload/tsconfig.lib.json",
+            "project": "projects/flipper-file-upload/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-file-upload/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-file-upload/src/test.ts",
+            "tsConfig": "projects/flipper-file-upload/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-file-upload/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-file-upload/tsconfig.lib.json",
+              "projects/flipper-file-upload/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "paymentcard": {
+      "projectType": "library",
+      "root": "projects/payment-card",
+      "sourceRoot": "projects/payment-card/src",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/payment-card/tsconfig.lib.json",
+            "project": "projects/payment-card/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/payment-card/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/payment-card/src/test.ts",
+            "tsConfig": "projects/payment-card/tsconfig.spec.json",
+            "karmaConfig": "projects/payment-card/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/payment-card/tsconfig.lib.json",
+              "projects/payment-card/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperfont": {
+      "projectType": "library",
+      "root": "projects/flipper-font",
+      "sourceRoot": "projects/flipper-font/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/flipper-font/tsconfig.lib.json",
+            "project": "projects/flipper-font/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-font/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-font/src/test.ts",
+            "tsConfig": "projects/flipper-font/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-font/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-font/tsconfig.lib.json",
+              "projects/flipper-font/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipper-e2e": {
+      "root": "e2e",
+      "projectType": "application",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": ".eslintrc.json",
+            "lintFilePatterns": [
+              "e2e/**.ts"
+            ]
+          }
+        }
+      }
+    },
+    "ee": {
+      "projectType": "library",
+      "root": "projects/ee",
+      "sourceRoot": "projects/ee/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ee/tsconfig.lib.json",
+            "project": "projects/ee/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ee/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ee/src/test.ts",
+            "tsConfig": "projects/ee/tsconfig.spec.json",
+            "karmaConfig": "projects/ee/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ee/tsconfig.lib.json",
+              "projects/ee/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "flipper",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "style": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

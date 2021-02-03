@@ -1,0 +1,59 @@
+[
+	{
+		"name": "Per Item",
+		"value": ""
+	},
+	{
+		"name": "Per Kilogram",
+		"value": "Kg"
+	},
+	{
+		"name": "Per Cup",
+		"value": "c"
+	},
+	{
+		"name": "Per Liter",
+		"value": "L"
+	},
+	{
+		"name": "Per Pound",
+		"value": "lb"
+	},
+	{
+		"name": "Per Pint",
+		"value": "pt"
+	},
+	{
+		"name": "Per Acre",
+		"value": "ac"
+	},
+	{
+		"name": "Per Centimeter",
+		"value": "cm"
+	},
+	{
+		"name": "Per Cubic Footer",
+		"value": "cu ft"
+	},
+	{
+		"name": "Per Day",
+		"value": "day"
+	},
+	{
+		"name": "Footer",
+		"value": "ft"
+	},
+	{
+		"name": "Per Gram",
+		"value": "G"
+	},
+	{
+		"name": "Per Hour",
+		"value": "Hr"
+	},
+	{
+		"name": "Per Minute",
+		"value": "Min"
+	}
+	
+]

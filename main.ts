@@ -295,3 +295,4 @@ try {
 // https://github.com/PatrickJS/angular-hmr
 // https://webpack.js.org/guides/hot-module-replacement/
 //https://dev.to/koscheyscrag/fix-of-angular-cli-javascript-heap-out-of-memory-error-while-running-ng-serve--1jjh
+// sed -i 's/name/R/g' .env

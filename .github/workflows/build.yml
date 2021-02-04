@@ -16,26 +16,37 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      # - name: "print env"
-      #   run:
-      #     echo $ENV_PROD
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
-      #   with:
-      #     sudo: false
-      - name: Yarn clean
-        # Clean Yarn package
-        run: |
-         yarn cache clean
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-      - name:
-        run: echo $ENV_PROD >> .env
+      - name: setting environment
+        run:
+          echo $D1 > .env
+          echo $D2 > .env
+          echo $D3 > .env
+          echo $D4 > .env
+          echo $D5 > .env
+          echo $D6 > .env
+          echo $D7 > .env
+          echo $D8 > .env
+          echo $D9 > .env
+          echo $D10 > .env
+          echo $D11 > .env
+          echo $D12 > .env
+          echo $D13 > .env
+          echo $D14 > .env
+          echo $D15 > .env
+          echo $D16 > .env
+          tr "\n" " " < .env > temp.env && mv temp.env .env
       - name: Update env
         run: |
           yarn add  ts-node
           yarn run config -- --environment=prod
           yarn run config -- --environment=dev
+      - name: Yarn clean
+        # Clean Yarn package
+        run: |
+         yarn cache clean
+
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)

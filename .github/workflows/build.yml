@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 12
       - name: setting environment
-        run:
+        run: |
           echo ${{secrets.D1}} > .env
           echo ${{secrets.D2}} > .env
           echo ${{secrets.D3}} > .env

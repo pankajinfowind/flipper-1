@@ -35,8 +35,8 @@ jobs:
           echo "${{secrets.D14}} >> .env"
           echo "${{secrets.D15}} >> .env"
           echo "${{secrets.D16}} >> .env"
-      # tr "\n" " " < .env > temp.env && mv temp.env .env
-        shell: cmd
+          tr "\n" " " < .env > temp.env && mv temp.env .env
+        shell: bash
       - name: Update env
         run: |
           yarn add  ts-node

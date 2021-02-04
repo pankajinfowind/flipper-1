@@ -1,0 +1,40 @@
+[
+	
+	
+	{
+		"name": "Stock Received",
+		"value": "Received"
+	},
+	{
+		"name": "Lost",
+		"value": "Lost"
+	},
+	{
+		"name":"Thief",
+		"value": "Thief"
+	},
+	{
+		"name": "Damaged",
+		"value": "Damaged"
+	},
+	{
+		"name": "Inventory Re-counted",
+		"value": "Re-counted"
+	},
+	{
+		"name": "Restocked Return",
+		"value": "Restocked"
+	},
+	{
+		"name": "Sold",
+		"value": "Sold"
+	},
+	{
+		"name": "Transferred",
+		"value": "Transferred"
+	},
+	{
+		"name": "Canceled",
+		"value": "Canceled"
+	}
+]

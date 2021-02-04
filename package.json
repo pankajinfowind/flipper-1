@@ -1,7 +1,19 @@
 {
-  "name": "new-level",
-  "version": "0.0.0",
+  "name": "flipper",
+  "version": "1.6.26",
+  "description": "A futurstic inventory system",
+  "homepage": "https://github.com/maximegris/angular-electron",
+  "author": {
+    "name": "flipper",
+    "email": "yegobox@gmail.com"
+  },
+  "keywords": [
+    "pos",
+    "linux"
+  ],
+  "main": "main.js",
   "scripts": {
+    "config": "ts-node ./src/assets/setEnv.ts",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

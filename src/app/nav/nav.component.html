@@ -1,0 +1,24 @@
+<div *ngIf="authenticated">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <mat-toolbar>Menu</mat-toolbar> <!---replace with logo-->
+      <mat-nav-list>
+        <mat-grid-list cols="2">
+          <mat-grid-tile routerLink="/analytics">Analytics</mat-grid-tile>
+          <mat-grid-tile routerLink="/pos">POS</mat-grid-tile>
+          <mat-grid-tile routerLink="/inventory">Inventory</mat-grid-tile>
+        </mat-grid-list>
+      </mat-nav-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content style="position: sticky;">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<div *ngIf="!authenticated">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>
+
+

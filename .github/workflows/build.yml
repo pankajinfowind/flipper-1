@@ -16,13 +16,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: "print env"
-        run:
-          echo $ENV_PROD
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          sudo: false
+      # - name: "print env"
+      #   run:
+      #     echo $ENV_PROD
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      #   with:
+      #     sudo: false
       - name: Update env
         run: |
           yarn add  ts-node

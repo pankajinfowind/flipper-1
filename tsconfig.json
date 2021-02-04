@@ -4,26 +4,137 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": false,
+    "strict": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
+    "downlevelIteration": false,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
+    "paths": {
+      "ng-offline-db": [
+        "dist/ng-offline-db"
+      ],
+      "ng-offline-db/*": [
+        "dist/ng-offline-db/*"
+      ],
+      "@enexus/flipper-menu": [
+        "dist/flipper-menu"
+      ],
+      "@enexus/flipper-menu/*": [
+        "dist/flipper-menu*"
+      ],
+      "@enexus/flipper-pos": [
+        "dist/flipper-pos"
+      ],
+      "@enexus/flipper-pos/*": [
+        "dist/flipper-pos/*"
+      ],
+      "@enexus/flipper-event": [
+        "dist/flipper-event"
+      ],
+      "@enexus/flipper-event/*": [
+        "dist/flipper-event/*"
+      ],
+      "@enexus/flipper-dialog": [
+        "dist/flipper-dialog"
+      ],
+      "@enexus/flipper-dialog/*": [
+        "dist/flipper-dialog/*"
+      ],
+      "@enexus/flipper-vendors": [
+        "dist/flipper-vendors"
+      ],
+      "@enexus/flipper-vendors/*": [
+        "dist/flipper-vendors/*"
+      ],
+      "@enexus/flipper-color": [
+        "dist/flipper-color"
+      ],
+      "@enexus/flipper-color/*": [
+        "dist/flipper-color/*"
+      ],
+      "@enexus/flipper-font": [
+        "dist/flipper-font"
+      ],
+      "@enexus/flipper-font/*": [
+        "dist/flipper-font/*"
+      ],
+      "@enexus/flipper-dashboard": [
+        "dist/flipper-dashboard"
+      ],
+      "@enexus/flipper-dashboard/*": [
+        "dist/flipper-dashboard/*"
+      ],
+      "flipper-button": [
+        "dist/flipper-button"
+      ],
+      "flipper-button/*": [
+        "dist/flipper-button/*"
+      ],
+      "@enexus/flipper-components": [
+        "dist/flipper-components"
+      ],
+      "@enexus/flipper-components/*": [
+        "dist/flipper-components/*"
+      ],
+      "@enexus/flipper-offline-database": [
+        "dist/flipper-offline-database"
+      ],
+      "@enexus/flipper-offline-database/*": [
+        "dist/flipper-offline-database/*"
+      ],
+      "@enexus/flipper-settings": [
+        "dist/flipper-settings"
+      ],
+      "@enexus/flipper-settings/*": [
+        "dist/flipper-settings/*"
+      ],
+      "@enexus/flipper-inventory": [
+        "dist/flipper-inventory"
+      ],
+      "@enexus/flipper-inventory/*": [
+        "dist/flipper-inventory/*"
+      ],
+      "@enexus/flipper-file-upload": [
+        "dist/flipper-file-upload"
+      ],
+      "@enexus/flipper-file-upload/*": [
+        "dist/flipper-file-upload/*"
+      ],
+      "@enexus/payment-card": [
+        "dist/payment-card"
+      ],
+      "@enexus/payment-card/*": [
+        "dist/payment-card"
+      ],
+      "enable-sync": [
+        "dist/enable-sync/enable-sync",
+        "dist/enable-sync"
+      ],
+      "testlivereload": [
+        "dist/testlivereload/testlivereload",
+        "dist/testlivereload"
+      ],
+      "test-p": [
+        "dist/test-p/test-p",
+        "dist/test-p"
+      ]
+    },
     "lib": [
       "es2018",
       "dom"
     ]
   },
   "angularCompilerOptions": {
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false,
+    "enableIvy": false
   }
 }

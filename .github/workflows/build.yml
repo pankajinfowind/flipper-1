@@ -19,6 +19,7 @@ jobs:
       - name: setting environment
         run: |
           echo "${{secrets.D1}} >> .env"
+          sed -i 's/#"//g' .env
           echo "${{secrets.D2}} >> .env"
           echo "${{secrets.D3}} >> .env"
           echo "${{secrets.D4}} >> .env"

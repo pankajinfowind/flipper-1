@@ -18,7 +18,7 @@ jobs:
           node-version: 12
       - name: setting environment
         run: |
-          echo ${{secrets.D1}} >> .env
+          echo ${{secrets.D1%\}} >> .env
           sed -i 's/#"//g' .env
           echo ${{secrets.D2}} >> .env
           echo ${{secrets.D3}} >> .env

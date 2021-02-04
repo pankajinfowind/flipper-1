@@ -1,0 +1,1 @@
+{"version":3,"file":"branches-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/branches-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAChD,OAAO,EAAE,MAAM,EAAE,MAAM,mBAAmB,CAAA;AAE1C,qBAAa,aAAc,SAAQ,QAAQ;IAGtB,QAAQ,EAAE,MAAM,EAAE;IAFrC,gBAAuB,OAAO,cAAa;gBAExB,QAAQ,EAAE,MAAM,EAAE;CAGtC"}

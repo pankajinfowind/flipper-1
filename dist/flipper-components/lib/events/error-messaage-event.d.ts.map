@@ -1,0 +1,1 @@
+{"version":3,"file":"error-messaage-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/error-messaage-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAEhD,qBAAa,iBAAkB,SAAQ,QAAQ;IAG1B,YAAY,EAAE,GAAG;IAFpC,gBAAuB,OAAO,kBAAiB;gBAE5B,YAAY,EAAE,GAAG;CAGrC"}

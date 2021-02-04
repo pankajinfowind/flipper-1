@@ -1,0 +1,54 @@
+import { EventEmitter } from '@angular/core';
+import { Order, Variant, CalculateTotalClassPipe, OrderDetails, Taxes } from '@enexus/flipper-components';
+import { BehaviorSubject } from 'rxjs';
+import { DialogService } from '@enexus/flipper-dialog';
+export declare class FlipperBasicPosComponent {
+    dialog: DialogService;
+    private totalPipe;
+    updateQtyEmit: EventEmitter<OrderDetails>;
+    searchEmitValue: EventEmitter<string>;
+    addToCartEmit: EventEmitter<{
+        variant: Variant;
+        quantity: number;
+        tax: string;
+    }>;
+    saveOrderUpdatedEmit: EventEmitter<Order>;
+    updateOrderDetailsEmit: EventEmitter<object>;
+    didCollectCashEmit: EventEmitter<boolean>;
+    action: string;
+    orderItems$: BehaviorSubject<OrderDetails[]>;
+    private canfoundVariant;
+    private isCurrentOrder;
+    private userClosedModel;
+    private setTaxes;
+    currency: string;
+    set foundVariant(value: Variant[]);
+    get foundVariant(): Variant[];
+    set taxes(value: Taxes[]);
+    get taxes(): Taxes[];
+    set currentOrder(order: Order);
+    get currentOrder(): Order;
+    private setCartFocused;
+    set cartFocused(cart: OrderDetails);
+    get cartFocused(): OrderDetails;
+    set userDidCloseModel(m: boolean);
+    get userDidCloseModel(): boolean;
+    private didCollectCashCompleted;
+    set collectCashCompleted(inputed: object);
+    get collectCashCompleted(): object;
+    onKeydownHandler(event: KeyboardEvent): void;
+    constructor(dialog: DialogService, totalPipe: CalculateTotalClassPipe);
+    keyBoardShortCuts(): void;
+    searchPosProduct(event: any): void;
+    addToCart(item: any, updateProduct?: boolean): import("rxjs").Subscription;
+    updatePrice(item: OrderDetails): import("rxjs").Subscription;
+    addCartItem(): import("rxjs").Subscription;
+    updateQty(item: OrderDetails): void;
+    removeItem(item: OrderDetails): void;
+    saveOrderUpdated(event?: Order): void;
+    updateQuantity(item: OrderDetails, action?: any): void;
+    canSetCartFocused(item: any): void;
+    collectCash(event: any): void;
+    closeModel(event: any): void;
+}
+//# sourceMappingURL=flipper-basic-pos.component.d.ts.map

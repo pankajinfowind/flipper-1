@@ -1,0 +1,8 @@
+export class Labels {
+    constructor(params = {}) {
+        for (const name in params) {
+            this[name] = params[name];
+        }
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGFiZWxzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvZmxpcHBlci1jb21wb25lbnRzL3NyYy9saWIvZW50cmllcy9sYWJlbHMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxPQUFPLE1BQU07SUFPakIsWUFBWSxTQUFpQixFQUFFO1FBQzdCLEtBQUssTUFBTSxJQUFJLElBQUksTUFBTSxFQUFFO1lBQ3pCLElBQUksQ0FBQyxJQUFJLENBQUMsR0FBRyxNQUFNLENBQUMsSUFBSSxDQUFDLENBQUE7U0FDMUI7SUFDSCxDQUFDO0NBQ0YiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY2xhc3MgTGFiZWxzIHtcclxuICBpZD86IGFueVxyXG4gIG5hbWU/OiBzdHJpbmdcclxuICBza3U/OiBzdHJpbmdcclxuICBjaGFubmVsczogQXJyYXk8c3RyaW5nPlxyXG4gIGNoYW5uZWw/OiBzdHJpbmdcclxuXHJcbiAgY29uc3RydWN0b3IocGFyYW1zOiBvYmplY3QgPSB7fSkge1xyXG4gICAgZm9yIChjb25zdCBuYW1lIGluIHBhcmFtcykge1xyXG4gICAgICB0aGlzW25hbWVdID0gcGFyYW1zW25hbWVdXHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbiJdfQ==

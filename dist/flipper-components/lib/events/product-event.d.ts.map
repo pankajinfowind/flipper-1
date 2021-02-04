@@ -1,0 +1,1 @@
+{"version":3,"file":"product-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/product-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAEhD,OAAO,EAAE,OAAO,EAAE,MAAM,YAAY,CAAA;AAEpC,qBAAa,YAAa,SAAQ,QAAQ;IAGrB,OAAO,EAAE,OAAO;IAFnC,gBAAuB,OAAO,cAAoB;gBAE/B,OAAO,EAAE,OAAO;CAGpC"}

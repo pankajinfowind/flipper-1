@@ -1,0 +1,1 @@
+{"version":3,"file":"branch-products-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/branch-products-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAChD,OAAO,EAAE,cAAc,EAAE,MAAM,4BAA4B,CAAA;AAE3D,qBAAa,mBAAoB,SAAQ,QAAQ;IAG5B,cAAc,EAAE,cAAc,EAAE;IAFnD,gBAAuB,OAAO,oBAAmB;gBAE9B,cAAc,EAAE,cAAc,EAAE;CAGpD"}

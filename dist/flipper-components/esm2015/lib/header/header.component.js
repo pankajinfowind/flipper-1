@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+export class HeaderComponent {
+}
+HeaderComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'flipper-header',
+                template: "<header>\r\n  <nav class=\"banner\" role=\"navigation\">\r\n    <div class=\"content\">\r\n      <div class=\"column column-fill flex-align-left\"></div>\r\n      <div class=\"column flex-align-center\">\r\n        <a  role=\"button\" data-ember-action=\"\" data-ember-action-467=\"467\">\r\n          <img alt=\"image\" [src]=\"'./assets/icons/icon.png'\" style=\"width:40px;height: 40px;\">\r\n        </a>\r\n      </div>\r\n      <div class=\"column column-fill flex-align-right\"></div>\r\n    </div>\r\n  </nav>\r\n</header>\r\n",
+                styles: ["@media (min-width:718px){.banner{height:73px}}.banner{background-color:#211a36;color:#fff!important;height:62px;overflow:hidden}.banner .content{align-items:center;display:flex;height:100%;justify-content:space-between;padding:10px}@media (min-width:1024px){.content{width:868px}}@media (min-width:718px){.content{width:680px}}@media (min-width:480px){.content{width:424px}}@media (min-width:374px){.content{width:324px}}.content{margin-left:auto;margin-right:auto;width:276px}"]
+            },] }
+];
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaGVhZGVyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL2ZsaXBwZXItY29tcG9uZW50cy9zcmMvbGliL2hlYWRlci9oZWFkZXIuY29tcG9uZW50LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsTUFBTSxlQUFlLENBQUE7QUFPekMsTUFBTSxPQUFPLGVBQWU7OztZQUwzQixTQUFTLFNBQUM7Z0JBQ1QsUUFBUSxFQUFFLGdCQUFnQjtnQkFDMUIsa2lCQUFzQzs7YUFFdkMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQgfSBmcm9tICdAYW5ndWxhci9jb3JlJ1xyXG5cclxuQENvbXBvbmVudCh7XHJcbiAgc2VsZWN0b3I6ICdmbGlwcGVyLWhlYWRlcicsXHJcbiAgdGVtcGxhdGVVcmw6ICcuL2hlYWRlci5jb21wb25lbnQuaHRtbCcsXHJcbiAgc3R5bGVVcmxzOiBbJy4vaGVhZGVyLmNvbXBvbmVudC5zY3NzJ10sXHJcbn0pXHJcbmV4cG9ydCBjbGFzcyBIZWFkZXJDb21wb25lbnQge31cclxuIl19

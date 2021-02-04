@@ -1,0 +1,19 @@
+{
+  "name": "@enexus/flipper-vendors",
+  "version": "1.1.1",
+  "peerDependencies": {
+    "@angular/common": "~10.0.2",
+    "@angular/core": "~10.0.2"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "main": "bundles/enexus-flipper-vendors.umd.js",
+  "module": "fesm2015/enexus-flipper-vendors.js",
+  "es2015": "fesm2015/enexus-flipper-vendors.js",
+  "esm2015": "esm2015/enexus-flipper-vendors.js",
+  "fesm2015": "fesm2015/enexus-flipper-vendors.js",
+  "typings": "enexus-flipper-vendors.d.ts",
+  "metadata": "enexus-flipper-vendors.metadata.json",
+  "sideEffects": false
+}

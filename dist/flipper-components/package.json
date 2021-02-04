@@ -1,0 +1,19 @@
+{
+  "name": "@enexus/flipper-components",
+  "version": "1.6.56",
+  "peerDependencies": {
+    "@angular/common": "~10.0.2",
+    "@angular/core": "~10.0.2"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "main": "bundles/enexus-flipper-components.umd.js",
+  "module": "fesm2015/enexus-flipper-components.js",
+  "es2015": "fesm2015/enexus-flipper-components.js",
+  "esm2015": "esm2015/enexus-flipper-components.js",
+  "fesm2015": "fesm2015/enexus-flipper-components.js",
+  "typings": "enexus-flipper-components.d.ts",
+  "metadata": "enexus-flipper-components.metadata.json",
+  "sideEffects": false
+}

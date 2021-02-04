@@ -1,0 +1,1 @@
+{"version":3,"file":"labels.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/entries/labels.ts"],"names":[],"mappings":"AAAA,qBAAa,MAAM;IACjB,EAAE,CAAC,EAAE,GAAG,CAAA;IACR,IAAI,CAAC,EAAE,MAAM,CAAA;IACb,GAAG,CAAC,EAAE,MAAM,CAAA;IACZ,QAAQ,EAAE,KAAK,CAAC,MAAM,CAAC,CAAA;IACvB,OAAO,CAAC,EAAE,MAAM,CAAA;gBAEJ,MAAM,GAAE,MAAW;CAKhC"}

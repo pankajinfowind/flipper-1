@@ -16,7 +16,7 @@ import { SafePipe } from './safe.pipe'
 import { AnQrcodeModule } from 'an-qrcode'
 import { SharedModule } from './shared/shared.module'
 import { AppComponent } from './app.component'
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -72,7 +72,11 @@ export class AppModule {
   async login(){
     await this.currentUser.configAuthUser(localStorage.getItem('userId'));
   }
-  constructor( private currentUser: CurrentUser){
+  constructor( private currentUser: CurrentUser,public translate: TranslateService){
+    translate.addLangs(['en','rw','fr'])
+    translate.setDefaultLang('en')
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|fr/)?browserLang:'en')
     // on startup the system go to intire login flow ind there check if user still need to be logged in
     if(localStorage.getItem('userId')){
       this.login();

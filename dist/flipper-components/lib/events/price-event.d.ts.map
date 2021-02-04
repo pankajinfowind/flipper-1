@@ -1,0 +1,1 @@
+{"version":3,"file":"price-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/price-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAEhD,OAAO,EAAE,KAAK,EAAE,MAAM,YAAY,CAAA;AAElC,qBAAa,UAAW,SAAQ,QAAQ;IAGnB,KAAK,EAAE,KAAK;IAF/B,gBAAuB,OAAO,YAAkB;gBAE7B,KAAK,EAAE,KAAK;CAGhC"}

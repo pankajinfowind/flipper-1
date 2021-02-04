@@ -5,6 +5,12 @@
     "@angular/common": "~10.0.2",
     "@angular/core": "~10.0.2"
   },
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "flipper-components": "flipper-components"
+    }
+  },
   "dependencies": {
     "tslib": "^2.0.0"
   },

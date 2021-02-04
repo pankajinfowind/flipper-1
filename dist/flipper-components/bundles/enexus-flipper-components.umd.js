@@ -529,7 +529,7 @@
     LoadingIconComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'flipper-loading-icon',
-                    template: "<ng-container *ngIf=\"!loading\"><ng-content></ng-content></ng-container>\r\n<div *ngIf=\"loading\" class=\"loading-spinner\">\r\n  <flipper-spinner [size]=\"24\" [color]=\"'accent'\"></flipper-spinner>\r\n</div>\r\n",
+                    template: "<ng-container *ngIf=\"!loading\"><ng-content></ng-content></ng-container>\r\n<div *ngIf=\"loading\" class=\"loading-spinner\">\r\n  <flipper-spinner [size]=\"24\" [color]=\"'accent'\"></flipper-spinner>\r\n</div>\r\n<!-- comment -->\r\n",
                     styles: [".mat-button .loading-spinner{display:inline-block}.mat-icon-button .loading-spinner{display:block;margin-top:4px}"]
                 },] }
     ];

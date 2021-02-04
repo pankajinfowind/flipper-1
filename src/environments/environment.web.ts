@@ -1,1 +1,0 @@
-import {name, version} from '../../package.json'; export const environment = { name, version, url: 'http://localhost:8082', production: true, paymentUrl: 'https://mysterious-depths-19225.herokuapp.com/', appUrl: 'http://localhost:8000/', pusher: { key: 'a5c8bceaeeac6065d8de', cluster: 'ap2', forceTLS: true, encrypted: true, } }

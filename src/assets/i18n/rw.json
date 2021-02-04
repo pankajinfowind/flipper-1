@@ -1,7 +1,8 @@
 {
-    "PAGES": {
-        "HOME": {
-            "TITLE": "App irakora!"
-        }
-    }
+  "POS":{
+    "NAME":"Curuza"
+  },
+  "INVENTORY":{
+    "NAME":"Kubara"
   }
+}

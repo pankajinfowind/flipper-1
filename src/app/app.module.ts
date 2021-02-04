@@ -74,9 +74,10 @@ export class AppModule {
   }
   constructor( private currentUser: CurrentUser,public translate: TranslateService){
     translate.addLangs(['en','rw','fr'])
-    translate.setDefaultLang('en')
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/)?browserLang:'en')
+    translate.setDefaultLang('rw')
+    // const browserLang = translate.getBrowserLang();
+    translate.use('rw')
+    // translate.use(browserLang.match(/en|fr/)?browserLang:'rw')
     // on startup the system go to intire login flow ind there check if user still need to be logged in
     if(localStorage.getItem('userId')){
       this.login();

@@ -1,8 +1,8 @@
 {
-  "PAGES": {
-      "HOME": {
-          "TITLE": "App works !"
-          
-      }
+  "POS":{
+    "NAME":"Curuza"
+  },
+  "INVENTORY":{
+    "NAME":"inventaire"
   }
 }

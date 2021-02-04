@@ -23,6 +23,12 @@ jobs:
       #   uses: mxschmitt/action-tmate@v3
       #   with:
       #     sudo: false
+      - name: Yarn clean
+        # Clean Yarn package
+        run: |
+         yarn cache clean
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
       - name:
         run: echo $ENV_PROD >> .env
       - name: Update env
@@ -30,13 +36,6 @@ jobs:
           yarn add  ts-node
           yarn run config -- --environment=prod
           yarn run config -- --environment=dev
-      - name: Yarn clean
-        # Clean Yarn package
-        run: |
-         yarn cache clean
-
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)

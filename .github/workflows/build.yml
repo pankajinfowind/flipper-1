@@ -37,11 +37,11 @@ jobs:
       #     echo ${{secrets.D16}} >> .env
       #     tr "\n" " " < .env > temp.env && mv temp.env .env
       #   shell: bash
-      - name: Update env
-        run: |
-          yarn add  ts-node
-          yarn run config -- --environment=prod
-          yarn run config -- --environment=dev
+      # - name: Update env
+      #   run: |
+      #     yarn add  ts-node
+      #     yarn run config -- --environment=prod
+      #     yarn run config -- --environment=dev
       - name: Yarn clean
         # Clean Yarn package
         run: |

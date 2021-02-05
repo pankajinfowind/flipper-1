@@ -356,7 +356,7 @@ export class SubscriptionComponent implements OnInit {
     this.loading.next(true)
 
     return this.httpClient
-      .get(environment.appUrl + 'api/save-expired-at/' + this.currentUser.get('userId'), { headers })
+      .get(environment.url + 'api/save-expired-at/' + this.currentUser.get('userId'), { headers })
       .pipe(finalize(() => this.loading.next(false)))
       .subscribe(res => {
         const resp: Message = res as Message

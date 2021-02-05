@@ -1,1 +1,0 @@
-{"version":3,"file":"user-logged-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/user-logged-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAChD,OAAO,EAAE,IAAI,EAAE,MAAM,YAAY,CAAA;AAEjC,qBAAa,eAAgB,SAAQ,QAAQ;IAGxB,IAAI,EAAE,IAAI;IAF7B,gBAAuB,OAAO,kBAAiB;gBAE5B,IAAI,EAAE,IAAI;CAG9B"}

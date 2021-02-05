@@ -7,12 +7,17 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
 
+  drawerClass='sidenav-container'
   authenticated:boolean = false;
+  opened = true;
 
+  setClosedClass(){
+    this.drawerClass='sidenav-container-closed'
+  }
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

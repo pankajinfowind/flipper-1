@@ -1,1 +1,0 @@
-{"version":3,"file":"price-variant-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/price-variant-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAEhD,OAAO,EAAE,YAAY,EAAE,MAAM,YAAY,CAAA;AAEzC,qBAAa,iBAAkB,SAAQ,QAAQ;IAG1B,YAAY,EAAE,YAAY;IAF7C,gBAAuB,OAAO,mBAAyB;gBAEpC,YAAY,EAAE,YAAY;CAG9C"}

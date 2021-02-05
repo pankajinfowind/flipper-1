@@ -1,16 +1,11 @@
-<div *ngIf="authenticated">
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-      <mat-toolbar>Menu</mat-toolbar> <!---replace with logo-->
-      <mat-nav-list>
-        <mat-grid-list cols="2">
-          <mat-grid-tile routerLink="/analytics">Analytics</mat-grid-tile>
-          <mat-grid-tile routerLink="/pos">{{'POS.NAME' | translate}}</mat-grid-tile>
-          <mat-grid-tile routerLink="/inventory">{{'INVENTORY.NAME' | translate}}</mat-grid-tile>
-        </mat-grid-list>
-      </mat-nav-list>
-
+<div *ngIf="authenticated" [ngClass]="drawerClass">
+  <mat-sidenav-container >
+    <!-- #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false" -->
+      <!-- FIXME(anyone): when toggled the content does not resize to fin to new size -->
+    <mat-sidenav [(opened)]="opened" [mode]="(isHandset$ | async) ? 'over' : 'side'" >
+      <flipper-menu class="flipper-menu" (click)="setClosedClass()">
+      </flipper-menu>
     </mat-sidenav>
     <mat-sidenav-content style="position: sticky;">
       <router-outlet #outlet="outlet"></router-outlet>

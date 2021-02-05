@@ -26,7 +26,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list'
 import { CurrentUser } from './core/guards/current-user'
-
+// import { FlipperMenuModule } from '@enexus/flipper-menu'
+import { FlipperInventoryModule } from '@enexus/flipper-inventory';
+import { FlipperMenuModule } from '@enexus/flipper-menu'
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
@@ -44,10 +46,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AnQrcodeModule,
     CommonModule,
     SharedModule,
+    FlipperMenuModule,
     AppRoutingModule,
     MatIconModule,
     FlipperComponentsModule,
     FlipperPosModule,
+    FlipperInventoryModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {

@@ -1,1 +1,0 @@
-{"version":3,"file":"businesses-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/businesses-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAChD,OAAO,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAA;AAErC,qBAAa,eAAgB,SAAQ,QAAQ;IAGxB,UAAU,EAAE,QAAQ,EAAE;IAFzC,gBAAuB,OAAO,gBAAe;gBAE1B,UAAU,EAAE,QAAQ,EAAE;CAG1C"}

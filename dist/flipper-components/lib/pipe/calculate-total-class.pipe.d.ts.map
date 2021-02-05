@@ -1,1 +1,0 @@
-{"version":3,"file":"calculate-total-class.pipe.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/pipe/calculate-total-class.pipe.ts"],"names":[],"mappings":"AAAA,OAAO,EAAQ,aAAa,EAAc,MAAM,eAAe,CAAA;AAE/D,qBAOa,uBAAwB,YAAW,aAAa;IAC3D,SAAS,CAAC,CAAC,EAAE,YAAY,EAAE,KAAK,CAAC,CAAC,CAAC,EAAE,IAAI,CAAC,EAAE,MAAM,GAAG,GAAG;CASzD"}

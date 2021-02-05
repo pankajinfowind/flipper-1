@@ -1,1 +1,0 @@
-{"version":3,"file":"any-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/any-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAC;AAGjD,qBAAa,QAAS,SAAQ,QAAQ;IAIjB,SAAS,EAAE,GAAG;IAFjC,gBAAuB,OAAO,eAAe;gBAE1B,SAAS,EAAE,GAAG;CAGlC"}

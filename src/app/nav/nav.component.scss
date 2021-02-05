@@ -1,0 +1,22 @@
+.sidenav-container {
+  height: 100%;
+  overflow: hidden;
+  .mat-sidenav{
+    background-color:#130f1f;
+    width: 255px
+  }
+}
+.sidenav-container-closed{
+  height: 100%;
+  overflow: hidden;
+  .mat-sidenav{
+    background-color:#130f1f;
+    width: 25px
+  }
+}
+.fp-main-sidebar{
+  background-color: #130f1f;
+}
+.mat-drawer-inner-container{
+  overflow: hidden;
+}

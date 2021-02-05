@@ -1,8 +1,0 @@
-export class Types {
-    constructor(params = {}) {
-        for (const name in params) {
-            this[name] = params[name];
-        }
-    }
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHlwZXMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9mbGlwcGVyLWNvbXBvbmVudHMvc3JjL2xpYi9lbnRyaWVzL3R5cGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE1BQU0sT0FBTyxLQUFLO0lBVWhCLFlBQVksU0FBaUIsRUFBRTtRQUM3QixLQUFLLE1BQU0sSUFBSSxJQUFJLE1BQU0sRUFBRTtZQUN6QixJQUFJLENBQUMsSUFBSSxDQUFDLEdBQUcsTUFBTSxDQUFDLElBQUksQ0FBQyxDQUFBO1NBQzFCO0lBQ0gsQ0FBQztDQUNGIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNsYXNzIFR5cGVzIHtcclxuICBpZDogc3RyaW5nXHJcbiAgbmFtZTogc3RyaW5nXHJcbiAgc3luY2VkT25saW5lPzogYm9vbGVhblxyXG4gIHRhYmxlOiBzdHJpbmdcclxuICBkb2NJZD86IHN0cmluZ1xyXG4gIGNoYW5uZWxzOiBBcnJheTxzdHJpbmc+XHJcblxyXG4gIGNoYW5uZWw/OiBzdHJpbmdcclxuXHJcbiAgY29uc3RydWN0b3IocGFyYW1zOiBvYmplY3QgPSB7fSkge1xyXG4gICAgZm9yIChjb25zdCBuYW1lIGluIHBhcmFtcykge1xyXG4gICAgICB0aGlzW25hbWVdID0gcGFyYW1zW25hbWVdXHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbiJdfQ==

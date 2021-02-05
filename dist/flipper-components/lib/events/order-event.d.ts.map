@@ -1,1 +1,0 @@
-{"version":3,"file":"order-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/order-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAEhD,OAAO,EAAE,KAAK,EAAE,MAAM,kBAAkB,CAAA;AAExC,qBAAa,UAAW,SAAQ,QAAQ;IAGnB,KAAK,EAAE,KAAK;IAF/B,gBAAuB,OAAO,YAAiB;gBAE5B,KAAK,EAAE,KAAK;CAGhC"}

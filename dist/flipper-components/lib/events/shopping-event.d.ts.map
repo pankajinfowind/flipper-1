@@ -1,1 +1,0 @@
-{"version":3,"file":"shopping-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/shopping-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAEhD,OAAO,EAAE,YAAY,EAAE,MAAM,YAAY,CAAA;AAEzC,qBAAa,aAAc,SAAQ,QAAQ;IAGtB,QAAQ,EAAE,YAAY;IAFzC,gBAAuB,OAAO,eAAqB;gBAEhC,QAAQ,EAAE,YAAY;CAG1C"}

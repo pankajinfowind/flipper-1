@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
     // end of deal here
   }
   userLogin() {
-    this.electronService.ipcRenderer.send('sent-login-message', environment.appUrl)
+    this.electronService.ipcRenderer.send('sent-login-message', environment.url)
   }
   getStaredNewToFlipper() {
     this.electronService.redirect('https://flipper.yegobox.com')

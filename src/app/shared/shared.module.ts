@@ -8,7 +8,7 @@ import { FlipperMenuModule } from '@enexus/flipper-menu'
 import { FlipperDashboardModule } from '@enexus/flipper-dashboard'
 // import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database'
 // import { FlipperSettingsModule } from '@enexus/flipper-settings'
-import { FlipperInventoryModule } from '@enexus/flipper-inventory'
+// import { FlipperInventoryModule } from '@enexus/flipper-inventory'
 import { FlipperPaymentCardModule } from '@enexus/payment-card'
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component'
 import { PageNotFoundComponent } from './components'
@@ -21,7 +21,6 @@ import { PageNotFoundComponent } from './components'
     FlipperComponentsModule,
     FlipperPosModule,
     VendorsModule,
-    FlipperMenuModule,
     FlipperDashboardModule,
     // FlipperOfflineDatabaseModule,
     // FlipperSettingsModule,
@@ -34,7 +33,7 @@ import { PageNotFoundComponent } from './components'
     FlipperEventModule,
     FlipperComponentsModule,
     VendorsModule,
-    FlipperMenuModule,
+    // FlipperMenuModule,
     FlipperDashboardModule,
     // FlipperOfflineDatabaseModule,
     // FlipperSettingsModule,

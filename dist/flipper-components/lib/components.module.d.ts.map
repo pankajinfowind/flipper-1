@@ -1,1 +1,0 @@
-{"version":3,"file":"components.module.d.ts","sourceRoot":"","sources":["../../../projects/flipper-components/src/lib/components.module.ts"],"names":[],"mappings":"AAwBA,qBAwDa,uBAAuB;CAAG;AACvC,OAAO,QAAQ,eAAe,CAAC;IAC7B,UAAU,mBAAmB,CAAC,CAAC,GAAG,GAAG;QACnC,QAAQ,EAAE,IAAI,CAAC,CAAC,CAAC,CAAA;QACjB,SAAS,CAAC,EAAE,QAAQ,EAAE,CAAA;KACvB;CACF"}

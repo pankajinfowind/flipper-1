@@ -1,1 +1,0 @@
-{"version":3,"file":"user-subscription-event.d.ts","sourceRoot":"","sources":["../../../../projects/flipper-components/src/lib/events/user-subscription-event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,uBAAuB,CAAA;AAChD,OAAO,EAAE,YAAY,EAAE,MAAM,YAAY,CAAA;AAEzC,qBAAa,qBAAsB,SAAQ,QAAQ;IAG9B,YAAY,EAAE,YAAY;IAF7C,gBAAuB,OAAO,uBAAsB;gBAEjC,YAAY,EAAE,YAAY;CAG9C"}

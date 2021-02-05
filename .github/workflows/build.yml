@@ -43,7 +43,6 @@ jobs:
       #     yarn run config -- --environment=prod
       #     yarn run config -- --environment=dev
       - name: Yarn clean
-        # Clean Yarn package
         run: |
          yarn cache clean
 

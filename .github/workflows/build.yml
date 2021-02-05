@@ -16,27 +16,27 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: setting environment
-        run: |
-          echo ${{secrets.D1}} >> .env
-          sed -i 's/#"//g' .env
-          echo ${{secrets.D2}} >> .env
-          echo ${{secrets.D3}} >> .env
-          echo ${{secrets.D4}} >> .env
-          echo ${{secrets.D5}} >> .env
-          echo ${{secrets.D6}} >> .env
-          echo ${{secrets.D7}} >> .env
-          echo ${{secrets.D8}} >> .env
-          echo ${{secrets.D9}} >> .env
-          echo ${{secrets.D10}} >> .env
-          echo ${{secrets.D11}} >> .env
-          echo ${{secrets.D12}} >> .env
-          echo ${{secrets.D13}} >> .env
-          echo ${{secrets.D14}} >> .env
-          echo ${{secrets.D15}} >> .env
-          echo ${{secrets.D16}} >> .env
-          tr "\n" " " < .env > temp.env && mv temp.env .env
-        shell: bash
+      # - name: setting environment
+      #   run: |
+      #     echo ${{secrets.D1}} >> .env
+      #     sed -i 's/#"//g' .env
+      #     echo ${{secrets.D2}} >> .env
+      #     echo ${{secrets.D3}} >> .env
+      #     echo ${{secrets.D4}} >> .env
+      #     echo ${{secrets.D5}} >> .env
+      #     echo ${{secrets.D6}} >> .env
+      #     echo ${{secrets.D7}} >> .env
+      #     echo ${{secrets.D8}} >> .env
+      #     echo ${{secrets.D9}} >> .env
+      #     echo ${{secrets.D10}} >> .env
+      #     echo ${{secrets.D11}} >> .env
+      #     echo ${{secrets.D12}} >> .env
+      #     echo ${{secrets.D13}} >> .env
+      #     echo ${{secrets.D14}} >> .env
+      #     echo ${{secrets.D15}} >> .env
+      #     echo ${{secrets.D16}} >> .env
+      #     tr "\n" " " < .env > temp.env && mv temp.env .env
+      #   shell: bash
       - name: Update env
         run: |
           yarn add  ts-node

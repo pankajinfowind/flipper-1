@@ -78,10 +78,10 @@ export class CurrentUser {
     console.log('userId:::', userId)
     await this.http
       .post(environment.url + '/auth', {
-        userId: userId,
+        'userId': userId,
       })
       .toPromise()
-      .then(async (user)=>{
+      .then(async (u)=>{
         //get the user object and set the payment properties to be used in subscription guards
         await this.http.get(environment.url + '/api/user').toPromise().then(async (user:User)=>{
           localStorage.setItem('subscriptionEndDate',user.subscriptionEndDate.toString());

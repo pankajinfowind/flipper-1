@@ -15,6 +15,7 @@
     "resolveJsonModule":true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "types": ["node"],
     "target": "es2015",
     "module": "es2020",
     "paths": {

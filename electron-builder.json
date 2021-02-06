@@ -37,7 +37,8 @@
     ]
   },
   "nsis": {
-    "oneClick": false,
+    "oneClick": true,
+    "guid": "eb1a0fbb-fc70-428e-97f1-fa7080894806",
     "allowElevation": true,
     "differentialPackage": true,
     "createStartMenuShortcut": true,

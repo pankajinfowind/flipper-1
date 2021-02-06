@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as url from 'url'
 const { setup: setupPushReceiver } = require('electron-push-receiver')
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
-const notifier = require('node-notifier')
+// const notifier = require('node-notifier')
 const { menu } = require('./menu')
 const onError = (err, response) => {
   console.error(err, response)
@@ -128,31 +128,31 @@ ipcMain.on('sent-login-message', (event, url) => {
 // this is just to test autoUpdater feature.
 let icon = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/linux/icon.png'))
 
-function showMessage(message, title) {
-  notifier.notify(
-    {
-      message,
-      title,
-      // Special sound
-      // Case Sensitive string for location of sound file, or use one of OS X's native sounds
-      // Only Notification Center or Windows Toasters
-      sound: true, // "Bottle",
-      // The absolute path to the icon of the message
-      // (doesn't work on balloons)
-      // If not found, a system icon will be shown
-      icon: icon,
-      // Wait with callback (onClick event of the toast), until user action is taken against notification
-      wait: true,
-    },
-    onError
-  )
-  notifier.on('click', (notifierObject, options) => {
-    //  TODO: implement when a user click on notification.
-  })
-}
-function sendStatusToWindow(text: string, title) {
-  showMessage(text, title)
-}
+// function showMessage(message, title) {
+//   notifier.notify(
+//     {
+//       message,
+//       title,
+//       // Special sound
+//       // Case Sensitive string for location of sound file, or use one of OS X's native sounds
+//       // Only Notification Center or Windows Toasters
+//       sound: true, // "Bottle",
+//       // The absolute path to the icon of the message
+//       // (doesn't work on balloons)
+//       // If not found, a system icon will be shown
+//       icon: icon,
+//       // Wait with callback (onClick event of the toast), until user action is taken against notification
+//       wait: true,
+//     },
+//     onError
+//   )
+//   notifier.on('click', (notifierObject, options) => {
+//     //  TODO: implement when a user click on notification.
+//   })
+// }
+// function sendStatusToWindow(text: string, title) {
+//   showMessage(text, title)
+// }
 if (!isDev) {
   autoUpdater.on('checking-for-update', () => {
     // sendStatusToWindow('Checking for update...', 'check updates');

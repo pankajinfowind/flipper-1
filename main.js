@@ -5,7 +5,7 @@ var path = require("path");
 var url = require("url");
 var setupPushReceiver = require('electron-push-receiver').setup;
 // reference on notification: https://ourcodeworld.com/articles/read/204/using-native-desktop-notification-with-electron-framework
-var notifier = require('node-notifier');
+// const notifier = require('node-notifier')
 var menu = require('./menu').menu;
 var onError = function (err, response) {
     console.error(err, response);
@@ -127,28 +127,31 @@ electron_1.ipcMain.on('sent-login-message', function (event, url) {
 ///////////////////// AUTO UPDATED  /////////////////////////////
 // this is just to test autoUpdater feature.
 var icon = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/linux/icon.png'));
-function showMessage(message, title) {
-    notifier.notify({
-        message: message,
-        title: title,
-        // Special sound
-        // Case Sensitive string for location of sound file, or use one of OS X's native sounds
-        // Only Notification Center or Windows Toasters
-        sound: true,
-        // The absolute path to the icon of the message
-        // (doesn't work on balloons)
-        // If not found, a system icon will be shown
-        icon: icon,
-        // Wait with callback (onClick event of the toast), until user action is taken against notification
-        wait: true,
-    }, onError);
-    notifier.on('click', function (notifierObject, options) {
-        //  TODO: implement when a user click on notification.
-    });
-}
-function sendStatusToWindow(text, title) {
-    showMessage(text, title);
-}
+// function showMessage(message, title) {
+//   notifier.notify(
+//     {
+//       message,
+//       title,
+//       // Special sound
+//       // Case Sensitive string for location of sound file, or use one of OS X's native sounds
+//       // Only Notification Center or Windows Toasters
+//       sound: true, // "Bottle",
+//       // The absolute path to the icon of the message
+//       // (doesn't work on balloons)
+//       // If not found, a system icon will be shown
+//       icon: icon,
+//       // Wait with callback (onClick event of the toast), until user action is taken against notification
+//       wait: true,
+//     },
+//     onError
+//   )
+//   notifier.on('click', (notifierObject, options) => {
+//     //  TODO: implement when a user click on notification.
+//   })
+// }
+// function sendStatusToWindow(text: string, title) {
+//   showMessage(text, title)
+// }
 if (!isDev) {
     autoUpdater.on('checking-for-update', function () {
         // sendStatusToWindow('Checking for update...', 'check updates');
@@ -286,4 +289,5 @@ catch (e) {
 // https://github.com/PatrickJS/angular-hmr
 // https://webpack.js.org/guides/hot-module-replacement/
 //https://dev.to/koscheyscrag/fix-of-angular-cli-javascript-heap-out-of-memory-error-while-running-ng-serve--1jjh
+// sed -i 's/name/R/g' .env
 //# sourceMappingURL=main.js.map

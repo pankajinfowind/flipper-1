@@ -74,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 export class AppModule {
   async login(){
+    localStorage.setItem('userId','54')
     await this.currentUser.configAuthUser(localStorage.getItem('userId'));
   }
   constructor( private currentUser: CurrentUser,public translate: TranslateService){

@@ -1,5 +1,5 @@
 {
-  "productName": "flippper",
+  "productName": "flipper",
   "directories": {
     "output": "release/"
   },
@@ -9,6 +9,10 @@
     "repo": "flipper",
     "vPrefixedTagName": true
   },
+  "extraFiles":[
+    "server/**",
+    "src/assets/**"
+  ],
   "files": [
     "**/*",
     "!**/*.ts",

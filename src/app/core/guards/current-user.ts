@@ -75,6 +75,7 @@ export class CurrentUser {
     )
   }
   public async configAuthUser(userId){
+    console.log('userId:::', userId)
     await this.http
       .post(environment.url + '/auth', {
         userId: userId,

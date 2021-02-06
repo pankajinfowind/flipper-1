@@ -95,7 +95,7 @@ export class CurrentUser {
       .get<Business>(environment.url + '/api/business')
       .toPromise()
       .then(business => {
-        localStorage.setItem('userId',userId)
+        localStorage.setItem('userIdNew',userId)
         this.eventBus.publish(new CurrentBusinessEvent(business))
         this.router.navigate(['/analytics']);
       })

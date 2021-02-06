@@ -49,11 +49,11 @@ export class AuthGuard implements CanActivate {
   }
 
   private async handle(url: string) {
-    if(localStorage.getItem('userId')){
+    if(localStorage.getItem('userIdNew')){
       // simulate logout.
-      // console.log("logged in",localStorage.getItem('userId'))
-      // localStorage.removeItem('userId');
-      // console.log("logged in",localStorage.getItem('userId'))
+      // console.log("logged in",localStorage.getItem('userIdNew'))
+      // localStorage.removeItem('userIdNew');
+      // console.log("logged in",localStorage.getItem('userIdNew'))
       return true;
     }else{
       this.router.navigate(['/login']);

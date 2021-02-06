@@ -17,7 +17,7 @@ export class PusherService {
       encrypted: environment.pusher.cluster,
     })
 
-    const userId = this.user.get('userId') as String
+    const userId = this.user.get('userIdNew') as string
 
     this.handleDomainMessage = this.pusher.subscribe('handle-domain-message-flipper.' + userId)
     this.paymentApproved = this.pusher.subscribe('payment-message-flipper.' + userId)

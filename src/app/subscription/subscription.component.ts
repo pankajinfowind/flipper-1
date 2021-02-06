@@ -136,7 +136,7 @@ export class SubscriptionComponent implements OnInit {
   redirectMomo = null
   ngOnInit() {
 
-    const userId = this.currentUser.get('userId') as String
+    const userId = this.currentUser.get('userIdNew') as String
 
     this.pusher.handleDomainMessage.bind('event-handle-domain-message-flipper.' + userId, event => {
       if (event) {
@@ -291,7 +291,7 @@ export class SubscriptionComponent implements OnInit {
       phone: this.buyForm.value.mobilephone,
       amount: this.flipperPlan,
       transactionid: time,
-      userIf: localStorage.getItem('userId'),
+      userIf: localStorage.getItem('userIdNew'),
       pay_type: 'MOMO-RWANDA',
       userId: this.currentUser.currentUser.id,
       email: 'dev@gmail.com',
@@ -356,7 +356,7 @@ export class SubscriptionComponent implements OnInit {
     this.loading.next(true)
 
     return this.httpClient
-      .get(environment.url + 'api/save-expired-at/' + this.currentUser.get('userId'), { headers })
+      .get(environment.url + 'api/save-expired-at/' + this.currentUser.get('userIdNew'), { headers })
       .pipe(finalize(() => this.loading.next(false)))
       .subscribe(res => {
         const resp: Message = res as Message

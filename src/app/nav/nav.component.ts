@@ -24,8 +24,9 @@ export class NavComponent {
       shareReplay()
     );
 
+
   constructor(private breakpointObserver: BreakpointObserver,private router: Router,) {
-   this.authenticated = localStorage.getItem("userId") !=null;
+   this.authenticated = localStorage.getItem('userIdNew') !=null;
   }
 
 }

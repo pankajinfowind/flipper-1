@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "2.0.14",
+  "version": "2.0.17",
   "description": "A futurstic inventory system",
   "homepage": "https://github.com/maximegris/angular-electron",
   "author": {
@@ -70,7 +70,7 @@
     "@angular/platform-browser-dynamic": "~11.0.3",
     "@angular/router": "~11.0.3",
     "@enexus/flipper-color": "0.0.3",
-    "@enexus/flipper-components": "^1.6.57",
+    "@enexus/flipper-components": "^1.6.58",
     "@enexus/flipper-dashboard": "1.0.2",
     "@enexus/flipper-dialog": "1.0.3",
     "@enexus/flipper-event": "1.0.5",

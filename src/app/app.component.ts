@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
       this.database.connect(PouchConfig.bucket, localStorage.getItem('channel'))
 
       // if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
+      this.database.sync([localStorage.getItem('userIdNew')])
       // }
       this.database.getChangeListener().subscribe(() => {
         // console.log(data);

@@ -1,6 +1,6 @@
 {
   "name": "flipper",
-  "version": "2.0.24",
+  "version": "2.0.25",
   "description": "A futurstic inventory system",
   "homepage": "https://github.com/maximegris/angular-electron",
   "author": {
@@ -25,7 +25,8 @@
     "electron:serve": "wait-on tcp:4200 && npm run electron:serve-tsc && npx electron . --serve",
     "electron:local": "npm run build:prod && npx electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build -p  always --linux snap -c.snap.publish=github",
-    "electron:windows": "npm run build:prod && npx electron-builder build --ia32  --windows",
+    "electron:windows-32": "npm run build:prod && npx electron-builder build --ia32  --windows",
+    "electron:windows-64": "npm run build:prod && npx electron-builder build --x64  --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build -p always  --mac",
     "electron:build": "npm run build:prod && electron-builder build",
     "test": "ng test --watch=false",

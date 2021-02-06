@@ -6,7 +6,7 @@ const { autoUpdater } = require('electron-updater')
 
 autoUpdater.logger = log
 
-var server = path.join(__dirname + '/../server/', 'flipper-1.20.3-client')
+var server = path.join(__dirname + '/../server/', 'flipper-1.20.3-client.jar')
 
 var dd = server.replace(/\app.asar/g, '')
 var final = dd.replace(/\\\\/g, '\\')

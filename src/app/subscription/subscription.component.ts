@@ -97,7 +97,7 @@ export class SubscriptionComponent implements OnInit {
   isFocused: any = ''
   redirectMomo = null
   ngOnInit() {
-    const userId = this.currentUser.get('userId') as number
+    const userId = this.currentUser.get('userId') as string
 
     this.pusher.handleDomainMessage.bind('event-handle-domain-message-flipper.' + userId, event => {
       if (event) {
@@ -113,7 +113,7 @@ export class SubscriptionComponent implements OnInit {
           this.message.error = false
           this.message.message = ''
           this.message.momo = ''
-          this.currentUser.currentUser.expiresAt = Date.parse(event.expiresAt)
+          // this.currentUser.currentUser.expiresAt = Date.parse(event.expiresAt)
           this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser)
 
           this.openDialog(true, event)
@@ -235,7 +235,7 @@ export class SubscriptionComponent implements OnInit {
       Accept: 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': '*',
-      Authorization: 'Bearer ' + this.currentUser.currentUser.token,
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
     })
 
     this.loading.next(true)
@@ -305,7 +305,7 @@ export class SubscriptionComponent implements OnInit {
       Accept: 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': '*',
-      Authorization: 'Bearer ' + this.currentUser.currentUser.token,
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
     })
 
     this.loading.next(true)
@@ -322,7 +322,7 @@ export class SubscriptionComponent implements OnInit {
           this.message.error = false
           this.message.message = ''
           this.message.momo = ''
-          this.currentUser.currentUser.expiresAt = Date.parse(data.expiresAt)
+          // this.currentUser.currentUser.expiresAt = Date.parse(data.expiresAt)
           // console.log(this.currentUser.currentUser);
           this.database.put(PouchConfig.Tables.user, this.currentUser.currentUser)
           return this.openDialog(true, data)

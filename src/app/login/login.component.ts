@@ -25,6 +25,7 @@ declare const Pusher: any
 })
 export class LoginComponent implements OnInit {
   user: Array<any>
+  version:string;
   qrcode: any
   pushers: any
   flipperPlan = []
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit() {
     // localStorage.setItem('loggedin','false');
-
+    this.version = environment.version
     this.qrcode = Date.now()
     // use Qr code to log in
     this.pushers = new Pusher(environment.pusher.key, {

@@ -11,7 +11,7 @@ var server = path.join(__dirname + '/../server/', 'flipper-1.20.3-client.jar')
 var dd = server.replace(/\app.asar/g, '')
 var final = dd.replace(/\\\\/g, '\\')
 log.info(`"${final}"`)
-child = exec(`java -jar  "${final}"`, function (error, stdout, stderr) {
+child = exec(`java -jar  "${final}"`, (error, stdout, stderr) =>{
   log.info('stdout: ' + stdout)
   log.info('stderr: ' + stderr)
   if (error !== null) {

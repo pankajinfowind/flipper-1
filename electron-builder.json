@@ -9,7 +9,7 @@
     "repo": "flipper",
     "vPrefixedTagName": true
   },
-  "extraresources":[
+  "extraResources":[
     "server/**",
     "src/assets/**"
   ],

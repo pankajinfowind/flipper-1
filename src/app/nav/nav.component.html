@@ -1,19 +1,32 @@
-<div *ngIf="authenticated" [ngClass]="drawerClass">
-  <mat-sidenav-container >
-    <!-- #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false" -->
-      <!-- FIXME(anyone): when toggled the content does not resize to fin to new size -->
-    <mat-sidenav [(opened)]="opened" [mode]="(isHandset$ | async) ? 'over' : 'side'" >
-      <flipper-menu class="flipper-menu" (click)="setClosedClass()">
-      </flipper-menu>
-    </mat-sidenav>
-    <mat-sidenav-content style="position: sticky;">
-      <router-outlet #outlet="outlet"></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+<mat-sidenav-container  *ngIf="authenticated" class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">Link 1</a>
+      <a mat-list-item href="#">Link 2</a>
+      <a mat-list-item href="#">Link 3</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>flipper</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <flipper-notification></flipper-notification>
+    <router-outlet #outlet="outlet"></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 <div *ngIf="!authenticated">
   <router-outlet #outlet="outlet"></router-outlet>
 </div>
-
-

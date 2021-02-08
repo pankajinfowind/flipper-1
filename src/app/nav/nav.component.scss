@@ -2,7 +2,7 @@
   height: 100%;
   overflow: hidden;
   .mat-sidenav{
-    background-color:#130f1f;
+    background-color:#ffffff;
     width: 255px
   }
 }
@@ -10,13 +10,29 @@
   height: 100%;
   overflow: hidden;
   .mat-sidenav{
-    background-color:#130f1f;
+    background-color:#ffffff;
     width: 25px
   }
 }
 .fp-main-sidebar{
-  background-color: #130f1f;
+  background-color: #ffffff;
 }
 .mat-drawer-inner-container{
   overflow: hidden;
 }
+.topheader{position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  height: 50px;
+  float: left;
+  width: 100%;
+  z-index: 9;
+  border-bottom: 1px #ccc solid;}
+.mat-toolbar{background: #ffffff;}
+.sitenavul ul {margin: 0;padding: 0;}
+.sitenavul ul li {float: left;    list-style: none;
+  width: 31.333%;
+  text-align: center;
+  margin: 1%;}
+  .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content{justify-content:center;}

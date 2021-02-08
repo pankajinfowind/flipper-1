@@ -1,28 +1,32 @@
+<div class="topheader">
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="Toggle()" style="outline: 0;margin-left: 25px;font-size: 18px;">
+    <img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"> Home
+  </button>
+      <!-- <span>flipper</span>
+      <input type="text" />  -->
+</div>
 <mat-sidenav-container  *ngIf="authenticated" class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+    <mat-toolbar>Menu</mat-toolbar>    
+    
+    <mat-nav-list class="sitenavul">
+      <ul>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/home-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"><span style="font-size: 10px;">Home</span></a></li>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/settings-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"><span style="font-size: 10px;">Account & Settings</span></a></li>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"></a></li>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"></a></li>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"></a></li>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"></a></li>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"></a></li>
+        <li><a mat-list-item href="#"><img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"></a></li>
+      </ul>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>flipper</span>
-    </mat-toolbar>
-    <!-- Add Content Here -->
+   <!-- Add Content Here -->
     <flipper-notification></flipper-notification>
     <router-outlet #outlet="outlet"></router-outlet>
   </mat-sidenav-content>

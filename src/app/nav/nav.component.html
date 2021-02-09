@@ -1,9 +1,32 @@
 <div class="topheader">
+  <div>
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="Toggle()" style="outline: 0;margin-left: 25px;font-size: 18px;">
-    <img [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"> Home
+    <svg role="img" height="24" width="24" viewBox="0 0 24 24"><title></title>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6ZM2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12ZM3 17C2.44772 17 2 17.4477 2 18C2 18.5523 2.44772 19 3 19H21C21.5523 19 22 18.5523 22 18C22 17.4477 21.5523 17 21 17H3Z" fill="currentColor"></path>
+  </svg>
+  Home
   </button>
-      <!-- <span>flipper</span>
-      <input type="text" />  -->
+<div class="middleicon"><span><img src="./assets/icons/icon.png" style="width: 20px;" /></span></div>
+<div class="rightsidenav">
+  <button style="outline: 0;border: 0;background: #fff;">
+    <svg role="img" height="24" style="color: #737373;" width="24" viewBox="0 0 24 24"><title>Search</title>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18C11.8487 18 13.551 17.3729 14.9056 16.3199L20.2929 21.7071C20.6834 22.0976 21.3166 22.0976 21.7071 21.7071C22.0976 21.3166 22.0976 20.6834 21.7071 20.2929L16.3199 14.9056C17.3729 13.551 18 11.8487 18 10C18 5.58172 14.4183 2 10 2ZM4 10C4 6.68629 6.68629 4 10 4C13.3137 4 16 6.68629 16 10C16 13.3137 13.3137 16 10 16C6.68629 16 4 13.3137 4 10Z" fill="currentColor"></path>
+</svg>
+</button>
+<button style="outline: 0;border: 0;background: #fff;padding-left: 35px;">      
+  <svg role="img" height="30" style="color: #737373;" width="33" viewBox="-3 0 30 30" ><title>Notifications</title>
+  <defs>
+    <mask id="notifications-icon__badge-mask" width="33" height="30">
+      <rect x="0" y="0" width="33" height="30" fill="white"></rect>
+      <circle cx="22" cy="8" r="8" fill="black"></circle>
+    </mask>
+  </defs>
+    <path mask="" d="M7.00289 14.6677L7.00009 14.6189C7.01631 12.1209 9.19113 10 12 10C14.8089 10 16.9837 12.1209 16.9999 14.6189L16.9971 14.6677C16.9942 14.7196 16.9903 14.7941 16.9859 14.8866C16.9772 15.0715 16.9667 15.3295 16.9597 15.6233C16.946 16.1994 16.9444 16.9559 17.0048 17.5687C17.1771 19.3164 17.9943 21.3318 18.713 22.8384C18.9148 23.2615 19.1134 23.6536 19.2953 24H12H4.70465C4.88658 23.6536 5.08518 23.2615 5.28697 22.8384C6.00567 21.3318 6.82289 19.3164 6.99518 17.5687C7.05558 16.9559 7.05401 16.1994 7.04031 15.6233C7.03332 15.3295 7.02284 15.0715 7.01411 14.8866C7.00973 14.7941 7.00578 14.7196 7.00289 14.6677ZM14 26H21C21.3618 26 21.6953 25.8046 21.8722 25.4891C22.0491 25.1736 22.0419 24.7872 21.8533 24.4785L21.8532 24.4784L21.8523 24.4769L21.8476 24.4693L21.8274 24.4356C21.8091 24.4052 21.7817 24.3591 21.7463 24.2987C21.6754 24.1779 21.5728 24.0002 21.4482 23.7766C21.1986 23.3286 20.8627 22.6997 20.5182 21.9774C19.8139 20.501 19.1311 18.7517 18.9952 17.3725C18.9473 16.8873 18.9458 16.232 18.9591 15.6709C18.9657 15.3961 18.9755 15.1541 18.9837 14.981C18.9877 14.8947 18.9914 14.8258 18.994 14.779L18.9971 14.726L18.9978 14.713L18.998 14.7101L18.998 14.7097L18.998 14.7096C18.9993 14.6888 19 14.6679 19 14.6471C19 10.9197 15.808 8 12 8C8.19199 8 5 10.9197 5 14.6471C5 14.6679 5.00065 14.6888 5.00196 14.7096L5.00196 14.7097L5.00199 14.7101L5.00217 14.713L5.00295 14.726L5.00599 14.779C5.0086 14.8258 5.01225 14.8947 5.01634 14.981C5.02451 15.1541 5.03433 15.3961 5.04087 15.6709C5.05422 16.232 5.05266 16.8873 5.00482 17.3725C4.86885 18.7517 4.18607 20.501 3.48183 21.9774C3.13726 22.6997 2.80141 23.3286 2.55183 23.7766C2.42722 24.0002 2.32459 24.1779 2.25373 24.2987C2.21832 24.3591 2.19088 24.4052 2.17264 24.4356L2.15236 24.4693L2.14769 24.4769L2.14683 24.4784L2.14679 24.4784L2.14678 24.4784L2.14673 24.4785L2.14671 24.4786C1.95812 24.7872 1.95086 25.1736 2.12775 25.4891C2.30468 25.8046 2.63823 26 3 26H10C10 27.1046 10.8954 28 12 28C13.1046 28 14 27.1046 14 26Z"></path>
+</svg>
+</button>
+<span style="float: right;margin-right: 30px;margin-top: 5px;">Demo</span>
+</div>
+</div>
 </div>
 <mat-sidenav-container  *ngIf="authenticated" class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
@@ -15,7 +38,7 @@
     <mat-nav-list class="sitenavul">
       <ul>
         <li><a title="Home">
-    <div><svg role="img" height="56" style="background:#5f6a7d;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember21" class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--gray ember-view"><title>Home</title>
+    <div><svg role="img" height="56" style="background:#5f6a7d;border-radius:10px;" width="56" viewBox="0 0 56 56"><title>Home</title>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M27.4453 13.1679C27.7812 12.944 28.2188 12.944 28.5547 13.1679L34 16.7981V15C34 14.4477 34.4477 14 35 14H39C39.5523 14 40 14.4477 40 15V20.7981L43.5547 23.1679C44.0142 23.4743 44.1384 24.0952 43.832 24.5547C43.5257 25.0142 42.9048 25.1384 42.4453 24.8321L42 24.5352V42C42 42.5523 41.5523 43 41 43H31H25H15C14.4477 43 14 42.5523 14 42V24.5352L13.5547 24.8321C13.0952 25.1384 12.4743 25.0142 12.1679 24.5547C11.8616 24.0952 11.9858 23.4743 12.4453 23.1679L27.4453 13.1679ZM40 23.2019V41H32V31C32 30.4477 31.5523 30 31 30H25C24.4477 30 24 30.4477 24 31V41H16V23.2019L28 15.2019L40 23.2019ZM30 41H26V32H30V41ZM38 19.4648V16H36V18C36 18.0428 35.9973 18.0849 35.9921 18.1262L38 19.4648ZM28 26C29.1046 26 30 25.1046 30 24C30 22.8954 29.1046 22 28 22C26.8954 22 26 22.8954 26 24C26 25.1046 26.8954 26 28 26Z" fill="white"></path>
   </svg></div>
     <span>Home</span>
@@ -29,42 +52,42 @@
   </a>
   </li>
         <li><a title="Reports">
-    <div><svg aria-labelledby="ember27__title" role="img" height="56" style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember27" class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--purple ember-view"><title id="ember27__title">Reports</title>
+    <div><svg role="img" height="56" style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56"><title>Reports</title>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M34 15C33.4477 15 33 15.4477 33 16V20H28C27.4477 20 27 20.4477 27 21V26H23V23C23 22.4477 22.5523 22 22 22H16C15.4477 22 15 22.4477 15 23V40C15 40.5523 15.4477 41 16 41H22H28H34H40C40.5523 41 41 40.5523 41 40V16C41 15.4477 40.5523 15 40 15H34ZM33 39V22H29V27V39H33ZM35 39H39V17H35V21V39ZM27 28V39H23V28H27ZM21 27V24H17V39H21V27Z" fill="white"></path>
   </svg></div>
     <span>Reports</span>
   </a>
   </li>
         <li><a title="Transactions">
-    <div><svg aria-labelledby="ember30__title" role="img" height="56" style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember30" class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--purple ember-view"><title id="ember30__title">Transactions</title>
+    <div><svg role="img" height="56" style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56"><title>Transactions</title>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M14 13C13.4477 13 13 13.4477 13 14V23V42C13 42.5523 13.4477 43 14 43H42C42.5523 43 43 42.5523 43 42V33V14C43 13.4477 42.5523 13 42 13H14ZM41 32H22.4142L24.7071 29.7071C25.0976 29.3166 25.0976 28.6834 24.7071 28.2929C24.3166 27.9024 23.6834 27.9024 23.2929 28.2929L19.2929 32.2929C18.9024 32.6834 18.9024 33.3166 19.2929 33.7071L23.2929 37.7071C23.6834 38.0976 24.3166 38.0976 24.7071 37.7071C25.0976 37.3166 25.0976 36.6834 24.7071 36.2929L22.4142 34H41V41H15V24H33.5858L31.2929 26.2929C30.9024 26.6834 30.9024 27.3166 31.2929 27.7071C31.6834 28.0976 32.3166 28.0976 32.7071 27.7071L36.7071 23.7071C37.0976 23.3166 37.0976 22.6834 36.7071 22.2929L32.7071 18.2929C32.3166 17.9024 31.6834 17.9024 31.2929 18.2929C30.9024 18.6834 30.9024 19.3166 31.2929 19.7071L33.5858 22H15V15H41V32Z" fill="white"></path>
   </svg></div>
     <span>Transactions</span>
   </a>
   </li>
         <li><a title="Balance">
-    <div><svg aria-labelledby="ember33__title" role="img" height="56" style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember33" class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--purple ember-view"><title id="ember33__title">Balance</title>
+    <div><svg role="img" height="56" style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56"><title>Balance</title>
     <path fill-rule="evenodd" clip-rule="evenodd" d="m14,18c0,-0.55228 0.44772,-1 1,-1l26,0c0.5523,0 1,0.44772 1,1l0,12c0,0.5523 -0.4477,1 -1,1l-26,0c-0.55228,0 -1,-0.4477 -1,-1l0,-12zm27,15c0.3506,0 0.6872,-0.0602 1,-0.1707l0,1.1707c0,0.5523 -0.4477,1 -1,1l-26,0c-0.55228,0 -1,-0.4477 -1,-1l0,-1.1707c0.31278,0.1105 0.64936,0.1707 1,0.1707l26,0zm0,4c0.3506,0 0.6872,-0.0602 1,-0.1707l0,1.1707c0,0.5523 -0.4477,1 -1,1l-26,0c-0.55228,0 -1,-0.4477 -1,-1l0,-1.1707c0.31278,0.1105 0.64936,0.1707 1,0.1707l26,0zm-29,-7l0,4l0,4c0,1.6569 1.34315,3 3,3l26,0c1.6569,0 3,-1.3431 3,-3l0,-4l0,-4l0,-12c0,-1.65685 -1.3431,-3 -3,-3l-26,0c-1.65685,0 -3,1.34315 -3,3l0,12zm13,-6c0,-1.6569 1.3431,-3 3,-3c1.6569,0 3,1.3431 3,3c0,1.6569 -1.3431,3 -3,3c-1.6569,0 -3,-1.3431 -3,-3zm3,-5c-2.7614,0 -5,2.23858 -5,5c0,2.7614 2.2386,5 5,5c2.7614,0 5,-2.2386 5,-5c0,-2.76142 -2.2386,-5 -5,-5zm-10,1c0,0.55228 -0.44772,1 -1,1c-0.55228,0 -1,-0.44772 -1,-1c0,-0.55228 0.44772,-1 1,-1c0.55228,0 1,0.44772 1,1zm0,8c0,0.5523 -0.44772,1 -1,1c-0.55228,0 -1,-0.4477 -1,-1c0,-0.5523 0.44772,-1 1,-1c0.55228,0 1,0.4477 1,1zm21,-7c0.5523,0 1,-0.44772 1,-1c0,-0.55228 -0.4477,-1 -1,-1c-0.5523,0 -1,0.44772 -1,1c0,0.55228 0.4477,1 1,1zm1,7c0,0.5523 -0.4477,1 -1,1c-0.5523,0 -1,-0.4477 -1,-1c0,-0.5523 0.4477,-1 1,-1c0.5523,0 1,0.4477 1,1z" fill="white"></path>
   </svg></div>
     <span>Balance</span>
   </a>
   </li>
         <li><a title="Items">
-    <div><svg aria-labelledby="ember36__title" role="img" height="56" style="background:#00c1ae;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember36" class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--teal ember-view"><title id="ember36__title">Items</title>
+    <div><svg role="img" height="56" style="background:#00c1ae;border-radius:10px;" width="56" viewBox="0 0 56 56"><title>Items</title>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M29 13C28.7348 13 28.4804 13.1054 28.2929 13.2929L12.2929 29.2929C11.9024 29.6834 11.9024 30.3166 12.2929 30.7071L25.2929 43.7071C25.6834 44.0976 26.3166 44.0976 26.7071 43.7071L42.7071 27.7071C42.8946 27.5196 43 27.2652 43 27V16C43 14.3431 41.6569 13 40 13H29ZM14.4142 30L29.4142 15H40C40.5523 15 41 15.4477 41 16V26.5858L26 41.5858L14.4142 30ZM20.7071 29.2929C20.3166 28.9024 19.6834 28.9024 19.2929 29.2929C18.9024 29.6834 18.9024 30.3166 19.2929 30.7071L25.2929 36.7071C25.6834 37.0976 26.3166 37.0976 26.7071 36.7071C27.0976 36.3166 27.0976 35.6834 26.7071 35.2929L20.7071 29.2929ZM37 20.5C37 21.3284 36.3284 22 35.5 22C34.6716 22 34 21.3284 34 20.5C34 19.6716 34.6716 19 35.5 19C36.3284 19 37 19.6716 37 20.5Z" fill="white"></path>
   </svg></div>
     <span>Items</span>
   </a>
   </li>
         <li><a title="Customers">
-    <div><svg aria-labelledby="ember39__title" role="img" height="56" style="background:#a1499c;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember39" class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--plum ember-view"><title id="ember39__title">Customers</title>
+    <div><svg role="img" height="56" style="background:#a1499c;border-radius:10px;" width="56" viewBox="0 0 56 56"><title>Customers</title>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 19C12 17.3431 13.3431 16 15 16H41C42.6569 16 44 17.3431 44 19V37C44 38.6569 42.6569 40 41 40H15C13.3431 40 12 38.6569 12 37V19ZM15 18C14.4477 18 14 18.4477 14 19V37C14 37.5523 14.4477 38 15 38H41C41.5523 38 42 37.5523 42 37V19C42 18.4477 41.5523 18 41 18H15ZM20 25C20 24.4477 20.4477 24 21 24C21.5523 24 22 24.4477 22 25C22 25.5523 21.5523 26 21 26C20.4477 26 20 25.5523 20 25ZM21 22C19.3431 22 18 23.3431 18 25C18 26.6569 19.3431 28 21 28C18.7909 28 17 29.7909 17 32C17 32.5523 17.4477 33 18 33C18.5523 33 19 32.5523 19 32C19 30.8954 19.8954 30 21 30C22.1046 30 23 30.8954 23 32C23 32.5523 23.4477 33 24 33C24.5523 33 25 32.5523 25 32C25 29.7909 23.2091 28 21 28C22.6569 28 24 26.6569 24 25C24 23.3431 22.6569 22 21 22ZM29 23C28.4477 23 28 23.4477 28 24C28 24.5523 28.4477 25 29 25H37C37.5523 25 38 24.5523 38 24C38 23.4477 37.5523 23 37 23H29ZM29 27C28.4477 27 28 27.4477 28 28C28 28.5523 28.4477 29 29 29H35C35.5523 29 36 28.5523 36 28C36 27.4477 35.5523 27 35 27H29ZM29 31C28.4477 31 28 31.4477 28 32C28 32.5523 28.4477 33 29 33H35C35.5523 33 36 32.5523 36 32C36 31.4477 35.5523 31 35 31H29Z" fill="white"></path>
   </svg></div>
     <span>Customers</span>
   </a>
   </li>
         <li><a title="Orders">
-    <div><svg aria-labelledby="ember42__title" role="img" height="56" style="background:#00c1ae;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember42" class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--teal ember-view"><title id="ember42__title">Orders</title>
+    <div><svg role="img" height="56" style="background:#00c1ae;border-radius:10px;" width="56" viewBox="0 0 56 56"><title>Orders</title>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M28 12C24.6863 12 22 14.6863 22 18H14C13.4477 18 13 18.4477 13 19V33.9289L12.0101 40.8586C11.9691 41.1456 12.0546 41.4362 12.2446 41.6552C12.4345 41.8742 12.7101 42 13 42H43C43.2899 42 43.5655 41.8742 43.7555 41.6552C43.9454 41.4362 44.031 41.1456 43.99 40.8586L43 33.9289V19C43 18.4477 42.5523 18 42 18H34C34 14.6863 31.3137 12 28 12ZM32 18C32 15.7909 30.2091 14 28 14C25.7909 14 24 15.7909 24 18H32ZM23 20H15V34C15 34.0473 14.9966 34.0946 14.99 34.1414L14.153 40H41.847L41.0101 34.1414C41.0034 34.0946 41 34.0473 41 34V20H33H23ZM25 24C25.5523 24 26 23.5523 26 23C26 22.4477 25.5523 22 25 22C24.4477 22 24 22.4477 24 23C24 23.5523 24.4477 24 25 24ZM18 35C18.5523 35 19 34.5523 19 34C19 33.4477 18.5523 33 18 33C17.4477 33 17 33.4477 17 34C17 34.5523 17.4477 35 18 35ZM23 34C23 34.5523 22.5523 35 22 35C21.4477 35 21 34.5523 21 34C21 33.4477 21.4477 33 22 33C22.5523 33 23 33.4477 23 34ZM26 35C26.5523 35 27 34.5523 27 34C27 33.4477 26.5523 33 26 33C25.4477 33 25 33.4477 25 34C25 34.5523 25.4477 35 26 35ZM31 34C31 34.5523 30.5523 35 30 35C29.4477 35 29 34.5523 29 34C29 33.4477 29.4477 33 30 33C30.5523 33 31 33.4477 31 34ZM34 35C34.5523 35 35 34.5523 35 34C35 33.4477 34.5523 33 34 33C33.4477 33 33 33.4477 33 34C33 34.5523 33.4477 35 34 35ZM39 34C39 34.5523 38.5523 35 38 35C37.4477 35 37 34.5523 37 34C37 33.4477 37.4477 33 38 33C38.5523 33 39 33.4477 39 34ZM31 24C31.5523 24 32 23.5523 32 23C32 22.4477 31.5523 22 31 22C30.4477 22 30 22.4477 30 23C30 23.5523 30.4477 24 31 24Z" fill="white"></path>
   </svg></div>
     <span>Orders</span>

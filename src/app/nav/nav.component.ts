@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -11,15 +11,17 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
-
   drawerClass = 'sidenav-container'
   authenticated: boolean = false;
+  showhidesearch:boolean = false;
   opened = true;
   @ViewChild('drawer') drawer: MatSidenav;
+  @ViewChild('search') searchElement: ElementRef;
 
   setClosedClass() {
     this.drawerClass = 'sidenav-container-closed'
   }
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -33,5 +35,16 @@ export class NavComponent {
 
   Toggle() {
     this.drawer.toggle();
+  }
+
+  ShowSearch() {
+    this.showhidesearch = true;
+    setTimeout(()=>{
+      this.searchElement.nativeElement.focus();
+    },0);
+  }
+
+  HideSearch() {
+    this.showhidesearch = false;
   }
 }

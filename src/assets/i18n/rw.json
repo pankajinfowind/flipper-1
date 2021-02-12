@@ -1,6 +1,12 @@
 {
   "POS":{
-    "NAME":"Curuza"
+    "NAME":"Curuza",
+    "ONGR": "Ongeramo igicuruzwa uhite ugicuruza",
+    "NTGCRZW":"Ntagicuruzwa kibonetse",
+    "CLCTCH":"Akira Amafaranga",
+    "CLEAR":"SIBA",
+    "TBPAID":"Ayishyurwa",
+    "CHANGE":"Garura"
   },
   "INVENTORY":{
     "NAME":"Kubara"

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { ErrorHandler, NgModule, APP_INITIALIZER } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { VendorsModule } from '@enexus/flipper-vendors'
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components'
@@ -29,25 +29,41 @@ import { CurrentUser } from './core/guards/current-user'
 // import { FlipperMenuModule } from '@enexus/flipper-menu'
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperMenuModule } from '@enexus/flipper-menu'
+import { APIService } from '@enexus/api-services'
+import * as Sentry from "@sentry/angular";
+import { SettingRoutingModule } from './settings/setting-routing.module'
+import { SettingsComponent } from './settings/settings.component'
+import { Router } from "@angular/router";
+import { FlipperSettingsModule } from '@enexus/flipper-settings'
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
 
 @NgModule({
-  declarations: [AppComponent,LoginComponent,SubscriptionComponent,CardValidationComponent,
+  declarations: [
+    SettingsComponent,
+    AppComponent,
+    LoginComponent,
+    SubscriptionComponent,
+    CardValidationComponent,
     PaidSuccessComponent,
     SafePipe,
-    NavComponent,],
+    NavComponent,
+  ],
   imports: [
     FlipperDashboardModule,
     BrowserModule,
     VendorsModule,
     HttpClientModule,
     AnQrcodeModule,
+    FlipperSettingsModule,
     CommonModule,
     SharedModule,
     FlipperMenuModule,
+    // routing modules
+    SettingRoutingModule,
     AppRoutingModule,
+    // end of routing module
     MatIconModule,
     FlipperComponentsModule,
     FlipperPosModule,
@@ -68,22 +84,37 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatListModule,
   ],
   entryComponents: [],
-  providers: [PouchDBService],
+  providers: [PouchDBService, APIService, {
+    provide: ErrorHandler,
+    useValue: Sentry.createErrorHandler({
+      showDialog: true,
+    }),
+  },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => { },
+      deps: [Sentry.TraceService],
+      multi: true,
+    },],
   bootstrap: [AppComponent]
 })
 
 export class AppModule {
-  async login(){
+  async login() {
     await this.currentUser.configAuthUser(localStorage.getItem('userIdNew'));
   }
-  constructor( private currentUser: CurrentUser,public translate: TranslateService){
-    translate.addLangs(['en','rw','fr'])
+  constructor(private currentUser: CurrentUser, public translate: TranslateService) {
+    translate.addLangs(['en', 'rw', 'fr'])
     translate.setDefaultLang('rw')
     // const browserLang = translate.getBrowserLang();
     translate.use('rw')
     // translate.use(browserLang.match(/en|fr/)?browserLang:'rw')
     // on startup the system go to intire login flow ind there check if user still need to be logged in
-    if(localStorage.getItem('userIdNew')){
+    if (localStorage.getItem('userIdNew')) {
       this.login();
     }
   }

@@ -456,3 +456,47 @@
 </script>
 
 </html>
+
+ <!-- <div class="row-second">
+          <div class="card-items" id="sold-items" *ngIf="topSoldItem && topSoldItem.length > 0">
+            <div class="card-header">
+              <span class="card-title">Top Items by Sales </span>
+              <span class="card-subtitle">{{topSoldItem.length}} in total </span>
+            </div>
+
+            <div class="card-body">
+              <div class="card-item" id="sold-items" *ngFor="let item of topSoldItem; let i = index;">
+                <div class="image">
+                  <img alt="archive" [src]="'./assets/icons/archive-'+(i+1)+'.svg'" class="archive-icon">
+                </div>
+                <div class="item">
+                  <span class="item-name">{{item.name}} </span>
+                  <span class="item-date">{{currency}} {{item.total}} </span>
+                  <span class="more">{{item.items}}</span>
+                </div>
+                <div class="divider mt-5"></div>
+              </div>
+              <br />
+
+            </div>
+
+            <div class="card-footer">
+              <div class="view-all">View all</div>
+            </div>
+          </div>
+
+          <div class="card-items" id="sold-items" *ngIf="topSoldItem && topSoldItem.length == 0">
+            <div class="card-header">
+              <span class="card-title">Top Items by Sales </span>
+              <span class="card-subtitle">0 in total </span>
+            </div>
+
+            <div class="card-body">
+              <div style="margin-right: 43px;margin-top: 80px;">
+                <flipper-message title="No Sales item(s)">
+                </flipper-message>
+              </div>
+            </div>
+
+
+          </div> -->

@@ -343,7 +343,7 @@ button {
   border: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smoothing: always;
+  // font-smoothing: always;
   text-rendering: optimizeLegibility;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -415,7 +415,8 @@ button {
   margin-top: 20px;
 }
 .mt-5 {
-  margin-top: 25px;
+  margin-top: 50px;
+  padding: 20px;
 }
 .ml-1 {
   margin-left: 5px;
@@ -514,3 +515,9 @@ button {
   margin-top: 0px;
   bottom: 0;
 }
+
+
+.advanced-pie-legend-wrapper{
+  display: none !important;
+}
+

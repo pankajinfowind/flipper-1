@@ -23,6 +23,7 @@ export class ElectronService {
   }
 
   constructor(@Inject(DOCUMENT) private document: Document) {
+
     // Conditional imports
     if (this.isElectron) {
       this.ipcRenderer = window.require('electron').ipcRenderer

@@ -4,10 +4,11 @@ import { SettingsComponent } from './settings.component'
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'dd',
     component: SettingsComponent,
   },
 ]
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

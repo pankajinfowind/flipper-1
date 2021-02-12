@@ -20,6 +20,7 @@ import { ModelService } from '@enexus/flipper-offline-database'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
 import { Router } from '@angular/router'
+import { LoggedOutEvent } from '../../subscription/loggedout.event'
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,6 @@ export class CurrentUser {
     private model: ModelService,
     private database: PouchDBService
   ) {
-    this.database.connect(PouchConfig.bucket, window.localStorage.getItem('channel'))
   }
 
   public get<K extends keyof User>(prop: K): User[K] {
@@ -90,6 +90,7 @@ export class CurrentUser {
         })
       })
   }
+
   public async defaultBusiness(userId:string) {
     await this.http
       .get<Business>(environment.url + '/api/business')
@@ -97,7 +98,8 @@ export class CurrentUser {
       .then(business => {
         localStorage.setItem('userIdNew',userId)
         this.eventBus.publish(new CurrentBusinessEvent(business))
-        this.router.navigate(['/analytics']);
+        this.eventBus.publish(new LoggedOutEvent(true))
+        this.router.navigate(['/dashboard']);
       })
   }
   public async defaultBranch() {

@@ -1,6 +1,12 @@
 {
   "POS":{
-    "NAME":"Curuza"
+    "NAME":"Curuza",
+    "ONGR": "Add a product and sell it directly",
+    "NTGCRZW":"Sorry! There is no item(s) found.",
+    "CLCTCH":"Collect Cash",
+    "CLEAR":"CLEAR",
+    "TBPAID":"TOTAL TO BE PAID",
+    "CHANGE":"CHANGE"
   },
   "INVENTORY":{
     "NAME":"inventaire"

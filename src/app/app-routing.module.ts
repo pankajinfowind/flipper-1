@@ -11,7 +11,7 @@ import { CreateProductComponent, ListProductsComponent } from '@enexus/flipper-i
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'analytics',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'analytics',
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard,HasSubscribedGuard],
   },
@@ -43,11 +43,11 @@ const routes: Routes = [
     component: CreateProductComponent,
     canActivate: [AuthGuard,HasSubscribedGuard]
   },
-  {
-    path: 'admin',
-    component: FlipperPosComponent,
-    canActivate: [AuthGuard,HasSubscribedGuard]
-  },
+  // {
+  //   path: 'settings',
+  //   loadChildren: () => import('@enexus/flipper-settings').then(m => m.FlipperSettingsModule),
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: '**',
     component: PageNotFoundComponent,

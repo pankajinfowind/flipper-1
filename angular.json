@@ -800,6 +800,46 @@
           }
         }
       }
+    },
+    "apiservice": {
+      "projectType": "library",
+      "root": "projects/api-services",
+      "sourceRoot": "projects/api-services/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/api-services/tsconfig.lib.json",
+            "project": "projects/api-services/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/api-services/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/api-services/src/test.ts",
+            "tsConfig": "projects/api-services/tsconfig.spec.json",
+            "karmaConfig": "projects/api-services/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/api-services/tsconfig.lib.json",
+              "projects/api-services/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "flipper",

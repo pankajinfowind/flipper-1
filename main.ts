@@ -296,3 +296,13 @@ try {
 // https://webpack.js.org/guides/hot-module-replacement/
 //https://dev.to/koscheyscrag/fix-of-angular-cli-javascript-heap-out-of-memory-error-while-running-ng-serve--1jjh
 // sed -i 's/name/R/g' .env
+
+// ng generate service another --path=projects/api-services
+
+// package to install on deploy
+// @enexus/flipper-dashboard
+// @enexus/flipper-pos
+// @enexus/flipper-settings
+// @enexus/flipper-components
+
+// https://flaviocopes.com/how-to-get-timestamp-javascript/

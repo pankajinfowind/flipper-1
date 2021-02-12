@@ -343,7 +343,7 @@ button {
   border: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smoothing: always;
+  // font-smoothing: always;
   text-rendering: optimizeLegibility;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -514,3 +514,9 @@ button {
   margin-top: 0px;
   bottom: 0;
 }
+
+
+.advanced-pie-legend-wrapper{
+  display: none !important;
+}
+

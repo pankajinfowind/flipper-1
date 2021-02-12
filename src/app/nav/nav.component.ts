@@ -1,9 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Location } from "@angular/common";
+import { filter, map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { APIService } from '@enexus/api-services';
+import { FlipperEventBusService } from '@enexus/flipper-event';
+import { LoggedOutEvent } from '../subscription/loggedout.event';
 
 @Component({
   selector: 'nav',
@@ -14,8 +18,9 @@ export class NavComponent {
 
   drawerClass = 'sidenav-container'
   authenticated: boolean = false;
-  opened = true;
+  opened = false;
   @ViewChild('drawer') drawer: MatSidenav;
+
 
   setClosedClass() {
     this.drawerClass = 'sidenav-container-closed'
@@ -26,12 +31,22 @@ export class NavComponent {
       shareReplay()
     );
 
+  public showTopNav:boolean =false;
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router,) {
+  constructor(private eventBus: FlipperEventBusService,private location: Location, private breakpointObserver: BreakpointObserver, private router: Router,private api:APIService ) {
     this.authenticated = localStorage.getItem('userIdNew') != null;
+    this.eventBus
+      .of<LoggedOutEvent>(LoggedOutEvent.CHANNEL)
+      .pipe(filter(e => e.event==true))
+      .subscribe(res => {
+        if(res.event){
+          this.showTopNav =true
+        }
+      })
   }
 
-  Toggle() {
+  toggle() {
+
     this.drawer.toggle();
   }
 }

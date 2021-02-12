@@ -181,12 +181,12 @@ figure {
   margin: 0 0 1rem;
 }
 img {
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   border-style: none;
 }
 svg {
   overflow: hidden;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
 }
 table {
   border-collapse: collapse;
@@ -2319,7 +2319,7 @@ textarea.form-control.is-invalid {
   .form-inline .form-control {
     display: inline-block;
     width: auto;
-    vertical-align: middle;
+    /*vertical-align: middle;*/
   }
   .form-inline .form-control-plaintext {
     display: inline-block;
@@ -2361,7 +2361,7 @@ textarea.form-control.is-invalid {
   font-weight: 400;
   color: #212529;
   text-align: center;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3215,7 +3215,7 @@ input[type='submit'].btn-block {
   position: relative;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
 }
 .btn-group-vertical > .btn,
 .btn-group > .btn {
@@ -3635,7 +3635,7 @@ input[type='submit'].btn-block {
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   background: #fff
     url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e")
     no-repeat right 0.75rem center/8px 10px;
@@ -4062,7 +4062,7 @@ input[type='submit'].btn-block {
   display: inline-block;
   width: 1.5em;
   height: 1.5em;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   content: '';
   background: no-repeat center center;
   background-size: 100% 100%;

@@ -1,18 +1,19 @@
-<div class="topheader">
-  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="Toggle()"
+<div *ngIf="showTopNav" class="topheader">
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()"
     style="outline: 0;margin-left: 25px;font-size: 18px;">
     <img alt="image" [src]="'./assets/icons/menu-black.svg'" style="width: 28px;margin-right: 10px;" class="icon"> Home
   </button>
-
 </div>
+<div *ngIf="!showTopNav" style="margin-top:16px;">.</div>
+
 <mat-sidenav-container *ngIf="authenticated" class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"   [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
 
     <mat-nav-list class="sitenavul">
       <ul>
-        <li><a title="Home">
+        <li><a routerLink="dashboard/"  title="Home">
             <div><svg role="img" height="56" style="background:#5f6a7d;border-radius:10px;" width="56"
                 viewBox="0 0 56 56" id="ember21"
                 class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--gray ember-view">
@@ -24,7 +25,7 @@
             <span>Home</span>
           </a>
         </li>
-        <li><a title="Account &amp; Settings">
+        <!-- <li><a routerLink="/settings" title="Account &amp; Settings">
             <div><svg role="img" height="56" style="background:#5f6a7d;border-radius:10px;" width="56"
                 viewBox="0 0 56 56">
                 <title>Account &amp; Settings</title>
@@ -34,8 +35,8 @@
               </svg></div>
             <span>Account &amp; Settings</span>
           </a>
-        </li>
-        <li><a title="Reports">
+        </li> -->
+        <!-- <li><a title="Reports">
             <div><svg aria-labelledby="ember27__title" role="img" height="56"
                 style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember27"
                 class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--purple ember-view">
@@ -46,8 +47,8 @@
               </svg></div>
             <span>Reports</span>
           </a>
-        </li>
-        <li><a title="Transactions">
+        </li> -->
+        <!-- <li><a title="Transactions">
             <div><svg aria-labelledby="ember30__title" role="img" height="56"
                 style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember30"
                 class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--purple ember-view">
@@ -58,8 +59,8 @@
               </svg></div>
             <span>Transactions</span>
           </a>
-        </li>
-        <li><a title="Balance">
+        </li> -->
+        <!-- <li><a title="Balance">
             <div><svg aria-labelledby="ember33__title" role="img" height="56"
                 style="background:#7250a1;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember33"
                 class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--purple ember-view">
@@ -70,8 +71,8 @@
               </svg></div>
             <span>Balance</span>
           </a>
-        </li>
-        <li><a title="Items">
+        </li> -->
+        <!-- <li><a title="Items">
             <div><svg aria-labelledby="ember36__title" role="img" height="56"
                 style="background:#00c1ae;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember36"
                 class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--teal ember-view">
@@ -82,29 +83,49 @@
               </svg></div>
             <span>Items</span>
           </a>
-        </li>
-        <li><a title="Customers">
-            <div><svg aria-labelledby="ember39__title" role="img" height="56"
+        </li> -->
+        <!-- <li>
+          <a title="Customers">
+            <div><svg  role="img" height="56"
                 style="background:#a1499c;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember39"
                 class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--plum ember-view">
-                <title id="ember39__title">Customers</title>
+                <title id="">Customers</title>
                 <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M12 19C12 17.3431 13.3431 16 15 16H41C42.6569 16 44 17.3431 44 19V37C44 38.6569 42.6569 40 41 40H15C13.3431 40 12 38.6569 12 37V19ZM15 18C14.4477 18 14 18.4477 14 19V37C14 37.5523 14.4477 38 15 38H41C41.5523 38 42 37.5523 42 37V19C42 18.4477 41.5523 18 41 18H15ZM20 25C20 24.4477 20.4477 24 21 24C21.5523 24 22 24.4477 22 25C22 25.5523 21.5523 26 21 26C20.4477 26 20 25.5523 20 25ZM21 22C19.3431 22 18 23.3431 18 25C18 26.6569 19.3431 28 21 28C18.7909 28 17 29.7909 17 32C17 32.5523 17.4477 33 18 33C18.5523 33 19 32.5523 19 32C19 30.8954 19.8954 30 21 30C22.1046 30 23 30.8954 23 32C23 32.5523 23.4477 33 24 33C24.5523 33 25 32.5523 25 32C25 29.7909 23.2091 28 21 28C22.6569 28 24 26.6569 24 25C24 23.3431 22.6569 22 21 22ZM29 23C28.4477 23 28 23.4477 28 24C28 24.5523 28.4477 25 29 25H37C37.5523 25 38 24.5523 38 24C38 23.4477 37.5523 23 37 23H29ZM29 27C28.4477 27 28 27.4477 28 28C28 28.5523 28.4477 29 29 29H35C35.5523 29 36 28.5523 36 28C36 27.4477 35.5523 27 35 27H29ZM29 31C28.4477 31 28 31.4477 28 32C28 32.5523 28.4477 33 29 33H35C35.5523 33 36 32.5523 36 32C36 31.4477 35.5523 31 35 31H29Z"
                   fill="white"></path>
               </svg></div>
             <span>Customers</span>
           </a>
+        </li> -->
+        <li>
+          <a routerLink="dashboard/" title="Analytics">
+            <div>
+              <svg  role="img" height="56"
+                style="background:#a1499c;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember39"
+                class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--plum ember-view">
+                <title id="">Analytics</title>
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 19C12 17.3431 13.3431 16 15 16H41C42.6569 16 44 17.3431 44 19V37C44 38.6569 42.6569 40 41 40H15C13.3431 40 12 38.6569 12 37V19ZM15 18C14.4477 18 14 18.4477 14 19V37C14 37.5523 14.4477 38 15 38H41C41.5523 38 42 37.5523 42 37V19C42 18.4477 41.5523 18 41 18H15ZM20 25C20 24.4477 20.4477 24 21 24C21.5523 24 22 24.4477 22 25C22 25.5523 21.5523 26 21 26C20.4477 26 20 25.5523 20 25ZM21 22C19.3431 22 18 23.3431 18 25C18 26.6569 19.3431 28 21 28C18.7909 28 17 29.7909 17 32C17 32.5523 17.4477 33 18 33C18.5523 33 19 32.5523 19 32C19 30.8954 19.8954 30 21 30C22.1046 30 23 30.8954 23 32C23 32.5523 23.4477 33 24 33C24.5523 33 25 32.5523 25 32C25 29.7909 23.2091 28 21 28C22.6569 28 24 26.6569 24 25C24 23.3431 22.6569 22 21 22ZM29 23C28.4477 23 28 23.4477 28 24C28 24.5523 28.4477 25 29 25H37C37.5523 25 38 24.5523 38 24C38 23.4477 37.5523 23 37 23H29ZM29 27C28.4477 27 28 27.4477 28 28C28 28.5523 28.4477 29 29 29H35C35.5523 29 36 28.5523 36 28C36 27.4477 35.5523 27 35 27H29ZM29 31C28.4477 31 28 31.4477 28 32C28 32.5523 28.4477 33 29 33H35C35.5523 33 36 32.5523 36 32C36 31.4477 35.5523 31 35 31H29Z"
+                  fill="white"></path>
+              </svg>
+            </div>
+            <span>Analytics</span>
+          </a>
         </li>
-        <li><a title="Orders">
-            <div><svg aria-labelledby="ember42__title" role="img" height="56"
+        <li>
+          <a routerLink="/pos" title="POS">
+            <div>
+              <svg aria-labelledby="ember42__title" role="img" height="56"
                 style="background:#00c1ae;border-radius:10px;" width="56" viewBox="0 0 56 56" id="ember42"
                 class="app-drawer__section__item-list__item__icon app-drawer__section__item-list__item__icon--teal ember-view">
                 <title id="ember42__title">Orders</title>
                 <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M28 12C24.6863 12 22 14.6863 22 18H14C13.4477 18 13 18.4477 13 19V33.9289L12.0101 40.8586C11.9691 41.1456 12.0546 41.4362 12.2446 41.6552C12.4345 41.8742 12.7101 42 13 42H43C43.2899 42 43.5655 41.8742 43.7555 41.6552C43.9454 41.4362 44.031 41.1456 43.99 40.8586L43 33.9289V19C43 18.4477 42.5523 18 42 18H34C34 14.6863 31.3137 12 28 12ZM32 18C32 15.7909 30.2091 14 28 14C25.7909 14 24 15.7909 24 18H32ZM23 20H15V34C15 34.0473 14.9966 34.0946 14.99 34.1414L14.153 40H41.847L41.0101 34.1414C41.0034 34.0946 41 34.0473 41 34V20H33H23ZM25 24C25.5523 24 26 23.5523 26 23C26 22.4477 25.5523 22 25 22C24.4477 22 24 22.4477 24 23C24 23.5523 24.4477 24 25 24ZM18 35C18.5523 35 19 34.5523 19 34C19 33.4477 18.5523 33 18 33C17.4477 33 17 33.4477 17 34C17 34.5523 17.4477 35 18 35ZM23 34C23 34.5523 22.5523 35 22 35C21.4477 35 21 34.5523 21 34C21 33.4477 21.4477 33 22 33C22.5523 33 23 33.4477 23 34ZM26 35C26.5523 35 27 34.5523 27 34C27 33.4477 26.5523 33 26 33C25.4477 33 25 33.4477 25 34C25 34.5523 25.4477 35 26 35ZM31 34C31 34.5523 30.5523 35 30 35C29.4477 35 29 34.5523 29 34C29 33.4477 29.4477 33 30 33C30.5523 33 31 33.4477 31 34ZM34 35C34.5523 35 35 34.5523 35 34C35 33.4477 34.5523 33 34 33C33.4477 33 33 33.4477 33 34C33 34.5523 33.4477 35 34 35ZM39 34C39 34.5523 38.5523 35 38 35C37.4477 35 37 34.5523 37 34C37 33.4477 37.4477 33 38 33C38.5523 33 39 33.4477 39 34ZM31 24C31.5523 24 32 23.5523 32 23C32 22.4477 31.5523 22 31 22C30.4477 22 30 22.4477 30 23C30 23.5523 30.4477 24 31 24Z"
-                  fill="white"></path>
-              </svg></div>
-            <span>Orders</span>
+                  fill="white">
+                </path>
+              </svg>
+            </div>
+            <span>POS</span>
           </a>
         </li>
       </ul>
@@ -112,8 +133,10 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <!-- Add Content Here -->
-    <flipper-notification></flipper-notification>
-    <router-outlet #outlet="outlet"></router-outlet>
+    <div style="margin-top: 66px;">
+      <flipper-notification></flipper-notification>
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 <div *ngIf="!authenticated">

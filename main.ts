@@ -305,4 +305,5 @@ try {
 // @enexus/flipper-settings
 // @enexus/flipper-components
 
+//  npm publish --access public
 // https://flaviocopes.com/how-to-get-timestamp-javascript/

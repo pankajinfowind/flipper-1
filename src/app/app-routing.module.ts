@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component'
 import { PageNotFoundComponent } from './shared/components'
 import { DashboardComponent } from '@enexus/flipper-dashboard'
 import { SubscriptionComponent } from './subscription/subscription.component'
-import { CreateProductComponent, ListProductsComponent } from '@enexus/flipper-inventory';
+import { CreateProductComponent, ListProductsComponent, ProductsComponent } from '@enexus/flipper-inventory';
 const routes: Routes = [
   {
     path: '',
@@ -33,10 +33,16 @@ const routes: Routes = [
     component: FlipperPosComponent,
     canActivate: [AuthGuard,HasSubscribedGuard]
   },
+  // {
+  //   path: 'inventory',
+  //   component: ProductsComponent,
+  //   canActivate: [AuthGuard,HasSubscribedGuard]
+  // },
+  //
   {
     path: 'inventory',
     component: ListProductsComponent,
-    canActivate: [AuthGuard,HasSubscribedGuard]
+    // canActivate: [AuthGuard,HasSubscribedGuard]
   },
   {
     path: 'add/product',

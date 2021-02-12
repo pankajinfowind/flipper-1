@@ -3,7 +3,7 @@
   overflow: hidden;
   .mat-sidenav{
     background-color:#ffffff;
-    width: 255px
+    width: 260px
   }
 }
 .sidenav-container-closed{
@@ -41,3 +41,12 @@
 
 li { transition: all .2s ease-in-out; }
 li:hover { transform: scale(1.1);cursor: pointer; }
+
+.middleicon{align-items: center;position: fixed;display: flex;top: 10px;left: 50%;}
+.rightsidenav{position: fixed;
+  z-index: 804;
+  top: 8px;
+  right: 0;
+  width: 290px;
+}
+#txtSearch:focus{outline: none;}

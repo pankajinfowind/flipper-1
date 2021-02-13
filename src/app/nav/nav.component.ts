@@ -46,7 +46,9 @@ export class NavComponent {
   }
 
   toggle() {
-    this.drawer?.toggle();
+    if(this.drawer){ //avoid accessing drawer when undefined!
+      this.drawer.toggle();
+    }
   }
 
   ShowSearch() {

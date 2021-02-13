@@ -78,6 +78,7 @@
     "@enexus/flipper-color": "^1.7.0",
     "@enexus/flipper-components": "^1.9.0",
     "@enexus/flipper-dashboard": "^1.2.0",
+    "@enexus/flipper-dialog": "^1.7.0",
     "@enexus/flipper-event": "1.0.5",
     "@enexus/flipper-font": "1.0.2",
     "@enexus/flipper-inventory": "^1.6.0",

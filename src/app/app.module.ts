@@ -35,7 +35,7 @@ import { SettingRoutingModule } from './settings/setting-routing.module'
 import { SettingsComponent } from './settings/settings.component'
 import { Router } from "@angular/router";
 import { FlipperSettingsModule } from '@enexus/flipper-settings'
-import { FlipperDialogModule } from '@enexus/flipper-dialog'
+// import { FlipperDialogModule } from '@enexus/flipper-dialog'
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
@@ -52,7 +52,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     NavComponent,
   ],
   imports: [
-    FlipperDialogModule,
+    // FlipperDialogModule,
     FlipperDashboardModule,
     BrowserModule,
     VendorsModule,
@@ -67,6 +67,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     // end of routing module
     MatIconModule,
+
     FlipperComponentsModule,
     FlipperPosModule,
     FlipperInventoryModule,

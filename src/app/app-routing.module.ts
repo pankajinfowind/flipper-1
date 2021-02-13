@@ -35,15 +35,9 @@ const routes: Routes = [
   },
   // {
   //   path: 'inventory',
-  //   component: ProductsComponent,
+  //   component: ListProductsComponent,
   //   canActivate: [AuthGuard,HasSubscribedGuard]
   // },
-  //
-  {
-    path: 'inventory',
-    component: ListProductsComponent,
-    // canActivate: [AuthGuard,HasSubscribedGuard]
-  },
   {
     path: 'add/product',
     component: CreateProductComponent,

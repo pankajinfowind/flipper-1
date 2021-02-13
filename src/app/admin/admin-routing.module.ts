@@ -39,11 +39,11 @@ const routes: Routes = [
       //   loadChildren: () => import('@enexus/flipper-inventory').then(m => m.FlipperInventoryModule),
       //   // canLoad: [AuthGuard, HasSubscribedGuard],
       // },
-      {
-        path: 'transactions',
-        loadChildren: () => import('./../transactions/transactions.module').then(m => m.TransactionsModule),
-        // canLoad: [AuthGuard, HasSubscribedGuard],
-      },
+      // {
+      //   path: 'transactions',
+      //   loadChildren: () => import('./../transactions/transactions.module').then(m => m.TransactionsModule),
+      //   canLoad: [AuthGuard, HasSubscribedGuard],
+      // },
       {
         path: '**',
         component: PageNotFoundComponent,

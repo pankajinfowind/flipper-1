@@ -77,7 +77,6 @@
     "@enexus/api-services": "^0.1.1",
     "@enexus/flipper-dashboard": "^1.2.0",
     "@enexus/flipper-event": "1.0.5",
-    "@enexus/flipper-file-upload": "1.0.2",
     "@enexus/flipper-font": "1.0.2",
     "@enexus/flipper-menu": "^1.2.6",
     "@enexus/flipper-offline-database": "1.0.13",

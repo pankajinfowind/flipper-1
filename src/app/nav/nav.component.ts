@@ -21,8 +21,6 @@ export class NavComponent {
   opened = true;
   @ViewChild('drawer') drawer: MatSidenav;
   @ViewChild('search') searchElement: ElementRef;
-
-
   setClosedClass() {
     this.drawerClass = 'sidenav-container-closed'
   }
@@ -48,8 +46,7 @@ export class NavComponent {
   }
 
   toggle() {
-
-    this.drawer.toggle();
+    this.drawer?.toggle();
   }
 
   ShowSearch() {

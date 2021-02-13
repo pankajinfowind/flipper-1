@@ -292,9 +292,10 @@ catch (e) {
 // sed -i 's/name/R/g' .env
 // ng generate service another --path=projects/api-services
 // package to install on deploy
-// @enexus/flipper-dashboard
-// @enexus/flipper-pos
-// @enexus/flipper-settings
-// @enexus/flipper-components
+// @enexus/flipper-dashboard @enexus/flipper-inventory @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components
+//
+//
+//
+//  npm publish --access public
 // https://flaviocopes.com/how-to-get-timestamp-javascript/
 //# sourceMappingURL=main.js.map

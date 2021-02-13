@@ -35,6 +35,7 @@ import { SettingRoutingModule } from './settings/setting-routing.module'
 import { SettingsComponent } from './settings/settings.component'
 import { Router } from "@angular/router";
 import { FlipperSettingsModule } from '@enexus/flipper-settings'
+import { FlipperDialogModule } from '@enexus/flipper-dialog'
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     NavComponent,
   ],
   imports: [
+    FlipperDialogModule,
     FlipperDashboardModule,
     BrowserModule,
     VendorsModule,
@@ -86,10 +88,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   entryComponents: [],
   providers: [PouchDBService, APIService, {
     provide: ErrorHandler,
-    useValue: Sentry.createErrorHandler({
-      showDialog: true,
-    }),
-  },
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    },
     {
       provide: Sentry.TraceService,
       deps: [Router],

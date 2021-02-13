@@ -300,7 +300,7 @@ try {
 // ng generate service another --path=projects/api-services
 
 // package to install on deploy
-// @enexus/flipper-dashboard @enexus/flipper-inventory @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components
+// @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components
 //
 //
 //

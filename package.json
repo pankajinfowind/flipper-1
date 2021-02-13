@@ -80,6 +80,7 @@
     "@enexus/flipper-dashboard": "^1.2.0",
     "@enexus/flipper-dialog": "^1.7.0",
     "@enexus/flipper-event": "1.0.5",
+    "@enexus/flipper-file-upload": "^1.10.0",
     "@enexus/flipper-font": "1.0.2",
     "@enexus/flipper-inventory": "^1.6.0",
     "@enexus/flipper-menu": "^1.2.6",

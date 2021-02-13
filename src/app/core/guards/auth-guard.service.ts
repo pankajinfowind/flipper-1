@@ -57,9 +57,9 @@ export class AuthGuard implements CanActivate {
       return true;
     }else{
        // FIXME:use bellow code avoid reloading the entire app but as workaround to remove unnessary header on login page we use location.href for now
-       location.href = '/login';
+      //  location.href = '/login';
        // this.router.navigate(['/login']);
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
       return false;
     }
   }

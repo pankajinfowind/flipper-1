@@ -12,7 +12,7 @@ import {
 import { FlipperEventBusService } from '@enexus/flipper-event'
 import { environment } from '../../environments/environment'
 import { PusherService } from '../pusher.service'
-import { Router } from '@angular/router'
+// import { Router } from '@angular/router'
 declare const Pusher: any
 
 @Component({
@@ -69,7 +69,6 @@ export class LoginComponent implements OnInit {
           channels: [event.id.toString()]
         }
         localStorage.setItem('token',user.token);
-
         await this.currentUser.configAuthUser(user.id);
         this.eventBus.publish(new UserLoggedEvent(user))
 

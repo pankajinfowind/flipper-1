@@ -59,9 +59,10 @@
     "commandTwo": "cd projects/flipper-components && npm run patch && cd ../.. && ng build flippercomponents && cd dist/flipper-components && npm publish --public && cd ..",
     "commandTree": "cd projects/flipper-dashboard && npm run patch && cd ../.. && ng build flipperdashboard && cd dist/flipper-dashboard && npm publish --public && cd ..",
     "commandFour": "cd projects/flipper-pos && npm run patch && cd ../.. && ng build flipperpos && cd dist/flipper-pos && npm publish --public && cd ..",
-    "buildAllAndPublish": "npm run commandOne && npm run commandTwo && npm run commandTree && npm run commandFour",
-    "localDevClean": "npm remove @enexus/flipper-color @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components --save",
-    "installAll": "npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/flipper-color --save"
+    "commandFive":"cd projects/api-services && npm run patch && cd ../.. && ng build apiservice && cd dist/api-services && npm publish --public && cd ..",
+    "buildAllAndPublish": "npm run commandOne && npm run commandTwo && npm run commandTree && npm run commandFour && npm run commandFive",
+    "localDevClean": "npm remove @enexus/flipper-color @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/api-services --save",
+    "installAll": "npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/flipper-color @enexus/api-services --save"
   },
   "config": {
     "ghooks": {

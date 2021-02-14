@@ -14,7 +14,7 @@
   "main": "main.js",
   "scripts": {
     "config": "ts-node ./src/assets/setEnv.ts",
-    "postinstall": "electron-builder install-app-deps && npm localDevClean",
+    "postinstall": "electron-builder install-app-deps && npm run installAll",
     "ng": "ng",
     "start": "npm-run-all -p electron:serve ng:serve",
     "build": "npm run electron:serve-tsc && ng build -c production --base-href ./",
@@ -60,11 +60,12 @@
     "commandTree": "cd projects/flipper-dashboard && npm run patch && cd ../.. && ng build flipperdashboard && cd dist/flipper-dashboard && npm publish --public && cd ..",
     "commandFour": "cd projects/flipper-pos && npm run patch && cd ../.. && ng build flipperpos && cd dist/flipper-pos && npm publish --public && cd ..",
     "buildAllAndPublish": "npm run commandOne && npm run commandTwo && npm run commandTree && npm run commandFour",
-    "localDevClean": "npm remove @enexus/flipper-color @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components --save"
+    "localDevClean": "npm remove @enexus/flipper-color @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components --save",
+    "installAll": "npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/flipper-color --save"
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/flipper-color --save",
+      "pre-commit": "npm run installAll",
       "post-merge": "",
       "post-rewrite": ""
     }
@@ -85,7 +86,6 @@
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
     "@enexus/api-services": "^0.1.1",
-    "@enexus/flipper-color": "^1.7.0",
     "@enexus/flipper-event": "1.0.5",
     "@enexus/flipper-font": "1.0.2",
     "@enexus/flipper-menu": "^1.2.6",

@@ -21,7 +21,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
 import { Router } from '@angular/router'
 import { LoggedOutEvent } from '../../subscription/loggedout.event'
-
+import * as Sentry from "@sentry/angular";
 @Injectable({
   providedIn: 'root',
 })
@@ -75,7 +75,7 @@ export class CurrentUser {
     )
   }
   public async configAuthUser(userId){
-    console.log('userId:::', userId)
+    Sentry.setUser({ userId: userId });
     await this.http
       .post(environment.url + '/auth', {
         'userId': userId,

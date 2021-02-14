@@ -300,10 +300,16 @@ try {
 // ng generate service another --path=projects/api-services
 
 // package to install on deploy
-// @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components
+// npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components --save
 //
+// npm remove @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components --save
 //
 //
 
 //  npm publish --access public
+// TODO: build command to build and publish all plugin that flipper depends on.
 // https://flaviocopes.com/how-to-get-timestamp-javascript/
+// cd projects/flipper-color && npm run patch && cd ../.. && ng build flippercolor && cd dist/flipper-color && npm publish --public && cd ..
+// cd projects/flipper-components && npm run patch && cd ../.. && ng build flippercomponents && cd dist/flipper-components && npm publish --public && cd ..
+// cd projects/flipper-dashboard && npm run patch && cd ../.. && ng build flipperdashboard && cd dist/flipper-dashboard && npm publish --public && cd ..
+// cd projects/flipper-pos && npm run patch && cd ../.. && ng build flipperpos && cd dist/flipper-pos && npm publish --public && cd ..

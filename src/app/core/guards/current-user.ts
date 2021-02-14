@@ -87,6 +87,8 @@ export class CurrentUser {
           localStorage.setItem('subscriptionEndDate',user.subscriptionEndDate.toString());
 
           await this.defaultBusiness(userId)
+        },(error)=>{
+          //TODO: report the error to us
         })
       })
   }

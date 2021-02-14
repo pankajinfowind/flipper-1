@@ -14,7 +14,7 @@
   "main": "main.js",
   "scripts": {
     "config": "ts-node ./src/assets/setEnv.ts",
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "electron-builder install-app-deps && npm localDevClean",
     "ng": "ng",
     "start": "npm-run-all -p electron:serve ng:serve",
     "build": "npm run electron:serve-tsc && ng build -c production --base-href ./",
@@ -54,7 +54,20 @@
     "buildAll": " ng build flippercolor && ng build flipperevent  && ng build flipperfont && ng build flipperfileupload   && ng build paymentcard  && ng build flippercomponents && ng build flippervendors     && ng build flipperdialog   && ng build flipperpos",
     "e2e": "npm run build:prod && cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' mocha --timeout 300000 --require ts-node/register e2e/**/*.e2e.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "commandOne": "cd projects/flipper-color && npm run patch && cd ../.. && ng build flippercolor && cd dist/flipper-color && npm publish --public && cd ..",
+    "commandTwo": "cd projects/flipper-components && npm run patch && cd ../.. && ng build flippercomponents && cd dist/flipper-components && npm publish --public && cd ..",
+    "commandTree": "cd projects/flipper-dashboard && npm run patch && cd ../.. && ng build flipperdashboard && cd dist/flipper-dashboard && npm publish --public && cd ..",
+    "commandFour": "cd projects/flipper-pos && npm run patch && cd ../.. && ng build flipperpos && cd dist/flipper-pos && npm publish --public && cd ..",
+    "buildAllAndPublish": "npm run commandOne && npm run commandTwo && npm run commandTree && npm run commandFour",
+    "localDevClean": "npm remove @enexus/flipper-color @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components --save"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/flipper-color --save",
+      "post-merge": "",
+      "post-rewrite": ""
+    }
   },
   "private": true,
   "dependencies": {
@@ -73,17 +86,10 @@
     "@angular/router": "~11.2.0",
     "@enexus/api-services": "^0.1.1",
     "@enexus/flipper-color": "^1.7.0",
-    "@enexus/flipper-components": "^1.9.0",
-    "@enexus/flipper-dashboard": "^1.2.0",
-    "@enexus/flipper-dialog": "^1.7.0",
     "@enexus/flipper-event": "1.0.5",
-    "@enexus/flipper-file-upload": "^1.10.0",
     "@enexus/flipper-font": "1.0.2",
-    "@enexus/flipper-inventory": "^1.6.0",
     "@enexus/flipper-menu": "^1.2.6",
     "@enexus/flipper-offline-database": "1.0.13",
-    "@enexus/flipper-pos": "^1.6.0",
-    "@enexus/flipper-settings": "^1.4.13",
     "@enexus/flipper-vendors": "1.1.1",
     "@enexus/flipperofflinedatabase": "1.2.13",
     "@enexus/payment-card": "1.0.3",
@@ -124,6 +130,7 @@
     "electron": "11.0.3",
     "electron-builder": "22.9.1",
     "electron-reload": "1.5.0",
+    "ghooks": "^2.0.4",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.1.1",

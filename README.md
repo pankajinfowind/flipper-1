@@ -20,4 +20,4 @@ flipper is open to contributions, but I recommend creating an issue or replying 
 
 ## Investors
 
-If you are interested in investing in DogeHouse or know someone I should talk to, send me an email at murag.richard@gmail.com or dm me on [Twitter](https://twitter.com/richardmurag).
+If you are interested in investing in Flipper or know someone I should talk to, send me an email at murag.richard@gmail.com or DM me on [Twitter](https://twitter.com/richardmurag).

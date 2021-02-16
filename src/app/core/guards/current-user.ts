@@ -84,14 +84,17 @@ export class CurrentUser {
       .then(async (u)=>{
         //get the user object and set the payment properties to be used in subscription guards
         await this.http.get(environment.url + '/api/user').toPromise().then(async (user:User)=>{
-          localStorage.setItem('subscriptionEndDate',user.subscriptionEndDate.toString());
-
+          if(user.subscriptionEndDate !=null || user.subscriptionEndDate !=undefined){
+            // TODO:check then subscriptionEndDate if it is propper handled
+            localStorage.setItem('subscriptionEndDate',user.subscriptionEndDate.toString());
+          }
           await this.defaultBusiness(userId)
         },(error)=>{
           //TODO: report the error to us
         })
       })
   }
+
 
   public async defaultBusiness(userId:string) {
     await this.http

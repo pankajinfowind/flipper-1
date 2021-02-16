@@ -8,6 +8,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { APIService } from '@enexus/api-services';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 import { LoggedOutEvent } from '../subscription/loggedout.event';
+import { Business, CurrentBusinessEvent } from '@enexus/flipper-components';
 
 @Component({
   selector: 'nav',
@@ -17,6 +18,7 @@ import { LoggedOutEvent } from '../subscription/loggedout.event';
 export class NavComponent {
   drawerClass = 'sidenav-container'
   authenticated: boolean = false;
+  business: Business;
   showhidesearch:boolean = false;
   opened = true;
   @ViewChild('drawer') drawer: MatSidenav;
@@ -34,6 +36,14 @@ export class NavComponent {
   public showTopNav:boolean =false;
 
   constructor(private eventBus: FlipperEventBusService,private location: Location, private breakpointObserver: BreakpointObserver, private router: Router,private api:APIService ) {
+    // CurrentBusinessEvent
+    this.eventBus
+      .of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
+      .subscribe(res => {
+        if(res.business){
+          this.business = res.business;
+        }
+      })
     this.authenticated = localStorage.getItem('userIdNew') != null;
     this.eventBus
       .of<LoggedOutEvent>(LoggedOutEvent.CHANNEL)

@@ -23,7 +23,7 @@ const isDev = require('electron-is-dev')
 var AutoLaunch = require('auto-launch')
 var autoLauncher = new AutoLaunch({
   name: 'flipper',
-  path: '/Applications/flipper.app',
+  // path: '/Applications/flipper.app',
 })
 autoLauncher.enable()
 // Checking if autoLaunch is enabled, if not then enabling it.

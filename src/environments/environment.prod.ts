@@ -2,6 +2,7 @@ import {name, version} from'../../package.json';
 export const environment = {
   name:name,
   version:version,
+  hmr: false,
   url: 'http://localhost:8082',
   production: true,
   paymentUrl: 'https://mighty-hamlet-20200.herokuapp.com/',

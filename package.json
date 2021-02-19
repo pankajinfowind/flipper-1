@@ -51,7 +51,7 @@
     "minor": "npm run release -- --release-as minor",
     "patch": "npm run release -- --release-as patch",
     "apiservice": "ng build apiservice  --watch",
-    "buildAll": " ng build flippercolor  && ng build flipperevent  && ng build flipperfont && ng build flipperfileupload    && ng build flippercomponents && ng build flippervendors     && ng build flipperdialog   && ng build flipperpos && ng build flipperdashboard && ng build apiservice",
+    "buildAll": " ng build flippercolor  && ng build flipperevent  && ng build flipperfont &&  ng build flippervendors    && ng build flipperdialog && ng build flipperfileupload    && ng build flippercomponents && ng build apiservice  && ng build flipperinventory   && ng build flipperpos && ng build flipperdashboard && ng build flippersettings",
     "e2e": "npm run build:prod && cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' mocha --timeout 300000 --require ts-node/register e2e/**/*.e2e.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "lint": "ng lint",
@@ -61,8 +61,8 @@
     "commandFour": "cd projects/flipper-pos && npm run patch && cd ../.. && ng build flipperpos && cd dist/flipper-pos && npm publish --public && cd ..",
     "commandFive": "cd projects/api-services && npm run patch && cd ../.. && ng build apiservice && cd dist/api-services && npm publish --public && cd ..",
     "buildAllAndPublish": "npm run commandOne && npm run commandTwo && npm run commandTree && npm run commandFour && npm run commandFive",
-    "localDevClean": "npm remove @enexus/flipper-color @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/api-services @enexus/flipper-event --save",
-    "installAll": "npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/flipper-color @enexus/api-services @enexus/flipper-event --save"
+    "localDevClean": "npm remove @enexus/flipper-color @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/api-services @enexus/flipper-event @enexus/flipper-vendors --save",
+    "installAll": "npm i @enexus/flipper-dashboard @enexus/flipper-inventory  @enexus/flipper-file-upload @enexus/flipper-dialog  @enexus/flipper-pos @enexus/flipper-settings @enexus/flipper-components @enexus/flipper-color @enexus/api-services @enexus/flipper-event @enexus/flipper-vendors --save"
   },
   "config": {
     "ghooks": {
@@ -74,6 +74,7 @@
   "private": true,
   "dependencies": {
     "@angular-builders/custom-webpack": "^11.0.0",
+    "@angular-devkit/build-ng-packagr": "~0.1002.0",
     "@angular/animations": "~11.2.0",
     "@angular/cdk": "^11.1.1",
     "@angular/common": "~11.2.0",
@@ -87,8 +88,8 @@
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
     "@enexus/api-services": "^0.1.3",
-    "@enexus/flipper-color": "^1.7.17",
-    "@enexus/flipper-components": "^1.9.14",
+    "@enexus/flipper-color": "^1.8.19",
+    "@enexus/flipper-components": "^1.9.15",
     "@enexus/flipper-dashboard": "^1.2.7",
     "@enexus/flipper-dialog": "^1.7.0",
     "@enexus/flipper-event": "^1.0.5",
@@ -99,7 +100,7 @@
     "@enexus/flipper-offline-database": "1.0.13",
     "@enexus/flipper-pos": "^1.6.6",
     "@enexus/flipper-settings": "^1.4.13",
-    "@enexus/flipper-vendors": "1.1.1",
+    "@enexus/flipper-vendors": "^1.1.1",
     "@enexus/flipperofflinedatabase": "1.2.13",
     "@enexus/payment-card": "1.0.3",
     "@ngx-translate/core": "^13.0.0",
@@ -112,6 +113,7 @@
     "an-qrcode": "1.0.5",
     "auto-launch": "5.0.5",
     "chart.js": "^2.9.4",
+    "chartjs-plugin-datalabels": "^0.7.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.1",
     "electron-push-receiver": "^2.1.3",

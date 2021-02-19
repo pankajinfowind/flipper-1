@@ -29,7 +29,7 @@ autoUpdater.logger = log
 //   console.log("Version is " + version);
 // })
 
-var server = path.join(__dirname + '/../server/', 'flipper-1.21.0-client.jar')
+var server = path.join(__dirname + '/../server/', 'flipper-1.22.0-client.jar')
 
 var dd = server.replace(/\app.asar/g, '')
 var final = dd.replace(/\\\\/g, '\\')

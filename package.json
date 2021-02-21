@@ -89,7 +89,7 @@
     "@angular/router": "~11.2.0",
     "@enexus/api-services": "^0.1.4",
     "@enexus/flipper-color": "^1.8.25",
-    "@enexus/flipper-components": "^1.9.18",
+    "@enexus/flipper-components": "^1.9.22",
     "@enexus/flipper-dashboard": "^1.3.4",
     "@enexus/flipper-dialog": "^1.7.0",
     "@enexus/flipper-event": "^1.0.5",

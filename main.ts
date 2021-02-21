@@ -313,3 +313,8 @@ try {
 // cd projects/flipper-components && npm run patch && cd ../.. && ng build flippercomponents && cd dist/flipper-components && npm publish --public && cd ..
 // cd projects/flipper-dashboard && npm run patch && cd ../.. && ng build flipperdashboard && cd dist/flipper-dashboard && npm publish --public && cd ..
 // cd projects/flipper-pos && npm run patch && cd ../.. && ng build flipperpos && cd dist/flipper-pos && npm publish --public && cd ..
+
+
+// fixable:
+// ng build flipperevent
+// ng build flipperdialog

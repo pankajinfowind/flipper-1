@@ -35,7 +35,9 @@ export class NavComponent {
 
   public showTopNav:boolean =false;
 
-  constructor(private eventBus: FlipperEventBusService,private location: Location, private breakpointObserver: BreakpointObserver, private router: Router,private api:APIService ) {
+  constructor(private eventBus: FlipperEventBusService,
+
+    private location: Location, private breakpointObserver: BreakpointObserver, private router: Router,private api:APIService ) {
     // CurrentBusinessEvent
     this.eventBus
       .of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
@@ -53,6 +55,12 @@ export class NavComponent {
           this.showTopNav =true
         }
       })
+  }
+  Logout(){
+    localStorage.removeItem('userIdNew');
+    this.authenticated = localStorage.getItem('userIdNew') != null;
+    this.showTopNav = false;
+    this.router.navigate(['/login']);
   }
 
   toggle() {

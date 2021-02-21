@@ -36,7 +36,10 @@
           </path>
         </svg>
       </button>
-      <span style="float: right;margin-right: 40px;margin-top: 5px;">{{business?.name}}</span>
+      <span style="float: right;margin-right: 40px;margin-top: 5px;" (click)="Logout()">LogOut</span>
+
+      <span style="float: right;margin-right: 40px;margin-top: 5px;" >{{business?.name}}</span>
+
       <div style="position: fixed;left: 20%;top: 5px;width: 100%;" *ngIf="showhidesearch">
         <svg height="24" role="img" viewBox="0 0 24 24" width="24"
           style="float: left;margin-top: 7px;margin-right: 8px;">

@@ -49,10 +49,14 @@ export class NavComponent {
     this.authenticated = localStorage.getItem('userIdNew') != null;
     this.eventBus
       .of<LoggedOutEvent>(LoggedOutEvent.CHANNEL)
-      .pipe(filter(e => e.event==true))
       .subscribe(res => {
         if(res.event){
           this.showTopNav =true
+        }else{
+          localStorage.removeItem('userIdNew');
+          this.authenticated = localStorage.getItem('userIdNew') != null;
+          this.showTopNav = false;
+          this.router.navigate(['/login']);
         }
       })
   }

@@ -89,9 +89,10 @@ export class CurrentUser {
             localStorage.setItem('subscriptionEndDate',user.subscriptionEndDate.toString());
           }
           await this.defaultBusiness(userId)
-        },(error)=>{
-          //TODO: report the error to us
         })
+      }).catch(e=>{
+        console.log('error login redirect back to login');
+        this.eventBus.publish(new LoggedOutEvent(false)) //false i.e not logged in
       })
   }
 
